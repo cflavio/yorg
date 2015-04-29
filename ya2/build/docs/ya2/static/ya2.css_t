@@ -1,0 +1,23 @@
+@import url("default.css");
+
+div.bodywrapper {
+    margin: 0 430px 0 0;
+}
+
+div.sphinxsidebar {
+    width: 230px;
+    padding: 10px;
+    margin-left:-430px;
+    margin-right: 180px;
+}
+
+
+div.related {
+    padding-top: 30px;
+    margin-right: -468px;
+}
+
+div.footer {
+    float: left;
+    width: 25%;
+}

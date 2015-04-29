@@ -1,0 +1,56 @@
+{% extends "default/layout.html" %}
+{%- block extrahead %}
+{{ super() }}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49064213-1', 'ya2tech.it');
+  ga('send', 'pageview');
+</script>
+{% endblock %}
+{% block relbar1 %}
+<div style="float: right; width: 468px; display: block;"><script type='text/javascript' src='http://ads.qadserve.com/t?id=1687fe8d-4afa-4198-9da5-f5e92b20cc66&size=468x60'></script></div>
+{{ super() }}
+{% endblock %}
+{% block relbar2 %}{% endblock %}
+{% block sidebar2 %}
+<div style="float: right; width:120px; padding:10px; margin-left:-180px; margin-right:40px; text-align:center;">
+<script type='text/javascript' src='http://ads1.qadabra.com/t?id=15265a43-4685-418d-b9a4-1f6eb7c05fb7&size=120x600'></script>
+</div>
+{{ sidebar() }}
+{% endblock %}
+<div>
+{% block footer %}
+{{ super() }}
+<div style="float: left;"><script type='text/javascript' src='http://ads1.qadabra.com/t?id=6b35d85d-d6c6-4e0d-98fa-28351d145f0c&size=468x60'></script></div>
+</div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ya2at"></script>
+<script type="text/javascript">
+  addthis.layers({
+    'theme' : 'dark',
+    'share' : {
+      'position' : 'right',
+      'numPreferredServices' : 5,
+      'offset' : {'bottom': '48px'}
+    }, 
+    'follow' : {
+      'services' : [
+        {'service': 'facebook', 'id': 'Ya2Tech'},
+        {'service': 'twitter', 'id': 'ya2tech'},
+        {'service': 'google_follow', 'id': '118211180567488443153'},
+        {'service': 'youtube', 'id': 'ya2games'},
+        {'service': 'pinterest', 'id': 'ya2tech'},
+        {'service': 'rss', 'id': 'http://www.ya2.it/feed-following'}
+      ],
+      'title' : 'Follow me',
+      'offset' : {'bottom': '0px'}
+    },
+    'mobile' : {
+        'buttonBarPosition' : 'top'
+    }  
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+from sys import path
+from os import walk
+from os.path import join
+from panda3d.core import Filename
+
+
+path.insert(0, '')
+
+
+class <Name>(p3d):
+    require('panda3d', 'bullet', 'morepy', 'models')
+    config(
+        start_dir='<name>',
+        version='<version>',
+        display_name='<Name>')
+    for _dir in ['licenses', 'assets', 'ya2/assets']:
+        dir(_dir, newDir=_dir)
+    file('license.txt')
+    for extension in ['mo', 'dds']:
+        for root, dirnames, filenames in walk('.'):
+            for filename in [filename for filename in filenames
+                             if filename.endswith('.'+extension)]:
+                file(join(root, filename), newDir=root)
+    mainModule('main')
