@@ -44,8 +44,9 @@ linux_path_noint_str = '{path}{name}-%s-nointernet-linux_{platform}' % \
     ver_branch
 src_path_str = '{path}{name}-%s-src.tar.gz' % ver_branch
 devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
-docs_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
+devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
 docs_path_str = '{path}{name}-%s-docs.tar.gz' % ver_branch
+pdf_path_str = '{path}{name}-%s-code.tar.gz' % ver_branch
 
 home = expanduser('~')
 ptools_path = home+'/runtime_panda3d'
@@ -367,6 +368,18 @@ def build_images(target, source, env):
                 png+'" "'+_file[:-3]+'dds"'
             system(cmd)
             remove(png)
+
+
+def build_pdf(target, source, env):
+    name = env['NAME']
+    cmd = "enscript --font=Courier11 --continuous-page-numbers " + \
+        "--pretty-print=python -o - `find . -name '*.py'` | " + \
+        "ps2pdf - sources.pdf ; pdfnup --nup 2x1 -o sources.pdf sources.pdf"
+    system(cmd)
+    cmd = 'tar -cf {out_name} sources.pdf && rm sources.pdf'
+    cmd = cmd.format(
+        out_name=pdf_path_str.format(path=path, name=name, version=ver_branch))
+    system(cmd)
 
 
 def get_size(start_path='.'):

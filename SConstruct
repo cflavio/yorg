@@ -3,12 +3,12 @@ from ya2.build.build import extensions, get_files, image_extensions, \
     src_path_str, devinfo_path_str, docs_path_str, build_p3d, build_windows, \
     build_osx, build_linux, build_src, build_devinfo, build_docs, \
     build_strings, build_string_template, build_images, win_path_noint_str,\
-    osx_path_noint_str, linux_path_noint_str
+    osx_path_noint_str, linux_path_noint_str, pdf_path_str, build_pdf
 
 argument_info = [
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
-    ('images', 0), ('nointernet', 0)]
+    ('images', 0), ('nointernet', 0), ('pdf', 0)]
 arguments = dict((arg, ARGUMENTS.get(arg, default))
                   for arg, default in argument_info)
 if any(arguments[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64']):
@@ -35,6 +35,7 @@ linux_path_64_noint = linux_path_noint_str.format(path=path, name=app_name,
 src_path = src_path_str.format(path=path, name=app_name)
 devinfo_path = devinfo_path_str.format(path=path, name=app_name)
 docs_path = docs_path_str.format(path=path, name=app_name)
+pdf_path = pdf_path_str.format(path=path, name=app_name)
 
 bld_p3d = Builder(action=build_p3d)
 bld_windows = Builder(action=build_windows)
@@ -43,6 +44,7 @@ bld_linux = Builder(action=build_linux)
 bld_src = Builder(action=build_src)
 bld_devinfo = Builder(action=build_devinfo)
 bld_docs = Builder(action=build_docs)
+bld_pdf = Builder(action=build_pdf)
 bld_images = Builder(action=build_images)
 bld_str = Builder(action=build_strings, suffix='.mo', src_suffix='.po')
 bld_str_tmpl = Builder(action=build_string_template, suffix='.pot',
@@ -52,7 +54,8 @@ env = Environment(BUILDERS={'p3d': bld_p3d, 'windows': bld_windows,
                             'osx': bld_osx, 'linux': bld_linux,
                             'source': bld_src, 'devinfo': bld_devinfo,
                             'docs': bld_docs, 'images': bld_images,
-                            'str': bld_str, 'str_tmpl': bld_str_tmpl})
+                            'str': bld_str, 'str_tmpl': bld_str_tmpl,
+                            'pdf': bld_pdf})
 env['P3D_PATH'] = p3d_path
 env['NAME'] = app_name
 env['LANG'] = lang_path
@@ -87,6 +90,8 @@ if arguments['linux_64']:
     env.linux([out_path], [p3d_path], PLATFORM='amd64')
 if arguments['docs']:
     env.docs([docs_path], get_files(['py']))
+if arguments['pdf']:
+    env.pdf([pdf_path], get_files(['py']))
 if arguments['lang']:
     for lang_code in ['it_IT']:
         tmpl = env.str_tmpl(
