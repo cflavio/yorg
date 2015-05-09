@@ -137,6 +137,7 @@ class _Event(Event):
                 globalClock.getFrameTime() - self.__last_slow_time > .05:
             self.__last_slow_time = None
             print 'slow'
+        eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
 
 
 class _Gfx(Gfx):
@@ -146,7 +147,6 @@ class _Gfx(Gfx):
         Gfx.__init__(self, mdt)
         vehicle_node = BulletRigidBodyNode('Vehicle')
         self.nodepath = eng.world_np.attachNewNode(vehicle_node)
-        self.nodepath.setPos(0, 0, 1)
 
         self.chassis_np = eng.loader.loadModel('car/car')
         self.chassis_np.reparentTo(self.nodepath)
@@ -227,3 +227,8 @@ class Car(GameObjectMdt):
     event_cls = _Event
     logic_cls = _Logic
     audio_cls = _Audio
+
+    def __init__(self, pos, hpr):
+        GameObjectMdt.__init__(self)
+        self.gfx.nodepath.set_pos(pos)
+        self.gfx.nodepath.set_hpr(hpr)

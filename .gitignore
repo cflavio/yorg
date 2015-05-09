@@ -1,3 +1,9 @@
 *.pyc
 *.mo
 built/
+.project
+.pydevproject
+.sconsign.dblite
+assets/images/icon/*_png.png
+assets/images/icons/*_png.png
+

@@ -1,4 +1,3 @@
-import __builtin__
 from datetime import datetime
 from direct.directnotify.DirectNotify import DirectNotify
 from direct.filter.CommonFilters import CommonFilters
@@ -11,11 +10,12 @@ from panda3d.core import getModelPath, WindowProperties, LightRampAttrib, \
 from panda3d.core import loadPrcFileData
 from platform import system, release
 from sys import platform
-import sys
 from webbrowser import open_new_tab
-
 from ya2.decorators.access import auto_properties
 from ya2.decorators.sender import sender_dec
+import __builtin__
+import sys
+
 
 
 class OnFrame:
@@ -114,7 +114,7 @@ class Engine(ShowBase, object):
 
         self.render.setShaderAuto()
 
-        self.__set_toon()
+        #self.__set_toon()
 
         self.world_np = render.attachNewNode('world')
         self.messenger.send = sender_dec(self.messenger.send)
@@ -167,7 +167,7 @@ class Engine(ShowBase, object):
 
     def __update(self, task):
         dt = globalClock.getDt()
-        self.world_phys.doPhysics(dt)
+        self.world_phys.doPhysics(dt, 5, 1/180.0)
         self.messenger.send(OnFrame())
         return task.cont
 

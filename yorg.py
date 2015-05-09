@@ -38,7 +38,9 @@ class _Fsm(Fsm):
         self.mdt.audio.menu_music.stop()
 
     def enterPlay(self):
-        self.__track, self.__car = Track(), Car()
+        self.__track = Track()
+        self.__car = Car(self.__track.gfx.start_pos,
+                         self.__track.gfx.start_pos_hpr)
         self.mdt.audio.game_music.play()
 
     def exitPlay(self):

@@ -14,7 +14,7 @@ class _Phys(Phys):
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
 
-        def find_geom(name):
+        def find_geoms(name):
             def sibling_names(node):
                 siblings = node.getParent().getChildren()
                 return [child.getName() for child in siblings]
@@ -22,11 +22,13 @@ class _Phys(Phys):
             # the list of geoms which have siblings named 'name'
             named_geoms = [
                 geom for geom in mdt.gfx.model.findAllMatches('**/+GeomNode')
-                if any([name in [s for s in sibling_names(geom)]])]
-            return named_geoms[0].node().getGeom(0)
+                if any([s.startswith(name) for s in sibling_names(geom)])]
+            in_vec = [name in named_geom.getName() for named_geom in named_geoms]
+            indexes = [i for i, el in enumerate(in_vec) if el]
+            return [named_geoms[i].node().getGeom(0) for i in indexes]
 
         for geom_name in ['Road', 'Wall']:
-            geom = find_geom(geom_name)
+            geom = find_geoms(geom_name)[0]
             mesh = BulletTriangleMesh()
             mesh.addGeom(geom)
             shape = BulletTriangleMeshShape(mesh, dynamic=False)
@@ -36,7 +38,7 @@ class _Phys(Phys):
             np.node().notifyCollisions(True)
 
         for geom_name in ['Goal']:
-            geom = find_geom(geom_name)
+            geom = find_geoms(geom_name)[0]
             mesh = BulletTriangleMesh()
             mesh.addGeom(geom)
             shape = BulletTriangleMeshShape(mesh, dynamic=False)
@@ -47,15 +49,16 @@ class _Phys(Phys):
             ghostNP.node().notifyCollisions(True)
 
         for geom_name in ['Slow']:
-            geom = find_geom(geom_name)
-            mesh = BulletTriangleMesh()
-            mesh.addGeom(geom)
-            shape = BulletTriangleMeshShape(mesh, dynamic=False)
-            ghost = BulletGhostNode(geom_name)
-            ghost.addShape(shape)
-            ghostNP = eng.world_np.attachNewNode(ghost)
-            eng.world_phys.attachGhost(ghost)
-            ghostNP.node().notifyCollisions(True)
+            geoms = find_geoms(geom_name)
+            for geom in geoms:
+                mesh = BulletTriangleMesh()
+                mesh.addGeom(geom)
+                shape = BulletTriangleMeshShape(mesh, dynamic=False)
+                ghost = BulletGhostNode(geom_name)
+                ghost.addShape(shape)
+                ghostNP = eng.world_np.attachNewNode(ghost)
+                eng.world_phys.attachGhost(ghost)
+                ghostNP.node().notifyCollisions(True)
 
 
 class _Gui(Gui):
@@ -86,10 +89,17 @@ class _Gfx(Gfx):
         self.model = loader.loadModel("track/track")
         self.model.reparentTo(render)
         self.model.hide(BitMask32.bit(0))
-        self.model.find('**/Slow').hide()
         waypoints = self.model.findAllMatches('**/Waypoint*')
         for waypoint in waypoints:
             print waypoint, waypoint.getPos()
+        self.model.find('**/Road').hide()
+        self.model.find('**/Wall').hide()
+        slow_models = self.model.findAllMatches('**/Slow*')
+        for model in slow_models:
+            model.hide()
+        self.model.find('**/Goal').hide()
+        self.start_pos = self.model.find('**/Start1').get_pos()
+        self.start_pos_hpr = self.model.find('**/Start1').get_hpr()
 
     def __set_light(self):
         eng.render.clearLight()
@@ -117,7 +127,7 @@ class _Gfx(Gfx):
         render.setShaderAuto()
 
     def __set_camera(self):
-        eng.cam.setPos(0, -40, 15)
+        eng.cam.setPos(0, -40, 50)
         eng.cam.lookAt(0, 0, 0)
 
     def destroy(self):
