@@ -11,7 +11,7 @@ from ya2.gameobject import Event, GameObjectMdt, Gfx, Logic, Phys, Audio
 class _Phys(Phys):
     '''This class models the physics component of a car.'''
 
-    max_speed = 20.0  # to be computed from physics properties
+    max_speed = 50.0  # to be computed from physics properties
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
@@ -178,6 +178,8 @@ class _Gfx(Gfx):
 class _Logic(Logic):
     '''This class manages the events of the Car class.'''
 
+    __steering_min_speed = 40
+    __steering_max_speed = 20
     __steering_clamp = 40  # degrees
     __steering_inc = 120  # degrees per second
     __steering_dec = 120  # degrees per second
@@ -193,8 +195,12 @@ class _Logic(Logic):
         steering_inc = d_t * self.__steering_inc
         steering_dec = d_t * self.__steering_dec
 
+        speed_ratio = min(1.0, self.mdt.phys.speed / self.mdt.phys.max_speed)
+        steering_range = self.__steering_min_speed - self.__steering_max_speed
+        steering_clamp = self.__steering_min_speed - speed_ratio * steering_range
+
         if input_dct['forward']:
-            eng_frc = 2500
+            eng_frc = 2500 if self.mdt.phys.speed < self.mdt.phys.max_speed else 0
             brake_frc = 0
 
         if input_dct['reverse']:
@@ -203,11 +209,11 @@ class _Logic(Logic):
 
         if input_dct['left']:
             self.__steering += steering_inc
-            self.__steering = min(self.__steering, self.__steering_clamp)
+            self.__steering = min(self.__steering, steering_clamp)
 
         if input_dct['right']:
             self.__steering -= steering_inc
-            self.__steering = max(self.__steering, -self.__steering_clamp)
+            self.__steering = max(self.__steering, -steering_clamp)
 
         if not input_dct['left'] and not input_dct['right']:
             if abs(self.__steering) <= steering_dec:
