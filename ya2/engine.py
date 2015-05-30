@@ -6,7 +6,7 @@ from gettext import install, translation
 from os import environ
 from panda3d.bullet import BulletWorld, BulletDebugNode
 from panda3d.core import getModelPath, WindowProperties, LightRampAttrib, \
-    PandaNode, NodePath
+    PandaNode, NodePath, AntialiasAttrib
 from panda3d.core import loadPrcFileData
 from platform import system, release
 from sys import platform
@@ -77,13 +77,15 @@ class FontMgr:
 class Configuration:
 
     def __init__(self, fps=False, win_size='1280 720', win_title='Ya2',
-                 fullscreen=False, cursor_hidden=False, sync_video=True):
-        self.__fps = fps
-        self.__win_size = win_size
-        self.__win_title = win_title
-        self.__fullscreen = fullscreen
-        self.__cursor_hidden = cursor_hidden
-        self.__sync_video = sync_video
+                 fullscreen=False, cursor_hidden=False, sync_video=True,
+                 antialiasing=False):
+        self.fps = fps
+        self.win_size = win_size
+        self.win_title = win_title
+        self.fullscreen = fullscreen
+        self.cursor_hidden = cursor_hidden
+        self.sync_video = sync_video
+        self.antialiasing = antialiasing
         self.configure()
 
     @staticmethod
@@ -91,14 +93,17 @@ class Configuration:
         loadPrcFileData('', key+' '+str(value))
 
     def configure(self):
-        self.__set('show-frame-rate-meter', int(self.__fps))
-        self.__set('win-size', self.__win_size)
-        self.__set('window-title', self.__win_title)
-        self.__set('fullscreen', int(self.__fullscreen))
-        self.__set('cursor-hidden', int(self.__cursor_hidden))
-        self.__set('sync-video', int(self.__sync_video))
+        self.__set('show-frame-rate-meter', int(self.fps))
+        self.__set('win-size', self.win_size)
+        self.__set('window-title', self.win_title)
+        self.__set('fullscreen', int(self.fullscreen))
+        self.__set('cursor-hidden', int(self.cursor_hidden))
+        self.__set('sync-video', int(self.sync_video))
         self.__set('aspect-ratio', 1.77778)
         self.__set('bullet-enable-contact-events', 'true')
+        if self.antialiasing:
+            self.__set('framebuffer-multisample', 1)
+            self.__set('multisamples', 2)
         LogMgr.configure()
 
 
@@ -113,7 +118,8 @@ class Engine(ShowBase, object):
         getModelPath().appendDirectory('assets/models')
 
         self.render.setShaderAuto()
-
+        if configuration.antialiasing:
+            self.render.setAntialias(AntialiasAttrib.MAuto)
         #self.__set_toon()
 
         self.world_np = render.attachNewNode('world')
