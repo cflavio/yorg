@@ -28,25 +28,29 @@ class _Phys(Phys):
             return [named_geoms[i].node().getGeom(0) for i in indexes]
 
         for geom_name in ['Road', 'Wall']:
-            geom = find_geoms(geom_name)[0]
-            mesh = BulletTriangleMesh()
-            mesh.addGeom(geom)
-            shape = BulletTriangleMeshShape(mesh, dynamic=False)
-            np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
-            np.node().addShape(shape)
-            eng.world_phys.attachRigidBody(np.node())
-            np.node().notifyCollisions(True)
+            geom = find_geoms(geom_name)
+            if geom:
+                geom = geom[0]
+                mesh = BulletTriangleMesh()
+                mesh.addGeom(geom)
+                shape = BulletTriangleMeshShape(mesh, dynamic=False)
+                np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
+                np.node().addShape(shape)
+                eng.world_phys.attachRigidBody(np.node())
+                np.node().notifyCollisions(True)
 
         for geom_name in ['Goal']:
-            geom = find_geoms(geom_name)[0]
-            mesh = BulletTriangleMesh()
-            mesh.addGeom(geom)
-            shape = BulletTriangleMeshShape(mesh, dynamic=False)
-            ghost = BulletGhostNode(geom_name)
-            ghost.addShape(shape)
-            ghostNP = eng.world_np.attachNewNode(ghost)
-            eng.world_phys.attachGhost(ghost)
-            ghostNP.node().notifyCollisions(True)
+            geom = find_geoms(geom_name)
+            if geom:
+                geom = geom[0]
+                mesh = BulletTriangleMesh()
+                mesh.addGeom(geom)
+                shape = BulletTriangleMeshShape(mesh, dynamic=False)
+                ghost = BulletGhostNode(geom_name)
+                ghost.addShape(shape)
+                ghostNP = eng.world_np.attachNewNode(ghost)
+                eng.world_phys.attachGhost(ghost)
+                ghostNP.node().notifyCollisions(True)
 
         for geom_name in ['Slow']:
             geoms = find_geoms(geom_name)
@@ -93,13 +97,22 @@ class _Gfx(Gfx):
         for waypoint in waypoints:
             print waypoint, waypoint.getPos()
         self.model.find('**/Road').hide()
-        self.model.find('**/Wall').hide()
+        wall = self.model.find('**/Wall')
+        if wall:
+            wall.hide()
         slow_models = self.model.findAllMatches('**/Slow*')
         for model in slow_models:
             model.hide()
-        self.model.find('**/Goal').hide()
-        self.start_pos = self.model.find('**/Start1').get_pos()
-        self.start_pos_hpr = self.model.find('**/Start1').get_hpr()
+        goal = self.model.find('**/Goal')
+        if goal:
+            goal.hide()
+        start_pos = self.model.find('**/Start1')
+        if start_pos:
+            self.start_pos = self.model.find('**/Start1').get_pos()
+            self.start_pos_hpr = self.model.find('**/Start1').get_hpr()
+        else:
+            self.start_pos = (0, 0, 0)
+            self.start_pos_hpr = (0, 0, 0)
 
     def __set_light(self):
         eng.render.clearLight()
