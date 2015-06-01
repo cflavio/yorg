@@ -5,7 +5,7 @@ from panda3d.bullet import BulletPlaneShape, BulletRigidBodyNode,\
     BulletTriangleMesh, BulletTriangleMeshShape, BulletGhostNode
 from panda3d.core import BitMask32, AmbientLight, DirectionalLight, TextNode,\
     Spotlight
-from ya2.gameobject import GameObjectMdt, Gfx, Gui, Phys
+from ya2.gameobject import GameObjectMdt, Gfx, Gui, Phys, Event
 
 
 class _Phys(Phys):
@@ -128,15 +128,15 @@ class _Gfx(Gfx):
         #self.directional_np = eng.render.attachNewNode(directional_lgt)
         #eng.render.setLight(self.directional_np)
 
-        spot_lgt = render.attachNewNode(Spotlight('Spot'))
-        spot_lgt.node().setScene(render)
-        spot_lgt.node().setShadowCaster(True, 1024, 1024)
-        spot_lgt.node().getLens().setFov(40)
-        spot_lgt.node().getLens().setNearFar(20, 200)
-        spot_lgt.node().setCameraMask(BitMask32.bit(0))
-        spot_lgt.setPos(50, -80, 80)
-        spot_lgt.lookAt(0, 0, 0)
-        render.setLight(spot_lgt)
+        self.spot_lgt = render.attachNewNode(Spotlight('Spot'))
+        self.spot_lgt.node().setScene(render)
+        self.spot_lgt.node().setShadowCaster(True, 1024, 1024)
+        self.spot_lgt.node().getLens().setFov(40)
+        self.spot_lgt.node().getLens().setNearFar(20, 200)
+        self.spot_lgt.node().setCameraMask(BitMask32.bit(0))
+        self.spot_lgt.setPos(50, -80, 80)
+        self.spot_lgt.lookAt(0, 0, 0)
+        render.setLight(self.spot_lgt)
         render.setShaderAuto()
 
     def __set_camera(self):
@@ -148,9 +148,18 @@ class _Gfx(Gfx):
         self.nodepath.removeNode()
 
 
+class _Event(Event):
+
+    def evt_OnFrame(self, evt):
+        cam_pos = eng.camera.get_pos()
+        self.mdt.gfx.spot_lgt.setPos(cam_pos.x+60, cam_pos.y-60, cam_pos.z + 100)
+        self.mdt.gfx.spot_lgt.lookAt(cam_pos.x-40, cam_pos.y+60, cam_pos.z - 50)
+
+
 class Track(GameObjectMdt):
     '''The Track class.'''
     __metaclass__ = ABCMeta
     gfx_cls = _Gfx
     phys_cls = _Phys
     gui_cls = _Gui
+    event_cls = _Event
