@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-16 22:22+0100\n"
+"POT-Creation-Date: 2015-06-02 11:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,46 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:17
-msgid "Play"
-msgstr ""
-
-#: menu.py:18
-msgid "Options"
-msgstr ""
+#: track.py:74
+msgid "F12: toggle debug"
+msgstr "F12: debug"
 
 #: menu.py:19
-msgid "Credits"
-msgstr ""
+msgid "Play"
+msgstr "Gioca"
 
 #: menu.py:20
+msgid "Options"
+msgstr "Opzioni"
+
+#: menu.py:21
+msgid "Credits"
+msgstr "Riconoscimenti"
+
+#: menu.py:22
 msgid "Quit"
-msgstr ""
+msgstr "Esci"
 
-#: menu.py:39
+#: menu.py:44
 msgid "Language"
-msgstr ""
+msgstr "Lingua"
 
-#: menu.py:52
+#: menu.py:58
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
-#: menu.py:59
+#: menu.py:65
 msgid "Fullscreen"
-msgstr ""
+msgstr "Schermo intero"
 
-#: menu.py:68
+#: menu.py:77
 msgid "Resolution"
-msgstr ""
+msgstr "Risoluzione"
 
-#: menu.py:117
+#: menu.py:92
+msgid "Antialiasing (from the next execution)"
+msgstr "Antialiasing (dalla prossima esecuzione)"
+
+#: menu.py:140
 msgid "Code"
-msgstr ""
+msgstr "Codice"
 
-#: track.py:23
-msgid "F12: toggle debug"
-msgstr ""
+#: menu.py:141
+msgid "Art"
+msgstr "Grafica"
 
-#: ya2/gui.py:83
+#: ya2/gui.py:85
 msgid "Back"
-msgstr ""
+msgstr "Indietro"

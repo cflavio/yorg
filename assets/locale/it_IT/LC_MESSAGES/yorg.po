@@ -17,46 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:17
-msgid "Play"
-msgstr "Gioca"
-
-#: menu.py:18
-msgid "Options"
-msgstr "Opzioni"
-
-#: menu.py:19
-msgid "Credits"
-msgstr "Riconoscimenti"
-
-#: menu.py:20
-msgid "Quit"
-msgstr "Esci"
-
-#: menu.py:39
-msgid "Language"
-msgstr "Lingua"
-
-#: menu.py:52
-msgid "Volume"
-msgstr "Volume"
-
-#: menu.py:59
-msgid "Fullscreen"
-msgstr "Schermo intero"
-
-#: menu.py:68
-msgid "Resolution"
-msgstr "Risoluzione"
-
-#: menu.py:117
-msgid "Code"
-msgstr "Codice"
-
-#: track.py:23
+#: track.py:74
 msgid "F12: toggle debug"
 msgstr "F12: debug"
 
-#: ya2/gui.py:83
+#: menu.py:19
+msgid "Play"
+msgstr "Gioca"
+
+#: menu.py:20
+msgid "Options"
+msgstr "Opzioni"
+
+#: menu.py:21
+msgid "Credits"
+msgstr "Riconoscimenti"
+
+#: menu.py:22
+msgid "Quit"
+msgstr "Esci"
+
+#: menu.py:44
+msgid "Language"
+msgstr "Lingua"
+
+#: menu.py:58
+msgid "Volume"
+msgstr "Volume"
+
+#: menu.py:65
+msgid "Fullscreen"
+msgstr "Schermo intero"
+
+#: menu.py:77
+msgid "Resolution"
+msgstr "Risoluzione"
+
+#: menu.py:92
+msgid "Antialiasing (from the next execution)"
+msgstr "Antialiasing (dalla prossima esecuzione)"
+
+#: menu.py:140
+msgid "Code"
+msgstr "Codice"
+
+#: menu.py:141
+msgid "Art"
+msgstr "Grafica"
+
+#: ya2/gui.py:85
 msgid "Back"
 msgstr "Indietro"

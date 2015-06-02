@@ -79,11 +79,18 @@ class Page(object):
         self.widgets += [DirectButton(
             text='', scale=.12, pos=(0, 1, -.8), text_font=self.font,
             frameColor=page_args.btn_color, frameSize=page_args.btn_size,
-            command=lambda: page_args.fsm.demand('Main'),
+            command=self.__on_back,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
         transl_text(self.widgets[-1], 'Back', _('Back'))
         self.widgets[-1]['text'] = self.widgets[-1].transl_text
+
+    def __on_back(self):
+        self.on_back()
+        self.page_args.fsm.demand('Main')
+
+    def on_back(self):
+        pass
 
     def __set_social(self):
         sites = [('facebook', 'http://www.facebook.com/Ya2Tech'),

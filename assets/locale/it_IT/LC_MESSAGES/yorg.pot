@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-16 22:22+0100\n"
+"POT-Creation-Date: 2015-06-02 11:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,46 +17,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:17
-msgid "Play"
-msgstr ""
-
-#: menu.py:18
-msgid "Options"
-msgstr ""
-
-#: menu.py:19
-msgid "Credits"
-msgstr ""
-
-#: menu.py:20
-msgid "Quit"
-msgstr ""
-
-#: menu.py:39
-msgid "Language"
-msgstr ""
-
-#: menu.py:52
-msgid "Volume"
-msgstr ""
-
-#: menu.py:59
-msgid "Fullscreen"
-msgstr ""
-
-#: menu.py:68
-msgid "Resolution"
-msgstr ""
-
-#: menu.py:117
-msgid "Code"
-msgstr ""
-
-#: track.py:23
+#: track.py:74
 msgid "F12: toggle debug"
 msgstr ""
 
-#: ya2/gui.py:83
+#: menu.py:19
+msgid "Play"
+msgstr ""
+
+#: menu.py:20
+msgid "Options"
+msgstr ""
+
+#: menu.py:21
+msgid "Credits"
+msgstr ""
+
+#: menu.py:22
+msgid "Quit"
+msgstr ""
+
+#: menu.py:44
+msgid "Language"
+msgstr ""
+
+#: menu.py:58
+msgid "Volume"
+msgstr ""
+
+#: menu.py:65
+msgid "Fullscreen"
+msgstr ""
+
+#: menu.py:77
+msgid "Resolution"
+msgstr ""
+
+#: menu.py:92
+msgid "Antialiasing (from the next execution)"
+msgstr ""
+
+#: menu.py:140
+msgid "Code"
+msgstr ""
+
+#: menu.py:141
+msgid "Art"
+msgstr ""
+
+#: ya2/gui.py:85
 msgid "Back"
 msgstr ""

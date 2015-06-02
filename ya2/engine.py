@@ -14,8 +14,9 @@ from webbrowser import open_new_tab
 from ya2.decorators.access import auto_properties
 from ya2.decorators.sender import sender_dec
 import __builtin__
+import json
 import sys
-
+from __builtin__ import staticmethod
 
 
 class OnFrame:
@@ -46,11 +47,14 @@ class LogMgr:
 
 class LangMgr(object):
 
-    def __init__(self, domain, path, lang):
+    lang_list = ['en', 'it']
+    languages = ['English', 'Italiano']
+
+    def __init__(self, domain, path, lang_index):
         self.__domain = domain
         self.__path = path
         install(domain, path, unicode=1)
-        self.set_lang(lang)
+        self.set_lang(self.lang_list[lang_index])
 
     def set_lang(self, lang):
         self.curr_lang = lang
@@ -60,6 +64,39 @@ class LangMgr(object):
         except IOError:
             install(self.__domain, self.__path, unicode=1)
 
+
+class OptionMgr:
+
+    @staticmethod
+    def get_options():
+        try:
+            with open('options.json') as opt_file:
+                conf = json.load(opt_file)
+        except IOError:
+            conf = {
+            'lang': 0,
+            'volume': 1,
+            'fullscreen': 0,
+            'resolution': OptionMgr.__index_closest(),
+            'aa': 0}
+        return conf
+
+    @staticmethod
+    def __index_closest():
+        def split_res(res):
+            return [int(v) for v in res.split('x')]
+
+        def distance(res):
+            curr_res, res = split_res(eng.resolution), split_res(res)
+            return abs(res[0] - curr_res[0]) + abs(res[1] - curr_res[1])
+
+        dist_lst = map(distance, eng.resolutions)
+        return dist_lst.index(min(dist_lst))
+
+    @staticmethod
+    def set_options(conf):
+        with open('options.json', 'w') as opt_file:
+            json.dump(conf, opt_file)
 
 class FontMgr:
 
@@ -137,7 +174,9 @@ class Engine(ShowBase, object):
         self.font_mgr = FontMgr(self)
         self.log_mgr = LogMgr()
         self.log_mgr.log_conf()
-        self.lang_mgr = LangMgr(domain, './assets/locale', 'en')
+
+        self.lang_mgr = LangMgr(domain, './assets/locale',
+                                OptionMgr.get_options()['lang'])
 
         self.accept('window-event', self.__on_resize)
 

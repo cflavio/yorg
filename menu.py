@@ -5,9 +5,12 @@ from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
+from panda3d.core import TextNode
 from sys import exit
 from ya2.gameobject import Fsm, GameObjectMdt, Gui
 from ya2.gui import Page, PageArgs, transl_text
+import json
+from ya2.engine import LangMgr, OptionMgr
 
 
 class MainPage(Page):
@@ -35,76 +38,89 @@ class OptionPage(Page):
 
     def create(self):
         font, page_args = self.font, self.page_args
+        conf = OptionMgr.get_options()
 
-        lang_lab = DirectLabel(text='', scale=.12, pos=(-.4, 1, .4),
-                               text_font=font)
+        lang_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, .4),
+                               text_font=font, text_align=TextNode.ARight)
         transl_text(lang_lab, 'Language', _('Language'))
-        lang_list = ['en', 'it']
         self.__lang_opt = DirectOptionMenu(
-            text='', scale=.12, items=['English', 'Italiano'], pos=(.4, 1, .4),
+            text='', scale=.12, items=LangMgr.languages, pos=(.9, 1, .4),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
-            initialitem=lang_list.index(eng.lang_mgr.curr_lang),
+            initialitem=conf['lang'],
             popupMarker_frameColor=page_args.btn_color, textMayChange=1,
             highlightColor=(.8, .8, .8, .2), command=self.__change_lang,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        vol_lab = DirectLabel(text='', scale=.12, pos=(-.4, 1, .2),
-                              text_font=font)
+        vol_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, .2),
+                              text_font=font, text_align=TextNode.ARight)
         transl_text(vol_lab, 'Volume', _('Volume'))
-        vol_slider = DirectSlider(
-            pos=(.68, 0, .23), scale=.47, value=1,
+        self.__vol_slider = DirectSlider(
+            pos=(1.18, 0, .23), scale=.47, value=conf['volume'],
             frameColor=page_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
 
-        fullscreen_lab = DirectLabel(text='', scale=.12, pos=(-.4, 1, 0),
-                                     text_font=font)
+        fullscreen_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, 0),
+                                     text_font=font, text_align=TextNode.ARight)
         transl_text(fullscreen_lab, 'Fullscreen', _('Fullscreen'))
-        fullscreen_cb = DirectCheckButton(
-            pos=(.33, 1, .03), text='', scale=.12, text_font=self.font,
+        self.__fullscreen_cb = DirectCheckButton(
+            pos=(.83, 1, .03), text='', scale=.12, text_font=self.font,
             frameColor=page_args.btn_color,
+            indicatorValue=conf['fullscreen'],
             indicator_frameColor=page_args.btn_color,
             command=eng.toggle_fullscreen,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        res_lab = DirectLabel(text='', scale=.12, pos=(-.4, 1, -.2),
-                              text_font=font)
+        res_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, -.2),
+                              text_font=font, text_align=TextNode.ARight)
         transl_text(res_lab, 'Resolution', _('Resolution'))
         self.__res_opt = DirectOptionMenu(
-            text='', scale=.12, items=eng.resolutions, pos=(.4, 1, -.2),
+            text='', scale=.12, items=eng.resolutions, pos=(.9, 1, -.2),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
-            initialitem=self.__index_closest(),
+            initialitem=conf['resolution'],
             popupMarker_frameColor=page_args.btn_color, textMayChange=1,
             highlightColor=(.8, .8, .8, .2), command=eng.set_resolution,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
+        aa_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, -.4),
+                            text_font=font, text_align=TextNode.ARight)
+        transl_text(aa_lab, 'Antialiasing (from the next execution)',
+                    _('Antialiasing (from the next execution)'))
+        self.__aa_cb = DirectCheckButton(
+            pos=(.83, 1, -.37), text='', scale=.12, text_font=self.font,
+            frameColor=page_args.btn_color,
+            indicatorValue=conf['aa'],
+            indicator_frameColor=page_args.btn_color,
+            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+
         if base.appRunner and base.appRunner.dom:
             fullscreen_lab['text_fg'] = (.25, .25, .25, 1)
-            fullscreen_cb['state'] = DISABLED
+            self.__fullscreen_cb['state'] = DISABLED
 
             self.__res_opt['text_fg'] = (.25, .25, .25, 1)
             self.__res_opt['state'] = DISABLED
 
         self.widgets = [
-            lang_lab, self.__lang_opt, vol_lab, vol_slider, fullscreen_lab,
-            fullscreen_cb, res_lab, self.__res_opt]
+            lang_lab, self.__lang_opt, vol_lab, self.__vol_slider,
+            fullscreen_lab, self.__fullscreen_cb, res_lab, self.__res_opt,
+            aa_lab, self.__aa_cb]
+        self.__change_lang(LangMgr.languages[conf['lang']])
         Page.create(self)
 
-    def __index_closest(self):
-        def split_res(res):
-            return [int(v) for v in res.split('x')]
-
-        def distance(res):
-            curr_res, res = split_res(eng.resolution), split_res(res)
-            return abs(res[0] - curr_res[0]) + abs(res[1] - curr_res[1])
-
-        dist_lst = map(distance, eng.resolutions)
-        return dist_lst.index(min(dist_lst))
+    def on_back(self):
+        conf = {
+            'lang': self.__lang_opt.selectedIndex,
+            'volume': self.__vol_slider.getValue(),
+            'fullscreen': self.__fullscreen_cb['indicatorValue'],
+            'resolution': self.__res_opt.selectedIndex,
+            'aa': self.__aa_cb['indicatorValue']}
+        OptionMgr.set_options(conf)
 
     def update_texts(self):
         Page.update_texts(self)
