@@ -1,2 +1,5 @@
 Font zekton http://www.dafont.com/it/zekton.font
 Tire icon https://openclipart.org/detail/188729/tire-by-barretr-188729
+Engine sfx http://opengameart.org/content/car-engine-loop-96khz-4s
+Brake sfx http://opengameart.org/content/car-tire-squeal-skid-loop
+Collision sfx http://opengameart.org/content/crash-collision

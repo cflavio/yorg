@@ -27,7 +27,7 @@ class _Phys(Phys):
     max_suspension_force = 6000
     max_suspension_travel_cm = 40
     skid_info = 1
-    suspension_stiffness = 40
+    suspension_stiffness = 20
     wheels_damping_relaxation = 2.3
     wheels_damping_compression = 4.4
     friction_slip = 100
@@ -105,7 +105,7 @@ class _Audio(Audio):
         Audio.__init__(self, mdt)
         self.engine_sfx = loader.loadSfx('assets/sfx/engine.ogg')
         self.brake_sfx = loader.loadSfx('assets/sfx/brake.ogg')
-        self.crash_sfx = loader.loadSfx('assets/sfx/crash.wav')
+        self.crash_sfx = loader.loadSfx('assets/sfx/crash.ogg')
         map(lambda sfx: sfx.set_loop(True), [self.engine_sfx, self.brake_sfx, self.crash_sfx])
         self.engine_sfx.play()
 
