@@ -77,7 +77,7 @@ class OptionMgr:
             'lang': 0,
             'volume': 1,
             'fullscreen': 0,
-            'resolution': OptionMgr.__index_closest(),
+            'resolution': 0,
             'aa': 0}
         return conf
 
