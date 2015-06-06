@@ -11,13 +11,23 @@ from ya2.gameobject import Event, GameObjectMdt, Gfx, Logic, Phys, Audio
 class _Phys(Phys):
     '''This class models the physics component of a car.'''
 
-    max_speed = 70.0  # to be computed from physics properties
+    box_shape = (.6, 1.4, .5)
+    box_pos = (0, 0, .5)
+    wheel_fr_pos = (.75, 1.05, .4)
+    wheel_fr_radius = .3
+    wheel_fl_pos = (-.75, 1.05, .4)
+    wheel_fl_radius = .3
+    wheel_rr_pos = (.75, -.8, .4)
+    wheel_rr_radius = .35
+    wheel_rl_pos = (-.75, -.8, .4)
+    wheel_rl_radius = .35
+    max_speed = 70.0
     mass = 400
     steering_min_speed = 40
     steering_max_speed = 10
-    steering_clamp = 40  # degrees
-    steering_inc = 120  # degrees per second
-    steering_dec = 120  # degrees per second
+    steering_clamp = 40
+    steering_inc = 120
+    steering_dec = 120
     engine_acceleration = 2500
     engine_deceleration = -1000
     brake_force = 100
@@ -35,8 +45,8 @@ class _Phys(Phys):
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
-        chassis_shape = BulletBoxShape((.6, 1.4, .5))
-        transform_state = TransformState.makePos((0, 0, .5))
+        chassis_shape = BulletBoxShape(self.box_shape)
+        transform_state = TransformState.makePos(self.box_pos)
         mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
         mdt.gfx.nodepath.node().setMass(self.mass)
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
@@ -52,10 +62,14 @@ class _Phys(Phys):
         eng.world_phys.attachVehicle(self.__vehicle)
 
         wheels_info = [
-            ((.75, 1.05, .4), True, mdt.gfx.front_right_wheel_np, .3),
-            ((-.75, 1.05, .4), True, mdt.gfx.front_left_wheel_np, .3),
-            ((.75, -.8, .4), False, mdt.gfx.rear_right_wheel_np, .35),
-            ((-.75, -.8, .4), False, mdt.gfx.rear_left_wheel_np, .35)]
+            (self.wheel_fr_pos, True, mdt.gfx.front_right_wheel_np,
+             self.wheel_fr_radius),
+            (self.wheel_fl_pos, True, mdt.gfx.front_left_wheel_np,
+             self.wheel_fl_radius),
+            (self.wheel_rr_pos, False, mdt.gfx.rear_right_wheel_np,
+             self.wheel_rr_radius),
+            (self.wheel_rl_pos, False, mdt.gfx.rear_left_wheel_np,
+             self.wheel_rl_radius)]
         map(lambda (pos, front, nodepath, radius):
             self.__add_wheel(pos, front, nodepath.node(), radius),
             wheels_info)
