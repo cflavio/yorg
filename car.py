@@ -124,13 +124,13 @@ class _Audio(Audio):
         self.engine_sfx.play()
 
     def update(self, input_dct):
-        if input_dct['reverse'] and self.mdt.phys.speed > .5 and \
+        if input_dct['reverse'] and self.mdt.phys.speed > 50.0 and \
                 self.brake_sfx.status() != AudioSound.PLAYING:
             self.brake_sfx.play()
+        if not input_dct['reverse'] or self.mdt.phys.speed < 50.0:
+            self.brake_sfx.stop()
         speed_ratio = self.mdt.phys.speed / self.mdt.phys.max_speed
         self.engine_sfx.set_volume(max(.25, abs(speed_ratio)))
-        if self.mdt.phys.speed < .5:
-            self.brake_sfx.stop()
 
 
 class _Event(Event):
