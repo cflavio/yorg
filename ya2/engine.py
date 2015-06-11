@@ -14,7 +14,7 @@ from webbrowser import open_new_tab
 from ya2.decorators.access import auto_properties
 from ya2.decorators.sender import sender_dec
 import __builtin__
-import json
+import yaml
 import sys
 from __builtin__ import staticmethod
 
@@ -70,8 +70,8 @@ class OptionMgr:
     @staticmethod
     def get_options():
         try:
-            with open('options.json') as opt_file:
-                conf = json.load(opt_file)
+            with open('options.yml') as opt_file:
+                conf = yaml.load(opt_file)
         except IOError:
             conf = {
             'lang': 0,
@@ -95,8 +95,9 @@ class OptionMgr:
 
     @staticmethod
     def set_options(conf):
-        with open('options.json', 'w') as opt_file:
-            json.dump(conf, opt_file)
+        with open('options.yml', 'w') as opt_file:
+            yaml.dump(conf, opt_file, default_flow_style=False)
+
 
 class FontMgr:
 
@@ -212,7 +213,7 @@ class Engine(ShowBase, object):
 
     def __update(self, task):
         dt = globalClock.getDt()
-        self.world_phys.doPhysics(dt, 5, 1/180.0)
+        self.world_phys.doPhysics(dt, 5, 1/60.0)
         self.messenger.send(OnFrame())
         return task.cont
 
