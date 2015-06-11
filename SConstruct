@@ -13,8 +13,9 @@ arguments = dict((arg, ARGUMENTS.get(arg, default))
                   for arg, default in argument_info)
 if any(arguments[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64']):
     arguments['p3d'] = 1
-if arguments['p3d']:
+if arguments['p3d'] or arguments['source']:
     arguments['images'] = 1
+    arguments['lang'] = 1
 path = set_path(arguments['path'])
 app_name = 'yorg'
 lang_path = 'assets/locale/'
@@ -71,7 +72,9 @@ if arguments['p3d']:
         [lang_path+'it_IT/LC_MESSAGES/%s.mo' % app_name]
     env.p3d([p3d_path], src_p3d)
 if arguments['source']:
-    env.source([src_path], get_files(extensions))
+    src_src = get_files(extensions) + img_files + \
+        [lang_path+'it_IT/LC_MESSAGES/%s.mo' % app_name]
+    env.source([src_path], src_src)
 if arguments['devinfo']:
     env.devinfo([devinfo_path], get_files(['py']))
 if arguments['windows']:
