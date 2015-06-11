@@ -11,42 +11,42 @@ from ya2.gameobject import Event, GameObjectMdt, Gfx, Logic, Phys, Audio
 class _Phys(Phys):
     '''This class models the physics component of a car.'''
 
-    box_shape = (.6, 1.4, .5)
-    box_pos = (0, 0, .5)
-    wheel_fr_pos = (.75, 1.05, .4)
-    wheel_fr_radius = .3
-    wheel_fl_pos = (-.75, 1.05, .4)
-    wheel_fl_radius = .3
-    wheel_rr_pos = (.75, -.8, .4)
-    wheel_rr_radius = .35
-    wheel_rl_pos = (-.75, -.8, .4)
-    wheel_rl_radius = .35
-    max_speed = 100.0
-    mass = 1000
-    steering_min_speed = 40
-    steering_max_speed = 10
-    steering_clamp = 40
-    steering_inc = 120
-    steering_dec = 120
-    engine_acceleration = 10000
-    engine_deceleration = -2000
-    brake_force = 100
-    pitch_control = .1
-    suspension_compression = 1
-    suspension_damping = 1
-    max_suspension_force = 8000
-    max_suspension_travel_cm = 80
-    skid_info = 1
-    suspension_stiffness = 25
-    wheels_damping_relaxation = 10
-    wheels_damping_compression = 50
-    friction_slip = 5
-    roll_influence = .1
+    collision_box_shape = (.6, 1.4, .5)  # meters
+    collision_box_pos = (0, 0, .5)  # meters
+    wheel_fr_pos = (.75, 1.05, .4)  # meters
+    wheel_fr_radius = .3  # meters
+    wheel_fl_pos = (-.75, 1.05, .4)  # meters
+    wheel_fl_radius = .3  # meters
+    wheel_rr_pos = (.75, -.8, .4)  # meters
+    wheel_rr_radius = .35  # meters
+    wheel_rl_pos = (-.75, -.8, .4)  # meters
+    wheel_rl_radius = .35  # meters
+    max_speed = 100.0  # Km/h
+    mass = 1000  # kilograms
+    steering_min_speed = 40  # degrees
+    steering_max_speed = 10  # degrees
+    steering_clamp = 40  # degrees
+    steering_inc = 120  # degrees per second
+    steering_dec = 120  # degrees per second
+    engine_acc_frc = 10000
+    engine_dec_frc = -2000
+    brake_frc = 100
+    pitch_control = .1  # default 0
+    suspension_compression = 1  # default .83; should be lower than damping
+    suspension_damping = 1.1  # default .88; should be greater than compression
+    max_suspension_force = 8000  # default 6000
+    max_suspension_travel_cm = 80  # default 500
+    skid_info = 1  # default 1
+    suspension_stiffness = 25  # default 5.88; f1 car == 200
+    wheels_damping_relaxation = 10  # overwrites suspension_damping
+    wheels_damping_compression = 50  # overwrites suspension_compression
+    friction_slip = 5  # default 10.5
+    roll_influence = .1  # default .1
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
-        chassis_shape = BulletBoxShape(self.box_shape)
-        transform_state = TransformState.makePos(self.box_pos)
+        chassis_shape = BulletBoxShape(self.collision_box_shape)
+        transform_state = TransformState.makePos(self.collision_box_pos)
         mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
         mdt.gfx.nodepath.node().setMass(self.mass)
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
@@ -56,8 +56,8 @@ class _Phys(Phys):
         self.__vehicle.setCoordinateSystem(ZUp)
         self.__vehicle.setPitchControl(self.pitch_control)
         tuning = self.__vehicle.getTuning()
-        tuning.setSuspensionCompression (self.suspension_compression)
-        tuning.setSuspensionDamping (self.suspension_damping)
+        tuning.setSuspensionCompression(self.suspension_compression)
+        tuning.setSuspensionDamping(self.suspension_damping)
 
         eng.world_phys.attachVehicle(self.__vehicle)
 
@@ -74,8 +74,8 @@ class _Phys(Phys):
             self.__add_wheel(pos, front, nodepath.node(), radius),
             wheels_info)
 
-        mdt.gfx.nodepath.node().setCcdMotionThreshold(1e-7)
-        mdt.gfx.nodepath.node().setCcdSweptSphereRadius(3.50)
+        #mdt.gfx.nodepath.node().setCcdMotionThreshold(1e-7)
+        #mdt.gfx.nodepath.node().setCcdSweptSphereRadius(3.50)
 
     def __add_wheel(self, pos, front, node, radius):
         '''This method adds a wheel to the car.'''
@@ -235,12 +235,12 @@ class _Logic(Logic):
         steering_clamp = self.mdt.phys.steering_min_speed - speed_ratio * steering_range
 
         if input_dct['forward']:
-            eng_frc = self.mdt.phys.engine_acceleration if self.mdt.phys.speed < self.mdt.phys.max_speed else 0
+            eng_frc = self.mdt.phys.engine_acc_frc if self.mdt.phys.speed < self.mdt.phys.max_speed else 0
             brake_frc = 0
 
         if input_dct['reverse']:
-            eng_frc = self.mdt.phys.engine_deceleration if self.mdt.phys.speed < .05 else 0
-            brake_frc = self.mdt.phys.brake_force
+            eng_frc = self.mdt.phys.engine_dec_frc if self.mdt.phys.speed < .05 else 0
+            brake_frc = self.mdt.phys.brake_frc
 
         if input_dct['left']:
             self.__steering += steering_inc
