@@ -21,27 +21,27 @@ class _Phys(Phys):
     wheel_rr_radius = .35  # meters
     wheel_rl_pos = (-.75, -.8, .4)  # meters
     wheel_rl_radius = .35  # meters
-    max_speed = 100.0  # Km/h
-    mass = 1000  # kilograms
+    max_speed = 90.0  # Km/h
+    mass = 900  # kilograms
     steering_min_speed = 40  # degrees
     steering_max_speed = 10  # degrees
     steering_clamp = 40  # degrees
     steering_inc = 120  # degrees per second
     steering_dec = 120  # degrees per second
-    engine_acc_frc = 10000
+    engine_acc_frc = 5000
     engine_dec_frc = -2000
     brake_frc = 100
-    pitch_control = .1  # default 0
-    suspension_compression = 1  # default .83; should be lower than damping
-    suspension_damping = 1.1  # default .88; should be greater than compression
-    max_suspension_force = 8000  # default 6000
-    max_suspension_travel_cm = 80  # default 500
+    pitch_control = 0  # default 0
+    suspension_compression = .8  # default .83; should be lower than damping
+    suspension_damping = .88  # default .88; should be greater than compression
+    max_suspension_force = 5000  # default 6000
+    max_suspension_travel_cm = 500  # default 500
     skid_info = 1  # default 1
-    suspension_stiffness = 25  # default 5.88; f1 car == 200
-    wheels_damping_relaxation = 10  # overwrites suspension_damping
-    wheels_damping_compression = 50  # overwrites suspension_compression
-    friction_slip = 5  # default 10.5
-    roll_influence = .1  # default .1
+    suspension_stiffness = 20  # default 5.88; f1 car == 200
+    wheels_damping_relaxation = 20  # overwrites suspension_damping
+    wheels_damping_compression = 20  # overwrites suspension_compression
+    friction_slip = 3.5  # default 10.5
+    roll_influence = .4  # default .1
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
@@ -140,7 +140,7 @@ class _Event(Event):
         Event.__init__(self, mdt)
         label_events = [('forward', 'arrow_up'),
                         ('left', 'arrow_left'),
-                        ('reverse', 'arrow_down'),
+                        ('reverse', 'z'),
                         ('right', 'arrow_right')]
         map(lambda (lab, evt): inputState.watchWithModifiers(lab, evt),
             label_events)
