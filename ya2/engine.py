@@ -1,3 +1,6 @@
+import sys
+sys.path.append('./ya2/thirdparty')
+
 from datetime import datetime
 from direct.directnotify.DirectNotify import DirectNotify
 from direct.filter.CommonFilters import CommonFilters
