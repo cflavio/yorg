@@ -32,16 +32,16 @@ class _Phys(Phys):
     engine_dec_frc = -2000
     brake_frc = 100
     pitch_control = 0  # default 0
-    suspension_compression = .8  # default .83; should be lower than damping
-    suspension_damping = .88  # default .88; should be greater than compression
-    max_suspension_force = 5000  # default 6000
-    max_suspension_travel_cm = 500  # default 500
+    suspension_compression = 1  # default .83; should be lower than damping
+    suspension_damping = .5  # default .88; should be greater than compression
+    max_suspension_force = 8000  # default 6000
+    max_suspension_travel_cm = 700  # default 500
     skid_info = 1  # default 1
     suspension_stiffness = 20  # default 5.88; f1 car == 200
-    wheels_damping_relaxation = 20  # overwrites suspension_damping
-    wheels_damping_compression = 20  # overwrites suspension_compression
+    wheels_damping_relaxation = 2  # overwrites suspension_damping
+    wheels_damping_compression = 4  # overwrites suspension_compression
     friction_slip = 3.5  # default 10.5
-    roll_influence = .4  # default .1
+    roll_influence = .25  # default .1
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
