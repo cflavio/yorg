@@ -3,9 +3,12 @@ from abc import ABCMeta
 from direct.showbase.InputStateGlobal import inputState
 from panda3d.bullet import BulletBoxShape, BulletVehicle, ZUp, \
     BulletRigidBodyNode
-from panda3d.core import TransformState, AudioSound
+from panda3d.core import TransformState, AudioSound, TextNode
 
-from ya2.gameobject import Event, GameObjectMdt, Gfx, Logic, Phys, Audio
+from ya2.gameobject import Event, GameObjectMdt, Gfx, Logic, Phys, Audio, Gui
+from ya2 import gui
+from direct.gui.DirectSlider import DirectSlider
+from direct.gui.OnscreenText import OnscreenText
 
 
 class _Phys(Phys):
@@ -52,14 +55,14 @@ class _Phys(Phys):
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
         eng.world_phys.attachRigidBody(mdt.gfx.nodepath.node())
 
-        self.__vehicle = BulletVehicle(eng.world_phys, mdt.gfx.nodepath.node())
-        self.__vehicle.setCoordinateSystem(ZUp)
-        self.__vehicle.setPitchControl(self.pitch_control)
-        tuning = self.__vehicle.getTuning()
+        self.vehicle = BulletVehicle(eng.world_phys, mdt.gfx.nodepath.node())
+        self.vehicle.setCoordinateSystem(ZUp)
+        self.vehicle.setPitchControl(self.pitch_control)
+        tuning = self.vehicle.getTuning()
         tuning.setSuspensionCompression(self.suspension_compression)
         tuning.setSuspensionDamping(self.suspension_damping)
 
-        eng.world_phys.attachVehicle(self.__vehicle)
+        eng.world_phys.attachVehicle(self.vehicle)
 
         wheels_info = [
             (self.wheel_fr_pos, True, mdt.gfx.front_right_wheel_np,
@@ -79,7 +82,7 @@ class _Phys(Phys):
 
     def __add_wheel(self, pos, front, node, radius):
         '''This method adds a wheel to the car.'''
-        wheel = self.__vehicle.createWheel()
+        wheel = self.vehicle.createWheel()
         wheel.setNode(node)
         wheel.setChassisConnectionPointCs(pos)
         wheel.setFrontWheel(front)
@@ -97,20 +100,20 @@ class _Phys(Phys):
 
     @property
     def speed(self):
-        return self.__vehicle.getCurrentSpeedKmHour()
+        return self.vehicle.getCurrentSpeedKmHour()
 
     def set_forces(self, eng_frc, brake_frc, steering):
         '''This callback method is invoked on each frame.'''
-        self.__vehicle.setSteeringValue(steering, 0)
-        self.__vehicle.setSteeringValue(steering, 1)
-        self.__vehicle.applyEngineForce(eng_frc, 2)
-        self.__vehicle.applyEngineForce(eng_frc, 3)
-        self.__vehicle.setBrake(brake_frc, 2)
-        self.__vehicle.setBrake(brake_frc, 3)
+        self.vehicle.setSteeringValue(steering, 0)
+        self.vehicle.setSteeringValue(steering, 1)
+        self.vehicle.applyEngineForce(eng_frc, 2)
+        self.vehicle.applyEngineForce(eng_frc, 3)
+        self.vehicle.setBrake(brake_frc, 2)
+        self.vehicle.setBrake(brake_frc, 3)
 
     def destroy(self):
         '''The destroyer.'''
-        self.__vehicle.destroy()
+        self.vehicle.destroy()
 
 
 class _Audio(Audio):
@@ -145,6 +148,7 @@ class _Event(Event):
         map(lambda (lab, evt): inputState.watchWithModifiers(lab, evt),
             label_events)
         self.accept('bullet-contact-added', self.on_collision)
+        self.accept('f11', self.mdt.gui.toggle)
         self.__last_wall_time = None
         self.__last_goal_time = None
         self.__last_slow_time = None
@@ -260,6 +264,143 @@ class _Logic(Logic):
         self.mdt.phys.set_forces(eng_frc, brake_frc, self.__steering)
 
 
+class CarParameter:
+
+    def __init__(self, attr, init_val, pos, val_range, cb):
+        self.__cb = cb
+        self.__lab = OnscreenText(text=attr, pos=pos, scale=.04,
+            align=TextNode.ARight, parent=eng.a2dTopLeft, fg=(1, 1, 1, 1))
+        self.__slider = DirectSlider(
+            pos=(pos[0]+.5, 0, pos[1]+.01), scale=.4, parent=eng.a2dTopLeft,
+            value=init_val, range=val_range, command=self.__set_attr)
+        self.__val = OnscreenText(
+            pos=(pos[0]+1.0, pos[1]), scale=.04, align=TextNode.ALeft,
+            parent=eng.a2dTopLeft, fg=(1, 1, 1, 1))
+        self.toggle()
+
+    def toggle(self):
+        for wdg in [self.__slider, self.__lab, self.__val]:
+            (wdg.show if wdg.isHidden() else wdg.hide)()
+
+    def __set_attr(self):
+        self.__cb(self.__slider['value'])
+        self.__val.setText(str(round(self.__slider['value'], 2)))
+
+    def destroy(self):
+        map(lambda wdg: wdg.destroy(), [self.__slider, self.__lab, self.__val])
+
+
+class _Gui(Gui):
+    '''This class models the GUI component of a car.'''
+
+    def __init__(self, mdt):
+        Gui.__init__(self, mdt)
+        self.__max_speed_par = CarParameter(
+            'max_speed', self.mdt.phys.max_speed, (.5, -.04), (10.0, 200.0),
+            lambda val: setattr(self.mdt.phys, 'max_speed', val))
+        self.__mass_par = CarParameter(
+            'mass', self.mdt.phys.mass, (.5, -.12), (100, 2000),
+            self.mdt.gfx.nodepath.node().setMass)
+        self.__steering_min_speed = CarParameter(
+            'steering_min_speed', self.mdt.phys.steering_min_speed, (.5, -.2),
+            (10.0, 100.0),
+            lambda val: setattr(self.mdt.phys, 'steering_min_speed', val))
+        self.__steering_max_speed = CarParameter(
+            'steering_max_speed', self.mdt.phys.steering_max_speed, (.5, -.28),
+            (1.0, 50.0),
+            lambda val: setattr(self.mdt.phys, 'steering_max_speed', val))
+        self.__steering_clamp = CarParameter(
+            'steering_clamp', self.mdt.phys.steering_clamp, (.5, -.36),
+            (1, 100),
+            lambda val: setattr(self.mdt.phys, 'steering_clamp', val))
+        self.__steering_inc = CarParameter(
+            'steering_inc', self.mdt.phys.steering_inc, (.5, -.44), (1, 200),
+            lambda val: setattr(self.mdt.phys, 'steering_inc', val))
+        self.__steering_dec = CarParameter(
+            'steering_dec', self.mdt.phys.steering_dec, (.5, -.52), (1, 200),
+            lambda val: setattr(self.mdt.phys, 'steering_dec', val))
+        self.__engine_acc_frc = CarParameter(
+            'engine_acc_frc', self.mdt.phys.engine_acc_frc, (.5, -.6),
+            (100, 10000),
+            lambda val: setattr(self.mdt.phys, 'engine_acc_frc', val))
+        self.__engine_dec_frc = CarParameter(
+            'engine_dec_frc', self.mdt.phys.engine_dec_frc, (.5, -.68),
+            (-10000, -100),
+            lambda val: setattr(self.mdt.phys, 'engine_dec_frc', val))
+        self.__brake_frc = CarParameter(
+            'brake_frc', self.mdt.phys.brake_frc, (.5, -.76),
+            (1, 1000),
+            lambda val: setattr(self.mdt.phys, 'brake_frc', val))
+        self.__pitch_control = CarParameter(
+            'pitch_control', self.mdt.phys.pitch_control, (.5, -.84),
+            (-10, 10), self.mdt.phys.vehicle.setPitchControl)
+        self.__suspension_compression = CarParameter(
+            'suspension_compression', self.mdt.phys.suspension_compression,
+            (.5, -.92), (-1, 10),
+            self.mdt.phys.vehicle.getTuning().setSuspensionCompression)
+        self.__suspension_damping = CarParameter(
+            'suspension_damping', self.mdt.phys.suspension_damping,
+            (.5, -1.0), (-1, 10),
+            self.mdt.phys.vehicle.getTuning().setSuspensionDamping)
+        self.__max_suspension_force = CarParameter(
+            'max_suspension_force', self.mdt.phys.max_suspension_force,
+            (.5, -1.08), (1, 15000),
+            lambda val: map(lambda whl: whl.setMaxSuspensionForce(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+        self.__max_suspension_travel_cm = CarParameter(
+            'max_suspension_travel_cm', self.mdt.phys.max_suspension_travel_cm,
+            (.5, -1.16), (1, 2000),
+            lambda val: map(lambda whl: whl.setMaxSuspensionTravelCm(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+        self.__skid_info = CarParameter(
+            'skid_info', self.mdt.phys.skid_info,
+            (.5, -1.24), (-10, 10),
+            lambda val: map(lambda whl: whl.setSkidInfo(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+        self.__suspension_stiffness = CarParameter(
+            'suspension_stiffness', self.mdt.phys.suspension_stiffness,
+            (.5, -1.32), (0, 100),
+            lambda val: map(lambda whl: whl.setSuspensionStiffness(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+        self.__wheels_damping_relaxation = CarParameter(
+            'wheels_damping_relaxation',
+            self.mdt.phys.wheels_damping_relaxation, (.5, -1.4), (-1, 10),
+            lambda val: map(lambda whl: whl.setWheelsDampingRelaxation(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+        self.__wheels_damping_compression = CarParameter(
+            'wheels_damping_compression',
+            self.mdt.phys.wheels_damping_compression, (.5, -1.48), (-1, 10),
+            lambda val: map(lambda whl: whl.setWheelsDampingCompression(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+        self.__friction_slip = CarParameter(
+            'friction_slip', self.mdt.phys.friction_slip, (.5, -1.56), (-1, 10),
+            lambda val: map(lambda whl: whl.setFrictionSlip(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+        self.__roll_influence = CarParameter(
+            'roll_influence', self.mdt.phys.roll_influence,
+            (.5, -1.64), (-1, 10),
+            lambda val: map(lambda whl: whl.setRollInfluence(val),
+                            self.mdt.phys.vehicle.get_wheels()))
+
+        self.__pars = [
+            self.__max_speed_par, self.__mass_par, self.__steering_min_speed,
+            self.__steering_max_speed, self.__steering_clamp,
+            self.__steering_inc, self.__steering_dec, self.__engine_acc_frc,
+            self.__engine_dec_frc, self.__brake_frc, self.__pitch_control,
+            self.__suspension_compression, self.__suspension_damping,
+            self.__max_suspension_force, self.__max_suspension_travel_cm,
+            self.__skid_info, self.__suspension_stiffness,
+            self.__wheels_damping_relaxation, self.__wheels_damping_compression,
+            self.__friction_slip, self.__roll_influence]
+
+    def toggle(self):
+        map(lambda par: par.toggle(), self.__pars)
+
+    def destroy(self):
+        Gui.destroy(self)
+        map(lambda wdg: wdg.destroy(), self.__pars)
+
+
 class Car(GameObjectMdt):
     '''The Car class models a car.'''
     __metaclass__ = ABCMeta
@@ -268,6 +409,7 @@ class Car(GameObjectMdt):
     event_cls = _Event
     logic_cls = _Logic
     audio_cls = _Audio
+    gui_cls = _Gui
 
     def __init__(self, pos, hpr):
         GameObjectMdt.__init__(self)
