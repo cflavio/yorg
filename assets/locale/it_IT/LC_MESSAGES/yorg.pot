@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-02 11:36+0200\n"
+"POT-Creation-Date: 2015-06-17 19:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,47 +21,51 @@ msgstr ""
 msgid "F12: toggle debug"
 msgstr ""
 
-#: menu.py:19
-msgid "Play"
+#: car.py:266
+msgid "Speed"
 msgstr ""
 
 #: menu.py:20
-msgid "Options"
+msgid "Play"
 msgstr ""
 
 #: menu.py:21
-msgid "Credits"
+msgid "Options"
 msgstr ""
 
 #: menu.py:22
+msgid "Credits"
+msgstr ""
+
+#: menu.py:23
 msgid "Quit"
 msgstr ""
 
-#: menu.py:44
+#: menu.py:45
 msgid "Language"
 msgstr ""
 
-#: menu.py:58
+#: menu.py:59
 msgid "Volume"
 msgstr ""
 
-#: menu.py:65
+#: menu.py:66
 msgid "Fullscreen"
 msgstr ""
 
-#: menu.py:77
+#: menu.py:78
 msgid "Resolution"
 msgstr ""
 
-#: menu.py:92
+#: menu.py:93
 msgid "Antialiasing (from the next execution)"
 msgstr ""
 
-#: menu.py:140
+#: menu.py:141
 msgid "Code"
 msgstr ""
 
-#: menu.py:141
+#: menu.py:142
 msgid "Art"
 msgstr ""
 

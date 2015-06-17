@@ -262,7 +262,8 @@ class _Logic(Logic):
                 self.__steering += steering_sign * steering_dec
 
         self.mdt.phys.set_forces(eng_frc, brake_frc, self.__steering)
-
+        self.mdt.gui.speed_txt.setText(
+            _('Speed')+': '+str(round(self.mdt.phys.speed, 2)))
 
 class CarParameter:
 
@@ -392,13 +393,15 @@ class _Gui(Gui):
             self.__skid_info, self.__suspension_stiffness,
             self.__wheels_damping_relaxation, self.__wheels_damping_compression,
             self.__friction_slip, self.__roll_influence]
+        self.speed_txt = OnscreenText(pos=(-.5, -.1), scale=.08,
+            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
 
     def toggle(self):
         map(lambda par: par.toggle(), self.__pars)
 
     def destroy(self):
         Gui.destroy(self)
-        map(lambda wdg: wdg.destroy(), self.__pars)
+        map(lambda wdg: wdg.destroy(), self.__pars + [self.speed_txt])
 
 
 class Car(GameObjectMdt):
