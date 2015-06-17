@@ -27,7 +27,8 @@ class _Fsm(Fsm):
 
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
-        self.defaultTransitions = {'Menu': ['Play']}
+        self.defaultTransitions = {'Menu': ['Play'],
+                                   'Play': ['Menu']}
 
     def enterMenu(self):
         self.__menu = Menu(self)
@@ -45,6 +46,8 @@ class _Fsm(Fsm):
 
     def exitPlay(self):
         self.mdt.audio.game_music.stop()
+        self.__track.destroy()
+        self.__car.destroy()
 
 
 class _Logic(GameLogic):

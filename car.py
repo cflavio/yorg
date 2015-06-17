@@ -6,7 +6,6 @@ from panda3d.bullet import BulletBoxShape, BulletVehicle, ZUp, \
 from panda3d.core import TransformState, AudioSound, TextNode
 
 from ya2.gameobject import Event, GameObjectMdt, Gfx, Logic, Phys, Audio, Gui
-from ya2 import gui
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
 
@@ -177,6 +176,15 @@ class _Event(Event):
         if self.__last_goal_time and \
                 globalClock.getFrameTime() - self.__last_goal_time > .05:
             self.__last_goal_time = None
+            if not self.mdt.gui.best_txt.getText() or \
+                    float(self.mdt.gui.best_txt.getText()) > \
+                    float(self.mdt.gui.time_txt.getText()):
+                self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
+            self.mdt.logic.last_time_start = globalClock.getFrameTime()
+            lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
+            self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/10')
+            #if lap_number > 3:
+            #    game.fsm.demand('Menu')
             print 'goal'
         if self.__last_slow_time and \
                 globalClock.getFrameTime() - self.__last_slow_time > .05:
@@ -217,7 +225,7 @@ class _Gfx(Gfx):
                   self.front_left_wheel_np,
                   self.rear_right_wheel_np,
                   self.rear_right_wheel_np]
-        map(lambda mesh: mesh.destroy(), meshes)
+        map(lambda mesh: mesh.removeNode(), meshes)
 
 
 class _Logic(Logic):
@@ -226,6 +234,7 @@ class _Logic(Logic):
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
         self.__steering = 0  # degrees
+        self.last_time_start = 0
 
     def update(self, input_dct):
         '''This callback method is invoked on each frame.'''
@@ -262,8 +271,10 @@ class _Logic(Logic):
                 self.__steering += steering_sign * steering_dec
 
         self.mdt.phys.set_forces(eng_frc, brake_frc, self.__steering)
-        self.mdt.gui.speed_txt.setText(
-            _('Speed')+': '+str(round(self.mdt.phys.speed, 2)))
+        self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
+        self.mdt.gui.time_txt.setText(str(round(
+            globalClock.getFrameTime() - self.last_time_start, 2)))
+
 
 class CarParameter:
 
@@ -393,7 +404,21 @@ class _Gui(Gui):
             self.__skid_info, self.__suspension_stiffness,
             self.__wheels_damping_relaxation, self.__wheels_damping_compression,
             self.__friction_slip, self.__roll_influence]
+        self.speed_lab = OnscreenText(text=_('Speed'), pos=(-.55, -.1), scale=.08,
+            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
         self.speed_txt = OnscreenText(pos=(-.5, -.1), scale=.08,
+            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.lap_lab = OnscreenText(text=_('Lap'), pos=(-.55, -.2), scale=.08,
+            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.lap_txt = OnscreenText(text='0/10', pos=(-.5, -.2), scale=.08,
+            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.time_lab = OnscreenText(text=_('Time'), pos=(-.55, -.3), scale=.08,
+            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.time_txt = OnscreenText(pos=(-.5, -.3), scale=.08,
+            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.best_lab = OnscreenText(text=_('Best'), pos=(-.55, -.4), scale=.08,
+            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.best_txt = OnscreenText(pos=(-.5, -.4), scale=.08,
             align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
 
     def toggle(self):
@@ -401,7 +426,8 @@ class _Gui(Gui):
 
     def destroy(self):
         Gui.destroy(self)
-        map(lambda wdg: wdg.destroy(), self.__pars + [self.speed_txt])
+        map(lambda wdg: wdg.destroy(),
+            self.__pars + [self.speed_txt, self.time_txt, self.lap_txt])
 
 
 class Car(GameObjectMdt):

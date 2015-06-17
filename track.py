@@ -145,7 +145,7 @@ class _Gfx(Gfx):
 
     def destroy(self):
         '''The destroyer.'''
-        self.nodepath.removeNode()
+        self.model.removeNode()
 
 
 class _Event(Event):

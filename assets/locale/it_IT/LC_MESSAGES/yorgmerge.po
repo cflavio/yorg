@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-17 19:14+0200\n"
+"POT-Creation-Date: 2015-06-17 21:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,8 +21,20 @@ msgstr ""
 msgid "F12: toggle debug"
 msgstr "F12: debug"
 
-#: car.py:266
+#: car.py:407
 msgid "Speed"
+msgstr "Velocità"
+
+#: car.py:411
+msgid "Lap"
+msgstr ""
+
+#: car.py:415
+msgid "Time"
+msgstr ""
+
+#: car.py:419
+msgid "Best"
 msgstr ""
 
 #: menu.py:20
@@ -72,3 +84,15 @@ msgstr "Grafica"
 #: ya2/gui.py:85
 msgid "Back"
 msgstr "Indietro"
+
+#~ msgid "SPEED"
+#~ msgstr "Velocità"
+
+#~ msgid "LAP"
+#~ msgstr "Giro"
+
+#~ msgid "TIME"
+#~ msgstr "Tempo"
+
+#~ msgid "BEST"
+#~ msgstr "Miglior tempo"

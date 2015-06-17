@@ -21,9 +21,21 @@ msgstr ""
 msgid "F12: toggle debug"
 msgstr "F12: debug"
 
-#: car.py:266
+#: car.py:407
 msgid "Speed"
 msgstr "Velocità"
+
+#: car.py:411
+msgid "Lap"
+msgstr "Giro"
+
+#: car.py:415
+msgid "Time"
+msgstr "Tempo"
+
+#: car.py:419
+msgid "Best"
+msgstr "Miglior giro"
 
 #: menu.py:20
 msgid "Play"

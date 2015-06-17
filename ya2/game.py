@@ -2,6 +2,7 @@
 to the game abstract class """
 from abc import ABCMeta
 from ya2.gameobject import Logic, GameObjectMdt
+import __builtin__
 
 
 class GameLogic(Logic):
@@ -15,6 +16,10 @@ class Game(GameObjectMdt):
     """ Definition of the LevelMediator Class """
     __metaclass__ = ABCMeta
     logic_cls = GameLogic
+
+    def __init__(self):
+        __builtin__.game = self
+        GameObjectMdt.__init__(self)
 
     def run(self):
         self.logic.run()
