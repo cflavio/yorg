@@ -1,7 +1,7 @@
 '''In this module we define the global game classes.'''
-from car import Car
+from car.car import Car
 from menu import Menu
-from track import Track
+from track.track import Track
 from ya2.game import Game, GameLogic
 from ya2.gameobject import Event, Fsm, Audio
 
