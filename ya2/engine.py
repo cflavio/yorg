@@ -18,8 +18,6 @@ from ya2.decorators.access import auto_properties
 from ya2.decorators.sender import sender_dec
 import __builtin__
 import yaml
-import sys
-from __builtin__ import staticmethod
 
 
 class OnFrame:
@@ -80,21 +78,9 @@ class OptionMgr:
             'lang': 0,
             'volume': 1,
             'fullscreen': 0,
-            'resolution': 0,
+            'resolution': None,
             'aa': 0}
         return conf
-
-    @staticmethod
-    def __index_closest():
-        def split_res(res):
-            return [int(v) for v in res.split('x')]
-
-        def distance(res):
-            curr_res, res = split_res(eng.resolution), split_res(res)
-            return abs(res[0] - curr_res[0]) + abs(res[1] - curr_res[1])
-
-        dist_lst = map(distance, eng.resolutions)
-        return dist_lst.index(min(dist_lst))
 
     @staticmethod
     def set_options(conf):
@@ -135,12 +121,12 @@ class Configuration:
 
     def configure(self):
         self.__set('show-frame-rate-meter', int(self.fps))
-        self.__set('win-size', self.win_size)
+        if self.win_size:
+            self.__set('win-size', self.win_size)
         self.__set('window-title', self.win_title)
         self.__set('fullscreen', int(self.fullscreen))
         self.__set('cursor-hidden', int(self.cursor_hidden))
         self.__set('sync-video', int(self.sync_video))
-        self.__set('aspect-ratio', 1.77778)
         self.__set('bullet-enable-contact-events', 'true')
         if self.antialiasing:
             self.__set('framebuffer-multisample', 1)
@@ -182,8 +168,6 @@ class Engine(ShowBase, object):
         self.lang_mgr = LangMgr(domain, './assets/locale',
                                 OptionMgr.get_options()['lang'])
 
-        self.accept('window-event', self.__on_resize)
-
         if self.win:
             self.set_resolution(self.get_resolution())
 
@@ -200,19 +184,6 @@ class Engine(ShowBase, object):
     def __on_close(self):
         self.closeWindow(self.win)
         sys.exit()
-
-    def __on_resize(self, a):
-        props = self.win.get_properties()
-        res_x = props.get_x_size()
-        res_y = props.get_y_size()
-        if float(res_x) / res_y < 1.7777:
-            dx, dy = 0, .28 * res_x / res_y
-        else:
-            dx, dy = float(float(res_x - res_y * 1.7777)/2) / res_x, .5
-        regions = [d for d in base.win.get_display_regions()
-                   if d.getSort() != -50]
-        for region in regions:
-            region.setDimensions(dx, 1-dx, .5-dy, .5+dy)
 
     def __update(self, task):
         dt = globalClock.getDt()
@@ -232,19 +203,22 @@ class Engine(ShowBase, object):
         res_x, res_y = win_prop.get_x_size(), win_prop.get_y_size()
         return '%dx%d' % (res_x, res_y)
 
+    def closest_res(self):
+        def split_res(res):
+            return [int(v) for v in res.split('x')]
+
+        def distance(res):
+            curr_res, res = split_res(eng.resolution), split_res(res)
+            return abs(res[0] - curr_res[0]) + abs(res[1] - curr_res[1])
+
+        dist_lst = map(distance, eng.resolutions)
+        idx_min = dist_lst.index(min(dist_lst))
+        return eng.resolutions[idx_min]
+
     def set_resolution(self, res):
         props = WindowProperties()
         props.set_size(*[int(res) for res in res.split('x')])
         self.win.request_properties(props)
-
-        # if we don't have the black-border display region, create it
-        if not any(d.getSort() == -50 for d in base.win.get_display_regions()):
-            display_reg = self.win.makeDisplayRegion()
-            display_reg.setClearColorActive(True)
-            display_reg.setClearColor((0, 0, 0, 1))
-            display_reg.setSort(-50)
-        base.cam.node().getDisplayRegion(0).setClearColorActive(True)
-        base.cam.node().getDisplayRegion(0).setClearColor((.45, .45, .55, 1))
 
     def open_browser(self, url):
         if platform.startswith('linux'):
@@ -265,6 +239,7 @@ class Engine(ShowBase, object):
         (self.__debug_np.show if is_hidden else self.__debug_np.hide)()
 
     def toggle_fullscreen(self, state):
+        self.set_resolution(self.closest_res())
         props = WindowProperties()
         props.set_fullscreen(not self.win.is_fullscreen())
         base.win.requestProperties(props)

@@ -76,12 +76,16 @@ class OptionPage(Page):
         res_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, -.2),
                               text_font=font, text_align=TextNode.ARight)
         transl_text(res_lab, 'Resolution', _('Resolution'))
+        if conf['resolution']:
+            curr_res = conf['resolution'].replace(' ', 'x')
+        else:
+            curr_res =  str(eng.win.getXSize())+'x'+str(base.win.getYSize())
         self.__res_opt = DirectOptionMenu(
             text='', scale=.12, items=eng.resolutions, pos=(.9, 1, -.2),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
-            initialitem=conf['resolution'],
+            initialitem=eng.resolutions.index(curr_res),
             popupMarker_frameColor=page_args.btn_color, textMayChange=1,
             highlightColor=(.8, .8, .8, .2), command=eng.set_resolution,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
@@ -118,7 +122,7 @@ class OptionPage(Page):
             'lang': self.__lang_opt.selectedIndex,
             'volume': self.__vol_slider.getValue(),
             'fullscreen': self.__fullscreen_cb['indicatorValue'],
-            'resolution': self.__res_opt.selectedIndex,
+            'resolution': self.__res_opt.get().replace('x', ' '),
             'aa': self.__aa_cb['indicatorValue']}
         OptionMgr.set_options(conf)
 
