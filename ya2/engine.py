@@ -24,6 +24,12 @@ class OnFrame:
     pass
 
 
+class OnCollision:
+
+    def __init__(self, obj_name):
+        self.obj_name = obj_name
+
+
 class LogMgr:
 
     def __init__(self):
@@ -127,7 +133,6 @@ class Configuration:
         self.__set('fullscreen', int(self.fullscreen))
         self.__set('cursor-hidden', int(self.cursor_hidden))
         self.__set('sync-video', int(self.sync_video))
-        self.__set('bullet-enable-contact-events', 'true')
         if self.antialiasing:
             self.__set('framebuffer-multisample', 1)
             self.__set('multisamples', 2)
@@ -152,6 +157,8 @@ class Engine(ShowBase, object):
         self.world_np = render.attachNewNode('world')
         self.messenger.send = sender_dec(self.messenger.send)
 
+        self.collision_objs = []
+        self.__coll_dct = {}
         self.world_phys = BulletWorld()
         self.world_phys.setGravity((0, 0, -9.81))
         debug_node = BulletDebugNode('Debug')
@@ -188,8 +195,30 @@ class Engine(ShowBase, object):
     def __update(self, task):
         dt = globalClock.getDt()
         self.world_phys.doPhysics(dt, 5, 1/60.0)
+        self.__do_collisions()
         self.messenger.send(OnFrame())
         return task.cont
+
+    def __do_collisions(self):
+        to_clear = self.collision_objs[:]
+        for obj in self.collision_objs:
+            if not obj in self.__coll_dct:
+                self.__coll_dct[obj] = []
+            result = self.world_phys.contactTest(obj)
+            for contact in result.getContacts():
+                def process_contact(node):
+                    if node != obj:
+                        if obj in to_clear:
+                            to_clear.remove(obj)
+                        if not node in [coll_pair[0] for coll_pair in self.__coll_dct[obj]]:
+                            self.__coll_dct[obj] += [(node, globalClock.getFrameTime())]
+                            self.messenger.send(OnCollision(node.getName()))
+                process_contact(contact.getNode0())
+                process_contact(contact.getNode1())
+        for obj in to_clear:
+            for coll_pair in self.__coll_dct[obj]:
+                if globalClock.getFrameTime() - coll_pair[1] > .25:
+                    self.__coll_dct[obj].remove(coll_pair)
 
     def get_resolutions(self):
         di = self.pipe.getDisplayInformation()

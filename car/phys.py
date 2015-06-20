@@ -46,6 +46,7 @@ class _Phys(Phys):
         mdt.gfx.nodepath.node().setMass(self.mass)
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
         eng.world_phys.attachRigidBody(mdt.gfx.nodepath.node())
+        eng.collision_objs += [mdt.gfx.nodepath.node()]
 
         self.vehicle = BulletVehicle(eng.world_phys, mdt.gfx.nodepath.node())
         self.vehicle.setCoordinateSystem(ZUp)
