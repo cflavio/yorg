@@ -17,26 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: track.py:74
-msgid "F12: toggle debug"
-msgstr "F12: debug"
-
-#: car.py:407
-msgid "Speed"
-msgstr "Velocità"
-
-#: car.py:411
-msgid "Lap"
-msgstr "Giro"
-
-#: car.py:415
-msgid "Time"
-msgstr "Tempo"
-
-#: car.py:419
-msgid "Best"
-msgstr "Miglior giro"
-
 #: menu.py:20
 msgid "Play"
 msgstr "Gioca"
@@ -69,18 +49,42 @@ msgstr "Schermo intero"
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu.py:93
+#: menu.py:97
 msgid "Antialiasing (from the next execution)"
 msgstr "Antialiasing (dalla prossima esecuzione)"
 
-#: menu.py:141
+#: menu.py:145
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:142
+#: menu.py:146
 msgid "Art"
 msgstr "Grafica"
+
+#: track/gui.py:12
+msgid "F12: toggle debug"
+msgstr "F12: debug"
+
+#: track/gui.py:16
+msgid "work in progress"
+msgstr "stiamo lavorando per voi"
 
 #: ya2/gui.py:85
 msgid "Back"
 msgstr "Indietro"
+
+#: car/gui.py:135
+msgid "Speed"
+msgstr "Velocità"
+
+#: car/gui.py:139
+msgid "Lap"
+msgstr "Giro"
+
+#: car/gui.py:143
+msgid "Time"
+msgstr "Tempo"
+
+#: car/gui.py:147
+msgid "Best"
+msgstr "Miglior giro"

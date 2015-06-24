@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-17 21:19+0200\n"
+"POT-Creation-Date: 2015-06-24 22:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,26 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: track.py:74
-msgid "F12: toggle debug"
-msgstr "F12: debug"
-
-#: car.py:407
-msgid "Speed"
-msgstr "Velocità"
-
-#: car.py:411
-msgid "Lap"
-msgstr ""
-
-#: car.py:415
-msgid "Time"
-msgstr ""
-
-#: car.py:419
-msgid "Best"
-msgstr ""
 
 #: menu.py:20
 msgid "Play"
@@ -69,30 +49,42 @@ msgstr "Schermo intero"
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu.py:93
+#: menu.py:97
 msgid "Antialiasing (from the next execution)"
 msgstr "Antialiasing (dalla prossima esecuzione)"
 
-#: menu.py:141
+#: menu.py:145
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:142
+#: menu.py:146
 msgid "Art"
 msgstr "Grafica"
+
+#: track/gui.py:12
+msgid "F12: toggle debug"
+msgstr "F12: debug"
+
+#: track/gui.py:16
+msgid "work in progress"
+msgstr ""
 
 #: ya2/gui.py:85
 msgid "Back"
 msgstr "Indietro"
 
-#~ msgid "SPEED"
-#~ msgstr "Velocità"
+#: car/gui.py:135
+msgid "Speed"
+msgstr "Velocità"
 
-#~ msgid "LAP"
-#~ msgstr "Giro"
+#: car/gui.py:139
+msgid "Lap"
+msgstr "Giro"
 
-#~ msgid "TIME"
-#~ msgstr "Tempo"
+#: car/gui.py:143
+msgid "Time"
+msgstr "Tempo"
 
-#~ msgid "BEST"
-#~ msgstr "Miglior tempo"
+#: car/gui.py:147
+msgid "Best"
+msgstr "Miglior giro"
