@@ -9,6 +9,10 @@ class _Audio(Audio):
         self.engine_sfx = loader.loadSfx('assets/sfx/engine.ogg')
         self.brake_sfx = loader.loadSfx('assets/sfx/brake.ogg')
         self.crash_sfx = loader.loadSfx('assets/sfx/crash.ogg')
+        self.crash_sfx = loader.loadSfx('assets/sfx/crash.ogg')
+        self.crash_high_speed_sfx = loader.loadSfx('assets/sfx/crash_high_speed.ogg')
+        self.lap_sfx = loader.loadSfx('assets/sfx/lap.ogg')
+        self.landing_sfx = loader.loadSfx('assets/sfx/landing.ogg')
         map(lambda sfx: sfx.set_loop(True), [self.engine_sfx, self.brake_sfx])
         self.engine_sfx.play()
 

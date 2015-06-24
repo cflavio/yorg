@@ -22,6 +22,9 @@ class _Event(Event):
         if evt.obj_name == 'Wall':
             if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.crash_sfx.play()
+        if evt.obj_name == 'Road':
+            if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
+                self.mdt.audio.landing_sfx.play()
         if evt.obj_name == 'Goal':
             if not self.mdt.gui.best_txt.getText() or \
                     float(self.mdt.gui.best_txt.getText()) > \
@@ -30,6 +33,8 @@ class _Event(Event):
             self.mdt.logic.last_time_start = globalClock.getFrameTime()
             lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
             self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/10')
+            if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
+                self.mdt.audio.lap_sfx.play()
             #if lap_number > 3:
             #    game.fsm.demand('Menu')
         #if evt.obj_name == 'Slow':
