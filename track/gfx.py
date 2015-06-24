@@ -18,7 +18,9 @@ class _Gfx(Gfx):
         waypoints = self.model.findAllMatches('**/Waypoint*')
         for waypoint in waypoints:
             print waypoint, waypoint.getPos()
-        self.model.find('**/Road').hide()
+        road = self.model.find('**/Road')
+        if road:
+            road.hide()
         wall = self.model.find('**/Wall')
         if wall:
             wall.hide()
@@ -28,6 +30,7 @@ class _Gfx(Gfx):
         goal = self.model.find('**/Goal')
         if goal:
             goal.hide()
+        self.__load_empties()
         start_pos = self.model.find('**/Start1')
         if start_pos:
             self.start_pos = self.model.find('**/Start1').get_pos()
@@ -35,6 +38,12 @@ class _Gfx(Gfx):
         else:
             self.start_pos = (0, 0, 0)
             self.start_pos_hpr = (0, 0, 0)
+
+    def __load_empties(self):
+        empty_models = self.model.findAllMatches('**/Empty*')
+        for model in empty_models:
+            child = eng.loader.loadModel('track/'+model.getName().split('.')[0][5:])
+            child.reparent_to(model)
 
     def __set_light(self):
         eng.render.clearLight()
