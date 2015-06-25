@@ -2,7 +2,6 @@
 from abc import ABCMeta
 from direct.fsm.FSM import FSM
 from direct.showbase.DirectObject import DirectObject
-from ya2.decorators.evtdec import evt_dec
 
 
 class Colleague(object):
@@ -23,9 +22,7 @@ class Fsm(FSM, Colleague):
 
 class Event(Colleague, DirectObject):
     '''This class manages the events of the GameObject.'''
-    def __init__(self, mdt):
-        Colleague.__init__(self, mdt)
-        self = evt_dec(self, self.mdt.fsm)
+    pass
 
 
 class Audio(Colleague):

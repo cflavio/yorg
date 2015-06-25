@@ -15,17 +15,18 @@ class _Event(Event):
         map(lambda (lab, evt): inputState.watchWithModifiers(lab, evt),
             label_events)
         self.accept('f11', self.mdt.gui.toggle)
+        self.accept('on_frame', self.__on_frame)
+        self.accept('on_collision', self.__on_collision)
 
-
-    def evt_OnCollision(self, evt):
-        print 'collision with %s %s' % (evt.obj_name, round(globalClock.getFrameTime(), 2))
-        if evt.obj_name == 'Wall':
+    def __on_collision(self, obj_name):
+        print 'collision with %s %s' % (obj_name, round(globalClock.getFrameTime(), 2))
+        if obj_name == 'Wall':
             if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.crash_sfx.play()
-        if evt.obj_name == 'Road':
+        if obj_name == 'Road':
             if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.landing_sfx.play()
-        if evt.obj_name == 'Goal':
+        if obj_name == 'Goal':
             if not self.mdt.gui.best_txt.getText() or \
                     float(self.mdt.gui.best_txt.getText()) > \
                     float(self.mdt.gui.time_txt.getText()):
@@ -39,7 +40,7 @@ class _Event(Event):
             #    game.fsm.demand('Menu')
         #if evt.obj_name == 'Slow':
 
-    def evt_OnFrame(self, evt):
+    def __on_frame(self):
         '''This callback method is invoked on each frame.'''
         input_dct = {
             'forward': inputState.isSet('forward'),

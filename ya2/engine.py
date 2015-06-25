@@ -6,18 +6,16 @@ from direct.directnotify.DirectNotify import DirectNotify
 from direct.filter.CommonFilters import CommonFilters
 from direct.showbase.ShowBase import ShowBase
 from gettext import install, translation
-from os import environ
+from os import environ, system
 from panda3d.bullet import BulletWorld, BulletDebugNode
 from panda3d.core import getModelPath, WindowProperties, LightRampAttrib, \
     PandaNode, NodePath, AntialiasAttrib
 from panda3d.core import loadPrcFileData
-from platform import system, release
-from sys import platform
 from webbrowser import open_new_tab
-from ya2.decorators.access import auto_properties
-from ya2.decorators.sender import sender_dec
 import __builtin__
 import yaml
+import platform
+import sys
 
 
 class OnFrame:
@@ -44,7 +42,7 @@ class LogMgr:
 
     def log_conf(self):
         self.log('version: '+eng.version)
-        self.log('operative system: '+system()+' '+release())
+        self.log('operative system: '+platform.system()+' '+platform.release())
         if eng.win:
             prop = eng.win.get_properties()
             self.log('fullscreen: '+str(prop.get_fullscreen()))
@@ -139,7 +137,6 @@ class Configuration:
         LogMgr.configure()
 
 
-@auto_properties
 class Engine(ShowBase, object):
 
     def __init__(self, configuration=None, domain=''):
@@ -155,7 +152,6 @@ class Engine(ShowBase, object):
         #self.__set_toon()
 
         self.world_np = render.attachNewNode('world')
-        self.messenger.send = sender_dec(self.messenger.send)
 
         self.collision_objs = []
         self.__coll_dct = {}
@@ -176,7 +172,7 @@ class Engine(ShowBase, object):
                                 OptionMgr.get_options()['lang'])
 
         if self.win:
-            self.set_resolution(self.get_resolution())
+            self.set_resolution(self.resolution)
 
             self.win.setCloseRequestEvent('window-closed')
             self.accept('window-closed', self.__on_close)
@@ -196,7 +192,7 @@ class Engine(ShowBase, object):
         dt = globalClock.getDt()
         self.world_phys.doPhysics(dt, 5, 1/60.0)
         self.__do_collisions()
-        self.messenger.send(OnFrame())
+        self.messenger.send('on_frame')
         return task.cont
 
     def __do_collisions(self):
@@ -212,7 +208,7 @@ class Engine(ShowBase, object):
                             to_clear.remove(obj)
                         if not node in [coll_pair[0] for coll_pair in self.__coll_dct[obj]]:
                             self.__coll_dct[obj] += [(node, globalClock.getFrameTime())]
-                            self.messenger.send(OnCollision(node.getName()))
+                            self.messenger.send('on_collision', [node.getName()])
                 process_contact(contact.getNode0())
                 process_contact(contact.getNode1())
         for obj in to_clear:
@@ -220,14 +216,16 @@ class Engine(ShowBase, object):
                 if globalClock.getFrameTime() - coll_pair[1] > .25:
                     self.__coll_dct[obj].remove(coll_pair)
 
-    def get_resolutions(self):
+    @property
+    def resolutions(self):
         di = self.pipe.getDisplayInformation()
         res_values = [
             (di.getDisplayModeWidth(idx), di.getDisplayModeHeight(idx))
             for idx in range(di.getTotalDisplayModes())]
         return ['%dx%d' % (s[0], s[1]) for s in sorted(list(set(res_values)))]
 
-    def get_resolution(self):
+    @property
+    def resolution(self):
         win_prop = self.win.get_properties()
         res_x, res_y = win_prop.get_x_size(), win_prop.get_y_size()
         return '%dx%d' % (res_x, res_y)
@@ -250,13 +248,14 @@ class Engine(ShowBase, object):
         self.win.request_properties(props)
 
     def open_browser(self, url):
-        if platform.startswith('linux'):
+        if sys.platform.startswith('linux'):
             environ['LD_LIBRARY_PATH'] = ''
             system('xdg-open '+url)
         else:
             open_new_tab(url)
 
-    def get_version(self):
+    @property
+    def version(self):
         version = 'version: source'
         if self.appRunner:
             package = self.appRunner.p3dInfo.FirstChildElement('package')

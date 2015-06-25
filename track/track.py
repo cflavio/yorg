@@ -4,7 +4,6 @@ from ya2.gameobject import GameObjectMdt
 from gfx import _Gfx
 from phys import _Phys
 from gui import _Gui
-from event import _Event
 
 
 class Track(GameObjectMdt):
@@ -13,4 +12,3 @@ class Track(GameObjectMdt):
     gfx_cls = _Gfx
     phys_cls = _Phys
     gui_cls = _Gui
-    event_cls = _Event
