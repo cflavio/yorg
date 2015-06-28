@@ -147,6 +147,7 @@ class Engine(ShowBase, object):
         getModelPath().appendDirectory('assets/models')
 
         self.render.setShaderAuto()
+        self.render.setTwoSided(True)
         if configuration.antialiasing:
             self.render.setAntialias(AntialiasAttrib.MAuto)
         #self.__set_toon()
