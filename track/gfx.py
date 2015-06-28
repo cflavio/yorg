@@ -1,4 +1,5 @@
 from panda3d.core import AmbientLight, BitMask32, Spotlight
+from direct.actor.Actor import Actor
 from ya2.gameobject import Gfx
 
 
@@ -38,13 +39,23 @@ class _Gfx(Gfx):
         else:
             self.start_pos = (0, 0, 0)
             self.start_pos_hpr = (0, 0, 0)
+        #self.model.clearModelNodes()
+        #self.model.flattenStrong()
         self.model.prepareScene(eng.win.getGsg())
 
     def __load_empties(self):
         empty_models = self.model.findAllMatches('**/Empty*')
+        self.__actors = []
         for model in empty_models:
-            child = eng.loader.loadModel('track/'+model.getName().split('.')[0][5:])
-            child.reparent_to(model)
+            model_name = model.getName().split('.')[0][5:]
+            if model_name.endswith('Anim'):
+                self.__actors += [Actor('track/' + model_name, {
+                    'anim': 'track/' + model_name + '-Anim'})]
+                self.__actors[-1].loop('anim')
+                self.__actors[-1].reparent_to(model)
+            else:
+                child = eng.loader.loadModel('track/'+model.getName().split('.')[0][5:])
+                child.reparent_to(model)
 
     def __set_light(self):
         eng.render.clearLight()
