@@ -46,6 +46,7 @@ class _Gfx(Gfx):
     def __load_empties(self):
         empty_models = self.model.findAllMatches('**/Empty*')
         self.__actors = []
+        self.__flat_roots = {}
         for model in empty_models:
             model_name = model.getName().split('.')[0][5:]
             if model_name.endswith('Anim'):
@@ -54,8 +55,15 @@ class _Gfx(Gfx):
                 self.__actors[-1].loop('anim')
                 self.__actors[-1].reparent_to(model)
             else:
+                if model_name not in self.__flat_roots:
+                    flat_root = self.model.attachNewNode(model_name)
+                    self.__flat_roots[model_name] = flat_root
                 child = eng.loader.loadModel('track/'+model.getName().split('.')[0][5:])
                 child.reparent_to(model)
+                model.reparentTo(self.__flat_roots[model_name])
+        for node in self.__flat_roots.values():
+            node.clearModelNodes()
+            node.flattenStrong()
 
     def __set_light(self):
         eng.render.clearLight()
