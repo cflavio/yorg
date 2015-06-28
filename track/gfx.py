@@ -38,6 +38,7 @@ class _Gfx(Gfx):
         else:
             self.start_pos = (0, 0, 0)
             self.start_pos_hpr = (0, 0, 0)
+        self.model.prepareScene(eng.win.getGsg())
 
     def __load_empties(self):
         empty_models = self.model.findAllMatches('**/Empty*')
