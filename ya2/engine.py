@@ -109,7 +109,7 @@ class Configuration:
 
     def __init__(self, fps=False, win_size='1280 720', win_title='Ya2',
                  fullscreen=False, cursor_hidden=False, sync_video=True,
-                 antialiasing=False):
+                 antialiasing=False, profiling=False):
         self.fps = fps
         self.win_size = win_size
         self.win_title = win_title
@@ -117,6 +117,7 @@ class Configuration:
         self.cursor_hidden = cursor_hidden
         self.sync_video = sync_video
         self.antialiasing = antialiasing
+        self.profiling = profiling
         self.configure()
 
     @staticmethod
@@ -134,6 +135,12 @@ class Configuration:
         if self.antialiasing:
             self.__set('framebuffer-multisample', 1)
             self.__set('multisamples', 2)
+        if self.profiling:
+            self.__set('want-pstats', 1)
+            self.__set('task-timer-verbose', 1),
+            self.__set('pstats-tasks', 1),
+            self.__set('gl-finish', 1),
+            self.__set('pstats-host', '127.0.0.1')
         LogMgr.configure()
 
 
