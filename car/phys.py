@@ -92,6 +92,11 @@ class _Phys(Phys):
         wheel.setSkidInfo(self.skid_info)
 
     @property
+    def is_flying(self):
+        rays = [wheel.getRaycastInfo() for wheel in self.vehicle.get_wheels()]
+        return not any(ray.isInContact() for ray in rays)
+
+    @property
     def speed(self):
         return self.vehicle.getCurrentSpeedKmHour()
 

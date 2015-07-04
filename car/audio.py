@@ -18,7 +18,8 @@ class _Audio(Audio):
 
     def update(self, input_dct):
         if input_dct['reverse'] and self.mdt.phys.speed > 50.0 and \
-                self.brake_sfx.status() != AudioSound.PLAYING:
+                self.brake_sfx.status() != AudioSound.PLAYING and \
+                not self.mdt.phys.is_flying:
             self.brake_sfx.play()
         if not input_dct['reverse'] or self.mdt.phys.speed < 50.0:
             self.brake_sfx.stop()
