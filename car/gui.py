@@ -138,7 +138,7 @@ class _Gui(Gui):
             align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
         self.lap_lab = OnscreenText(text=_('Lap'), pos=(-.55, -.2), scale=.08,
             align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.lap_txt = OnscreenText(text='0/10', pos=(-.5, -.2), scale=.08,
+        self.lap_txt = OnscreenText(text='1/10', pos=(-.5, -.2), scale=.08,
             align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
         self.time_lab = OnscreenText(text=_('Time'), pos=(-.55, -.3), scale=.08,
             align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))

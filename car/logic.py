@@ -45,5 +45,6 @@ class _Logic(Logic):
 
         self.mdt.phys.set_forces(eng_frc, brake_frc, self.__steering)
         self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
-        self.mdt.gui.time_txt.setText(str(round(
-            globalClock.getFrameTime() - self.last_time_start, 2)))
+        if not self.mdt.event.has_just_started:
+            self.mdt.gui.time_txt.setText(str(round(
+                globalClock.getFrameTime() - self.last_time_start, 2)))

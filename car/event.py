@@ -17,6 +17,7 @@ class _Event(Event):
         self.accept('f11', self.mdt.gui.toggle)
         self.accept('on_frame', self.__on_frame)
         self.accept('on_collision', self.__on_collision)
+        self.has_just_started = True
 
     def __on_collision(self, obj_name):
         print 'collision with %s %s' % (obj_name, round(globalClock.getFrameTime(), 2))
@@ -27,15 +28,18 @@ class _Event(Event):
             if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.landing_sfx.play()
         if obj_name == 'Goal':
-            if not self.mdt.gui.best_txt.getText() or \
-                    float(self.mdt.gui.best_txt.getText()) > \
-                    float(self.mdt.gui.time_txt.getText()):
+            lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
+            if not self.has_just_started and (
+                    not self.mdt.gui.best_txt.getText() or
+                    float(self.mdt.gui.best_txt.getText()) >
+                    float(self.mdt.gui.time_txt.getText())):
                 self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
             self.mdt.logic.last_time_start = globalClock.getFrameTime()
-            lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
-            self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/10')
-            if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
-                self.mdt.audio.lap_sfx.play()
+            if not self.has_just_started:
+                self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/3')
+                if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
+                    self.mdt.audio.lap_sfx.play()
+            self.has_just_started = False
             #if lap_number > 3:
             #    game.fsm.demand('Menu')
         #if evt.obj_name == 'Slow':
