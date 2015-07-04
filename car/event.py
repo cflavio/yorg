@@ -54,3 +54,5 @@ class _Event(Event):
         self.mdt.logic.update(input_dct)
         self.mdt.audio.update(input_dct)
         eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
+        if self.mdt.logic.is_upside_down:
+            self.mdt.gfx.nodepath.setR(0)

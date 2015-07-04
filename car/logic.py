@@ -8,6 +8,7 @@ class _Logic(Logic):
         Logic.__init__(self, mdt)
         self.__steering = 0  # degrees
         self.last_time_start = 0
+        self.last_roll_ok_time = None
 
     def update(self, input_dct):
         '''This callback method is invoked on each frame.'''
@@ -48,3 +49,12 @@ class _Logic(Logic):
         if not self.mdt.event.has_just_started:
             self.mdt.gui.time_txt.setText(str(round(
                 globalClock.getFrameTime() - self.last_time_start, 2)))
+        self.__update_roll_info()
+
+    def __update_roll_info(self):
+        if -45 <= self.mdt.gfx.nodepath.getR() < 45:
+            self.last_roll_ok_time = globalClock.getFrameTime()
+
+    @property
+    def is_upside_down(self):
+        return globalClock.getFrameTime() - self.last_roll_ok_time > 5.0
