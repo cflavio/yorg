@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-24 22:09+0200\n"
+"POT-Creation-Date: 2015-07-04 12:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,14 +50,19 @@ msgid "Resolution"
 msgstr "Risoluzione"
 
 #: menu.py:97
-msgid "Antialiasing (from the next execution)"
+msgid "Antialiasing"
+msgstr ""
+
+#: menu.py:101
+#, fuzzy
+msgid "(from the next execution)"
 msgstr "Antialiasing (dalla prossima esecuzione)"
 
-#: menu.py:145
+#: menu.py:149
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:146
+#: menu.py:150
 msgid "Art"
 msgstr "Grafica"
 
@@ -67,7 +72,7 @@ msgstr "F12: debug"
 
 #: track/gui.py:16
 msgid "work in progress"
-msgstr ""
+msgstr "stiamo lavorando per voi"
 
 #: ya2/gui.py:85
 msgid "Back"

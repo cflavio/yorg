@@ -40,11 +40,11 @@ class OptionPage(Page):
         font, page_args = self.font, self.page_args
         conf = OptionMgr.get_options()
 
-        lang_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, .4),
+        lang_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .4),
                                text_font=font, text_align=TextNode.ARight)
         transl_text(lang_lab, 'Language', _('Language'))
         self.__lang_opt = DirectOptionMenu(
-            text='', scale=.12, items=LangMgr.languages, pos=(.9, 1, .4),
+            text='', scale=.12, items=LangMgr.languages, pos=(.2, 1, .4),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
@@ -54,18 +54,18 @@ class OptionPage(Page):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        vol_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, .2),
+        vol_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .2),
                               text_font=font, text_align=TextNode.ARight)
         transl_text(vol_lab, 'Volume', _('Volume'))
         self.__vol_slider = DirectSlider(
-            pos=(1.18, 0, .23), scale=.47, value=conf['volume'],
+            pos=(.47, 0, .23), scale=.47, value=conf['volume'],
             frameColor=page_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
 
-        fullscreen_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, 0),
+        fullscreen_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, 0),
                                      text_font=font, text_align=TextNode.ARight)
         transl_text(fullscreen_lab, 'Fullscreen', _('Fullscreen'))
         self.__fullscreen_cb = DirectCheckButton(
-            pos=(.83, 1, .03), text='', scale=.12, text_font=self.font,
+            pos=(.12, 1, .03), text='', scale=.12, text_font=self.font,
             frameColor=page_args.btn_color,
             indicatorValue=conf['fullscreen'],
             indicator_frameColor=page_args.btn_color,
@@ -73,7 +73,7 @@ class OptionPage(Page):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        res_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, -.2),
+        res_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.2),
                               text_font=font, text_align=TextNode.ARight)
         transl_text(res_lab, 'Resolution', _('Resolution'))
         if conf['resolution']:
@@ -81,7 +81,7 @@ class OptionPage(Page):
         else:
             curr_res =  str(eng.win.getXSize())+'x'+str(base.win.getYSize())
         self.__res_opt = DirectOptionMenu(
-            text='', scale=.12, items=eng.resolutions, pos=(.9, 1, -.2),
+            text='', scale=.12, items=eng.resolutions, pos=(.2, 1, -.2),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
@@ -91,12 +91,16 @@ class OptionPage(Page):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        aa_lab = DirectLabel(text='', scale=.12, pos=(.6, 1, -.4),
+        aa_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.4),
                             text_font=font, text_align=TextNode.ARight)
-        transl_text(aa_lab, 'Antialiasing (from the next execution)',
-                    _('Antialiasing (from the next execution)'))
+        transl_text(aa_lab, 'Antialiasing',
+                    _('Antialiasing'))
+        aa_next_lab = DirectLabel(text='', scale=.08, pos=(.2, 1, -.4),
+                            text_font=font, text_align=TextNode.ALeft)
+        transl_text(aa_next_lab, '(from the next execution)',
+                    _('(from the next execution)'))
         self.__aa_cb = DirectCheckButton(
-            pos=(.83, 1, -.37), text='', scale=.12, text_font=self.font,
+            pos=(.12, 1, -.37), text='', scale=.12, text_font=self.font,
             frameColor=page_args.btn_color,
             indicatorValue=conf['aa'],
             indicator_frameColor=page_args.btn_color,
@@ -113,7 +117,7 @@ class OptionPage(Page):
         self.widgets = [
             lang_lab, self.__lang_opt, vol_lab, self.__vol_slider,
             fullscreen_lab, self.__fullscreen_cb, res_lab, self.__res_opt,
-            aa_lab, self.__aa_cb]
+            aa_lab, self.__aa_cb, aa_next_lab]
         self.__change_lang(LangMgr.languages[conf['lang']])
         Page.create(self)
 

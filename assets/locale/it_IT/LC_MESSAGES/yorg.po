@@ -50,14 +50,18 @@ msgid "Resolution"
 msgstr "Risoluzione"
 
 #: menu.py:97
-msgid "Antialiasing (from the next execution)"
-msgstr "Antialiasing (dalla prossima esecuzione)"
+msgid "Antialiasing"
+msgstr "Antialiasing"
 
-#: menu.py:145
+#: menu.py:101
+msgid "(from the next execution)"
+msgstr "(dalla prossima esecuzione)"
+
+#: menu.py:149
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:146
+#: menu.py:150
 msgid "Art"
 msgstr "Grafica"
 
