@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-04 12:45+0200\n"
+"POT-Creation-Date: 2015-07-11 13:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,52 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:20
+#: menu.py:19
 msgid "Play"
 msgstr "Gioca"
 
-#: menu.py:21
+#: menu.py:20
 msgid "Options"
 msgstr "Opzioni"
 
-#: menu.py:22
+#: menu.py:21
 msgid "Credits"
 msgstr "Riconoscimenti"
 
-#: menu.py:23
+#: menu.py:22
 msgid "Quit"
 msgstr "Esci"
 
-#: menu.py:45
+#: menu.py:44
 msgid "Language"
 msgstr "Lingua"
 
-#: menu.py:59
+#: menu.py:58
 msgid "Volume"
 msgstr "Volume"
 
-#: menu.py:66
+#: menu.py:65
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: menu.py:78
+#: menu.py:77
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu.py:97
+#: menu.py:96
 msgid "Antialiasing"
-msgstr ""
+msgstr "Antialiasing"
 
-#: menu.py:101
-#, fuzzy
+#: menu.py:100
 msgid "(from the next execution)"
-msgstr "Antialiasing (dalla prossima esecuzione)"
+msgstr "(dalla prossima esecuzione)"
 
-#: menu.py:149
+#: menu.py:148
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:150
+#: menu.py:149
 msgid "Art"
 msgstr "Grafica"
 
@@ -73,6 +72,14 @@ msgstr "F12: debug"
 #: track/gui.py:16
 msgid "work in progress"
 msgstr "stiamo lavorando per voi"
+
+#: track/gui.py:23
+msgid "arrows for driving; Z for braking"
+msgstr ""
+
+#: track/gui.py:32
+msgid "GO!"
+msgstr ""
 
 #: ya2/gui.py:85
 msgid "Back"

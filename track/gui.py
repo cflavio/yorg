@@ -19,6 +19,10 @@ class _Gui(Gui):
         self.__countdown_txt = OnscreenText(
             '', pos=(0, 0), scale=.2, fg=(1, 1, 1, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+        self.__keys_txt = OnscreenText(
+            _('arrows for driving; Z for braking'), pos=(.1, -.2), scale=.1,
+            fg=(1, 1, 1, 1), align=TextNode.ALeft, parent=eng.a2dTopLeft,
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.countdown_cnt = 3
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
 
@@ -31,6 +35,8 @@ class _Gui(Gui):
             return task.again
         else:
             self.__countdown_txt.destroy()
+            destroy_keys = lambda task: self.__keys_txt.destroy()
+            taskMgr.doMethodLater(5.0, destroy_keys, 'destroy keys')
             game.track.fsm.demand('Race')
 
     def destroy(self):

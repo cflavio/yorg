@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-04 12:45+0200\n"
+"POT-Creation-Date: 2015-07-11 13:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,51 +17,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:20
+#: menu.py:19
 msgid "Play"
 msgstr ""
 
-#: menu.py:21
+#: menu.py:20
 msgid "Options"
 msgstr ""
 
-#: menu.py:22
+#: menu.py:21
 msgid "Credits"
 msgstr ""
 
-#: menu.py:23
+#: menu.py:22
 msgid "Quit"
 msgstr ""
 
-#: menu.py:45
+#: menu.py:44
 msgid "Language"
 msgstr ""
 
-#: menu.py:59
+#: menu.py:58
 msgid "Volume"
 msgstr ""
 
-#: menu.py:66
+#: menu.py:65
 msgid "Fullscreen"
 msgstr ""
 
-#: menu.py:78
+#: menu.py:77
 msgid "Resolution"
 msgstr ""
 
-#: menu.py:97
+#: menu.py:96
 msgid "Antialiasing"
 msgstr ""
 
-#: menu.py:101
+#: menu.py:100
 msgid "(from the next execution)"
 msgstr ""
 
-#: menu.py:149
+#: menu.py:148
 msgid "Code"
 msgstr ""
 
-#: menu.py:150
+#: menu.py:149
 msgid "Art"
 msgstr ""
 
@@ -71,6 +71,14 @@ msgstr ""
 
 #: track/gui.py:16
 msgid "work in progress"
+msgstr ""
+
+#: track/gui.py:23
+msgid "arrows for driving; Z for braking"
+msgstr ""
+
+#: track/gui.py:32
+msgid "GO!"
 msgstr ""
 
 #: ya2/gui.py:85
