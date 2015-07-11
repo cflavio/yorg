@@ -43,6 +43,7 @@ class _Gfx(Gfx):
         #self.model.flattenStrong()
         self.model.prepareScene(eng.win.getGsg())
 
+
     def __load_empties(self):
         empty_models = self.model.findAllMatches('**/Empty*')
         self.__actors = []

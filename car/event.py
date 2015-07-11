@@ -8,16 +8,16 @@ class _Event(Event):
 
     def __init__(self, mdt):
         Event.__init__(self, mdt)
+        self.has_just_started = True
+        self.accept('f11', self.mdt.gui.toggle)
+        self.accept('on_frame', self.__on_frame)
+        self.accept('on_collision', self.__on_collision)
         label_events = [('forward', 'arrow_up'),
                         ('left', 'arrow_left'),
                         ('reverse', 'z'),
                         ('right', 'arrow_right')]
         map(lambda (lab, evt): inputState.watchWithModifiers(lab, evt),
             label_events)
-        self.accept('f11', self.mdt.gui.toggle)
-        self.accept('on_frame', self.__on_frame)
-        self.accept('on_collision', self.__on_collision)
-        self.has_just_started = True
 
     def __on_collision(self, obj_name):
         print 'collision with %s %s' % (obj_name, round(globalClock.getFrameTime(), 2))
@@ -51,6 +51,8 @@ class _Event(Event):
             'left': inputState.isSet('left'),
             'reverse': inputState.isSet('reverse'),
             'right': inputState.isSet('right')}
+        if game.track.fsm.getCurrentOrNextState() != 'Race':
+            input_dct = {key: False for key in input_dct}
         self.mdt.logic.update(input_dct)
         self.mdt.audio.update(input_dct)
         eng.camera.setPos(self.mdt.gfx.nodepath.getPos())

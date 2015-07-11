@@ -40,15 +40,15 @@ class _Fsm(Fsm):
 
     def enterPlay(self):
         eng.start()
-        self.__track = Track()
-        self.__car = Car(self.__track.gfx.start_pos,
-                         self.__track.gfx.start_pos_hpr)
+        self.mdt.track = Track()
+        self.mdt.car = Car(self.mdt.track.gfx.start_pos,
+                         self.mdt.track.gfx.start_pos_hpr)
         self.mdt.audio.game_music.play()
 
     def exitPlay(self):
         self.mdt.audio.game_music.stop()
-        self.__track.destroy()
-        self.__car.destroy()
+        self.mdt.track.destroy()
+        self.mdt.car.destroy()
 
 
 class _Logic(GameLogic):

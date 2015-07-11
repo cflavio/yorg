@@ -5,6 +5,8 @@ from gfx import _Gfx
 from phys import _Phys
 from gui import _Gui
 from event import _Event
+from audio import _Audio
+from fsm import _Fsm
 
 
 class Track(GameObjectMdt):
@@ -14,3 +16,5 @@ class Track(GameObjectMdt):
     phys_cls = _Phys
     gui_cls = _Gui
     event_cls = _Event
+    audio_cls = _Audio
+    fsm_cls = _Fsm

@@ -16,6 +16,22 @@ class _Gui(Gui):
             _('work in progress'), pos=(.1, .1), scale=0.05, fg=(1, 1, 1, 1),
             parent=eng.a2dBottomLeft, align=TextNode.ALeft,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+        self.__countdown_txt = OnscreenText(
+            '', pos=(0, 0), scale=.2, fg=(1, 1, 1, 1),
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+        self.countdown_cnt = 3
+        taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
+
+    def process_countdown(self, task):
+        if self.countdown_cnt >= 0:
+            self.mdt.audio.countdown_sfx.play()
+            txt = str(self.countdown_cnt) if self.countdown_cnt else _('GO!')
+            self.__countdown_txt.setText(txt)
+            self.countdown_cnt -= 1
+            return task.again
+        else:
+            self.__countdown_txt.destroy()
+            game.track.fsm.demand('Race')
 
     def destroy(self):
         Gui.destroy(self)
