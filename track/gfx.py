@@ -97,3 +97,7 @@ class _Gfx(Gfx):
     def destroy(self):
         '''The destroyer.'''
         self.model.removeNode()
+        eng.render.clearLight(self.ambient_np)
+        eng.render.clearLight(self.spot_lgt)
+        self.ambient_np.removeNode()
+        #self.spot_lgt.removeNode()

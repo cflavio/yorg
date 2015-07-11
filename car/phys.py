@@ -108,7 +108,3 @@ class _Phys(Phys):
         self.vehicle.applyEngineForce(eng_frc, 3)
         self.vehicle.setBrake(brake_frc, 2)
         self.vehicle.setBrake(brake_frc, 3)
-
-    def destroy(self):
-        '''The destroyer.'''
-        self.vehicle.destroy()

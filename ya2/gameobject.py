@@ -22,7 +22,10 @@ class Fsm(FSM, Colleague):
 
 class Event(Colleague, DirectObject):
     '''This class manages the events of the GameObject.'''
-    pass
+
+    def destroy(self):
+        Colleague.destroy(self)
+        self.ignoreAll()
 
 
 class Audio(Colleague):

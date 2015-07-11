@@ -9,7 +9,6 @@ from panda3d.core import TextNode
 from sys import exit
 from ya2.gameobject import Fsm, GameObjectMdt, Gui
 from ya2.gui import Page, PageArgs, transl_text
-import json
 from ya2.engine import LangMgr, OptionMgr
 
 

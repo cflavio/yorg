@@ -159,19 +159,6 @@ class Engine(ShowBase, object):
             self.render.setAntialias(AntialiasAttrib.MAuto)
         #self.__set_toon()
 
-        self.world_np = render.attachNewNode('world')
-
-        self.collision_objs = []
-        self.__coll_dct = {}
-        self.world_phys = BulletWorld()
-        self.world_phys.setGravity((0, 0, -9.81))
-        debug_node = BulletDebugNode('Debug')
-        debug_node.showBoundingBoxes(True)
-        self.__debug_np = self.render.attachNewNode(debug_node)
-        self.world_phys.setDebugNode(self.__debug_np.node())
-
-        self.taskMgr.add(self.__update, 'Engine::update')
-
         self.font_mgr = FontMgr(self)
         self.log_mgr = LogMgr()
         self.log_mgr.log_conf()
@@ -196,12 +183,30 @@ class Engine(ShowBase, object):
         self.closeWindow(self.win)
         sys.exit()
 
+    def start(self):
+        self.collision_objs = []
+        self.__coll_dct = {}
+        self.world_np = render.attachNewNode('world')
+        self.world_phys = BulletWorld()
+        self.world_phys.setGravity((0, 0, -9.81))
+        debug_node = BulletDebugNode('Debug')
+        debug_node.showBoundingBoxes(True)
+        self.__debug_np = self.render.attachNewNode(debug_node)
+        self.world_phys.setDebugNode(self.__debug_np.node())
+        self.taskMgr.add(self.__update, 'Engine::update')
+
+    def stop(self):
+        eng.world_phys = None
+        eng.world_np.removeNode()
+        self.__debug_np.removeNode()
+
     def __update(self, task):
-        dt = globalClock.getDt()
-        self.world_phys.doPhysics(dt, 5, 1/60.0)
-        self.__do_collisions()
-        self.messenger.send('on_frame')
-        return task.cont
+        if self.world_phys:
+            dt = globalClock.getDt()
+            self.world_phys.doPhysics(dt, 5, 1/60.0)
+            self.__do_collisions()
+            self.messenger.send('on_frame')
+            return task.cont
 
     def __do_collisions(self):
         to_clear = self.collision_objs[:]
@@ -269,6 +274,17 @@ class Engine(ShowBase, object):
             package = self.appRunner.p3dInfo.FirstChildElement('package')
             version = 'version: ' + package.Attribute('version')
         return version
+
+    def print_stats(self):
+        print '\n\n#####\nrender2d.analyze()'
+        self.render2d.analyze()
+        print '\n\n#####\nrender.analyze()'
+        self.render.analyze()
+        print '\n\n#####\nrender2d.ls()'
+        self.render2d.ls()
+        print '\n\n#####\nrender.ls()'
+        self.render.ls()
+
 
     def toggle_debug(self):
         is_hidden = self.__debug_np.isHidden()

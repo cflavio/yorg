@@ -138,7 +138,7 @@ class _Gui(Gui):
             align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
         self.lap_lab = OnscreenText(text=_('Lap'), pos=(-.55, -.2), scale=.08,
             align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.lap_txt = OnscreenText(text='1/10', pos=(-.5, -.2), scale=.08,
+        self.lap_txt = OnscreenText(text='1/3', pos=(-.5, -.2), scale=.08,
             align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
         self.time_lab = OnscreenText(text=_('Time'), pos=(-.55, -.3), scale=.08,
             align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
@@ -154,5 +154,6 @@ class _Gui(Gui):
 
     def destroy(self):
         Gui.destroy(self)
-        map(lambda wdg: wdg.destroy(),
-            self.__pars + [self.speed_txt, self.time_txt, self.lap_txt])
+        labels = [self.speed_lab, self.speed_txt, self.time_lab, self.time_txt,
+                  self.lap_lab, self.lap_txt, self.best_lab, self.best_txt]
+        map(lambda wdg: wdg.destroy(), self.__pars + labels)

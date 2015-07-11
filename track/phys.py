@@ -58,3 +58,6 @@ class _Phys(Phys):
                 ghostNP = eng.world_np.attachNewNode(ghost)
                 eng.world_phys.attachGhost(ghost)
                 ghostNP.node().notifyCollisions(True)
+
+    def destroy(self):
+        eng.stop()

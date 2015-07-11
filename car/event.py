@@ -40,8 +40,8 @@ class _Event(Event):
                 if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
                     self.mdt.audio.lap_sfx.play()
             self.has_just_started = False
-            #if lap_number > 3:
-            #    game.fsm.demand('Menu')
+            if lap_number >= 3:
+                game.fsm.demand('Menu')
         #if evt.obj_name == 'Slow':
 
     def __on_frame(self):
