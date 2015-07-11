@@ -29,10 +29,12 @@ class _Event(Event):
                 self.mdt.audio.landing_sfx.play()
         if obj_name == 'Goal':
             lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
+            if self.mdt.gui.time_txt.getText():
+                lap_time = float(self.mdt.gui.time_txt.getText())
+                self.mdt.logic.lap_times += [lap_time]
             if not self.has_just_started and (
                     not self.mdt.gui.best_txt.getText() or
-                    float(self.mdt.gui.best_txt.getText()) >
-                    float(self.mdt.gui.time_txt.getText())):
+                    float(self.mdt.gui.best_txt.getText()) > lap_time):
                 self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
             self.mdt.logic.last_time_start = globalClock.getFrameTime()
             if not self.has_just_started:
@@ -41,7 +43,8 @@ class _Event(Event):
                     self.mdt.audio.lap_sfx.play()
             self.has_just_started = False
             if lap_number >= 3:
-                game.fsm.demand('Menu')
+                game.track.fsm.demand('Results')
+                game.track.gui.show_results()
         #if evt.obj_name == 'Slow':
 
     def __on_frame(self):

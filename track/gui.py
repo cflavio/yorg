@@ -39,6 +39,22 @@ class _Gui(Gui):
             taskMgr.doMethodLater(5.0, destroy_keys, 'destroy keys')
             game.track.fsm.demand('Race')
 
+    def show_results(self):
+        self.__res_txts = [OnscreenText(
+            str(game.car.logic.lap_times[i-1]) if i else _('TIME'),
+            pos=(.2, .3 - .2 * i), scale=.1, fg=(1, 1, 1, 1),
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+            for i in range(4)]
+        self.__res_txts += [OnscreenText(
+            str(i) if i else _('LAP'), pos=(-.2, .3 - .2 * i), scale=.1,
+            fg=(1, 1, 1, 1),
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+            for i in range(4)]
+        def to_menu(task):
+            map(lambda txt: txt.destroy(), self.__res_txts)
+            game.fsm.demand('Menu')
+        taskMgr.doMethodLater(10.0, to_menu, 'to menu')
+
     def destroy(self):
         Gui.destroy(self)
         self.__debug_txt.destroy()

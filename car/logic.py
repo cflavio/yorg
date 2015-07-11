@@ -9,6 +9,7 @@ class _Logic(Logic):
         self.__steering = 0  # degrees
         self.last_time_start = 0
         self.last_roll_ok_time = None
+        self.lap_times = []
 
     def update(self, input_dct):
         '''This callback method is invoked on each frame.'''
