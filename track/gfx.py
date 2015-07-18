@@ -16,9 +16,11 @@ class _Gfx(Gfx):
         self.model = loader.loadModel("track/track")
         self.model.reparentTo(render)
         self.model.hide(BitMask32.bit(0))
-        waypoints = self.model.findAllMatches('**/Waypoint*')
-        for waypoint in waypoints:
-            print waypoint, waypoint.getPos()
+        wp_idx = 0
+        self.waypoints = []
+        while self.model.find('**/Waypoint' + str(wp_idx)):
+            self.waypoints += [self.model.find('**/Waypoint' + str(wp_idx))]
+            wp_idx += 1
         road = self.model.find('**/Road')
         if road:
             road.hide()

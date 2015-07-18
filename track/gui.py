@@ -23,6 +23,10 @@ class _Gui(Gui):
             _('arrows for driving; Z for braking'), pos=(.1, -.2), scale=.1,
             fg=(1, 1, 1, 1), align=TextNode.ALeft, parent=eng.a2dTopLeft,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+        self.way_txt = OnscreenText(
+            '', pos=(.1, .4), scale=0.1, fg=(1, 1, 1, 1),
+            parent=eng.a2dBottomLeft, align=TextNode.ALeft,
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.countdown_cnt = 3
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
 
@@ -59,3 +63,4 @@ class _Gui(Gui):
         Gui.destroy(self)
         self.__debug_txt.destroy()
         self.__wip_txt.destroy()
+        self.way_txt.destroy()

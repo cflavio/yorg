@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-11 13:08+0200\n"
+"POT-Creation-Date: 2015-07-18 13:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,12 +77,24 @@ msgstr ""
 msgid "arrows for driving; Z for braking"
 msgstr ""
 
-#: track/gui.py:32
+#: track/gui.py:36
 msgid "GO!"
+msgstr ""
+
+#: track/gui.py:48
+msgid "TIME"
+msgstr ""
+
+#: track/gui.py:53
+msgid "LAP"
 msgstr ""
 
 #: ya2/gui.py:85
 msgid "Back"
+msgstr ""
+
+#: car/logic.py:93
+msgid "wrong way"
 msgstr ""
 
 #: car/gui.py:135

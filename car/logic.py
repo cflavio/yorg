@@ -1,4 +1,6 @@
 from ya2.gameobject import Logic
+from panda3d.core import Vec3, Vec2, deg2Rad
+import math
 
 
 class _Logic(Logic):
@@ -51,10 +53,44 @@ class _Logic(Logic):
             self.mdt.gui.time_txt.setText(str(round(
                 globalClock.getFrameTime() - self.last_time_start, 2)))
         self.__update_roll_info()
+        self.__update_wp()
 
     def __update_roll_info(self):
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:
             self.last_roll_ok_time = globalClock.getFrameTime()
+
+    def __update_wp(self):
+        car_np = self.mdt.gfx.nodepath
+        waypoints = game.track.gfx.waypoints
+        distances = [car_np.getDistance(wp) for wp in waypoints]
+        curr_wp_idx = distances.index(min(distances))
+        curr_wp = waypoints[curr_wp_idx]
+        prev_wp = waypoints[(curr_wp_idx - 1) % len(waypoints)]
+        next_wp = waypoints[(curr_wp_idx + 1) % len(waypoints)]
+        curr_vec = Vec2(car_np.getPos(curr_wp).xy)
+        curr_vec.normalize()
+        prev_vec = Vec2(car_np.getPos(prev_wp).xy)
+        prev_vec.normalize()
+        next_vec = Vec2(car_np.getPos(next_wp).xy)
+        next_vec.normalize()
+        prev_angle = prev_vec.signedAngleDeg(curr_vec)
+        next_angle = next_vec.signedAngleDeg(curr_vec)
+
+        if abs(prev_angle) > abs(next_angle):
+            start_wp = prev_wp
+            end_wp = curr_wp
+        else:
+            start_wp = curr_wp
+            end_wp = next_wp
+        wp_vec = Vec3(end_wp.getPos(start_wp).xy, 1)
+        wp_vec.normalize()
+
+        car_rad = deg2Rad(car_np.getH())
+        car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
+        car_vec.normalize()
+
+        prod = car_vec.dot(wp_vec)
+        game.track.gui.way_txt.setText(_('wrong way') if prod < -.6 else '')
 
     @property
     def is_upside_down(self):

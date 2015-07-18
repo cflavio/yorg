@@ -77,13 +77,25 @@ msgstr "stiamo lavorando per voi"
 msgid "arrows for driving; Z for braking"
 msgstr "frecce per guidare; Z per frenare"
 
-#: track/gui.py:32
+#: track/gui.py:36
 msgid "GO!"
 msgstr "VIA!"
+
+#: track/gui.py:48
+msgid "TIME"
+msgstr "TEMPO"
+
+#: track/gui.py:53
+msgid "LAP"
+msgstr "GIRO"
 
 #: ya2/gui.py:85
 msgid "Back"
 msgstr "Indietro"
+
+#: car/logic.py:93
+msgid "wrong way"
+msgstr "direzione sbagliata"
 
 #: car/gui.py:135
 msgid "Speed"
