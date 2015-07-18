@@ -125,6 +125,7 @@ class Configuration:
         loadPrcFileData('', key+' '+str(value))
 
     def configure(self):
+        self.__set('request-dxdisplay-information', 1)
         self.__set('show-frame-rate-meter', int(self.fps))
         if self.win_size:
             self.__set('win-size', self.win_size)
