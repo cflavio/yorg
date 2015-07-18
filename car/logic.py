@@ -59,7 +59,8 @@ class _Logic(Logic):
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:
             self.last_roll_ok_time = globalClock.getFrameTime()
 
-    def __update_wp(self):
+    @property
+    def direction(self):
         car_np = self.mdt.gfx.nodepath
         waypoints = game.track.gfx.waypoints
         distances = [car_np.getDistance(wp) for wp in waypoints]
@@ -89,8 +90,11 @@ class _Logic(Logic):
         car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         car_vec.normalize()
 
-        prod = car_vec.dot(wp_vec)
-        game.track.gui.way_txt.setText(_('wrong way') if prod < -.6 else '')
+        return car_vec.dot(wp_vec)
+
+    def __update_wp(self):
+        way_str = _('wrong way') if self.direction < -.6 else ''
+        game.track.gui.way_txt.setText(way_str)
 
     @property
     def is_upside_down(self):

@@ -38,9 +38,14 @@ class _Event(Event):
                 self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
             self.mdt.logic.last_time_start = globalClock.getFrameTime()
             if not self.has_just_started:
-                self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/3')
-                if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
-                    self.mdt.audio.lap_sfx.play()
+                fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
+                back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
+                if fwd or back:
+                    self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/3')
+                    if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
+                        self.mdt.audio.lap_sfx.play()
+                else:
+                    self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/3')
             self.has_just_started = False
             if lap_number >= 3:
                 game.track.fsm.demand('Results')
