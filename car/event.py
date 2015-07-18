@@ -56,6 +56,10 @@ class _Event(Event):
             'right': inputState.isSet('right')}
         if game.track.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
+            self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
+            self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
+            wheels = self.mdt.phys.vehicle.get_wheels()
+            map(lambda whl: whl.set_rotation(0), wheels)
         self.mdt.logic.update(input_dct)
         self.mdt.audio.update(input_dct)
         eng.camera.setPos(self.mdt.gfx.nodepath.getPos())

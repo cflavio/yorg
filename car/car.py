@@ -20,5 +20,5 @@ class Car(GameObjectMdt):
 
     def __init__(self, pos, hpr):
         GameObjectMdt.__init__(self)
-        self.gfx.nodepath.set_pos(pos)
-        self.gfx.nodepath.set_hpr(hpr)
+        self.logic.start_pos = pos
+        self.logic.start_pos_hpr = hpr
