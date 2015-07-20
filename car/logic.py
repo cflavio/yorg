@@ -3,6 +3,16 @@ from panda3d.core import Vec3, Vec2, deg2Rad
 import math
 
 
+#camera constants
+cam_speed = 25
+cam_dist_min = 12
+cam_dist_max = 16
+cam_z_max = 4
+cam_z_min = 3.2
+look_z_max = 2.4
+look_z_min = 2
+
+
 class _Logic(Logic):
     '''This class manages the events of the Car class.'''
 
@@ -97,18 +107,21 @@ class _Logic(Logic):
         game.track.gui.way_txt.setText(way_str)
 
     def update_cam(self):
+        cam_dist_diff = cam_dist_max - cam_dist_min
+        cam_z_diff = cam_z_max - cam_z_min
+        look_z_diff = look_z_max - look_z_min
         car_np = self.mdt.gfx.nodepath
         car_rad = deg2Rad(car_np.getH())
         car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         car_vec.normalize()
-        cam_vec = car_vec * (12 + 4 * self.mdt.phys.speed_ratio)
+        cam_vec = car_vec * (cam_dist_min + cam_dist_diff * self.mdt.phys.speed_ratio)
         car_pos = self.mdt.gfx.nodepath.getPos()
-        delta_pos_z = 4 - .8 * self.mdt.phys.speed_ratio
-        delta_cam_z = .4 * self.mdt.phys.speed_ratio
+        delta_pos_z = cam_z_max - cam_z_diff * self.mdt.phys.speed_ratio
+        delta_cam_z = look_z_min + look_z_diff * self.mdt.phys.speed_ratio
         self.tgt_x = car_pos.x - cam_vec.x
         self.tgt_y = car_pos.y - cam_vec.y
         self.tgt_z = car_pos.z + delta_pos_z
-        curr_incr = 25.0 * globalClock.getDt()
+        curr_incr = cam_speed * globalClock.getDt()
         def new_pos(cam_pos, tgt):
             if abs(cam_pos - tgt) <= curr_incr:
                 return tgt
@@ -119,7 +132,7 @@ class _Logic(Logic):
         new_y = new_pos(eng.camera.getY(), self.tgt_y)
         new_z = new_pos(eng.camera.getZ(), self.tgt_z)
         eng.camera.setPos(new_x, new_y, new_z)
-        eng.camera.look_at(car_pos.x, car_pos.y, car_pos.z + 2 + delta_cam_z)
+        eng.camera.look_at(car_pos.x, car_pos.y, car_pos.z + delta_cam_z)
 
     @property
     def is_upside_down(self):
