@@ -25,6 +25,7 @@ class _Event(Event):
         if obj_name == 'Wall':
             if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.crash_sfx.play()
+            taskMgr.doMethodLater(.1, self.__crash_sfx, 'crash sfx', [self.mdt.phys.speed, self.mdt.phys.speed_ratio])
         if obj_name == 'Road':
             if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.landing_sfx.play()
@@ -52,6 +53,11 @@ class _Event(Event):
                 game.track.fsm.demand('Results')
                 game.track.gui.show_results()
         #if evt.obj_name == 'Slow':
+
+    def __crash_sfx(self, speed, speed_ratio):
+        print self.mdt.phys.speed, speed
+        if abs(self.mdt.phys.speed) < abs(speed / 2.0) and speed_ratio > .5:
+            self.mdt.audio.crash_high_speed_sfx.play()
 
     def __on_frame(self):
         '''This callback method is invoked on each frame.'''
