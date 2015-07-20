@@ -100,6 +100,11 @@ class _Phys(Phys):
     def speed(self):
         return self.vehicle.getCurrentSpeedKmHour()
 
+    @property
+    def speed_ratio(self):
+        is_race = game.track.fsm.getCurrentOrNextState() == 'Race'
+        return  min(1.0, self.speed / self.max_speed) if is_race else 0
+
     def set_forces(self, eng_frc, brake_frc, steering):
         '''This callback method is invoked on each frame.'''
         self.vehicle.setSteeringValue(steering, 0)

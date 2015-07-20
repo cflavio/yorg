@@ -67,6 +67,6 @@ class _Event(Event):
             map(lambda whl: whl.set_rotation(0), wheels)
         self.mdt.logic.update(input_dct)
         self.mdt.audio.update(input_dct)
-        eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
+        self.mdt.logic.update_cam()
         if self.mdt.logic.is_upside_down:
             self.mdt.gfx.nodepath.setR(0)

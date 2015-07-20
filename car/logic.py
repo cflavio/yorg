@@ -20,7 +20,7 @@ class _Logic(Logic):
         steering_inc = d_t * self.mdt.phys.steering_inc
         steering_dec = d_t * self.mdt.phys.steering_dec
 
-        speed_ratio = min(1.0, self.mdt.phys.speed / self.mdt.phys.max_speed)
+        speed_ratio = self.mdt.phys.speed_ratio
         steering_range = self.mdt.phys.steering_min_speed - self.mdt.phys.steering_max_speed
         steering_clamp = self.mdt.phys.steering_min_speed - speed_ratio * steering_range
 
@@ -95,6 +95,31 @@ class _Logic(Logic):
     def __update_wp(self):
         way_str = _('wrong way') if self.direction < -.6 else ''
         game.track.gui.way_txt.setText(way_str)
+
+    def update_cam(self):
+        car_np = self.mdt.gfx.nodepath
+        car_rad = deg2Rad(car_np.getH())
+        car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
+        car_vec.normalize()
+        cam_vec = car_vec * (12 + 4 * self.mdt.phys.speed_ratio)
+        car_pos = self.mdt.gfx.nodepath.getPos()
+        delta_pos_z = 4 - .8 * self.mdt.phys.speed_ratio
+        delta_cam_z = .4 * self.mdt.phys.speed_ratio
+        self.tgt_x = car_pos.x - cam_vec.x
+        self.tgt_y = car_pos.y - cam_vec.y
+        self.tgt_z = car_pos.z + delta_pos_z
+        curr_incr = 25.0 * globalClock.getDt()
+        def new_pos(cam_pos, tgt):
+            if abs(cam_pos - tgt) <= curr_incr:
+                return tgt
+            else:
+                sign = 1 if tgt > cam_pos else -1
+                return cam_pos + sign * curr_incr
+        new_x = new_pos(eng.camera.getX(), self.tgt_x)
+        new_y = new_pos(eng.camera.getY(), self.tgt_y)
+        new_z = new_pos(eng.camera.getZ(), self.tgt_z)
+        eng.camera.setPos(new_x, new_y, new_z)
+        eng.camera.look_at(car_pos.x, car_pos.y, car_pos.z + 2 + delta_cam_z)
 
     @property
     def is_upside_down(self):

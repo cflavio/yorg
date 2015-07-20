@@ -10,7 +10,6 @@ class _Gfx(Gfx):
         Gfx.__init__(self, mdt)
         self.__set_model()
         self.__set_light()
-        self.__set_camera()
 
     def __set_model(self):
         self.model = loader.loadModel("track/track")
@@ -92,10 +91,6 @@ class _Gfx(Gfx):
         self.spot_lgt.lookAt(0, 0, 0)
         render.setLight(self.spot_lgt)
         render.setShaderAuto()
-
-    def __set_camera(self):
-        eng.cam.setPos(0, -40, 50)
-        eng.cam.lookAt(0, 0, 0)
 
     def destroy(self):
         '''The destroyer.'''
