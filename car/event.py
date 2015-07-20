@@ -15,6 +15,7 @@ class _Event(Event):
         label_events = [('forward', 'arrow_up'),
                         ('left', 'arrow_left'),
                         ('reverse', 'z'),
+                        ('reverse', 'arrow_down'),
                         ('right', 'arrow_right')]
         map(lambda (lab, evt): inputState.watchWithModifiers(lab, evt),
             label_events)
