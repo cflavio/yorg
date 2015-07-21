@@ -71,7 +71,7 @@ class _Gfx(Gfx):
         eng.render.clearLight()
 
         ambient_lgt = AmbientLight('ambient light')
-        ambient_lgt.setColor((.25, .25, .25, 1))
+        ambient_lgt.setColor((.7, .7, .55, 1))
         self.ambient_np = render.attachNewNode(ambient_lgt)
         render.setLight(self.ambient_np)
 
