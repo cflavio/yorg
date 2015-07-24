@@ -4,6 +4,7 @@ sys.path.append('./ya2/thirdparty')
 from datetime import datetime
 from direct.directnotify.DirectNotify import DirectNotify
 from direct.filter.CommonFilters import CommonFilters
+from direct.particles.ParticleEffect import ParticleEffect
 from direct.showbase.ShowBase import ShowBase
 from gettext import install, translation
 from os import environ, system
@@ -153,6 +154,7 @@ class Engine(ShowBase, object):
         __builtin__.eng = self
         self.disableMouse()
         getModelPath().appendDirectory('assets/models')
+        self.enableParticles()
 
         self.render.setShaderAuto()
         self.render.setTwoSided(True)
@@ -286,6 +288,12 @@ class Engine(ShowBase, object):
         print '\n\n#####\nrender.ls()'
         self.render.ls()
 
+    def particle(self, path, parent, renderParent, pos, timeout):
+        p = ParticleEffect()
+        p.loadConfig(path)
+        p.start(parent=parent, renderParent=renderParent)
+        p.setPos(pos)
+        taskMgr.doMethodLater(timeout, lambda p: p.cleanup(), 'clear', [p])
 
     def toggle_debug(self):
         is_hidden = self.__debug_np.isHidden()

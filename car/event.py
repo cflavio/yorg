@@ -58,6 +58,8 @@ class _Event(Event):
         print self.mdt.phys.speed, speed
         if abs(self.mdt.phys.speed) < abs(speed / 2.0) and speed_ratio > .5:
             self.mdt.audio.crash_high_speed_sfx.play()
+            eng.particle('assets/particles/sparks.ptf', self.mdt.gfx.nodepath,
+                         eng.render, (0, 1.2, .75), .8)
 
     def __on_frame(self):
         '''This callback method is invoked on each frame.'''
