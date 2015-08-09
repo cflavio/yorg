@@ -9,7 +9,11 @@ from ya2.gameobject import Event, Fsm, Audio
 class _Event(Event):
     '''This class manages the events of the game.'''
 
-    def evt_f12(self):
+    def __init__(self, mdt):
+        Event.__init__(self, mdt)
+        self.accept('f12', self.on_f12)
+
+    def on_f12(self):
         eng.toggle_debug()
 
 
