@@ -4,6 +4,7 @@ from menu import Menu
 from track.track import Track
 from ya2.game import Game, GameLogic
 from ya2.gameobject import Event, Fsm, Audio
+import time
 
 
 class _Event(Event):
@@ -11,11 +12,9 @@ class _Event(Event):
 
     def __init__(self, mdt):
         Event.__init__(self, mdt)
-        self.accept('f12', self.on_f12)
-
-    def on_f12(self):
-        eng.toggle_debug()
-
+        self.accept('f12', eng.toggle_debug)
+        now = time.strftime('%y_%m_%d_%H_%M_%S')
+        self.accept('f10', eng.win.saveScreenshot, ['yorg_' + now + '.png'])
 
 class _Audio(Audio):
 
