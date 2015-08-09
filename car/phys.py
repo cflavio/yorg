@@ -29,8 +29,8 @@ class _Phys(Phys):
     pitch_control = 0  # default 0
     suspension_compression = 1  # default .83; should be lower than damping
     suspension_damping = .5  # default .88; should be greater than compression
-    max_suspension_force = 8000  # default 6000
-    max_suspension_travel_cm = 700  # default 500
+    max_suspension_force = 12000  # default 6000
+    max_suspension_travel_cm = 1700  # default 500
     skid_info = 1  # default 1
     suspension_stiffness = 20  # default 5.88; f1 car == 200
     wheels_damping_relaxation = 2  # overwrites suspension_damping
