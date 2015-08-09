@@ -16,16 +16,16 @@ class _Phys(Phys):
     wheel_rr_radius = .35  # meters
     wheel_rl_pos = (-.75, -.8, .4)  # meters
     wheel_rl_radius = .35  # meters
-    max_speed = 90.0  # Km/h
-    mass = 900  # kilograms
+    max_speed = 105.0  # Km/h
+    mass = 1400  # kilograms
     steering_min_speed = 40  # degrees
     steering_max_speed = 10  # degrees
     steering_clamp = 40  # degrees
     steering_inc = 120  # degrees per second
     steering_dec = 120  # degrees per second
-    engine_acc_frc = 5000
-    engine_dec_frc = -2000
-    brake_frc = 100
+    engine_acc_frc = 7000
+    engine_dec_frc = -5000
+    brake_frc = 75
     pitch_control = 0  # default 0
     suspension_compression = 1  # default .83; should be lower than damping
     suspension_damping = .5  # default .88; should be greater than compression
@@ -35,8 +35,8 @@ class _Phys(Phys):
     suspension_stiffness = 20  # default 5.88; f1 car == 200
     wheels_damping_relaxation = 2  # overwrites suspension_damping
     wheels_damping_compression = 4  # overwrites suspension_compression
-    friction_slip = 3.5  # default 10.5
-    roll_influence = .25  # default .1
+    friction_slip = 3  # default 10.5
+    roll_influence = .40  # default .1
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
