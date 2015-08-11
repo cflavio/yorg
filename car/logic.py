@@ -4,15 +4,15 @@ import math
 
 
 #camera constants
-cam_speed = 22
+cam_speed = 30
 cam_dist_min = 25
 cam_dist_max = 50
-cam_z_max = 30
-cam_z_min = 60
+cam_z_max = 10
+cam_z_min = 15
 look_dist_min = 10
 look_dist_max = 20
-look_z_max = 4
-look_z_min = 2
+look_z_max = 3
+look_z_min = 3
 
 
 class _Logic(Logic):
