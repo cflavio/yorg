@@ -1,6 +1,6 @@
 from direct.showbase.InputStateGlobal import inputState
 from ya2.gameobject import Event
-from panda3d.core import AudioSound
+from panda3d.core import AudioSound, Vec3, Vec2
 
 
 class _Event(Event):
@@ -26,9 +26,32 @@ class _Event(Event):
             if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.crash_sfx.play()
             taskMgr.doMethodLater(.1, self.__crash_sfx, 'crash sfx', [self.mdt.phys.speed, self.mdt.phys.speed_ratio])
-        if obj_name == 'Road':
+        if obj_name in ['Road', 'Offroad']:
             if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.landing_sfx.play()
+        if obj_name in ['Respawn']:
+            last_pos = self.mdt.logic.last_contact_pos
+            start_wp_n, end_wp_n = self.mdt.logic.current_wp
+            start_wp, end_wp = start_wp_n.get_pos(), end_wp_n.get_pos()
+            # A + dot(AP,AB) / dot(AB,AB) * AB
+            point_vec = Vec3(last_pos.x - start_wp.x,
+                             last_pos.y - start_wp.y,
+                             last_pos.z - start_wp.z)
+            wp_vec = Vec3(end_wp.x - start_wp.x,
+                          end_wp.y - start_wp.y,
+                          end_wp.z - start_wp.z)
+            dot_point = point_vec.dot(wp_vec)
+            dot_wp = wp_vec.dot(wp_vec)
+            delta = wp_vec * (dot_point / dot_wp)
+            new_pos = start_wp + delta
+            self.mdt.gfx.nodepath.setPos(new_pos.x, new_pos.y, new_pos.z + 2)
+
+            wp_vec = Vec3(end_wp_n.getPos(start_wp_n).xy, 0)
+            wp_vec.normalize()
+            or_h = (wp_vec.xy).signedAngleDeg(Vec2(0, 1))
+            self.mdt.gfx.nodepath.setHpr(-or_h, 0, 0)
+            self.mdt.gfx.nodepath.node().setLinearVelocity(0)
+            self.mdt.gfx.nodepath.node().setAngularVelocity(0)
         if obj_name == 'Goal':
             lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
             if self.mdt.gui.time_txt.getText():
@@ -79,3 +102,10 @@ class _Event(Event):
         self.mdt.logic.update_cam()
         if self.mdt.logic.is_upside_down:
             self.mdt.gfx.nodepath.setR(0)
+        car_pos = self.mdt.gfx.nodepath.get_pos()
+        top = (car_pos.x, car_pos.y, 100)
+        bottom = (car_pos.x, car_pos.y, -100)
+        result = eng.world_phys.rayTestAll(top, bottom)
+        for hit in result.getHits():
+            if 'Road' in hit.getNode().getName():
+                self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()

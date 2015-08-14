@@ -73,7 +73,7 @@ class _Logic(Logic):
             self.last_roll_ok_time = globalClock.getFrameTime()
 
     @property
-    def direction(self):
+    def current_wp(self):
         car_np = self.mdt.gfx.nodepath
         waypoints = game.track.gfx.waypoints
         distances = [car_np.getDistance(wp) for wp in waypoints]
@@ -96,10 +96,15 @@ class _Logic(Logic):
         else:
             start_wp = curr_wp
             end_wp = next_wp
-        wp_vec = Vec3(end_wp.getPos(start_wp).xy, 1)
+        return start_wp, end_wp
+
+    @property
+    def direction(self):
+        start_wp, end_wp = self.current_wp
+        wp_vec = Vec3(end_wp.getPos(start_wp).xy, 0)
         wp_vec.normalize()
 
-        car_rad = deg2Rad(car_np.getH())
+        car_rad = deg2Rad(self.mdt.gfx.nodepath.getH())
         car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         car_vec.normalize()
 

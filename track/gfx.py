@@ -23,9 +23,12 @@ class _Gfx(Gfx):
         road = self.model.find('**/Road')
         if road:
             road.hide()
-        wall = self.model.find('**/Wall')
-        if wall:
-            wall.hide()
+        wall_models = self.model.findAllMatches('**/Wall*')
+        for model in wall_models:
+            model.hide()
+        respawn_models = self.model.findAllMatches('**/Respawn*')
+        for model in respawn_models:
+            model.hide()
         slow_models = self.model.findAllMatches('**/Slow*')
         for model in slow_models:
             model.hide()
