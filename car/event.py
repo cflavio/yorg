@@ -31,19 +31,20 @@ class _Event(Event):
                 self.mdt.audio.landing_sfx.play()
         if obj_name in ['Respawn']:
             last_pos = self.mdt.logic.last_contact_pos
-            start_wp_n, end_wp_n = self.mdt.logic.current_wp
-            start_wp, end_wp = start_wp_n.get_pos(), end_wp_n.get_pos()
+            start_wp_n, end_wp_n = self.mdt.logic.closest_wp(last_pos)
+            #start_wp, end_wp = start_wp_n.get_pos(), end_wp_n.get_pos()
             # A + dot(AP,AB) / dot(AB,AB) * AB
-            point_vec = Vec3(last_pos.x - start_wp.x,
-                             last_pos.y - start_wp.y,
-                             last_pos.z - start_wp.z)
-            wp_vec = Vec3(end_wp.x - start_wp.x,
-                          end_wp.y - start_wp.y,
-                          end_wp.z - start_wp.z)
-            dot_point = point_vec.dot(wp_vec)
-            dot_wp = wp_vec.dot(wp_vec)
-            delta = wp_vec * (dot_point / dot_wp)
-            new_pos = start_wp + delta
+            #point_vec = Vec3(last_pos.x - start_wp.x,
+            #                 last_pos.y - start_wp.y,
+            #                 last_pos.z - start_wp.z)
+            #wp_vec = Vec3(end_wp.x - start_wp.x,
+            #              end_wp.y - start_wp.y,
+            #              end_wp.z - start_wp.z)
+            #dot_point = point_vec.dot(wp_vec)
+            #dot_wp = wp_vec.dot(wp_vec)
+            #delta = wp_vec * (dot_point / dot_wp)
+            #new_pos = start_wp + delta
+            new_pos = start_wp_n.get_pos()
             self.mdt.gfx.nodepath.setPos(new_pos.x, new_pos.y, new_pos.z + 2)
 
             wp_vec = Vec3(end_wp_n.getPos(start_wp_n).xy, 0)
