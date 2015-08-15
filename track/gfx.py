@@ -16,11 +16,11 @@ class _Gfx(Gfx):
         self.model.reparentTo(render)
         self.model.hide(BitMask32.bit(0))
 
-        waypoints = self.model.findAllMatches('**/Waypoint*')
+        waypoints = self.model.findAllMatches('**/Waypoints/Waypoint*')
         waypoints = [wp for wp in waypoints]
         self.waypoints = {}
         for wp in waypoints:
-            lst_wp = [self.model.find('**/Waypoint' + idx)
+            lst_wp = [self.model.find('**/Waypoints/Waypoint' + idx)
                       for idx in wp.getTag('prev').split(',')]
             self.waypoints[wp] = lst_wp
 
