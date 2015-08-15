@@ -15,23 +15,25 @@ class _Gfx(Gfx):
         self.model = loader.loadModel("track/track")
         self.model.reparentTo(render)
         self.model.hide(BitMask32.bit(0))
-        wp_idx = 0
-        self.waypoints = []
-        while self.model.find('**/Waypoint' + str(wp_idx)):
-            self.waypoints += [self.model.find('**/Waypoint' + str(wp_idx))]
-            wp_idx += 1
-        road = self.model.find('**/Road')
-        if road:
-            road.hide()
+
+        waypoints = self.model.findAllMatches('**/Waypoint*')
+        waypoints = [wp for wp in waypoints]
+        self.waypoints = {}
+        for wp in waypoints:
+            lst_wp = [self.model.find('**/Waypoint' + idx)
+                      for idx in wp.getTag('prev').split(',')]
+            self.waypoints[wp] = lst_wp
+
+        road_models = self.model.findAllMatches('**/Road*')
+        map(lambda mod: mod.hide(), road_models)
+        offroad_models = self.model.findAllMatches('**/Offroad*')
+        map(lambda mod: mod.hide(), offroad_models)
         wall_models = self.model.findAllMatches('**/Wall*')
-        for model in wall_models:
-            model.hide()
+        map(lambda mod: mod.hide(), wall_models)
         respawn_models = self.model.findAllMatches('**/Respawn*')
-        for model in respawn_models:
-            model.hide()
+        map(lambda mod: mod.hide(), respawn_models)
         slow_models = self.model.findAllMatches('**/Slow*')
-        for model in slow_models:
-            model.hide()
+        map(lambda mod: mod.hide(), slow_models)
         goal = self.model.find('**/Goal')
         if goal:
             goal.hide()

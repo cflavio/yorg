@@ -72,15 +72,34 @@ class _Logic(Logic):
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:
             self.last_roll_ok_time = globalClock.getFrameTime()
 
+    def pt_line_dst(self, pt, line_pt1, line_pt2):
+        diff1 = line_pt2.get_pos() - line_pt1.get_pos()
+        diff2 = line_pt1.get_pos() - pt.get_pos()
+        diff = abs(diff1.cross(diff2).length())
+        return diff / abs((line_pt2.get_pos() - line_pt1.get_pos()).length())
+
     @property
     def current_wp(self):
         car_np = self.mdt.gfx.nodepath
         waypoints = game.track.gfx.waypoints
-        distances = [car_np.getDistance(wp) for wp in waypoints]
+        distances = [car_np.getDistance(wp) for wp in waypoints.keys()]
         curr_wp_idx = distances.index(min(distances))
-        curr_wp = waypoints[curr_wp_idx]
-        prev_wp = waypoints[(curr_wp_idx - 1) % len(waypoints)]
-        next_wp = waypoints[(curr_wp_idx + 1) % len(waypoints)]
+        curr_wp = waypoints.keys()[curr_wp_idx]
+
+        may_prev = waypoints[curr_wp]
+        distances = []
+        for wp in may_prev:
+            distances += [self.pt_line_dst(car_np, wp, curr_wp)]
+        prev_idx = distances.index(min(distances))
+        prev_wp = may_prev[prev_idx]
+
+        may_succ = [wp for wp in waypoints if curr_wp in waypoints[wp]]
+        distances = []
+        for wp in may_succ:
+            distances += [self.pt_line_dst(car_np, curr_wp, wp)]
+        next_idx = distances.index(min(distances))
+        next_wp = may_succ[next_idx]
+
         curr_vec = Vec2(car_np.getPos(curr_wp).xy)
         curr_vec.normalize()
         prev_vec = Vec2(car_np.getPos(prev_wp).xy)
