@@ -1,16 +1,16 @@
 from ya2.gameobject import Logic
-from panda3d.core import Vec3, Vec2, deg2Rad
+from panda3d.core import Vec3, Vec2, deg2Rad, Point3
 import math
 
 
 #camera constants
 cam_speed = 30
-cam_dist_min = 25
-cam_dist_max = 50
-cam_z_max = 10
-cam_z_min = 15
-look_dist_min = 10
-look_dist_max = 20
+cam_dist_min = 20
+cam_dist_max = 25
+cam_z_max = 4
+cam_z_min = 5
+look_dist_min = 5
+look_dist_max = 10
 look_z_max = 3
 look_z_min = 3
 
@@ -140,6 +140,11 @@ class _Logic(Logic):
         way_str = _('wrong way') if self.direction < -.6 else ''
         game.track.gui.way_txt.setText(way_str)
 
+    def get_closest(self, pos):
+        result = eng.world_phys.rayTestClosest(pos, self.mdt.gfx.nodepath.getPos())
+        if result.hasHit():
+            return result.getNode().getName()
+
     def update_cam(self):
         cam_dist_diff = cam_dist_max - cam_dist_min
         look_dist_diff = look_dist_max - look_dist_min
@@ -157,6 +162,14 @@ class _Logic(Logic):
         self.tgt_x = car_pos.x - cam_vec.x
         self.tgt_y = car_pos.y - cam_vec.y
         self.tgt_z = car_pos.z + delta_pos_z
+
+        curr_pos = eng.camera.get_pos()
+        cam_cond = lambda curr_pos: self.get_closest(curr_pos) and self.get_closest(curr_pos) not in ['Vehicle', 'Goal'] and curr_pos.z < 100
+        if cam_cond(curr_pos):
+            while cam_cond(curr_pos):
+                curr_pos = Point3(curr_pos.x, curr_pos.y, curr_pos.z + 1)
+            self.tgt_z = curr_pos.z + 25
+
         self.tgt_look_x = car_pos.x - tgt_vec.x
         self.tgt_look_y = car_pos.y - tgt_vec.y
         curr_incr = cam_speed * globalClock.getDt()

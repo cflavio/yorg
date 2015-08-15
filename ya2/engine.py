@@ -155,7 +155,7 @@ class Engine(ShowBase, object):
         self.disableMouse()
         getModelPath().appendDirectory('assets/models')
         self.enableParticles()
-        base.cam.node().getLens().setNearFar(10.0, 1000.0)
+        #base.cam.node().getLens().setNearFar(10.0, 1000.0)
 
         self.render.setShaderAuto()
         self.render.setTwoSided(True)
