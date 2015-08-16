@@ -140,8 +140,9 @@ class _Logic(Logic):
         way_str = _('wrong way') if self.direction < -.6 else ''
         game.track.gui.way_txt.setText(way_str)
 
-    def get_closest(self, pos):
-        result = eng.world_phys.rayTestClosest(pos, self.mdt.gfx.nodepath.getPos())
+    def get_closest(self, pos, tgt=None):
+        tgt = tgt or self.mdt.gfx.nodepath.getPos()
+        result = eng.world_phys.rayTestClosest(pos, tgt)
         if result.hasHit():
             return result.getNode().getName()
 
@@ -154,21 +155,32 @@ class _Logic(Logic):
         car_rad = deg2Rad(car_np.getH())
         car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         car_vec.normalize()
+        car_pos = self.mdt.gfx.nodepath.getPos()
         cam_vec = car_vec * (cam_dist_min + cam_dist_diff * self.mdt.phys.speed_ratio)
         tgt_vec = -car_vec * (look_dist_min + look_dist_diff * self.mdt.phys.speed_ratio)
-        car_pos = self.mdt.gfx.nodepath.getPos()
         delta_pos_z = cam_z_max - cam_z_diff * self.mdt.phys.speed_ratio
         delta_cam_z = look_z_min + look_z_diff * self.mdt.phys.speed_ratio
+
+        curr_pos = Point3(car_pos.x - cam_vec.x, car_pos.y - cam_vec.y, 1)
+        curr_cam_fact = cam_dist_min + cam_dist_diff * self.mdt.phys.speed_ratio
+        cam_cond = lambda curr_pos: self.get_closest(curr_pos) and self.get_closest(curr_pos) not in ['Vehicle', 'Goal'] and curr_cam_fact > .1
+        if cam_cond(curr_pos):
+            while cam_cond(curr_pos):
+                curr_cam_fact -= .1
+                cam_vec = car_vec * curr_cam_fact
+                curr_pos = Point3(car_pos.x - cam_vec.x, car_pos.y - cam_vec.y, eng.camera.getZ())
+            curr_delta = delta_cam_z
+            tgt = (self.mdt.gfx.nodepath.getX(), self.mdt.gfx.nodepath.getY(), self.mdt.gfx.nodepath.getZ() + delta_cam_z)
+            delta_cond = lambda curr_delta: self.get_closest(curr_pos, tgt) and self.get_closest(curr_pos, tgt) not in ['Vehicle', 'Goal'] and curr_delta > .1
+            while delta_cond(curr_delta):
+                curr_delta -= .1
+                cam_vec = car_vec * curr_cam_fact
+                tgt = (self.mdt.gfx.nodepath.getX(), self.mdt.gfx.nodepath.getY(), self.mdt.gfx.nodepath.getZ() + curr_delta)
+            delta_cam_z = curr_delta
+
         self.tgt_x = car_pos.x - cam_vec.x
         self.tgt_y = car_pos.y - cam_vec.y
         self.tgt_z = car_pos.z + delta_pos_z
-
-        curr_pos = eng.camera.get_pos()
-        cam_cond = lambda curr_pos: self.get_closest(curr_pos) and self.get_closest(curr_pos) not in ['Vehicle', 'Goal'] and curr_pos.z < 100
-        if cam_cond(curr_pos):
-            while cam_cond(curr_pos):
-                curr_pos = Point3(curr_pos.x, curr_pos.y, curr_pos.z + 1)
-            self.tgt_z = curr_pos.z + 25
 
         self.tgt_look_x = car_pos.x - tgt_vec.x
         self.tgt_look_y = car_pos.y - tgt_vec.y
