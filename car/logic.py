@@ -66,7 +66,8 @@ class _Logic(Logic):
             self.mdt.gui.time_txt.setText(str(round(
                 globalClock.getFrameTime() - self.last_time_start, 2)))
         self.__update_roll_info()
-        self.__update_wp()
+        if game.track.gfx.waypoints:
+            self.__update_wp()
 
     def __update_roll_info(self):
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:

@@ -38,9 +38,12 @@ class _Gui(Gui):
     def set_corners(self):
         corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
         corners = [self.mdt.gfx.model.find('**/Minimap'+corner) for corner in corners]
-        self.corners = [corner.get_pos() for corner in corners]
+        if not any(corner.isEmpty() for corner in corners):
+            self.corners = [corner.get_pos() for corner in corners]
 
     def update_minimap(self):
+        if not hasattr(self, 'corners'):
+            return
         left = self.corners[0].getX()
         right = self.corners[1].getX()
         top = self.corners[0].getY()
