@@ -1,6 +1,7 @@
 from panda3d.core import TextNode
 from direct.gui.OnscreenText import OnscreenText
 from ya2.gameobject import Gui
+from direct.gui.OnscreenImage import OnscreenImage
 
 
 class _Gui(Gui):
@@ -8,10 +9,6 @@ class _Gui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
-        self.__debug_txt = OnscreenText(
-            _('F12: toggle debug'), pos=(-.1, .1), scale=0.07, fg=(1, 1, 1, 1),
-            parent=eng.a2dBottomRight, align=TextNode.ARight,
-            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.__wip_txt = OnscreenText(
             _('work in progress'), pos=(.1, .1), scale=0.05, fg=(1, 1, 1, 1),
             parent=eng.a2dBottomLeft, align=TextNode.ALeft,
@@ -29,6 +26,39 @@ class _Gui(Gui):
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.countdown_cnt = 3
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
+        self.minimap = OnscreenImage(
+            'assets/images/minimaps/minimap.jpg', pos=(-.25, 1, .25), scale=.2,
+            parent=eng.a2dBottomRight)
+        self.car_handle = OnscreenImage(
+            'assets/images/minimaps/car_handle.png', pos=(-.25, 1, .25),
+            scale=.03, parent=eng.a2dBottomRight)
+        self.car_handle.setTransparency(True)
+        self.set_corners()
+
+    def set_corners(self):
+        corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
+        corners = [self.mdt.gfx.model.find('**/Minimap'+corner) for corner in corners]
+        self.corners = [corner.get_pos() for corner in corners]
+
+    def update_minimap(self):
+        left = self.corners[0].getX()
+        right = self.corners[1].getX()
+        top = self.corners[0].getY()
+        bottom = self.corners[3].getY()
+        car_pos = game.car.gfx.nodepath.get_pos()
+        pos_x_norm = (car_pos.getX() - left) / (right - left)
+        pos_y_norm = (car_pos.getY() - bottom) / (top - bottom)
+
+        width = self.minimap.getScale()[0] * 2.0
+        height = self.minimap.getScale()[2] * 2.0
+        center_x = self.minimap.getX()
+        center_y = self.minimap.getZ()
+        left_img = center_x - width / 2.0
+        bottom_img = center_y - height / 2.0
+        pos_x = left_img + pos_x_norm * width
+        pos_y = bottom_img + pos_y_norm * height
+        self.car_handle.set_pos(pos_x, 1, pos_y)
+        self.car_handle.setR(-game.car.gfx.nodepath.getH())
 
     def process_countdown(self, task):
         if self.countdown_cnt >= 0:
@@ -61,6 +91,7 @@ class _Gui(Gui):
 
     def destroy(self):
         Gui.destroy(self)
-        self.__debug_txt.destroy()
         self.__wip_txt.destroy()
         self.way_txt.destroy()
+        self.minimap.destroy()
+        self.car_handle.destroy()
