@@ -148,6 +148,9 @@ class _Logic(Logic):
             return result.getNode().getName()
 
     def update_cam(self):
+        eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
+
+    def update_cam_fp(self):
         cam_dist_diff = cam_dist_max - cam_dist_min
         look_dist_diff = look_dist_max - look_dist_min
         cam_z_diff = cam_z_max - cam_z_min
