@@ -10,8 +10,8 @@ class _Gfx(Gfx):
         Gfx.__init__(self, mdt)
         self.__set_model()
         self.__set_light()
-        eng.cam.setPos(0, -40, 50)
-        eng.cam.lookAt(0, 0, 0)
+        #eng.cam.setPos(0, -40, 50)
+        #eng.cam.lookAt(0, 0, 0)
 
     def __set_model(self):
         self.model = loader.loadModel("track/track")
