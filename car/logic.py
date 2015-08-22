@@ -44,6 +44,9 @@ class _Logic(Logic):
             eng_frc = self.mdt.phys.engine_dec_frc if self.mdt.phys.speed < .05 else 0
             brake_frc = self.mdt.phys.brake_frc
 
+        if not input_dct['forward'] and not input_dct['reverse']:
+            brake_frc = self.mdt.phys.eng_brk_frc
+
         if input_dct['left']:
             self.__steering += steering_inc
             self.__steering = min(self.__steering, steering_clamp)

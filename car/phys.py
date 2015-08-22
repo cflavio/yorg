@@ -26,6 +26,7 @@ class _Phys(Phys):
     engine_acc_frc = 7000
     engine_dec_frc = -5000
     brake_frc = 75
+    eng_brk_frc = 25
     pitch_control = 0  # default 0
     suspension_compression = 1  # default .83; should be lower than damping
     suspension_damping = .5  # default .88; should be greater than compression
