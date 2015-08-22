@@ -4,7 +4,7 @@ import math
 
 
 #camera constants
-cam_speed = 20
+cam_speed = 30
 cam_dist_min = 25
 cam_dist_max = 40
 cam_z_max = 20

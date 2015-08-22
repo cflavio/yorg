@@ -16,7 +16,7 @@ class _Phys(Phys):
     wheel_rr_radius = .35  # meters
     wheel_rl_pos = (-.75, -.8, .4)  # meters
     wheel_rl_radius = .35  # meters
-    max_speed = 105.0  # Km/h
+    max_speed = 140.0  # Km/h
     mass = 1400  # kilograms
     steering_min_speed = 40  # degrees
     steering_max_speed = 10  # degrees
