@@ -70,7 +70,7 @@ class _Phys(Phys):
         map(lambda (pos, front, nodepath, radius):
             self.__add_wheel(pos, front, nodepath.node(), radius),
             wheels_info)
-
+        self.curr_max_speed = self.max_speed
         #mdt.gfx.nodepath.node().setCcdMotionThreshold(1e-7)
         #mdt.gfx.nodepath.node().setCcdSweptSphereRadius(3.50)
 
@@ -114,3 +114,32 @@ class _Phys(Phys):
         self.vehicle.applyEngineForce(eng_frc, 3)
         self.vehicle.setBrake(brake_frc, 2)
         self.vehicle.setBrake(brake_frc, 3)
+
+    def update_terrain(self):
+        speeds = []
+        frictions = []
+        for wheel in self.vehicle.get_wheels():
+            contact_pos = wheel.get_raycast_info().getContactPointWs()
+            result = eng.world_phys.rayTestClosest(
+                (contact_pos.x, contact_pos.y, contact_pos.z + .1),
+                (contact_pos.x, contact_pos.y, contact_pos.z - .1))
+            ground = result.get_node()
+            if ground:
+                ground_name = ground.get_name()
+                gfx_node = game.track.gfx.model.find('**/' + ground_name)
+                try:
+                    speeds += [float(gfx_node.get_tag('speed'))]
+                    frictions += [float(gfx_node.get_tag('friction'))]
+                except ValueError:
+                    pass
+        if speeds:
+            avg_speed = sum(speeds) / len(speeds)
+        else:
+            avg_speed = 1.0
+        if frictions:
+            avg_friction = sum(frictions) / len(frictions)
+        else:
+            avg_friction = 1.0
+        self.curr_max_speed = self.max_speed * avg_speed
+        for wheel in self.vehicle.get_wheels():
+            wheel.setFrictionSlip(self.friction_slip * avg_friction)

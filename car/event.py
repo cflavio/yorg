@@ -110,3 +110,4 @@ class _Event(Event):
         for hit in result.getHits():
             if 'Road' in hit.getNode().getName():
                 self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()
+        self.mdt.phys.update_terrain()
