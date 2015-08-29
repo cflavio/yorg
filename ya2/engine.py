@@ -13,6 +13,7 @@ from panda3d.core import getModelPath, WindowProperties, LightRampAttrib, \
     PandaNode, NodePath, AntialiasAttrib
 from panda3d.core import loadPrcFileData
 from webbrowser import open_new_tab
+from pause import pause, resume, isPaused, get_isPaused
 import __builtin__
 import yaml
 import platform
@@ -186,6 +187,9 @@ class Engine(ShowBase, object):
     def __on_close(self):
         self.closeWindow(self.win)
         sys.exit()
+
+    def toggle_pause(self):
+        (resume if get_isPaused() else pause)()
 
     def start(self):
         self.collision_objs = []
