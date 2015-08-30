@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-18 13:21+0200\n"
+"POT-Creation-Date: 2015-08-30 14:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,37 +65,33 @@ msgstr "Codice"
 msgid "Art"
 msgstr "Grafica"
 
-#: track/gui.py:12
-msgid "F12: toggle debug"
-msgstr "F12: debug"
-
-#: track/gui.py:16
+#: track/gui.py:13
 msgid "work in progress"
 msgstr "stiamo lavorando per voi"
 
-#: track/gui.py:23
+#: track/gui.py:20
 msgid "arrows for driving; Z for braking"
 msgstr "frecce per guidare; Z per frenare"
 
-#: track/gui.py:36
+#: track/gui.py:69
 msgid "GO!"
 msgstr "VIA!"
 
-#: track/gui.py:48
+#: track/gui.py:81
 msgid "TIME"
-msgstr ""
+msgstr "TEMPO"
 
-#: track/gui.py:53
+#: track/gui.py:86
 msgid "LAP"
-msgstr ""
+msgstr "GIRO"
 
 #: ya2/gui.py:85
 msgid "Back"
 msgstr "Indietro"
 
-#: car/logic.py:93
+#: car/logic.py:144
 msgid "wrong way"
-msgstr ""
+msgstr "direzione sbagliata"
 
 #: car/gui.py:135
 msgid "Speed"
@@ -112,3 +108,6 @@ msgstr "Tempo"
 #: car/gui.py:147
 msgid "Best"
 msgstr "Miglior giro"
+
+#~ msgid "F12: toggle debug"
+#~ msgstr "F12: debug"
