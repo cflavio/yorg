@@ -48,7 +48,7 @@ devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
 docs_path_str = '{path}{name}-%s-docs.tar.gz' % ver_branch
 pdf_path_str = '{path}{name}-%s-code.tar.gz' % ver_branch
 
-home = expanduser('~')
+home = '/home/flavio'  # expanduser('~') TODO: don't hardcode that
 ptools_path = home+'/runtime_panda3d'
 has_super_mirror = os_path.exists(ptools_path)
 bld_cmd_mir_tmpl = 'panda3d -M {ptools} {ptools}/pdeploy1.9.p3d '
