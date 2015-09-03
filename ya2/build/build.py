@@ -102,7 +102,7 @@ def build_src(target, source, env):
     '''This function creates a tar.gz file with the game sources.'''
     name = env['NAME']
     build_command_str = \
-        "tar --transform 's/^./{name}/' -cf {out_name} " +\
+        "tar --transform 's/^./{name}/' -czf {out_name} " +\
         "--exclude '{out_name}' --exclude '.git' --exclude '.kdev4' " +\
         "--exclude '{name}.kdev4' --exclude '.sconsign.dblite' " +\
         "--exclude '*.pyc' --exclude .settings --exclude .project " +\
@@ -149,7 +149,7 @@ def build_devinfo(target, source, env):
                     f.write(out+'\n')
             f.write('\n')
     build_command_str = \
-        "tar -cf {out_name} -C {path} devinfo.txt && rm {path}devinfo.txt"
+        "tar -czf {out_name} -C {path} devinfo.txt && rm {path}devinfo.txt"
     build_command = build_command_str.format(
         path=path, out_name=devinfo_path_str.format(path=path, name=name,
                                                     version=ver_branch))
@@ -276,7 +276,7 @@ def build_docs(target, source, env):
     system("sed -i 1s/./Modules/ %sdocs_apidoc/modules.rst" % path)
     system('sphinx-build -b html %sdocs_apidoc %sdocs' % (path, path))
     build_command_str = \
-        "tar -C {path} -cf {out_name} ./docs"
+        "tar -C {path} -czf {out_name} ./docs"
     build_command = build_command_str.format(
         path=path, out_name=docs_path_str.format(path=path, name=name,
                                                  version=ver_branch))
@@ -376,7 +376,7 @@ def build_pdf(target, source, env):
         "--pretty-print=python -o - `find . -name '*.py'` | " + \
         "ps2pdf - sources.pdf ; pdfnup --nup 2x1 -o sources.pdf sources.pdf"
     system(cmd)
-    cmd = 'tar -cf {out_name} sources.pdf && rm sources.pdf'
+    cmd = 'tar -czf {out_name} sources.pdf && rm sources.pdf'
     cmd = cmd.format(
         out_name=pdf_path_str.format(path=path, name=name, version=ver_branch))
     system(cmd)
