@@ -6,8 +6,8 @@ from ya2.gameobject import Phys
 class _Phys(Phys):
     '''This class models the physics component of a car.'''
 
-    collision_box_shape = (.8, 1.4, .5)  # meters
-    collision_box_pos = (0, 0, .5)  # meters
+    collision_box_shape = (.8, 1.4, .45)  # meters
+    collision_box_pos = (0, 0, .55)  # meters
     wheel_fr_pos = (.75, 1.05, .4)  # meters
     wheel_fr_radius = .3  # meters
     wheel_fl_pos = (-.75, 1.05, .4)  # meters
