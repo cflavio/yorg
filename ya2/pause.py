@@ -54,56 +54,56 @@ else:
     # defines the new method wrappers for intercepting messages
 
     # ANIMATIONS ################################################################
-    def newAnimPlay(self):
-        PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
-        PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
-        AnimControl__origPlay(self)
-    Dtool_funcToMethod(newAnimPlay,AnimControl,'play')
-    del newAnimPlay
-
-    def newAnimLoop(self,restart=1,_from=None,_to=None):
-        PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
-        PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
-        if _from is not None and _to is not None :
-            AnimControl__origLoop(self,restart,_from,_to)
-        else:
-            AnimControl__origLoop(self,restart)
-    Dtool_funcToMethod(newAnimLoop,AnimControl,'loop')
-    del newAnimLoop
-
-    def newAnimPingpong(self,restart=1,_from=None,_to=None):
-        PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
-        PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
-        if _from is not None and _to is not None :
-            AnimControl__origPingpong(self,restart,_from,_to)
-        else:
-            AnimControl__origPingpong(self,restart)
-    Dtool_funcToMethod(newAnimPingpong,AnimControl,'pingpong')
-    del newAnimPingpong
-
-    def newAnimStop(self):
-        for e in PRmsg.getAllAccepting(self):
-            PRmsg.ignore(e,self)
-        AnimControl__origStop(self)
-    Dtool_funcToMethod(newAnimStop,AnimControl,'stop')
-    del newAnimStop
-
-    def pauseAnim(self,respectTag=1):
-        if respectTag:
-            part=self.getPart()
-            for n in xrange(part.getNumNodes()):
-                if NodePath(part.getNode(n)).hasNetTag('nopause'):
-                    return
-        PRmsg.ignore('pauseAllAnims',self)
-        PRmsg.ignore('pauseNotTaggedAnims',self)
-        PRmsg.accept('resumeAllAnims',self,resumeAnim,[self,self.getPlayRate()])
-        self.setPlayRate(0)
-
-    def resumeAnim(self,PR):
-        PRmsg.ignore('resumeAllAnims',self)
-        PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
-        PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
-        self.setPlayRate(PR)
+#     def newAnimPlay(self):
+#         PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
+#         PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
+#         AnimControl__origPlay(self)
+#     Dtool_funcToMethod(newAnimPlay,AnimControl,'play')
+#     del newAnimPlay
+#
+#     def newAnimLoop(self,restart=1,_from=None,_to=None):
+#         PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
+#         PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
+#         if _from is not None and _to is not None :
+#             AnimControl__origLoop(self,restart,_from,_to)
+#         else:
+#             AnimControl__origLoop(self,restart)
+#     Dtool_funcToMethod(newAnimLoop,AnimControl,'loop')
+#     del newAnimLoop
+#
+#     def newAnimPingpong(self,restart=1,_from=None,_to=None):
+#         PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
+#         PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
+#         if _from is not None and _to is not None :
+#             AnimControl__origPingpong(self,restart,_from,_to)
+#         else:
+#             AnimControl__origPingpong(self,restart)
+#     Dtool_funcToMethod(newAnimPingpong,AnimControl,'pingpong')
+#     del newAnimPingpong
+#
+#     def newAnimStop(self):
+#         for e in PRmsg.getAllAccepting(self):
+#             PRmsg.ignore(e,self)
+#         AnimControl__origStop(self)
+#     Dtool_funcToMethod(newAnimStop,AnimControl,'stop')
+#     del newAnimStop
+#
+#     def pauseAnim(self,respectTag=1):
+#         if respectTag:
+#             part=self.getPart()
+#             for n in xrange(part.getNumNodes()):
+#                 if NodePath(part.getNode(n)).hasNetTag('nopause'):
+#                     return
+#         PRmsg.ignore('pauseAllAnims',self)
+#         PRmsg.ignore('pauseNotTaggedAnims',self)
+#         PRmsg.accept('resumeAllAnims',self,resumeAnim,[self,self.getPlayRate()])
+#         self.setPlayRate(0)
+#
+#     def resumeAnim(self,PR):
+#         PRmsg.ignore('resumeAllAnims',self)
+#         PRmsg.accept('pauseAllAnims',self,pauseAnim,[self,0])
+#         PRmsg.accept('pauseNotTaggedAnims',self,pauseAnim,[self])
+#         self.setPlayRate(PR)
 
 
     # AUDIO SOUNDS ##############################################################
