@@ -5,12 +5,12 @@ import math
 
 #camera constants
 cam_speed = 30
-cam_dist_min = 25
-cam_dist_max = 40
-cam_z_max = 20
-cam_z_min = 30
-look_dist_min = 10
-look_dist_max = 20
+cam_dist_min = 12
+cam_dist_max = 18
+cam_z_max = 6
+cam_z_min = 1
+look_dist_min = 5
+look_dist_max = 10
 look_z_max = 3
 look_z_min = 0
 
