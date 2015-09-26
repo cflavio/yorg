@@ -40,7 +40,7 @@ class LogMgr:
         loadPrcFileData('', 'notify-level-ya2 info')
 
     def log(self, msg):
-        self.__notify.info(datetime.now().strftime("%H:%M:%S") + ' ' + msg)
+        self.__notify.info(datetime.now().strftime("%H:%M:%S") + ' ' + str(msg))
 
     def log_conf(self):
         self.log('version: '+eng.version)
@@ -132,7 +132,6 @@ class Configuration:
         if self.win_size:
             self.__set('win-size', self.win_size)
         self.__set('window-title', self.win_title)
-        self.__set('fullscreen', int(self.fullscreen))
         self.__set('cursor-hidden', int(self.cursor_hidden))
         self.__set('sync-video', int(self.sync_video))
         if self.antialiasing:
@@ -172,7 +171,9 @@ class Engine(ShowBase, object):
                                 OptionMgr.get_options()['lang'])
 
         if self.win:
-            self.set_resolution(self.resolution)
+            self.set_resolution('x'.join(configuration.win_size.split()))
+            if OptionMgr.get_options()['fullscreen']:
+                self.toggle_fullscreen()
 
             self.win.setCloseRequestEvent('window-closed')
             self.accept('window-closed', self.__on_close)
@@ -304,7 +305,7 @@ class Engine(ShowBase, object):
         is_hidden = self.__debug_np.isHidden()
         (self.__debug_np.show if is_hidden else self.__debug_np.hide)()
 
-    def toggle_fullscreen(self, state):
+    def toggle_fullscreen(self, state=None):
         self.set_resolution(self.closest_res())
         props = WindowProperties()
         props.set_fullscreen(not self.win.is_fullscreen())
