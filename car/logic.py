@@ -36,11 +36,15 @@ class _Logic(Logic):
         steering_range = self.mdt.phys.steering_min_speed - self.mdt.phys.steering_max_speed
         steering_clamp = self.mdt.phys.steering_min_speed - speed_ratio * steering_range
 
-        if input_dct['forward']:
+        if input_dct['forward'] and input_dct['reverse']:
+            eng_frc = self.mdt.phys.engine_acc_frc if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
+            brake_frc = self.mdt.phys.brake_frc
+
+        if input_dct['forward'] and not input_dct['reverse']:
             eng_frc = self.mdt.phys.engine_acc_frc if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
             brake_frc = 0
 
-        if input_dct['reverse']:
+        if input_dct['reverse'] and not input_dct['forward']:
             eng_frc = self.mdt.phys.engine_dec_frc if self.mdt.phys.speed < .05 else 0
             brake_frc = self.mdt.phys.brake_frc
 
