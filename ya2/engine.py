@@ -1,4 +1,5 @@
 import sys
+from direct.gui.DirectFrame import DirectFrame
 sys.path.append('./ya2/thirdparty')
 
 from datetime import datetime
@@ -104,6 +105,7 @@ class FontMgr:
         if path not in self.__fonts:
             self.__fonts[path] = self.__eng.loader.loadFont(path)
             self.__fonts[path].setPixelsPerUnit(60)
+            self.__fonts[path].setOutline((0, 0, 0, 1), .8, .2)
         return self.__fonts[path]
 
 
@@ -190,6 +192,11 @@ class Engine(ShowBase, object):
         sys.exit()
 
     def toggle_pause(self):
+        if not get_isPaused():
+            self.pauseFrame = DirectFrame(
+                frameColor=(.3, .3, .3, .7), frameSize=(-1.8, 1.8, -1, 1))
+        else:
+            self.pauseFrame.destroy()
         (resume if get_isPaused() else pause)()
 
     def start(self):
