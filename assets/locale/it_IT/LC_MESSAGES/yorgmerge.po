@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-30 14:01+0200\n"
+"POT-Creation-Date: 2015-09-27 11:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,35 +33,35 @@ msgstr "Riconoscimenti"
 msgid "Quit"
 msgstr "Esci"
 
-#: menu.py:44
+#: menu.py:46
 msgid "Language"
 msgstr "Lingua"
 
-#: menu.py:58
+#: menu.py:62
 msgid "Volume"
 msgstr "Volume"
 
-#: menu.py:65
+#: menu.py:70
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: menu.py:77
+#: menu.py:83
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu.py:96
+#: menu.py:104
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: menu.py:100
+#: menu.py:109
 msgid "(from the next execution)"
 msgstr "(dalla prossima esecuzione)"
 
-#: menu.py:148
+#: menu.py:158
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:149
+#: menu.py:159
 msgid "Art"
 msgstr "Grafica"
 
@@ -69,45 +69,39 @@ msgstr "Grafica"
 msgid "work in progress"
 msgstr "stiamo lavorando per voi"
 
-#: track/gui.py:20
-msgid "arrows for driving; Z for braking"
-msgstr "frecce per guidare; Z per frenare"
-
 #: track/gui.py:69
 msgid "GO!"
 msgstr "VIA!"
 
-#: track/gui.py:81
-msgid "TIME"
-msgstr "TEMPO"
-
-#: track/gui.py:86
+#: track/gui.py:89
 msgid "LAP"
 msgstr "GIRO"
 
-#: ya2/gui.py:85
+#: ya2/gui.py:92
 msgid "Back"
 msgstr "Indietro"
 
-#: car/logic.py:144
+#: car/logic.py:148
 msgid "wrong way"
 msgstr "direzione sbagliata"
 
-#: car/gui.py:135
-msgid "Speed"
-msgstr "Velocità"
+#~ msgid "arrows for driving; Z for braking"
+#~ msgstr "frecce per guidare; Z per frenare"
 
-#: car/gui.py:139
-msgid "Lap"
-msgstr "Giro"
+#~ msgid "TIME"
+#~ msgstr "TEMPO"
 
-#: car/gui.py:143
-msgid "Time"
-msgstr "Tempo"
+#~ msgid "Speed"
+#~ msgstr "Velocità"
 
-#: car/gui.py:147
-msgid "Best"
-msgstr "Miglior giro"
+#~ msgid "Lap"
+#~ msgstr "Giro"
+
+#~ msgid "Time"
+#~ msgstr "Tempo"
+
+#~ msgid "Best"
+#~ msgstr "Miglior giro"
 
 #~ msgid "F12: toggle debug"
 #~ msgstr "F12: debug"
