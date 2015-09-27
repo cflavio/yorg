@@ -32,7 +32,10 @@ def __get_version():
 
 
 path = 'built/'
-ver_branch = {'master': 'stable', 'dev': 'dev'}[__get_branch()]
+try:
+    ver_branch = {'master': 'stable', 'dev': 'dev'}[__get_branch()]
+except KeyError:
+    ver_branch = __get_branch()
 ver = __get_version()
 p3d_path_str = '{path}{name}-%s.p3d' % ver_branch
 win_path_str = '{path}{name}-%s-windows.exe' % ver_branch
