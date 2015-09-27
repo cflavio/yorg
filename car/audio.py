@@ -20,7 +20,7 @@ class _Audio(Audio):
                 self.brake_sfx.status() != AudioSound.PLAYING and \
                 not self.mdt.phys.is_flying:
             self.brake_sfx.play()
-        if not input_dct['reverse'] or self.mdt.phys.speed < 50.0:
+        if not input_dct['reverse'] or self.mdt.phys.speed < 50.0 or self.mdt.phys.is_flying:
             self.brake_sfx.stop()
         speed_ratio = self.mdt.phys.speed / self.mdt.phys.max_speed
         self.engine_sfx.set_volume(max(.25, abs(speed_ratio)))
