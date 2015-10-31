@@ -22,14 +22,14 @@ class _Event(Event):
 
     def __on_collision(self, obj_name):
         print 'collision with %s %s' % (obj_name, round(globalClock.getFrameTime(), 2))
-        if obj_name == 'Wall':
+        if obj_name.startswith('Wall'):
             if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.crash_sfx.play()
             taskMgr.doMethodLater(.1, self.__crash_sfx, 'crash sfx', [self.mdt.phys.speed, self.mdt.phys.speed_ratio])
-        if obj_name in ['Road', 'Offroad']:
+        if any(obj_name.startswith(s) for s in ['Road', 'Offroad']):
             if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.landing_sfx.play()
-        if obj_name in ['Respawn']:
+        if obj_name.startswith('Respawn'):
             last_pos = self.mdt.logic.last_contact_pos
             start_wp_n, end_wp_n = self.mdt.logic.closest_wp(last_pos)
             #start_wp, end_wp = start_wp_n.get_pos(), end_wp_n.get_pos()
@@ -53,7 +53,7 @@ class _Event(Event):
             self.mdt.gfx.nodepath.setHpr(-or_h, 0, 0)
             self.mdt.gfx.nodepath.node().setLinearVelocity(0)
             self.mdt.gfx.nodepath.node().setAngularVelocity(0)
-        if obj_name == 'Goal':
+        if obj_name.startswith('Goal'):
             lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
             if self.mdt.gui.time_txt.getText():
                 lap_time = float(self.mdt.gui.time_txt.getText())
