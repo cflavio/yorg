@@ -3,6 +3,7 @@ from direct.gui.OnscreenText import OnscreenText
 from itertools import product
 from panda3d.core import PNMImage, Texture
 from panda3d.core import TextNode
+from direct.gui.OnscreenImage import OnscreenImage
 
 
 class ImageButton(DirectButton):
@@ -67,6 +68,11 @@ class Page(object):
             self.__set_social()
         if self.page_args.version:
             self.__set_version()
+        self.background = OnscreenImage(
+            scale=(1.77778, 1, 1.0),
+            image='assets/images/gui/menu_background.jpg')
+        self.background.setBin( 'background', 10 )
+        self.widgets += [self.background]
 
     def update_texts(self):
         transl_wdg = [wdg for wdg in self.widgets
@@ -78,6 +84,7 @@ class Page(object):
         page_args = self.page_args
         self.widgets += [DirectButton(
             text='', scale=.12, pos=(0, 1, -.8), text_font=self.font,
+            text_fg=(.75, .75, .75, 1),
             frameColor=page_args.btn_color, frameSize=page_args.btn_size,
             command=self.__on_back,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
@@ -100,10 +107,11 @@ class Page(object):
                  ('youtube',
                   'http://www.youtube.com/user/ya2games?sub_confirmation=1'),
                  ('pinterest', 'http://www.pinterest.com/ya2tech'),
+                 ('tumblr', 'http://ya2tech.tumblr.com'),
                  ('feed', 'http://www.ya2.it/feed-following')]
         self.widgets += [
             ImageButton(eng, parent=eng.a2dBottomRight, scale=.1,
-                        pos=(-.85 + i*.15, 1, .1), frameColor=(0, 0, 0, 0),
+                        pos=(-1.0 + i*.15, 1, .1), frameColor=(0, 0, 0, 0),
                         image='assets/images/icons/%s_png.png' % site[0],
                         command=eng.open_browser, extraArgs=[site[1]],
                         rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),

@@ -5,6 +5,7 @@ from track.track import Track
 from ya2.game import Game, GameLogic
 from ya2.gameobject import Event, Fsm, Audio
 import time
+from direct.gui.OnscreenImage import OnscreenImage
 
 
 class _Event(Event):
@@ -43,10 +44,15 @@ class _Fsm(Fsm):
 
     def enterPlay(self):
         eng.start()
+        self.load_img = OnscreenImage('assets/images/gui/loading.jpg', scale=(1.77778, 1, 1))
+        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff')
+
+    def load_stuff(self, task):
         self.mdt.track = Track()
         self.mdt.car = Car(self.mdt.track.gfx.start_pos,
                          self.mdt.track.gfx.start_pos_hpr)
         self.mdt.audio.game_music.play()
+        self.load_img.destroy()
 
     def exitPlay(self):
         self.mdt.audio.game_music.stop()

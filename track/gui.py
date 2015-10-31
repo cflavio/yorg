@@ -16,10 +16,10 @@ class _Gui(Gui):
         self.__countdown_txt = OnscreenText(
             '', pos=(0, 0), scale=.2, fg=(1, 1, 1, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
-        self.__keys_txt = OnscreenText(
-            _('arrows for driving; Z for braking'), pos=(.1, -.2), scale=.1,
-            fg=(1, 1, 1, 1), align=TextNode.ALeft, parent=eng.a2dTopLeft,
-            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+        self.__keys_img = OnscreenImage(
+            image='assets/images/gui/keys.png', parent=eng.a2dTopLeft,
+            pos=(.7, 1, -.4), scale=(.6, 1, .3))
+        self.__keys_img.setTransparency(True)
         self.way_txt = OnscreenText(
             '', pos=(.1, .4), scale=0.1, fg=(1, 1, 1, 1),
             parent=eng.a2dBottomLeft, align=TextNode.ALeft,
@@ -72,23 +72,30 @@ class _Gui(Gui):
             return task.again
         else:
             self.__countdown_txt.destroy()
-            destroy_keys = lambda task: self.__keys_txt.destroy()
+            destroy_keys = lambda task: self.__keys_img.destroy()
             taskMgr.doMethodLater(5.0, destroy_keys, 'destroy keys')
             game.track.fsm.demand('Race')
 
     def show_results(self):
+        self.result_img = OnscreenImage(image='assets/images/gui/results.png',
+                                        scale=(.8, 1, .8))
+        self.result_img.setTransparency(True)
         self.__res_txts = [OnscreenText(
-            str(game.car.logic.lap_times[i-1]) if i else _('TIME'),
-            pos=(.2, .3 - .2 * i), scale=.1, fg=(1, 1, 1, 1),
+            str(game.car.logic.lap_times[i-1]) if i else '',
+            pos=(.3, .2 - .2 * i), scale=.1, fg=(.75, .75, .75, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
             for i in range(4)]
         self.__res_txts += [OnscreenText(
-            str(i) if i else _('LAP'), pos=(-.2, .3 - .2 * i), scale=.1,
-            fg=(1, 1, 1, 1),
+            _('LAP'), pos=(-.3, .35), scale=.1, fg=(.75, .75, .75, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
             for i in range(4)]
+        self.__res_txts += [OnscreenText(
+            str(i), pos=(-.3, .2 - .2 * i), scale=.1, fg=(.75, .75, .75, 1),
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+            for i in range(1, 4)]
         def to_menu(task):
             map(lambda txt: txt.destroy(), self.__res_txts)
+            self.result_img.destroy()
             game.fsm.demand('Menu')
         taskMgr.doMethodLater(10.0, to_menu, 'to menu')
 

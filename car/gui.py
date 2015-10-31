@@ -2,6 +2,7 @@ from panda3d.core import TextNode
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
 from ya2.gameobject import Gui
+from direct.gui.OnscreenImage import OnscreenImage
 
 
 class CarParameter:
@@ -132,28 +133,32 @@ class _Gui(Gui):
             self.__skid_info, self.__suspension_stiffness,
             self.__wheels_damping_relaxation, self.__wheels_damping_compression,
             self.__friction_slip, self.__roll_influence]
-        self.speed_lab = OnscreenText(text=_('Speed'), pos=(-.55, -.1), scale=.08,
-            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.speed_txt = OnscreenText(pos=(-.5, -.1), scale=.08,
-            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.lap_lab = OnscreenText(text=_('Lap'), pos=(-.55, -.2), scale=.08,
-            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.lap_txt = OnscreenText(text='1/3', pos=(-.5, -.2), scale=.08,
-            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.time_lab = OnscreenText(text=_('Time'), pos=(-.55, -.3), scale=.08,
-            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.time_txt = OnscreenText(pos=(-.5, -.3), scale=.08,
-            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.best_lab = OnscreenText(text=_('Best'), pos=(-.55, -.4), scale=.08,
-            align=TextNode.ARight, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
-        self.best_txt = OnscreenText(pos=(-.5, -.4), scale=.08,
-            align=TextNode.ALeft, parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.panel = OnscreenImage(
+            'assets/images/gui/panel.png', scale=(.4, 1, .2),
+            parent=eng.a2dTopRight, pos=(-.45, 1, -.25))
+        self.panel.setTransparency(True)
+        self.speed_txt = OnscreenText(
+            pos=(-.7, -.38), scale=.065,
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
+            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.lap_txt = OnscreenText(
+            text='1/3', pos=(-.5, -.38), scale=.065,
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
+            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.time_txt = OnscreenText(
+            pos=(-.3, -.38), scale=.065,
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
+            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+        self.best_txt = OnscreenText(
+            pos=(-.1, -.38), scale=.065,
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
+            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
 
     def toggle(self):
         map(lambda par: par.toggle(), self.__pars)
 
     def destroy(self):
         Gui.destroy(self)
-        labels = [self.speed_lab, self.speed_txt, self.time_lab, self.time_txt,
-                  self.lap_lab, self.lap_txt, self.best_lab, self.best_txt]
+        labels = [self.panel, self.speed_txt, self.time_txt, self.lap_txt,
+                  self.best_txt]
         map(lambda wdg: wdg.destroy(), self.__pars + labels)
