@@ -171,7 +171,10 @@ class Engine(ShowBase, object):
                                 OptionMgr.get_options()['lang'])
 
         if self.win:
-            self.set_resolution('x'.join(configuration.win_size.split()))
+            try:
+                self.set_resolution('x'.join(configuration.win_size.split()))
+            except AttributeError:
+                pass  # configuration file doesn't exist
             if OptionMgr.get_options()['fullscreen']:
                 self.toggle_fullscreen()
 
