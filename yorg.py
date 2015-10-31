@@ -44,7 +44,7 @@ class _Fsm(Fsm):
 
     def enterPlay(self):
         eng.start()
-        self.load_img = OnscreenImage('assets/images/gui/loading.png', scale=(1.77778, 1, 1))
+        self.load_img = OnscreenImage('assets/images/gui/loading.jpg', scale=(1.77778, 1, 1))
         taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff')
 
     def load_stuff(self, task):

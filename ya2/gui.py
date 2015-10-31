@@ -70,7 +70,7 @@ class Page(object):
             self.__set_version()
         self.background = OnscreenImage(
             scale=(1.77778, 1, 1.0),
-            image='assets/images/gui/menu_background.png')
+            image='assets/images/gui/menu_background.jpg')
         self.background.setBin( 'background', 10 )
         self.widgets += [self.background]
 
