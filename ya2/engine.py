@@ -262,6 +262,7 @@ class Engine(ShowBase, object):
         res_x, res_y = win_prop.get_x_size(), win_prop.get_y_size()
         return '%dx%d' % (res_x, res_y)
 
+    @property
     def closest_res(self):
         def split_res(res):
             return [int(v) for v in res.split('x')]
@@ -316,7 +317,7 @@ class Engine(ShowBase, object):
         (self.__debug_np.show if is_hidden else self.__debug_np.hide)()
 
     def toggle_fullscreen(self, state=None):
-        self.set_resolution(self.closest_res())
+        self.set_resolution(self.closest_res)
         props = WindowProperties()
         props.set_fullscreen(not self.win.is_fullscreen())
         base.win.requestProperties(props)

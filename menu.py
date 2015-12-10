@@ -91,7 +91,7 @@ class OptionPage(Page):
             text_font=font, text_fg=(.75, .75, .75, 1), text_scale=.85,
             item_text_font=font, item_text_fg=(.75, .75, .75, 1),
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
-            initialitem=eng.resolutions.index(curr_res),
+            initialitem=eng.closest_res,
             popupMarker_frameColor=page_args.btn_color, textMayChange=1,
             highlightColor=(.8, .8, .8, .2), command=eng.set_resolution,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
