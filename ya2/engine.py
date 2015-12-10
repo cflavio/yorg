@@ -272,8 +272,11 @@ class Engine(ShowBase, object):
             return abs(res[0] - curr_res[0]) + abs(res[1] - curr_res[1])
 
         dist_lst = map(distance, eng.resolutions)
-        idx_min = dist_lst.index(min(dist_lst))
-        return eng.resolutions[idx_min]
+        try:
+            idx_min = dist_lst.index(min(dist_lst))
+            return eng.resolutions[idx_min]
+        except ValueError:  # sometimes we have empty resolutions
+            return eng.resolution
 
     def set_resolution(self, res):
         props = WindowProperties()
