@@ -279,9 +279,13 @@ class Engine(ShowBase, object):
             return eng.resolution
 
     def set_resolution(self, res):
+        self.log_mgr.log('setting resolution ' + str(res))
         props = WindowProperties()
         props.set_size(*[int(res) for res in res.split('x')])
         self.win.request_properties(props)
+        taskMgr.doMethodLater(
+            3.0, self.log_mgr.log, 'log res',
+            ['resolution: ' + str(self.resolution)])
 
     def open_browser(self, url):
         if sys.platform.startswith('linux'):
