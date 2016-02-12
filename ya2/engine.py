@@ -278,14 +278,20 @@ class Engine(ShowBase, object):
         except ValueError:  # sometimes we have empty resolutions
             return eng.resolution
 
-    def set_resolution(self, res):
+    def set_resolution(self, res, check=True):
         self.log_mgr.log('setting resolution ' + str(res))
         props = WindowProperties()
-        props.set_size(*[int(res) for res in res.split('x')])
+        props.set_size(*[int(resol) for resol in res.split('x')])
         self.win.request_properties(props)
-        taskMgr.doMethodLater(
-            3.0, self.log_mgr.log, 'log res',
-            ['resolution: ' + str(self.resolution)])
+        if check:
+            taskMgr.doMethodLater(
+                3.0, self.set_resolution_check, 'resolution check', [res])
+
+    def set_resolution_check(self, res):
+        self.log_mgr.log('resolutions:', self.resolution, res)
+        if self.resolution != res:
+            self.log_mgr.log('second attempt', self.resolution, res)
+            self.set_resolution(res, False)
 
     def open_browser(self, url):
         if sys.platform.startswith('linux'):
