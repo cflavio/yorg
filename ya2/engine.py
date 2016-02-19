@@ -288,9 +288,9 @@ class Engine(ShowBase, object):
                 3.0, self.set_resolution_check, 'resolution check', [res])
 
     def set_resolution_check(self, res):
-        self.log_mgr.log('resolutions:', self.resolution, res)
+        self.log_mgr.log('resolutions: %s %s' % (self.resolution, res))
         if self.resolution != res:
-            self.log_mgr.log('second attempt', self.resolution, res)
+            self.log_mgr.log('second attempt: %s %s' % (self.resolution, res))
             self.set_resolution(res, False)
 
     def open_browser(self, url):
