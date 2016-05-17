@@ -7,7 +7,9 @@ from ya2.engine import Engine
 from yorg import Yorg
 
 
-if not path.exists('main.py'):  # is it the deployed version?
+if sys.platform != 'darwin' and \
+        not path.exists('main.py'):  # on osx it shows an error window on exit
+    #is it the deployed version?
     sys.stdout = open('yorg_output.txt', 'w')
     sys.stderr = open('yorg_error.txt', 'w')
     nout = MultiplexStream()
