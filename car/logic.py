@@ -9,8 +9,8 @@ cam_dist_min = 12
 cam_dist_max = 18
 cam_z_max = 5
 cam_z_min = 3
-look_dist_min = 6
-look_dist_max = 10
+look_dist_min = 2
+look_dist_max = 6
 look_z_max = 2
 look_z_min = 0
 
@@ -152,13 +152,14 @@ class _Logic(Logic):
         tgt = tgt or self.mdt.gfx.nodepath.getPos()
         result = eng.world_phys.rayTestClosest(pos, tgt)
         if result.hasHit():
-            return result.getNode().getName()
+            return result
 
     def update_cam(self):
         #eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
         self.update_cam_fp()
 
     def update_cam_fp(self):
+        speed_ratio = self.mdt.phys.speed_ratio
         cam_dist_diff = cam_dist_max - cam_dist_min
         look_dist_diff = look_dist_max - look_dist_min
         cam_z_diff = cam_z_max - cam_z_min
@@ -168,34 +169,35 @@ class _Logic(Logic):
         car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         car_vec.normalize()
         car_pos = self.mdt.gfx.nodepath.getPos()
-        cam_vec = car_vec * (cam_dist_min + cam_dist_diff * self.mdt.phys.speed_ratio)
-        tgt_vec = -car_vec * (look_dist_min + look_dist_diff * self.mdt.phys.speed_ratio)
-        delta_pos_z = cam_z_max - cam_z_diff * self.mdt.phys.speed_ratio
-        delta_cam_z = look_z_min + look_z_diff * self.mdt.phys.speed_ratio
+        cam_vec = -car_vec * (cam_dist_min + cam_dist_diff * speed_ratio)
+        tgt_vec = car_vec * (look_dist_min + look_dist_diff * speed_ratio)
+        delta_pos_z = cam_z_max - cam_z_diff * speed_ratio
+        delta_cam_z = look_z_min + look_z_diff * speed_ratio
 
-        #curr_pos = Point3(car_pos.x - cam_vec.x, car_pos.y - cam_vec.y, 1)
-        #curr_cam_fact = cam_dist_min + cam_dist_diff * self.mdt.phys.speed_ratio
-        #cam_cond = lambda curr_pos: self.get_closest(curr_pos) and self.get_closest(curr_pos) not in ['Vehicle', 'Goal'] and curr_cam_fact > .1
-        #if cam_cond(curr_pos):
-        #    while cam_cond(curr_pos):
-        #        curr_cam_fact -= .1
-        #        cam_vec = car_vec * curr_cam_fact
-        #        curr_pos = Point3(car_pos.x - cam_vec.x, car_pos.y - cam_vec.y, eng.camera.getZ())
-        #    curr_delta = delta_cam_z
-        #    tgt = (self.mdt.gfx.nodepath.getX(), self.mdt.gfx.nodepath.getY(), self.mdt.gfx.nodepath.getZ() + delta_cam_z)
-        #    delta_cond = lambda curr_delta: self.get_closest(curr_pos, tgt) and self.get_closest(curr_pos, tgt) not in ['Vehicle', 'Goal'] and curr_delta > .1
-        #    while delta_cond(curr_delta):
-        #        curr_delta -= .1
-        #        cam_vec = car_vec * curr_cam_fact
-        #        tgt = (self.mdt.gfx.nodepath.getX(), self.mdt.gfx.nodepath.getY(), self.mdt.gfx.nodepath.getZ() + curr_delta)
-        #    delta_cam_z = curr_delta
+        curr_pos = Point3(car_pos.x + cam_vec.x, car_pos.y + cam_vec.y, 1)
+        curr_cam_fact = cam_dist_min + cam_dist_diff * speed_ratio
+        def cam_cond(curr_pos):
+            closest = self.get_closest(curr_pos)
+            if closest:
+                closest_str = closest.getNode().getName()
+            if closest and closest_str not in ['Vehicle', 'Goal'] and \
+                    curr_cam_fact > .1:
+                return closest
+        curr_hit = cam_cond(curr_pos)
+        if curr_hit:
+            hit_pos = curr_hit.getHitPos()
+            cam_vec = Vec3(
+                hit_pos.x - car_pos.x,
+                hit_pos.y - car_pos.y,
+                cam_vec.z)
 
-        self.tgt_x = car_pos.x - cam_vec.x
-        self.tgt_y = car_pos.y - cam_vec.y
+        self.tgt_x = car_pos.x + cam_vec.x
+        self.tgt_y = car_pos.y + cam_vec.y
         self.tgt_z = car_pos.z + delta_pos_z
 
-        self.tgt_look_x = car_pos.x - tgt_vec.x
-        self.tgt_look_y = car_pos.y - tgt_vec.y
+        self.tgt_look_x = car_pos.x + tgt_vec.x
+        self.tgt_look_y = car_pos.y + tgt_vec.y
+
         curr_incr = cam_speed * globalClock.getDt()
         def new_pos(cam_pos, tgt):
             if abs(cam_pos - tgt) <= curr_incr:
@@ -206,8 +208,10 @@ class _Logic(Logic):
         new_x = new_pos(eng.camera.getX(), self.tgt_x)
         new_y = new_pos(eng.camera.getY(), self.tgt_y)
         new_z = new_pos(eng.camera.getZ(), self.tgt_z)
+
         eng.camera.setPos(new_x, new_y, new_z)
-        eng.camera.look_at(self.tgt_look_x, self.tgt_look_y, car_pos.z + delta_cam_z)
+        eng.camera.look_at(
+            self.tgt_look_x, self.tgt_look_y, car_pos.z + delta_cam_z)
 
     @property
     def is_upside_down(self):
