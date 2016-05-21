@@ -7,7 +7,7 @@ class _Phys(Phys):
     '''This class models the physics component of a car.'''
 
     collision_box_shape = (.8, 1.4, .45)  # meters
-    collision_box_pos = (0, 0, .55)  # meters
+    collision_box_pos = (0, 0, .35)  # meters
     wheel_fr_pos = (.75, 1.05, .4)  # meters
     wheel_fr_radius = .3  # meters
     wheel_fl_pos = (-.75, 1.05, .4)  # meters
@@ -37,7 +37,7 @@ class _Phys(Phys):
     wheels_damping_relaxation = 2  # overwrites suspension_damping
     wheels_damping_compression = 4  # overwrites suspension_compression
     friction_slip = 3  # default 10.5
-    roll_influence = .40  # default .1
+    roll_influence = .2  # default .1
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
