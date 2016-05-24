@@ -164,13 +164,19 @@ class _Logic(Logic):
         look_dist_diff = look_dist_max - look_dist_min
         cam_z_diff = cam_z_max - cam_z_min
         look_z_diff = look_z_max - look_z_min
-        car_np = self.mdt.gfx.nodepath
-        car_rad = deg2Rad(car_np.getH())
-        car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
-        car_vec.normalize()
+        #car_np = self.mdt.gfx.nodepath
+        #car_rad = deg2Rad(car_np.getH())
+        #car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
+        #car_vec.normalize()
+
+        fwd_vec = eng.render.getRelativeVector(self.mdt.gfx.nodepath, Vec3(0, 1, 0))
+        fwd_vec.normalize()
+
         car_pos = self.mdt.gfx.nodepath.getPos()
-        cam_vec = -car_vec * (cam_dist_min + cam_dist_diff * speed_ratio)
-        tgt_vec = car_vec * (look_dist_min + look_dist_diff * speed_ratio)
+        #cam_vec = -car_vec * (cam_dist_min + cam_dist_diff * speed_ratio)
+        #tgt_vec = car_vec * (look_dist_min + look_dist_diff * speed_ratio)
+        cam_vec = -fwd_vec * (cam_dist_min + cam_dist_diff * speed_ratio)
+        tgt_vec = fwd_vec * (look_dist_min + look_dist_diff * speed_ratio)
         delta_pos_z = cam_z_max - cam_z_diff * speed_ratio
         delta_cam_z = look_z_min + look_z_diff * speed_ratio
 
@@ -193,10 +199,11 @@ class _Logic(Logic):
 
         self.tgt_x = car_pos.x + cam_vec.x
         self.tgt_y = car_pos.y + cam_vec.y
-        self.tgt_z = car_pos.z + delta_pos_z
+        self.tgt_z = car_pos.z + cam_vec.z + delta_pos_z
 
         self.tgt_look_x = car_pos.x + tgt_vec.x
         self.tgt_look_y = car_pos.y + tgt_vec.y
+        self.tgt_look_z = car_pos.z + tgt_vec.z
 
         curr_incr = cam_speed * globalClock.getDt()
         def new_pos(cam_pos, tgt):
@@ -211,7 +218,7 @@ class _Logic(Logic):
 
         eng.camera.setPos(new_x, new_y, new_z)
         eng.camera.look_at(
-            self.tgt_look_x, self.tgt_look_y, car_pos.z + delta_cam_z)
+            self.tgt_look_x, self.tgt_look_y, self.tgt_look_z + delta_cam_z)
 
     @property
     def is_upside_down(self):
