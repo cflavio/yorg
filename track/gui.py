@@ -9,6 +9,10 @@ class _Gui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
+        self.debug_txt = OnscreenText(
+            '', pos=(-.5, .1), scale=0.05, fg=(1, 1, 1, 1),
+            parent=eng.a2dBottomRight, align=TextNode.ARight,
+            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.__wip_txt = OnscreenText(
             _('work in progress'), pos=(.1, .1), scale=0.05, fg=(1, 1, 1, 1),
             parent=eng.a2dBottomLeft, align=TextNode.ALeft,

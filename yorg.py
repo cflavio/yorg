@@ -48,7 +48,7 @@ class _Fsm(Fsm):
         taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff')
 
     def load_stuff(self, task):
-        self.mdt.track = Track()
+        self.mdt.track = Track('track_prototype')
         self.mdt.car = Car(self.mdt.track.gfx.start_pos,
                          self.mdt.track.gfx.start_pos_hpr)
         self.mdt.audio.game_music.play()

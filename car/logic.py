@@ -180,7 +180,9 @@ class _Logic(Logic):
         delta_pos_z = cam_z_max - cam_z_diff * speed_ratio
         delta_cam_z = look_z_min + look_z_diff * speed_ratio
 
-        curr_pos = Point3(car_pos.x + cam_vec.x, car_pos.y + cam_vec.y, 1)
+        curr_pos = Point3(car_pos.x + cam_vec.x,
+                          car_pos.y + cam_vec.y,
+                          car_pos.z + cam_vec.z + delta_pos_z)
         curr_cam_fact = cam_dist_min + cam_dist_diff * speed_ratio
         def cam_cond(curr_pos):
             closest = self.get_closest(curr_pos)
@@ -195,7 +197,9 @@ class _Logic(Logic):
             cam_vec = Vec3(
                 hit_pos.x - car_pos.x,
                 hit_pos.y - car_pos.y,
-                cam_vec.z)
+                hit_pos.z - car_pos.z)
+
+        #game.track.gui.debug_txt.setText(curr_hit.getNode().getName() if curr_hit else '')
 
         self.tgt_x = car_pos.x + cam_vec.x
         self.tgt_y = car_pos.y + cam_vec.y

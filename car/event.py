@@ -79,7 +79,7 @@ class _Event(Event):
         #if evt.obj_name == 'Slow':
 
     def __crash_sfx(self, speed, speed_ratio):
-        print self.mdt.phys.speed, speed
+        print 'crash speed', self.mdt.phys.speed, speed
         if abs(self.mdt.phys.speed) < abs(speed / 2.0) and speed_ratio > .5:
             self.mdt.audio.crash_high_speed_sfx.play()
             eng.particle('assets/particles/sparks.ptf', self.mdt.gfx.nodepath,

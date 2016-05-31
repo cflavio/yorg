@@ -6,15 +6,16 @@ from ya2.gameobject import Gfx
 class _Gfx(Gfx):
     '''This class models the graphics component of a track.'''
 
-    def __init__(self, mdt):
+    def __init__(self, mdt, track_path):
         Gfx.__init__(self, mdt)
+        self.track_path = track_path
         self.__set_model()
         self.__set_light()
         #eng.cam.setPos(0, -40, 50)
         #eng.cam.lookAt(0, 0, 0)
 
     def __set_model(self):
-        self.model = loader.loadModel("track/track")
+        self.model = loader.loadModel(self.track_path + '/track')
         self.model.reparentTo(render)
         self.model.hide(BitMask32.bit(0))
 
@@ -59,15 +60,15 @@ class _Gfx(Gfx):
         for model in empty_models:
             model_name = model.getName().split('.')[0][5:]
             if model_name.endswith('Anim'):
-                self.__actors += [Actor('track/' + model_name, {
-                    'anim': 'track/' + model_name + '-Anim'})]
+                self.__actors += [Actor(self.track_path + '/' + model_name, {
+                    'anim': self.track_path + '/' + model_name + '-Anim'})]
                 self.__actors[-1].loop('anim')
                 self.__actors[-1].reparent_to(model)
             else:
                 if model_name not in self.__flat_roots:
                     flat_root = self.model.attachNewNode(model_name)
                     self.__flat_roots[model_name] = flat_root
-                child = eng.loader.loadModel('track/'+model.getName().split('.')[0][5:])
+                child = eng.loader.loadModel(self.track_path + '/' + model.getName().split('.')[0][5:])
                 child.reparent_to(model)
                 model.reparentTo(self.__flat_roots[model_name])
         for node in self.__flat_roots.values():
