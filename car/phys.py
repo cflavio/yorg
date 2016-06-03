@@ -7,7 +7,7 @@ class _Phys(Phys):
     '''This class models the physics component of a car.'''
 
     collision_box_shape = (.8, 1.4, .45)  # meters
-    collision_box_pos = (0, 0, .35)  # meters
+    collision_box_pos = (0, 0, .39)  # meters
     wheel_fr_pos = (.75, 1.05, .4)  # meters
     wheel_fr_radius = .3  # meters
     wheel_fl_pos = (-.75, 1.05, .4)  # meters
@@ -42,6 +42,7 @@ class _Phys(Phys):
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
         chassis_shape = BulletBoxShape(self.collision_box_shape)
+
         transform_state = TransformState.makePos(self.collision_box_pos)
         mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
         mdt.gfx.nodepath.node().setMass(self.mass)
