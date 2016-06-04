@@ -23,6 +23,7 @@ class _Logic(Logic):
         self.__steering = 0  # degrees
         self.last_time_start = 0
         self.last_roll_ok_time = None
+        self.last_roll_ko_time = None
         self.lap_times = []
 
     def update(self, input_dct):
@@ -79,6 +80,8 @@ class _Logic(Logic):
     def __update_roll_info(self):
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:
             self.last_roll_ok_time = globalClock.getFrameTime()
+        else:
+            self.last_roll_ko_time = globalClock.getFrameTime()
 
     def pt_line_dst(self, pt, line_pt1, line_pt2):
         diff1 = line_pt2.get_pos() - line_pt1.get_pos()
@@ -220,10 +223,18 @@ class _Logic(Logic):
         new_y = new_pos(eng.camera.getY(), self.tgt_y)
         new_z = new_pos(eng.camera.getZ(), self.tgt_z)
 
-        eng.camera.setPos(new_x, new_y, new_z)
+        if not self.is_rolling:
+            eng.camera.setPos(new_x, new_y, new_z)
         eng.camera.look_at(
             self.tgt_look_x, self.tgt_look_y, self.tgt_look_z + delta_cam_z)
 
     @property
     def is_upside_down(self):
         return globalClock.getFrameTime() - self.last_roll_ok_time > 5.0
+
+    @property
+    def is_rolling(self):
+        try:
+            return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
+        except TypeError:
+            return False
