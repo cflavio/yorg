@@ -21,7 +21,7 @@ class Car(GameObjectMdt):
     def __init__(self, path, pos, hpr):
         self.fsm = self.fsm_cls(self)
         self.gfx = self.gfx_cls(self, path)
-        self.phys = self.phys_cls(self)
+        self.phys = self.phys_cls(self, path)
         self.gui = self.gui_cls(self)
         self.logic = self.logic_cls(self)
         self.audio = self.audio_cls(self)

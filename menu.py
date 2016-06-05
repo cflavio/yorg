@@ -154,8 +154,8 @@ class CarPage(Page):
     def create(self, game_fsm):
         page_args = self.page_args
         menu_data = [
-            ('Kronos', lambda: game_fsm.demand('Play', 'car0')),
-            ('Red', lambda: game_fsm.demand('Play', 'car1'))]
+            ('Kronos', lambda: game_fsm.demand('Play', 'kronos')),
+            ('Red', lambda: game_fsm.demand('Play', 'red'))]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),

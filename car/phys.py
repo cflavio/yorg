@@ -1,49 +1,17 @@
 from panda3d.bullet import BulletBoxShape, BulletVehicle, ZUp
-from panda3d.core import TransformState
+from panda3d.core import TransformState, LVecBase3f, LPoint3f
 from ya2.gameobject import Phys
+import yaml
 
 
 class _Phys(Phys):
     '''This class models the physics component of a car.'''
 
-    collision_box_shape = (.8, 1.4, .45)  # meters
-    collision_box_pos = (0, 0, .39)  # meters
-    wheel_fr_pos = (.75, 1.05, .4)  # meters
-    wheel_fr_radius = .3  # meters
-    wheel_fl_pos = (-.75, 1.05, .4)  # meters
-    wheel_fl_radius = .3  # meters
-    wheel_rr_pos = (.75, -.8, .4)  # meters
-    wheel_rr_radius = .35  # meters
-    wheel_rl_pos = (-.75, -.8, .4)  # meters
-    wheel_rl_radius = .35  # meters
-    max_speed = 140.0  # Km/h
-    mass = 1400  # kilograms
-    steering_min_speed = 40  # degrees
-    steering_max_speed = 10  # degrees
-    steering_clamp = 40  # degrees
-    steering_inc = 120  # degrees per second
-    steering_dec = 120  # degrees per second
-    engine_acc_frc = 7000
-    engine_dec_frc = -5000
-    brake_frc = 75
-    eng_brk_frc = 25
-    pitch_control = 0  # default 0
-    suspension_compression = 1  # default .83; should be lower than damping
-    suspension_damping = .5  # default .88; should be greater than compression
-    max_suspension_force = 12000  # default 6000
-    max_suspension_travel_cm = 1700  # default 500
-    skid_info = 1  # default 1
-    suspension_stiffness = 20  # default 5.88; f1 car == 200
-    wheels_damping_relaxation = 2  # overwrites suspension_damping
-    wheels_damping_compression = 4  # overwrites suspension_compression
-    friction_slip = 3  # default 10.5
-    roll_influence = .2  # default .1
-
-    def __init__(self, mdt):
+    def __init__(self, mdt, path):
         Phys.__init__(self, mdt)
-        chassis_shape = BulletBoxShape(self.collision_box_shape)
-
-        transform_state = TransformState.makePos(self.collision_box_pos)
+        self.__set_phys(path)
+        chassis_shape = BulletBoxShape(LVecBase3f(*self.collision_box_shape))
+        transform_state = TransformState.makePos(LVecBase3f(*self.collision_box_pos))
         mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
         mdt.gfx.nodepath.node().setMass(self.mass)
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
@@ -75,11 +43,28 @@ class _Phys(Phys):
         #mdt.gfx.nodepath.node().setCcdMotionThreshold(1e-7)
         #mdt.gfx.nodepath.node().setCcdSweptSphereRadius(3.50)
 
+    def __set_phys(self, path):
+        with open('assets/models/%s/phys.yml' % path) as phys_file:
+            conf = yaml.load(phys_file)
+        fields = [
+            'collision_box_shape', 'collision_box_pos', 'wheel_fr_pos',
+            'wheel_fr_radius', 'wheel_fl_pos','wheel_fl_radius',
+            'wheel_rr_pos', 'wheel_rr_radius', 'wheel_rl_pos',
+            'wheel_rl_radius', 'max_speed', 'mass', 'steering_min_speed',
+            'steering_max_speed', 'steering_clamp', 'steering_inc',
+            'steering_dec', 'engine_acc_frc', 'engine_dec_frc', 'brake_frc',
+            'eng_brk_frc', 'pitch_control', 'suspension_compression',
+            'suspension_damping', 'max_suspension_force',
+            'max_suspension_travel_cm', 'skid_info', 'suspension_stiffness',
+            'wheels_damping_relaxation', 'wheels_damping_compression',
+            'friction_slip', 'roll_influence']
+        map(lambda field: setattr(self, field, conf[field]), fields)
+
     def __add_wheel(self, pos, front, node, radius):
         '''This method adds a wheel to the car.'''
         wheel = self.vehicle.createWheel()
         wheel.setNode(node)
-        wheel.setChassisConnectionPointCs(pos)
+        wheel.setChassisConnectionPointCs(LPoint3f(*pos))
         wheel.setFrontWheel(front)
         wheel.setWheelDirectionCs((0, 0, -1))
         wheel.setWheelAxleCs((1, 0, 0))
