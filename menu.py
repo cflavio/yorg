@@ -14,9 +14,9 @@ from ya2.engine import LangMgr, OptionMgr
 
 class MainPage(Page):
 
-    def create(self, game_fsm, fsm):
+    def create(self, fsm):
         page_args = self.page_args
-        menu_data = [('Play', _('Play'), lambda: game_fsm.demand('Play')),
+        menu_data = [('Play', _('Play'), lambda: fsm.demand('Cars')),
                      ('Options', _('Options'), lambda: fsm.demand('Options')),
                      ('Credits', _('Credits'), lambda: fsm.demand('Credits')),
                      ('Quit', _('Quit'), lambda: exit())]
@@ -149,6 +149,25 @@ class OptionPage(Page):
         self.update_texts()
 
 
+class CarPage(Page):
+
+    def create(self, game_fsm):
+        page_args = self.page_args
+        menu_data = [
+            ('Kronos', lambda: game_fsm.demand('Play', 'car0')),
+            ('Red', lambda: game_fsm.demand('Play', 'car1'))]
+        self.widgets = [
+            DirectButton(
+                text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
+                text_fg=(.75, .75, .75, 1),
+                text_font=self.font, frameColor=page_args.btn_color,
+                command=menu[1], frameSize=page_args.btn_size,
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            for i, menu in enumerate(menu_data)]
+        Page.create(self)
+
+
 class CreditPage(Page):
 
     def create(self):
@@ -174,6 +193,7 @@ class _Gui(Gui):
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
             (0, 0, 0, .2), True, False, False)
         self.main_page = MainPage(main_args)
+        self.car_page = CarPage(args)
         self.option_page = OptionPage(args)
         self.credit_page = CreditPage(args)
 
@@ -184,15 +204,22 @@ class _Fsm(Fsm):
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
         self.defaultTransitions = {
-            'Main': ['Options', 'Credits'],
+            'Main': ['Cars', 'Options', 'Credits'],
+            'Cars': ['Main'],
             'Options': ['Main'],
             'Credits': ['Main']}
 
     def enterMain(self):
-        self.mdt.gui.main_page.create(self.mdt.game_fsm, self.mdt.fsm)
+        self.mdt.gui.main_page.create(self.mdt.fsm)
 
     def exitMain(self):
         self.mdt.gui.main_page.destroy()
+
+    def enterCars(self):
+        self.mdt.gui.car_page.create(self.mdt.game_fsm)
+
+    def exitCars(self):
+        self.mdt.gui.car_page.destroy()
 
     def enterOptions(self):
         self.mdt.gui.option_page.create()

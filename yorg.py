@@ -42,14 +42,14 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterPlay(self):
+    def enterPlay(self, car_path):
         eng.start()
         self.load_img = OnscreenImage('assets/images/gui/loading.jpg', scale=(1.77778, 1, 1))
-        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff')
+        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [car_path])
 
-    def load_stuff(self, task):
-        self.mdt.track = Track('tracks/track_prototype')
-        self.mdt.car = Car('cars/car0', self.mdt.track.gfx.start_pos,
+    def load_stuff(self, car_path):
+        self.mdt.track = Track('tracks/track_bug_phys')
+        self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
                            self.mdt.track.gfx.start_pos_hpr)
         self.mdt.audio.game_music.play()
         self.load_img.destroy()
