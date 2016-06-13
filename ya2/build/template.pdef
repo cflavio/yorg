@@ -17,9 +17,11 @@ class <Name>(p3d):
         dir(_dir, newDir=_dir)
     dir('ya2/thirdparty/yaml', 'yaml')
     file('license.txt')
-    for extension in ['mo', 'dds']:
+    exclude = ['options.yml']
+    for extension in ['mo', 'dds', 'yml']:
         for root, dirnames, filenames in walk('.'):
             for filename in [filename for filename in filenames
-                             if filename.endswith('.'+extension)]:
+                             if filename.endswith('.'+extension) and not
+                             filename in exclude]:
                 file(join(root, filename), newDir=root)
     mainModule('main')
