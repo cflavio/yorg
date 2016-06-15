@@ -44,7 +44,8 @@ def may_destroy(wdg):
 
 class PageArgs(object):
 
-    def __init__(self, fsm, font, btn_size, btn_color, back, social, version):
+    def __init__(self, fsm, font, btn_size, btn_color, back, social, version,
+                 back_state):
         self.fsm = fsm
         self.font = font
         self.btn_size = btn_size
@@ -52,6 +53,7 @@ class PageArgs(object):
         self.back = back
         self.social = social
         self.version = version
+        self.back_state = back_state
 
 
 class Page(object):
@@ -94,7 +96,7 @@ class Page(object):
 
     def __on_back(self):
         self.on_back()
-        self.page_args.fsm.demand('Main')
+        self.page_args.fsm.demand(self.page_args.back_state)
 
     def on_back(self):
         pass

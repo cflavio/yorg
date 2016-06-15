@@ -16,7 +16,7 @@ class MainPage(Page):
 
     def create(self, fsm):
         page_args = self.page_args
-        menu_data = [('Play', _('Play'), lambda: fsm.demand('Cars')),
+        menu_data = [('Play', _('Play'), lambda: fsm.demand('Tracks')),
                      ('Options', _('Options'), lambda: fsm.demand('Options')),
                      ('Credits', _('Credits'), lambda: fsm.demand('Credits')),
                      ('Quit', _('Quit'), lambda: exit())]
@@ -149,13 +149,32 @@ class OptionPage(Page):
         self.update_texts()
 
 
-class CarPage(Page):
+class TrackPage(Page):
 
-    def create(self, game_fsm):
+    def create(self, fsm):
         page_args = self.page_args
         menu_data = [
-            ('Kronos', lambda: game_fsm.demand('Play', 'kronos')),
-            ('Red', lambda: game_fsm.demand('Play', 'red'))]
+            ('Desert', lambda: fsm.demand('Cars', 'tracks/track_desert')),
+            ('Prototype', lambda: fsm.demand('Cars', 'tracks/track_prototype'))]
+        self.widgets = [
+            DirectButton(
+                text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
+                text_fg=(.75, .75, .75, 1),
+                text_font=self.font, frameColor=page_args.btn_color,
+                command=menu[1], frameSize=page_args.btn_size,
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            for i, menu in enumerate(menu_data)]
+        Page.create(self)
+
+
+class CarPage(Page):
+
+    def create(self, game_fsm, track_path):
+        page_args = self.page_args
+        menu_data = [
+            ('Kronos', lambda: game_fsm.demand('Play', track_path, 'kronos')),
+            ('Red', lambda: game_fsm.demand('Play', track_path, 'red'))]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
@@ -188,12 +207,16 @@ class _Gui(Gui):
         Gui.__init__(self, mdt)
         main_args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), False, True, True)
+            (0, 0, 0, .2), False, True, True, '')
         args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), True, False, False)
+            (0, 0, 0, .2), True, False, False, 'Main')
+        car_args = PageArgs(
+            mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
+            (0, 0, 0, .2), True, False, False, 'Tracks')
         self.main_page = MainPage(main_args)
-        self.car_page = CarPage(args)
+        self.track_page = TrackPage(args)
+        self.car_page = CarPage(car_args)
         self.option_page = OptionPage(args)
         self.credit_page = CreditPage(args)
 
@@ -204,8 +227,9 @@ class _Fsm(Fsm):
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
         self.defaultTransitions = {
-            'Main': ['Cars', 'Options', 'Credits'],
-            'Cars': ['Main'],
+            'Main': ['Tracks', 'Options', 'Credits'],
+            'Tracks': ['Main', 'Cars'],
+            'Cars': ['Main', 'Tracks'],
             'Options': ['Main'],
             'Credits': ['Main']}
 
@@ -215,8 +239,14 @@ class _Fsm(Fsm):
     def exitMain(self):
         self.mdt.gui.main_page.destroy()
 
-    def enterCars(self):
-        self.mdt.gui.car_page.create(self.mdt.game_fsm)
+    def enterTracks(self):
+        self.mdt.gui.track_page.create(self.mdt.fsm)
+
+    def exitTracks(self):
+        self.mdt.gui.track_page.destroy()
+
+    def enterCars(self, track_path):
+        self.mdt.gui.car_page.create(self.mdt.game_fsm, track_path)
 
     def exitCars(self):
         self.mdt.gui.car_page.destroy()

@@ -1,6 +1,7 @@
 from panda3d.core import AmbientLight, BitMask32, Spotlight
 from direct.actor.Actor import Actor
 from ya2.gameobject import Gfx
+from direct.gui.OnscreenText import OnscreenText
 
 
 class _Gfx(Gfx):
