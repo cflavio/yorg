@@ -17,6 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: yorg.py:51
+msgid ""
+"LOADING...\n"
+"\n"
+"PLEASE WAIT, IT MAY REQUIRE SOME TIME"
+msgstr ""
+"CARICAMENTO...\n"
+"\n"
+"ATTENDERE PREGO, SERVE TEMPO... :)"
+
 #: menu.py:19
 msgid "Play"
 msgstr "Gioca"
@@ -57,31 +67,30 @@ msgstr "Antialiasing"
 msgid "(from the next execution)"
 msgstr "(dalla prossima esecuzione)"
 
-#: menu.py:158
+#: menu.py:196
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:159
+#: menu.py:197
 msgid "Art"
 msgstr "Grafica"
 
-#: track/gui.py:13
+#: track/gui.py:17
 msgid "work in progress"
 msgstr "stiamo lavorando per voi"
 
-#: track/gui.py:69
+#: track/gui.py:73
 msgid "GO!"
 msgstr "VIA!"
 
-#: track/gui.py:89
+#: track/gui.py:93
 msgid "LAP"
 msgstr "GIRO"
 
-#: ya2/gui.py:92
+#: ya2/gui.py:94
 msgid "Back"
 msgstr "Indietro"
 
-#: car/logic.py:148
+#: car/logic.py:151
 msgid "wrong way"
 msgstr "direzione sbagliata"
-
