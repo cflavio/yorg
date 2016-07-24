@@ -1,4 +1,5 @@
-from panda3d.bullet import BulletBoxShape, BulletVehicle, ZUp
+from panda3d.bullet import BulletVehicle, ZUp,\
+    BulletConvexHullShape
 from panda3d.core import TransformState, LVecBase3f, LPoint3f
 from ya2.gameobject import Phys
 import yaml
@@ -10,11 +11,33 @@ class _Phys(Phys):
     def __init__(self, mdt, path):
         Phys.__init__(self, mdt)
         self.__set_phys(path)
-        chassis_shape = BulletBoxShape(LVecBase3f(*self.collision_box_shape))
+
+        def find_geoms(model, name):
+            def sibling_names(node):
+                siblings = node.getParent().getChildren()
+                return [child.getName() for child in siblings]
+
+            named_geoms = [
+                geom for geom in model.findAllMatches('**/+GeomNode')
+                if any([s.startswith(name) for s in sibling_names(geom)])]
+            in_vec = [name in named_geom.getName() for named_geom in named_geoms]
+            indexes = [i for i, el in enumerate(in_vec) if el]
+            return [named_geoms[i] for i in indexes]
+
+        chassis_shape = BulletConvexHullShape()
+        capsule = loader.loadModel('cars/capsule')
+        capsule.setScale(*self.collision_box_scale)
+        capsule.flattenLight()
+        for geom in find_geoms(capsule, 'Cube'):
+            geom_geom = geom.node().getGeom(0)
+            ts = geom.getTransform()
+            chassis_shape.addGeom(geom_geom, ts)
+
         transform_state = TransformState.makePos(LVecBase3f(*self.collision_box_pos))
         mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
         mdt.gfx.nodepath.node().setMass(self.mass)
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
+
         eng.world_phys.attachRigidBody(mdt.gfx.nodepath.node())
         eng.collision_objs += [mdt.gfx.nodepath.node()]
 
@@ -42,13 +65,15 @@ class _Phys(Phys):
         self.curr_max_speed = self.max_speed
         #mdt.gfx.nodepath.node().setCcdMotionThreshold(1e-7)
         #mdt.gfx.nodepath.node().setCcdSweptSphereRadius(3.50)
+        #self.vehicle.get_chassis().setCcdMotionThreshold(.01)
+        #self.vehicle.get_chassis().setCcdSweptSphereRadius(.2)
 
     def __set_phys(self, path):
         with open('assets/models/%s/phys.yml' % path) as phys_file:
             conf = yaml.load(phys_file)
         fields = [
-            'collision_box_shape', 'collision_box_pos', 'wheel_fr_pos',
-            'wheel_fr_radius', 'wheel_fl_pos','wheel_fl_radius',
+            'collision_box_shape', 'collision_box_pos', 'collision_box_scale',
+            'wheel_fr_pos', 'wheel_fr_radius', 'wheel_fl_pos','wheel_fl_radius',
             'wheel_rr_pos', 'wheel_rr_radius', 'wheel_rl_pos',
             'wheel_rl_radius', 'max_speed', 'mass', 'steering_min_speed',
             'steering_max_speed', 'steering_clamp', 'steering_inc',

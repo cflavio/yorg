@@ -1,5 +1,6 @@
 collision_box_shape: [.75, 1.4, .25]  # meters
 collision_box_pos: [0, 0, .2]  # meters
+collision_box_scale: [.9, .65, .5]
 wheel_fr_pos: [.68, .85, .3]  # meters
 wheel_fr_radius: .3  # meters
 wheel_fl_pos: [-0.68, .85, .3]  # meters
