@@ -17,6 +17,7 @@ class _Gfx(Gfx):
 
     def __set_model(self):
         self.model = loader.loadModel(self.track_path + '/track')
+        #self.model.flattenLight()
         self.model.reparentTo(render)
         self.model.hide(BitMask32.bit(0))
 
