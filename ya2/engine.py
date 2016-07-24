@@ -222,7 +222,7 @@ class Engine(ShowBase, object):
     def __update(self, task):
         if self.world_phys:
             dt = globalClock.getDt()
-            self.world_phys.doPhysics(dt, 5, 1/60.0)
+            self.world_phys.doPhysics(dt, 10, 1/180.0)
             self.__do_collisions()
             self.messenger.send('on_frame')
             return task.cont
