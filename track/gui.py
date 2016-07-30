@@ -7,7 +7,7 @@ from direct.gui.OnscreenImage import OnscreenImage
 class _Gui(Gui):
     '''This class models the GUI component of a track.'''
 
-    def __init__(self, mdt):
+    def __init__(self, mdt, minimap):
         Gui.__init__(self, mdt)
         self.debug_txt = OnscreenText(
             '', pos=(-.5, .1), scale=0.05, fg=(1, 1, 1, 1),
@@ -31,8 +31,8 @@ class _Gui(Gui):
         self.countdown_cnt = 3
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
         self.minimap = OnscreenImage(
-            'assets/images/minimaps/minimap.jpg', pos=(-.25, 1, .25), scale=.2,
-            parent=eng.a2dBottomRight)
+            'assets/images/minimaps/%s' % minimap, pos=(-.25, 1, .25),
+            scale=.2, parent=eng.a2dBottomRight)
         self.car_handle = OnscreenImage(
             'assets/images/minimaps/car_handle.png', pos=(-.25, 1, .25),
             scale=.03, parent=eng.a2dBottomRight)

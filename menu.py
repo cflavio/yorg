@@ -154,8 +154,8 @@ class TrackPage(Page):
     def create(self, fsm):
         page_args = self.page_args
         menu_data = [
-            ('Desert', lambda: fsm.demand('Cars', 'tracks/track_desert')),
-            ('Prototype', lambda: fsm.demand('Cars', 'tracks/track_prototype'))]
+            ('Desert', lambda: fsm.demand('Cars', 'tracks/track_desert', 'desert.png')),
+            ('Prototype', lambda: fsm.demand('Cars', 'tracks/track_prototype', 'prototype.jpg'))]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
@@ -170,11 +170,11 @@ class TrackPage(Page):
 
 class CarPage(Page):
 
-    def create(self, game_fsm, track_path):
+    def create(self, game_fsm, track_path, minimap):
         page_args = self.page_args
         menu_data = [
-            ('Kronos', lambda: game_fsm.demand('Play', track_path, 'kronos')),
-            ('Themis', lambda: game_fsm.demand('Play', track_path, 'themis'))]
+            ('Kronos', lambda: game_fsm.demand('Play', track_path, minimap, 'kronos')),
+            ('Themis', lambda: game_fsm.demand('Play', track_path, minimap, 'themis'))]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
@@ -245,8 +245,8 @@ class _Fsm(Fsm):
     def exitTracks(self):
         self.mdt.gui.track_page.destroy()
 
-    def enterCars(self, track_path):
-        self.mdt.gui.car_page.create(self.mdt.game_fsm, track_path)
+    def enterCars(self, track_path, minimap):
+        self.mdt.gui.car_page.create(self.mdt.game_fsm, track_path, minimap)
 
     def exitCars(self):
         self.mdt.gui.car_page.destroy()

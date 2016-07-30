@@ -43,7 +43,7 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterPlay(self, track_path, car_path):
+    def enterPlay(self, track_path, minimap, car_path):
         eng.start()
         self.load_img = OnscreenImage('assets/images/gui/loading.jpg', scale=(1.77778, 1, 1))
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
@@ -51,10 +51,10 @@ class _Fsm(Fsm):
             text=_('LOADING...\n\nPLEASE WAIT, IT MAY REQUIRE SOME TIME'),
             parent= self.load_img, scale=.12, pos=(0, .4), font=font,
             fg=(.75, .75, .75, 1), wordwrap=12)
-        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, car_path])
+        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, minimap, car_path])
 
-    def load_stuff(self, track_path, car_path):
-        self.mdt.track = Track(track_path)
+    def load_stuff(self, track_path, minimap, car_path):
+        self.mdt.track = Track(track_path, minimap)
         self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
                            self.mdt.track.gfx.start_pos_hpr)
         self.mdt.audio.game_music.play()
