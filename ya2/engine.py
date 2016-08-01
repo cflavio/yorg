@@ -46,6 +46,12 @@ class LogMgr:
     def log_conf(self):
         self.log('version: '+eng.version)
         self.log('operative system: '+platform.system()+' '+platform.release())
+        gsg = eng.win.get_gsg()
+        self.log(gsg.getDriverVendor())
+        self.log(gsg.getDriverRenderer())
+        self.log('shader: %s.%s' % (gsg.getDriverShaderVersionMajor(), gsg.getDriverShaderVersionMinor()))
+        self.log(gsg.getDriverVersion())
+        self.log('driver version: %s.%s' % (gsg.getDriverVersionMajor(), gsg.getDriverVersionMinor()))
         if eng.win:
             prop = eng.win.get_properties()
             self.log('fullscreen: '+str(prop.get_fullscreen()))
