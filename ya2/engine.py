@@ -208,7 +208,7 @@ class Engine(ShowBase, object):
             self.pauseFrame.destroy()
         (resume if get_isPaused() else pause)()
 
-    def start(self):
+    def init(self):
         self.collision_objs = []
         self.__coll_dct = {}
         self.world_np = render.attachNewNode('world')
@@ -218,6 +218,8 @@ class Engine(ShowBase, object):
         debug_node.showBoundingBoxes(True)
         self.__debug_np = self.render.attachNewNode(debug_node)
         self.world_phys.setDebugNode(self.__debug_np.node())
+
+    def start(self):
         self.taskMgr.add(self.__update, 'Engine::update')
 
     def stop(self):

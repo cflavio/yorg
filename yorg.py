@@ -7,6 +7,8 @@ from ya2.gameobject import Event, Fsm, Audio
 import time
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.OnscreenText import OnscreenText
+from track.gfx import _Gfx as TrackGfx
+from car.gfx import _Gfx as CarGfx
 
 
 class _Event(Event):
@@ -32,19 +34,22 @@ class _Fsm(Fsm):
 
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
-        self.defaultTransitions = {'Menu': ['Play'],
+        self.defaultTransitions = {'Menu': ['Loading'],
+                                   'Loading': ['Play'],
                                    'Play': ['Menu']}
 
     def enterMenu(self):
+        eng.log_mgr.log('entering Menu state')
         self.__menu = Menu(self)
         self.mdt.audio.menu_music.play()
 
     def exitMenu(self):
+        eng.log_mgr.log('exiting Menu state')
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterPlay(self, track_path, minimap, car_path):
-        eng.start()
+    def enterLoading(self, track_path, minimap, car_path):
+        eng.log_mgr.log('entering Loading state')
         self.load_img = OnscreenImage('assets/images/gui/loading.jpg', scale=(1.77778, 1, 1))
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.load_txt = OnscreenText(
@@ -54,13 +59,25 @@ class _Fsm(Fsm):
         taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, minimap, car_path])
 
     def load_stuff(self, track_path, minimap, car_path):
-        self.mdt.track = Track(track_path, minimap)
-        self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
-                           self.mdt.track.gfx.start_pos_hpr)
-        self.mdt.audio.game_music.play()
+        eng.init()
+        def load_car():
+            self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
+                               self.mdt.track.gfx.start_pos_hpr, start)
+        self.mdt.track = Track(track_path, minimap, load_car)
+        def start():
+            self.mdt.fsm.demand('Play', track_path, minimap, car_path)
+
+    def exitLoading(self):
+        eng.log_mgr.log('exiting Loading state')
         self.load_img.destroy()
 
+    def enterPlay(self, track_path, minimap, car_path):
+        eng.log_mgr.log('entering Play state')
+        eng.start()
+        self.mdt.audio.game_music.play()
+
     def exitPlay(self):
+        eng.log_mgr.log('exiting Play state')
         self.mdt.audio.game_music.stop()
         self.mdt.track.destroy()
         self.mdt.car.destroy()
