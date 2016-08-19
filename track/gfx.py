@@ -115,19 +115,21 @@ class _Gfx(Gfx):
 
     def flattening(self):
         eng.log_mgr.log('track flattening')
-        def flat_models(models, cb, model='', time=0):
+        def flat_models(models, cb, model='', time=0, number=0):
             if model:
-                eng.log_mgr.log('flattened model: %s (%s seconds)' % (model, round(globalClock.getFrameTime() - time, 2)))
+                eng.log_mgr.log('flattened model: %s (%s seconds, %s nodes)' % (model, round(globalClock.getFrameTime() - time, 2), number))
             if models:
                 node = models[0]
                 node.clearModelNodes()
-                def process_flat(flatten_node, model, time):
-                    flat_models(models[1:], cb, model, time)
+                def process_flat(flatten_node, model, time, number):
+                    flat_models(models[1:], cb, model, time, number)
                 game.fsm.curr_load_txt.setText(_('flattening model: ') + node.get_name())
                 loader.asyncFlattenStrong(
                     node,
                     callback=process_flat,
-                    extraArgs=[node.get_name(), globalClock.getFrameTime()])  # it doesn't work
+                    extraArgs=[node.get_name(),
+                               globalClock.getFrameTime(),
+                               len(node.get_children())])  # it doesn't work
                 #node.flattenStrong()
                 #process_flat(node)
             else:
