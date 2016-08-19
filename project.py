@@ -1,4 +1,3 @@
-#TODO: options for starting a specific car with a specific track
 #TODO: AI
 #TODO: networking
 #TODO: sharing times on social networks

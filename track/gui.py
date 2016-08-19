@@ -30,7 +30,7 @@ class _Gui(Gui):
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.countdown_cnt = 3
         self.minimap = OnscreenImage(
-            'assets/images/minimaps/%s' % minimap, pos=(-.25, 1, .25),
+            'assets/images/minimaps/%s.jpg' % minimap, pos=(-.25, 1, .25),
             scale=.2, parent=eng.a2dBottomRight)
         self.car_handle = OnscreenImage(
             'assets/images/minimaps/car_handle.png', pos=(-.25, 1, .25),

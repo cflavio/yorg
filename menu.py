@@ -158,6 +158,14 @@ class OptionPage(Page):
             dial['command'] = lambda val: dial.cleanup()  # it destroys too
 
     def on_back(self):
+        try:
+            car = OptionMgr.get_options()['car']
+        except KeyError:
+            car = ''
+        try:
+            track = OptionMgr.get_options()['track']
+        except KeyError:
+            track = ''
         conf = {
             'lang': self.__lang_opt.selectedIndex,
             'volume': self.__vol_slider.getValue(),
@@ -165,7 +173,9 @@ class OptionPage(Page):
             'resolution': self.__res_opt.get().replace('x', ' '),
             'aa': self.__aa_cb['indicatorValue'],
             'open_browser_at_exit': self.__browser_cb['indicatorValue'],
-            'multithreaded_render': OptionMgr.get_options()['multithreaded_render']}
+            'multithreaded_render': OptionMgr.get_options()['multithreaded_render'],
+            'car': car,
+            'track': track}
         OptionMgr.set_options(conf)
 
     def update_texts(self):
@@ -184,8 +194,8 @@ class TrackPage(Page):
     def create(self, fsm):
         page_args = self.page_args
         menu_data = [
-            ('Desert', lambda: fsm.demand('Cars', 'tracks/track_desert', 'desert.png')),
-            ('Prototype', lambda: fsm.demand('Cars', 'tracks/track_prototype', 'prototype.jpg'))]
+            ('Desert', lambda: fsm.demand('Cars', 'tracks/track_desert')),
+            ('Prototype', lambda: fsm.demand('Cars', 'tracks/track_prototype'))]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
@@ -200,11 +210,11 @@ class TrackPage(Page):
 
 class CarPage(Page):
 
-    def create(self, game_fsm, track_path, minimap):
+    def create(self, game_fsm, track_path):
         page_args = self.page_args
         menu_data = [
-            ('Kronos', lambda: game_fsm.demand('Loading', track_path, minimap, 'kronos')),
-            ('Themis', lambda: game_fsm.demand('Loading', track_path, minimap, 'themis'))]
+            ('Kronos', lambda: game_fsm.demand('Loading', track_path, 'kronos')),
+            ('Themis', lambda: game_fsm.demand('Loading', track_path, 'themis'))]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
@@ -275,8 +285,8 @@ class _Fsm(Fsm):
     def exitTracks(self):
         self.mdt.gui.track_page.destroy()
 
-    def enterCars(self, track_path, minimap):
-        self.mdt.gui.car_page.create(self.mdt.game_fsm, track_path, minimap)
+    def enterCars(self, track_path):
+        self.mdt.gui.car_page.create(self.mdt.game_fsm, track_path)
 
     def exitCars(self):
         self.mdt.gui.car_page.destroy()

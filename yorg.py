@@ -11,6 +11,7 @@ from track.gfx import _Gfx as TrackGfx
 from car.gfx import _Gfx as CarGfx
 from panda3d.core import NodePath, TextNode
 from direct.interval.LerpInterval import LerpHprInterval
+from ya2.engine import OptionMgr
 
 
 class _Event(Event):
@@ -50,7 +51,7 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterLoading(self, track_path, minimap, car_path):
+    def enterLoading(self, track_path, car_path):
         eng.log_mgr.log('entering Loading state')
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.load_txt = OnscreenText(
@@ -70,7 +71,7 @@ class _Fsm(Fsm):
         self.cam_node.reparent_to(self.cam_pivot)
         self.cam_pivot.hprInterval(25, (360, 0, 0), blendType='easeInOut').loop()
         self.cam_tsk = taskMgr.add(self.update_cam, 'update cam')
-        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, minimap, car_path])
+        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, car_path])
 
     def update_cam(self, task):
         pos = self.cam_node.get_pos(render)
@@ -78,14 +79,14 @@ class _Fsm(Fsm):
         eng.camera.look_at(0, 0, 0)
         return task.again
 
-    def load_stuff(self, track_path, minimap, car_path):
+    def load_stuff(self, track_path, car_path):
         eng.init()
         def load_car():
             self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
                                self.mdt.track.gfx.start_pos_hpr, start)
-        self.mdt.track = Track(track_path, minimap, load_car)
+        self.mdt.track = Track(track_path, load_car)
         def start():
-            self.mdt.fsm.demand('Play', track_path, minimap, car_path)
+            self.mdt.fsm.demand('Play', track_path, car_path)
 
     def exitLoading(self):
         eng.log_mgr.log('exiting Loading state')
@@ -96,7 +97,7 @@ class _Fsm(Fsm):
         taskMgr.remove(self.cam_tsk)
         eng.camera.set_pos(0, 0, 0)
 
-    def enterPlay(self, track_path, minimap, car_path):
+    def enterPlay(self, track_path, car_path):
         eng.log_mgr.log('entering Play state')
         self.mdt.track.gfx.model.reparentTo(render)
         self.mdt.car.gfx.reparent()
@@ -115,7 +116,18 @@ class _Logic(GameLogic):
 
     def run(self):
         GameLogic.run(self)
-        self.mdt.fsm.demand('Menu')
+        try:
+            car = OptionMgr.get_options()['car']
+        except KeyError:
+            car = ''
+        try:
+            track = OptionMgr.get_options()['track']
+        except KeyError:
+            track = ''
+        if car and track:
+            self.mdt.fsm.demand('Loading', 'tracks/track_' + track, car)
+        else:
+            self.mdt.fsm.demand('Menu')
 
 
 class Yorg(Game):
