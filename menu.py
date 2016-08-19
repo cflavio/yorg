@@ -10,16 +10,19 @@ from sys import exit
 from ya2.gameobject import Fsm, GameObjectMdt, Gui
 from ya2.gui import Page, PageArgs, transl_text
 from ya2.engine import LangMgr, OptionMgr
+from direct.showbase.DirectObject import DirectObject
+from direct.gui.DirectDialog import OkDialog
 
 
-class MainPage(Page):
+class MainPage(Page, DirectObject):
 
     def create(self, fsm):
         page_args = self.page_args
         menu_data = [('Play', _('Play'), lambda: fsm.demand('Tracks')),
                      ('Options', _('Options'), lambda: fsm.demand('Options')),
                      ('Credits', _('Credits'), lambda: fsm.demand('Credits')),
-                     ('Quit', _('Quit'), lambda: exit())]
+                     ('Quit', _('Quit'), self.on_exit)]
+        self.accept('escape-up', self.on_exit)
         self.widgets = [
             DirectButton(
                 text='', scale=.2, pos=(0, 1, .4-i*.28),
@@ -33,6 +36,11 @@ class MainPage(Page):
             transl_text(wdg, menu_data[i][0], menu_data[i][1])
         Page.create(self)
 
+    def on_exit(self):
+        if OptionMgr.get_options()['open_browser_at_exit']:
+            eng.open_browser('http://www.ya2.it')
+        exit()
+
 
 class OptionPage(Page):
 
@@ -40,12 +48,12 @@ class OptionPage(Page):
         font, page_args = self.font, self.page_args
         conf = OptionMgr.get_options()
 
-        lang_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .4),
+        lang_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .5),
                                text_fg=(.75, .75, .75, 1),
                                text_font=font, text_align=TextNode.ARight)
         transl_text(lang_lab, 'Language', _('Language'))
         self.__lang_opt = DirectOptionMenu(
-            text='', scale=.12, items=LangMgr.languages, pos=(.2, 1, .4),
+            text='', scale=.12, items=LangMgr.languages, pos=(.2, 1, .5),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
             text_fg=(.75, .75, .75, 1),
@@ -56,20 +64,20 @@ class OptionPage(Page):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        vol_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .2),
+        vol_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .3),
                               text_font=font, text_fg=(.75, .75, .75, 1),
                               text_align=TextNode.ARight)
         transl_text(vol_lab, 'Volume', _('Volume'))
         self.__vol_slider = DirectSlider(
-            pos=(.47, 0, .23), scale=.47, value=conf['volume'],
+            pos=(.47, 0, .33), scale=.47, value=conf['volume'],
             frameColor=page_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
 
-        fullscreen_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, 0),
+        fullscreen_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .1),
                                      text_font=font, text_fg=(.75, .75, .75, 1),
                                      text_align=TextNode.ARight)
         transl_text(fullscreen_lab, 'Fullscreen', _('Fullscreen'))
         self.__fullscreen_cb = DirectCheckButton(
-            pos=(.12, 1, .03), text='', scale=.12, text_font=self.font,
+            pos=(.12, 1, .12), text='', scale=.12, text_font=self.font,
             text_fg=(.75, .75, .75, 1), frameColor=page_args.btn_color,
             indicatorValue=conf['fullscreen'],
             indicator_frameColor=page_args.btn_color,
@@ -77,7 +85,7 @@ class OptionPage(Page):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        res_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.2),
+        res_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.1),
                               text_font=font, text_fg=(.75, .75, .75, 1),
                               text_align=TextNode.ARight)
         transl_text(res_lab, 'Resolution', _('Resolution'))
@@ -86,7 +94,7 @@ class OptionPage(Page):
         else:
             curr_res =  str(eng.win.getXSize())+'x'+str(base.win.getYSize())
         self.__res_opt = DirectOptionMenu(
-            text='', scale=.12, items=eng.resolutions, pos=(.2, 1, -.2),
+            text='', scale=.12, items=eng.resolutions, pos=(.2, 1, -.1),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_fg=(.75, .75, .75, 1), text_scale=.85,
             item_text_font=font, item_text_fg=(.75, .75, .75, 1),
@@ -97,23 +105,37 @@ class OptionPage(Page):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        aa_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.4),
+        aa_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.3),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ARight)
         transl_text(aa_lab, 'Antialiasing',
                     _('Antialiasing'))
-        aa_next_lab = DirectLabel(text='', scale=.08, pos=(.2, 1, -.4),
+        aa_next_lab = DirectLabel(text='', scale=.08, pos=(.2, 1, -.3),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ALeft)
         transl_text(aa_next_lab, '(from the next execution)',
                     _('(from the next execution)'))
         self.__aa_cb = DirectCheckButton(
-            pos=(.12, 1, -.37), text='', scale=.12, text_font=self.font,
+            pos=(.12, 1, -.27), text='', scale=.12, text_font=self.font,
             frameColor=page_args.btn_color,
             indicatorValue=conf['aa'],
             indicator_frameColor=page_args.btn_color,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+
+        browser_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.5),
+                            text_font=font, text_fg=(.75, .75, .75, 1),
+                            text_align=TextNode.ARight)
+        transl_text(browser_lab, "See Ya2's news at exit",
+                    _("See Ya2's news at exit"))
+        self.__browser_cb = DirectCheckButton(
+            pos=(.12, 1, -.47), text='', scale=.12, text_font=self.font,
+            frameColor=page_args.btn_color,
+            indicatorValue=conf['open_browser_at_exit'],
+            indicator_frameColor=page_args.btn_color,
+            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'),
+            command=self.on_browser)
 
         if base.appRunner and base.appRunner.dom:
             fullscreen_lab['text_fg'] = (.75, .75, .75, 1)
@@ -125,9 +147,15 @@ class OptionPage(Page):
         self.widgets = [
             lang_lab, self.__lang_opt, vol_lab, self.__vol_slider,
             fullscreen_lab, self.__fullscreen_cb, res_lab, self.__res_opt,
-            aa_lab, self.__aa_cb, aa_next_lab]
+            aa_lab, self.__aa_cb, aa_next_lab, browser_lab, self.__browser_cb]
         self.__change_lang(LangMgr.languages[conf['lang']])
         Page.create(self)
+
+    def on_browser(self, val):
+        txt = _('Please, really consider enabling this option to see our news.\nWe hope you will find interesting stuff there.\nMoreover, this is how we can keep Yorg free.')
+        if not val:
+            dial = OkDialog(dialogName="Ya2's news", text=txt, frameColor=self.page_args.dial_color)
+            dial['command'] = lambda val: dial.cleanup()  # it destroys too
 
     def on_back(self):
         conf = {
@@ -135,7 +163,9 @@ class OptionPage(Page):
             'volume': self.__vol_slider.getValue(),
             'fullscreen': self.__fullscreen_cb['indicatorValue'],
             'resolution': self.__res_opt.get().replace('x', ' '),
-            'aa': self.__aa_cb['indicatorValue']}
+            'aa': self.__aa_cb['indicatorValue'],
+            'open_browser_at_exit': self.__browser_cb['indicatorValue'],
+            'multithreaded_render': OptionMgr.get_options()['multithreaded_render']}
         OptionMgr.set_options(conf)
 
     def update_texts(self):
@@ -207,13 +237,13 @@ class _Gui(Gui):
         Gui.__init__(self, mdt)
         main_args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), False, True, True, '')
+            (0, 0, 0, .2), False, True, True, '', (.9, .9, .9, .8))
         args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), True, False, False, 'Main')
+            (0, 0, 0, .2), True, False, False, 'Main', (.9, .9, .9, .8))
         car_args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), True, False, False, 'Tracks')
+            (0, 0, 0, .2), True, False, False, 'Tracks', (.95, .95, .95, .99))
         self.main_page = MainPage(main_args)
         self.track_page = TrackPage(args)
         self.car_page = CarPage(car_args)

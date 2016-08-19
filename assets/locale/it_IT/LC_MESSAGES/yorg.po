@@ -27,51 +27,64 @@ msgstr ""
 "\n"
 "ATTENDERE PREGO, SERVE TEMPO... :)"
 
-#: menu.py:19
+#: menu.py:21
 msgid "Play"
 msgstr "Gioca"
 
-#: menu.py:20
+#: menu.py:22
 msgid "Options"
 msgstr "Opzioni"
 
-#: menu.py:21
+#: menu.py:23
 msgid "Credits"
 msgstr "Riconoscimenti"
 
-#: menu.py:22
+#: menu.py:24
 msgid "Quit"
 msgstr "Esci"
 
-#: menu.py:46
+#: menu.py:54
 msgid "Language"
 msgstr "Lingua"
 
-#: menu.py:62
+#: menu.py:70
 msgid "Volume"
 msgstr "Volume"
 
-#: menu.py:70
+#: menu.py:78
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: menu.py:83
+#: menu.py:91
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu.py:104
+#: menu.py:112
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: menu.py:109
+#: menu.py:117
 msgid "(from the next execution)"
 msgstr "(dalla prossima esecuzione)"
 
-#: menu.py:196
+#: menu.py:130
+msgid "See Ya2's news at exit"
+msgstr "Vedi le notizie di Ya2 all'uscita"
+
+#: menu.py:155
+msgid ""
+"Please, really consider enabling this option to see our news.\n"
+"We hope you will find interesting stuff there.\n"
+"Moreover, this is how we can keep Yorg free."
+msgstr "Per favore, considera seriamente di abilitare questa opzione per vedere le nostre notizie.\n"
+"Speriamo che ci troverai roba interessante.\n"
+"Inoltre, è così che possiamo mantenere Yorg gratis."
+
+#: menu.py:226
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:197
+#: menu.py:227
 msgid "Art"
 msgstr "Grafica"
 

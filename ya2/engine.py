@@ -91,8 +91,10 @@ class OptionMgr:
             'lang': 0,
             'volume': 1,
             'fullscreen': 0,
-            'resolution': None,
-            'aa': 0}
+            'resolution': '1280 720',
+            'aa': 0,
+            'multithreaded_render': 0,
+            'open_browser_at_exit': 1}
         return conf
 
     @staticmethod
@@ -200,6 +202,8 @@ class Engine(ShowBase, object):
         CommonFilters(base.win, base.cam).setCartoonInk(separation=1)
 
     def __on_close(self):
+        if OptionMgr.get_options()['open_browser_at_exit']:
+            eng.open_browser('http://www.ya2.it')
         self.closeWindow(self.win)
         sys.exit()
 

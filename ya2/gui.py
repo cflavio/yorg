@@ -45,7 +45,7 @@ def may_destroy(wdg):
 class PageArgs(object):
 
     def __init__(self, fsm, font, btn_size, btn_color, back, social, version,
-                 back_state):
+                 back_state, dial_color):
         self.fsm = fsm
         self.font = font
         self.btn_size = btn_size
@@ -54,6 +54,7 @@ class PageArgs(object):
         self.social = social
         self.version = version
         self.back_state = back_state
+        self.dial_color = dial_color
 
 
 class Page(object):
