@@ -25,6 +25,7 @@ if __name__ == '__main__' or path.exists('main.pyo'):
             win_title='Yorg',
             win_size=OptionMgr.get_options()['resolution'],
             fullscreen=OptionMgr.get_options()['fullscreen'],
-            antialiasing=OptionMgr.get_options()['aa']),
+            antialiasing=OptionMgr.get_options()['aa'],
+            mt_render=OptionMgr.get_options()['multithreaded_render']),
         'yorg')
     Yorg().run()
