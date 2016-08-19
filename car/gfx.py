@@ -16,35 +16,26 @@ class _Gfx(Gfx):
         chassis_model = eng.loader.loadModel(path + '/car')
         self.load_wheels(chassis_model)
 
-    def load_wheels(self, chassis_model):
-        self.chassis_np = chassis_model
+    def reparent(self):
         self.chassis_np.reparentTo(self.nodepath)
         self.chassis_np.setDepthOffset(-2)
+        self.front_right_wheel_np.reparentTo(eng.world_np)
+        self.front_left_wheel_np.reparentTo(eng.world_np)
+        self.rear_right_wheel_np.reparentTo(eng.world_np)
+        self.rear_left_wheel_np.reparentTo(eng.world_np)
 
+    def load_wheels(self, chassis_model):
+        self.chassis_np = chassis_model
         try:
             self.front_right_wheel_np = eng.loader.loadModel(self.path + '/frontwheel')
-            self.front_right_wheel_np.reparentTo(eng.world_np)
-
             self.front_left_wheel_np = eng.loader.loadModel(self.path + '/frontwheel')
-            self.front_left_wheel_np.reparentTo(eng.world_np)
-
             self.rear_right_wheel_np = eng.loader.loadModel(self.path + '/rearwheel')
-            self.rear_right_wheel_np.reparentTo(eng.world_np)
-
             self.rear_left_wheel_np = eng.loader.loadModel(self.path + '/rearwheel')
-            self.rear_left_wheel_np.reparentTo(eng.world_np)
         except IOError:
             self.front_right_wheel_np = eng.loader.loadModel(self.path + '/wheel')
-            self.front_right_wheel_np.reparentTo(eng.world_np)
-
             self.front_left_wheel_np = eng.loader.loadModel(self.path + '/wheel')
-            self.front_left_wheel_np.reparentTo(eng.world_np)
-
             self.rear_right_wheel_np = eng.loader.loadModel(self.path + '/wheel')
-            self.rear_right_wheel_np.reparentTo(eng.world_np)
-
             self.rear_left_wheel_np = eng.loader.loadModel(self.path + '/wheel')
-            self.rear_left_wheel_np.reparentTo(eng.world_np)
         taskMgr.doMethodLater(.01, self.cb, 'callback')
 
     def destroy(self):

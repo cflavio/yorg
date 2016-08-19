@@ -9,6 +9,8 @@ from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.OnscreenText import OnscreenText
 from track.gfx import _Gfx as TrackGfx
 from car.gfx import _Gfx as CarGfx
+from panda3d.core import NodePath, TextNode
+from direct.interval.LerpInterval import LerpHprInterval
 
 
 class _Event(Event):
@@ -50,13 +52,31 @@ class _Fsm(Fsm):
 
     def enterLoading(self, track_path, minimap, car_path):
         eng.log_mgr.log('entering Loading state')
-        self.load_img = OnscreenImage('assets/images/gui/loading.jpg', scale=(1.77778, 1, 1))
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.load_txt = OnscreenText(
             text=_('LOADING...\n\nPLEASE WAIT, IT MAY REQUIRE SOME TIME'),
-            parent= self.load_img, scale=.12, pos=(0, .4), font=font,
-            fg=(.75, .75, .75, 1), wordwrap=12)
+            scale=.12, pos=(0, .4), font=font, fg=(.75, .75, .75, 1),
+            wordwrap=12)
+        self.curr_load_txt = OnscreenText(
+            text='',
+            scale=.08, pos=(-.1, .1), font=font, fg=(.75, .75, .75, 1),
+            parent=base.a2dBottomRight, align=TextNode.A_right)
+        self.preview = loader.loadModel(track_path + '/preview/preview')
+        self.preview.reparent_to(render)
+        self.cam_pivot = NodePath('cam pivot')
+        self.cam_pivot.reparent_to(render)
+        self.cam_node = NodePath('cam node')
+        self.cam_node.set_pos(500, 0, 0)
+        self.cam_node.reparent_to(self.cam_pivot)
+        self.cam_pivot.hprInterval(25, (360, 0, 0), blendType='easeInOut').loop()
+        self.cam_tsk = taskMgr.add(self.update_cam, 'update cam')
         taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, minimap, car_path])
+
+    def update_cam(self, task):
+        pos = self.cam_node.get_pos(render)
+        eng.camera.set_pos(pos[0], pos[1], 1000)
+        eng.camera.look_at(0, 0, 0)
+        return task.again
 
     def load_stuff(self, track_path, minimap, car_path):
         eng.init()
@@ -69,10 +89,17 @@ class _Fsm(Fsm):
 
     def exitLoading(self):
         eng.log_mgr.log('exiting Loading state')
-        self.load_img.destroy()
+        self.preview.remove_node()
+        self.cam_pivot.remove_node()
+        self.load_txt.destroy()
+        self.curr_load_txt.destroy()
+        taskMgr.remove(self.cam_tsk)
+        eng.camera.set_pos(0, 0, 0)
 
     def enterPlay(self, track_path, minimap, car_path):
         eng.log_mgr.log('entering Play state')
+        self.mdt.track.gfx.model.reparentTo(render)
+        self.mdt.car.gfx.reparent()
         eng.start()
         self.mdt.audio.game_music.play()
 

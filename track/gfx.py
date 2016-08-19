@@ -1,6 +1,7 @@
-from panda3d.core import AmbientLight, BitMask32, Spotlight
+from panda3d.core import AmbientLight, BitMask32, Spotlight, TextNode
 from direct.actor.Actor import Actor
 from ya2.gameobject import Gfx
+from direct.gui.OnscreenText import OnscreenText
 
 
 class _Gfx(Gfx):
@@ -16,17 +17,20 @@ class _Gfx(Gfx):
         #eng.cam.lookAt(0, 0, 0)
 
     def __set_model(self):
-        eng.log_mgr.log('load track model')
-        loader.loadModel(self.track_path + '/track', callback=self.__set_submodels)
+        eng.log_mgr.log('loading track model')
+        game.fsm.curr_load_txt.setText(_('loading track model'))
+        loader.loadModel(self.track_path + '/track',
+                         callback=self.__set_submodels,
+                         extraArgs=[globalClock.getFrameTime()])
 
-    def __set_submodels(self, model):
-        eng.log_mgr.log('load track submodels')
+    def __set_submodels(self, model, time):
+        eng.log_mgr.log('loaded track model (%s seconds)' % str(round(globalClock.getFrameTime() - time, 2)))
+        eng.log_mgr.log("retrieve track's info")
         self.model = model
         for submodel in self.model.getChildren():
             if submodel.getName() not in ['Minimap', 'Starts', 'Waypoints'] \
                     and not submodel.getName().startswith('Empty'):
                 submodel.flattenLight()
-        self.model.reparentTo(render)
         self.model.hide(BitMask32.bit(0))
 
         waypoints = self.model.findAllMatches('**/Waypoints/Waypoint*')
@@ -66,20 +70,24 @@ class _Gfx(Gfx):
         taskMgr.doMethodLater(.01, lambda task: self.cb(), 'callback')
 
     def __load_empties(self, end_loading):
+        eng.log_mgr.log('loading track submodels')
         empty_models = self.model.findAllMatches('**/Empty*')
         self.__actors = []
         self.__flat_roots = {}
-        def preload_models(models, cb):
+        def preload_models(models, cb, model='', time=0):
+            if model:
+                eng.log_mgr.log('loaded model: %s (%s seconds)' % (model, globalClock.getFrameTime() - time))
             if models:
                 model = models[0]
+                game.fsm.curr_load_txt.setText(_('loading model: ') + model)
                 if model.endswith('Anim'):
                     self.__actors += [Actor(self.track_path + '/' + model, {
                         'anim': self.track_path + '/' + model + '-Anim'})]
-                    preload_models(models[1:], cb)
+                    preload_models(models[1:], cb, model, globalClock.getFrameTime())
                 else:
                     path = self.track_path + '/' + model
                     eng.loader.loadModel(path)
-                    preload_models(models[1:], cb)
+                    preload_models(models[1:], cb, model, globalClock.getFrameTime())
             else:
                 cb()
 
@@ -107,13 +115,19 @@ class _Gfx(Gfx):
 
     def flattening(self):
         eng.log_mgr.log('track flattening')
-        def flat_models(models, cb):
+        def flat_models(models, cb, model='', time=0):
+            if model:
+                eng.log_mgr.log('flattened model: %s (%s seconds)' % (model, round(globalClock.getFrameTime() - time, 2)))
             if models:
                 node = models[0]
                 node.clearModelNodes()
-                def process_flat(flatten_node):
-                    flat_models(models[1:], cb)
-                loader.asyncFlattenStrong(node, callback=process_flat)  # it doesn't work
+                def process_flat(flatten_node, model, time):
+                    flat_models(models[1:], cb, model, time)
+                game.fsm.curr_load_txt.setText(_('flattening model: ') + node.get_name())
+                loader.asyncFlattenStrong(
+                    node,
+                    callback=process_flat,
+                    extraArgs=[node.get_name(), globalClock.getFrameTime()])  # it doesn't work
                 #node.flattenStrong()
                 #process_flat(node)
             else:

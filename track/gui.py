@@ -10,7 +10,7 @@ class _Gui(Gui):
     def __init__(self, mdt, minimap):
         Gui.__init__(self, mdt)
         self.debug_txt = OnscreenText(
-            '', pos=(-.5, .1), scale=0.05, fg=(1, 1, 1, 1),
+            '', pos=(-.1, .1), scale=0.05, fg=(1, 1, 1, 1),
             parent=eng.a2dBottomRight, align=TextNode.ARight,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.__wip_txt = OnscreenText(
@@ -29,7 +29,6 @@ class _Gui(Gui):
             parent=eng.a2dBottomLeft, align=TextNode.ALeft,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.countdown_cnt = 3
-        taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
         self.minimap = OnscreenImage(
             'assets/images/minimaps/%s' % minimap, pos=(-.25, 1, .25),
             scale=.2, parent=eng.a2dBottomRight)
@@ -38,6 +37,7 @@ class _Gui(Gui):
             scale=.03, parent=eng.a2dBottomRight)
         self.car_handle.setTransparency(True)
         self.set_corners()
+        taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
 
     def set_corners(self):
         corners = ['topleft', 'topright', 'bottomright', 'bottomleft']

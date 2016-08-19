@@ -27,9 +27,10 @@ class _Phys(Phys):
             if geoms:
                 mesh = BulletTriangleMesh()
                 for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
                     ts = geom.getTransform(mdt.gfx.model)
-                    for geom in [g.decompose() for g in geom.node().getGeoms()]:
-                        mesh.addGeom(geom, ts)
+                    for _geom in [g.decompose() for g in geom.node().getGeoms()]:
+                        mesh.addGeom(_geom, ts)
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
                 np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
                 np.node().addShape(shape)
@@ -41,6 +42,7 @@ class _Phys(Phys):
             if geoms:
                 mesh = BulletTriangleMesh()
                 for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
                     ts = geom.getTransform(mdt.gfx.model)
                     for geom in [g.decompose() for g in geom.node().getGeoms()]:
                         mesh.addGeom(geom, ts)
@@ -56,6 +58,7 @@ class _Phys(Phys):
             if geoms:
                 mesh = BulletTriangleMesh()
                 for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
                     ts = geom.getTransform(mdt.gfx.model)
                     for geom in [g.decompose() for g in geom.node().getGeoms()]:
                         mesh.addGeom(geom, ts)
@@ -71,6 +74,7 @@ class _Phys(Phys):
             if geoms:
                 mesh = BulletTriangleMesh()
                 for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
                     ts = geom.getTransform(mdt.gfx.model)
                     for geom in [g.decompose() for g in geom.node().getGeoms()]:
                         mesh.addGeom(geom, ts)

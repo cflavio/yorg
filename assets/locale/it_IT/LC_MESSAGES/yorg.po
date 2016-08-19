@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:51
+#: yorg.py:57
 msgid ""
 "LOADING...\n"
 "\n"
@@ -74,6 +74,18 @@ msgstr "Codice"
 #: menu.py:197
 msgid "Art"
 msgstr "Grafica"
+
+#: track/gfx.py:21
+msgid "loading track model"
+msgstr "caricamento modello pista"
+
+#: track/gfx.py:82
+msgid "loading model: "
+msgstr "caricamento modello: "
+
+#: track/gfx.py:126
+msgid "flattening model: "
+msgstr "elaborazione modello: "
 
 #: track/gui.py:17
 msgid "work in progress"
