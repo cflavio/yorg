@@ -223,6 +223,11 @@ class _Logic(Logic):
         new_y = new_pos(eng.camera.getY(), self.tgt_y)
         new_z = new_pos(eng.camera.getZ(), self.tgt_z)
 
+        # overwrite camera's position to set the physics
+        #new_x = car_pos.x + 10
+        #new_y = car_pos.y - 5
+        #new_z = car_pos.z + 5
+
         if not self.is_rolling:
             eng.camera.setPos(new_x, new_y, new_z)
         eng.camera.look_at(

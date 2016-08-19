@@ -1,4 +1,6 @@
-#FIXME: dimension of car's capsule
+#TODO: options for starting a specific car with a specific track
+#TODO: AI
+#TODO: networking
 #TODO: sharing times on social networks
 #TODO: build only nointernet, linux64, win64, osx64, without runtime caching, runtime-dev option
 #TODO: branches master and stable (not dev)
