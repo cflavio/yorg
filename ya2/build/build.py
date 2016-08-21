@@ -33,7 +33,7 @@ def __get_version():
 
 path = 'built/'
 try:
-    ver_branch = {'master': 'stable', 'dev': 'dev'}[__get_branch()]
+    ver_branch = {'master': 'dev', 'stable': 'stable'}[__get_branch()]
 except KeyError:
     ver_branch = __get_branch()
 ver = __get_version()
@@ -57,7 +57,7 @@ has_super_mirror = os_path.exists(ptools_path)
 bld_cmd_mir_tmpl = 'panda3d -M {ptools} {ptools}/pdeploy1.9.p3d '
 bld_cmd_mir = bld_cmd_mir_tmpl.format(ptools=ptools_path)
 
-build_command_prefix = bld_cmd_mir if has_super_mirror else 'pdeploy1.9 '
+build_command_prefix = bld_cmd_mir if has_super_mirror else 'pdeploy '
 build_command_str = (
     build_command_prefix +
     '-o  {path} {nointernet} -n {name} -N {Name} -v {version} -a ya2.it -A '
@@ -92,7 +92,7 @@ def build_p3d(target, source, env):
         cmd_str = cmd_template.format(ptools_path=ptools_path, path=path,
                                       name=name)
     else:
-        cmd_str = 'ppackage1.9 -i %s %s.pdef' % (path, name)
+        cmd_str = 'ppackage -i %s %s.pdef' % (path, name)
     system(cmd_str)
     p3d_src_tmpl = '{path}{Name}.{version}.p3d'
     p3d_src = p3d_src_tmpl.format(path=path, Name=name.capitalize(),

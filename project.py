@@ -1,5 +1,6 @@
 #TODO: AI
 #TODO: networking
+#TODO: flat objects in four areas when they are too many
 #TODO: sharing times on social networks
 #TODO: build only nointernet, linux64, win64, osx64, without runtime caching, runtime-dev option
 #TODO: branches master and stable (not dev)
