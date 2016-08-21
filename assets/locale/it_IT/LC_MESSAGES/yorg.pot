@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-30 14:01+0200\n"
+"POT-Creation-Date: 2016-08-19 22:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,94 +17,100 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:19
-msgid "Play"
-msgstr ""
-
-#: menu.py:20
-msgid "Options"
+#: yorg.py:57
+msgid ""
+"LOADING...\n"
+"\n"
+"PLEASE WAIT, IT MAY REQUIRE SOME TIME"
 msgstr ""
 
 #: menu.py:21
-msgid "Credits"
+msgid "Play"
 msgstr ""
 
 #: menu.py:22
+msgid "Options"
+msgstr ""
+
+#: menu.py:23
+msgid "Credits"
+msgstr ""
+
+#: menu.py:24
 msgid "Quit"
 msgstr ""
 
-#: menu.py:44
+#: menu.py:54
 msgid "Language"
 msgstr ""
 
-#: menu.py:58
+#: menu.py:70
 msgid "Volume"
 msgstr ""
 
-#: menu.py:65
+#: menu.py:78
 msgid "Fullscreen"
 msgstr ""
 
-#: menu.py:77
+#: menu.py:91
 msgid "Resolution"
 msgstr ""
 
-#: menu.py:96
+#: menu.py:112
 msgid "Antialiasing"
 msgstr ""
 
-#: menu.py:100
+#: menu.py:117
 msgid "(from the next execution)"
 msgstr ""
 
-#: menu.py:148
+#: menu.py:130
+msgid "See Ya2's news at exit"
+msgstr ""
+
+#: menu.py:155
+msgid ""
+"Please, really consider enabling this option to see our news.\n"
+"We hope you will find interesting stuff there.\n"
+"Moreover, this is how we can keep Yorg free."
+msgstr ""
+
+#: menu.py:226
 msgid "Code"
 msgstr ""
 
-#: menu.py:149
+#: menu.py:227
 msgid "Art"
 msgstr ""
 
-#: track/gui.py:13
+#: track/gfx.py:21
+msgid "loading track model"
+msgstr ""
+
+#: track/gfx.py:82
+msgid "loading model: "
+msgstr ""
+
+#: track/gfx.py:126
+msgid "flattening model: "
+msgstr ""
+
+#: track/gui.py:17
 msgid "work in progress"
 msgstr ""
 
-#: track/gui.py:20
-msgid "arrows for driving; Z for braking"
-msgstr ""
-
-#: track/gui.py:69
+#: track/gui.py:73
 msgid "GO!"
 msgstr ""
 
-#: track/gui.py:81
-msgid "TIME"
-msgstr ""
-
-#: track/gui.py:86
+#: track/gui.py:93
 msgid "LAP"
 msgstr ""
 
-#: ya2/gui.py:85
+#: ya2/gui.py:94
 msgid "Back"
 msgstr ""
 
-#: car/logic.py:144
+#: car/logic.py:151
 msgid "wrong way"
-msgstr ""
-
-#: car/gui.py:135
-msgid "Speed"
-msgstr ""
-
-#: car/gui.py:139
-msgid "Lap"
-msgstr ""
-
-#: car/gui.py:143
-msgid "Time"
-msgstr ""
-
-#: car/gui.py:147
-msgid "Best"
 msgstr ""

@@ -5,6 +5,13 @@ from track.track import Track
 from ya2.game import Game, GameLogic
 from ya2.gameobject import Event, Fsm, Audio
 import time
+from direct.gui.OnscreenImage import OnscreenImage
+from direct.gui.OnscreenText import OnscreenText
+from track.gfx import _Gfx as TrackGfx
+from car.gfx import _Gfx as CarGfx
+from panda3d.core import NodePath, TextNode
+from direct.interval.LerpInterval import LerpHprInterval
+from ya2.engine import OptionMgr
 
 
 class _Event(Event):
@@ -30,25 +37,75 @@ class _Fsm(Fsm):
 
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
-        self.defaultTransitions = {'Menu': ['Play'],
+        self.defaultTransitions = {'Menu': ['Loading'],
+                                   'Loading': ['Play'],
                                    'Play': ['Menu']}
 
     def enterMenu(self):
+        eng.log_mgr.log('entering Menu state')
         self.__menu = Menu(self)
         self.mdt.audio.menu_music.play()
 
     def exitMenu(self):
+        eng.log_mgr.log('exiting Menu state')
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterPlay(self):
+    def enterLoading(self, track_path, car_path):
+        eng.log_mgr.log('entering Loading state')
+        font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
+        self.load_txt = OnscreenText(
+            text=_('LOADING...\n\nPLEASE WAIT, IT MAY REQUIRE SOME TIME'),
+            scale=.12, pos=(0, .4), font=font, fg=(.75, .75, .75, 1),
+            wordwrap=12)
+        self.curr_load_txt = OnscreenText(
+            text='',
+            scale=.08, pos=(-.1, .1), font=font, fg=(.75, .75, .75, 1),
+            parent=base.a2dBottomRight, align=TextNode.A_right)
+        self.preview = loader.loadModel(track_path + '/preview/preview')
+        self.preview.reparent_to(render)
+        self.cam_pivot = NodePath('cam pivot')
+        self.cam_pivot.reparent_to(render)
+        self.cam_node = NodePath('cam node')
+        self.cam_node.set_pos(500, 0, 0)
+        self.cam_node.reparent_to(self.cam_pivot)
+        self.cam_pivot.hprInterval(25, (360, 0, 0), blendType='easeInOut').loop()
+        self.cam_tsk = taskMgr.add(self.update_cam, 'update cam')
+        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, car_path])
+
+    def update_cam(self, task):
+        pos = self.cam_node.get_pos(render)
+        eng.camera.set_pos(pos[0], pos[1], 1000)
+        eng.camera.look_at(0, 0, 0)
+        return task.again
+
+    def load_stuff(self, track_path, car_path):
+        eng.init()
+        def load_car():
+            self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
+                               self.mdt.track.gfx.start_pos_hpr, start)
+        self.mdt.track = Track(track_path, load_car)
+        def start():
+            self.mdt.fsm.demand('Play', track_path, car_path)
+
+    def exitLoading(self):
+        eng.log_mgr.log('exiting Loading state')
+        self.preview.remove_node()
+        self.cam_pivot.remove_node()
+        self.load_txt.destroy()
+        self.curr_load_txt.destroy()
+        taskMgr.remove(self.cam_tsk)
+        eng.camera.set_pos(0, 0, 0)
+
+    def enterPlay(self, track_path, car_path):
+        eng.log_mgr.log('entering Play state')
+        self.mdt.track.gfx.model.reparentTo(render)
+        self.mdt.car.gfx.reparent()
         eng.start()
-        self.mdt.track = Track()
-        self.mdt.car = Car(self.mdt.track.gfx.start_pos,
-                         self.mdt.track.gfx.start_pos_hpr)
         self.mdt.audio.game_music.play()
 
     def exitPlay(self):
+        eng.log_mgr.log('exiting Play state')
         self.mdt.audio.game_music.stop()
         self.mdt.track.destroy()
         self.mdt.car.destroy()
@@ -59,7 +116,18 @@ class _Logic(GameLogic):
 
     def run(self):
         GameLogic.run(self)
-        self.mdt.fsm.demand('Menu')
+        try:
+            car = OptionMgr.get_options()['car']
+        except KeyError:
+            car = ''
+        try:
+            track = OptionMgr.get_options()['track']
+        except KeyError:
+            track = ''
+        if car and track:
+            self.mdt.fsm.demand('Loading', 'tracks/track_' + track, car)
+        else:
+            self.mdt.fsm.demand('Menu')
 
 
 class Yorg(Game):

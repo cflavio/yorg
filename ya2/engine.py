@@ -1,4 +1,5 @@
 import sys
+from direct.gui.DirectFrame import DirectFrame
 sys.path.append('./ya2/thirdparty')
 
 from datetime import datetime
@@ -45,6 +46,12 @@ class LogMgr:
     def log_conf(self):
         self.log('version: '+eng.version)
         self.log('operative system: '+platform.system()+' '+platform.release())
+        gsg = eng.win.get_gsg()
+        self.log(gsg.getDriverVendor())
+        self.log(gsg.getDriverRenderer())
+        self.log('shader: %s.%s' % (gsg.getDriverShaderVersionMajor(), gsg.getDriverShaderVersionMinor()))
+        self.log(gsg.getDriverVersion())
+        self.log('driver version: %s.%s' % (gsg.getDriverVersionMajor(), gsg.getDriverVersionMinor()))
         if eng.win:
             prop = eng.win.get_properties()
             self.log('fullscreen: '+str(prop.get_fullscreen()))
@@ -84,8 +91,10 @@ class OptionMgr:
             'lang': 0,
             'volume': 1,
             'fullscreen': 0,
-            'resolution': None,
-            'aa': 0}
+            'resolution': '1280 720',
+            'aa': 0,
+            'multithreaded_render': 0,
+            'open_browser_at_exit': 1}
         return conf
 
     @staticmethod
@@ -104,6 +113,7 @@ class FontMgr:
         if path not in self.__fonts:
             self.__fonts[path] = self.__eng.loader.loadFont(path)
             self.__fonts[path].setPixelsPerUnit(60)
+            self.__fonts[path].setOutline((0, 0, 0, 1), .8, .2)
         return self.__fonts[path]
 
 
@@ -111,7 +121,7 @@ class Configuration:
 
     def __init__(self, fps=False, win_size='1280 720', win_title='Ya2',
                  fullscreen=False, cursor_hidden=False, sync_video=True,
-                 antialiasing=False, profiling=False):
+                 antialiasing=False, profiling=False, mt_render=False):
         self.fps = fps
         self.win_size = win_size
         self.win_title = win_title
@@ -119,6 +129,7 @@ class Configuration:
         self.cursor_hidden = cursor_hidden
         self.sync_video = sync_video
         self.antialiasing = antialiasing
+        self.multithreaded_render = mt_render
         self.profiling = profiling
         self.configure()
 
@@ -137,6 +148,8 @@ class Configuration:
         if self.antialiasing:
             self.__set('framebuffer-multisample', 1)
             self.__set('multisamples', 2)
+        if self.multithreaded_render:
+            self.__set('threading-model', '/Draw')
         if self.profiling:
             self.__set('want-pstats', 1)
             self.__set('task-timer-verbose', 1),
@@ -189,13 +202,20 @@ class Engine(ShowBase, object):
         CommonFilters(base.win, base.cam).setCartoonInk(separation=1)
 
     def __on_close(self):
+        if OptionMgr.get_options()['open_browser_at_exit']:
+            eng.open_browser('http://www.ya2.it')
         self.closeWindow(self.win)
         sys.exit()
 
     def toggle_pause(self):
+        if not get_isPaused():
+            self.pauseFrame = DirectFrame(
+                frameColor=(.3, .3, .3, .7), frameSize=(-1.8, 1.8, -1, 1))
+        else:
+            self.pauseFrame.destroy()
         (resume if get_isPaused() else pause)()
 
-    def start(self):
+    def init(self):
         self.collision_objs = []
         self.__coll_dct = {}
         self.world_np = render.attachNewNode('world')
@@ -205,6 +225,8 @@ class Engine(ShowBase, object):
         debug_node.showBoundingBoxes(True)
         self.__debug_np = self.render.attachNewNode(debug_node)
         self.world_phys.setDebugNode(self.__debug_np.node())
+
+    def start(self):
         self.taskMgr.add(self.__update, 'Engine::update')
 
     def stop(self):
@@ -215,7 +237,7 @@ class Engine(ShowBase, object):
     def __update(self, task):
         if self.world_phys:
             dt = globalClock.getDt()
-            self.world_phys.doPhysics(dt, 5, 1/60.0)
+            self.world_phys.doPhysics(dt, 10, 1/180.0)
             self.__do_collisions()
             self.messenger.send('on_frame')
             return task.cont
@@ -255,6 +277,7 @@ class Engine(ShowBase, object):
         res_x, res_y = win_prop.get_x_size(), win_prop.get_y_size()
         return '%dx%d' % (res_x, res_y)
 
+    @property
     def closest_res(self):
         def split_res(res):
             return [int(v) for v in res.split('x')]
@@ -264,13 +287,26 @@ class Engine(ShowBase, object):
             return abs(res[0] - curr_res[0]) + abs(res[1] - curr_res[1])
 
         dist_lst = map(distance, eng.resolutions)
-        idx_min = dist_lst.index(min(dist_lst))
-        return eng.resolutions[idx_min]
+        try:
+            idx_min = dist_lst.index(min(dist_lst))
+            return eng.resolutions[idx_min]
+        except ValueError:  # sometimes we have empty resolutions
+            return eng.resolution
 
-    def set_resolution(self, res):
+    def set_resolution(self, res, check=True):
+        self.log_mgr.log('setting resolution ' + str(res))
         props = WindowProperties()
-        props.set_size(*[int(res) for res in res.split('x')])
+        props.set_size(*[int(resol) for resol in res.split('x')])
         self.win.request_properties(props)
+        if check:
+            taskMgr.doMethodLater(
+                3.0, self.set_resolution_check, 'resolution check', [res])
+
+    def set_resolution_check(self, res):
+        self.log_mgr.log('resolutions: %s %s' % (self.resolution, res))
+        if self.resolution != res:
+            self.log_mgr.log('second attempt: %s %s' % (self.resolution, res))
+            self.set_resolution(res, False)
 
     def open_browser(self, url):
         if sys.platform.startswith('linux'):
@@ -309,7 +345,7 @@ class Engine(ShowBase, object):
         (self.__debug_np.show if is_hidden else self.__debug_np.hide)()
 
     def toggle_fullscreen(self, state=None):
-        self.set_resolution(self.closest_res())
+        self.set_resolution(self.closest_res)
         props = WindowProperties()
         props.set_fullscreen(not self.win.is_fullscreen())
         base.win.requestProperties(props)

@@ -24,24 +24,28 @@ class _Phys(Phys):
 
         for geom_name in ['Road', 'Wall', 'Offroad']:
             geoms = find_geoms(geom_name)
-            for geom in geoms:
-                #geom = geom[0]
-                geom_geom = geom.node().getGeom(0)
+            if geoms:
                 mesh = BulletTriangleMesh()
-                mesh.addGeom(geom_geom)
+                for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
+                    ts = geom.getTransform(mdt.gfx.model)
+                    for _geom in [g.decompose() for g in geom.node().getGeoms()]:
+                        mesh.addGeom(_geom, ts)
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
-                np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom.get_name()))
+                np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
                 np.node().addShape(shape)
                 eng.world_phys.attachRigidBody(np.node())
                 np.node().notifyCollisions(True)
 
         for geom_name in ['Goal']:
-            geom = find_geoms(geom_name)
-            if geom:
-                geom = geom[0].node().getGeom(0)
-                #geom = geom[0]
+            geoms = find_geoms(geom_name)
+            if geoms:
                 mesh = BulletTriangleMesh()
-                mesh.addGeom(geom)
+                for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
+                    ts = geom.getTransform(mdt.gfx.model)
+                    for geom in [g.decompose() for g in geom.node().getGeoms()]:
+                        mesh.addGeom(geom, ts)
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
                 ghost = BulletGhostNode(geom_name)
                 ghost.addShape(shape)
@@ -51,10 +55,13 @@ class _Phys(Phys):
 
         for geom_name in ['Slow']:
             geoms = find_geoms(geom_name)
-            for geom in geoms:
-                geom = geom.node().getGeom(0)
+            if geoms:
                 mesh = BulletTriangleMesh()
-                mesh.addGeom(geom)
+                for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
+                    ts = geom.getTransform(mdt.gfx.model)
+                    for geom in [g.decompose() for g in geom.node().getGeoms()]:
+                        mesh.addGeom(geom, ts)
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
                 ghost = BulletGhostNode(geom_name)
                 ghost.addShape(shape)
@@ -64,10 +71,13 @@ class _Phys(Phys):
 
         for geom_name in ['Respawn']:
             geoms = find_geoms(geom_name)
-            for geom in geoms:
-                geom = geom.node().getGeom(0)
+            if geoms:
                 mesh = BulletTriangleMesh()
-                mesh.addGeom(geom)
+                for geom in geoms:
+                    eng.log_mgr.log('setting physics for: ' + geom.get_name())
+                    ts = geom.getTransform(mdt.gfx.model)
+                    for geom in [g.decompose() for g in geom.node().getGeoms()]:
+                        mesh.addGeom(geom, ts)
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
                 ghost = BulletGhostNode(geom_name)
                 ghost.addShape(shape)

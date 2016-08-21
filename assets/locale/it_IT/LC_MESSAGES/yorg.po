@@ -17,97 +17,105 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu.py:19
+#: yorg.py:57
+msgid ""
+"LOADING...\n"
+"\n"
+"PLEASE WAIT, IT MAY REQUIRE SOME TIME"
+msgstr ""
+"CARICAMENTO...\n"
+"\n"
+"ATTENDERE PREGO, SERVE TEMPO... :)"
+
+#: menu.py:21
 msgid "Play"
 msgstr "Gioca"
 
-#: menu.py:20
+#: menu.py:22
 msgid "Options"
 msgstr "Opzioni"
 
-#: menu.py:21
+#: menu.py:23
 msgid "Credits"
 msgstr "Riconoscimenti"
 
-#: menu.py:22
+#: menu.py:24
 msgid "Quit"
 msgstr "Esci"
 
-#: menu.py:44
+#: menu.py:54
 msgid "Language"
 msgstr "Lingua"
 
-#: menu.py:58
+#: menu.py:70
 msgid "Volume"
 msgstr "Volume"
 
-#: menu.py:65
+#: menu.py:78
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: menu.py:77
+#: menu.py:91
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu.py:96
+#: menu.py:112
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: menu.py:100
+#: menu.py:117
 msgid "(from the next execution)"
 msgstr "(dalla prossima esecuzione)"
 
-#: menu.py:148
+#: menu.py:130
+msgid "See Ya2's news at exit"
+msgstr "Vedi le notizie di Ya2 all'uscita"
+
+#: menu.py:155
+msgid ""
+"Please, really consider enabling this option to see our news.\n"
+"We hope you will find interesting stuff there.\n"
+"Moreover, this is how we can keep Yorg free."
+msgstr "Per favore, considera seriamente di abilitare questa opzione per vedere le nostre notizie.\n"
+"Speriamo che ci troverai roba interessante.\n"
+"Inoltre, è così che possiamo mantenere Yorg gratis."
+
+#: menu.py:226
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:149
+#: menu.py:227
 msgid "Art"
 msgstr "Grafica"
 
-#: track/gui.py:13
+#: track/gfx.py:21
+msgid "loading track model"
+msgstr "caricamento modello pista"
+
+#: track/gfx.py:82
+msgid "loading model: "
+msgstr "caricamento modello: "
+
+#: track/gfx.py:126
+msgid "flattening model: "
+msgstr "elaborazione modello: "
+
+#: track/gui.py:17
 msgid "work in progress"
 msgstr "stiamo lavorando per voi"
 
-#: track/gui.py:20
-msgid "arrows for driving; Z for braking"
-msgstr "frecce per guidare; Z per frenare"
-
-#: track/gui.py:69
+#: track/gui.py:73
 msgid "GO!"
 msgstr "VIA!"
 
-#: track/gui.py:81
-msgid "TIME"
-msgstr "TEMPO"
-
-#: track/gui.py:86
+#: track/gui.py:93
 msgid "LAP"
 msgstr "GIRO"
 
-#: ya2/gui.py:85
+#: ya2/gui.py:94
 msgid "Back"
 msgstr "Indietro"
 
-#: car/logic.py:144
+#: car/logic.py:151
 msgid "wrong way"
 msgstr "direzione sbagliata"
-
-#: car/gui.py:135
-msgid "Speed"
-msgstr "Velocità"
-
-#: car/gui.py:139
-msgid "Lap"
-msgstr "Giro"
-
-#: car/gui.py:143
-msgid "Time"
-msgstr "Tempo"
-
-#: car/gui.py:147
-msgid "Best"
-msgstr "Miglior giro"
-
-#~ msgid "F12: toggle debug"
-#~ msgstr "F12: debug"

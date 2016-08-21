@@ -18,7 +18,18 @@ class Car(GameObjectMdt):
     audio_cls = _Audio
     gui_cls = _Gui
 
-    def __init__(self, pos, hpr):
-        GameObjectMdt.__init__(self)
-        self.logic.start_pos = pos
-        self.logic.start_pos_hpr = hpr
+    def __init__(self, path, pos, hpr, cb):
+        eng.log_mgr.log('init car')
+        self.fsm = self.fsm_cls(self)
+        def post_gfx(task):
+            self.phys = self.phys_cls(self, path)
+            self.gui = self.gui_cls(self)
+            self.logic = self.logic_cls(self)
+            self.audio = self.audio_cls(self)
+            self.ai = self.ai_cls(self)
+            self.event = self.event_cls(self)
+            self.logic.start_pos = pos
+            self.logic.start_pos_hpr = hpr
+            eng.log_mgr.log('end init car')
+            cb()
+        self.gfx = self.gfx_cls(self, path, post_gfx)
