@@ -1,11 +1,10 @@
 #TODO: AI
 #TODO: networking
-#TODO: flat objects in four areas when they are too many
-#TODO: sharing times on social networks
-#TODO: build only nointernet, linux64, win64, osx64, without runtime caching, runtime-dev option
-#TODO: branches master and stable (not dev)
+#TODO: build only nointernet, linux64, win64, osx64, runtime-dev option
 #TODO: (1.9.1) remove request-dxdisplay-information for detecting the resolution on Windows
 #TODO: embed into a wx window
 #TODO: autoinstalling panda plugin http://www.panda3d.org/forums/viewtopic.php?f=1&t=16321
 #TODO: do an abstract class Game with virtual methods drawMenuBackground, onPlay, onLoad
 #TODO: pause: put all tasks on a taskchain and deactivate it
+#TODO: unit tests
+#TODO: hardware instancing
