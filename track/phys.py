@@ -25,17 +25,30 @@ class _Phys(Phys):
         for geom_name in ['Road', 'Wall', 'Offroad']:
             geoms = find_geoms(geom_name)
             if geoms:
-                mesh = BulletTriangleMesh()
+                # we can't manage speed and friction if we merge meshes
+                #mesh = BulletTriangleMesh()
+                #for geom in geoms:
+                #    eng.log_mgr.log('setting physics for: ' + geom.get_name())
+                #    ts = geom.getTransform(mdt.gfx.model)
+                #    for _geom in [g.decompose() for g in geom.node().getGeoms()]:
+                #        mesh.addGeom(_geom, ts)
+                #shape = BulletTriangleMeshShape(mesh, dynamic=False)
+                # we can't manage speed and friction if we merge meshes
+                #np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
+                #np.node().addShape(shape)
+                #eng.world_phys.attachRigidBody(np.node())
+                #np.node().notifyCollisions(True)
                 for geom in geoms:
                     eng.log_mgr.log('setting physics for: ' + geom.get_name())
                     ts = geom.getTransform(mdt.gfx.model)
+                    mesh = BulletTriangleMesh()
                     for _geom in [g.decompose() for g in geom.node().getGeoms()]:
                         mesh.addGeom(_geom, ts)
-                shape = BulletTriangleMeshShape(mesh, dynamic=False)
-                np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
-                np.node().addShape(shape)
-                eng.world_phys.attachRigidBody(np.node())
-                np.node().notifyCollisions(True)
+                    shape = BulletTriangleMeshShape(mesh, dynamic=False)
+                    np = eng.world_np.attachNewNode(BulletRigidBodyNode(geom.get_name()))
+                    np.node().addShape(shape)
+                    eng.world_phys.attachRigidBody(np.node())
+                    np.node().notifyCollisions(True)
 
         for geom_name in ['Goal']:
             geoms = find_geoms(geom_name)

@@ -1,3 +1,5 @@
+#FIXME: nodes like EmptyPlant4.228 are hidden (they don't have collision), nodes like EmptyPlant3.670 are visible (they have collision)
+#TODO: incremental steering
 #TODO: AI
 #TODO: networking
 #TODO: build only nointernet, linux64, win64, osx64, runtime-dev option
@@ -8,3 +10,7 @@
 #TODO: pause: put all tasks on a taskchain and deactivate it
 #TODO: unit tests
 #TODO: hardware instancing
+#TODO: shadows
+#TODO: gfx and physics models on different files (memory requirements)
+#TODO: animation (path*, start, duration)
+#TODO: water
