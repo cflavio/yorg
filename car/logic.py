@@ -25,6 +25,8 @@ class _Logic(Logic):
         self.last_roll_ok_time = None
         self.last_roll_ko_time = None
         self.lap_times = []
+        self.start_left = None
+        self.start_right = None
 
     def update(self, input_dct):
         '''This callback method is invoked on each frame.'''
@@ -53,12 +55,24 @@ class _Logic(Logic):
             brake_frc = self.mdt.phys.eng_brk_frc
 
         if input_dct['left']:
-            self.__steering += steering_inc
+            if self.start_left is None:
+                self.start_left = globalClock.getFrameTime()
+            dt = globalClock.getFrameTime() - self.start_left
+            mul = min(1, dt / .1)
+            self.__steering += steering_inc * mul
             self.__steering = min(self.__steering, steering_clamp)
+        else:
+            self.start_left = None
 
         if input_dct['right']:
-            self.__steering -= steering_inc
+            if self.start_right is None:
+                self.start_right = globalClock.getFrameTime()
+            dt = globalClock.getFrameTime() - self.start_right
+            mul = min(1, dt / .1)
+            self.__steering -= steering_inc * mul
             self.__steering = max(self.__steering, -steering_clamp)
+        else:
+            self.start_right = None
 
         if not input_dct['left'] and not input_dct['right']:
             if abs(self.__steering) <= steering_dec:
