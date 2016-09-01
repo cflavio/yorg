@@ -43,7 +43,7 @@ class _Gui(Gui):
 
     def set_corners(self):
         corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
-        corners = [self.mdt.gfx.model.find('**/Minimap'+corner) for corner in corners]
+        corners = [self.mdt.gfx.phys_model.find('**/Minimap'+corner) for corner in corners]
         if not any(corner.isEmpty() for corner in corners):
             self.corners = [corner.get_pos() for corner in corners]
 

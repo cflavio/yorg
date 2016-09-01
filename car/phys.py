@@ -137,7 +137,7 @@ class _Phys(Phys):
             ground = result.get_node()
             if ground:
                 ground_name = ground.get_name()
-                gfx_node = game.track.gfx.model.find('**/' + ground_name)
+                gfx_node = game.track.gfx.phys_model.find('**/' + ground_name)
                 try:
                     speeds += [float(gfx_node.get_tag('speed'))]
                     frictions += [float(gfx_node.get_tag('friction'))]

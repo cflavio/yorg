@@ -20,6 +20,7 @@
 
 # MAYBE/SOMEDAY =====
 
+#TODO: graphics buttons in the menu
 #TODO: hardware instancing
 #TODO: embed into a wx window
 #TODO: particle effects and texturing for skid marks

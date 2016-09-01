@@ -62,7 +62,10 @@ class _Fsm(Fsm):
             text='',
             scale=.08, pos=(-.1, .1), font=font, fg=(.75, .75, .75, 1),
             parent=base.a2dBottomRight, align=TextNode.A_right)
-        self.preview = loader.loadModel(track_path + '/preview/preview')
+        try:
+            self.preview = loader.loadModel(track_path + '/preview/preview')
+        except IOError:
+            self.preview = loader.loadModel(track_path + '/preview/preview.bam')
         self.preview.reparent_to(render)
         self.cam_pivot = NodePath('cam pivot')
         self.cam_pivot.reparent_to(render)
