@@ -9,8 +9,6 @@
 
 # WAITING =====
 
-#TODO: gfx and physics models on different files (memory requirements)
-#FIXME: nodes like EmptyPlant4.228 are hidden (they don't have collision), nodes like EmptyPlant3.670 are visible (they have collision)
 #TODO: shadows (pbr)
 #TODO: animation (path*, start, duration)
 #TODO: water
@@ -29,3 +27,4 @@
 #TODO: do an abstract class Game with virtual methods drawMenuBackground, onPlay, onLoad
 #TODO: pause: put all tasks on a taskchain and deactivate it
 #TODO: unit tests
+#TODO: django webapp for scores
