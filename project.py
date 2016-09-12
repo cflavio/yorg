@@ -3,7 +3,9 @@
 
 #TODO LIST =====
 
-#TODO: AI
+#TODO: also change the play rate of the engine
+#TODO: remove 4-parts world splitting
+#TODO: option for removing submodels (fast loading)
 #TODO: networking
 
 
@@ -28,3 +30,7 @@
 #TODO: pause: put all tasks on a taskchain and deactivate it
 #TODO: unit tests
 #TODO: django webapp for scores
+#TODO: multi-threading physics loading
+#TODO: improve lighting
+#TODO: git submodules ya2/engine, ya2/racing
+#TODO: ai - obstacle avoidance

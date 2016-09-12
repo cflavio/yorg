@@ -85,8 +85,9 @@ class _Fsm(Fsm):
     def load_stuff(self, track_path, car_path):
         eng.init()
         def load_car():
+            ai = OptionMgr.get_options()['ai']
             self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
-                               self.mdt.track.gfx.start_pos_hpr, start)
+                               self.mdt.track.gfx.start_pos_hpr, start, ai)
         self.mdt.track = Track(track_path, load_car)
         def start():
             self.mdt.fsm.demand('Play', track_path, car_path)

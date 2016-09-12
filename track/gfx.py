@@ -19,7 +19,7 @@ class _Gfx(Gfx):
     def __set_model(self):
         eng.log_mgr.log('loading track model')
         game.fsm.curr_load_txt.setText(_('loading track model'))
-        loader.loadModel(self.track_path + '/track',
+        loader.loadModel(self.track_path + '/track.bam',
                          callback=self.__load_collisions,
                          extraArgs=[globalClock.getFrameTime()])
 

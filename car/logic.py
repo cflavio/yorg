@@ -150,16 +150,19 @@ class _Logic(Logic):
         return self.closest_wp()
 
     @property
+    def car_vec(self):
+        car_rad = deg2Rad(self.mdt.gfx.nodepath.getH())
+        car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
+        car_vec.normalize()
+        return car_vec
+
+    @property
     def direction(self):
         start_wp, end_wp = self.current_wp
         wp_vec = Vec3(end_wp.getPos(start_wp).xy, 0)
         wp_vec.normalize()
 
-        car_rad = deg2Rad(self.mdt.gfx.nodepath.getH())
-        car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
-        car_vec.normalize()
-
-        return car_vec.dot(wp_vec)
+        return self.car_vec.dot(wp_vec)
 
     def __update_wp(self):
         way_str = _('wrong way') if self.direction < -.6 else ''

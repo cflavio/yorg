@@ -1,6 +1,7 @@
 from direct.showbase.InputStateGlobal import inputState
 from ya2.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
+from ai import _Ai
 
 
 class _Event(Event):
@@ -85,13 +86,19 @@ class _Event(Event):
             eng.particle('assets/particles/sparks.ptf', self.mdt.gfx.nodepath,
                          eng.render, (0, 1.2, .75), .8)
 
+    def __get_input(self):
+        if self.mdt.ai.__class__ == _Ai:
+            return self.mdt.ai.get_input()
+        else:
+            return {
+                'forward': inputState.isSet('forward'),
+                'left': inputState.isSet('left'),
+                'reverse': inputState.isSet('reverse'),
+                'right': inputState.isSet('right')}
+
     def __on_frame(self):
         '''This callback method is invoked on each frame.'''
-        input_dct = {
-            'forward': inputState.isSet('forward'),
-            'left': inputState.isSet('left'),
-            'reverse': inputState.isSet('reverse'),
-            'right': inputState.isSet('right')}
+        input_dct = self.__get_input()
         if game.track.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
             self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)

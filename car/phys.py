@@ -126,17 +126,24 @@ class _Phys(Phys):
         self.vehicle.setBrake(brake_frc, 2)
         self.vehicle.setBrake(brake_frc, 3)
 
+    def ground_name(self, wheel):
+        contact_pos = wheel.get_raycast_info().getContactPointWs()
+        result = eng.world_phys.rayTestClosest(
+            (contact_pos.x, contact_pos.y, contact_pos.z + .1),
+            (contact_pos.x, contact_pos.y, contact_pos.z - .1))
+        ground = result.get_node()
+        return ground.get_name() if ground else ''
+
+    @property
+    def ground_names(self):
+        return [self.ground_name(wheel) for wheel in self.vehicle.get_wheels()]
+
     def update_terrain(self):
         speeds = []
         frictions = []
         for wheel in self.vehicle.get_wheels():
-            contact_pos = wheel.get_raycast_info().getContactPointWs()
-            result = eng.world_phys.rayTestClosest(
-                (contact_pos.x, contact_pos.y, contact_pos.z + .1),
-                (contact_pos.x, contact_pos.y, contact_pos.z - .1))
-            ground = result.get_node()
-            if ground:
-                ground_name = ground.get_name()
+            ground_name = self.ground_name(wheel)
+            if ground_name:
                 gfx_node = game.track.gfx.phys_model.find('**/' + ground_name)
                 try:
                     speeds += [float(gfx_node.get_tag('speed'))]

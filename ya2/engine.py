@@ -94,7 +94,8 @@ class OptionMgr:
             'resolution': '1280 720',
             'aa': 0,
             'multithreaded_render': 0,
-            'open_browser_at_exit': 1}
+            'open_browser_at_exit': 1,
+            'ai': 0}
         return conf
 
     @staticmethod
