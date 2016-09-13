@@ -27,7 +27,7 @@ class _Gfx(Gfx):
         eng.log_mgr.log('loaded track model (%s seconds)' % str(round(globalClock.getFrameTime() - time, 2)))
         self.model = model
         if model is None:
-            self.model = loader.loadModel(self.track_path + '/track.bam')
+            self.model = loader.loadModel(self.track_path + '/track')
         loader.loadModel(self.track_path + '/collision',
                          callback=self.__set_submodels,
                          extraArgs=[globalClock.getFrameTime()])
