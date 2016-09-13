@@ -3,9 +3,8 @@
 
 #TODO LIST =====
 
-#TODO: also change the play rate of the engine
-#TODO: remove 4-parts world splitting
-#TODO: option for removing submodels (fast loading)
+#TODO: add the third car
+#TODO: play vs computer
 #TODO: networking
 
 

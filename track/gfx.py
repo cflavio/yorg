@@ -1,6 +1,7 @@
-from panda3d.core import AmbientLight, BitMask32, Spotlight, TextNode
+from panda3d.core import AmbientLight, BitMask32, Spotlight, TextNode, NodePath
 from direct.actor.Actor import Actor
 from ya2.gameobject import Gfx
+from ya2.engine import OptionMgr
 from direct.gui.OnscreenText import OnscreenText
 
 
@@ -126,7 +127,9 @@ class _Gfx(Gfx):
                     center_x = (left + right) / 2
                     center_y = (left + right) / 2
                     pos_x, pos_y = model.get_pos()[0], model.get_pos()[1]
-                    if  pos_x < center_x and pos_y < center_y:
+                    if not OptionMgr.get_options()['split_world']:
+                        parent = self.__flat_roots[model_name][0]
+                    elif  pos_x < center_x and pos_y < center_y:
                         parent = self.__flat_roots[model_name][0]
                     elif  pos_x >= center_x and pos_y < center_y:
                         parent = self.__flat_roots[model_name][1]
@@ -154,14 +157,18 @@ class _Gfx(Gfx):
                     orig_node.remove_node()
                     flat_models(models[1:], cb, model, time, number)
                 game.fsm.curr_load_txt.setText(_('flattening model: ') + node.get_name())
-                loader.asyncFlattenStrong(
-                    node,
-                    callback=process_flat,
-                    inPlace=False,
-                    extraArgs=[node,
-                               node.get_name(),
-                               globalClock.getFrameTime(),
-                               len(node.get_children())])  # it doesn't work
+                if OptionMgr.get_options()['submodels']:
+                    loader.asyncFlattenStrong(
+                        node,
+                        callback=process_flat,
+                        inPlace=False,
+                        extraArgs=[node,
+                                   node.get_name(),
+                                   globalClock.getFrameTime(),
+                                   len(node.get_children())])  # it doesn't work
+                else:
+                    len_children = len(node.get_children())
+                    process_flat(node, NodePath(''), node, globalClock.getFrameTime(), len_children)
                 #len_children = len(node.get_children())
                 #node.flattenStrong()
                 #process_flat(node, node.get_name(), globalClock.getFrameTime(), len_children)

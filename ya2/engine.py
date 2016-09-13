@@ -95,7 +95,9 @@ class OptionMgr:
             'aa': 0,
             'multithreaded_render': 0,
             'open_browser_at_exit': 1,
-            'ai': 0}
+            'ai': 0,
+            'submodels': 1,
+            'split_world': 1}
         return conf
 
     @staticmethod
