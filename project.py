@@ -15,7 +15,6 @@
 
 #TODO: animation (path*, start, duration)
 #TODO: water
-#TODO: (1.9.1) remove request-dxdisplay-information for detecting the resolution on Windows
 #TODO: waypoints as a line
 
 
