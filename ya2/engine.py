@@ -257,7 +257,7 @@ class Engine(ShowBase, object):
                             to_clear.remove(obj)
                         if not node in [coll_pair[0] for coll_pair in self.__coll_dct[obj]]:
                             self.__coll_dct[obj] += [(node, globalClock.getFrameTime())]
-                            self.messenger.send('on_collision', [node.getName()])
+                            self.messenger.send('on_collision', [obj, node.getName()])
                 process_contact(contact.getNode0())
                 process_contact(contact.getNode1())
         for obj in to_clear:

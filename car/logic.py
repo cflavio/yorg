@@ -82,8 +82,6 @@ class _Logic(Logic):
                 self.__steering += steering_sign * steering_dec
 
         self.mdt.phys.set_forces(eng_frc, brake_frc, self.__steering)
-        if game.track.fsm.getCurrentOrNextState() == 'Race':
-            self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
         if not self.mdt.event.has_just_started:
             self.mdt.gui.time_txt.setText(str(round(
                 globalClock.getFrameTime() - self.last_time_start, 2)))
@@ -260,3 +258,12 @@ class _Logic(Logic):
             return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
         except TypeError:
             return False
+
+
+class _PlayerLogic(_Logic):
+
+    def update(self, input_dct):
+        '''This callback method is invoked on each frame.'''
+        _Logic.update(self, input_dct)
+        if game.track.fsm.getCurrentOrNextState() == 'Race':
+            self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))

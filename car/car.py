@@ -2,8 +2,8 @@
 from abc import ABCMeta
 from gfx import _Gfx
 from phys import _Phys
-from event import _Event
-from logic import _Logic
+from event import _Event, _PlayerEvent
+from logic import _Logic, _PlayerLogic
 from audio import _Audio
 from gui import _Gui
 from ai import _Ai
@@ -17,8 +17,6 @@ class Car(GameObjectMdt):
     phys_cls = _Phys
     event_cls = _Event
     logic_cls = _Logic
-    audio_cls = _Audio
-    gui_cls = _Gui
 
     def __init__(self, path, pos, hpr, cb, ai=False):
         eng.log_mgr.log('init car')
@@ -37,3 +35,11 @@ class Car(GameObjectMdt):
             eng.log_mgr.log('end init car')
             cb()
         self.gfx = self.gfx_cls(self, path, post_gfx)
+
+
+class PlayerCar(Car):
+
+    event_cls = _PlayerEvent
+    audio_cls = _Audio
+    gui_cls = _Gui
+    logic_cls = _PlayerLogic

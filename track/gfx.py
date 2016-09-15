@@ -70,14 +70,18 @@ class _Gfx(Gfx):
             goal.hide()
         self.__load_empties(self.end_loading)
 
-    def end_loading(self):
-        start_pos = self.phys_model.find('**/Start1')
-        if start_pos:
-            self.start_pos = self.phys_model.find('**/Start1').get_pos()
-            self.start_pos_hpr = self.phys_model.find('**/Start1').get_hpr()
+    def get_start_pos(self, i):
+        node_str = '**/Start' + str(i + 1)
+        start_pos_node = self.phys_model.find(node_str)
+        if start_pos_node:
+            start_pos = self.phys_model.find(node_str).get_pos()
+            start_pos_hpr = self.phys_model.find(node_str).get_hpr()
         else:
-            self.start_pos = (0, 0, 0)
-            self.start_pos_hpr = (0, 0, 0)
+            start_pos = (0, 0, 0)
+            start_pos_hpr = (0, 0, 0)
+        return start_pos, start_pos_hpr
+
+    def end_loading(self):
         #self.model.clearModelNodes()
         #self.model.flattenStrong()
         self.model.prepareScene(eng.win.getGsg())

@@ -10,9 +10,8 @@ class _Event(Event):
     def __init__(self, mdt):
         Event.__init__(self, mdt)
         self.has_just_started = True
-        self.accept('f11', self.mdt.gui.toggle)
-        self.accept('on_frame', self.__on_frame)
-        self.accept('on_collision', self.__on_collision)
+        self.accept('on_frame', self._on_frame)
+        self.accept('on_collision', self._on_collision)
         label_events = [('forward', 'arrow_up'),
                         ('left', 'arrow_left'),
                         ('reverse', 'z'),
@@ -21,15 +20,10 @@ class _Event(Event):
         map(lambda (lab, evt): inputState.watchWithModifiers(lab, evt),
             label_events)
 
-    def __on_collision(self, obj_name):
+    def _on_collision(self, obj, obj_name):
+        if obj != self.mdt.gfx.nodepath.node():
+            return
         print 'collision with %s %s' % (obj_name, round(globalClock.getFrameTime(), 2))
-        if obj_name.startswith('Wall'):
-            if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
-                self.mdt.audio.crash_sfx.play()
-            taskMgr.doMethodLater(.1, self.__crash_sfx, 'crash sfx', [self.mdt.phys.speed, self.mdt.phys.speed_ratio])
-        if any(obj_name.startswith(s) for s in ['Road', 'Offroad']):
-            if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
-                self.mdt.audio.landing_sfx.play()
         if obj_name.startswith('Respawn'):
             last_pos = self.mdt.logic.last_contact_pos
             start_wp_n, end_wp_n = self.mdt.logic.closest_wp(last_pos)
@@ -54,6 +48,69 @@ class _Event(Event):
             self.mdt.gfx.nodepath.setHpr(-or_h, 0, 0)
             self.mdt.gfx.nodepath.node().setLinearVelocity(0)
             self.mdt.gfx.nodepath.node().setAngularVelocity(0)
+
+    def _get_input(self):
+        if self.mdt.ai.__class__ == _Ai:
+            return self.mdt.ai.get_input()
+        else:
+            return {
+                'forward': inputState.isSet('forward'),
+                'left': inputState.isSet('left'),
+                'reverse': inputState.isSet('reverse'),
+                'right': inputState.isSet('right')}
+
+    def _on_frame(self):
+        '''This callback method is invoked on each frame.'''
+        input_dct = self._get_input()
+        if game.track.fsm.getCurrentOrNextState() != 'Race':
+            input_dct = {key: False for key in input_dct}
+            self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
+            self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
+            wheels = self.mdt.phys.vehicle.get_wheels()
+            map(lambda whl: whl.set_rotation(0), wheels)
+        self.mdt.logic.update(input_dct)
+        if self.mdt.logic.is_upside_down:
+            self.mdt.gfx.nodepath.setR(0)
+        car_pos = self.mdt.gfx.nodepath.get_pos()
+        top = (car_pos.x, car_pos.y, 100)
+        bottom = (car_pos.x, car_pos.y, -100)
+        result = eng.world_phys.rayTestAll(top, bottom)
+        for hit in result.getHits():
+            if 'Road' in hit.getNode().getName():
+                self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()
+        self.mdt.phys.update_terrain()
+
+
+class _PlayerEvent(_Event):
+
+    def __init__(self, mdt):
+        _Event.__init__(self, mdt)
+        self.accept('f11', self.mdt.gui.toggle)
+
+    def _on_frame(self):
+        '''This callback method is invoked on each frame.'''
+        _Event._on_frame(self)
+        self.mdt.logic.update_cam()
+        self.mdt.audio.update(self._get_input())
+
+    def __crash_sfx(self, speed, speed_ratio):
+        print 'crash speed', self.mdt.phys.speed, speed
+        if abs(self.mdt.phys.speed) < abs(speed / 2.0) and speed_ratio > .5:
+            self.mdt.audio.crash_high_speed_sfx.play()
+            eng.particle('assets/particles/sparks.ptf', self.mdt.gfx.nodepath,
+                         eng.render, (0, 1.2, .75), .8)
+
+    def _on_collision(self, obj, obj_name):
+        _Event._on_collision(self, obj, obj_name)
+        if obj != self.mdt.gfx.nodepath.node():
+            return
+        if obj_name.startswith('Wall'):
+            if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
+                self.mdt.audio.crash_sfx.play()
+            taskMgr.doMethodLater(.1, self.__crash_sfx, 'crash sfx', [self.mdt.phys.speed, self.mdt.phys.speed_ratio])
+        if any(obj_name.startswith(s) for s in ['Road', 'Offroad']):
+            if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
+                self.mdt.audio.landing_sfx.play()
         if obj_name.startswith('Goal'):
             lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
             if self.mdt.gui.time_txt.getText():
@@ -77,44 +134,3 @@ class _Event(Event):
             if lap_number >= 3:
                 game.track.fsm.demand('Results')
                 game.track.gui.show_results()
-        #if evt.obj_name == 'Slow':
-
-    def __crash_sfx(self, speed, speed_ratio):
-        print 'crash speed', self.mdt.phys.speed, speed
-        if abs(self.mdt.phys.speed) < abs(speed / 2.0) and speed_ratio > .5:
-            self.mdt.audio.crash_high_speed_sfx.play()
-            eng.particle('assets/particles/sparks.ptf', self.mdt.gfx.nodepath,
-                         eng.render, (0, 1.2, .75), .8)
-
-    def __get_input(self):
-        if self.mdt.ai.__class__ == _Ai:
-            return self.mdt.ai.get_input()
-        else:
-            return {
-                'forward': inputState.isSet('forward'),
-                'left': inputState.isSet('left'),
-                'reverse': inputState.isSet('reverse'),
-                'right': inputState.isSet('right')}
-
-    def __on_frame(self):
-        '''This callback method is invoked on each frame.'''
-        input_dct = self.__get_input()
-        if game.track.fsm.getCurrentOrNextState() != 'Race':
-            input_dct = {key: False for key in input_dct}
-            self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
-            self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
-            wheels = self.mdt.phys.vehicle.get_wheels()
-            map(lambda whl: whl.set_rotation(0), wheels)
-        self.mdt.logic.update(input_dct)
-        self.mdt.audio.update(input_dct)
-        self.mdt.logic.update_cam()
-        if self.mdt.logic.is_upside_down:
-            self.mdt.gfx.nodepath.setR(0)
-        car_pos = self.mdt.gfx.nodepath.get_pos()
-        top = (car_pos.x, car_pos.y, 100)
-        bottom = (car_pos.x, car_pos.y, -100)
-        result = eng.world_phys.rayTestAll(top, bottom)
-        for hit in result.getHits():
-            if 'Road' in hit.getNode().getName():
-                self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()
-        self.mdt.phys.update_terrain()

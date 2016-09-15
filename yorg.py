@@ -1,5 +1,5 @@
 '''In this module we define the global game classes.'''
-from car.car import Car
+from car.car import Car, PlayerCar
 from menu import Menu
 from track.track import Track
 from ya2.game import Game, GameLogic
@@ -85,12 +85,27 @@ class _Fsm(Fsm):
     def load_stuff(self, track_path, car_path):
         eng.init()
         def load_car():
+            cars = ['kronos', 'themis', 'diones']
+            cars.remove(car_path)
             ai = OptionMgr.get_options()['ai']
-            self.mdt.car = Car('cars/' + car_path, self.mdt.track.gfx.start_pos,
-                               self.mdt.track.gfx.start_pos_hpr, start, ai)
+            def load_other_cars():
+               if not cars:
+                   self.mdt.fsm.demand('Play', track_path, car_path)
+               else:
+                   car = cars[0]
+                   cars.remove(car)
+                   self.mdt.cars += [
+                       Car('cars/' + car,
+                            self.mdt.track.gfx.get_start_pos(len(cars))[0],
+                            self.mdt.track.gfx.get_start_pos(len(cars))[1],
+                            load_other_cars, True)]
+            self.mdt.player_car = PlayerCar(
+                'cars/' + car_path,
+                self.mdt.track.gfx.get_start_pos(len(cars))[0],
+                self.mdt.track.gfx.get_start_pos(len(cars))[1],
+                load_other_cars, ai)
+            self.mdt.cars = []
         self.mdt.track = Track(track_path, load_car)
-        def start():
-            self.mdt.fsm.demand('Play', track_path, car_path)
 
     def exitLoading(self):
         eng.log_mgr.log('exiting Loading state')
@@ -104,7 +119,8 @@ class _Fsm(Fsm):
     def enterPlay(self, track_path, car_path):
         eng.log_mgr.log('entering Play state')
         self.mdt.track.gfx.model.reparentTo(render)
-        self.mdt.car.gfx.reparent()
+        self.mdt.player_car.gfx.reparent()
+        map(lambda car: car.gfx.reparent(), self.mdt.cars)
         eng.start()
         self.mdt.audio.game_music.play()
 
@@ -112,7 +128,8 @@ class _Fsm(Fsm):
         eng.log_mgr.log('exiting Play state')
         self.mdt.audio.game_music.stop()
         self.mdt.track.destroy()
-        self.mdt.car.destroy()
+        self.mdt.player_car.destroy()
+        map(lambda car: car.destroy(), self.mdt.cars)
 
 
 class _Logic(GameLogic):

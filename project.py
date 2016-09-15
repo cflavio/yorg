@@ -1,14 +1,14 @@
 # BUGS =====
 
+#FIXME: at exit it re-creates options.yml and it removes split_world, submodels and ai
 #FIXME: it crashes when some resolutions are selected
 #FIXME: the light is very bright when switching to fullscreen
+#FIXME: make resolutions entries smaller
 
 
-#TODO LIST =====
+# TODO LIST =====
 
-#TODO: play vs computer
 #TODO: networking
-#TODO: make resolutions entries smaller
 
 
 # WAITING =====

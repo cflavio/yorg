@@ -54,7 +54,7 @@ class _Gui(Gui):
         right = self.corners[1].getX()
         top = self.corners[0].getY()
         bottom = self.corners[3].getY()
-        car_pos = game.car.gfx.nodepath.get_pos()
+        car_pos = game.player_car.gfx.nodepath.get_pos()
         pos_x_norm = (car_pos.getX() - left) / (right - left)
         pos_y_norm = (car_pos.getY() - bottom) / (top - bottom)
 
@@ -67,7 +67,7 @@ class _Gui(Gui):
         pos_x = left_img + pos_x_norm * width
         pos_y = bottom_img + pos_y_norm * height
         self.car_handle.set_pos(pos_x, 1, pos_y)
-        self.car_handle.setR(-game.car.gfx.nodepath.getH())
+        self.car_handle.setR(-game.player_car.gfx.nodepath.getH())
 
     def process_countdown(self, task):
         if self.countdown_cnt >= 0:
@@ -87,7 +87,7 @@ class _Gui(Gui):
                                         scale=(.8, 1, .8))
         self.result_img.setTransparency(True)
         self.__res_txts = [OnscreenText(
-            str(game.car.logic.lap_times[i-1]) if i else '',
+            str(game.player_car.logic.lap_times[i-1]) if i else '',
             pos=(.3, .2 - .2 * i), scale=.1, fg=(.75, .75, .75, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
             for i in range(4)]
@@ -105,7 +105,7 @@ class _Gui(Gui):
             align=TextNode.A_right)]
         self.__buttons = []
 
-        curr_time = min(game.car.logic.lap_times)
+        curr_time = min(game.player_car.logic.lap_times)
         facebook_url = 'https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg'  #TODO: find a way to share the time on Facebook
         twitter_url = 'https://twitter.com/share?text=I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech%21&hashtags=yorg'.format(time=curr_time, track=self.track)
         plus_url = 'https://plus.google.com/share?url=ya2.it/yorg'  #TODO: find a way to share the time on Google Plus
