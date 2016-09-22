@@ -1,6 +1,5 @@
 # BUGS =====
 
-#FIXME: at exit it re-creates options.yml and it removes split_world, submodels and ai
 #FIXME: it crashes when some resolutions are selected
 #FIXME: the light is very bright when switching to fullscreen
 #FIXME: network: manage big difference in loading time of tracks

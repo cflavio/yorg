@@ -282,16 +282,16 @@ class OptionPage(Page):
             track = OptionMgr.get_options()['track']
         except KeyError:
             track = ''
-        conf = {
-            'lang': self.__lang_opt.selectedIndex,
-            'volume': self.__vol_slider.getValue(),
-            'fullscreen': self.__fullscreen_cb['indicatorValue'],
-            'resolution': self.__res_opt.get().replace('x', ' '),
-            'aa': self.__aa_cb['indicatorValue'],
-            'open_browser_at_exit': self.__browser_cb['indicatorValue'],
-            'multithreaded_render': OptionMgr.get_options()['multithreaded_render'],
-            'car': car,
-            'track': track}
+        conf = OptionMgr.get_options()
+        conf['lang'] = self.__lang_opt.selectedIndex
+        conf['volume'] = self.__vol_slider.getValue()
+        conf['fullscreen'] = self.__fullscreen_cb['indicatorValue']
+        conf['resolution'] = self.__res_opt.get().replace('x', ' ')
+        conf['aa'] = self.__aa_cb['indicatorValue']
+        conf['open_browser_at_exit'] = self.__browser_cb['indicatorValue']
+        conf['multithreaded_render'] = OptionMgr.get_options()['multithreaded_render']
+        conf['car'] = car
+        conf['track'] = track
         OptionMgr.set_options(conf)
 
     def update_texts(self):
