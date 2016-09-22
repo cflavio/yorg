@@ -3,12 +3,11 @@
 #FIXME: at exit it re-creates options.yml and it removes split_world, submodels and ai
 #FIXME: it crashes when some resolutions are selected
 #FIXME: the light is very bright when switching to fullscreen
-#FIXME: make resolutions entries smaller
+#FIXME: network: manage big difference in loading time of tracks
 
 
 # TODO LIST =====
 
-#TODO: networking
 #TODO: option for number of laps
 #TODO: option for fps showing
 #TODO: make tournament (list of tracks and ranking)
@@ -45,7 +44,5 @@
 #TODO: drivers' names on their cars during multiplayer matches
 #TODO: print if the port is closed when creating the server
 #TODO: send game packets using udp in place of tcp
-#TODO: network: manage big difference in loading time of tracks
 #TODO: network: wheels animations
 #TODO: network: physics (collisions to players' car)
-

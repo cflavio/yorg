@@ -210,9 +210,9 @@ class OptionPage(Page):
         else:
             curr_res =  str(eng.win.getXSize())+'x'+str(base.win.getYSize())
         self.__res_opt = DirectOptionMenu(
-            text='', scale=.12, items=eng.resolutions, pos=(.2, 1, -.1),
+            text='', scale=.08, items=eng.resolutions, pos=(.2, 1, -.1),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
-            text_font=font, text_fg=(.75, .75, .75, 1), text_scale=.85,
+            text_font=font, text_fg=(.75, .75, .75, 1),
             item_text_font=font, item_text_fg=(.75, .75, .75, 1),
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
             initialitem=eng.closest_res,
