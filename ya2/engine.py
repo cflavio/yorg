@@ -101,7 +101,8 @@ class OptionMgr:
             'ai': 0,
             'submodels': 1,
             'split_world': 1,
-            'laps': 3}
+            'laps': 3,
+            'fps': 1}
         return conf
 
     @staticmethod

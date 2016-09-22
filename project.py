@@ -8,7 +8,6 @@
 
 # TODO LIST =====
 
-#TODO: option for fps showing
 #TODO: make tournament (list of tracks and ranking)
 #TODO: refactoring
 #TODO: git submodules ya2/engine, ya2/racing

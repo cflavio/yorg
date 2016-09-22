@@ -21,7 +21,7 @@ if sys.platform != 'darwin' and \
 if __name__ == '__main__' or path.exists('main.pyo'):
     Engine(
         Configuration(
-            fps=True,
+            fps=OptionMgr.get_options()['fps'],
             win_title='Yorg',
             win_size=OptionMgr.get_options()['resolution'],
             fullscreen=OptionMgr.get_options()['fullscreen'],
