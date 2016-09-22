@@ -2,6 +2,7 @@ from direct.showbase.InputStateGlobal import inputState
 from ya2.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
 from ai import _Ai
+from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
 
 
 class _Event(Event):
@@ -52,6 +53,12 @@ class _Event(Event):
     def _get_input(self):
         if self.mdt.ai.__class__ == _Ai:
             return self.mdt.ai.get_input()
+        elif self.__class__ == _NetworkEvent:
+            return {
+                'forward': False,
+                'left': False,
+                'reverse': False,
+                'right': False}
         else:
             return {
                 'forward': inputState.isSet('forward'),
@@ -81,17 +88,67 @@ class _Event(Event):
         self.mdt.phys.update_terrain()
 
 
+class NetMsgs:
+
+    game_packet = 0
+    player_info = 1
+    end_race_player = 2
+    end_race = 3
+
+
 class _PlayerEvent(_Event):
 
     def __init__(self, mdt):
         _Event.__init__(self, mdt)
         self.accept('f11', self.mdt.gui.toggle)
+        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+            self.server_info = {}
+        self.last_sent = globalClock.getFrameTime()
+
+    def eval_register(self):
+        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+            game.logic.srv.register_cb(self.process_srv)
+        elif hasattr(game.logic, 'client') and game.logic.client.is_active:
+            game.logic.client.register_cb(self.process_client)
 
     def _on_frame(self):
         '''This callback method is invoked on each frame.'''
         _Event._on_frame(self)
         self.mdt.logic.update_cam()
         self.mdt.audio.update(self._get_input())
+        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+            pos = self.mdt.gfx.nodepath.getPos()
+            hpr = self.mdt.gfx.nodepath.getHpr()
+            velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
+            self.server_info['server'] = (pos, hpr, velocity)
+            for car in [car for car in game.cars if car.ai_cls == _Ai]:
+                pos = car.gfx.nodepath.getPos()
+                hpr = car.gfx.nodepath.getHpr()
+                velocity = car.phys.vehicle.getChassis().getLinearVelocity()
+                self.server_info[car] = (pos, hpr, velocity)
+            if globalClock.getFrameTime() - self.last_sent > .2:
+                game.logic.srv.send(self.__prepare_game_packet())
+                self.last_sent = globalClock.getFrameTime()
+        if hasattr(game.logic, 'client') and game.logic.client.is_active:
+            pos = self.mdt.gfx.nodepath.getPos()
+            hpr = self.mdt.gfx.nodepath.getHpr()
+            velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
+            from itertools import chain
+            packet = list(chain([NetMsgs.player_info], pos, hpr, velocity))
+            if globalClock.getFrameTime() - self.last_sent > .2:
+                game.logic.client.send(packet)
+                self.last_sent = globalClock.getFrameTime()
+
+    def __prepare_game_packet(self):
+        packet = [NetMsgs.game_packet]
+        for car in [game.player_car] + game.cars:
+            name = car.gfx.path
+            pos = car.gfx.nodepath.getPos()
+            hpr = car.gfx.nodepath.getHpr()
+            velocity = car.phys.vehicle.getChassis().getLinearVelocity()
+            from itertools import chain
+            packet += chain([name], pos, hpr, velocity)
+        return packet
 
     def __crash_sfx(self, speed, speed_ratio):
         print 'crash speed', self.mdt.phys.speed, speed
@@ -132,5 +189,49 @@ class _PlayerEvent(_Event):
                     self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/3')
             self.has_just_started = False
             if lap_number >= 3:
+                if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+                    game.logic.srv.send([NetMsgs.end_race])
+                elif hasattr(game.logic, 'client') and game.logic.client.is_active:
+                    game.logic.client.send([NetMsgs.end_race_player])
                 game.track.fsm.demand('Results')
                 game.track.gui.show_results()
+
+    def process_srv(self, data_lst, sender):
+        from car import NetworkCar
+        if data_lst[0] == NetMsgs.player_info:
+            pos = (data_lst[1], data_lst[2], data_lst[3])
+            hpr = (data_lst[4], data_lst[5], data_lst[6])
+            velocity = (data_lst[7], data_lst[8], data_lst[9])
+            self.server_info[sender] = (pos, hpr, velocity)
+            car_name = game.logic.srv.car_mapping[sender]
+            for car in [car for car in game.cars if car.__class__ == NetworkCar]:
+                if car_name in car.gfx.path:
+                    LerpPosInterval(car.gfx.nodepath, .2, pos).start()
+                    LerpHprInterval(car.gfx.nodepath, .2, hpr).start()
+        if data_lst[0] == NetMsgs.end_race_player:
+            game.logic.srv.send([NetMsgs.end_race])
+            game.track.fsm.demand('Results')
+            game.track.gui.show_results()
+
+    def process_client(self, data_lst, sender):
+        from car import NetworkCar
+        car_info = {}
+        if data_lst[0] == NetMsgs.game_packet:
+            for i in range(1, len(data_lst), 10):
+                car_name = data_lst[i]
+                car_pos = (data_lst[i + 1], data_lst[i + 2], data_lst[i + 3])
+                car_hpr = (data_lst[i + 4], data_lst[i + 5], data_lst[i + 6])
+                car_velocity = (data_lst[i + 7], data_lst[i + 8], data_lst[i + 9])
+                for car in [car for car in game.cars if car.__class__ == NetworkCar]:
+                    if car_name in car.gfx.path:
+                        LerpPosInterval(car.gfx.nodepath, .2, car_pos).start()
+                        LerpHprInterval(car.gfx.nodepath, .2, car_hpr).start()
+        if data_lst[0] == NetMsgs.end_race:
+            if game.track.fsm.getCurrentOrNextState() != 'Results':
+                game.track.fsm.demand('Results')
+                game.track.gui.show_results()
+
+
+class _NetworkEvent(_Event):
+
+    pass

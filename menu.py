@@ -1,6 +1,6 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectCheckButton import DirectCheckButton
-from direct.gui.DirectGuiGlobals import FLAT, DISABLED
+from direct.gui.DirectGuiGlobals import FLAT, DISABLED, NORMAL
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
@@ -9,16 +9,29 @@ from panda3d.core import TextNode
 from sys import exit
 from ya2.gameobject import Fsm, GameObjectMdt, Gui
 from ya2.gui import Page, PageArgs, transl_text
-from ya2.engine import LangMgr, OptionMgr
+from ya2.engine import LangMgr, OptionMgr, Server, Client, ClientError
 from direct.showbase.DirectObject import DirectObject
 from direct.gui.DirectDialog import OkDialog
+from direct.gui.DirectGui import DirectEntry
+
+
+class NetMsgs:
+
+    track_selected = 0
+    car_request = 1
+    car_confirm = 2
+    car_deny = 3
+    car_selection = 4
+    car_deselection = 5
+    start_race = 6
 
 
 class MainPage(Page, DirectObject):
 
     def create(self, fsm):
         page_args = self.page_args
-        menu_data = [('Play', _('Play'), lambda: fsm.demand('Tracks')),
+        menu_data = [('Single Player', _('Single Player'), lambda: fsm.demand('Tracks')),
+                     ('Multiplayer', _('Multiplayer'), lambda: fsm.demand('Multiplayer')),
                      ('Options', _('Options'), lambda: fsm.demand('Options')),
                      ('Credits', _('Credits'), lambda: fsm.demand('Credits')),
                      ('Quit', _('Quit'), self.on_exit)]
@@ -40,6 +53,109 @@ class MainPage(Page, DirectObject):
         if OptionMgr.get_options()['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
         exit()
+
+
+class MultiplayerPage(Page):
+
+    def create(self, fsm):
+
+        page_args = self.page_args
+        menu_data = [
+            ('Server', lambda: fsm.demand('Server')),
+            ('Client', lambda: fsm.demand('Client'))]
+        self.widgets = [
+            DirectButton(
+                text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
+                text_fg=(.75, .75, .75, 1),
+                text_font=self.font, frameColor=page_args.btn_color,
+                command=menu[1], frameSize=page_args.btn_size,
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            for i, menu in enumerate(menu_data)]
+        Page.create(self)
+
+
+class ServerPage(Page):
+
+    def create(self, fsm):
+        import socket
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('ya2.it', 0))
+        local_addr = s.getsockname()[0]
+        from json import load
+        from urllib2 import urlopen
+        public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
+        addr = local_addr + ' - ' + public_addr
+        self.widgets = [
+            OnscreenText(text=addr, scale=.12, pos=(0, .4),
+                         font=self.font, fg=(.75, .75, .75, 1))]
+        self.conn_txt = OnscreenText(scale=.12,
+                         pos=(0, .2), font=self.font, fg=(.75, .75, .75, 1))
+        self.widgets += [self.conn_txt]
+        page_args = self.page_args
+        self.widgets += [
+            DirectButton(
+                text=_('Start'), scale=.2, pos=(0, 1, -.5),
+                text_fg=(.75, .75, .75, 1),
+                text_font=self.font, frameColor=page_args.btn_color,
+                command=self.start, extraArgs=[fsm],
+                frameSize=page_args.btn_size,
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
+        Page.create(self)
+        game.logic.srv = Server(self.process_msg, self.process_connection)
+
+    def process_msg(self, data_lst):
+        print data_lst
+
+    def process_connection(self, client_address):
+        eng.log_mgr.log('connection from ' + client_address)
+        self.conn_txt.setText(_('connection from ') + client_address)
+
+    def start(self, fsm):
+        fsm.demand('Tracks')
+
+
+class ClientPage(Page):
+
+    def create(self, fsm):
+        self.fsm = fsm
+        self.widgets = [
+            OnscreenText(text='', scale=.12, pos=(0, .4),
+                         font=self.font, fg=(.75, .75, .75, 1))]
+        transl_text(self.widgets[0], _('Client'), _('Client'))
+        self.ent = DirectEntry(
+            scale=.12, pos=(-.68, 1, .2), entryFont=self.font, width=12,
+            frameColor=self.page_args.btn_color,
+            initialText='insert the server address')
+        self.ent.onscreenText['fg'] = (.75, .75, .75, 1)
+        self.widgets += [self.ent]
+        page_args = self.page_args
+        self.widgets += [
+            DirectButton(
+                text=_('Connect'), scale=.2, pos=(0, 1, -.2),
+                text_fg=(.75, .75, .75, 1),
+                text_font=self.font, frameColor=page_args.btn_color,
+                command=self.connect, frameSize=page_args.btn_size,
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
+        Page.create(self)
+
+    def connect(self):
+        try:
+            print self.ent.get()
+            game.logic.client = Client(self.process_msg, self.ent.get())
+            self.widgets += [
+                OnscreenText(text=_('Waiting for the server'), scale=.12,
+                             pos=(0, -.5), font=self.font, fg=(.75, .75, .75, 1))]
+        except ClientError:
+            txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)
+            taskMgr.doMethodLater(5.0, lambda tsk: txt.destroy(), 'destroy error text')
+
+    def process_msg(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.track_selected:
+            eng.log_mgr.log('track selected: ' + data_lst[1])
+            self.fsm.demand('Cars', 'tracks/track_' + data_lst[1])
 
 
 class OptionPage(Page):
@@ -193,15 +309,20 @@ class TrackPage(Page):
 
     def create(self, fsm):
         page_args = self.page_args
+        def on_track(track):
+            fsm.demand('Cars', 'tracks/track_' + track)
+            if game.logic.srv.is_active:
+                game.logic.srv.send([NetMsgs.track_selected, track])
         menu_data = [
-            ('Desert', lambda: fsm.demand('Cars', 'tracks/track_desert')),
-            ('Prototype', lambda: fsm.demand('Cars', 'tracks/track_prototype'))]
+            ('Desert', on_track, ['desert']),
+            ('Prototype', on_track, ['prototype'])]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
                 text_fg=(.75, .75, .75, 1),
                 text_font=self.font, frameColor=page_args.btn_color,
-                command=menu[1], frameSize=page_args.btn_size,
+                command=menu[1], extraArgs=menu[2],
+                frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
@@ -212,20 +333,103 @@ class CarPage(Page):
 
     def create(self, game_fsm, track_path):
         page_args = self.page_args
+        self.track_path = track_path
+        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+            game.logic.srv.register_cb(self.process_srv)
+            game.logic.srv.car_mapping = {}
+        elif hasattr(game.logic, 'client') and game.logic.client.is_active:
+            game.logic.client.register_cb(self.process_client)
+        def on_car(car):
+            if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+                eng.log_mgr.log('car selected: ' + car)
+                game.logic.srv.send([NetMsgs.car_selection, car])
+                for btn in [wdg for wdg in self.widgets if wdg.__class__ == DirectButton and wdg['extraArgs'] == [car]]:
+                    btn['state'] = DISABLED
+                    btn.setAlphaScale(.25)
+                if self in self.current_cars:
+                  eng.log_mgr.log('car deselected: ' + self.current_cars[self])
+                  game.logic.srv.send([NetMsgs.car_deselection, self.current_cars[self]])
+                  for btn in [wdg for wdg in self.widgets if wdg.__class__ == DirectButton and wdg['extraArgs'] == [self.current_cars[self]]]:
+                      btn['state'] = NORMAL
+                      btn.setAlphaScale(1)
+                self.current_cars[self] = car
+                game.logic.srv.car_mapping['self'] = car
+                self.evaluate_starting()
+            if hasattr(game.logic, 'client') and game.logic.client.is_active:
+                eng.log_mgr.log('car request: ' + car)
+                game.logic.client.send([NetMsgs.car_request, car])
         menu_data = [
-            ('Kronos', lambda: game_fsm.demand('Loading', track_path, 'kronos')),
-            ('Themis', lambda: game_fsm.demand('Loading', track_path, 'themis')),
-            ('Diones', lambda: game_fsm.demand('Loading', track_path, 'diones'))]
+            ('Kronos', on_car, ['kronos']),
+            ('Themis', on_car, ['themis']),
+            ('Diones', on_car, ['diones'])]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
                 text_fg=(.75, .75, .75, 1),
                 text_font=self.font, frameColor=page_args.btn_color,
-                command=menu[1], frameSize=page_args.btn_size,
+                command=menu[1], extraArgs=menu[2],
+                frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
+        self.current_cars = {}
         Page.create(self)
+
+    def evaluate_starting(self):
+        if all(conn in self.current_cars for conn in game.logic.srv.connections + [self]):
+            packet = [NetMsgs.start_race]
+            packet += [len(self.current_cars)]
+            def process(k):
+                return 'server' if k == self else k.getAddress().getIpString()
+            for k, v in self.current_cars.items():
+                packet += [process(k)]
+                packet += [v]
+            game.logic.srv.send(packet)
+            eng.log_mgr.log('start race: ' + str(packet))
+            game.fsm.demand('Loading', self.track_path, self.current_cars[self],
+                            packet[2:])
+
+    def process_srv(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.car_request:
+            car = data_lst[1]
+            eng.log_mgr.log('car requested: ' + car)
+            btn = [wdg for wdg in self.widgets if wdg.__class__ == DirectButton and wdg['extraArgs'] == [car]][0]
+            if btn['state'] == DISABLED:
+                game.logic.srv.send([NetMsgs.car_deny], sender)
+                eng.log_mgr.log('car already selected: ' + car)
+            elif btn['state'] == NORMAL:
+                eng.log_mgr.log('car selected: ' + car)
+                self.current_cars[sender] = car
+                btn['state'] == DISABLED
+                game.logic.srv.send([NetMsgs.car_confirm, car], sender)
+                game.logic.srv.send([NetMsgs.car_selection, car])
+                game.logic.srv.car_mapping[sender] = car
+                self.evaluate_starting()
+
+    def process_client(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.car_confirm:
+            self.car = car = data_lst[1]
+            eng.log_mgr.log('car confirmed: ' + car)
+            btn = [wdg for wdg in self.widgets if wdg.__class__ == DirectButton and wdg['extraArgs'] == [car]][0]
+            btn['state'] = DISABLED
+            btn.setAlphaScale(.25)
+        if data_lst[0] == NetMsgs.car_deny:
+            eng.log_mgr.log('car denied')
+        if data_lst[0] == NetMsgs.car_selection:
+            car = data_lst[1]
+            eng.log_mgr.log('car selection: ' + car)
+            btn = [wdg for wdg in self.widgets if wdg.__class__ == DirectButton and wdg['extraArgs'] == [car]][0]
+            btn['state'] = DISABLED
+            btn.setAlphaScale(.25)
+        if data_lst[0] == NetMsgs.car_deselection:
+            car = data_lst[1]
+            eng.log_mgr.log('car deselection: ' + car)
+            btn = [wdg for wdg in self.widgets if wdg.__class__ == DirectButton and wdg['extraArgs'] == [car]][0]
+            btn['state'] = NORMAL
+            btn.setAlphaScale(1)
+        if data_lst[0] == NetMsgs.start_race:
+            eng.log_mgr.log('start_race: ' + str(data_lst))
+            game.fsm.demand('Loading', self.track_path, self.car, data_lst[2:])
 
 
 class CreditPage(Page):
@@ -256,6 +460,9 @@ class _Gui(Gui):
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
             (0, 0, 0, .2), True, False, False, 'Tracks', (.95, .95, .95, .99))
         self.main_page = MainPage(main_args)
+        self.multiplayer_page = MultiplayerPage(args)
+        self.server_page = ServerPage(args)
+        self.client_page = ClientPage(args)
         self.track_page = TrackPage(args)
         self.car_page = CarPage(car_args)
         self.option_page = OptionPage(args)
@@ -268,7 +475,10 @@ class _Fsm(Fsm):
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
         self.defaultTransitions = {
-            'Main': ['Tracks', 'Options', 'Credits'],
+            'Main': ['Tracks', 'Multiplayer', 'Options', 'Credits'],
+            'Multiplayer': ['Main', 'Server', 'Client'],
+            'Server': ['Main', 'Tracks'],
+            'Client': ['Main', 'Cars'],
             'Tracks': ['Main', 'Cars'],
             'Cars': ['Main', 'Tracks'],
             'Options': ['Main'],
@@ -279,6 +489,24 @@ class _Fsm(Fsm):
 
     def exitMain(self):
         self.mdt.gui.main_page.destroy()
+
+    def enterMultiplayer(self):
+        self.mdt.gui.multiplayer_page.create(self.mdt.fsm)
+
+    def exitMultiplayer(self):
+        self.mdt.gui.multiplayer_page.destroy()
+
+    def enterServer(self):
+        self.mdt.gui.server_page.create(self.mdt.fsm)
+
+    def exitServer(self):
+        self.mdt.gui.server_page.destroy()
+
+    def enterClient(self):
+        self.mdt.gui.client_page.create(self.mdt.fsm)
+
+    def exitClient(self):
+        self.mdt.gui.client_page.destroy()
 
     def enterTracks(self):
         self.mdt.gui.track_page.create(self.mdt.fsm)

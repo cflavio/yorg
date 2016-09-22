@@ -1,5 +1,5 @@
 '''In this module we define the global game classes.'''
-from car.car import Car, PlayerCar
+from car.car import Car, PlayerCar, NetworkCar
 from menu import Menu
 from track.track import Track
 from ya2.game import Game, GameLogic
@@ -12,6 +12,12 @@ from car.gfx import _Gfx as CarGfx
 from panda3d.core import NodePath, TextNode
 from direct.interval.LerpInterval import LerpHprInterval
 from ya2.engine import OptionMgr
+
+
+class NetMsgs:
+
+    client_ready = 0
+    start_race = 1
 
 
 class _Event(Event):
@@ -51,7 +57,7 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterLoading(self, track_path, car_path):
+    def enterLoading(self, track_path, car_path, player_cars=[]):
         eng.log_mgr.log('entering Loading state')
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.load_txt = OnscreenText(
@@ -74,7 +80,7 @@ class _Fsm(Fsm):
         self.cam_node.reparent_to(self.cam_pivot)
         self.cam_pivot.hprInterval(25, (360, 0, 0), blendType='easeInOut').loop()
         self.cam_tsk = taskMgr.add(self.update_cam, 'update cam')
-        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, car_path])
+        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, car_path, player_cars])
 
     def update_cam(self, task):
         pos = self.cam_node.get_pos(render)
@@ -82,10 +88,12 @@ class _Fsm(Fsm):
         eng.camera.look_at(0, 0, 0)
         return task.again
 
-    def load_stuff(self, track_path, car_path):
+    def load_stuff(self, track_path, car_path, player_cars):
         eng.init()
+        player_cars = player_cars[1::2]
         def load_car():
             cars = ['kronos', 'themis', 'diones']
+            grid = ['kronos', 'themis', 'diones']
             cars.remove(car_path)
             ai = OptionMgr.get_options()['ai']
             def load_other_cars():
@@ -94,15 +102,21 @@ class _Fsm(Fsm):
                else:
                    car = cars[0]
                    cars.remove(car)
+                   car_class = Car
+                   ai = True
+                   if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+                       car_class = NetworkCar if car in player_cars else Car
+                   if hasattr(game.logic, 'client') and game.logic.client.is_active:
+                       car_class = NetworkCar
                    self.mdt.cars += [
-                       Car('cars/' + car,
-                            self.mdt.track.gfx.get_start_pos(len(cars))[0],
-                            self.mdt.track.gfx.get_start_pos(len(cars))[1],
-                            load_other_cars, True)]
+                       car_class('cars/' + car,
+                            self.mdt.track.gfx.get_start_pos(grid.index(car))[0],
+                            self.mdt.track.gfx.get_start_pos(grid.index(car))[1],
+                            load_other_cars, car not in player_cars)]
             self.mdt.player_car = PlayerCar(
                 'cars/' + car_path,
-                self.mdt.track.gfx.get_start_pos(len(cars))[0],
-                self.mdt.track.gfx.get_start_pos(len(cars))[1],
+                self.mdt.track.gfx.get_start_pos(grid.index(car_path))[0],
+                self.mdt.track.gfx.get_start_pos(grid.index(car_path))[1],
                 load_other_cars, ai)
             self.mdt.cars = []
         self.mdt.track = Track(track_path, load_car)
@@ -121,11 +135,46 @@ class _Fsm(Fsm):
         self.mdt.track.gfx.model.reparentTo(render)
         self.mdt.player_car.gfx.reparent()
         map(lambda car: car.gfx.reparent(), self.mdt.cars)
+        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+            self.ready_clients = []
+            game.logic.srv.register_cb(self.process_srv)
+        elif hasattr(game.logic, 'client') and game.logic.client.is_active:
+            game.logic.client.register_cb(self.process_client)
+            def send_ready(task):
+                game.logic.client.send([NetMsgs.client_ready])
+                eng.log_mgr.log('sent client ready')
+                return task.again
+            self.send_tsk = taskMgr.doMethodLater(.5, send_ready, 'send ready')
+            # the server could not be listen to this event if it is still loading
+            # we should do a global protocol, perhaps
+        else:
+            self.start_play()
+
+    def process_srv(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.client_ready:
+            eng.log_mgr.log('client ready: ' + sender.getAddress().getIpString())
+            self.ready_clients += [sender]
+            if all(client in self.ready_clients for client in game.logic.srv.connections):
+                self.start_play()
+                game.logic.srv.send([NetMsgs.start_race])
+
+    def process_client(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.start_race:
+            eng.log_mgr.log('start race')
+            taskMgr.remove(self.send_tsk)
+            self.start_play()
+
+    def start_play(self):
         eng.start()
+        game.player_car.event.eval_register()
         self.mdt.audio.game_music.play()
 
     def exitPlay(self):
         eng.log_mgr.log('exiting Play state')
+        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+            game.logic.srv.destroy()
+        elif hasattr(game.logic, 'client') and game.logic.client.is_active:
+            game.logic.client.destroy()
         self.mdt.audio.game_music.stop()
         self.mdt.track.destroy()
         self.mdt.player_car.destroy()

@@ -2,7 +2,7 @@
 from abc import ABCMeta
 from gfx import _Gfx
 from phys import _Phys
-from event import _Event, _PlayerEvent
+from event import _Event, _PlayerEvent, _NetworkEvent
 from logic import _Logic, _PlayerLogic
 from audio import _Audio
 from gui import _Gui
@@ -43,3 +43,8 @@ class PlayerCar(Car):
     audio_cls = _Audio
     gui_cls = _Gui
     logic_cls = _PlayerLogic
+
+
+class NetworkCar(Car):
+
+    event_cls = _NetworkEvent

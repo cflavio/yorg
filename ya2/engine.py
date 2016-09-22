@@ -11,8 +11,11 @@ from gettext import install, translation
 from os import environ, system
 from panda3d.bullet import BulletWorld, BulletDebugNode
 from panda3d.core import getModelPath, WindowProperties, LightRampAttrib, \
-    PandaNode, NodePath, AntialiasAttrib
-from panda3d.core import loadPrcFileData
+    PandaNode, NodePath, AntialiasAttrib, loadPrcFileData, \
+    QueuedConnectionManager, QueuedConnectionListener, QueuedConnectionReader, \
+    ConnectionWriter, PointerToConnection, NetAddress, NetDatagram
+from direct.distributed.PyDatagram import PyDatagram
+from direct.distributed.PyDatagramIterator import PyDatagramIterator
 from webbrowser import open_new_tab
 from pause import pause, resume, isPaused, get_isPaused
 import __builtin__
@@ -118,6 +121,119 @@ class FontMgr:
             self.__fonts[path].setPixelsPerUnit(60)
             self.__fonts[path].setOutline((0, 0, 0, 1), .8, .2)
         return self.__fonts[path]
+
+
+class AbsNetwork:
+
+    def __init__(self, reader_cb):
+        self.c_mgr = QueuedConnectionManager()
+        self.c_reader = QueuedConnectionReader(self.c_mgr, 0)
+        self.c_writer = ConnectionWriter(self.c_mgr, 0)
+        self.reader_tsk = taskMgr.add(self.tsk_reader, 'connection reader', -40)
+        self.reader_cb = reader_cb
+
+    def _format(self, data_lst):
+        dct_types = {bool: 'B', int: 'I', float: 'F', str: 'S'}
+        return ''.join(dct_types[type(part)] for part in data_lst)
+
+    def send(self, data_lst, receiver=None):
+        datagram = PyDatagram()
+        datagram.addString(self._format(data_lst))
+        dct_meths = {bool: datagram.addBool, int: datagram.addInt64,
+                     float: datagram.addFloat64, str: datagram.addString}
+        for part in data_lst:
+            dct_meths[type(part)](part)
+        self._actual_send(datagram, receiver)
+
+    def tsk_reader(self, task):
+        if self.c_reader.dataAvailable():
+            datagram = NetDatagram()
+            if self.c_reader.getData(datagram):
+                iterator = PyDatagramIterator(datagram)
+                format = iterator.getString()
+                dct_meths = {'B': iterator.getBool, 'I': iterator.getInt64,
+                             'F': iterator.getFloat64, 'S': iterator.getString}
+                msg_lst = [dct_meths[c]() for c in format]
+                self.reader_cb(msg_lst, datagram.getConnection())
+        return task.cont
+
+    @property
+    def is_active(self):
+        return self.reader_tsk.is_alive()
+
+    def register_cb(self, cb):
+        self.reader_cb = cb
+
+    def destroy(self):
+        taskMgr.remove(self.reader_tsk)
+
+
+class Server(AbsNetwork):
+
+    def __init__(self, reader_cb, connection_cb):
+        AbsNetwork.__init__(self, reader_cb)
+        self.connection_cb = connection_cb
+        self.c_listener = QueuedConnectionListener(self.c_mgr, 0)
+        self.connections = []
+        self.tcp_socket = self.c_mgr.openTCPServerRendezvous(9099, 1000)
+        self.c_listener.addConnection(self.tcp_socket)
+        self.listener_tsk = taskMgr.add(self.tsk_listener, 'connection listener', -39)
+        eng.log_mgr.log('the server is up')
+
+    def tsk_listener(self, task):
+        if self.c_listener.newConnectionAvailable():
+            rendezvous = PointerToConnection()
+            net_address = NetAddress()
+            new_connection = PointerToConnection()
+            if self.c_listener.getNewConnection(rendezvous, net_address, new_connection):
+                new_connection = new_connection.p()
+                self.connections.append(new_connection)
+                self.c_reader.addConnection(new_connection)
+                self.connection_cb(net_address.getIpString())
+                eng.log_mgr.log('received a connection from ' + net_address.getIpString())
+        return task.cont
+
+    def _actual_send(self, datagram, receiver):
+        if receiver is not None:
+            for client in self.connections:
+                if client == receiver:
+                    self.c_writer.send(datagram, client)
+        else:
+            for client in self.connections:
+                self.c_writer.send(datagram, client)
+
+    def destroy(self):
+        AbsNetwork.destroy(self)
+        for client in self.connections:
+            self.c_reader.removeConnection(client)
+        self.c_mgr.closeConnection(self.tcp_socket)
+        taskMgr.remove(self.listener_tsk)
+        eng.log_mgr.log('the server has been destroyed')
+
+
+class ClientError(Exception):
+
+    pass
+
+
+class Client(AbsNetwork):
+
+    def __init__(self, reader_cb, server_address):
+        AbsNetwork.__init__(self, reader_cb)
+        self.conn = self.c_mgr.openTCPClientConnection(server_address, 9099, 3000)
+        if self.conn:
+            self.c_reader.addConnection(self.conn)
+        else:
+            raise ClientError
+        eng.log_mgr.log('the client is up')
+
+    def _actual_send(self, datagram, receiver):
+        self.c_writer.send(datagram, self.conn)
+
+    def destroy(self):
+        AbsNetwork.destroy(self)
+        self.c_mgr.closeConnection(self.conn)
+        eng.log_mgr.log('the client has been destroyed')
 
 
 class Configuration:

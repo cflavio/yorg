@@ -86,11 +86,12 @@ class _Gui(Gui):
         self.result_img = OnscreenImage(image='assets/images/gui/results.png',
                                         scale=(.8, 1, .8))
         self.result_img.setTransparency(True)
+        laps = len(game.player_car.logic.lap_times)
         self.__res_txts = [OnscreenText(
             str(game.player_car.logic.lap_times[i-1]) if i else '',
             pos=(.3, .2 - .2 * i), scale=.1, fg=(.75, .75, .75, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
-            for i in range(4)]
+            for i in range(laps)]
         self.__res_txts += [OnscreenText(
             _('LAP'), pos=(-.3, .35), scale=.1, fg=(.75, .75, .75, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
@@ -105,7 +106,7 @@ class _Gui(Gui):
             align=TextNode.A_right)]
         self.__buttons = []
 
-        curr_time = min(game.player_car.logic.lap_times)
+        curr_time = min(game.player_car.logic.lap_times or [0])
         facebook_url = 'https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg'  #TODO: find a way to share the time on Facebook
         twitter_url = 'https://twitter.com/share?text=I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech%21&hashtags=yorg'.format(time=curr_time, track=self.track)
         plus_url = 'https://plus.google.com/share?url=ya2.it/yorg'  #TODO: find a way to share the time on Google Plus
