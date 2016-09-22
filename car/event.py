@@ -3,6 +3,7 @@ from ya2.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
 from ai import _Ai
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
+from ya2.engine import OptionMgr
 
 
 class _Event(Event):
@@ -178,17 +179,18 @@ class _PlayerEvent(_Event):
                     float(self.mdt.gui.best_txt.getText()) > lap_time):
                 self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
             self.mdt.logic.last_time_start = globalClock.getFrameTime()
+            laps = OptionMgr.get_options()['laps']
             if not self.has_just_started:
                 fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
                 back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
                 if fwd or back:
-                    self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/3')
+                    self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/'+str(laps))
                     if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
                         self.mdt.audio.lap_sfx.play()
                 else:
-                    self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/3')
+                    self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))
             self.has_just_started = False
-            if lap_number >= 3:
+            if int(self.mdt.gui.lap_txt.getText().split('/')[0]) > laps:
                 if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
                     game.logic.srv.send([NetMsgs.end_race])
                 elif hasattr(game.logic, 'client') and game.logic.client.is_active:

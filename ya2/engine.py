@@ -100,7 +100,8 @@ class OptionMgr:
             'open_browser_at_exit': 1,
             'ai': 0,
             'submodels': 1,
-            'split_world': 1}
+            'split_world': 1,
+            'laps': 3}
         return conf
 
     @staticmethod

@@ -311,7 +311,7 @@ class TrackPage(Page):
         page_args = self.page_args
         def on_track(track):
             fsm.demand('Cars', 'tracks/track_' + track)
-            if game.logic.srv.is_active:
+            if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
                 game.logic.srv.send([NetMsgs.track_selected, track])
         menu_data = [
             ('Desert', on_track, ['desert']),
@@ -355,9 +355,11 @@ class CarPage(Page):
                 self.current_cars[self] = car
                 game.logic.srv.car_mapping['self'] = car
                 self.evaluate_starting()
-            if hasattr(game.logic, 'client') and game.logic.client.is_active:
+            elif hasattr(game.logic, 'client') and game.logic.client.is_active:
                 eng.log_mgr.log('car request: ' + car)
                 game.logic.client.send([NetMsgs.car_request, car])
+            else:
+                game.fsm.demand('Loading', self.track_path, car)
         menu_data = [
             ('Kronos', on_car, ['kronos']),
             ('Themis', on_car, ['themis']),
