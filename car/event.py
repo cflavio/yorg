@@ -67,15 +67,18 @@ class _Event(Event):
                 'reverse': inputState.isSet('reverse'),
                 'right': inputState.isSet('right')}
 
+    def reset_car(self):
+        self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
+        self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
+        wheels = self.mdt.phys.vehicle.get_wheels()
+        map(lambda whl: whl.set_rotation(0), wheels)
+
     def _on_frame(self):
         '''This callback method is invoked on each frame.'''
         input_dct = self._get_input()
         if game.track.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
-            self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
-            self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
-            wheels = self.mdt.phys.vehicle.get_wheels()
-            map(lambda whl: whl.set_rotation(0), wheels)
+            self.reset_car()
         self.mdt.logic.update(input_dct)
         if self.mdt.logic.is_upside_down:
             self.mdt.gfx.nodepath.setR(0)

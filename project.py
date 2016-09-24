@@ -1,29 +1,30 @@
 # BUGS =====
 
-#FIXME: it crashes when some resolutions are selected
-#FIXME: the light is very bright when switching to fullscreen
-#FIXME: network: manage big difference in loading time of tracks
-
 
 # TODO LIST =====
 
 #TODO: make tournament (list of tracks and ranking)
-#TODO: refactoring
-#TODO: git submodules ya2/engine, ya2/racing
+#TODO: make uml diagrams with pyreverse into devinfo
+#TODO: refactoring (modules racing/, racing/game) (do an abstract class Game with virtual methods drawMenuBackground, onPlay, onLoad)
+#TODO: put collision meshes and physics info into car models
+#TODO: driving model
+#TODO: waypoints as a line
+#TODO: forks
+#TODO: git submodules racing/, racing/game
 #TODO: unit tests
 
 
 # WAITING =====
 
-#TODO: animation (path*, start, duration)
-#TODO: water
-#TODO: waypoints as a line
-#TODO: driver selection
-#TODO: put collision meshes and physics info into car models
+#TODO: (windows) the light is very bright when switching to fullscreen without shaders
+#TODO: (windows) it crashes when some resolutions are selected
 
 
 # MAYBE/SOMEDAY =====
 
+#TODO: animation (path*, start, duration)
+#TODO: water
+#TODO: driver selection
 #TODO: graphics buttons in the menu
 #TODO: modifying car setting between tracks: engine (speed), tires (friction), suspension (roll)
 #TODO: port ai lookahead to 3D
@@ -32,7 +33,6 @@
 #TODO: hardware instancing
 #TODO: embed into a wx window
 #TODO: build only nointernet, linux64, win64, osx64, runtime-dev option
-#TODO: do an abstract class Game with virtual methods drawMenuBackground, onPlay, onLoad
 #TODO: pause: put all tasks on a taskchain and deactivate it
 #TODO: django webapp for scores
 #TODO: multi-threading physics loading
@@ -43,3 +43,4 @@
 #TODO: send game packets using udp in place of tcp
 #TODO: network: wheels animations
 #TODO: network: physics (collisions to players' car)
+#TODO: day/night cycle

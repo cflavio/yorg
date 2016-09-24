@@ -168,6 +168,7 @@ class _Fsm(Fsm):
         eng.start()
         game.player_car.event.eval_register()
         self.mdt.audio.game_music.play()
+        map(lambda car: car.event.reset_car(), [self.mdt.player_car] + self.mdt.cars)
 
     def exitPlay(self):
         eng.log_mgr.log('exiting Play state')
