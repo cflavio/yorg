@@ -3,6 +3,7 @@ from direct.gui.OnscreenText import OnscreenText
 from ya2.gameobject import Gui
 from ya2.gui import ImageButton
 from direct.gui.OnscreenImage import OnscreenImage
+from ya2.engine import OptionMgr
 
 
 class _Gui(Gui):
@@ -121,12 +122,20 @@ class _Gui(Gui):
                         rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                         clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, site in enumerate(sites)]
-        def to_menu(task):
+        def step(task):
             map(lambda txt: txt.destroy(), self.__res_txts)
             map(lambda btn: btn.destroy(), self.__buttons)
             self.result_img.destroy()
-            game.fsm.demand('Menu')
-        taskMgr.doMethodLater(10.0, to_menu, 'to menu')
+            if game.ranking:
+                for car in game.ranking:
+                    game.ranking[car] += game.track.race_ranking[car]
+                conf = OptionMgr.get_options()
+                conf['last_ranking'] = game.ranking
+                OptionMgr.set_options(conf)
+                game.fsm.demand('Ranking')
+            else:
+                game.fsm.demand('Menu')
+        taskMgr.doMethodLater(10.0, step, 'step')
 
     def destroy(self):
         Gui.destroy(self)

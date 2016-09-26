@@ -45,7 +45,8 @@ class _Fsm(Fsm):
         Fsm.__init__(self, mdt)
         self.defaultTransitions = {'Menu': ['Loading'],
                                    'Loading': ['Play'],
-                                   'Play': ['Menu']}
+                                   'Play': ['Ranking', 'Menu'],
+                                   'Ranking': ['Play', 'Menu']}
 
     def enterMenu(self):
         eng.log_mgr.log('entering Menu state')
@@ -57,8 +58,17 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterLoading(self, track_path, car_path, player_cars=[]):
+    def enterLoading(self, track_path='', car_path='', player_cars=[]):
         eng.log_mgr.log('entering Loading state')
+        if not track_path and not car_path:
+            tracks = ['prototype', 'desert']
+            track = tracks[tracks.index(OptionMgr.get_options()['last_track']) + 1]
+            track_path = 'tracks/track_' + track
+            car_path = OptionMgr.get_options()['last_car']
+        conf = OptionMgr.get_options()
+        conf['last_track'] = track_path[13:]
+        conf['last_car'] = car_path
+        OptionMgr.set_options(conf)
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.load_txt = OnscreenText(
             text=_('LOADING...\n\nPLEASE WAIT, IT MAY REQUIRE SOME TIME'),
@@ -180,6 +190,34 @@ class _Fsm(Fsm):
         self.mdt.track.destroy()
         self.mdt.player_car.destroy()
         map(lambda car: car.destroy(), self.mdt.cars)
+
+    def enterRanking(self):
+        sorted_ranking = reversed(sorted(game.ranking.items(), key=lambda el: el[1]))
+        font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
+        self.ranking_texts = []
+        for i, (name, score) in enumerate(sorted_ranking):
+            self.ranking_texts += [OnscreenText(
+                '%s %s' % (name, score), pos=(0, .5 -.2 * i), font=font,
+                fg=(.75, .75, .75, 1), scale=.12)]
+        def step(task):
+            current_track = game.track.gfx.track_path[13:]
+            tracks = ['prototype', 'desert']
+            if tracks.index(current_track) == len(tracks) - 1:
+                game.ranking = None
+                conf = OptionMgr.get_options()
+                del conf['last_car']
+                del conf['last_track']
+                del conf['last_ranking']
+                OptionMgr.set_options(conf)
+                self.demand('Menu')
+            else:
+                next_track = tracks[tracks.index(current_track) + 1]
+                curr_car = OptionMgr.get_options()['last_car']
+                self.demand('Loading', next_track, curr_car)
+        taskMgr.doMethodLater(10, step, 'step')
+
+    def exitRanking(self):
+        map(lambda txt: txt.destroy(), self.ranking_texts)
 
 
 class _Logic(GameLogic):

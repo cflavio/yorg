@@ -30,7 +30,7 @@ class MainPage(Page, DirectObject):
 
     def create(self, fsm):
         page_args = self.page_args
-        menu_data = [('Single Player', _('Single Player'), lambda: fsm.demand('Tracks')),
+        menu_data = [('Single Player', _('Single Player'), lambda: fsm.demand('Singleplayer')),
                      ('Multiplayer', _('Multiplayer'), lambda: fsm.demand('Multiplayer')),
                      ('Options', _('Options'), lambda: fsm.demand('Options')),
                      ('Credits', _('Credits'), lambda: fsm.demand('Credits')),
@@ -55,10 +55,39 @@ class MainPage(Page, DirectObject):
         exit()
 
 
+class SingleplayerPage(Page):
+
+    def create(self, fsm):
+        page_args = self.page_args
+        game.ranking = None
+        def on_continue():
+            game.ranking = OptionMgr.get_options()['last_ranking']
+            game.fsm.demand('Loading')
+        def on_tournament():
+            game.ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
+            fsm.demand('Cars', 'tracks/track_prototype')
+        menu_data = [
+            ('Single race', lambda: fsm.demand('Tracks')),
+            ('New tournament', on_tournament),
+            ('Continue tournament', on_continue)]
+        self.widgets = [
+            DirectButton(
+                text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
+                text_fg=(.75, .75, .75, 1),
+                text_font=self.font, frameColor=page_args.btn_color,
+                command=menu[1], frameSize=page_args.btn_size,
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            for i, menu in enumerate(menu_data)]
+        if 'last_ranking' not in OptionMgr.get_options():
+            self.widgets[-1]['state'] = DISABLED
+            self.widgets[-1].setAlphaScale(.25)
+        Page.create(self)
+
+
 class MultiplayerPage(Page):
 
     def create(self, fsm):
-
         page_args = self.page_args
         menu_data = [
             ('Server', lambda: fsm.demand('Server')),
@@ -462,6 +491,7 @@ class _Gui(Gui):
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
             (0, 0, 0, .2), True, False, False, 'Tracks', (.95, .95, .95, .99))
         self.main_page = MainPage(main_args)
+        self.singleplayer_page = SingleplayerPage(args)
         self.multiplayer_page = MultiplayerPage(args)
         self.server_page = ServerPage(args)
         self.client_page = ClientPage(args)
@@ -477,7 +507,8 @@ class _Fsm(Fsm):
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
         self.defaultTransitions = {
-            'Main': ['Tracks', 'Multiplayer', 'Options', 'Credits'],
+            'Main': ['Singleplayer', 'Multiplayer', 'Options', 'Credits'],
+            'Singleplayer': ['Main', 'Tracks', 'Cars'],
             'Multiplayer': ['Main', 'Server', 'Client'],
             'Server': ['Main', 'Tracks'],
             'Client': ['Main', 'Cars'],
@@ -491,6 +522,12 @@ class _Fsm(Fsm):
 
     def exitMain(self):
         self.mdt.gui.main_page.destroy()
+
+    def enterSingleplayer(self):
+        self.mdt.gui.singleplayer_page.create(self.mdt.fsm)
+
+    def exitSingleplayer(self):
+        self.mdt.gui.singleplayer_page.destroy()
 
     def enterMultiplayer(self):
         self.mdt.gui.multiplayer_page.create(self.mdt.fsm)

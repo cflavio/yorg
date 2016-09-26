@@ -198,6 +198,11 @@ class _PlayerEvent(_Event):
                     game.logic.srv.send([NetMsgs.end_race])
                 elif hasattr(game.logic, 'client') and game.logic.client.is_active:
                     game.logic.client.send([NetMsgs.end_race_player])
+                #TODO: compute the ranking
+                game.track.race_ranking = {
+                    'kronos': 0,
+                    'themis': 0,
+                    'diones': 0}
                 game.track.fsm.demand('Results')
                 game.track.gui.show_results()
 
