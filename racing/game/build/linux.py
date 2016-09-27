@@ -1,10 +1,9 @@
-from os import path as os_path, remove, system, walk, chdir, getcwd, \
-    makedirs, error
-from os.path import expanduser, exists, basename
+'''Linux build.'''
+from os import path as os_path, remove, system, makedirs
+from os.path import basename
 from shutil import move, rmtree, copytree, copy
-from subprocess import Popen, PIPE
-from build import ver, has_super_mirror, path, src_path_str, ver_branch, \
-    exec_cmd, devinfo_path_str, build_command_str, InsideDir, get_size
+from .build import ver, path, ver_branch, build_command_str, InsideDir, \
+    build_command_prefix, get_size
 
 
 def build_linux(target, source, env):
@@ -22,7 +21,8 @@ def build_linux(target, source, env):
     with InsideDir(path+'linux_'+platform):
         makedirs('image/data')
         copytree(start_dir+'racing/game/build/mojosetup/meta', 'image/meta')
-        copytree(start_dir+'racing/game/build/mojosetup/scripts', 'image/scripts')
+        copytree(start_dir+'racing/game/build/mojosetup/scripts',
+                 'image/scripts')
         copytree(start_dir+'racing/game/licenses', 'image/data/licenses')
         copy(start_dir+'license.txt', 'image/data/license.txt')
         copy(start_dir+'racing/game/build/mojosetup/mojosetup_'+platform, '.')
@@ -45,15 +45,15 @@ def build_linux(target, source, env):
                    Name=name.capitalize()))
         if nointernet:
             copytree('usr/lib/'+name, 'image/data/lib')
-            linux_exe_cmd = (
-                build_command_prefix +
-                '-o  . {nointernet} -t host_dir=./lib -t verify_contents=never '
-                '-n {name} -N {Name} -v {version} -a ya2.it -A "Ya2" '
-                '-l "GPLv3" -L license.txt -e flavio@ya2.it -t width=800 '
-                "-t height=600 -P {platform} -i '%s16_png.png' "
-                "-i '%s32_png.png' -i '%s48_png.png' -i '%s128_png.png' "
-                "-i '%s256_png.png' ../{p3d_path} standalone") % (
-                    ('assets/images/icon/icon',) * 5)
+            cmd_tmpl = build_command_prefix + \
+                '-o  . {nointernet} -t host_dir=./lib ' + \
+                '-t verify_contents=never ' + \
+                '-n {name} -N {Name} -v {version} -a ya2.it -A "Ya2" ' + \
+                '-l "GPLv3" -L license.txt -e flavio@ya2.it -t width=800 ' + \
+                "-t height=600 -P {platform} -i '%s16_png.png' " + \
+                "-i '%s32_png.png' -i '%s48_png.png' -i '%s128_png.png' " + \
+                "-i '%s256_png.png' ../{p3d_path} standalone"
+            linux_exe_cmd = cmd_tmpl % (('assets/images/icon/icon',) * 5)
             build_command = linux_exe_cmd.format(
                 path=path, name=name, Name=name.capitalize(), version=ver,
                 p3d_path=basename(env['P3D_PATH']), platform='linux_'+platform,

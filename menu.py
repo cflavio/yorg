@@ -49,7 +49,7 @@ class MainPage(Page, DirectObject):
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(self.widgets):
-            transl_text(wdg, menu_data[i][0], menu_data[i][1])
+            transl_text(wdg, menu_data[i][0])
         Page.create(self)
 
     def on_exit(self):
@@ -155,7 +155,7 @@ class ClientPage(Page):
         self.widgets = [
             OnscreenText(text='', scale=.12, pos=(0, .4),
                          font=self.font, fg=(.75, .75, .75, 1))]
-        transl_text(self.widgets[0], _('Client'), _('Client'))
+        transl_text(self.widgets[0], _('Client'))
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=self.font, width=12,
             frameColor=self.page_args.btn_color,
@@ -199,7 +199,7 @@ class OptionPage(Page):
         lang_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .5),
                                text_fg=(.75, .75, .75, 1),
                                text_font=font, text_align=TextNode.ARight)
-        transl_text(lang_lab, 'Language', _('Language'))
+        transl_text(lang_lab, 'Language')
         self.__lang_opt = DirectOptionMenu(
             text='', scale=.12, items=LangMgr.languages, pos=(.2, 1, .5),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
@@ -215,7 +215,7 @@ class OptionPage(Page):
         vol_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .3),
                               text_font=font, text_fg=(.75, .75, .75, 1),
                               text_align=TextNode.ARight)
-        transl_text(vol_lab, 'Volume', _('Volume'))
+        transl_text(vol_lab, 'Volume')
         self.__vol_slider = DirectSlider(
             pos=(.47, 0, .33), scale=.47, value=conf['volume'],
             frameColor=page_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
@@ -223,7 +223,7 @@ class OptionPage(Page):
         fullscreen_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .1),
                                      text_font=font, text_fg=(.75, .75, .75, 1),
                                      text_align=TextNode.ARight)
-        transl_text(fullscreen_lab, 'Fullscreen', _('Fullscreen'))
+        transl_text(fullscreen_lab, 'Fullscreen')
         self.__fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='', scale=.12, text_font=self.font,
             text_fg=(.75, .75, .75, 1), frameColor=page_args.btn_color,
@@ -236,7 +236,7 @@ class OptionPage(Page):
         res_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.1),
                               text_font=font, text_fg=(.75, .75, .75, 1),
                               text_align=TextNode.ARight)
-        transl_text(res_lab, 'Resolution', _('Resolution'))
+        transl_text(res_lab, 'Resolution')
         if conf['resolution']:
             curr_res = conf['resolution'].replace(' ', 'x')
         else:
@@ -256,13 +256,11 @@ class OptionPage(Page):
         aa_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.3),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ARight)
-        transl_text(aa_lab, 'Antialiasing',
-                    _('Antialiasing'))
+        transl_text(aa_lab, 'Antialiasing')
         aa_next_lab = DirectLabel(text='', scale=.08, pos=(.2, 1, -.3),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ALeft)
-        transl_text(aa_next_lab, '(from the next execution)',
-                    _('(from the next execution)'))
+        transl_text(aa_next_lab, '(from the next execution)')
         self.__aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', scale=.12, text_font=self.font,
             frameColor=page_args.btn_color,
@@ -274,8 +272,7 @@ class OptionPage(Page):
         browser_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.5),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ARight)
-        transl_text(browser_lab, "See Ya2's news at exit",
-                    _("See Ya2's news at exit"))
+        transl_text(browser_lab, "See Ya2's news at exit")
         self.__browser_cb = DirectCheckButton(
             pos=(.12, 1, -.47), text='', scale=.12, text_font=self.font,
             frameColor=page_args.btn_color,
@@ -475,7 +472,7 @@ class CreditPage(Page):
         flavio = _('Code')+': Flavio Calva'
         luca = _('Art')+': Luca Quartero'
         text = '\n\n'.join([flavio, luca])
-        transl_text(self.widgets[0], text, text)
+        transl_text(self.widgets[0], text)
         Page.create(self)
 
 

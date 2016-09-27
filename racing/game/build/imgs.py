@@ -1,6 +1,13 @@
+'''This module provides functionalities for building images.'''
+from os import system, remove
+from .build import exec_cmd
+
+
 def build_images(target, source, env):
+    '''Builds the images.'''
 
     def get_img_fmt(_file):
+        '''Returns image info.'''
         cmd = 'identify -verbose "%s" | grep alpha' % _file
         alpha = exec_cmd(cmd).strip()
         geometry = exec_cmd('identify -verbose "%s" | grep Geometry' % _file)
@@ -18,7 +25,7 @@ def build_images(target, source, env):
                                                        png)
         system(cmd)
         if not png.endswith('_png.png'):
-            cmd = 'nvcompress -bc3 '+('-alpha' if alpha else '')+' -nomips "'+\
-                png+'" "'+_file[:-3]+'dds"'
+            cmd = 'nvcompress -bc3 '+('-alpha' if alpha else '') + \
+                ' -nomips "' + png + '" "' + _file[:-3] + 'dds"'
             system(cmd)
             remove(png)

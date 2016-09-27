@@ -9,6 +9,7 @@ class GameLogic(Logic):
     """ Definition of the Logic Class """
 
     def run(self):
+        '''Starts the game logic.'''
         pass
 
 
@@ -22,5 +23,6 @@ class Game(GameObjectMdt):
         GameObjectMdt.__init__(self)
 
     def run(self):
+        '''Starts the game.'''
         self.logic.run()
         eng.run()

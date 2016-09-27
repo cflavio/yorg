@@ -5,11 +5,13 @@ from direct.showbase.DirectObject import DirectObject
 
 
 class Colleague(object):
+    '''This class models a colleague (mediator pattern).'''
 
     def __init__(self, mdt):
         self.mdt = mdt
 
     def destroy(self):
+        '''Destroys the colleague.'''
         pass
 
 
@@ -81,6 +83,7 @@ class GameObjectMdt(object):
         self.event = self.event_cls(self)
 
     def destroy(self):
+        '''Destroys the mediator.'''
         self.fsm.cleanup()
         self.fsm.destroy()
         self.phys.destroy()

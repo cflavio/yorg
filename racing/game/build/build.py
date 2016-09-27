@@ -9,10 +9,7 @@ More details about *target*, *source* and *env* files
 `here <http://www.scons.org/>`_.'''
 
 
-from os import path as os_path, remove, system, walk, chdir, getcwd, \
-    makedirs, error
-from os.path import expanduser, exists, basename
-from shutil import move, rmtree, copytree, copy
+from os import path as os_path, walk, chdir, getcwd
 from subprocess import Popen, PIPE
 
 
@@ -23,10 +20,12 @@ def exec_cmd(cmd):
 
 
 def __get_branch():
+    '''The current branch.'''
     return exec_cmd('git symbolic-ref HEAD').split('/')[-1].strip()
 
 
 def __get_version():
+    '''The current version.'''
     date = exec_cmd('git show -s --format=%ci HEAD')
     return __get_branch()+'-'+date[2:4]+date[5:7]+date[8:10]
 
@@ -72,6 +71,7 @@ extensions = ['txt', 'ttf', 'dds', 'egg', 'ogg', 'py', 'lua', 'rst', 'pdef',
 
 
 def image_extensions(files):
+    '''The list of image extesions.'''
     ext = lambda _file: 'png' if _file.endswith('_png.psd') else 'dds'
     return [_file[:_file.rfind('.')+1]+ext(_file) for _file in files]
 

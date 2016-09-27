@@ -1,7 +1,11 @@
-from network import AbsNetwork
+'''This module provides the server for a network application.'''
+from panda3d.core import QueuedConnectionListener, PointerToConnection, \
+    NetAddress
+from .network import AbsNetwork
 
 
 class Server(AbsNetwork):
+    '''This class models the server.'''
 
     def __init__(self, reader_cb, connection_cb):
         AbsNetwork.__init__(self, reader_cb)
@@ -10,23 +14,28 @@ class Server(AbsNetwork):
         self.connections = []
         self.tcp_socket = self.c_mgr.openTCPServerRendezvous(9099, 1000)
         self.c_listener.addConnection(self.tcp_socket)
-        self.listener_tsk = taskMgr.add(self.tsk_listener, 'connection listener', -39)
+        self.listener_tsk = taskMgr.add(self.tsk_listener,
+                                        'connection listener', -39)
         eng.log_mgr.log('the server is up')
 
     def tsk_listener(self, task):
+        '''The listener task.'''
         if self.c_listener.newConnectionAvailable():
             rendezvous = PointerToConnection()
             net_address = NetAddress()
             new_connection = PointerToConnection()
-            if self.c_listener.getNewConnection(rendezvous, net_address, new_connection):
+            if self.c_listener.getNewConnection(rendezvous, net_address,
+                                                new_connection):
                 new_connection = new_connection.p()
                 self.connections.append(new_connection)
                 self.c_reader.addConnection(new_connection)
                 self.connection_cb(net_address.getIpString())
-                eng.log_mgr.log('received a connection from ' + net_address.getIpString())
+                eng.log_mgr.log('received a connection from ' +
+                                net_address.getIpString())
         return task.cont
 
     def _actual_send(self, datagram, receiver):
+        '''Sends a datagram.'''
         if receiver is not None:
             for client in self.connections:
                 if client == receiver:

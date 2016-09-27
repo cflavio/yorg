@@ -1,8 +1,10 @@
+'''This module defines the configuration management.'''
 from panda3d.core import loadPrcFileData
-from log import LogMgr
+from .log import LogMgr
 
 
-class Configuration:
+class Configuration(object):
+    '''This class models the configuration.'''
 
     def __init__(self, fps=False, win_size='1280 720', win_title='Ya2',
                  fullscreen=False, cursor_hidden=False, sync_video=True,
@@ -20,9 +22,11 @@ class Configuration:
 
     @staticmethod
     def __set(key, value):
+        '''This method sets a configuration parameter.'''
         loadPrcFileData('', key+' '+str(value))
 
     def configure(self):
+        '''This sets the configuration.'''
         self.__set('show-frame-rate-meter', int(self.fps))
         if self.win_size:
             self.__set('win-size', self.win_size)
@@ -36,8 +40,8 @@ class Configuration:
             self.__set('threading-model', '/Draw')
         if self.profiling:
             self.__set('want-pstats', 1)
-            self.__set('task-timer-verbose', 1),
-            self.__set('pstats-tasks', 1),
-            self.__set('gl-finish', 1),
+            self.__set('task-timer-verbose', 1)
+            self.__set('pstats-tasks', 1)
+            self.__set('gl-finish', 1)
             self.__set('pstats-host', '127.0.0.1')
         LogMgr.configure()

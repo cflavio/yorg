@@ -4,10 +4,6 @@ from os import system
 from shutil import move
 from platform import architecture
 from tempfile import NamedTemporaryFile
-import os
-import platform
-import shutil
-import tempfile
 
 
 with NamedTemporaryFile(mode='w+t') as tmp:

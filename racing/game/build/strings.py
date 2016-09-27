@@ -1,9 +1,8 @@
-from os import path as os_path, remove, system, walk, chdir, getcwd, \
-    makedirs, error
-from os.path import expanduser, exists, basename
-from shutil import move, rmtree, copytree, copy
-from subprocess import Popen, PIPE
-from build import get_files
+'''This module provides functionalities for building translations.'''
+from os import system, makedirs, error
+from os.path import exists
+from shutil import move, copy
+from .build import get_files
 
 
 def build_string_template(target, source, env):
@@ -26,7 +25,7 @@ def build_string_template(target, source, env):
         move(p+name+'tmp.po', p+name+'.pot')
     if not exists(p+name+'.po'):
         copy(p+name+'.pot', p+name+'.po')
-    cmd_str = 'msgmerge -o {path}{name}merge.po {path}{name}.po '+\
+    cmd_str = 'msgmerge -o {path}{name}merge.po {path}{name}.po ' + \
         '{path}{name}.pot'
     system(cmd_str.format(path=p, name=name))
     copy(p+name+'merge.po', p+name+'.po')

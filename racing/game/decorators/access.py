@@ -1,14 +1,18 @@
+'''The access decorator.'''
 from inspect import getmembers, ismethod
 from itertools import product
 
 
 def __pvt_name(cls_str, attr):
+    '''The private name.'''
     return '_'+cls_str+'__'+attr
 
 
 def _get_meth(cls, attr):
+    '''The getter.'''
 
     def __get_meth(self):
+        '''The getter implementation.'''
         get_attr = lambda cls_str: \
             self.__getattribute__(__pvt_name(cls_str, attr))
         try:
@@ -20,6 +24,7 @@ def _get_meth(cls, attr):
 
 
 def auto_properties(cls):
+    '''The decorator.'''
     methods = getmembers(cls, predicate=ismethod)
     meth_names = map(lambda memb: memb[0], methods)
 

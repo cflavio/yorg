@@ -1,10 +1,7 @@
-from os import path as os_path, remove, system, walk, chdir, getcwd, \
-    makedirs, error
-from os.path import expanduser, exists, basename
-from shutil import move, rmtree, copytree, copy
-from subprocess import Popen, PIPE
-from build import ver, has_super_mirror, path, src_path_str, ver_branch, \
-    exec_cmd, devinfo_path_str, build_command_str
+'''Windows build.'''
+from os import system
+from shutil import move, rmtree
+from .build import ver, path, ver_branch, build_command_str
 
 
 def build_windows(target, source, env):

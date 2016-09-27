@@ -1,9 +1,11 @@
+'''This module provides an image button.'''
 from direct.gui.DirectButton import DirectButton
 from panda3d.core import PNMImage, Texture
 from itertools import product
 
 
 class ImageButton(DirectButton):
+    '''This class models an image button.'''
 
     def __init__(self, eng, image, *args, **kwargs):
         maps = eng.loader.loadModel('racing/game/assets/img_btn')
@@ -11,11 +13,11 @@ class ImageButton(DirectButton):
                     maps.find('**/image_rollover'))
         DirectButton.__init__(self, geom=btn_geom, *args, **kwargs)
         image_rollover = PNMImage(image)
-        for x, y in product(range(image_rollover.get_x_size()),
-                            range(image_rollover.get_y_size())):
-            col = image_rollover.getXelA(x, y)
+        for pos_x, pos_y in product(range(image_rollover.get_x_size()),
+                                    range(image_rollover.get_y_size())):
+            col = image_rollover.getXelA(pos_x, pos_y)
             new_color = (col[0] * 1.2, col[1] * 1.2, col[2] * 1.2, col[3])
-            image_rollover.setXelA(x, y, new_color)
+            image_rollover.setXelA(pos_x, pos_y, new_color)
         rollover_texture = Texture()
         rollover_texture.load(image_rollover)
         for i, texture in enumerate([eng.loader.loadTexture(image),

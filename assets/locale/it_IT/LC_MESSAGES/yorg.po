@@ -71,35 +71,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: menu.py:202
-msgid "Language"
-msgstr "Lingua"
-
-#: menu.py:218
-msgid "Volume"
-msgstr "Volume"
-
-#: menu.py:226
-msgid "Fullscreen"
-msgstr "Schermo intero"
-
-#: menu.py:239
-msgid "Resolution"
-msgstr "Risoluzione"
-
-#: menu.py:260
-msgid "Antialiasing"
-msgstr "Antialiasing"
-
-#: menu.py:265
-msgid "(from the next execution)"
-msgstr "(dalla prossima esecuzione)"
-
-#: menu.py:278
-msgid "See Ya2's news at exit"
-msgstr "Vedi le notizie di Ya2 all'uscita"
-
-#: menu.py:303
+#: menu.py:300
 msgid ""
 "Please, really consider enabling this option to see our news.\n"
 "We hope you will find interesting stuff there.\n"
@@ -110,11 +82,11 @@ msgstr ""
 "Speriamo che ci troverai roba interessante.\n"
 "Inoltre, è così che possiamo mantenere Yorg gratis."
 
-#: menu.py:475
+#: menu.py:472
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:476
+#: menu.py:473
 msgid "Art"
 msgstr "Grafica"
 
@@ -146,13 +118,33 @@ msgstr "GIRO"
 msgid "share:"
 msgstr ""
 
-#: racing/game/gui/page.py:73
-msgid "Back"
-msgstr "Indietro"
-
 #: racing/car/logic.py:166
 msgid "wrong way"
 msgstr "direzione sbagliata"
+
+#~ msgid "Language"
+#~ msgstr "Lingua"
+
+#~ msgid "Volume"
+#~ msgstr "Volume"
+
+#~ msgid "Fullscreen"
+#~ msgstr "Schermo intero"
+
+#~ msgid "Resolution"
+#~ msgstr "Risoluzione"
+
+#~ msgid "Antialiasing"
+#~ msgstr "Antialiasing"
+
+#~ msgid "(from the next execution)"
+#~ msgstr "(dalla prossima esecuzione)"
+
+#~ msgid "See Ya2's news at exit"
+#~ msgstr "Vedi le notizie di Ya2 all'uscita"
+
+#~ msgid "Back"
+#~ msgstr "Indietro"
 
 #~ msgid "Play"
 #~ msgstr "Gioca"

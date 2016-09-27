@@ -1,18 +1,23 @@
+'''Decorator for events.'''
 from direct.showbase.DirectObject import DirectObject
 from functools import wraps
 from inspect import getmro
 
 
 def accept_dec(fun):
+    '''Decorator of the accept function.'''
     def inner(msg, meth, args=[]):
+        '''The inner function to be decorated.'''
         fun(msg, meth, args)
     return inner
 
 
 def __evt_wrapper(self, fun, meths):
+    '''Wrapping the event.'''
 
     @wraps(fun)
     def wrapper_evt(*args, **kargs):
+        '''Actual event wrapper.'''
         for meth in meths:
             fun_name = meth.__name__
             states_index = fun_name.find('__')
@@ -36,9 +41,11 @@ def __evt_wrapper(self, fun, meths):
 
 
 def __destroy_wrapper(self, fun):
+    '''Removes the wrapper.'''
 
     @wraps(fun)
     def wrapper_destroy(*args, **kargs):
+        '''The actual removal.'''
         self.ignoreAll()
         fun(*args, **kargs)
 
@@ -46,11 +53,13 @@ def __destroy_wrapper(self, fun):
 
 
 def __evt_name(attr):
+    '''Gets the event name.'''
     states_index = attr.find('__')
     return attr[4: states_index] if states_index != -1 else attr[4:]
 
 
 def evt_dec(obj, fsm=None):
+    '''The event decorator.'''
     obj.__evt_dec_fsm = fsm
     if DirectObject not in getmro(obj.__class__):
         obj.__class__.__bases__ += (DirectObject,)

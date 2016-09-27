@@ -1,9 +1,7 @@
-from os import path as os_path, remove, system, walk, chdir, getcwd, \
-    makedirs, error
-from os.path import expanduser, exists, basename
-from shutil import move, rmtree, copytree, copy
-from subprocess import Popen, PIPE
-from build import ver, has_super_mirror, path
+'''P3D build.'''
+from os import remove, system
+from shutil import move
+from .build import ver, has_super_mirror, path, ptools_path
 
 
 def build_p3d(target, source, env):

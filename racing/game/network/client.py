@@ -1,16 +1,19 @@
-from network import AbsNetwork
+'''This module provides the client for a network application.'''
+from .network import AbsNetwork
 
 
 class ClientError(Exception):
-
+    '''The client can not connect.'''
     pass
 
 
 class Client(AbsNetwork):
+    '''This class models the client.'''
 
     def __init__(self, reader_cb, server_address):
         AbsNetwork.__init__(self, reader_cb)
-        self.conn = self.c_mgr.openTCPClientConnection(server_address, 9099, 3000)
+        self.conn = self.c_mgr.openTCPClientConnection(server_address, 9099,
+                                                       3000)
         if self.conn:
             self.c_reader.addConnection(self.conn)
         else:

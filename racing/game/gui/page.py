@@ -1,19 +1,19 @@
+'''This module provides a GUI page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
-from itertools import product
-from panda3d.core import PNMImage, Texture
 from panda3d.core import TextNode
 from direct.gui.OnscreenImage import OnscreenImage
-from imgbtn import ImageButton
+from .imgbtn import ImageButton
 
 
-def transl_text(obj, text_src, text_transl):
-    # we get text_transl to put it into po files
+def transl_text(obj, text_src):
+    '''We get text_transl to put it into po files.'''
     obj.__text_src = text_src
     obj.__class__.transl_text = property(lambda self: _(self.__text_src))
 
 
 def may_destroy(wdg):
+    '''Possibly destroy a widget.'''
     try:
         wdg.destroy()
     except AttributeError:  # wdg may be None
@@ -21,6 +21,7 @@ def may_destroy(wdg):
 
 
 class PageArgs(object):
+    '''This class models the arguments of a page.'''
 
     def __init__(self, fsm, font, btn_size, btn_color, back, social, version,
                  back_state, dial_color):
@@ -36,12 +37,15 @@ class PageArgs(object):
 
 
 class Page(object):
+    '''This class models a page.'''
 
     def __init__(self, page_args):
         self.page_args = page_args
         self.font = eng.font_mgr.load_font(page_args.font)
+        self.background = None
 
     def create(self):
+        '''Creates a page.'''
         self.update_texts()
         if self.page_args.back:
             self.__set_back_btn()
@@ -52,16 +56,18 @@ class Page(object):
         self.background = OnscreenImage(
             scale=(1.77778, 1, 1.0),
             image='assets/images/gui/menu_background.jpg')
-        self.background.setBin( 'background', 10 )
+        self.background.setBin('background', 10)
         self.widgets += [self.background]
 
     def update_texts(self):
+        '''Updates the texts.'''
         transl_wdg = [wdg for wdg in self.widgets
                       if hasattr(wdg, 'transl_text')]
         for wdg in transl_wdg:
             wdg['text'] = wdg.transl_text
 
     def __set_back_btn(self):
+        '''Sets the back button.'''
         page_args = self.page_args
         self.widgets += [DirectButton(
             text='', scale=.12, pos=(0, 1, -.8), text_font=self.font,
@@ -70,17 +76,20 @@ class Page(object):
             command=self.__on_back,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
-        transl_text(self.widgets[-1], 'Back', _('Back'))
+        transl_text(self.widgets[-1], 'Back')
         self.widgets[-1]['text'] = self.widgets[-1].transl_text
 
     def __on_back(self):
+        '''Called when the user presses back.'''
         self.on_back()
         self.page_args.fsm.demand(self.page_args.back_state)
 
     def on_back(self):
+        '''Pseudoabstract method.'''
         pass
 
     def __set_social(self):
+        '''Sets social buttons.'''
         sites = [('facebook', 'http://www.facebook.com/Ya2Tech'),
                  ('twitter', 'http://twitter.com/ya2tech'),
                  ('google_plus',
@@ -91,19 +100,22 @@ class Page(object):
                  ('tumblr', 'http://ya2tech.tumblr.com'),
                  ('feed', 'http://www.ya2.it/feed-following')]
         self.widgets += [
-            ImageButton(eng, parent=eng.a2dBottomRight, scale=.1,
-                        pos=(-1.0 + i*.15, 1, .1), frameColor=(0, 0, 0, 0),
-                        image='assets/images/icons/%s_png.png' % site[0],
-                        command=eng.open_browser, extraArgs=[site[1]],
-                        rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-                        clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            ImageButton(
+                eng, parent=eng.a2dBottomRight, scale=.1,
+                pos=(-1.0 + i*.15, 1, .1), frameColor=(0, 0, 0, 0),
+                image='assets/images/icons/%s_png.png' % site[0],
+                command=eng.open_browser, extraArgs=[site[1]],
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, site in enumerate(sites)]
 
     def __set_version(self):
+        '''Sets the version.'''
         self.widgets += [
             OnscreenText(text=eng.version, parent=eng.a2dBottomLeft,
                          pos=(.02, .02), scale=.04, fg=(.8, .8, .8, 1),
                          align=TextNode.ALeft, font=self.font)]
 
     def destroy(self):
+        '''Destroys the page.'''
         map(lambda wdg: wdg.destroy(), self.widgets)
