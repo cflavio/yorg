@@ -2,8 +2,9 @@
 from os import path
 from panda3d.core import MultiplexStream, Notify
 import sys
-from ya2.engine import Configuration, OptionMgr
-from ya2.engine import Engine
+from racing.game.engine import Engine
+from racing.game.configuration import Configuration
+from racing.game.option import OptionMgr
 from yorg import Yorg
 
 

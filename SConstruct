@@ -1,9 +1,18 @@
-from ya2.build.build import extensions, get_files, image_extensions, \
+from racing.game.build.build import extensions, get_files, image_extensions, \
     set_path, p3d_path_str, win_path_str, osx_path_str, linux_path_str, \
-    src_path_str, devinfo_path_str, docs_path_str, build_p3d, build_windows, \
-    build_osx, build_linux, build_src, build_devinfo, build_docs, \
-    build_strings, build_string_template, build_images, win_path_noint_str,\
-    osx_path_noint_str, linux_path_noint_str, pdf_path_str, build_pdf
+    src_path_str, devinfo_path_str, docs_path_str, win_path_noint_str,\
+    osx_path_noint_str, linux_path_noint_str, pdf_path_str
+from racing.game.build.p3d import build_p3d
+from racing.game.build.windows import build_windows
+from racing.game.build.osx import build_osx
+from racing.game.build.linux import build_linux
+from racing.game.build.src import build_src
+from racing.game.build.devinfo import build_devinfo
+from racing.game.build.docs import build_docs
+from racing.game.build.strings import build_strings, build_string_template
+from racing.game.build.imgs import build_images
+from racing.game.build.pdf import build_pdf
+
 
 argument_info = [
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),

@@ -3,13 +3,12 @@
 
 # TODO LIST =====
 
-#TODO: make tournament (list of tracks and ranking)
-#TODO: make uml diagrams with pyreverse into devinfo
-#TODO: refactoring (modules racing/, racing/game) (do an abstract class Game with virtual methods drawMenuBackground, onPlay, onLoad)
 #TODO: put collision meshes and physics info into car models
 #TODO: driving model
 #TODO: waypoints as a line
 #TODO: forks
+#TODO: make scons for racing and game
+#TODO: make uml diagrams with pyreverse into devinfo
 #TODO: git submodules racing/, racing/game
 #TODO: unit tests
 

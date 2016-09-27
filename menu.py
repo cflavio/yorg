@@ -7,9 +7,12 @@ from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TextNode
 from sys import exit
-from ya2.gameobject import Fsm, GameObjectMdt, Gui
-from ya2.gui import Page, PageArgs, transl_text
-from ya2.engine import LangMgr, OptionMgr, Server, Client, ClientError
+from racing.game.gameobject import Fsm, GameObjectMdt, Gui
+from racing.game.gui.page import Page, PageArgs, transl_text
+from racing.game.lang import LangMgr
+from racing.game.option import OptionMgr
+from racing.game.network.server import Server
+from racing.game.network.client import Client, ClientError
 from direct.showbase.DirectObject import DirectObject
 from direct.gui.DirectDialog import OkDialog
 from direct.gui.DirectGui import DirectEntry

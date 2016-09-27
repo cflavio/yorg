@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-19 22:06+0200\n"
+"POT-Creation-Date: 2016-09-26 23:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,100 +17,132 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:57
+#: yorg.py:74
 msgid ""
 "LOADING...\n"
 "\n"
 "PLEASE WAIT, IT MAY REQUIRE SOME TIME"
 msgstr ""
 
-#: menu.py:21
-msgid "Play"
+#: menu.py:36
+msgid "Single Player"
 msgstr ""
 
-#: menu.py:22
+#: menu.py:37
+msgid "Multiplayer"
+msgstr ""
+
+#: menu.py:38
 msgid "Options"
 msgstr ""
 
-#: menu.py:23
+#: menu.py:39
 msgid "Credits"
 msgstr ""
 
-#: menu.py:24
+#: menu.py:40
 msgid "Quit"
 msgstr ""
 
-#: menu.py:54
+#: menu.py:130
+msgid "Start"
+msgstr ""
+
+#: menu.py:145
+msgid "connection from "
+msgstr ""
+
+#: menu.py:158
+msgid "Client"
+msgstr ""
+
+#: menu.py:168
+msgid "Connect"
+msgstr ""
+
+#: menu.py:181
+msgid "Waiting for the server"
+msgstr ""
+
+#: menu.py:184
+msgid "Error"
+msgstr ""
+
+#: menu.py:202
 msgid "Language"
 msgstr ""
 
-#: menu.py:70
+#: menu.py:218
 msgid "Volume"
 msgstr ""
 
-#: menu.py:78
+#: menu.py:226
 msgid "Fullscreen"
 msgstr ""
 
-#: menu.py:91
+#: menu.py:239
 msgid "Resolution"
 msgstr ""
 
-#: menu.py:112
+#: menu.py:260
 msgid "Antialiasing"
 msgstr ""
 
-#: menu.py:117
+#: menu.py:265
 msgid "(from the next execution)"
 msgstr ""
 
-#: menu.py:130
+#: menu.py:278
 msgid "See Ya2's news at exit"
 msgstr ""
 
-#: menu.py:155
+#: menu.py:303
 msgid ""
 "Please, really consider enabling this option to see our news.\n"
 "We hope you will find interesting stuff there.\n"
 "Moreover, this is how we can keep Yorg free."
 msgstr ""
 
-#: menu.py:226
+#: menu.py:475
 msgid "Code"
 msgstr ""
 
-#: menu.py:227
+#: menu.py:476
 msgid "Art"
 msgstr ""
 
-#: track/gfx.py:21
+#: racing/track/gfx.py:22
 msgid "loading track model"
 msgstr ""
 
-#: track/gfx.py:82
+#: racing/track/gfx.py:100
 msgid "loading model: "
 msgstr ""
 
-#: track/gfx.py:126
+#: racing/track/gfx.py:163
 msgid "flattening model: "
 msgstr ""
 
-#: track/gui.py:17
+#: racing/track/gui.py:20
 msgid "work in progress"
 msgstr ""
 
-#: track/gui.py:73
+#: racing/track/gui.py:76
 msgid "GO!"
 msgstr ""
 
-#: track/gui.py:93
+#: racing/track/gui.py:97
 msgid "LAP"
 msgstr ""
 
-#: ya2/gui.py:94
+#: racing/track/gui.py:105
+msgid "share:"
+msgstr ""
+
+#: racing/game/gui/page.py:73
 msgid "Back"
 msgstr ""
 
-#: car/logic.py:151
+#: racing/car/logic.py:166
 msgid "wrong way"
 msgstr ""

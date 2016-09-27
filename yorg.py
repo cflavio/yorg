@@ -1,17 +1,17 @@
 '''In this module we define the global game classes.'''
-from car.car import Car, PlayerCar, NetworkCar
+from racing.car.car import Car, PlayerCar, NetworkCar
 from menu import Menu
-from track.track import Track
-from ya2.game import Game, GameLogic
-from ya2.gameobject import Event, Fsm, Audio
+from racing.track.track import Track
+from racing.game.game import Game, GameLogic
+from racing.game.gameobject import Event, Fsm, Audio
 import time
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.OnscreenText import OnscreenText
-from track.gfx import _Gfx as TrackGfx
-from car.gfx import _Gfx as CarGfx
+from racing.track.gfx import _Gfx as TrackGfx
+from racing.car.gfx import _Gfx as CarGfx
 from panda3d.core import NodePath, TextNode
 from direct.interval.LerpInterval import LerpHprInterval
-from ya2.engine import OptionMgr
+from racing.game.option import OptionMgr
 
 
 class NetMsgs:

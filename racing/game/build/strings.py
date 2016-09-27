@@ -1,0 +1,48 @@
+from os import path as os_path, remove, system, walk, chdir, getcwd, \
+    makedirs, error
+from os.path import expanduser, exists, basename
+from shutil import move, rmtree, copytree, copy
+from subprocess import Popen, PIPE
+from build import get_files
+
+
+def build_string_template(target, source, env):
+    '''This function creates the *gettext* templates (to manage localization)
+    merging with the already translated ones.'''
+    name = env['NAME']
+    lang = env['LANG']
+    src_files = ' '.join(get_files(['py']))
+    cmd_tmpl = 'xgettext -d {name} -L python -o {name}.pot '
+    system(cmd_tmpl.format(name=name) + src_files)
+    try:
+        makedirs(lang+'it_IT/LC_MESSAGES')
+    except error:
+        pass
+    move(name+'.pot', lang+'it_IT/LC_MESSAGES/%s.pot' % name)
+    p = lang+'it_IT/LC_MESSAGES/'
+    for a in ['CHARSET/UTF-8', 'ENCODING/8bit']:
+        cmd_tmpl = "sed 's/{src}/' {path}{name}.pot > {path}{name}tmp.po"
+        system(cmd_tmpl.format(src=a, path=p, name=name))
+        move(p+name+'tmp.po', p+name+'.pot')
+    if not exists(p+name+'.po'):
+        copy(p+name+'.pot', p+name+'.po')
+    cmd_str = 'msgmerge -o {path}{name}merge.po {path}{name}.po '+\
+        '{path}{name}.pot'
+    system(cmd_str.format(path=p, name=name))
+    copy(p+name+'merge.po', p+name+'.po')
+    lines = open(p+name+'.po', 'r').readlines()
+    with open(p+name+'.po', 'w') as f:
+        for l in lines:
+            f.write('"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\\n"\n'
+                    if l.startswith('"POT-Creation-Date: ') else l)
+
+
+def build_strings(target, source, env):
+    '''This function creates the *mo* files (binaries) containing the
+    translated strings that would be used in the game, starting from
+    the *po* files.'''
+    name = env['NAME']
+    lang = env['LANG']
+    p = lang+'it_IT/LC_MESSAGES/'
+    system('msgfmt -o {path}{name}.mo {path}{name}.po'.format(path=p,
+                                                              name=name))
