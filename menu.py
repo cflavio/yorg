@@ -201,7 +201,7 @@ class OptionPage(Page):
                                text_font=font, text_align=TextNode.ARight)
         transl_text(lang_lab, 'Language')
         self.__lang_opt = DirectOptionMenu(
-            text='', scale=.12, items=LangMgr.languages, pos=(.2, 1, .5),
+            text='', scale=.12, items=eng.lang_mgr.languages, pos=(.2, 1, .5),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
             text_fg=(.75, .75, .75, 1),
@@ -293,7 +293,8 @@ class OptionPage(Page):
             lang_lab, self.__lang_opt, vol_lab, self.__vol_slider,
             fullscreen_lab, self.__fullscreen_cb, res_lab, self.__res_opt,
             aa_lab, self.__aa_cb, aa_next_lab, browser_lab, self.__browser_cb]
-        self.__change_lang(LangMgr.languages[conf['lang']])
+        idx = eng.lang_mgr.lang_codes.index(conf['lang'])
+        self.__change_lang(eng.lang_mgr.languages[idx])
         Page.create(self)
 
     def on_browser(self, val):
@@ -312,7 +313,7 @@ class OptionPage(Page):
         except KeyError:
             track = ''
         conf = OptionMgr.get_options()
-        conf['lang'] = self.__lang_opt.selectedIndex
+        conf['lang'] = eng.lang_mgr.languages[self.__lang_opt.selectedIndex][:2].lower()
         conf['volume'] = self.__vol_slider.getValue()
         conf['fullscreen'] = self.__fullscreen_cb['indicatorValue']
         conf['resolution'] = self.__res_opt.get().replace('x', ' ')

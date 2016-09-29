@@ -16,7 +16,7 @@ class OptionMgr(object):
                 conf = load(opt_file)
         except IOError:
             conf = {
-                'lang': 0,
+                'lang': 'en',
                 'volume': 1,
                 'fullscreen': 0,
                 'resolution': '1280 720',

@@ -6,7 +6,10 @@ import os
 
 sys.path.insert(0, os.path.abspath('<src_path>'))
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = [
+    'sphinx.ext.autodoc',
+    #'sphinx.ext.viewcode'  # it crashes
+    ]
 source_suffix = '.rst'
 master_doc = 'index'
 project = u'<name>'

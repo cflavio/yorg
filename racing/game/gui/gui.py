@@ -17,7 +17,7 @@ class GuiMgr(DirectObject):
         '''Called when the application closes.'''
         if OptionMgr.get_options()['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
-        self.closeWindow(self.win)
+        eng.closeWindow(eng.win)
         exit()
 
     @property

@@ -9,7 +9,7 @@ from direct.filter.CommonFilters import CommonFilters
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.showbase.ShowBase import ShowBase
 import __builtin__
-from .pause import pause, resume, get_is_paused
+from .pause import PauseMgr
 from .font import FontMgr
 from .log import LogMgr
 from .lang import LangMgr
@@ -31,26 +31,29 @@ class Engine(ShowBase, object):
         configuration = configuration or Configuration()
         ShowBase.__init__(self)
         __builtin__.eng = self
+        self.pause_mgr = PauseMgr()
         self.gfx_mgr = GfxMgr(configuration.antialiasing)
         self.phys_mgr = PhysMgr()
         self.font_mgr = FontMgr()
         self.log_mgr = LogMgr()
         self.log_mgr.log_conf()
         lang = OptionMgr.get_options()['lang']
-        self.lang_mgr = LangMgr(domain, './assets/locale', lang)
+        langs = ['English', 'Italiano']
+        self.lang_mgr = LangMgr(domain, './assets/locale', langs, lang)
         if self.win:
             self.gui_mgr = GuiMgr('x'.join(configuration.win_size.split()))
 
     def toggle_pause(self):
         '''Toggles the pause.'''
-        if not get_is_paused():
+        p_mgr = self.pause_mgr
+        if not p_mgr.get_is_paused():
             frm_opt = {}
             frm_opt['frameColor'] = (.3, .3, .3, .7),
             frm_opt['frameSize'] = (-1.8, 1.8, -1, 1)
             self.pause_frame = DirectFrame(**frm_opt)
         else:
             self.pause_frame.destroy()
-        (resume if get_is_paused() else pause)()
+        (p_mgr.resume if p_mgr.get_is_paused() else p_mgr.pause)()
 
     @staticmethod
     def open_browser(url):

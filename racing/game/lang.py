@@ -5,22 +5,23 @@ from gettext import install, translation
 class LangMgr(object):
     '''This class defines the manager of translations.'''
 
-    lang_list = ['en', 'it']
-    languages = ['English', 'Italiano']
-
-    def __init__(self, domain, path, lang_index):
-        self.__domain = domain
-        self.__path = path
+    def __init__(self, domain, path, languages, lang_code=None):
+        self.domain = domain
+        self.path = path
+        self.languages = languages
         install(domain, path, unicode=1)
-        lang = self.lang_list[lang_index]
-        self.curr_lang = lang
+        lang = lang_code if lang_code else self.languages[0][:2].lower()
         self.set_lang(lang)
+
+    @property
+    def lang_codes(self):
+        return [lang[:2].lower() for lang in self.languages]
 
     def set_lang(self, lang):
         '''Setting the current language.'''
         self.curr_lang = lang
         try:
-            lang = translation(self.__domain, self.__path, languages=[lang])
+            lang = translation(self.domain, self.path, languages=[lang])
             lang.install(unicode=1)
         except IOError:
-            install(self.__domain, self.__path, unicode=1)
+            install(self.domain, self.path, unicode=1)
