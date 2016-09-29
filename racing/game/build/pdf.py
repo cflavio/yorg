@@ -6,7 +6,7 @@ from .build import path, ver_branch, pdf_path_str
 
 def build_pdf(target, source, env):
     '''Pdf building.'''
-    name = env['NAME']
+    pdfname = env['NAME']
     filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
     conf = {
         'sources': [
@@ -52,6 +52,6 @@ def build_pdf(target, source, env):
     for name in conf:
         pdfs += name + '.pdf '
     cmd = 'tar -czf {out_name} ' + pdfs + ' && rm ' + pdfs
-    pdf_path = pdf_path_str.format(path=path, name=name, version=ver_branch)
+    pdf_path = pdf_path_str.format(path=path, name=pdfname, version=ver_branch)
     cmd = cmd.format(out_name=pdf_path)
     system(cmd)
