@@ -18,31 +18,34 @@ def build_linux(target, source, env):
         nointernet=nointernet)
     system(build_command)
     start_dir = os_path.abspath('.') + '/'
-    with InsideDir(path+'linux_'+platform):
+    with InsideDir(path + 'linux_' + platform):
         makedirs('image/data')
-        copytree(start_dir+'racing/game/build/mojosetup/meta', 'image/meta')
-        copytree(start_dir+'racing/game/build/mojosetup/scripts',
-                 'image/scripts')
-        copytree(start_dir+'racing/game/licenses', 'image/data/licenses')
-        copy(start_dir+'license.txt', 'image/data/license.txt')
-        copy(start_dir+'racing/game/build/mojosetup/mojosetup_'+platform, '.')
-        if os_path.exists(start_dir+'racing/game/build/mojosetup/guis'):
+        copytree(start_dir + 'racing/game/build/mojosetup/meta', 'image/meta')
+        src_dir = start_dir + 'racing/game/build/mojosetup/scripts'
+        copytree(src_dir, 'image/scripts')
+        copytree(start_dir + 'racing/game/licenses', 'image/data/licenses')
+        copy(start_dir + 'license.txt', 'image/data/license.txt')
+        src = start_dir + 'racing/game/build/mojosetup/mojosetup_' + platform
+        copy(src, '.')
+        if os_path.exists(start_dir + 'racing/game/build/mojosetup/guis'):
             makedirs('image/guis')
-            copy(start_dir+'racing/game/build/mojosetup/guis/%s/'
-                 'libmojosetupgui_gtkplus2.so' % platform,
-                 'image/guis/libmojosetupgui_gtkplus2.so')
+            libpath = 'racing/game/build/mojosetup/guis/%s/' + \
+                'libmojosetupgui_gtkplus2.so'
+            dst_path = 'image/guis/libmojosetupgui_gtkplus2.so'
+            copy(start_dir + libpath % platform, dst_path)
         arch_dict = {'i386': 'i686', 'amd64': 'x86_64'}
-        system('tar -zxvf %s-%s-1-%s.pkg.tar.gz' % (name, ver,
-                                                    arch_dict[platform]))
+        cmd_tmpl = 'tar -zxvf %s-%s-1-%s.pkg.tar.gz'
+        system(cmd_tmpl % (name, ver, arch_dict[platform]))
         remove('.PKGINFO')
         move('usr/bin/'+name, 'image/data/'+name)
-        copy(start_dir+'assets/images/icon/icon48_png.png',
-             'image/data/icon.png')
-        system("sed -i.bak -e 's/<version>/{version}/' "
-               "-e 's/<size>/{size}/' -e 's/<name>/{name}/' "
-               "-e 's/<Name>/{Name}/' image/scripts/config.lua".format(
-                   version=ver_branch, size=get_size('image'), name=name,
-                   Name=name.capitalize()))
+        src_path = start_dir + 'assets/images/icon/icon48_png.png'
+        copy(src_path, 'image/data/icon.png')
+        cmd_tmpl = "sed -i.bak -e 's/<version>/{version}/' " + \
+            "-e 's/<size>/{size}/' -e 's/<name>/{name}/' " + \
+            "-e 's/<Name>/{Name}/' image/scripts/config.lua"
+        cmd = cmd_tmpl.format(version=ver_branch, size=get_size('image'),
+                              name=name, Name=name.capitalize())
+        system(cmd)
         if nointernet:
             copytree('usr/lib/'+name, 'image/data/lib')
             cmd_tmpl = build_command_prefix + \
@@ -59,14 +62,16 @@ def build_linux(target, source, env):
                 p3d_path=basename(env['P3D_PATH']), platform='linux_'+platform,
                 nointernet=nointernet)
             system(build_command)
-            move('linux_'+platform+'/'+name, 'image/data/'+name)
+            move('linux_' + platform + '/' + name, 'image/data/' + name)
         with InsideDir('image'):
             system('zip -9r ../pdata.zip *')
-        system('cat pdata.zip >> ./mojosetup_'+platform)
-        move('mojosetup_'+platform,
-             '%s-%s%s-linux_%s' % (name, ver_branch, int_str, platform))
-        system('chmod +x %s-%s%s-linux_%s' % (name, ver_branch, int_str,
-                                              platform))
-        move('%s-%s%s-linux_%s' % (name, ver_branch, int_str, platform),
-             '../%s-%s%s-linux_%s' % (name, ver_branch, int_str, platform))
+        system('cat pdata.zip >> ./mojosetup_' + platform)
+        dst = '%s-%s%s-linux_%s' % (name, ver_branch, int_str, platform)
+        move('mojosetup_' + platform, dst)
+        cmd_tmpl = 'chmod +x %s-%s%s-linux_%s'
+        cmd = cmd_tmpl % (name, ver_branch, int_str, platform)
+        system(cmd)
+        src = '%s-%s%s-linux_%s' % (name, ver_branch, int_str, platform)
+        dst = '../%s-%s%s-linux_%s' % (name, ver_branch, int_str, platform)
+        move(src, dst)
     rmtree(path+'linux_'+platform)

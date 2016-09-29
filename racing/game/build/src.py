@@ -14,6 +14,6 @@ def build_src(target, source, env):
         "--exclude '*.pyc' --exclude .settings --exclude .project " + \
         "--exclude .pydevproject --exclude '{name}.geany' ."
     build_command = build_command_str.format(
-        name=name, out_name=src_path_str.format(path=path, name=name,
-                                                version=ver_branch))
+        name=name,
+        out_name=src_path_str.format(path=path, name=name, version=ver_branch))
     system(build_command)

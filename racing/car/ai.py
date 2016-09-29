@@ -41,7 +41,7 @@ class _Ai(Ai):
         return self.curr_dot_prod > .8
 
     def ground_name(self, pos):
-        result = eng.world_phys.rayTestClosest(
+        result = eng.phys_mgr.world_phys.rayTestClosest(
             (pos.x, pos.y, pos.z + 1), (pos.x, pos.y, pos.z - 1))
         ground = result.get_node()
         return ground.get_name() if ground else ''

@@ -25,7 +25,7 @@ class _Event(Event):
 
     def __init__(self, mdt):
         Event.__init__(self, mdt)
-        self.accept('f12', eng.toggle_debug)
+        self.accept('f12', eng.phys_mgr.toggle_debug)
         now = time.strftime('%y_%m_%d_%H_%M_%S')
         self.accept('f10', eng.win.saveScreenshot, ['yorg_' + now + '.png'])
 
@@ -99,7 +99,7 @@ class _Fsm(Fsm):
         return task.again
 
     def load_stuff(self, track_path, car_path, player_cars):
-        eng.init()
+        eng.phys_mgr.init()
         player_cars = player_cars[1::2]
         def load_car():
             cars = ['kronos', 'themis', 'diones']
@@ -175,7 +175,7 @@ class _Fsm(Fsm):
             self.start_play()
 
     def start_play(self):
-        eng.start()
+        eng.phys_mgr.start()
         game.player_car.event.eval_register()
         self.mdt.audio.game_music.play()
         map(lambda car: car.event.reset_car(), [self.mdt.player_car] + self.mdt.cars)

@@ -85,7 +85,7 @@ class _Event(Event):
         car_pos = self.mdt.gfx.nodepath.get_pos()
         top = (car_pos.x, car_pos.y, 100)
         bottom = (car_pos.x, car_pos.y, -100)
-        result = eng.world_phys.rayTestAll(top, bottom)
+        result = eng.phys_mgr.world_phys.rayTestAll(top, bottom)
         for hit in result.getHits():
             if 'Road' in hit.getNode().getName():
                 self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()

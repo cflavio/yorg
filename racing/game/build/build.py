@@ -15,8 +15,8 @@ from subprocess import Popen, PIPE
 
 def exec_cmd(cmd):
     '''This function execute the *cmd* command and returns its output.'''
-    return '\n'.join(
-        Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True).communicate())
+    ret = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True).communicate()
+    return '\n'.join(ret)
 
 
 def __get_branch():

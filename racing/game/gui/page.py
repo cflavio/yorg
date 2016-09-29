@@ -61,9 +61,8 @@ class Page(object):
 
     def update_texts(self):
         '''Updates the texts.'''
-        transl_wdg = [wdg for wdg in self.widgets
-                      if hasattr(wdg, 'transl_text')]
-        for wdg in transl_wdg:
+        tr_wdg = [wdg for wdg in self.widgets if hasattr(wdg, 'transl_text')]
+        for wdg in tr_wdg:
             wdg['text'] = wdg.transl_text
 
     def __set_back_btn(self):
@@ -90,18 +89,18 @@ class Page(object):
 
     def __set_social(self):
         '''Sets social buttons.'''
-        sites = [('facebook', 'http://www.facebook.com/Ya2Tech'),
-                 ('twitter', 'http://twitter.com/ya2tech'),
-                 ('google_plus',
-                  'https://plus.google.com/118211180567488443153'),
-                 ('youtube',
-                  'http://www.youtube.com/user/ya2games?sub_confirmation=1'),
-                 ('pinterest', 'http://www.pinterest.com/ya2tech'),
-                 ('tumblr', 'http://ya2tech.tumblr.com'),
-                 ('feed', 'http://www.ya2.it/feed-following')]
+        sites = [
+            ('facebook', 'http://www.facebook.com/Ya2Tech'),
+            ('twitter', 'http://twitter.com/ya2tech'),
+            ('google_plus', 'https://plus.google.com/118211180567488443153'),
+            ('youtube',
+             'http://www.youtube.com/user/ya2games?sub_confirmation=1'),
+            ('pinterest', 'http://www.pinterest.com/ya2tech'),
+            ('tumblr', 'http://ya2tech.tumblr.com'),
+            ('feed', 'http://www.ya2.it/feed-following')]
         self.widgets += [
             ImageButton(
-                eng, parent=eng.a2dBottomRight, scale=.1,
+                parent=eng.a2dBottomRight, scale=.1,
                 pos=(-1.0 + i*.15, 1, .1), frameColor=(0, 0, 0, 0),
                 image='assets/images/icons/%s_png.png' % site[0],
                 command=eng.open_browser, extraArgs=[site[1]],

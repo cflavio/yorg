@@ -26,56 +26,42 @@ def build_devinfo(target, source, env):
                     clean_out += line + '\n'
         return clean_out
 
-    #Waiting for Panda 1.9.0 to uncomment this
-    #with open('%sdevinfo.txt' % path, 'a') as f:
-    #    f.write(exec_cmd('nosetests').strip()+'\n\n')
-    for s in source:
-        with open('%sdevinfo.txt' % path, 'a') as f:
-            if str(s).startswith('racing'):
-                continue
-            f.write('    '+str(s)+'\n')
-            outs = [clean_pylint((exec_cmd('pylint -r n '+str(s)))),
-                    exec_cmd('pyflakes '+str(s)),
-                    exec_cmd('pep8 '+str(s))]
-            outs = [out.strip() for out in outs]
-            for out in outs:
-                if out:
-                    f.write(out+'\n')
-            f.write('\n')
-    for s in source:
-        with open('%sdevinfo_racing.txt' % path, 'a') as f:
-            if not str(s).startswith('racing') or \
-                    str(s).startswith('racing/game/'):
-                continue
-            f.write('    '+str(s)+'\n')
-            outs = [clean_pylint((exec_cmd('pylint -r n '+str(s)))),
-                    exec_cmd('pyflakes '+str(s)),
-                    exec_cmd('pep8 '+str(s))]
-            outs = [out.strip() for out in outs]
-            for out in outs:
-                if out:
-                    f.write(out+'\n')
-            f.write('\n')
-    for s in source:
-        with open('%sdevinfo_game.txt' % path, 'a') as f:
-            if not str(s).startswith('racing/game/') or \
-                    str(s).startswith('racing/game/thirdparty') or \
-                    str(s).startswith('racing/game/tests'):
-                continue
-            f.write('    '+str(s)+'\n')
-            outs = [clean_pylint((exec_cmd('pylint -r n '+str(s)))),
-                    exec_cmd('pyflakes '+str(s)),
-                    exec_cmd('pep8 '+str(s))]
-            outs = [out.strip() for out in outs]
-            for out in outs:
-                if out:
-                    f.write(out+'\n')
-            f.write('\n')
+    def process(name, cond):
+        '''Processes files which don't satisfy cond.'''
+        for s in source:
+            with open(name % path, 'a') as f:
+                if cond(s):
+                    continue
+                f.write('    '+str(s)+'\n')
+                outs = [clean_pylint((exec_cmd('pylint -r n '+str(s)))),
+                        exec_cmd('pyflakes '+str(s)),
+                        exec_cmd('pep8 '+str(s))]
+                outs = [out.strip() for out in outs]
+                for out in outs:
+                    if out:
+                        f.write(out+'\n')
+                f.write('\n')
+
+    process('%sdevinfo.txt', lambda s: str(s).startswith('racing'))
+
+    def racing_cond(s):
+        '''The condition for the racing package.'''
+        _s = str(s)
+        return not _s.startswith('racing') or _s.startswith('racing/game/')
+
+    process('%sdevinfo_racing.txt', racing_cond)
+
+    def game_cond(s):
+        '''The condition for the game package.'''
+        not_game = not str(s).startswith('racing/game/')
+        thirdparty = str(s).startswith('racing/game/thirdparty')
+        return not_game or thirdparty or str(s).startswith('racing/game/tests')
+
+    process('%sdevinfo_game.txt', game_cond)
     build_command_str = \
         "tar -czf {out_name} -C {path} devinfo.txt devinfo_racing.txt " + \
         "devinfo_game.txt && rm {path}devinfo.txt " + \
         "{path}devinfo_racing.txt {path}devinfo_game.txt"
-    build_command = build_command_str.format(
-        path=path, out_name=devinfo_path_str.format(path=path, name=name,
-                                                    version=ver_branch))
+    fpath = devinfo_path_str.format(path=path, name=name, version=ver_branch)
+    build_command = build_command_str.format(path=path, out_name=fpath)
     system(build_command)

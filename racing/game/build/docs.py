@@ -9,22 +9,23 @@ def build_docs(target, source, env):
     `Sphinx <http://sphinx-doc.org>`_ .'''
     name = env['NAME']
     copytree('racing/game/build/docs', path+'docs_apidoc')
-    system('sed -i.bak -e "s/<name>/%s/" %sdocs_apidoc/index.rst'
-           % (name.capitalize(), path))
+    cmd = 'sed -i.bak -e "s/<name>/%s/" %sdocs_apidoc/index.rst'
+    system(cmd % (name.capitalize(), path))
     curr_path = os_path.abspath('.').replace('/', '\/')
     curr_path = curr_path.replace('\\', '\\\\')
     cmd_tmpl = 'sed -i.bak -e "s/<name>/{name}/" ' + \
-        '-e "s/<src_path>/{src_path}/" ' + \
-        '-e "s/<version>/{version}/" {path}docs_apidoc/conf.py'
-    system(cmd_tmpl.format(name=name.capitalize(), version=ver_branch,
-                           path=path, src_path=curr_path))
+        '-e "s/<src_path>/{src_path}/" -e "s/<version>/{version}/" ' + \
+        '{path}docs_apidoc/conf.py'
+    system(cmd_tmpl.format(
+        name=name.capitalize(),
+        version=ver_branch,
+        path=path,
+        src_path=curr_path))
     system('sphinx-apidoc -o %sdocs_apidoc .' % path)
     system("sed -i 1s/./Modules/ %sdocs_apidoc/modules.rst" % path)
     system('sphinx-build -b html %sdocs_apidoc %sdocs' % (path, path))
-    build_command_str = \
-        "tar -C {path} -czf {out_name} ./docs"
-    build_command = build_command_str.format(
-        path=path, out_name=docs_path_str.format(path=path, name=name,
-                                                 version=ver_branch))
+    build_command_str = 'tar -C {path} -czf {out_name} ./docs'
+    f_out = docs_path_str.format(path=path, name=name, version=ver_branch)
+    build_command = build_command_str.format(path=path, out_name=f_out)
     system(build_command)
     map(rmtree, [path+'docs_apidoc', path+'docs'])

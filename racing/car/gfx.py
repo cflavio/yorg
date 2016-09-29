@@ -10,7 +10,7 @@ class _Gfx(Gfx):
         self.path = path
         self.cb = cb
         vehicle_node = BulletRigidBodyNode('Vehicle')
-        self.nodepath = eng.world_np.attachNewNode(vehicle_node)
+        self.nodepath = eng.phys_mgr.world_np.attachNewNode(vehicle_node)
 
         #eng.loader.loadModel(path + '/car', callback=self.load_wheels)  # it doesn't work
         chassis_model = eng.loader.loadModel(path + '/car')
@@ -19,10 +19,10 @@ class _Gfx(Gfx):
     def reparent(self):
         self.chassis_np.reparentTo(self.nodepath)
         self.chassis_np.setDepthOffset(-2)
-        self.front_right_wheel_np.reparentTo(eng.world_np)
-        self.front_left_wheel_np.reparentTo(eng.world_np)
-        self.rear_right_wheel_np.reparentTo(eng.world_np)
-        self.rear_left_wheel_np.reparentTo(eng.world_np)
+        self.front_right_wheel_np.reparentTo(eng.phys_mgr.world_np)
+        self.front_left_wheel_np.reparentTo(eng.phys_mgr.world_np)
+        self.rear_right_wheel_np.reparentTo(eng.phys_mgr.world_np)
+        self.rear_left_wheel_np.reparentTo(eng.phys_mgr.world_np)
 
     def load_wheels(self, chassis_model):
         self.chassis_np = chassis_model

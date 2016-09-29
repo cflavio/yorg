@@ -7,22 +7,21 @@ from itertools import product
 class ImageButton(DirectButton):
     '''This class models an image button.'''
 
-    def __init__(self, eng, image, *args, **kwargs):
-        maps = eng.loader.loadModel('racing/game/assets/img_btn')
-        btn_geom = (maps.find('**/image'), maps.find('**/image'),
-                    maps.find('**/image_rollover'))
+    def __init__(self, image, *args, **kwargs):
+        maps = loader.loadModel('racing/game/assets/img_btn')
+        imgs = ['image', 'image', 'image_rollover']
+        btn_geom = [maps.find('**/' + img) for img in imgs]
         DirectButton.__init__(self, geom=btn_geom, *args, **kwargs)
-        image_rollover = PNMImage(image)
-        for pos_x, pos_y in product(range(image_rollover.get_x_size()),
-                                    range(image_rollover.get_y_size())):
-            col = image_rollover.getXelA(pos_x, pos_y)
+        img_rollover = PNMImage(image)
+        sz_x, sz_y = img_rollover.get_x_size(), img_rollover.get_y_size()
+        for pos_x, pos_y in product(range(sz_x), range(sz_y)):
+            col = img_rollover.getXelA(pos_x, pos_y)
             new_color = (col[0] * 1.2, col[1] * 1.2, col[2] * 1.2, col[3])
-            image_rollover.setXelA(pos_x, pos_y, new_color)
-        rollover_texture = Texture()
-        rollover_texture.load(image_rollover)
-        for i, texture in enumerate([eng.loader.loadTexture(image),
-                                     eng.loader.loadTexture(image),
-                                     rollover_texture]):
+            img_rollover.setXelA(pos_x, pos_y, new_color)
+        rollover_txt = Texture()
+        rollover_txt.load(img_rollover)
+        txt = loader.loadTexture(image)
+        for i, texture in enumerate([txt, txt, rollover_txt]):
             self['geom'][i].setTexture(texture, 1)
             self['geom'][i].setTransparency(True)
         self.initialiseoptions(self.__class__)

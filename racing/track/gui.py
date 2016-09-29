@@ -115,7 +115,7 @@ class _Gui(Gui):
         sites = [('facebook', facebook_url), ('twitter', twitter_url),
                  ('google_plus', plus_url), ('tumblr', tumblr_url)]
         self.__buttons += [
-            ImageButton(eng, scale=.1,
+            ImageButton(scale=.1,
                         pos=(.02 + i*.15, 1, -.62), frameColor=(0, 0, 0, 0),
                         image='assets/images/icons/%s_png.png' % site[0],
                         command=eng.open_browser, extraArgs=[site[1]],

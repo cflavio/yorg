@@ -12,8 +12,8 @@ class AbsNetwork(object):
         self.c_mgr = QueuedConnectionManager()
         self.c_reader = QueuedConnectionReader(self.c_mgr, 0)
         self.c_writer = ConnectionWriter(self.c_mgr, 0)
-        self.reader_tsk = taskMgr.add(self.tsk_reader, 'connection reader',
-                                      -40)
+        args = (self.tsk_reader, 'connection reader', -40)
+        self.reader_tsk = taskMgr.add(*args)
         self.reader_cb = reader_cb
 
     @staticmethod
@@ -26,10 +26,12 @@ class AbsNetwork(object):
         '''Sends a packet.'''
         datagram = PyDatagram()
         datagram.addString(self._format(data_lst))
-        dct_meths = {bool: datagram.addBool, int: datagram.addInt64,
-                     float: datagram.addFloat64, str: datagram.addString}
-        for part in data_lst:
-            dct_meths[type(part)](part)
+        dct_meths = {
+            bool: datagram.addBool,
+            int: datagram.addInt64,
+            float: datagram.addFloat64,
+            str: datagram.addString}
+        map(lambda part: dct_meths[type(part)](part), data_lst)
         self._actual_send(datagram, receiver)
 
     def tsk_reader(self, task):
@@ -39,8 +41,11 @@ class AbsNetwork(object):
             if self.c_reader.getData(datagram):
                 iterator = PyDatagramIterator(datagram)
                 _format = iterator.getString()
-                dct_meths = {'B': iterator.getBool, 'I': iterator.getInt64,
-                             'F': iterator.getFloat64, 'S': iterator.getString}
+                dct_meths = {
+                    'B': iterator.getBool,
+                    'I': iterator.getInt64,
+                    'F': iterator.getFloat64,
+                    'S': iterator.getString}
                 msg_lst = [dct_meths[c]() for c in _format]
                 self.reader_cb(msg_lst, datagram.getConnection())
         return task.cont

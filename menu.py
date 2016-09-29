@@ -229,7 +229,7 @@ class OptionPage(Page):
             text_fg=(.75, .75, .75, 1), frameColor=page_args.btn_color,
             indicatorValue=conf['fullscreen'],
             indicator_frameColor=page_args.btn_color,
-            command=eng.toggle_fullscreen,
+            command=eng.gui_mgr.toggle_fullscreen,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
@@ -242,14 +242,14 @@ class OptionPage(Page):
         else:
             curr_res =  str(eng.win.getXSize())+'x'+str(base.win.getYSize())
         self.__res_opt = DirectOptionMenu(
-            text='', scale=.08, items=eng.resolutions, pos=(.2, 1, -.1),
+            text='', scale=.08, items=eng.gui_mgr.resolutions, pos=(.2, 1, -.1),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_fg=(.75, .75, .75, 1),
             item_text_font=font, item_text_fg=(.75, .75, .75, 1),
             item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
-            initialitem=eng.closest_res,
+            initialitem=eng.gui_mgr.closest_res,
             popupMarker_frameColor=page_args.btn_color, textMayChange=1,
-            highlightColor=(.8, .8, .8, .2), command=eng.set_resolution,
+            highlightColor=(.8, .8, .8, .2), command=eng.gui_mgr.set_resolution,
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 

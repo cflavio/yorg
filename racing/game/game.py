@@ -2,6 +2,7 @@
 to the game abstract class """
 from abc import ABCMeta
 from racing.game.gameobject import Logic, GameObjectMdt
+from .engine import Engine
 import __builtin__
 
 
@@ -18,8 +19,9 @@ class Game(GameObjectMdt):
     __metaclass__ = ABCMeta
     logic_cls = GameLogic
 
-    def __init__(self):
+    def __init__(self, conf, domain):
         __builtin__.game = self
+        Engine(conf, domain)
         GameObjectMdt.__init__(self)
 
     def run(self):

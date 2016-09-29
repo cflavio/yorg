@@ -1,5 +1,5 @@
 '''This module defines the option manager.'''
-import yaml
+from yaml import load, dump
 
 
 class OptionMgr(object):
@@ -13,7 +13,7 @@ class OptionMgr(object):
         '''It returns the current option dict.'''
         try:
             with open('options.yml') as opt_file:
-                conf = yaml.load(opt_file)
+                conf = load(opt_file)
         except IOError:
             conf = {
                 'lang': 0,
@@ -34,4 +34,4 @@ class OptionMgr(object):
     def set_options(conf):
         '''It stores the conf dict.'''
         with open('options.yml', 'w') as opt_file:
-            yaml.dump(conf, opt_file, default_flow_style=False)
+            dump(conf, opt_file, default_flow_style=False)

@@ -1,6 +1,6 @@
 '''This module provides functionalities for logging.'''
 from datetime import datetime
-import platform
+from platform import system, release
 from panda3d.core import loadPrcFileData
 from direct.directnotify.DirectNotify import DirectNotify
 
@@ -18,23 +18,28 @@ class LogMgr(object):
 
     def log(self, msg):
         '''Logs the message.'''
-        self.__notify.info(datetime.now().strftime("%H:%M:%S") + ' ' +
-                           str(msg))
+        str_time = datetime.now().strftime("%H:%M:%S")
+        log_msg = '{time} {msg}'.format(time=str_time, msg=msg)
+        self.__notify.info(log_msg)
 
     def log_conf(self):
         '''Logs the system configuration.'''
-        self.log('version: '+eng.version)
-        self.log('operative system: '+platform.system()+' '+platform.release())
+        self.log('version: ' + eng.version)
+        self.log('operative system: ' + system() + ' ' + release())
         gsg = eng.win.get_gsg()
         self.log(gsg.getDriverVendor())
         self.log(gsg.getDriverRenderer())
-        self.log('shader: %s.%s' % (gsg.getDriverShaderVersionMajor(),
-                                    gsg.getDriverShaderVersionMinor()))
+        shad_maj = gsg.getDriverShaderVersionMajor()
+        shad_min = gsg.getDriverShaderVersionMinor()
+        self.log('shader: {maj}.{min}'.format(maj=shad_maj, min=shad_min))
         self.log(gsg.getDriverVersion())
-        self.log('driver version: %s.%s' % (gsg.getDriverVersionMajor(),
-                                            gsg.getDriverVersionMinor()))
+        drv_maj = gsg.getDriverVersionMajor()
+        drv_min = gsg.getDriverVersionMinor()
+        drv = 'driver version: {maj}.{min}'
+        self.log(drv.format(maj=drv_maj, min=drv_min))
         if eng.win:
             prop = eng.win.get_properties()
-            self.log('fullscreen: '+str(prop.get_fullscreen()))
-            resolution = (prop.get_x_size(), prop.get_y_size())
-            self.log('resolution: %sx%s' % resolution)
+            self.log('fullscreen: ' + str(prop.get_fullscreen()))
+            res_x, res_y = prop.get_x_size(), prop.get_y_size()
+            res_tmpl = 'resolution: {res_x}x{res_y}'
+            self.log(res_tmpl.format(res_x=res_x, res_y=res_y))

@@ -12,12 +12,11 @@ class Client(AbsNetwork):
 
     def __init__(self, reader_cb, server_address):
         AbsNetwork.__init__(self, reader_cb)
-        self.conn = self.c_mgr.openTCPClientConnection(server_address, 9099,
-                                                       3000)
-        if self.conn:
-            self.c_reader.addConnection(self.conn)
-        else:
+        args = (server_address, 9099, 3000)
+        self.conn = self.c_mgr.openTCPClientConnection(*args)
+        if not self.conn:
             raise ClientError
+        self.c_reader.addConnection(self.conn)
         eng.log_mgr.log('the client is up')
 
     def _actual_send(self, datagram, receiver):

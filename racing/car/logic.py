@@ -168,7 +168,7 @@ class _Logic(Logic):
 
     def get_closest(self, pos, tgt=None):
         tgt = tgt or self.mdt.gfx.nodepath.getPos()
-        result = eng.world_phys.rayTestClosest(pos, tgt)
+        result = eng.phys_mgr.world_phys.rayTestClosest(pos, tgt)
         if result.hasHit():
             return result
 

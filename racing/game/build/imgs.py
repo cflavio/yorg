@@ -21,8 +21,8 @@ def build_images(target, source, env):
         sizes = [2**i for i in range(0, 12)]
         low_pow = lambda x: max([y for y in sizes if y <= x])
         width, height = map(low_pow, size)
-        cmd = 'convert "%s"[0] -resize %dx%d! "%s"' % (_file, width, height,
-                                                       png)
+        cmd_tmpl = 'convert "%s"[0] -resize %dx%d! "%s"'
+        cmd = cmd_tmpl % (_file, width, height, png)
         system(cmd)
         if not png.endswith('_png.png'):
             cmd = 'nvcompress -bc3 '+('-alpha' if alpha else '') + \

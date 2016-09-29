@@ -2,7 +2,6 @@
 from os import path
 from panda3d.core import MultiplexStream, Notify
 import sys
-from racing.game.engine import Engine
 from racing.game.configuration import Configuration
 from racing.game.option import OptionMgr
 from yorg import Yorg
@@ -20,13 +19,12 @@ if sys.platform != 'darwin' and \
 
 # main #######################################################################
 if __name__ == '__main__' or path.exists('main.pyo'):
-    Engine(
-        Configuration(
+    conf = Configuration(
             fps=OptionMgr.get_options()['fps'],
             win_title='Yorg',
             win_size=OptionMgr.get_options()['resolution'],
             fullscreen=OptionMgr.get_options()['fullscreen'],
             antialiasing=OptionMgr.get_options()['aa'],
-            mt_render=OptionMgr.get_options()['multithreaded_render']),
-        'yorg')
-    Yorg().run()
+            mt_render=OptionMgr.get_options()['multithreaded_render'])
+    Yorg(conf,
+        'yorg').run()

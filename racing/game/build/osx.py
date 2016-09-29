@@ -15,8 +15,8 @@ def build_osx(target, source, env):
     system(build_command)
     osx_path = '{Name}.app'
     osx_tgt = '{name}-{version}{int_str}-osx.zip'
-    osx_cmd_tmpl = 'cd '+path+'osx_i386 && zip -r ../'+osx_tgt+' '+osx_path +\
-                   ' && cd ../..'
+    osx_cmd_tmpl = 'cd ' + path + 'osx_i386 && zip -r ../' + osx_tgt + ' ' + \
+        osx_path + ' && cd ../..'
     osx_cmd = osx_cmd_tmpl.format(Name=name.capitalize(), name=name,
                                   version=ver_branch, int_str=int_str)
     system(osx_cmd)
