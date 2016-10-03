@@ -3,7 +3,7 @@ from direct.gui.OnscreenText import OnscreenText
 from racing.game.gameobject import Gui
 from racing.game.gui.imgbtn import ImageButton
 from direct.gui.OnscreenImage import OnscreenImage
-from racing.game.option import OptionMgr
+from racing.game.dictfile import DictFile
 
 
 class _Gui(Gui):
@@ -129,9 +129,9 @@ class _Gui(Gui):
             if game.ranking:
                 for car in game.ranking:
                     game.ranking[car] += game.track.race_ranking[car]
-                conf = OptionMgr.get_options()
+                conf = game.options
                 conf['last_ranking'] = game.ranking
-                OptionMgr.set_options(conf)
+                conf.store()
                 game.fsm.demand('Ranking')
             else:
                 game.fsm.demand('Menu')

@@ -1,7 +1,7 @@
 from panda3d.core import AmbientLight, BitMask32, Spotlight, TextNode, NodePath
 from direct.actor.Actor import Actor
 from racing.game.gameobject import Gfx
-from racing.game.option import OptionMgr
+from racing.game.dictfile import DictFile
 from direct.gui.OnscreenText import OnscreenText
 
 
@@ -131,7 +131,7 @@ class _Gfx(Gfx):
                     center_x = (left + right) / 2
                     center_y = (left + right) / 2
                     pos_x, pos_y = model.get_pos()[0], model.get_pos()[1]
-                    if not OptionMgr.get_options()['split_world']:
+                    if not game.options['split_world']:
                         parent = self.__flat_roots[model_name][0]
                     elif  pos_x < center_x and pos_y < center_y:
                         parent = self.__flat_roots[model_name][0]
@@ -161,7 +161,7 @@ class _Gfx(Gfx):
                     orig_node.remove_node()
                     flat_models(models[1:], cb, model, time, number)
                 game.fsm.curr_load_txt.setText(_('flattening model: ') + node.get_name())
-                if OptionMgr.get_options()['submodels']:
+                if game.options['submodels']:
                     loader.asyncFlattenStrong(
                         node,
                         callback=process_flat,

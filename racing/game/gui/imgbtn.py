@@ -2,13 +2,15 @@
 from direct.gui.DirectButton import DirectButton
 from panda3d.core import PNMImage, Texture
 from itertools import product
+from os.path import dirname, realpath
 
 
 class ImageButton(DirectButton):
     '''This class models an image button.'''
 
     def __init__(self, image, *args, **kwargs):
-        maps = loader.loadModel('racing/game/assets/img_btn')
+        this_path = dirname(realpath(__file__))
+        maps = loader.loadModel(this_path + '/../assets/img_btn')
         imgs = ['image', 'image', 'image_rollover']
         btn_geom = [maps.find('**/' + img) for img in imgs]
         DirectButton.__init__(self, geom=btn_geom, *args, **kwargs)

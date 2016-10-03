@@ -3,7 +3,7 @@ from racing.game.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
 from ai import _Ai
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
-from racing.game.option import OptionMgr
+from racing.game.dictfile import DictFile
 
 
 class _Event(Event):
@@ -182,7 +182,7 @@ class _PlayerEvent(_Event):
                     float(self.mdt.gui.best_txt.getText()) > lap_time):
                 self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
             self.mdt.logic.last_time_start = globalClock.getFrameTime()
-            laps = OptionMgr.get_options()['laps']
+            laps = game.options['laps']
             if not self.has_just_started:
                 fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
                 back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0

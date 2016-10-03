@@ -1,19 +1,14 @@
 '''This module provides the engine object.'''
-from sys import path, platform, exit
+from sys import path, platform
 from os import environ, system
 from webbrowser import open_new_tab
-from panda3d.core import LightRampAttrib, \
-    PandaNode, NodePath, AntialiasAttrib
 from direct.gui.DirectFrame import DirectFrame
-from direct.filter.CommonFilters import CommonFilters
-from direct.particles.ParticleEffect import ParticleEffect
 from direct.showbase.ShowBase import ShowBase
 import __builtin__
 from .pause import PauseMgr
 from .font import FontMgr
 from .log import LogMgr
 from .lang import LangMgr
-from .option import OptionMgr
 from .configuration import Configuration
 from .gfx import GfxMgr
 from .gui.gui import GuiMgr
@@ -26,7 +21,7 @@ path.append('./ya2/thirdparty')
 class Engine(ShowBase, object):
     '''This class models the engine object.'''
 
-    def __init__(self, configuration=None, domain=''):
+    def __init__(self, configuration=None, domain='', langs=[]):
         self.pause_frame = None
         configuration = configuration or Configuration()
         ShowBase.__init__(self)
@@ -37,8 +32,7 @@ class Engine(ShowBase, object):
         self.font_mgr = FontMgr()
         self.log_mgr = LogMgr()
         self.log_mgr.log_conf()
-        lang = OptionMgr.get_options()['lang']
-        langs = ['English', 'Italiano']
+        lang = game.options['lang']
         self.lang_mgr = LangMgr(domain, './assets/locale', langs, lang)
         if self.win:
             self.gui_mgr = GuiMgr('x'.join(configuration.win_size.split()))
@@ -72,4 +66,3 @@ class Engine(ShowBase, object):
             package = self.appRunner.p3dInfo.FirstChildElement('package')
             version = 'version: ' + package.Attribute('version')
         return version
-

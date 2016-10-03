@@ -11,7 +11,7 @@ from racing.track.gfx import _Gfx as TrackGfx
 from racing.car.gfx import _Gfx as CarGfx
 from panda3d.core import NodePath, TextNode
 from direct.interval.LerpInterval import LerpHprInterval
-from racing.game.option import OptionMgr
+from racing.game.dictfile import DictFile
 
 
 class NetMsgs:
@@ -62,13 +62,13 @@ class _Fsm(Fsm):
         eng.log_mgr.log('entering Loading state')
         if not track_path and not car_path:
             tracks = ['prototype', 'desert']
-            track = tracks[tracks.index(OptionMgr.get_options()['last_track']) + 1]
+            track = tracks[tracks.index(game.options['last_track']) + 1]
             track_path = 'tracks/track_' + track
-            car_path = OptionMgr.get_options()['last_car']
-        conf = OptionMgr.get_options()
+            car_path = game.options['last_car']
+        conf = game.options
         conf['last_track'] = track_path[13:]
         conf['last_car'] = car_path
-        OptionMgr.set_options(conf)
+        conf.store()
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.load_txt = OnscreenText(
             text=_('LOADING...\n\nPLEASE WAIT, IT MAY REQUIRE SOME TIME'),
@@ -105,7 +105,7 @@ class _Fsm(Fsm):
             cars = ['kronos', 'themis', 'diones']
             grid = ['kronos', 'themis', 'diones']
             cars.remove(car_path)
-            ai = OptionMgr.get_options()['ai']
+            ai = game.options['ai']
             def load_other_cars():
                if not cars:
                    self.mdt.fsm.demand('Play', track_path, car_path)
@@ -204,15 +204,15 @@ class _Fsm(Fsm):
             tracks = ['prototype', 'desert']
             if tracks.index(current_track) == len(tracks) - 1:
                 game.ranking = None
-                conf = OptionMgr.get_options()
+                conf = game.options
                 del conf['last_car']
                 del conf['last_track']
                 del conf['last_ranking']
-                OptionMgr.set_options(conf)
+                conf.store()
                 self.demand('Menu')
             else:
                 next_track = tracks[tracks.index(current_track) + 1]
-                curr_car = OptionMgr.get_options()['last_car']
+                curr_car = game.options['last_car']
                 self.demand('Loading', next_track, curr_car)
         taskMgr.doMethodLater(10, step, 'step')
 
@@ -223,14 +223,14 @@ class _Fsm(Fsm):
 class _Logic(GameLogic):
     '''This class defines the logics of the game.'''
 
-    def run(self):
-        GameLogic.run(self)
+    def start(self):
+        GameLogic.start(self)
         try:
-            car = OptionMgr.get_options()['car']
+            car = game.options['car']
         except KeyError:
             car = ''
         try:
-            track = OptionMgr.get_options()['track']
+            track = game.options['track']
         except KeyError:
             track = ''
         if car and track:

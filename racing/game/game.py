@@ -9,7 +9,7 @@ import __builtin__
 class GameLogic(Logic):
     """ Definition of the Logic Class """
 
-    def run(self):
+    def start(self):
         '''Starts the game logic.'''
         pass
 
@@ -19,12 +19,10 @@ class Game(GameObjectMdt):
     __metaclass__ = ABCMeta
     logic_cls = GameLogic
 
-    def __init__(self, conf, domain):
+    def __init__(self, conf, domain, langs, options):
         __builtin__.game = self
-        Engine(conf, domain)
+        self.options = options
+        Engine(conf, domain, langs)
         GameObjectMdt.__init__(self)
-
-    def run(self):
-        '''Starts the game.'''
-        self.logic.run()
+        self.logic.start()
         eng.run()

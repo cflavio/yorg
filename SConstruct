@@ -70,6 +70,36 @@ env['P3D_PATH'] = p3d_path
 env['NAME'] = app_name
 env['LANG'] = lang_path
 env['NOINTERNET'] = arguments['nointernet']
+filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
+pdf_conf = {
+    'sources': [
+        ('python', '.', '*.py', ['./racing/*'])],
+    'sources_racing': [
+        ('python', './racing', '*.py', ['./racing/game/*'])],
+    'sources_game': [
+        ('python', './racing/game', '*.py', filt_game),
+        ('lua', './racing/game', 'config.lua', filt_game),
+        ('python', './racing/game', '*.pdef', filt_game),
+        ('', './racing/game', '*.rst', filt_game),
+        ('html', './racing/game', '*.html', filt_game),
+        ('javascript', './racing/game', '*.js', filt_game),
+        ('', './racing/game', '*.css_t', filt_game),
+        ('', './racing/game', '*.conf', filt_game)
+        ]
+}
+env['PDF_CONF'] = pdf_conf
+
+cond_racing = lambda s: not str(s).startswith('racing') or str(s).startswith('racing/game/')
+def cond_game(src):
+    not_game = not str(src).startswith('racing/game/')
+    thirdparty = str(src).startswith('racing/game/thirdparty')
+    return not_game or thirdparty or str(src).startswith('racing/game/tests')
+dev_conf = {
+    'devinfo': lambda s: str(s).startswith('racing'),
+    'devinfo_racing': cond_racing,
+    'devinfo_game': cond_game
+}
+env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
 

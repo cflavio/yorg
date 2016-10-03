@@ -4,6 +4,7 @@ from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TextNode
 from direct.gui.OnscreenImage import OnscreenImage
 from .imgbtn import ImageButton
+from ..gameobject import GameObjectMdt, Gui
 
 
 def transl_text(obj, text_src):
@@ -36,10 +37,11 @@ class PageArgs(object):
         self.dial_color = dial_color
 
 
-class Page(object):
-    '''This class models a page.'''
+class PageGui(Gui):
+    '''This class models the GUI component of a page.'''
 
-    def __init__(self, page_args):
+    def __init__(self, mdt, page_args):
+        Gui.__init__(self, mdt)
         self.page_args = page_args
         self.font = eng.font_mgr.load_font(page_args.font)
         self.background = None
@@ -118,3 +120,18 @@ class Page(object):
     def destroy(self):
         '''Destroys the page.'''
         map(lambda wdg: wdg.destroy(), self.widgets)
+
+
+class Page(GameObjectMdt):
+    '''This class models a page.'''
+    gui_cls = PageGui
+
+    def __init__(self, page_args):
+        self.fsm = self.fsm_cls(self)
+        self.gfx = self.gfx_cls(self)
+        self.phys = self.phys_cls(self)
+        self.gui = self.gui_cls(self, page_args)
+        self.logic = self.logic_cls(self)
+        self.audio = self.audio_cls(self)
+        self.ai = self.ai_cls(self)
+        self.event = self.event_cls(self)

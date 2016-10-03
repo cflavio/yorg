@@ -1,14 +1,19 @@
-from panda3d.core import getModelPath
+'''This class provides functionalities for the graphics.'''
+from panda3d.core import getModelPath, LightRampAttrib, PandaNode, NodePath, \
+    AntialiasAttrib
+from direct.particles.ParticleEffect import ParticleEffect
+from direct.filter.CommonFilters import CommonFilters
 
 
-class GfxMgr:
+class GfxMgr(object):
+    '''This class models the graphics manager.'''
 
-    def __init__(self, aa):
+    def __init__(self, antialiasing):
         getModelPath().appendDirectory('assets/models')
         eng.enableParticles()
         render.setShaderAuto()
         render.setTwoSided(True)
-        if aa:
+        if antialiasing:
             render.setAntialias(AntialiasAttrib.MAuto)
 
     @staticmethod

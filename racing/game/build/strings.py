@@ -18,22 +18,23 @@ def build_string_template(target, source, env):
     except error:
         pass
     move(name + '.pot', lang + 'it_IT/LC_MESSAGES/%s.pot' % name)
-    p = lang + 'it_IT/LC_MESSAGES/'
-    for a in ['CHARSET/UTF-8', 'ENCODING/8bit']:
+    path = lang + 'it_IT/LC_MESSAGES/'
+    for line in ['CHARSET/UTF-8', 'ENCODING/8bit']:
         cmd_tmpl = "sed 's/{src}/' {path}{name}.pot > {path}{name}tmp.po"
-        system(cmd_tmpl.format(src=a, path=p, name=name))
-        move(p + name + 'tmp.po', p + name + '.pot')
-    if not exists(p + name + '.po'):
-        copy(p + name + '.pot', p + name + '.po')
+        system(cmd_tmpl.format(src=line, path=path, name=name))
+        move(path + name + 'tmp.po', path + name + '.pot')
+    if not exists(path + name + '.po'):
+        copy(path + name + '.pot', path + name + '.po')
     cmd_str = 'msgmerge -o {path}{name}merge.po {path}{name}.po ' + \
         '{path}{name}.pot'
-    system(cmd_str.format(path=p, name=name))
-    copy(p + name + 'merge.po', p + name + '.po')
-    lines = open(p + name + '.po', 'r').readlines()
-    with open(p + name + '.po', 'w') as f:
-        for l in lines:
+    system(cmd_str.format(path=path, name=name))
+    copy(path + name + 'merge.po', path + name + '.po')
+    lines = open(path + name + '.po', 'r').readlines()
+    with open(path + name + '.po', 'w') as outf:
+        for line in lines:
             po_str = '"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\\n"\n'
-            f.write(po_str if l.startswith('"POT-Creation-Date: ') else l)
+            startl = '"POT-Creation-Date: '
+            outf.write(po_str if line.startswith(startl) else line)
 
 
 def build_strings(target, source, env):
@@ -42,6 +43,6 @@ def build_strings(target, source, env):
     the *po* files.'''
     name = env['NAME']
     lang = env['LANG']
-    p = lang + 'it_IT/LC_MESSAGES/'
+    path = lang + 'it_IT/LC_MESSAGES/'
     cmd = 'msgfmt -o {path}{name}.mo {path}{name}.po'
-    system(cmd.format(path=p, name=name))
+    system(cmd.format(path=path, name=name))

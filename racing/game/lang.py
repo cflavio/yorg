@@ -11,10 +11,12 @@ class LangMgr(object):
         self.languages = languages
         install(domain, path, unicode=1)
         lang = lang_code if lang_code else self.languages[0][:2].lower()
+        self.curr_lang = lang
         self.set_lang(lang)
 
     @property
     def lang_codes(self):
+        '''The codes of the supported languages.'''
         return [lang[:2].lower() for lang in self.languages]
 
     def set_lang(self, lang):

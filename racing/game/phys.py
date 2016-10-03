@@ -1,7 +1,9 @@
+'''This module provides physics functionalities.'''
 from panda3d.bullet import BulletWorld, BulletDebugNode
 
 
-class PhysMgr:
+class PhysMgr(object):
+    '''This class models the physics manager.'''
 
     def __init__(self):
         '''Inits the engine.'''
@@ -12,6 +14,7 @@ class PhysMgr:
         self.__debug_np = None
 
     def init(self):
+        '''Inits the physics.'''
         self.collision_objs = []
         self.__coll_dct = {}
         self.world_np = render.attachNewNode('world')

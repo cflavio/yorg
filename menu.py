@@ -10,7 +10,7 @@ from sys import exit
 from racing.game.gameobject import Fsm, GameObjectMdt, Gui
 from racing.game.gui.page import Page, PageArgs, transl_text
 from racing.game.lang import LangMgr
-from racing.game.option import OptionMgr
+from racing.game.dictfile import DictFile
 from racing.game.network.server import Server
 from racing.game.network.client import Client, ClientError
 from direct.showbase.DirectObject import DirectObject
@@ -32,28 +32,28 @@ class NetMsgs:
 class MainPage(Page, DirectObject):
 
     def create(self, fsm):
-        page_args = self.page_args
+        page_args = self.gui.page_args
         menu_data = [('Single Player', _('Single Player'), lambda: fsm.demand('Singleplayer')),
                      ('Multiplayer', _('Multiplayer'), lambda: fsm.demand('Multiplayer')),
                      ('Options', _('Options'), lambda: fsm.demand('Options')),
                      ('Credits', _('Credits'), lambda: fsm.demand('Credits')),
                      ('Quit', _('Quit'), self.on_exit)]
         self.accept('escape-up', self.on_exit)
-        self.widgets = [
+        self.gui.widgets = [
             DirectButton(
                 text='', scale=.2, pos=(0, 1, .4-i*.28),
                 text_fg=(.75, .75, .75, 1),
-                text_font=self.font, frameColor=page_args.btn_color,
+                text_font=self.gui.font, frameColor=page_args.btn_color,
                 command=menu[2], frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
-        for i, wdg in enumerate(self.widgets):
+        for i, wdg in enumerate(self.gui.widgets):
             transl_text(wdg, menu_data[i][0])
-        Page.create(self)
+        self.gui.create()
 
     def on_exit(self):
-        if OptionMgr.get_options()['open_browser_at_exit']:
+        if game.options['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
         exit()
 
@@ -61,10 +61,10 @@ class MainPage(Page, DirectObject):
 class SingleplayerPage(Page):
 
     def create(self, fsm):
-        page_args = self.page_args
+        page_args = self.gui.page_args
         game.ranking = None
         def on_continue():
-            game.ranking = OptionMgr.get_options()['last_ranking']
+            game.ranking = game.options['last_ranking']
             game.fsm.demand('Loading')
         def on_tournament():
             game.ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
@@ -73,38 +73,38 @@ class SingleplayerPage(Page):
             ('Single race', lambda: fsm.demand('Tracks')),
             ('New tournament', on_tournament),
             ('Continue tournament', on_continue)]
-        self.widgets = [
+        self.gui.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
                 text_fg=(.75, .75, .75, 1),
-                text_font=self.font, frameColor=page_args.btn_color,
+                text_font=self.gui.font, frameColor=page_args.btn_color,
                 command=menu[1], frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
-        if 'last_ranking' not in OptionMgr.get_options():
-            self.widgets[-1]['state'] = DISABLED
-            self.widgets[-1].setAlphaScale(.25)
-        Page.create(self)
+        if 'last_ranking' not in game.options.dct:
+            self.gui.widgets[-1]['state'] = DISABLED
+            self.gui.widgets[-1].setAlphaScale(.25)
+        self.gui.create()
 
 
 class MultiplayerPage(Page):
 
     def create(self, fsm):
-        page_args = self.page_args
+        page_args = self.gui.page_args
         menu_data = [
             ('Server', lambda: fsm.demand('Server')),
             ('Client', lambda: fsm.demand('Client'))]
-        self.widgets = [
+        self.gui.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
                 text_fg=(.75, .75, .75, 1),
-                text_font=self.font, frameColor=page_args.btn_color,
+                text_font=self.gui.font, frameColor=page_args.btn_color,
                 command=menu[1], frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
-        Page.create(self)
+        self.gui.create()
 
 
 class ServerPage(Page):
@@ -118,23 +118,23 @@ class ServerPage(Page):
         from urllib2 import urlopen
         public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
         addr = local_addr + ' - ' + public_addr
-        self.widgets = [
+        self.gui.widgets = [
             OnscreenText(text=addr, scale=.12, pos=(0, .4),
-                         font=self.font, fg=(.75, .75, .75, 1))]
+                         font=self.gui.font, fg=(.75, .75, .75, 1))]
         self.conn_txt = OnscreenText(scale=.12,
-                         pos=(0, .2), font=self.font, fg=(.75, .75, .75, 1))
-        self.widgets += [self.conn_txt]
-        page_args = self.page_args
-        self.widgets += [
+                         pos=(0, .2), font=self.gui.font, fg=(.75, .75, .75, 1))
+        self.gui.widgets += [self.conn_txt]
+        page_args = self.gui.page_args
+        self.gui.widgets += [
             DirectButton(
                 text=_('Start'), scale=.2, pos=(0, 1, -.5),
                 text_fg=(.75, .75, .75, 1),
-                text_font=self.font, frameColor=page_args.btn_color,
+                text_font=self.gui.font, frameColor=page_args.btn_color,
                 command=self.start, extraArgs=[fsm],
                 frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
-        Page.create(self)
+        self.gui.create()
         game.logic.srv = Server(self.process_msg, self.process_connection)
 
     def process_msg(self, data_lst):
@@ -152,26 +152,26 @@ class ClientPage(Page):
 
     def create(self, fsm):
         self.fsm = fsm
-        self.widgets = [
+        self.gui.widgets = [
             OnscreenText(text='', scale=.12, pos=(0, .4),
-                         font=self.font, fg=(.75, .75, .75, 1))]
-        transl_text(self.widgets[0], _('Client'))
+                         font=self.gui.font, fg=(.75, .75, .75, 1))]
+        transl_text(self.gui.widgets[0], _('Client'))
         self.ent = DirectEntry(
-            scale=.12, pos=(-.68, 1, .2), entryFont=self.font, width=12,
-            frameColor=self.page_args.btn_color,
+            scale=.12, pos=(-.68, 1, .2), entryFont=self.gui.font, width=12,
+            frameColor=self.gui.page_args.btn_color,
             initialText='insert the server address')
         self.ent.onscreenText['fg'] = (.75, .75, .75, 1)
-        self.widgets += [self.ent]
-        page_args = self.page_args
-        self.widgets += [
+        self.gui.widgets += [self.ent]
+        page_args = self.gui.page_args
+        self.gui.widgets += [
             DirectButton(
                 text=_('Connect'), scale=.2, pos=(0, 1, -.2),
                 text_fg=(.75, .75, .75, 1),
-                text_font=self.font, frameColor=page_args.btn_color,
+                text_font=self.gui.font, frameColor=page_args.btn_color,
                 command=self.connect, frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
-        Page.create(self)
+        self.gui.create()
 
     def connect(self):
         try:
@@ -193,8 +193,8 @@ class ClientPage(Page):
 class OptionPage(Page):
 
     def create(self):
-        font, page_args = self.font, self.page_args
-        conf = OptionMgr.get_options()
+        font, page_args = self.gui.font, self.gui.page_args
+        conf = game.options
 
         lang_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .5),
                                text_fg=(.75, .75, .75, 1),
@@ -225,7 +225,7 @@ class OptionPage(Page):
                                      text_align=TextNode.ARight)
         transl_text(fullscreen_lab, 'Fullscreen')
         self.__fullscreen_cb = DirectCheckButton(
-            pos=(.12, 1, .12), text='', scale=.12, text_font=self.font,
+            pos=(.12, 1, .12), text='', scale=.12, text_font=self.gui.font,
             text_fg=(.75, .75, .75, 1), frameColor=page_args.btn_color,
             indicatorValue=conf['fullscreen'],
             indicator_frameColor=page_args.btn_color,
@@ -262,7 +262,7 @@ class OptionPage(Page):
                             text_align=TextNode.ALeft)
         transl_text(aa_next_lab, '(from the next execution)')
         self.__aa_cb = DirectCheckButton(
-            pos=(.12, 1, -.27), text='', scale=.12, text_font=self.font,
+            pos=(.12, 1, -.27), text='', scale=.12, text_font=self.gui.font,
             frameColor=page_args.btn_color,
             indicatorValue=conf['aa'],
             indicator_frameColor=page_args.btn_color,
@@ -274,7 +274,7 @@ class OptionPage(Page):
                             text_align=TextNode.ARight)
         transl_text(browser_lab, "See Ya2's news at exit")
         self.__browser_cb = DirectCheckButton(
-            pos=(.12, 1, -.47), text='', scale=.12, text_font=self.font,
+            pos=(.12, 1, -.47), text='', scale=.12, text_font=self.gui.font,
             frameColor=page_args.btn_color,
             indicatorValue=conf['open_browser_at_exit'],
             indicator_frameColor=page_args.btn_color,
@@ -289,13 +289,13 @@ class OptionPage(Page):
             self.__res_opt['text_fg'] = (.75, .75, .75, 1)
             self.__res_opt['state'] = DISABLED
 
-        self.widgets = [
+        self.gui.widgets = [
             lang_lab, self.__lang_opt, vol_lab, self.__vol_slider,
             fullscreen_lab, self.__fullscreen_cb, res_lab, self.__res_opt,
             aa_lab, self.__aa_cb, aa_next_lab, browser_lab, self.__browser_cb]
         idx = eng.lang_mgr.lang_codes.index(conf['lang'])
         self.__change_lang(eng.lang_mgr.languages[idx])
-        Page.create(self)
+        self.gui.create()
 
     def on_browser(self, val):
         txt = _('Please, really consider enabling this option to see our news.\nWe hope you will find interesting stuff there.\nMoreover, this is how we can keep Yorg free.')
@@ -305,27 +305,27 @@ class OptionPage(Page):
 
     def on_back(self):
         try:
-            car = OptionMgr.get_options()['car']
+            car = game.options['car']
         except KeyError:
             car = ''
         try:
-            track = OptionMgr.get_options()['track']
+            track = game.options['track']
         except KeyError:
             track = ''
-        conf = OptionMgr.get_options()
+        conf = game.options
         conf['lang'] = eng.lang_mgr.languages[self.__lang_opt.selectedIndex][:2].lower()
         conf['volume'] = self.__vol_slider.getValue()
         conf['fullscreen'] = self.__fullscreen_cb['indicatorValue']
         conf['resolution'] = self.__res_opt.get().replace('x', ' ')
         conf['aa'] = self.__aa_cb['indicatorValue']
         conf['open_browser_at_exit'] = self.__browser_cb['indicatorValue']
-        conf['multithreaded_render'] = OptionMgr.get_options()['multithreaded_render']
+        conf['multithreaded_render'] = game.options['multithreaded_render']
         conf['car'] = car
         conf['track'] = track
-        OptionMgr.set_options(conf)
+        conf.store()
 
     def update_texts(self):
-        Page.update_texts(self)
+        self.gui.update_texts()
         curr_lang = eng.lang_mgr.curr_lang
         self.__lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
@@ -338,7 +338,7 @@ class OptionPage(Page):
 class TrackPage(Page):
 
     def create(self, fsm):
-        page_args = self.page_args
+        page_args = self.gui.page_args
         def on_track(track):
             fsm.demand('Cars', 'tracks/track_' + track)
             if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
@@ -346,23 +346,23 @@ class TrackPage(Page):
         menu_data = [
             ('Desert', on_track, ['desert']),
             ('Prototype', on_track, ['prototype'])]
-        self.widgets = [
+        self.gui.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
                 text_fg=(.75, .75, .75, 1),
-                text_font=self.font, frameColor=page_args.btn_color,
+                text_font=self.gui.font, frameColor=page_args.btn_color,
                 command=menu[1], extraArgs=menu[2],
                 frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
-        Page.create(self)
+        self.gui.create()
 
 
 class CarPage(Page):
 
     def create(self, game_fsm, track_path):
-        page_args = self.page_args
+        page_args = self.gui.page_args
         self.track_path = track_path
         if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
             game.logic.srv.register_cb(self.process_srv)
@@ -394,18 +394,18 @@ class CarPage(Page):
             ('Kronos', on_car, ['kronos']),
             ('Themis', on_car, ['themis']),
             ('Diones', on_car, ['diones'])]
-        self.widgets = [
+        self.gui.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
                 text_fg=(.75, .75, .75, 1),
-                text_font=self.font, frameColor=page_args.btn_color,
+                text_font=self.gui.font, frameColor=page_args.btn_color,
                 command=menu[1], extraArgs=menu[2],
                 frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
         self.current_cars = {}
-        Page.create(self)
+        self.gui.create()
 
     def evaluate_starting(self):
         if all(conn in self.current_cars for conn in game.logic.srv.connections + [self]):
@@ -467,14 +467,14 @@ class CarPage(Page):
 class CreditPage(Page):
 
     def create(self):
-        self.widgets = [
+        self.gui.widgets = [
             OnscreenText(text='', scale=.12, pos=(0, .4),
-                         font=self.font, fg=(.75, .75, .75, 1))]
+                         font=self.gui.font, fg=(.75, .75, .75, 1))]
         flavio = _('Code')+': Flavio Calva'
         luca = _('Art')+': Luca Quartero'
         text = '\n\n'.join([flavio, luca])
-        transl_text(self.widgets[0], text)
-        Page.create(self)
+        transl_text(self.gui.widgets[0], text)
+        self.gui.create()
 
 
 class _Gui(Gui):

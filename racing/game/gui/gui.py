@@ -1,21 +1,24 @@
+'''This module provides functionalities for the GUI.'''
 from panda3d.core import WindowProperties
 from direct.showbase.DirectObject import DirectObject
-from ..option import OptionMgr
 
 
 class GuiMgr(DirectObject):
+    '''This class models the GUI manager.'''
 
     def __init__(self, res):
+        DirectObject.__init__(self)
         eng.disableMouse()
         self.set_resolution(res)
-        if OptionMgr.get_options()['fullscreen']:
+        if game.options['fullscreen']:
             self.toggle_fullscreen()
         eng.win.setCloseRequestEvent('window-closed')
         self.accept('window-closed', self.__on_close)
 
-    def __on_close(self):
+    @staticmethod
+    def __on_close():
         '''Called when the application closes.'''
-        if OptionMgr.get_options()['open_browser_at_exit']:
+        if game.options['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
         eng.closeWindow(eng.win)
         exit()
@@ -26,12 +29,14 @@ class GuiMgr(DirectObject):
         d_i = eng.pipe.getDisplayInformation()
 
         def res(idx):
+            '''Get the idx-th resolution.'''
             return d_i.getDisplayModeWidth(idx), d_i.getDisplayModeHeight(idx)
 
         res_values = [res(idx) for idx in range(d_i.getTotalDisplayModes())]
         sorted_res = sorted(list(set(res_values)))
 
         def res_str(res_x, res_y):
+            '''Resolution as a string.'''
             return '{res_x}x{res_y}'.format(res_x=res_x, res_y=res_y)
 
         return [res_str(*s) for s in sorted_res]

@@ -7,23 +7,7 @@ from .build import path, ver_branch, pdf_path_str
 def build_pdf(target, source, env):
     '''Pdf building.'''
     pdfname = env['NAME']
-    filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
-    conf = {
-        'sources': [
-            ('python', '.', '*.py', ['./racing/*'])],
-        'sources_racing': [
-            ('python', './racing', '*.py', ['./racing/game/*'])],
-        'sources_game': [
-            ('python', './racing/game', '*.py', filt_game),
-            ('lua', './racing/game', 'config.lua', filt_game),
-            ('python', './racing/game', '*.pdef', filt_game),
-            ('', './racing/game', '*.rst', filt_game),
-            ('html', './racing/game', '*.html', filt_game),
-            ('javascript', './racing/game', '*.js', filt_game),
-            ('', './racing/game', '*.css_t', filt_game),
-            ('', './racing/game', '*.conf', filt_game)
-            ]
-    }
+    conf = env['PDF_CONF']
     cmd_tmpl = "enscript --font=Courier11 --continuous-page-numbers " + \
         "{lang} -o - `find {root} -name '{wildcard}' " + \
         "{filter}` | ps2pdf - {name}.pdf ; " + \
