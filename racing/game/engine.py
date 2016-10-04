@@ -1,5 +1,9 @@
 '''This module provides the engine object.'''
 from sys import path, platform
+
+from os.path import dirname, realpath
+path.append(dirname(realpath(__file__)) + '/thirdparty')
+
 from os import environ, system
 from webbrowser import open_new_tab
 from direct.gui.DirectFrame import DirectFrame
@@ -15,25 +19,22 @@ from .gui.gui import GuiMgr
 from .phys import PhysMgr
 
 
-path.append('./ya2/thirdparty')
-
-
 class Engine(ShowBase, object):
     '''This class models the engine object.'''
 
-    def __init__(self, configuration=None, domain='', langs=[]):
+    def __init__(self, configuration=None, lang_path='', domain='', langs=[]):
         self.pause_frame = None
         configuration = configuration or Configuration()
         ShowBase.__init__(self)
         __builtin__.eng = self
         self.pause_mgr = PauseMgr()
-        self.gfx_mgr = GfxMgr(configuration.antialiasing)
+        self.gfx_mgr = GfxMgr('assets/models', configuration.antialiasing)
         self.phys_mgr = PhysMgr()
         self.font_mgr = FontMgr()
         self.log_mgr = LogMgr()
         self.log_mgr.log_conf()
         lang = game.options['lang']
-        self.lang_mgr = LangMgr(domain, './assets/locale', langs, lang)
+        self.lang_mgr = LangMgr(domain, lang_path, langs, lang)
         if self.win:
             self.gui_mgr = GuiMgr('x'.join(configuration.win_size.split()))
 
@@ -41,9 +42,9 @@ class Engine(ShowBase, object):
         '''Toggles the pause.'''
         p_mgr = self.pause_mgr
         if not p_mgr.get_is_paused():
-            frm_opt = {}
-            frm_opt['frameColor'] = (.3, .3, .3, .7),
-            frm_opt['frameSize'] = (-1.8, 1.8, -1, 1)
+            frm_opt = {
+                'frameColor': (.3, .3, .3, .7),
+                'frameSize': (-1.8, 1.8, -1, 1)}
             self.pause_frame = DirectFrame(**frm_opt)
         else:
             self.pause_frame.destroy()
@@ -61,8 +62,7 @@ class Engine(ShowBase, object):
     @property
     def version(self):
         '''The current software version.'''
-        version = 'version: source'
         if self.appRunner:
             package = self.appRunner.p3dInfo.FirstChildElement('package')
-            version = 'version: ' + package.Attribute('version')
-        return version
+            return 'version: ' + package.Attribute('version')
+        return 'version: source'

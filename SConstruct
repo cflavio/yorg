@@ -70,6 +70,8 @@ env['P3D_PATH'] = p3d_path
 env['NAME'] = app_name
 env['LANG'] = lang_path
 env['NOINTERNET'] = arguments['nointernet']
+env['ICO_FILE'] = 'assets/images/icon/icon%s_png.png'
+env['LANGUAGES'] = ['it_IT']
 filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
 pdf_conf = {
     'sources': [

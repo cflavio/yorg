@@ -1,6 +1,6 @@
 from sys import path
 from os import walk
-from os.path import join
+from os.path import join, dirname, realpath
 from panda3d.core import Filename
 
 
@@ -13,15 +13,17 @@ class <Name>(p3d):
         start_dir='<name>',
         version='<version>',
         display_name='<Name>')
-    for _dir in ['licenses', 'assets', 'ya2/assets']:
+    dir('<enginepath>/thirdparty/yaml', 'yaml')
+    for _dir in ['licenses', 'assets', '<enginepath>/assets']:
         dir(_dir, newDir=_dir)
-    dir('ya2/thirdparty/yaml', 'yaml')
     file('license.txt')
     exclude = ['options.yml']
     for extension in ['mo', 'dds', 'yml']:
         for root, dirnames, filenames in walk('.'):
-            for filename in [filename for filename in filenames
-                             if filename.endswith('.'+extension) and not
-                             filename in exclude]:
+            files = [
+                filename for filename in filenames
+                if filename.endswith('.'+extension) and
+                    not filename in exclude]
+            for filename in files:
                 file(join(root, filename), newDir=root)
     mainModule('main')

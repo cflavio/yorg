@@ -27,33 +27,26 @@ class AbsNetwork(object):
         datagram = PyDatagram()
         datagram.addString(self._format(data_lst))
         dct_meths = {
-            bool: datagram.addBool,
-            int: datagram.addInt64,
-            float: datagram.addFloat64,
-            str: datagram.addString}
+            bool: datagram.addBool, int: datagram.addInt64,
+            float: datagram.addFloat64, str: datagram.addString}
         map(lambda part: dct_meths[type(part)](part), data_lst)
         self._actual_send(datagram, receiver)
 
     def tsk_reader(self, task):
         '''The reader task.'''
-        if self.c_reader.dataAvailable():
-            datagram = NetDatagram()
-            if self.c_reader.getData(datagram):
-                iterator = PyDatagramIterator(datagram)
-                _format = iterator.getString()
-                dct_meths = {
-                    'B': iterator.getBool,
-                    'I': iterator.getInt64,
-                    'F': iterator.getFloat64,
-                    'S': iterator.getString}
-                msg_lst = [dct_meths[c]() for c in _format]
-                self.reader_cb(msg_lst, datagram.getConnection())
+        if not self.c_reader.dataAvailable():
+            return task.cont
+        datagram = NetDatagram()
+        if not self.c_reader.getData(datagram):
+            return task.cont
+        iterator = PyDatagramIterator(datagram)
+        _format = iterator.getString()
+        dct_meths = {
+            'B': iterator.getBool, 'I': iterator.getInt64,
+            'F': iterator.getFloat64, 'S': iterator.getString}
+        msg_lst = [dct_meths[c]() for c in _format]
+        self.reader_cb(msg_lst, datagram.getConnection())
         return task.cont
-
-    @property
-    def is_active(self):
-        '''Is the component active?'''
-        return self.reader_tsk.is_alive()
 
     def register_cb(self, callback):
         '''Registers a callback.'''

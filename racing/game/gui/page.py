@@ -1,24 +1,16 @@
 '''This module provides a GUI page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
-from panda3d.core import TextNode
 from direct.gui.OnscreenImage import OnscreenImage
+from panda3d.core import TextNode
 from .imgbtn import ImageButton
 from ..gameobject import GameObjectMdt, Gui
 
 
 def transl_text(obj, text_src):
-    '''We get text_transl to put it into po files.'''
+    '''We get text_src to put it into po files.'''
     obj.__text_src = text_src
     obj.__class__.transl_text = property(lambda self: _(self.__text_src))
-
-
-def may_destroy(wdg):
-    '''Possibly destroy a widget.'''
-    try:
-        wdg.destroy()
-    except AttributeError:  # wdg may be None
-        pass
 
 
 class PageArgs(object):
@@ -45,19 +37,19 @@ class PageGui(Gui):
         self.page_args = page_args
         self.font = eng.font_mgr.load_font(page_args.font)
         self.background = None
+        self.widgets = []
 
-    def create(self):
-        '''Creates a page.'''
+    def build(self, background, rollover, click, social):
+        '''Builds a page.'''
         self.update_texts()
         if self.page_args.back:
-            self.__set_back_btn()
+            self.__build_back_btn(rollover, click)
         if self.page_args.social:
-            self.__set_social()
+            self.__build_social(rollover, click, social)
         if self.page_args.version:
-            self.__set_version()
-        self.background = OnscreenImage(
-            scale=(1.77778, 1, 1.0),
-            image='assets/images/gui/menu_background.jpg')
+            self.__build_version()
+        self.background = OnscreenImage(scale=(1.77778, 1, 1.0),
+                                        image=background)
         self.background.setBin('background', 10)
         self.widgets += [self.background]
 
@@ -67,16 +59,15 @@ class PageGui(Gui):
         for wdg in tr_wdg:
             wdg['text'] = wdg.transl_text
 
-    def __set_back_btn(self):
+    def __build_back_btn(self, rollover, click):
         '''Sets the back button.'''
         page_args = self.page_args
         self.widgets += [DirectButton(
             text='', scale=.12, pos=(0, 1, -.8), text_font=self.font,
-            text_fg=(.75, .75, .75, 1),
+            text_fg=(.75, .75, .75, 1), command=self.__on_back,
             frameColor=page_args.btn_color, frameSize=page_args.btn_size,
-            command=self.__on_back,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
+            rolloverSound=loader.loadSfx(rollover),
+            clickSound=loader.loadSfx(click))]
         transl_text(self.widgets[-1], 'Back')
         self.widgets[-1]['text'] = self.widgets[-1].transl_text
 
@@ -89,7 +80,7 @@ class PageGui(Gui):
         '''Pseudoabstract method.'''
         pass
 
-    def __set_social(self):
+    def __build_social(self, rollover, click, social):
         '''Sets social buttons.'''
         sites = [
             ('facebook', 'http://www.facebook.com/Ya2Tech'),
@@ -104,18 +95,18 @@ class PageGui(Gui):
             ImageButton(
                 parent=eng.a2dBottomRight, scale=.1,
                 pos=(-1.0 + i*.15, 1, .1), frameColor=(0, 0, 0, 0),
-                image='assets/images/icons/%s_png.png' % site[0],
+                image=social % site[0],
                 command=eng.open_browser, extraArgs=[site[1]],
-                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+                rolloverSound=loader.loadSfx(rollover),
+                clickSound=loader.loadSfx(click))
             for i, site in enumerate(sites)]
 
-    def __set_version(self):
+    def __build_version(self):
         '''Sets the version.'''
-        self.widgets += [
-            OnscreenText(text=eng.version, parent=eng.a2dBottomLeft,
-                         pos=(.02, .02), scale=.04, fg=(.8, .8, .8, 1),
-                         align=TextNode.ALeft, font=self.font)]
+        self.widgets += [OnscreenText(
+            text=eng.version, parent=eng.a2dBottomLeft, pos=(.02, .02),
+            scale=.04, fg=(.8, .8, .8, 1), align=TextNode.ALeft,
+            font=self.font)]
 
     def destroy(self):
         '''Destroys the page.'''

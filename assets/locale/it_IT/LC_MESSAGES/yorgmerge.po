@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-03 16:48+0200\n"
+"POT-Creation-Date: 2016-10-05 01:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:73
+#: yorg.py:76
 msgid ""
 "LOADING...\n"
 "\n"
@@ -47,31 +47,31 @@ msgstr "Riconoscimenti"
 msgid "Quit"
 msgstr "Esci"
 
-#: menu.py:130
+#: menu.py:142
 msgid "Start"
 msgstr ""
 
-#: menu.py:145
+#: menu.py:161
 msgid "connection from "
 msgstr ""
 
-#: menu.py:158
+#: menu.py:174
 msgid "Client"
 msgstr ""
 
-#: menu.py:168
+#: menu.py:184
 msgid "Connect"
 msgstr ""
 
-#: menu.py:181
+#: menu.py:201
 msgid "Waiting for the server"
 msgstr ""
 
-#: menu.py:184
+#: menu.py:204
 msgid "Error"
 msgstr ""
 
-#: menu.py:301
+#: menu.py:325
 msgid ""
 "Please, really consider enabling this option to see our news.\n"
 "We hope you will find interesting stuff there.\n"
@@ -82,11 +82,11 @@ msgstr ""
 "Speriamo che ci troverai roba interessante.\n"
 "Inoltre, è così che possiamo mantenere Yorg gratis."
 
-#: menu.py:472
+#: menu.py:505
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:473
+#: menu.py:506
 msgid "Art"
 msgstr "Grafica"
 

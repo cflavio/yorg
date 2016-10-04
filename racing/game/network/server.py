@@ -20,27 +20,26 @@ class Server(AbsNetwork):
 
     def tsk_listener(self, task):
         '''The listener task.'''
-        if self.c_listener.newConnectionAvailable():
-            rendezvous = PointerToConnection()
-            net_address = NetAddress()
-            new_connection = PointerToConnection()
-            args = (rendezvous, net_address, new_connection)
-            if self.c_listener.getNewConnection(*args):
-                new_connection = new_connection.p()
-                self.connections.append(new_connection)
-                self.c_reader.addConnection(new_connection)
-                self.connection_cb(net_address.getIpString())
-                msg = 'received a connection from ' + net_address.getIpString()
-                eng.log_mgr.log(msg)
+        if not self.c_listener.newConnectionAvailable():
+            return task.cont
+        net_address = NetAddress()
+        new_connection = PointerToConnection()
+        args = (PointerToConnection(), net_address, new_connection)
+        if not self.c_listener.getNewConnection(*args):
+            return task.cont
+        new_connection = new_connection.p()
+        self.connections.append(new_connection)
+        self.c_reader.addConnection(new_connection)
+        self.connection_cb(net_address.getIpString())
+        msg = 'received a connection from ' + net_address.getIpString()
+        eng.log_mgr.log(msg)
         return task.cont
 
     def _actual_send(self, datagram, receiver):
         '''Sends a datagram.'''
-        dests = self.connections
-        if receiver is not None:
-            dests = [cln for cln in self.connections if cln == receiver]
-        for cln in dests:
-            self.c_writer.send(datagram, cln)
+        dests = [cln for cln in self.connections if cln == receiver] \
+            if receiver else self.connections
+        map(lambda cln: self.c_writer.send(datagram, cln), dests)
 
     def destroy(self):
         AbsNetwork.destroy(self)

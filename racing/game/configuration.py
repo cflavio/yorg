@@ -23,7 +23,7 @@ class Configuration(object):
     @staticmethod
     def __set(key, value):
         '''This method sets a configuration parameter.'''
-        loadPrcFileData('', key+' '+str(value))
+        loadPrcFileData('', key + ' ' + str(value))
 
     def configure(self):
         '''This sets the configuration.'''

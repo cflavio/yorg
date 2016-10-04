@@ -4,34 +4,39 @@ from shutil import move
 from .build import path, ver_branch, pdf_path_str
 
 
+def __process(opt_lang, cmd_tmpl, name, i):
+    '''Processes a file.'''
+    filt = ''
+    for fil in opt_lang[3]:
+        filt += "-not -path '%s' " % fil
+    lang = ('--pretty-print=' + opt_lang[0]) if opt_lang[0] else ''
+    cmd = cmd_tmpl.format(lang=lang, root=opt_lang[1],
+                          wildcard=opt_lang[2], filter=filt, name=name)
+    if i:
+        rename(name + '.pdf', name + '_append.pdf')
+        system(cmd)
+        cmd = 'gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH ' + \
+            '-sDEVICE=pdfwrite -sOutputFile={name}-joined.pdf ' + \
+            '{name}_append.pdf {name}.pdf'
+        system(cmd.format(name=name))
+        remove(name + '.pdf')
+        remove(name + '_append.pdf')
+        move(name + '-joined.pdf', name + '.pdf')
+    else:
+        system(cmd)
+
+
 def build_pdf(target, source, env):
     '''Pdf building.'''
     pdfname = env['NAME']
     conf = env['PDF_CONF']
     cmd_tmpl = "enscript --font=Courier11 --continuous-page-numbers " + \
-        "{lang} -o - `find {root} -name '{wildcard}' " + \
+        "--line-numbers {lang} -o - `find {root} -name '{wildcard}' " + \
         "{filter}` | ps2pdf - {name}.pdf ; " + \
         "pdfnup --nup 2x1 -o {name}.pdf {name}.pdf"
     for name, options in conf.items():
         for i, opt_lang in enumerate(options):
-            filt = ''
-            for fil in opt_lang[3]:
-                filt += "-not -path '%s' " % fil
-            lang = ('--pretty-print=' + opt_lang[0]) if opt_lang[0] else ''
-            cmd = cmd_tmpl.format(lang=lang, root=opt_lang[1],
-                                  wildcard=opt_lang[2], filter=filt, name=name)
-            if i:
-                rename(name + '.pdf', name + '_append.pdf')
-                system(cmd)
-                cmd = 'gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH ' + \
-                    '-sDEVICE=pdfwrite -sOutputFile={name}-joined.pdf ' + \
-                    '{name}_append.pdf {name}.pdf'
-                system(cmd.format(name=name))
-                remove(name + '.pdf')
-                remove(name + '_append.pdf')
-                move(name + '-joined.pdf', name + '.pdf')
-            else:
-                system(cmd)
+            __process(opt_lang, cmd_tmpl, name, i)
     pdfs = ''
     for name in conf:
         pdfs += name + '.pdf '

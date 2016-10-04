@@ -73,18 +73,20 @@ class GuiMgr(DirectObject):
         props = WindowProperties()
         props.set_size(*[int(resol) for resol in res.split('x')])
         eng.win.request_properties(props)
-        if check:
-            args = 3.0, self.set_resolution_check, 'resolution check', [res]
-            taskMgr.doMethodLater(*args)
+        if not check:
+            return
+        args = 3.0, self.set_resolution_check, 'resolution check', [res]
+        taskMgr.doMethodLater(*args)
 
     def set_resolution_check(self, res):
         '''Checks the resolution.'''
         res_msg = 'resolutions: {curr} (current), {res} (wanted)'
         eng.log_mgr.log(res_msg.format(curr=self.resolution, res=res))
-        if self.resolution != res:
-            retry = 'second attempt: {curr} (current) {res} (wanted)'
-            self.log_mgr.log(retry.format(curr=self.resolution, res=res))
-            self.set_resolution(res, False)
+        if self.resolution == res:
+            return
+        retry = 'second attempt: {curr} (current) {res} (wanted)'
+        self.log_mgr.log(retry.format(curr=self.resolution, res=res))
+        self.set_resolution(res, False)
 
     def toggle_fullscreen(self):
         '''Toggles the fullscreen.'''

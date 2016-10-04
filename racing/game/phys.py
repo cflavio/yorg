@@ -1,12 +1,14 @@
 '''This module provides physics functionalities.'''
 from panda3d.bullet import BulletWorld, BulletDebugNode
+from .observer import Subject
 
 
-class PhysMgr(object):
+class PhysMgr(Subject):
     '''This class models the physics manager.'''
 
     def __init__(self):
         '''Inits the engine.'''
+        Subject.__init__(self)
         self.collision_objs = []
         self.__coll_dct = {}
         self.world_np = None
@@ -27,16 +29,16 @@ class PhysMgr(object):
 
     def start(self):
         '''Starts the engine.'''
-        taskMgr.add(self.__update, 'Engine::update')
+        taskMgr.add(self.__update, 'Phys::update')
 
     def __update(self, task):
         '''Called on each frame.'''
-        if self.world_phys:
-            d_t = globalClock.getDt()
-            self.world_phys.doPhysics(d_t, 10, 1/180.0)
-            self.__do_collisions()
-            messenger.send('on_frame')
-            return task.cont
+        if not self.world_phys:
+            return
+        d_t = globalClock.getDt()
+        self.world_phys.doPhysics(d_t, 10, 1/180.0)
+        self.__do_collisions()
+        return task.cont
 
     def stop(self):
         '''Stops the engine.'''
@@ -46,13 +48,15 @@ class PhysMgr(object):
 
     def __process_contact(self, obj, node, to_clear):
         '''Processes a physics contact.'''
-        if node != obj:
-            if obj in to_clear:
-                to_clear.remove(obj)
-            coll_dct = self.__coll_dct[obj]
-            if not node in [coll_pair[0] for coll_pair in coll_dct]:
-                self.__coll_dct[obj] += [(node, globalClock.getFrameTime())]
-                messenger.send('on_collision', [obj, node.getName()])
+        if node == obj:
+            return
+        if obj in to_clear:
+            to_clear.remove(obj)
+        coll_dct = self.__coll_dct[obj]
+        if node in [coll_pair[0] for coll_pair in coll_dct]:
+            return
+        self.__coll_dct[obj] += [(node, globalClock.getFrameTime())]
+        self.notify('on_collision', [obj, node.getName()])
 
     def __do_collisions(self):
         '''Computes the collisions.'''

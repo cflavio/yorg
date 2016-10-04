@@ -1,4 +1,5 @@
 '''In this module we define the global game classes.'''
+from racing.game.engine import Engine
 from racing.car.car import Car, PlayerCar, NetworkCar
 from menu import Menu
 from racing.track.track import Track
@@ -12,6 +13,7 @@ from racing.car.gfx import _Gfx as CarGfx
 from panda3d.core import NodePath, TextNode
 from direct.interval.LerpInterval import LerpHprInterval
 from racing.game.dictfile import DictFile
+from racing.game.configuration import Configuration
 
 
 class NetMsgs:
@@ -114,9 +116,9 @@ class _Fsm(Fsm):
                    cars.remove(car)
                    car_class = Car
                    ai = True
-                   if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+                   if hasattr(game.logic, 'srv') and game.logic.srv:
                        car_class = NetworkCar if car in player_cars else Car
-                   if hasattr(game.logic, 'client') and game.logic.client.is_active:
+                   if hasattr(game.logic, 'client') and game.logic.client:
                        car_class = NetworkCar
                    self.mdt.cars += [
                        car_class('cars/' + car,
@@ -145,10 +147,10 @@ class _Fsm(Fsm):
         self.mdt.track.gfx.model.reparentTo(render)
         self.mdt.player_car.gfx.reparent()
         map(lambda car: car.gfx.reparent(), self.mdt.cars)
-        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+        if hasattr(game.logic, 'srv') and game.logic.srv:
             self.ready_clients = []
             game.logic.srv.register_cb(self.process_srv)
-        elif hasattr(game.logic, 'client') and game.logic.client.is_active:
+        elif hasattr(game.logic, 'client') and game.logic.client:
             game.logic.client.register_cb(self.process_client)
             def send_ready(task):
                 game.logic.client.send([NetMsgs.client_ready])
@@ -176,16 +178,20 @@ class _Fsm(Fsm):
 
     def start_play(self):
         eng.phys_mgr.start()
+        game.track.event.start()
         game.player_car.event.eval_register()
         self.mdt.audio.game_music.play()
         map(lambda car: car.event.reset_car(), [self.mdt.player_car] + self.mdt.cars)
+        map(lambda car: car.event.start(), [self.mdt.player_car] + self.mdt.cars)
 
     def exitPlay(self):
         eng.log_mgr.log('exiting Play state')
-        if hasattr(game.logic, 'srv') and game.logic.srv.is_active:
+        if hasattr(game.logic, 'srv') and game.logic.srv:
             game.logic.srv.destroy()
-        elif hasattr(game.logic, 'client') and game.logic.client.is_active:
+            game.logic.srv = None
+        elif hasattr(game.logic, 'client') and game.logic.client:
             game.logic.client.destroy()
+            game.logic.client = None
         self.mdt.audio.game_music.stop()
         self.mdt.track.destroy()
         self.mdt.player_car.destroy()
@@ -244,3 +250,19 @@ class Yorg(Game):
     event_cls = _Event
     fsm_cls = _Fsm
     audio_cls = _Audio
+
+    def __init__(self):
+        default_opt = {
+            'lang': 'en', 'volume': 1, 'fullscreen': 0,
+            'resolution': '1280 720', 'aa': 0,
+            'multithreaded_render': 0, 'open_browser_at_exit': 1,
+            'ai': 0, 'submodels': 1, 'split_world': 1, 'laps': 3, 'fps': 1}
+        self.options = DictFile('options.yml', default_opt)
+        conf = Configuration(
+            fps=self.options['fps'], win_title='Yorg',
+            win_size=self.options['resolution'],
+            fullscreen=self.options['fullscreen'],
+            antialiasing=self.options['aa'],
+            mt_render=self.options['multithreaded_render'])
+        Game.__init__(self, conf, './assets/locale', 'yorg',
+                      ['English', 'Italiano'])

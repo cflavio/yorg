@@ -84,7 +84,8 @@ class GameObjectMdt(object):
 
     def destroy(self):
         '''Destroys the mediator.'''
-        self.fsm.cleanup()
+        if self.fsm.state:
+            self.fsm.cleanup()
         self.fsm.destroy()
         self.phys.destroy()
         self.gfx.destroy()

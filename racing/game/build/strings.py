@@ -5,20 +5,14 @@ from shutil import move, copy
 from .build import get_files
 
 
-def build_string_template(target, source, env):
-    '''This function creates the *gettext* templates (to manage localization)
-    merging with the already translated ones.'''
-    name = env['NAME']
-    lang = env['LANG']
-    src_files = ' '.join(get_files(['py']))
-    cmd_tmpl = 'xgettext -d {name} -L python -o {name}.pot '
-    system(cmd_tmpl.format(name=name) + src_files)
+def __build_language(lang_path, lang, name):
+    '''Builds a language.'''
     try:
-        makedirs(lang + 'it_IT/LC_MESSAGES')
+        makedirs(lang_path + lang + '/LC_MESSAGES')
     except error:
         pass
-    move(name + '.pot', lang + 'it_IT/LC_MESSAGES/%s.pot' % name)
-    path = lang + 'it_IT/LC_MESSAGES/'
+    move(name + '.pot', lang_path + lang + '/LC_MESSAGES/%s.pot' % name)
+    path = lang_path + lang + '/LC_MESSAGES/'
     for line in ['CHARSET/UTF-8', 'ENCODING/8bit']:
         cmd_tmpl = "sed 's/{src}/' {path}{name}.pot > {path}{name}tmp.po"
         system(cmd_tmpl.format(src=line, path=path, name=name))
@@ -37,12 +31,27 @@ def build_string_template(target, source, env):
             outf.write(po_str if line.startswith(startl) else line)
 
 
+def build_string_template(target, source, env):
+    '''This function creates the *gettext* templates (to manage localization)
+    merging with the already translated ones.'''
+    name = env['NAME']
+    lang_path = env['LANG']
+    languages = env['LANGUAGES']
+    src_files = ' '.join(get_files(['py']))
+    cmd_tmpl = 'xgettext -d {name} -L python -o {name}.pot '
+    system(cmd_tmpl.format(name=name) + src_files)
+    for lang in languages:
+        __build_language(lang_path, lang, name)
+
+
 def build_strings(target, source, env):
     '''This function creates the *mo* files (binaries) containing the
     translated strings that would be used in the game, starting from
     the *po* files.'''
     name = env['NAME']
-    lang = env['LANG']
-    path = lang + 'it_IT/LC_MESSAGES/'
-    cmd = 'msgfmt -o {path}{name}.mo {path}{name}.po'
-    system(cmd.format(path=path, name=name))
+    lang_path = env['LANG']
+    languages = env['LANGUAGES']
+    for lang in languages:
+        path = lang_path + lang + '/LC_MESSAGES/'
+        cmd = 'msgfmt -o {path}{name}.mo {path}{name}.po'
+        system(cmd.format(path=path, name=name))

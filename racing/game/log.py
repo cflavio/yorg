@@ -37,9 +37,10 @@ class LogMgr(object):
         drv_min = gsg.getDriverVersionMinor()
         drv = 'driver version: {maj}.{min}'
         self.log(drv.format(maj=drv_maj, min=drv_min))
-        if eng.win:
-            prop = eng.win.get_properties()
-            self.log('fullscreen: ' + str(prop.get_fullscreen()))
-            res_x, res_y = prop.get_x_size(), prop.get_y_size()
-            res_tmpl = 'resolution: {res_x}x{res_y}'
-            self.log(res_tmpl.format(res_x=res_x, res_y=res_y))
+        if not eng.win:
+            return
+        prop = eng.win.get_properties()
+        self.log('fullscreen: ' + str(prop.get_fullscreen()))
+        res_x, res_y = prop.get_x_size(), prop.get_y_size()
+        res_tmpl = 'resolution: {res_x}x{res_y}'
+        self.log(res_tmpl.format(res_x=res_x, res_y=res_y))

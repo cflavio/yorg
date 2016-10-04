@@ -19,10 +19,9 @@ class Game(GameObjectMdt):
     __metaclass__ = ABCMeta
     logic_cls = GameLogic
 
-    def __init__(self, conf, domain, langs, options):
+    def __init__(self, conf, lang_path, domain, langs):
         __builtin__.game = self
-        self.options = options
-        Engine(conf, domain, langs)
+        Engine(conf, lang_path, domain, langs)
         GameObjectMdt.__init__(self)
         self.logic.start()
         eng.run()

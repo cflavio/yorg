@@ -1,7 +1,6 @@
 '''Builds info for developers.'''
 from os import system
-from .build import path, ver_branch, exec_cmd, \
-    devinfo_path_str
+from .build import path, ver_branch, exec_cmd, devinfo_path_str
 
 
 def build_devinfo(target, source, env):
@@ -16,31 +15,36 @@ def build_devinfo(target, source, env):
         '''Cleans pylint stuff.'''
         clean_out = ''
         skipping = False
-        for line in pylint_out.split('\n'):
-            if line != 'No config file found, using default configuration':
-                if line == 'Traceback (most recent call last):':
-                    skipping = True
-                elif line == 'RuntimeError: maximum recursion depth ' +\
-                             'exceeded while calling a Python object':
-                    skipping = False
-                elif not skipping:
-                    clean_out += line + '\n'
+        err_str = 'No config file found, using default configuration'
+        lines = [line for line in pylint_out.split('\n') if line != err_str]
+        for line in lines:
+            if line == 'Traceback (most recent call last):':
+                skipping = True
+            elif line == 'RuntimeError: maximum recursion depth ' +\
+                         'exceeded while calling a Python object':
+                skipping = False
+            elif not skipping:
+                clean_out += line + '\n'
         return clean_out
+
+    def append_file(src, cond, outfile):
+        '''Appends a file.'''
+        if cond(src):
+            return
+        outfile.write('    '+str(src)+'\n')
+        outs = [clean_pylint((exec_cmd('pylint -r n '+str(src)))),
+                exec_cmd('pyflakes '+str(src)),
+                exec_cmd('pep8 '+str(src))]
+        outs = [out.strip() for out in outs]
+        for out in [out for out in outs if out]:
+            outfile.write(out+'\n')
+        outfile.write('\n')
 
     def process(name, cond):
         '''Processes files which don't satisfy cond.'''
         for src in source:
             with open(name % path, 'a') as outfile:
-                if cond(src):
-                    continue
-                outfile.write('    '+str(src)+'\n')
-                outs = [clean_pylint((exec_cmd('pylint -r n '+str(src)))),
-                        exec_cmd('pyflakes '+str(src)),
-                        exec_cmd('pep8 '+str(src))]
-                outs = [out.strip() for out in outs]
-                for out in [out for out in outs if out]:
-                    outfile.write(out+'\n')
-                outfile.write('\n')
+                append_file(src, cond, outfile)
 
     for fname, cond in dev_conf.items():
         process('%s' + fname + '.txt', cond)
