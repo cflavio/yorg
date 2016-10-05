@@ -41,14 +41,14 @@ class Engine(ShowBase, object):
     def toggle_pause(self):
         '''Toggles the pause.'''
         p_mgr = self.pause_mgr
-        if not p_mgr.get_is_paused():
+        if not p_mgr.is_paused:
             frm_opt = {
                 'frameColor': (.3, .3, .3, .7),
                 'frameSize': (-1.8, 1.8, -1, 1)}
             self.pause_frame = DirectFrame(**frm_opt)
         else:
             self.pause_frame.destroy()
-        (p_mgr.resume if p_mgr.get_is_paused() else p_mgr.pause)()
+        (p_mgr.resume if p_mgr.is_paused else p_mgr.pause)()
 
     @staticmethod
     def open_browser(url):
