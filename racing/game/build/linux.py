@@ -52,8 +52,7 @@ def __build_no_internet(name, platform, ico_file, p3d_path, nointernet):
     ico_str = ''
     for dim in dims:
         ico_str += "-i '" + ico_file % dim + "' "
-    linux_exe_cmd = cmd_tmpl % (('assets/images/icon/icon',) * 5)
-    build_command = linux_exe_cmd.format(
+    build_command = cmd_tmpl.format(
         path=path, name=name, Name=name.capitalize(), version=ver,
         p3d_path=basename(p3d_path), platform='linux_'+platform,
         nointernet=nointernet, icons=ico_str)
