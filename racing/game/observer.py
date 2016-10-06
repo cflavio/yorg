@@ -7,28 +7,21 @@ class Subject(object):
     def __init__(self):
         self.observers = []
 
-    def attach(self, observer):
+    def attach(self, obs, meth, sort=100):
         '''Attaches an observer.'''
-        self.observers += [observer]
-        self.observers = list(set(self.observers))
+        self.observers += [(obs, meth, sort)]
 
     def detach(self, observer):
         '''Detaches an observer.'''
-        if observer in self.observers:
-            self.observers.remove(observer)
+        for obs in [obs for obs in self.observers if obs[0] == observer]:
+            self.observers.remove(obs)
 
-    def notify(self, message='', argument=None):
+    def notify(self, *args):
         '''Notifies the observers.'''
-        for obs in self.observers:
-            if message:
-                obs.update(self, message, argument)
-            else:
-                obs.update(self)
+        sorted_observers = sorted(self.observers, key=lambda obs: obs[2])
+        map(lambda obs: obs[1](*args), sorted_observers)
 
 
 class Observer(object):
     '''This class models the observer.'''
-
-    def update(self, subject, message='', argument=None):
-        '''Pseudoabstract update method.'''
-        pass
+    pass

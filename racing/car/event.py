@@ -14,7 +14,7 @@ class _Event(Event, Observer):
         Event.__init__(self, mdt)
         Observer.__init__(self)
         self.has_just_started = True
-        eng.phys_mgr.attach(self)
+        eng.phys_mgr.attach(self, self.update)
         label_events = [('forward', 'arrow_up'),
                         ('left', 'arrow_left'),
                         ('reverse', 'z'),
@@ -26,8 +26,7 @@ class _Event(Event, Observer):
     def start(self):
         self.tsk = taskMgr.add(self._on_frame, 'Track::__on_frame')
 
-    def update(self, subject, msg, arg):
-        obj, obj_name = arg
+    def update(self, obj, obj_name):
         if obj != self.mdt.gfx.nodepath.node():
             return
         print 'collision with %s %s' % (obj_name, round(globalClock.getFrameTime(), 2))
@@ -176,9 +175,8 @@ class _PlayerEvent(_Event):
             eng.particle('assets/particles/sparks.ptf', self.mdt.gfx.nodepath,
                          eng.render, (0, 1.2, .75), .8)
 
-    def update(self, subject, msg, arg):
-        _Event.update(self, subject, msg, arg)
-        obj, obj_name = arg
+    def update(self, obj, obj_name):
+        _Event.update(self, obj, obj_name)
         if obj != self.mdt.gfx.nodepath.node():
             return
         if obj_name.startswith('Wall'):

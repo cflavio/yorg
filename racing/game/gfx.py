@@ -8,12 +8,12 @@ from direct.filter.CommonFilters import CommonFilters
 class GfxMgr(object):
     '''This class models the graphics manager.'''
 
-    def __init__(self, model_path, antialiasing):
-        getModelPath().appendDirectory(model_path)
+    def __init__(self):
+        getModelPath().appendDirectory(eng.conf.model_path)
         eng.enableParticles()
         render.setShaderAuto()
         render.setTwoSided(True)
-        if antialiasing:
+        if eng.conf.antialiasing:
             render.setAntialias(AntialiasAttrib.MAuto)
 
     @staticmethod

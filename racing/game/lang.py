@@ -5,14 +5,12 @@ from gettext import install, translation
 class LangMgr(object):
     '''This class defines the manager of translations.'''
 
-    def __init__(self, domain, path, languages, lang_code=None):
-        self.domain = domain
-        self.path = path
-        self.languages = languages
-        install(domain, path, unicode=1)
-        lang = lang_code if lang_code else self.languages[0][:2].lower()
-        self.curr_lang = lang
-        self.set_lang(lang)
+    def __init__(self):
+        self.domain = eng.conf.lang_domain
+        self.path = eng.conf.lang_path
+        self.languages = eng.conf.languages
+        self.curr_lang = eng.conf.lang
+        self.set_lang(eng.conf.lang)
 
     @property
     def lang_codes(self):

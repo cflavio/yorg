@@ -14,7 +14,7 @@ class <Name>(p3d):
         version='<version>',
         display_name='<Name>')
     dir('<enginepath>/thirdparty/yaml', 'yaml')
-    for _dir in ['licenses', 'assets', '<enginepath>/assets']:
+    for _dir in ['<enginepath>/licenses', 'assets', '<enginepath>/assets']:
         dir(_dir, newDir=_dir)
     file('license.txt')
     exclude = ['options.yml']

@@ -12,7 +12,7 @@ class Colleague(object):
 
     def destroy(self):
         '''Destroys the colleague.'''
-        pass
+        self.mdt = None
 
 
 class Fsm(FSM, Colleague):
@@ -20,6 +20,11 @@ class Fsm(FSM, Colleague):
     def __init__(self, mdt):
         FSM.__init__(self, self.__class__.__name__)
         Colleague.__init__(self, mdt)
+
+    def destroy(self):
+        if self.state:
+            self.cleanup()
+        Colleague.destroy(self)
 
 
 class Event(Colleague, DirectObject):
@@ -84,8 +89,6 @@ class GameObjectMdt(object):
 
     def destroy(self):
         '''Destroys the mediator.'''
-        if self.fsm.state:
-            self.fsm.cleanup()
         self.fsm.destroy()
         self.phys.destroy()
         self.gfx.destroy()

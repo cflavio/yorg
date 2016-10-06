@@ -30,7 +30,7 @@ def build_pdf(target, source, env):
     '''Pdf building.'''
     pdfname = env['NAME']
     conf = env['PDF_CONF']
-    cmd_tmpl = "enscript --font=Courier11 --continuous-page-numbers " + \
+    cmd_tmpl = "enscript --font=Courier10 --continuous-page-numbers " + \
         "--line-numbers {lang} -o - `find {root} -name '{wildcard}' " + \
         "{filter}` | ps2pdf - {name}.pdf ; " + \
         "pdfnup --nup 2x1 -o {name}.pdf {name}.pdf"

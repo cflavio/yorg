@@ -6,9 +6,12 @@ from .log import LogMgr
 class Configuration(object):
     '''This class models the configuration.'''
 
-    def __init__(self, fps=False, win_size='1280 720', win_title='Ya2',
-                 fullscreen=False, cursor_hidden=False, sync_video=True,
-                 antialiasing=False, profiling=False, mt_render=False):
+    def __init__(
+            self, fps=False, win_size='1280 720', win_title='Ya2',
+            fullscreen=False, cursor_hidden=False, sync_video=True,
+            antialiasing=False, profiling=False, mt_render=False,
+            model_path='assets/models', lang='en', lang_path='assets/locale',
+            lang_domain='ya2_game', languages=['English', 'Italiano']):
         self.fps = fps
         self.win_size = win_size
         self.win_title = win_title
@@ -18,6 +21,11 @@ class Configuration(object):
         self.antialiasing = antialiasing
         self.multithreaded_render = mt_render
         self.profiling = profiling
+        self.model_path = model_path
+        self.lang = lang
+        self.lang_path = lang_path
+        self.lang_domain = lang_domain
+        self.languages = languages
         self.configure()
 
     @staticmethod

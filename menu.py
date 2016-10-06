@@ -8,7 +8,7 @@ from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TextNode
 from sys import exit
 from racing.game.gameobject import Fsm, GameObjectMdt, Gui
-from racing.game.gui.page import Page, PageArgs, transl_text
+from racing.game.gui.page import Page, PageArgs, PageEvent, PageGui
 from racing.game.lang import LangMgr
 from racing.game.dictfile import DictFile
 from racing.game.network.server import Server
@@ -49,12 +49,8 @@ class MainPage(Page, DirectObject):
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(self.gui.widgets):
-            transl_text(wdg, menu_data[i][0])
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+            PageGui.transl_text(wdg, menu_data[i][0])
+        self.gui.build()
 
     def on_exit(self):
         if game.options['open_browser_at_exit']:
@@ -89,11 +85,7 @@ class SingleplayerPage(Page):
         if 'last_ranking' not in game.options.dct:
             self.gui.widgets[-1]['state'] = DISABLED
             self.gui.widgets[-1].setAlphaScale(.25)
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        self.gui.build()
 
 
 class MultiplayerPage(Page):
@@ -112,11 +104,7 @@ class MultiplayerPage(Page):
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        self.gui.build()
 
 
 class ServerPage(Page):
@@ -146,11 +134,7 @@ class ServerPage(Page):
                 frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        self.gui.build()
         game.logic.srv = Server(self.process_msg, self.process_connection)
 
     def process_msg(self, data_lst):
@@ -167,11 +151,11 @@ class ServerPage(Page):
 class ClientPage(Page):
 
     def build(self, fsm):
-        self.fsm = fsm
+        self.menu_fsm = fsm
         self.gui.widgets = [
             OnscreenText(text='', scale=.12, pos=(0, .4),
                          font=self.gui.font, fg=(.75, .75, .75, 1))]
-        transl_text(self.gui.widgets[0], _('Client'))
+        PageGui.transl_text(self.gui.widgets[0], _('Client'))
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=self.gui.font, width=12,
             frameColor=self.gui.page_args.btn_color,
@@ -187,11 +171,7 @@ class ClientPage(Page):
                 command=self.connect, frameSize=page_args.btn_size,
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        self.gui.build()
 
     def connect(self):
         try:
@@ -207,10 +187,36 @@ class ClientPage(Page):
     def process_msg(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:
             eng.log_mgr.log('track selected: ' + data_lst[1])
-            self.fsm.demand('Cars', 'tracks/track_' + data_lst[1])
+            self.menu_fsm.demand('Cars', 'tracks/track_' + data_lst[1])
+
+
+class OptionEvent(PageEvent):
+
+    def on_back(self):
+        try:
+            car = game.options['car']
+        except KeyError:
+            car = ''
+        try:
+            track = game.options['track']
+        except KeyError:
+            track = ''
+        conf = game.options
+        conf['lang'] = eng.lang_mgr.languages[self.mdt._lang_opt.selectedIndex][:2].lower()
+        conf['volume'] = self.mdt._vol_slider.getValue()
+        conf['fullscreen'] = self.mdt._fullscreen_cb['indicatorValue']
+        conf['resolution'] = self.mdt._res_opt.get().replace('x', ' ')
+        conf['aa'] = self.mdt._aa_cb['indicatorValue']
+        conf['open_browser_at_exit'] = self.mdt._browser_cb['indicatorValue']
+        conf['multithreaded_render'] = game.options['multithreaded_render']
+        conf['car'] = car
+        conf['track'] = track
+        conf.store()
 
 
 class OptionPage(Page):
+
+    event_cls = OptionEvent
 
     def build(self):
         font, page_args = self.gui.font, self.gui.page_args
@@ -219,8 +225,8 @@ class OptionPage(Page):
         lang_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .5),
                                text_fg=(.75, .75, .75, 1),
                                text_font=font, text_align=TextNode.ARight)
-        transl_text(lang_lab, 'Language')
-        self.__lang_opt = DirectOptionMenu(
+        PageGui.transl_text(lang_lab, 'Language')
+        self._lang_opt = DirectOptionMenu(
             text='', scale=.12, items=eng.lang_mgr.languages, pos=(.2, 1, .5),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_scale=.85, item_text_font=font,
@@ -235,16 +241,16 @@ class OptionPage(Page):
         vol_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .3),
                               text_font=font, text_fg=(.75, .75, .75, 1),
                               text_align=TextNode.ARight)
-        transl_text(vol_lab, 'Volume')
-        self.__vol_slider = DirectSlider(
+        PageGui.transl_text(vol_lab, 'Volume')
+        self._vol_slider = DirectSlider(
             pos=(.47, 0, .33), scale=.47, value=conf['volume'],
             frameColor=page_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
 
         fullscreen_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .1),
                                      text_font=font, text_fg=(.75, .75, .75, 1),
                                      text_align=TextNode.ARight)
-        transl_text(fullscreen_lab, 'Fullscreen')
-        self.__fullscreen_cb = DirectCheckButton(
+        PageGui.transl_text(fullscreen_lab, 'Fullscreen')
+        self._fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='', scale=.12, text_font=self.gui.font,
             text_fg=(.75, .75, .75, 1), frameColor=page_args.btn_color,
             indicatorValue=conf['fullscreen'],
@@ -256,12 +262,12 @@ class OptionPage(Page):
         res_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.1),
                               text_font=font, text_fg=(.75, .75, .75, 1),
                               text_align=TextNode.ARight)
-        transl_text(res_lab, 'Resolution')
+        PageGui.transl_text(res_lab, 'Resolution')
         if conf['resolution']:
             curr_res = conf['resolution'].replace(' ', 'x')
         else:
             curr_res =  str(eng.win.getXSize())+'x'+str(base.win.getYSize())
-        self.__res_opt = DirectOptionMenu(
+        self._res_opt = DirectOptionMenu(
             text='', scale=.08, items=eng.gui_mgr.resolutions, pos=(.2, 1, -.1),
             frameColor=page_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
             text_font=font, text_fg=(.75, .75, .75, 1),
@@ -276,12 +282,12 @@ class OptionPage(Page):
         aa_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.3),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ARight)
-        transl_text(aa_lab, 'Antialiasing')
+        PageGui.transl_text(aa_lab, 'Antialiasing')
         aa_next_lab = DirectLabel(text='', scale=.08, pos=(.2, 1, -.3),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ALeft)
-        transl_text(aa_next_lab, '(from the next execution)')
-        self.__aa_cb = DirectCheckButton(
+        PageGui.transl_text(aa_next_lab, '(from the next execution)')
+        self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', scale=.12, text_font=self.gui.font,
             frameColor=page_args.btn_color,
             indicatorValue=conf['aa'],
@@ -292,8 +298,8 @@ class OptionPage(Page):
         browser_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.5),
                             text_font=font, text_fg=(.75, .75, .75, 1),
                             text_align=TextNode.ARight)
-        transl_text(browser_lab, "See Ya2's news at exit")
-        self.__browser_cb = DirectCheckButton(
+        PageGui.transl_text(browser_lab, "See Ya2's news at exit")
+        self._browser_cb = DirectCheckButton(
             pos=(.12, 1, -.47), text='', scale=.12, text_font=self.gui.font,
             frameColor=page_args.btn_color,
             indicatorValue=conf['open_browser_at_exit'],
@@ -310,48 +316,23 @@ class OptionPage(Page):
             self.__res_opt['state'] = DISABLED
 
         self.gui.widgets = [
-            lang_lab, self.__lang_opt, vol_lab, self.__vol_slider,
-            fullscreen_lab, self.__fullscreen_cb, res_lab, self.__res_opt,
-            aa_lab, self.__aa_cb, aa_next_lab, browser_lab, self.__browser_cb]
+            lang_lab, self._lang_opt, vol_lab, self._vol_slider,
+            fullscreen_lab, self._fullscreen_cb, res_lab, self._res_opt,
+            aa_lab, self._aa_cb, aa_next_lab, browser_lab, self._browser_cb]
         idx = eng.lang_mgr.lang_codes.index(conf['lang'])
         self.__change_lang(eng.lang_mgr.languages[idx])
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        self.gui.build()
 
     def on_browser(self, val):
         txt = _('Please, really consider enabling this option to see our news.\nWe hope you will find interesting stuff there.\nMoreover, this is how we can keep Yorg free.')
         if not val:
-            dial = OkDialog(dialogName="Ya2's news", text=txt, frameColor=self.page_args.dial_color)
+            dial = OkDialog(dialogName="Ya2's news", text=txt, frameColor=self.gui.page_args.dial_color)
             dial['command'] = lambda val: dial.cleanup()  # it destroys too
-
-    def on_back(self):
-        try:
-            car = game.options['car']
-        except KeyError:
-            car = ''
-        try:
-            track = game.options['track']
-        except KeyError:
-            track = ''
-        conf = game.options
-        conf['lang'] = eng.lang_mgr.languages[self.__lang_opt.selectedIndex][:2].lower()
-        conf['volume'] = self.__vol_slider.getValue()
-        conf['fullscreen'] = self.__fullscreen_cb['indicatorValue']
-        conf['resolution'] = self.__res_opt.get().replace('x', ' ')
-        conf['aa'] = self.__aa_cb['indicatorValue']
-        conf['open_browser_at_exit'] = self.__browser_cb['indicatorValue']
-        conf['multithreaded_render'] = game.options['multithreaded_render']
-        conf['car'] = car
-        conf['track'] = track
-        conf.store()
 
     def update_texts(self):
         self.gui.update_texts()
         curr_lang = eng.lang_mgr.curr_lang
-        self.__lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
+        self._lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
     def __change_lang(self, arg):
         lang_dict = {'English': 'en', 'Italiano': 'it'}
@@ -380,11 +361,7 @@ class TrackPage(Page):
                 rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        self.gui.build()
 
 
 class CarPage(Page):
@@ -433,11 +410,7 @@ class CarPage(Page):
                 clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, menu in enumerate(menu_data)]
         self.current_cars = {}
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        self.gui.build()
 
     def evaluate_starting(self):
         if all(conn in self.current_cars for conn in game.logic.srv.connections + [self]):
@@ -505,12 +478,8 @@ class CreditPage(Page):
         flavio = _('Code')+': Flavio Calva'
         luca = _('Art')+': Luca Quartero'
         text = '\n\n'.join([flavio, luca])
-        transl_text(self.gui.widgets[0], text)
-        self.gui.build(
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav',
-            'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+        PageGui.transl_text(self.gui.widgets[0], text)
+        self.gui.build()
 
 
 class _Gui(Gui):
@@ -520,13 +489,22 @@ class _Gui(Gui):
         Gui.__init__(self, mdt)
         main_args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), False, True, True, '', (.9, .9, .9, .8))
+            (0, 0, 0, .2), False, True, True, '', (.9, .9, .9, .8),
+            'assets/images/gui/menu_background.jpg',
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
+            'assets/images/icons/%s_png.png')
         args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), True, False, False, 'Main', (.9, .9, .9, .8))
+            (0, 0, 0, .2), True, False, False, 'Main', (.9, .9, .9, .8),
+            'assets/images/gui/menu_background.jpg',
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
+            'assets/images/icons/%s_png.png')
         car_args = PageArgs(
             mdt.fsm, 'assets/fonts/zekton rg.ttf', (-3, 3, -.32, .88),
-            (0, 0, 0, .2), True, False, False, 'Tracks', (.95, .95, .95, .99))
+            (0, 0, 0, .2), True, False, False, 'Tracks', (.95, .95, .95, .99),
+            'assets/images/gui/menu_background.jpg',
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
+            'assets/images/icons/%s_png.png')
         self.main_page = MainPage(main_args)
         self.singleplayer_page = SingleplayerPage(args)
         self.multiplayer_page = MultiplayerPage(args)
@@ -607,6 +585,10 @@ class _Fsm(Fsm):
 
     def exitCredits(self):
         self.mdt.gui.credit_page.destroy()
+
+    def destroy(self):
+        Fsm.destroy(self)
+        print '\nehe\n'
 
 
 class Menu(GameObjectMdt):

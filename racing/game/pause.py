@@ -13,7 +13,6 @@ class PauseMgr(object):
         self.paused_taskchain = 'ya2 paused tasks'
         taskMgr.setupTaskChain(self.paused_taskchain, frameBudget=0)
         self.is_paused = False
-        self.resume_locked = False
         fpath = os.path.dirname(sys.modules[Task.__name__].__file__)
         self.direct_dir = os.path.abspath(os.path.join(fpath, os.pardir))
         self.paused_ivals = []

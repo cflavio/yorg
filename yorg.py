@@ -31,6 +31,11 @@ class _Event(Event):
         now = time.strftime('%y_%m_%d_%H_%M_%S')
         self.accept('f10', eng.win.saveScreenshot, ['yorg_' + now + '.png'])
 
+    def on_end(self):
+        if self.mdt.options['open_browser_at_exit']:
+            eng.open_browser('http://www.ya2.it')
+
+
 class _Audio(Audio):
 
     def __init__(self, mdt):
@@ -229,8 +234,8 @@ class _Fsm(Fsm):
 class _Logic(GameLogic):
     '''This class defines the logics of the game.'''
 
-    def start(self):
-        GameLogic.start(self)
+    def on_start(self):
+        GameLogic.on_start(self)
         try:
             car = game.options['car']
         except KeyError:
@@ -262,7 +267,6 @@ class Yorg(Game):
             fps=self.options['fps'], win_title='Yorg',
             win_size=self.options['resolution'],
             fullscreen=self.options['fullscreen'],
-            antialiasing=self.options['aa'],
-            mt_render=self.options['multithreaded_render'])
-        Game.__init__(self, conf, './assets/locale', 'yorg',
-                      ['English', 'Italiano'])
+            antialiasing=self.options['aa'], lang=self.options['lang'],
+            mt_render=self.options['multithreaded_render'], lang_domain='yorg')
+        Game.__init__(self, conf)

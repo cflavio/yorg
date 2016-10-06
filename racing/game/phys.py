@@ -9,8 +9,8 @@ class PhysMgr(Subject):
     def __init__(self):
         '''Inits the engine.'''
         Subject.__init__(self)
-        self.collision_objs = []
-        self.__coll_dct = {}
+        self.collision_objs = []  # objects to be tested
+        self.__coll_dct = {}  # obj: [(node, coll_time), ...]
         self.world_np = None
         self.world_phys = None
         self.__debug_np = None
@@ -28,23 +28,21 @@ class PhysMgr(Subject):
         self.world_phys.setDebugNode(self.__debug_np.node())
 
     def start(self):
-        '''Starts the engine.'''
-        taskMgr.add(self.__update, 'Phys::update')
+        '''Starts the physics.'''
+        eng.attach(self, self.__on_frame, 1)
 
-    def __update(self, task):
+    def __on_frame(self):
         '''Called on each frame.'''
-        if not self.world_phys:
-            return
         d_t = globalClock.getDt()
         self.world_phys.doPhysics(d_t, 10, 1/180.0)
         self.__do_collisions()
-        return task.cont
 
     def stop(self):
         '''Stops the engine.'''
         self.world_phys = None
         self.world_np.removeNode()
         self.__debug_np.removeNode()
+        eng.detach(self)
 
     def __process_contact(self, obj, node, to_clear):
         '''Processes a physics contact.'''
@@ -52,11 +50,10 @@ class PhysMgr(Subject):
             return
         if obj in to_clear:
             to_clear.remove(obj)
-        coll_dct = self.__coll_dct[obj]
-        if node in [coll_pair[0] for coll_pair in coll_dct]:
+        if node in [coll_pair[0] for coll_pair in self.__coll_dct[obj]]:
             return
         self.__coll_dct[obj] += [(node, globalClock.getFrameTime())]
-        self.notify('on_collision', [obj, node.getName()])
+        self.notify(obj, node.getName())
 
     def __do_collisions(self):
         '''Computes the collisions.'''

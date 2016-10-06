@@ -6,22 +6,31 @@ from direct.showbase.DirectObject import DirectObject
 class GuiMgr(DirectObject):
     '''This class models the GUI manager.'''
 
-    def __init__(self, res):
+    def __init__(self):
         DirectObject.__init__(self)
         eng.disableMouse()
-        self.set_resolution(res)
-        if game.options['fullscreen']:
+        self.on_close_cb = None
+        self.set_resolution('x'.join(eng.conf.win_size.split()))
+        if eng.conf.fullscreen:
             self.toggle_fullscreen()
         eng.win.setCloseRequestEvent('window-closed')
         self.accept('window-closed', self.__on_close)
 
-    @staticmethod
-    def __on_close():
+    def register_close_cb(self, on_close_cb):
+        '''Registers the closing callback.'''
+        self.on_close_cb = on_close_cb
+
+    def __on_close(self):
         '''Called when the application closes.'''
-        if game.options['open_browser_at_exit']:
-            eng.open_browser('http://www.ya2.it')
         eng.closeWindow(eng.win)
+        if self.on_close_cb:
+            self.on_close_cb()
         exit()
+
+    @staticmethod
+    def res_str(res_x, res_y):
+        '''Resolution as a string.'''
+        return '{res_x}x{res_y}'.format(res_x=res_x, res_y=res_y)
 
     @property
     def resolutions(self):
@@ -34,19 +43,14 @@ class GuiMgr(DirectObject):
 
         res_values = [res(idx) for idx in range(d_i.getTotalDisplayModes())]
         sorted_res = sorted(list(set(res_values)))
-
-        def res_str(res_x, res_y):
-            '''Resolution as a string.'''
-            return '{res_x}x{res_y}'.format(res_x=res_x, res_y=res_y)
-
-        return [res_str(*s) for s in sorted_res]
+        return [self.res_str(*s) for s in sorted_res]
 
     @property
     def resolution(self):
         '''Current resolution.'''
         win_prop = eng.win.get_properties()
         res_x, res_y = win_prop.get_x_size(), win_prop.get_y_size()
-        return '{res_x}x{res_y}'.format(res_x=res_x, res_y=res_y)
+        return self.res_str(res_x, res_y)
 
     @property
     def closest_res(self):

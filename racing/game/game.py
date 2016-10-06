@@ -9,8 +9,16 @@ import __builtin__
 class GameLogic(Logic):
     """ Definition of the Logic Class """
 
-    def start(self):
-        '''Starts the game logic.'''
+    def on_start(self):
+        '''Called at the start.'''
+        pass
+
+    def on_frame(self):
+        '''Called on each frame.'''
+        pass
+
+    def on_end(self):
+        '''Called at the end.'''
         pass
 
 
@@ -19,9 +27,11 @@ class Game(GameObjectMdt):
     __metaclass__ = ABCMeta
     logic_cls = GameLogic
 
-    def __init__(self, conf, lang_path, domain, langs):
+    def __init__(self, conf):
         __builtin__.game = self
-        Engine(conf, lang_path, domain, langs)
+        eng = Engine(conf)
         GameObjectMdt.__init__(self)
-        self.logic.start()
+        eng.gui_mgr.register_close_cb(self.logic.on_end)
+        self.logic.on_start()
+        eng.attach(self, self.logic.on_frame)
         eng.run()

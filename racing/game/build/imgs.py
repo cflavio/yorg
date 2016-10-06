@@ -31,5 +31,4 @@ def __build_img(_file):
 
 def build_images(target, source, env):
     '''Builds the images.'''
-    for _file in [str(src) for src in source]:
-        __build_img(_file)
+    map(lambda _file: __build_img(_file), [str(src) for src in source])

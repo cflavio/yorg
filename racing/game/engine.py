@@ -17,26 +17,28 @@ from .configuration import Configuration
 from .gfx import GfxMgr
 from .gui.gui import GuiMgr
 from .phys import PhysMgr
+from .observer import Subject
 
 
-class Engine(ShowBase, object):
+class Engine(ShowBase, Subject, object):
     '''This class models the engine object.'''
 
-    def __init__(self, configuration=None, lang_path='', domain='', langs=[]):
+    def __init__(self, configuration=None):
         self.pause_frame = None
-        configuration = configuration or Configuration()
+        self.conf = configuration or Configuration()
         ShowBase.__init__(self)
+        Subject.__init__(self)
         __builtin__.eng = self
         self.pause_mgr = PauseMgr()
-        self.gfx_mgr = GfxMgr('assets/models', configuration.antialiasing)
+        self.gfx_mgr = GfxMgr()
         self.phys_mgr = PhysMgr()
         self.font_mgr = FontMgr()
         self.log_mgr = LogMgr()
         self.log_mgr.log_conf()
-        lang = game.options['lang']
-        self.lang_mgr = LangMgr(domain, lang_path, langs, lang)
+        self.lang_mgr = LangMgr()
         if self.win:
-            self.gui_mgr = GuiMgr('x'.join(configuration.win_size.split()))
+            self.gui_mgr = GuiMgr()
+        taskMgr.add(self.__on_frame, 'on frame')
 
     def toggle_pause(self):
         '''Toggles the pause.'''
@@ -66,3 +68,8 @@ class Engine(ShowBase, object):
             package = self.appRunner.p3dInfo.FirstChildElement('package')
             return 'version: ' + package.Attribute('version')
         return 'version: source'
+
+    def __on_frame(self, task):
+        '''Called at each frame.'''
+        Subject.notify(self)
+        return task.cont

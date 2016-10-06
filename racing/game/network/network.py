@@ -16,16 +16,11 @@ class AbsNetwork(object):
         self.reader_tsk = taskMgr.add(*args)
         self.reader_cb = reader_cb
 
-    @staticmethod
-    def _format(data_lst):
-        '''Formats a packet.'''
-        dct_types = {bool: 'B', int: 'I', float: 'F', str: 'S'}
-        return ''.join(dct_types[type(part)] for part in data_lst)
-
     def send(self, data_lst, receiver=None):
         '''Sends a packet.'''
         datagram = PyDatagram()
-        datagram.addString(self._format(data_lst))
+        dct_types = {bool: 'B', int: 'I', float: 'F', str: 'S'}
+        datagram.addString(''.join(dct_types[type(part)] for part in data_lst))
         dct_meths = {
             bool: datagram.addBool, int: datagram.addInt64,
             float: datagram.addFloat64, str: datagram.addString}
@@ -39,12 +34,10 @@ class AbsNetwork(object):
         datagram = NetDatagram()
         if not self.c_reader.getData(datagram):
             return task.cont
-        iterator = PyDatagramIterator(datagram)
-        _format = iterator.getString()
-        dct_meths = {
-            'B': iterator.getBool, 'I': iterator.getInt64,
-            'F': iterator.getFloat64, 'S': iterator.getString}
-        msg_lst = [dct_meths[c]() for c in _format]
+        _iter = PyDatagramIterator(datagram)
+        dct_meths = {'B': _iter.getBool, 'I': _iter.getInt64,
+                     'F': _iter.getFloat64, 'S': _iter.getString}
+        msg_lst = [dct_meths[c]() for c in _iter.getString()]
         self.reader_cb(msg_lst, datagram.getConnection())
         return task.cont
 
