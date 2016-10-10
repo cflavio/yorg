@@ -10,7 +10,7 @@ class ImageButton(DirectButton):
 
     def __init__(self, image, *args, **kwargs):
         this_path = dirname(realpath(__file__))
-        maps = loader.loadModel(this_path + '/../assets/img_btn')
+        maps = loader.loadModel(this_path + '/../../assets/img_btn')
         imgs = ['image', 'image', 'image_rollover']
         btn_geom = [maps.find('**/' + img) for img in imgs]
         DirectButton.__init__(self, geom=btn_geom, *args, **kwargs)

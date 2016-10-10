@@ -24,9 +24,9 @@ class LogMgr(object):
 
     def log_conf(self):
         '''Logs the system configuration.'''
-        self.log('version: ' + eng.version)
+        self.log('version: ' + eng.logic.version)
         self.log('operative system: ' + system() + ' ' + release())
-        gsg = eng.win.get_gsg()
+        gsg = eng.base.win.get_gsg()
         self.log(gsg.getDriverVendor())
         self.log(gsg.getDriverRenderer())
         shad_maj = gsg.getDriverShaderVersionMajor()
@@ -37,9 +37,9 @@ class LogMgr(object):
         drv_min = gsg.getDriverVersionMinor()
         drv = 'driver version: {maj}.{min}'
         self.log(drv.format(maj=drv_maj, min=drv_min))
-        if not eng.win:
+        if not eng.base.win:
             return
-        prop = eng.win.get_properties()
+        prop = eng.base.win.get_properties()
         self.log('fullscreen: ' + str(prop.get_fullscreen()))
         res_x, res_y = prop.get_x_size(), prop.get_y_size()
         res_tmpl = 'resolution: {res_x}x{res_y}'

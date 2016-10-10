@@ -1,10 +1,10 @@
 '''In this module we define the global game classes.'''
-from racing.game.engine import Engine
+from racing.game.engine.engine import Engine
 from racing.car.car import Car, PlayerCar, NetworkCar
-from menu import Menu
+from menu import YorgMenu
 from racing.track.track import Track
 from racing.game.game import Game, GameLogic
-from racing.game.gameobject import Event, Fsm, Audio
+from racing.game.gameobject.gameobject import Event, Fsm, Audio
 import time
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.OnscreenText import OnscreenText
@@ -13,7 +13,8 @@ from racing.car.gfx import _Gfx as CarGfx
 from panda3d.core import NodePath, TextNode
 from direct.interval.LerpInterval import LerpHprInterval
 from racing.game.dictfile import DictFile
-from racing.game.configuration import Configuration
+from racing.game.engine.configuration import Configuration
+from sys import exit
 
 
 class NetMsgs:
@@ -27,9 +28,9 @@ class _Event(Event):
 
     def __init__(self, mdt):
         Event.__init__(self, mdt)
-        self.accept('f12', eng.phys_mgr.toggle_debug)
+        self.accept('f12', eng.phys.toggle_debug)
         now = time.strftime('%y_%m_%d_%H_%M_%S')
-        self.accept('f10', eng.win.saveScreenshot, ['yorg_' + now + '.png'])
+        self.accept('f10', eng.base.win.saveScreenshot, ['yorg_' + now + '.png'])
 
     def on_end(self):
         if self.mdt.options['open_browser_at_exit']:
@@ -57,7 +58,7 @@ class _Fsm(Fsm):
 
     def enterMenu(self):
         eng.log_mgr.log('entering Menu state')
-        self.__menu = Menu(self)
+        self.__menu = YorgMenu(self)
         self.mdt.audio.menu_music.play()
 
     def exitMenu(self):
@@ -67,6 +68,7 @@ class _Fsm(Fsm):
 
     def enterLoading(self, track_path='', car_path='', player_cars=[]):
         eng.log_mgr.log('entering Loading state')
+        eng.gfx.init()
         if not track_path and not car_path:
             tracks = ['prototype', 'desert']
             track = tracks[tracks.index(game.options['last_track']) + 1]
@@ -101,12 +103,12 @@ class _Fsm(Fsm):
 
     def update_cam(self, task):
         pos = self.cam_node.get_pos(render)
-        eng.camera.set_pos(pos[0], pos[1], 1000)
-        eng.camera.look_at(0, 0, 0)
+        eng.base.camera.set_pos(pos[0], pos[1], 1000)
+        eng.base.camera.look_at(0, 0, 0)
         return task.again
 
     def load_stuff(self, track_path, car_path, player_cars):
-        eng.phys_mgr.init()
+        eng.phys.init()
         player_cars = player_cars[1::2]
         def load_car():
             cars = ['kronos', 'themis', 'diones']
@@ -145,7 +147,7 @@ class _Fsm(Fsm):
         self.load_txt.destroy()
         self.curr_load_txt.destroy()
         taskMgr.remove(self.cam_tsk)
-        eng.camera.set_pos(0, 0, 0)
+        eng.base.camera.set_pos(0, 0, 0)
 
     def enterPlay(self, track_path, car_path):
         eng.log_mgr.log('entering Play state')
@@ -182,7 +184,7 @@ class _Fsm(Fsm):
             self.start_play()
 
     def start_play(self):
-        eng.phys_mgr.start()
+        eng.phys.start()
         game.track.event.start()
         game.player_car.event.eval_register()
         self.mdt.audio.game_music.play()
@@ -201,6 +203,8 @@ class _Fsm(Fsm):
         self.mdt.track.destroy()
         self.mdt.player_car.destroy()
         map(lambda car: car.destroy(), self.mdt.cars)
+        eng.phys.stop()
+        eng.gfx.clean()
 
     def enterRanking(self):
         sorted_ranking = reversed(sorted(game.ranking.items(), key=lambda el: el[1]))
@@ -248,6 +252,12 @@ class _Logic(GameLogic):
             self.mdt.fsm.demand('Loading', 'tracks/track_' + track, car)
         else:
             self.mdt.fsm.demand('Menu')
+        base.accept('escape-up', self.on_exit)
+
+    def on_exit(self):
+        if game.options['open_browser_at_exit']:
+            eng.open_browser('http://www.ya2.it')
+        exit()
 
 
 class Yorg(Game):

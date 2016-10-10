@@ -1,6 +1,6 @@
 from panda3d.core import AmbientLight, BitMask32, Spotlight, TextNode, NodePath
 from direct.actor.Actor import Actor
-from racing.game.gameobject import Gfx
+from racing.game.gameobject.gameobject import Gfx
 from racing.game.dictfile import DictFile
 from direct.gui.OnscreenText import OnscreenText
 
@@ -84,7 +84,7 @@ class _Gfx(Gfx):
     def end_loading(self):
         #self.model.clearModelNodes()
         #self.model.flattenStrong()
-        self.model.prepareScene(eng.win.getGsg())
+        self.model.prepareScene(eng.base.win.getGsg())
         taskMgr.doMethodLater(.01, lambda task: self.cb(), 'callback')
 
     def __load_empties(self, end_loading):
@@ -104,7 +104,7 @@ class _Gfx(Gfx):
                     preload_models(models[1:], cb, model, globalClock.getFrameTime())
                 else:
                     path = self.track_path + '/' + model
-                    eng.loader.loadModel(path)
+                    eng.base.loader.loadModel(path)
                     preload_models(models[1:], cb, model, globalClock.getFrameTime())
             else:
                 cb()
@@ -122,7 +122,7 @@ class _Gfx(Gfx):
                         flat_roots = [self.model.attachNewNode('%s_%s' % (model_name, str(i))) for i in range(4)]
                         self.__flat_roots[model_name] = flat_roots
                     path = self.track_path + '/' + model.getName().split('.')[0][5:]
-                    child = eng.loader.loadModel(path)
+                    child = eng.base.loader.loadModel(path)
                     child.reparent_to(model)
                     left = self.corners[0].getX()
                     right = self.corners[1].getX()
@@ -182,7 +182,7 @@ class _Gfx(Gfx):
         flat_models(flatlist(self.__flat_roots.values()), self.end_loading)
 
     def __set_light(self):
-        eng.render.clearLight()
+        eng.base.render.clearLight()
 
         ambient_lgt = AmbientLight('ambient light')
         ambient_lgt.setColor((.7, .7, .55, 1))
@@ -210,7 +210,7 @@ class _Gfx(Gfx):
         '''The destroyer.'''
         self.model.removeNode()
         self.phys_model.removeNode()
-        eng.render.clearLight(self.ambient_np)
-        eng.render.clearLight(self.spot_lgt)
+        eng.base.render.clearLight(self.ambient_np)
+        eng.base.render.clearLight(self.spot_lgt)
         self.ambient_np.removeNode()
         #self.spot_lgt.removeNode()

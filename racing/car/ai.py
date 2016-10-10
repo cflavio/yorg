@@ -1,4 +1,4 @@
-from racing.game.gameobject import Ai
+from racing.game.gameobject.gameobject import Ai
 from panda3d.core import Vec3, Vec2, Point3, LVector4f, Mat4
 
 
@@ -41,7 +41,7 @@ class _Ai(Ai):
         return self.curr_dot_prod > .8
 
     def ground_name(self, pos):
-        result = eng.phys_mgr.world_phys.rayTestClosest(
+        result = eng.phys.world_phys.rayTestClosest(
             (pos.x, pos.y, pos.z + 1), (pos.x, pos.y, pos.z - 1))
         ground = result.get_node()
         return ground.get_name() if ground else ''

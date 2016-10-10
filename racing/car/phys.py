@@ -1,7 +1,7 @@
 from panda3d.bullet import BulletVehicle, ZUp,\
     BulletConvexHullShape
 from panda3d.core import TransformState, LVecBase3f, LPoint3f
-from racing.game.gameobject import Phys
+from racing.game.gameobject.gameobject import Phys
 import yaml
 
 
@@ -38,17 +38,17 @@ class _Phys(Phys):
         mdt.gfx.nodepath.node().setMass(self.mass)
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
 
-        eng.phys_mgr.world_phys.attachRigidBody(mdt.gfx.nodepath.node())
-        eng.phys_mgr.collision_objs += [mdt.gfx.nodepath.node()]
+        eng.phys.world_phys.attachRigidBody(mdt.gfx.nodepath.node())
+        eng.phys.collision_objs += [mdt.gfx.nodepath.node()]
 
-        self.vehicle = BulletVehicle(eng.phys_mgr.world_phys, mdt.gfx.nodepath.node())
+        self.vehicle = BulletVehicle(eng.phys.world_phys, mdt.gfx.nodepath.node())
         self.vehicle.setCoordinateSystem(ZUp)
         self.vehicle.setPitchControl(self.pitch_control)
         tuning = self.vehicle.getTuning()
         tuning.setSuspensionCompression(self.suspension_compression)
         tuning.setSuspensionDamping(self.suspension_damping)
 
-        eng.phys_mgr.world_phys.attachVehicle(self.vehicle)
+        eng.phys.world_phys.attachVehicle(self.vehicle)
 
         wheels_info = [
             (self.wheel_fr_pos, True, mdt.gfx.front_right_wheel_np,
@@ -128,7 +128,7 @@ class _Phys(Phys):
 
     def ground_name(self, wheel):
         contact_pos = wheel.get_raycast_info().getContactPointWs()
-        result = eng.phys_mgr.world_phys.rayTestClosest(
+        result = eng.phys.world_phys.rayTestClosest(
             (contact_pos.x, contact_pos.y, contact_pos.z + .1),
             (contact_pos.x, contact_pos.y, contact_pos.z - .1))
         ground = result.get_node()

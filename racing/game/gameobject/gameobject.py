@@ -2,17 +2,20 @@
 from abc import ABCMeta
 from direct.fsm.FSM import FSM
 from direct.showbase.DirectObject import DirectObject
+from ..observer import Subject
 
 
-class Colleague(object):
+class Colleague(Subject):
     '''This class models a colleague (mediator pattern).'''
 
     def __init__(self, mdt):
+        Subject.__init__(self)
         self.mdt = mdt
 
     def destroy(self):
         '''Destroys the colleague.'''
         self.mdt = None
+        Subject.destroy(self)
 
 
 class Fsm(FSM, Colleague):

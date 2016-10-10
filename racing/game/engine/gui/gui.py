@@ -1,67 +1,67 @@
 '''This module provides functionalities for the GUI.'''
+from sys import platform
+from os import environ, system
+from webbrowser import open_new_tab
 from panda3d.core import WindowProperties
-from direct.showbase.DirectObject import DirectObject
+from direct.gui.DirectFrame import DirectFrame
+from ...gameobject.gameobject import Gui
 
 
-class GuiMgr(DirectObject):
+class EngineGui(Gui):
     '''This class models the GUI manager.'''
 
-    def __init__(self):
-        DirectObject.__init__(self)
-        eng.disableMouse()
-        self.on_close_cb = None
-        self.set_resolution('x'.join(eng.conf.win_size.split()))
-        if eng.conf.fullscreen:
+    def __init__(self, mdt):
+        Gui.__init__(self, mdt)
+        eng.base.disableMouse()
+        resol = eng.logic.conf.win_size.split()
+        self.set_resolution(tuple(int(size) for size in resol))
+        if eng.logic.conf.fullscreen:
             self.toggle_fullscreen()
-        eng.win.setCloseRequestEvent('window-closed')
-        self.accept('window-closed', self.__on_close)
+        self.pause_frame = None
 
-    def register_close_cb(self, on_close_cb):
-        '''Registers the closing callback.'''
-        self.on_close_cb = on_close_cb
-
-    def __on_close(self):
-        '''Called when the application closes.'''
-        eng.closeWindow(eng.win)
-        if self.on_close_cb:
-            self.on_close_cb()
-        exit()
+    def toggle_pause(self):
+        '''Toggles the pause.'''
+        p_mgr = self.mdt.pause_mgr
+        if not p_mgr.is_paused:
+            self.pause_frame = DirectFrame(frameColor=(.3, .3, .3, .7),
+                                           frameSize=(-1.8, 1.8, -1, 1))
+        else:
+            self.pause_frame.destroy()
+        (p_mgr.resume if p_mgr.is_paused else p_mgr.pause)()
 
     @staticmethod
-    def res_str(res_x, res_y):
-        '''Resolution as a string.'''
-        return '{res_x}x{res_y}'.format(res_x=res_x, res_y=res_y)
+    def open_browser(url):
+        '''Opens the browser.'''
+        if platform.startswith('linux'):
+            environ['LD_LIBRARY_PATH'] = ''
+            system('xdg-open '+url)
+        else:
+            open_new_tab(url)
 
     @property
     def resolutions(self):
         '''Available resolutions.'''
-        d_i = eng.pipe.getDisplayInformation()
+        d_i = eng.base.pipe.getDisplayInformation()
 
         def res(idx):
             '''Get the idx-th resolution.'''
             return d_i.getDisplayModeWidth(idx), d_i.getDisplayModeHeight(idx)
 
         res_values = [res(idx) for idx in range(d_i.getTotalDisplayModes())]
-        sorted_res = sorted(list(set(res_values)))
-        return [self.res_str(*s) for s in sorted_res]
+        return sorted(list(set(res_values)))
 
     @property
     def resolution(self):
         '''Current resolution.'''
-        win_prop = eng.win.get_properties()
-        res_x, res_y = win_prop.get_x_size(), win_prop.get_y_size()
-        return self.res_str(res_x, res_y)
+        win_prop = eng.base.win.get_properties()
+        return win_prop.get_x_size(), win_prop.get_y_size()
 
     @property
     def closest_res(self):
         '''The closest resolution to the current one.'''
-        def split_res(res):
-            '''Gets the resolution values.'''
-            return [int(v) for v in res.split('x')]
-
         def distance(res):
             '''Distance from a resolution.'''
-            curr_res, res = split_res(self.resolution), split_res(res)
+            curr_res = self.resolution
             return abs(res[0] - curr_res[0]) + abs(res[1] - curr_res[1])
 
         dist_lst = map(distance, self.resolutions)
@@ -75,8 +75,8 @@ class GuiMgr(DirectObject):
         '''Sets a resolution.'''
         eng.log_mgr.log('setting resolution ' + str(res))
         props = WindowProperties()
-        props.set_size(*[int(resol) for resol in res.split('x')])
-        eng.win.request_properties(props)
+        props.set_size(res)
+        eng.base.win.request_properties(props)
         if not check:
             return
         args = 3.0, self.set_resolution_check, 'resolution check', [res]
@@ -89,12 +89,12 @@ class GuiMgr(DirectObject):
         if self.resolution == res:
             return
         retry = 'second attempt: {curr} (current) {res} (wanted)'
-        self.log_mgr.log(retry.format(curr=self.resolution, res=res))
+        eng.log_mgr.log(retry.format(curr=self.resolution, res=res))
         self.set_resolution(res, False)
 
     def toggle_fullscreen(self):
         '''Toggles the fullscreen.'''
         self.set_resolution(self.closest_res)
         props = WindowProperties()
-        props.set_fullscreen(not self.win.is_fullscreen())
+        props.set_fullscreen(not eng.base.win.is_fullscreen())
         base.win.requestProperties(props)

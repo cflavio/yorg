@@ -1,8 +1,8 @@
 from panda3d.core import TextNode
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
-from racing.game.gameobject import Gui
 from direct.gui.OnscreenImage import OnscreenImage
+from racing.game.gameobject.gameobject import Gui
 
 
 class CarParameter:
@@ -10,13 +10,13 @@ class CarParameter:
     def __init__(self, attr, init_val, pos, val_range, cb):
         self.__cb = cb
         self.__lab = OnscreenText(text=attr, pos=pos, scale=.04,
-            align=TextNode.ARight, parent=eng.a2dTopLeft, fg=(1, 1, 1, 1))
+            align=TextNode.ARight, parent=eng.base.a2dTopLeft, fg=(1, 1, 1, 1))
         self.__slider = DirectSlider(
-            pos=(pos[0]+.5, 0, pos[1]+.01), scale=.4, parent=eng.a2dTopLeft,
+            pos=(pos[0]+.5, 0, pos[1]+.01), scale=.4, parent=eng.base.a2dTopLeft,
             value=init_val, range=val_range, command=self.__set_attr)
         self.__val = OnscreenText(
             pos=(pos[0]+1.0, pos[1]), scale=.04, align=TextNode.ALeft,
-            parent=eng.a2dTopLeft, fg=(1, 1, 1, 1))
+            parent=eng.base.a2dTopLeft, fg=(1, 1, 1, 1))
         self.toggle()
 
     def toggle(self):
@@ -135,24 +135,24 @@ class _Gui(Gui):
             self.__friction_slip, self.__roll_influence]
         self.panel = OnscreenImage(
             'assets/images/gui/panel.png', scale=(.4, 1, .2),
-            parent=eng.a2dTopRight, pos=(-.45, 1, -.25))
+            parent=eng.base.a2dTopRight, pos=(-.45, 1, -.25))
         self.panel.setTransparency(True)
         self.speed_txt = OnscreenText(
             pos=(-.7, -.38), scale=.065,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
         self.lap_txt = OnscreenText(
             text='1/3', pos=(-.5, -.38), scale=.065,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
         self.time_txt = OnscreenText(
             pos=(-.3, -.38), scale=.065,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
         self.best_txt = OnscreenText(
             pos=(-.1, -.38), scale=.065,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.a2dTopRight, fg=(1, 1, 1, 1))
+            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
 
     def toggle(self):
         map(lambda par: par.toggle(), self.__pars)

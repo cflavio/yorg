@@ -1,5 +1,5 @@
 from direct.showbase.InputStateGlobal import inputState
-from racing.game.gameobject import Event
+from racing.game.gameobject.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
 from ai import _Ai
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
@@ -14,7 +14,7 @@ class _Event(Event, Observer):
         Event.__init__(self, mdt)
         Observer.__init__(self)
         self.has_just_started = True
-        eng.phys_mgr.attach(self, self.update)
+        eng.phys.attach(self.update)
         label_events = [('forward', 'arrow_up'),
                         ('left', 'arrow_left'),
                         ('reverse', 'z'),
@@ -88,7 +88,7 @@ class _Event(Event, Observer):
         car_pos = self.mdt.gfx.nodepath.get_pos()
         top = (car_pos.x, car_pos.y, 100)
         bottom = (car_pos.x, car_pos.y, -100)
-        result = eng.phys_mgr.world_phys.rayTestAll(top, bottom)
+        result = eng.phys.world_phys.rayTestAll(top, bottom)
         for hit in result.getHits():
             if 'Road' in hit.getNode().getName():
                 self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()
@@ -102,7 +102,7 @@ class _Event(Event, Observer):
     def destroy(self):
         Event.destroy(self)
         taskMgr.remove(self.tsk)
-        eng.phys_mgr.detach(self)
+        eng.phys.detach(self)
 
 
 class NetMsgs:

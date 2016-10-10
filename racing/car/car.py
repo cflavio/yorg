@@ -7,7 +7,7 @@ from logic import _Logic, _PlayerLogic
 from audio import _Audio
 from gui import _Gui
 from ai import _Ai
-from racing.game.gameobject import GameObjectMdt
+from racing.game.gameobject.gameobject import GameObjectMdt
 
 
 class Car(GameObjectMdt):

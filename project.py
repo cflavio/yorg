@@ -29,7 +29,7 @@
 #TODO: port ai lookahead to 3D
 #TODO: ai - obstacle avoidance
 #TODO: particle effects and texturing for skid marks
-#TODO: hardware instancing
+#TODO: hardware instancing or save flattened files on bam files (caching)
 #TODO: embed into a wx window
 #TODO: build only nointernet, linux64, win64, osx64, runtime-dev option
 #TODO: pause: put all tasks on a taskchain and deactivate it
@@ -43,3 +43,4 @@
 #TODO: network: wheels animations
 #TODO: network: physics (collisions to players' car)
 #TODO: day/night cycle
+#TODO: shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798

@@ -1,4 +1,4 @@
-from racing.game.gameobject import Audio
+from racing.game.gameobject.gameobject import Audio
 
 
 class _Audio(Audio):

@@ -1,6 +1,6 @@
 ''''In this module we define the track class.'''
 from abc import ABCMeta
-from racing.game.gameobject import GameObjectMdt
+from racing.game.gameobject.gameobject import GameObjectMdt
 from gfx import _Gfx
 from phys import _Phys
 from gui import _Gui

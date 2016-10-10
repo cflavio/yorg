@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-05 01:51+0200\n"
+"POT-Creation-Date: 2016-10-09 10:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,34 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:76
+#: yorg.py:84
 msgid ""
 "LOADING...\n"
 "\n"
 "PLEASE WAIT, IT MAY REQUIRE SOME TIME"
 msgstr ""
 
-#: menu.py:36
+#: menu.py:37
 msgid "Single Player"
 msgstr ""
 
-#: menu.py:37
+#: menu.py:38
 msgid "Multiplayer"
 msgstr ""
 
-#: menu.py:38
+#: menu.py:39
 msgid "Options"
 msgstr ""
 
-#: menu.py:39
+#: menu.py:40
 msgid "Credits"
 msgstr ""
 
-#: menu.py:40
+#: menu.py:41
 msgid "Quit"
 msgstr ""
 
-#: menu.py:142
+#: menu.py:146
 msgid "Start"
 msgstr ""
 
@@ -52,34 +52,34 @@ msgstr ""
 msgid "connection from "
 msgstr ""
 
-#: menu.py:174
+#: menu.py:177
 msgid "Client"
 msgstr ""
 
-#: menu.py:184
+#: menu.py:186
 msgid "Connect"
 msgstr ""
 
-#: menu.py:201
+#: menu.py:199
 msgid "Waiting for the server"
 msgstr ""
 
-#: menu.py:204
+#: menu.py:202
 msgid "Error"
 msgstr ""
 
-#: menu.py:325
+#: menu.py:350
 msgid ""
 "Please, really consider enabling this option to see our news.\n"
 "We hope you will find interesting stuff there.\n"
 "Moreover, this is how we can keep Yorg free."
 msgstr ""
 
-#: menu.py:505
+#: menu.py:526
 msgid "Code"
 msgstr ""
 
-#: menu.py:506
+#: menu.py:527
 msgid "Art"
 msgstr ""
 

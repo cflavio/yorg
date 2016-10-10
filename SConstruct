@@ -72,6 +72,7 @@ env['LANG'] = lang_path
 env['NOINTERNET'] = arguments['nointernet']
 env['ICO_FILE'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT']
+env['SUPERMIRROR'] = '/home/flavio/runtime_panda3d'
 filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
 pdf_conf = {
     'sources': [
@@ -79,16 +80,11 @@ pdf_conf = {
     'sources_racing': [
         ('python', './racing', '*.py', ['./racing/game/*'])],
     'sources_game': [
-        ('python', './racing/game', '*.py', filt_game),
+        ('python', './racing/game', '*.py *.pdef', filt_game),
         ('lua', './racing/game', 'config.lua', filt_game),
-        ('python', './racing/game', '*.pdef', filt_game),
-        ('', './racing/game', '*.rst', filt_game),
+        ('', './racing/game', '*.rst *.css_t *.conf', filt_game),
         ('html', './racing/game', '*.html', filt_game),
-        ('javascript', './racing/game', '*.js', filt_game),
-        ('', './racing/game', '*.css_t', filt_game),
-        ('', './racing/game', '*.conf', filt_game)
-        ]
-}
+        ('javascript', './racing/game', '*.js', filt_game)]}
 env['PDF_CONF'] = pdf_conf
 
 cond_racing = lambda s: not str(s).startswith('racing') or str(s).startswith('racing/game/')

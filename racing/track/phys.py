@@ -1,6 +1,6 @@
 from panda3d.bullet import BulletRigidBodyNode, BulletTriangleMesh, \
     BulletTriangleMeshShape, BulletGhostNode
-from racing.game.gameobject import Phys
+from racing.game.gameobject.gameobject import Phys
 
 
 class _Phys(Phys):
@@ -44,9 +44,9 @@ class _Phys(Phys):
                     for _geom in [g.decompose() for g in geom.node().getGeoms()]:
                         mesh.addGeom(_geom, ts)
                     shape = BulletTriangleMeshShape(mesh, dynamic=False)
-                    np = eng.phys_mgr.world_np.attachNewNode(BulletRigidBodyNode(geom.get_name()))
+                    np = eng.gfx.world_np.attachNewNode(BulletRigidBodyNode(geom.get_name()))
                     np.node().addShape(shape)
-                    eng.phys_mgr.world_phys.attachRigidBody(np.node())
+                    eng.phys.world_phys.attachRigidBody(np.node())
                     np.node().notifyCollisions(True)
 
         for geom_name in ['Wall']:
@@ -59,9 +59,9 @@ class _Phys(Phys):
                     for _geom in [g.decompose() for g in geom.node().getGeoms()]:
                         mesh.addGeom(_geom, ts)
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
-                np = eng.phys_mgr.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
+                np = eng.gfx.world_np.attachNewNode(BulletRigidBodyNode(geom_name))
                 np.node().addShape(shape)
-                eng.phys_mgr.world_phys.attachRigidBody(np.node())
+                eng.phys.world_phys.attachRigidBody(np.node())
                 np.node().notifyCollisions(True)
 
         for geom_name in ['Goal']:
@@ -76,8 +76,8 @@ class _Phys(Phys):
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
                 ghost = BulletGhostNode(geom_name)
                 ghost.addShape(shape)
-                ghostNP = eng.phys_mgr.world_np.attachNewNode(ghost)
-                eng.phys_mgr.world_phys.attachGhost(ghost)
+                ghostNP = eng.gfx.world_np.attachNewNode(ghost)
+                eng.phys.world_phys.attachGhost(ghost)
                 ghostNP.node().notifyCollisions(True)
 
         for geom_name in ['Slow']:
@@ -92,8 +92,8 @@ class _Phys(Phys):
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
                 ghost = BulletGhostNode(geom_name)
                 ghost.addShape(shape)
-                ghostNP = eng.phys_mgr.world_np.attachNewNode(ghost)
-                eng.phys_mgr.world_phys.attachGhost(ghost)
+                ghostNP = eng.gfx.world_np.attachNewNode(ghost)
+                eng.phys.world_phys.attachGhost(ghost)
                 ghostNP.node().notifyCollisions(True)
 
         for geom_name in ['Respawn']:
@@ -108,9 +108,9 @@ class _Phys(Phys):
                 shape = BulletTriangleMeshShape(mesh, dynamic=False)
                 ghost = BulletGhostNode(geom_name)
                 ghost.addShape(shape)
-                ghostNP = eng.phys_mgr.world_np.attachNewNode(ghost)
-                eng.phys_mgr.world_phys.attachGhost(ghost)
+                ghostNP = eng.gfx.world_np.attachNewNode(ghost)
+                eng.phys.world_phys.attachGhost(ghost)
                 ghostNP.node().notifyCollisions(True)
 
     def destroy(self):
-        eng.phys_mgr.stop()
+        eng.phys.stop()

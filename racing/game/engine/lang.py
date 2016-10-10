@@ -6,11 +6,11 @@ class LangMgr(object):
     '''This class defines the manager of translations.'''
 
     def __init__(self):
-        self.domain = eng.conf.lang_domain
-        self.path = eng.conf.lang_path
-        self.languages = eng.conf.languages
-        self.curr_lang = eng.conf.lang
-        self.set_lang(eng.conf.lang)
+        self.domain = eng.logic.conf.lang_domain
+        self.path = eng.logic.conf.lang_path
+        self.languages = eng.logic.conf.languages
+        self.curr_lang = eng.logic.conf.lang
+        self.set_lang(eng.logic.conf.lang)
 
     @property
     def lang_codes(self):

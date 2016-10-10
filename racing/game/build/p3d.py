@@ -2,7 +2,7 @@
 from os import remove, system, path as os_path
 from os.path import dirname, realpath
 from shutil import move
-from .build import ver, has_super_mirror, path, ptools_path
+from .build import ver, path
 
 
 def build_p3d(target, source, env):
@@ -10,6 +10,7 @@ def build_p3d(target, source, env):
     `p3d <http://www.panda3d.org/manual/index.php/Introduction_to_p3d_files>`_
     file of the game.'''
     name = env['NAME']
+    mirr = env['SUPERMIRROR']
     start_dir = os_path.abspath('.') + '/'
     file_path = dirname(realpath(__file__))
     curr_path = dirname(realpath(file_path))
@@ -21,11 +22,11 @@ def build_p3d(target, source, env):
         version=ver, Name=name.capitalize(), name=name,
         curr_path=file_path + '/', eng_path=eng_path)
     system(sed_cmd)
-    if has_super_mirror:
+    if mirr:
         cmd_template = 'panda3d -M {ptools_path} ' + \
             '{ptools_path}/ppackage1.9.p3d -S {ptools_path}/mycert.pem ' + \
             '-i {path} {name}.pdef'
-        cmd_str = cmd_template.format(ptools_path=ptools_path, path=path,
+        cmd_str = cmd_template.format(ptools_path=mirr, path=path,
                                       name=name)
     else:
         cmd_str = 'ppackage -i %s %s.pdef' % (path, name)

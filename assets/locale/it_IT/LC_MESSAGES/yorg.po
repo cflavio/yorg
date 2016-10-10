@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:76
+#: yorg.py:84
 msgid ""
 "LOADING...\n"
 "\n"
@@ -27,27 +27,27 @@ msgstr ""
 "\n"
 "ATTENDERE PREGO, SERVE TEMPO... :)"
 
-#: menu.py:36
+#: menu.py:37
 msgid "Single Player"
 msgstr ""
 
-#: menu.py:37
+#: menu.py:38
 msgid "Multiplayer"
 msgstr ""
 
-#: menu.py:38
+#: menu.py:39
 msgid "Options"
 msgstr "Opzioni"
 
-#: menu.py:39
+#: menu.py:40
 msgid "Credits"
 msgstr "Riconoscimenti"
 
-#: menu.py:40
+#: menu.py:41
 msgid "Quit"
 msgstr "Esci"
 
-#: menu.py:142
+#: menu.py:146
 msgid "Start"
 msgstr ""
 
@@ -55,23 +55,23 @@ msgstr ""
 msgid "connection from "
 msgstr ""
 
-#: menu.py:174
+#: menu.py:177
 msgid "Client"
 msgstr ""
 
-#: menu.py:184
+#: menu.py:186
 msgid "Connect"
 msgstr ""
 
-#: menu.py:201
+#: menu.py:199
 msgid "Waiting for the server"
 msgstr ""
 
-#: menu.py:204
+#: menu.py:202
 msgid "Error"
 msgstr ""
 
-#: menu.py:325
+#: menu.py:350
 msgid ""
 "Please, really consider enabling this option to see our news.\n"
 "We hope you will find interesting stuff there.\n"
@@ -82,11 +82,11 @@ msgstr ""
 "Speriamo che ci troverai roba interessante.\n"
 "Inoltre, è così che possiamo mantenere Yorg gratis."
 
-#: menu.py:505
+#: menu.py:526
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:506
+#: menu.py:527
 msgid "Art"
 msgstr "Grafica"
 

@@ -1,8 +1,8 @@
 """ In this module there will be all classes related
 to the game abstract class """
 from abc import ABCMeta
-from racing.game.gameobject import Logic, GameObjectMdt
-from .engine import Engine
+from .gameobject.gameobject import Logic, GameObjectMdt
+from .engine.engine import Engine
 import __builtin__
 
 
@@ -11,10 +11,6 @@ class GameLogic(Logic):
 
     def on_start(self):
         '''Called at the start.'''
-        pass
-
-    def on_frame(self):
-        '''Called on each frame.'''
         pass
 
     def on_end(self):
@@ -31,7 +27,6 @@ class Game(GameObjectMdt):
         __builtin__.game = self
         eng = Engine(conf)
         GameObjectMdt.__init__(self)
-        eng.gui_mgr.register_close_cb(self.logic.on_end)
+        eng.event.register_close_cb(self.logic.on_end)
         self.logic.on_start()
-        eng.attach(self, self.logic.on_frame)
-        eng.run()
+        eng.base.run()

@@ -1,15 +1,16 @@
 '''OSX build.'''
 from os import system
 from shutil import rmtree
-from .build import ver, path, ver_branch, build_command_str
+from .build import ver, path, ver_branch, bld_cmd
 
 
 def build_osx(target, source, env):
     '''This function builds the OSX installer.'''
     name = env['NAME']
+    mirr = env['SUPERMIRROR']
     nointernet = '-s' if env['NOINTERNET'] else ''
     int_str = '-nointernet' if env['NOINTERNET'] else ''
-    build_command = build_command_str.format(
+    build_command = bld_cmd(mirr).format(
         path=path, name=name, Name=name.capitalize(), version=ver,
         p3d_path=env['P3D_PATH'], platform='osx_i386', nointernet=nointernet)
     system(build_command)

@@ -30,40 +30,23 @@ def __get_version():
     return __get_branch()+'-'+date[2:4]+date[5:7]+date[8:10]
 
 
-path = 'built/'
-try:
-    ver_branch = {'master': 'dev', 'stable': 'stable'}[__get_branch()]
-except KeyError:
-    ver_branch = __get_branch()
-ver = __get_version()
-p3d_path_str = '{path}{name}-%s.p3d' % ver_branch
-win_path_str = '{path}{name}-%s-windows.exe' % ver_branch
-osx_path_str = '{path}{name}-%s-osx.zip' % ver_branch
-linux_path_str = '{path}{name}-%s-linux_{platform}' % ver_branch
-win_path_noint_str = '{path}{name}-%s-nointernet-windows.exe' % ver_branch
-osx_path_noint_str = '{path}{name}-%s-nointernet-osx.zip' % ver_branch
-linux_path_noint_str = '{path}{name}-%s-nointernet-linux_{platform}' % \
-    ver_branch
-src_path_str = '{path}{name}-%s-src.tar.gz' % ver_branch
-devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
-devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
-docs_path_str = '{path}{name}-%s-docs.tar.gz' % ver_branch
-pdf_path_str = '{path}{name}-%s-code.tar.gz' % ver_branch
+def bld_cmd_pref(ptools_path):
+    '''The prefix of a build command.'''
+    has_super_mirror = os_path.exists(ptools_path)
+    bld_cmd_mir_tmpl = 'panda3d -M {ptools} {ptools}/pdeploy1.9.p3d '
+    bld_cmd_mir = bld_cmd_mir_tmpl.format(ptools=ptools_path)
+    return bld_cmd_mir if has_super_mirror else 'pdeploy '
 
-home = '/home/flavio'  # expanduser('~') TODO: don't hardcode that
-ptools_path = home+'/runtime_panda3d'
-has_super_mirror = os_path.exists(ptools_path)
-bld_cmd_mir_tmpl = 'panda3d -M {ptools} {ptools}/pdeploy1.9.p3d '
-bld_cmd_mir = bld_cmd_mir_tmpl.format(ptools=ptools_path)
 
-build_command_prefix = bld_cmd_mir if has_super_mirror else 'pdeploy '
-build_command_str = (
-    build_command_prefix +
-    '-o  {path} {nointernet} -n {name} -N {Name} -v {version} -a ya2.it -A '
-    '"Ya2" -l "GPLv3" -L license.txt -e flavio@ya2.it -t width=800 '
-    "-t height=600 -P {platform} -i '%s16_png.png' -i '%s32_png.png' "
-    "-i '%s48_png.png' -i '%s128_png.png' -i '%s256_png.png' {p3d_path} "
-    "installer") % (('assets/images/icon/icon',) * 5)
+def bld_cmd(ptools_path):
+    '''A build command based on tools' path.'''
+    return (
+        bld_cmd_pref(ptools_path) +
+        '-o  {path} {nointernet} -n {name} -N {Name} -v {version} -a ya2.it '
+        '-A "Ya2" -l "GPLv3" -L license.txt -e flavio@ya2.it -t width=800 '
+        "-t height=600 -P {platform} -i '%s16_png.png' -i '%s32_png.png' "
+        "-i '%s48_png.png' -i '%s128_png.png' -i '%s256_png.png' {p3d_path} "
+        "installer") % (('assets/images/icon/icon',) * 5)
 
 
 extensions = ['txt', 'ttf', 'dds', 'egg', 'ogg', 'py', 'lua', 'rst', 'pdef',
@@ -115,3 +98,24 @@ class InsideDir(object):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         chdir(self.old_dir)
+
+
+path = 'built/'
+try:
+    ver_branch = {'master': 'dev', 'stable': 'stable'}[__get_branch()]
+except KeyError:
+    ver_branch = __get_branch()
+ver = __get_version()
+p3d_path_str = '{path}{name}-%s.p3d' % ver_branch
+win_path_str = '{path}{name}-%s-windows.exe' % ver_branch
+osx_path_str = '{path}{name}-%s-osx.zip' % ver_branch
+linux_path_str = '{path}{name}-%s-linux_{platform}' % ver_branch
+win_path_noint_str = '{path}{name}-%s-nointernet-windows.exe' % ver_branch
+osx_path_noint_str = '{path}{name}-%s-nointernet-osx.zip' % ver_branch
+linux_path_noint_str = '{path}{name}-%s-nointernet-linux_{platform}' % \
+    ver_branch
+src_path_str = '{path}{name}-%s-src.tar.gz' % ver_branch
+devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
+devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
+docs_path_str = '{path}{name}-%s-docs.tar.gz' % ver_branch
+pdf_path_str = '{path}{name}-%s-code.tar.gz' % ver_branch

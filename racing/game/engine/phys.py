@@ -1,17 +1,15 @@
 '''This module provides physics functionalities.'''
 from panda3d.bullet import BulletWorld, BulletDebugNode
-from .observer import Subject
+from ..gameobject.gameobject import Phys
 
 
-class PhysMgr(Subject):
+class EnginePhys(Phys):
     '''This class models the physics manager.'''
 
-    def __init__(self):
-        '''Inits the engine.'''
-        Subject.__init__(self)
+    def __init__(self, mdt):
+        Phys.__init__(self, mdt)
         self.collision_objs = []  # objects to be tested
         self.__coll_dct = {}  # obj: [(node, coll_time), ...]
-        self.world_np = None
         self.world_phys = None
         self.__debug_np = None
 
@@ -19,7 +17,6 @@ class PhysMgr(Subject):
         '''Inits the physics.'''
         self.collision_objs = []
         self.__coll_dct = {}
-        self.world_np = render.attachNewNode('world')
         self.world_phys = BulletWorld()
         self.world_phys.setGravity((0, 0, -9.81))
         debug_node = BulletDebugNode('Debug')
@@ -29,20 +26,18 @@ class PhysMgr(Subject):
 
     def start(self):
         '''Starts the physics.'''
-        eng.attach(self, self.__on_frame, 1)
+        eng.event.attach(self.__on_frame, 1)
 
     def __on_frame(self):
         '''Called on each frame.'''
-        d_t = globalClock.getDt()
-        self.world_phys.doPhysics(d_t, 10, 1/180.0)
+        self.world_phys.doPhysics(globalClock.getDt(), 10, 1/180.0)
         self.__do_collisions()
 
     def stop(self):
-        '''Stops the engine.'''
+        '''Stops the physics.'''
         self.world_phys = None
-        self.world_np.removeNode()
         self.__debug_np.removeNode()
-        eng.detach(self)
+        eng.event.detach(self.__on_frame)
 
     def __process_contact(self, obj, node, to_clear):
         '''Processes a physics contact.'''

@@ -1,15 +1,16 @@
 '''Windows build.'''
 from os import system
 from shutil import move, rmtree
-from .build import ver, path, ver_branch, build_command_str
+from .build import ver, path, ver_branch, bld_cmd
 
 
 def build_windows(target, source, env):
     '''This function builds the Windows installer.'''
     name = env['NAME']
+    mirr = env['SUPERMIRROR']
     nointernet = '-s' if env['NOINTERNET'] else ''
     int_str = '-nointernet' if env['NOINTERNET'] else ''
-    build_command = build_command_str.format(
+    build_command = bld_cmd(mirr).format(
         path=path,
         name=name,
         Name=name.capitalize(),

@@ -3,18 +3,29 @@ from panda3d.core import getModelPath, LightRampAttrib, PandaNode, NodePath, \
     AntialiasAttrib
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.filter.CommonFilters import CommonFilters
+from ..gameobject.gameobject import Gfx
 
 
-class GfxMgr(object):
+class EngineGfx(Gfx):
     '''This class models the graphics manager.'''
 
-    def __init__(self):
-        getModelPath().appendDirectory(eng.conf.model_path)
-        eng.enableParticles()
+    def __init__(self, mdt):
+        Gfx.__init__(self, mdt)
+        getModelPath().appendDirectory(eng.logic.conf.model_path)
+        mdt.base.enableParticles()
         render.setShaderAuto()
         render.setTwoSided(True)
-        if eng.conf.antialiasing:
+        if eng.logic.conf.antialiasing:
             render.setAntialias(AntialiasAttrib.MAuto)
+        self.world_np = None
+
+    def init(self):
+        '''Inits the graphics.'''
+        self.world_np = render.attachNewNode('world')
+
+    def clean(self):
+        '''Destroys the graphics.'''
+        self.world_np.removeNode()
 
     @staticmethod
     def __set_toon():

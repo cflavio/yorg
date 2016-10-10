@@ -1,4 +1,4 @@
-from racing.game.gameobject import Logic
+from racing.game.gameobject.gameobject import Logic
 from panda3d.core import Vec3, Vec2, deg2Rad, Point3
 import math
 
@@ -168,7 +168,7 @@ class _Logic(Logic):
 
     def get_closest(self, pos, tgt=None):
         tgt = tgt or self.mdt.gfx.nodepath.getPos()
-        result = eng.phys_mgr.world_phys.rayTestClosest(pos, tgt)
+        result = eng.phys.world_phys.rayTestClosest(pos, tgt)
         if result.hasHit():
             return result
 
@@ -187,7 +187,7 @@ class _Logic(Logic):
         #car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         #car_vec.normalize()
 
-        fwd_vec = eng.render.getRelativeVector(self.mdt.gfx.nodepath, Vec3(0, 1, 0))
+        fwd_vec = eng.base.render.getRelativeVector(self.mdt.gfx.nodepath, Vec3(0, 1, 0))
         fwd_vec.normalize()
 
         car_pos = self.mdt.gfx.nodepath.getPos()
@@ -234,9 +234,9 @@ class _Logic(Logic):
             else:
                 sign = 1 if tgt > cam_pos else -1
                 return cam_pos + sign * curr_incr
-        new_x = new_pos(eng.camera.getX(), self.tgt_x)
-        new_y = new_pos(eng.camera.getY(), self.tgt_y)
-        new_z = new_pos(eng.camera.getZ(), self.tgt_z)
+        new_x = new_pos(eng.base.camera.getX(), self.tgt_x)
+        new_y = new_pos(eng.base.camera.getY(), self.tgt_y)
+        new_z = new_pos(eng.base.camera.getZ(), self.tgt_z)
 
         # overwrite camera's position to set the physics
         #new_x = car_pos.x + 10
@@ -244,8 +244,8 @@ class _Logic(Logic):
         #new_z = car_pos.z + 5
 
         if not self.is_rolling:
-            eng.camera.setPos(new_x, new_y, new_z)
-        eng.camera.look_at(
+            eng.base.camera.setPos(new_x, new_y, new_z)
+        eng.base.camera.look_at(
             self.tgt_look_x, self.tgt_look_y, self.tgt_look_z + delta_cam_z)
 
     @property

@@ -1,7 +1,7 @@
 from panda3d.core import TextNode
 from direct.gui.OnscreenText import OnscreenText
-from racing.game.gameobject import Gui
-from racing.game.gui.imgbtn import ImageButton
+from racing.game.gameobject.gameobject import Gui
+from racing.game.engine.gui.imgbtn import ImageButton
 from direct.gui.OnscreenImage import OnscreenImage
 from racing.game.dictfile import DictFile
 
@@ -14,30 +14,30 @@ class _Gui(Gui):
         self.track = track
         self.debug_txt = OnscreenText(
             '', pos=(-.1, .1), scale=0.05, fg=(1, 1, 1, 1),
-            parent=eng.a2dBottomRight, align=TextNode.ARight,
+            parent=eng.base.a2dBottomRight, align=TextNode.ARight,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.__wip_txt = OnscreenText(
             _('work in progress'), pos=(.1, .1), scale=0.05, fg=(1, 1, 1, 1),
-            parent=eng.a2dBottomLeft, align=TextNode.ALeft,
+            parent=eng.base.a2dBottomLeft, align=TextNode.ALeft,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.__countdown_txt = OnscreenText(
             '', pos=(0, 0), scale=.2, fg=(1, 1, 1, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.__keys_img = OnscreenImage(
-            image='assets/images/gui/keys.png', parent=eng.a2dTopLeft,
+            image='assets/images/gui/keys.png', parent=eng.base.a2dTopLeft,
             pos=(.7, 1, -.4), scale=(.6, 1, .3))
         self.__keys_img.setTransparency(True)
         self.way_txt = OnscreenText(
             '', pos=(.1, .4), scale=0.1, fg=(1, 1, 1, 1),
-            parent=eng.a2dBottomLeft, align=TextNode.ALeft,
+            parent=eng.base.a2dBottomLeft, align=TextNode.ALeft,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.countdown_cnt = 3
         self.minimap = OnscreenImage(
             'assets/images/minimaps/%s.jpg' % track, pos=(-.25, 1, .25),
-            scale=.2, parent=eng.a2dBottomRight)
+            scale=.2, parent=eng.base.a2dBottomRight)
         self.car_handle = OnscreenImage(
             'assets/images/minimaps/car_handle.png', pos=(-.25, 1, .25),
-            scale=.03, parent=eng.a2dBottomRight)
+            scale=.03, parent=eng.base.a2dBottomRight)
         self.car_handle.setTransparency(True)
         self.set_corners()
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
@@ -118,7 +118,7 @@ class _Gui(Gui):
             ImageButton(scale=.1,
                         pos=(.02 + i*.15, 1, -.62), frameColor=(0, 0, 0, 0),
                         image='assets/images/icons/%s_png.png' % site[0],
-                        command=eng.open_browser, extraArgs=[site[1]],
+                        command=eng.gui.open_browser, extraArgs=[site[1]],
                         rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
                         clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, site in enumerate(sites)]

@@ -44,10 +44,8 @@ def build_devinfo(target, source, env):
         for src in source:
             with open(('%s%s.txt') % (path, fname), 'a') as outfile:
                 __process(src, cond, outfile)
-    names, rmnames = '', ''
-    for fname in dev_conf:
-        names += fname + '.txt '
-        rmnames += '{path}' + fname + '.txt '
+    names = ''.join([fname + '.txt ' for fname in dev_conf])
+    rmnames = ''.join(['{path}' + fname + '.txt ' for fname in dev_conf])
     build_command_str = \
         'tar -czf {out_name} -C {path} ' + names + ' && rm ' + rmnames
     fpath = devinfo_path_str.format(path=path, name=name, version=ver_branch)
