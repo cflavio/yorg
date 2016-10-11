@@ -7,9 +7,7 @@ from .build import path, ver_branch, pdf_path_str
 
 def __process(opt_lang, cmd_tmpl, name, i):
     '''Processes a file.'''
-    filt = ''
-    for fil in opt_lang[3]:
-        filt += "-not -path '%s' " % fil
+    filt = ''.join(["-not -path '%s' " % fil for fil in opt_lang[3]])
     lang = ('--pretty-print=' + opt_lang[0]) if opt_lang[0] else ''
     wcard = '-o '.join(["-name '%s' " % wld for wld in opt_lang[2].split()])
     wcard = '\\( %s\\)' % wcard
@@ -22,8 +20,7 @@ def __process(opt_lang, cmd_tmpl, name, i):
             '-sDEVICE=pdfwrite -sOutputFile={name}-joined.pdf ' + \
             '{name}_append.pdf {name}.pdf'
         system(cmd.format(name=name))
-        remove(name + '.pdf')
-        remove(name + '_append.pdf')
+        map(remove, ['%s%s.pdf' % (name, suff) for suff in ['', '_append']])
         move(name + '-joined.pdf', name + '.pdf')
     else:
         system(cmd)

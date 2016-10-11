@@ -1,3 +1,4 @@
+'''This module defines the FSM for the track.'''
 from racing.game.gameobject.gameobject import Fsm
 
 

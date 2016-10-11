@@ -3,6 +3,7 @@
 
 import sys
 import os
+import datetime
 
 sys.path.insert(0, os.path.abspath('<src_path>'))
 
@@ -13,7 +14,7 @@ extensions = [
 source_suffix = '.rst'
 master_doc = 'index'
 project = u'<name>'
-copyright = u'2016, Ya2'
+copyright = u'%s, Ya2' % datetime.datetime.now().year
 version = '<version>'
 release = '<version>'
 pygments_style = 'sphinx'

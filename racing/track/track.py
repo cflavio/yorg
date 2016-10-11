@@ -1,12 +1,12 @@
 ''''In this module we define the track class.'''
 from abc import ABCMeta
 from racing.game.gameobject.gameobject import GameObjectMdt
-from gfx import _Gfx
-from phys import _Phys
-from gui import _Gui
-from event import _Event
-from audio import _Audio
-from fsm import _Fsm
+from .gfx import _Gfx
+from .phys import _Phys
+from .gui import _Gui
+from .event import _Event
+from .audio import _Audio
+from .fsm import _Fsm
 
 
 class Track(GameObjectMdt):
@@ -22,7 +22,9 @@ class Track(GameObjectMdt):
     def __init__(self, track_path, cb):
         eng.log_mgr.log('init track')
         self.fsm = self.fsm_cls(self)
+
         def post_gfx():
+            '''Called after the graphics.'''
             self.phys = self.phys_cls(self)
             self.gui = self.gui_cls(self, track_path[13:])
             self.logic = self.logic_cls(self)

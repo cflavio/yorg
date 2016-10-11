@@ -3,7 +3,6 @@ from sys import platform
 from os import environ, system
 from webbrowser import open_new_tab
 from panda3d.core import WindowProperties
-from direct.gui.DirectFrame import DirectFrame
 from ...gameobject.gameobject import Gui
 
 
@@ -18,16 +17,6 @@ class EngineGui(Gui):
         if eng.logic.conf.fullscreen:
             self.toggle_fullscreen()
         self.pause_frame = None
-
-    def toggle_pause(self):
-        '''Toggles the pause.'''
-        p_mgr = self.mdt.pause_mgr
-        if not p_mgr.is_paused:
-            self.pause_frame = DirectFrame(frameColor=(.3, .3, .3, .7),
-                                           frameSize=(-1.8, 1.8, -1, 1))
-        else:
-            self.pause_frame.destroy()
-        (p_mgr.resume if p_mgr.is_paused else p_mgr.pause)()
 
     @staticmethod
     def open_browser(url):

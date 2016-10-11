@@ -19,15 +19,12 @@ def build_docs(target, source, env):
         '-e "s/<src_path>/{src_path}/" -e "s/<version>/{version}/" ' + \
         '{path}docs_apidoc/conf.py'
     system(cmd_tmpl.format(
-        name=name.capitalize(),
-        version=ver_branch,
-        path=path,
+        name=name.capitalize(), version=ver_branch, path=path,
         src_path=curr_path))
     system('sphinx-apidoc -o %sdocs_apidoc .' % path)
     system("sed -i 1s/./Modules/ %sdocs_apidoc/modules.rst" % path)
     system('sphinx-build -b html %sdocs_apidoc %sdocs' % (path, path))
     build_command_str = 'tar -C {path} -czf {out_name} ./docs'
     f_out = docs_path_str.format(path=path, name=name, version=ver_branch)
-    build_command = build_command_str.format(path=path, out_name=f_out)
-    system(build_command)
+    system(build_command_str.format(path=path, out_name=f_out))
     map(rmtree, [path+'docs_apidoc', path+'docs'])

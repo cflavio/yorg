@@ -1,49 +1,23 @@
-'''In this module we define the global game classes.'''
-from racing.game.engine.engine import Engine
 from racing.car.car import Car, PlayerCar, NetworkCar
-from menu import YorgMenu
 from racing.track.track import Track
 from racing.game.game import Game, GameLogic
 from racing.game.gameobject.gameobject import Event, Fsm, Audio
-import time
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.OnscreenText import OnscreenText
 from racing.track.gfx import _Gfx as TrackGfx
 from racing.car.gfx import _Gfx as CarGfx
 from panda3d.core import NodePath, TextNode
 from direct.interval.LerpInterval import LerpHprInterval
-from racing.game.dictfile import DictFile
-from racing.game.engine.configuration import Configuration
-from sys import exit
+from racing.game.engine.gui.mainpage import MainPage, MainPageGui
+from racing.game.engine.gui.page import Page, PageEvent, PageGui
+from racing.game.gameobject.gameobject import Fsm
+from menu.menu import YorgMenu
 
 
 class NetMsgs:
 
     client_ready = 0
     start_race = 1
-
-
-class _Event(Event):
-    '''This class manages the events of the game.'''
-
-    def __init__(self, mdt):
-        Event.__init__(self, mdt)
-        self.accept('f12', eng.phys.toggle_debug)
-        now = time.strftime('%y_%m_%d_%H_%M_%S')
-        self.accept('f10', eng.base.win.saveScreenshot, ['yorg_' + now + '.png'])
-
-    def on_end(self):
-        if self.mdt.options['open_browser_at_exit']:
-            eng.open_browser('http://www.ya2.it')
-
-
-class _Audio(Audio):
-
-    def __init__(self, mdt):
-        Audio.__init__(self, mdt)
-        self.menu_music = loader.loadSfx('assets/music/menu.ogg')
-        self.game_music = loader.loadSfx('assets/music/on_the_other_side.ogg')
-        map(lambda mus: mus.set_loop(True), [self.menu_music, self.game_music])
 
 
 class _Fsm(Fsm):
@@ -58,7 +32,7 @@ class _Fsm(Fsm):
 
     def enterMenu(self):
         eng.log_mgr.log('entering Menu state')
-        self.__menu = YorgMenu(self)
+        self.__menu = YorgMenu()
         self.mdt.audio.menu_music.play()
 
     def exitMenu(self):
@@ -123,9 +97,9 @@ class _Fsm(Fsm):
                    cars.remove(car)
                    car_class = Car
                    ai = True
-                   if hasattr(game.logic, 'srv') and game.logic.srv:
+                   if eng.server.is_active:
                        car_class = NetworkCar if car in player_cars else Car
-                   if hasattr(game.logic, 'client') and game.logic.client:
+                   if eng.client.is_active:
                        car_class = NetworkCar
                    self.mdt.cars += [
                        car_class('cars/' + car,
@@ -154,13 +128,13 @@ class _Fsm(Fsm):
         self.mdt.track.gfx.model.reparentTo(render)
         self.mdt.player_car.gfx.reparent()
         map(lambda car: car.gfx.reparent(), self.mdt.cars)
-        if hasattr(game.logic, 'srv') and game.logic.srv:
+        if eng.server.is_active:
             self.ready_clients = []
-            game.logic.srv.register_cb(self.process_srv)
-        elif hasattr(game.logic, 'client') and game.logic.client:
-            game.logic.client.register_cb(self.process_client)
+            eng.server.register_cb(self.process_srv)
+        elif eng.client.is_active:
+            eng.client.register_cb(self.process_client)
             def send_ready(task):
-                game.logic.client.send([NetMsgs.client_ready])
+                eng.client.send([NetMsgs.client_ready])
                 eng.log_mgr.log('sent client ready')
                 return task.again
             self.send_tsk = taskMgr.doMethodLater(.5, send_ready, 'send ready')
@@ -173,9 +147,9 @@ class _Fsm(Fsm):
         if data_lst[0] == NetMsgs.client_ready:
             eng.log_mgr.log('client ready: ' + sender.getAddress().getIpString())
             self.ready_clients += [sender]
-            if all(client in self.ready_clients for client in game.logic.srv.connections):
+            if all(client in self.ready_clients for client in eng.server.connections):
                 self.start_play()
-                game.logic.srv.send([NetMsgs.start_race])
+                eng.server.send([NetMsgs.start_race])
 
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.start_race:
@@ -193,12 +167,12 @@ class _Fsm(Fsm):
 
     def exitPlay(self):
         eng.log_mgr.log('exiting Play state')
-        if hasattr(game.logic, 'srv') and game.logic.srv:
-            game.logic.srv.destroy()
-            game.logic.srv = None
-        elif hasattr(game.logic, 'client') and game.logic.client:
-            game.logic.client.destroy()
-            game.logic.client = None
+        if eng.server.is_active:
+            eng.server.destroy()
+            eng.server = None
+        elif eng.client.is_active:
+            eng.client.destroy()
+            eng.client = None
         self.mdt.audio.game_music.stop()
         self.mdt.track.destroy()
         self.mdt.player_car.destroy()
@@ -233,50 +207,3 @@ class _Fsm(Fsm):
 
     def exitRanking(self):
         map(lambda txt: txt.destroy(), self.ranking_texts)
-
-
-class _Logic(GameLogic):
-    '''This class defines the logics of the game.'''
-
-    def on_start(self):
-        GameLogic.on_start(self)
-        try:
-            car = game.options['car']
-        except KeyError:
-            car = ''
-        try:
-            track = game.options['track']
-        except KeyError:
-            track = ''
-        if car and track:
-            self.mdt.fsm.demand('Loading', 'tracks/track_' + track, car)
-        else:
-            self.mdt.fsm.demand('Menu')
-        base.accept('escape-up', self.on_exit)
-
-    def on_exit(self):
-        if game.options['open_browser_at_exit']:
-            eng.open_browser('http://www.ya2.it')
-        exit()
-
-
-class Yorg(Game):
-    logic_cls = _Logic
-    event_cls = _Event
-    fsm_cls = _Fsm
-    audio_cls = _Audio
-
-    def __init__(self):
-        default_opt = {
-            'lang': 'en', 'volume': 1, 'fullscreen': 0,
-            'resolution': '1280 720', 'aa': 0,
-            'multithreaded_render': 0, 'open_browser_at_exit': 1,
-            'ai': 0, 'submodels': 1, 'split_world': 1, 'laps': 3, 'fps': 1}
-        self.options = DictFile('options.yml', default_opt)
-        conf = Configuration(
-            fps=self.options['fps'], win_title='Yorg',
-            win_size=self.options['resolution'],
-            fullscreen=self.options['fullscreen'],
-            antialiasing=self.options['aa'], lang=self.options['lang'],
-            mt_render=self.options['multithreaded_render'], lang_domain='yorg')
-        Game.__init__(self, conf)

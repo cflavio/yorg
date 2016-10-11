@@ -10,8 +10,12 @@ class ClientError(Exception):
 class Client(AbsNetwork):
     '''This class models the client.'''
 
-    def __init__(self, reader_cb, server_address):
-        AbsNetwork.__init__(self, reader_cb)
+    def __init__(self, mdt):
+        AbsNetwork.__init__(self, mdt)
+        self.conn = None
+
+    def start(self, reader_cb, server_address):
+        AbsNetwork.start(self, reader_cb)
         args = (server_address, 9099, 3000)
         self.conn = self.c_mgr.openTCPClientConnection(*args)
         if not self.conn:

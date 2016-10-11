@@ -2,7 +2,7 @@
 from os import path
 from panda3d.core import MultiplexStream, Notify
 import sys
-from yorg import Yorg
+from yorg.yorg import Yorg
 from racing.game.dictfile import DictFile
 
 

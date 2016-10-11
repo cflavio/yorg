@@ -4,12 +4,30 @@ import os
 import sys
 from direct.task import Task
 from direct.interval.IntervalGlobal import ivalMgr
+from direct.gui.DirectFrame import DirectFrame
+from ..gameobject.gameobject import Gui, Logic, GameObjectMdt, Colleague
 
 
-class PauseMgr(object):
-    '''This class manages the pause.'''
+class PauseGui(Gui):
+    '''This class defines the GUI of the pause.'''
 
-    def __init__(self):
+    def __init__(self, mdt):
+        Gui.__init__(self, mdt)
+
+    def toggle(self):
+        '''Toggles the pause.'''
+        if not self.mdt.logic.is_paused:
+            self.pause_frame = DirectFrame(frameColor=(.3, .3, .3, .7),
+                                           frameSize=(-1.8, 1.8, -1, 1))
+        else:
+            self.pause_frame.destroy()
+
+
+class PauseLogic(Logic):
+    '''This class defines the logic of the pause.'''
+
+    def __init__(self, mdt):
+        Logic.__init__(self, mdt)
         self.paused_taskchain = 'ya2 paused tasks'
         taskMgr.setupTaskChain(self.paused_taskchain, frameBudget=0)
         self.is_paused = False
@@ -102,3 +120,25 @@ class PauseMgr(object):
         base.enableParticles()
         self.is_paused = False
         return self.is_paused
+
+    def toggle(self):
+        '''Toggles the pause.'''
+        self.mdt.gui.toggle()
+        (self.resume if self.is_paused else self.pause)()
+
+
+class PauseMgr(GameObjectMdt, Colleague):
+    '''This class manages the pause.'''
+    logic_cls = PauseLogic
+    gui_cls = PauseGui
+
+    def __init__(self, mdt):
+        Colleague.__init__(self, mdt)
+        self.fsm = self.fsm_cls(self)
+        self.gfx = self.gfx_cls(self)
+        self.phys = self.phys_cls(self)
+        self.gui = self.gui_cls(self)
+        self.logic = self.logic_cls(self)
+        self.audio = self.audio_cls(self)
+        self.ai = self.ai_cls(self)
+        self.event = self.event_cls(self)

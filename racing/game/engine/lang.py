@@ -1,11 +1,13 @@
 '''This module contains utilies for managing translations.'''
 from gettext import install, translation
+from ..gameobject.gameobject import Colleague
 
 
-class LangMgr(object):
+class LangMgr(Colleague):
     '''This class defines the manager of translations.'''
 
-    def __init__(self):
+    def __init__(self, mdt):
+        Colleague.__init__(self, mdt)
         self.domain = eng.logic.conf.lang_domain
         self.path = eng.logic.conf.lang_path
         self.languages = eng.logic.conf.languages

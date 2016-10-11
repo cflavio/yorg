@@ -31,14 +31,9 @@ class PageGui(Gui):
 
     def __build_back_btn(self):
         '''Sets the back button.'''
-        menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         self.widgets += [DirectButton(
-            text='', scale=menu_args.text_scale, pos=(0, 1, -.8),
-            text_font=menu_gui.font,
-            text_fg=menu_args.text_fg, command=self.__on_back,
-            frameColor=menu_args.btn_color, frameSize=menu_args.btn_size,
-            rolloverSound=menu_gui.rollover, clickSound=menu_gui.click)]
+            text='', pos=(0, 1, -.8), command=self.__on_back,
+            **self.menu.gui.btn_args)]
         PageGui.transl_text(self.widgets[-1], 'Back')
         self.widgets[-1]['text'] = self.widgets[-1].transl_text
 

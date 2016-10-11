@@ -1,3 +1,4 @@
+'''This module provides the logic of a car.'''
 from racing.game.gameobject.gameobject import Logic
 from panda3d.core import Vec3, Vec2, deg2Rad, Point3
 import math
@@ -20,6 +21,12 @@ class _Logic(Logic):
 
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
+        self.tgt_y = None
+        self.tgt_x = None
+        self.tgt_look_x = None
+        self.tgt_z = None
+        self.tgt_look_z = None
+        self.tgt_look_y = None
         self.__steering = 0  # degrees
         self.last_time_start = 0
         self.last_roll_ok_time = None
@@ -36,19 +43,24 @@ class _Logic(Logic):
         steering_dec = d_t * self.mdt.phys.steering_dec
 
         speed_ratio = self.mdt.phys.speed_ratio
-        steering_range = self.mdt.phys.steering_min_speed - self.mdt.phys.steering_max_speed
-        steering_clamp = self.mdt.phys.steering_min_speed - speed_ratio * steering_range
+        steering_range = self.mdt.phys.steering_min_speed - \
+            self.mdt.phys.steering_max_speed
+        steering_clamp = self.mdt.phys.steering_min_speed - \
+            speed_ratio * steering_range
 
         if input_dct['forward'] and input_dct['reverse']:
-            eng_frc = self.mdt.phys.engine_acc_frc if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
+            eng_frc = self.mdt.phys.engine_acc_frc \
+                if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
             brake_frc = self.mdt.phys.brake_frc
 
         if input_dct['forward'] and not input_dct['reverse']:
-            eng_frc = self.mdt.phys.engine_acc_frc if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
+            eng_frc = self.mdt.phys.engine_acc_frc \
+                if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
             brake_frc = 0
 
         if input_dct['reverse'] and not input_dct['forward']:
-            eng_frc = self.mdt.phys.engine_dec_frc if self.mdt.phys.speed < .05 else 0
+            eng_frc = self.mdt.phys.engine_dec_frc \
+                if self.mdt.phys.speed < .05 else 0
             brake_frc = self.mdt.phys.brake_frc
 
         if not input_dct['forward'] and not input_dct['reverse']:
@@ -57,8 +69,8 @@ class _Logic(Logic):
         if input_dct['left']:
             if self.start_left is None:
                 self.start_left = globalClock.getFrameTime()
-            dt = globalClock.getFrameTime() - self.start_left
-            mul = min(1, dt / .1)
+            d_t = globalClock.getFrameTime() - self.start_left
+            mul = min(1, d_t / .1)
             self.__steering += steering_inc * mul
             self.__steering = min(self.__steering, steering_clamp)
         else:
@@ -67,8 +79,8 @@ class _Logic(Logic):
         if input_dct['right']:
             if self.start_right is None:
                 self.start_right = globalClock.getFrameTime()
-            dt = globalClock.getFrameTime() - self.start_right
-            mul = min(1, dt / .1)
+            d_t = globalClock.getFrameTime() - self.start_right
+            mul = min(1, d_t / .1)
             self.__steering -= steering_inc * mul
             self.__steering = max(self.__steering, -steering_clamp)
         else:
@@ -90,18 +102,22 @@ class _Logic(Logic):
             self.__update_wp()
 
     def __update_roll_info(self):
+        '''Updates rolling information.'''
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:
             self.last_roll_ok_time = globalClock.getFrameTime()
         else:
             self.last_roll_ko_time = globalClock.getFrameTime()
 
-    def pt_line_dst(self, pt, line_pt1, line_pt2):
+    @staticmethod
+    def pt_line_dst(point, line_pt1, line_pt2):
+        '''Line distance.'''
         diff1 = line_pt2.get_pos() - line_pt1.get_pos()
-        diff2 = line_pt1.get_pos() - pt.get_pos()
+        diff2 = line_pt1.get_pos() - point.get_pos()
         diff = abs(diff1.cross(diff2).length())
         return diff / abs((line_pt2.get_pos() - line_pt1.get_pos()).length())
 
     def closest_wp(self, pos=None):
+        '''The closest waypoint.'''
         if pos:
             node = render.attachNewNode('pos node')
             node.set_pos(pos)
@@ -114,15 +130,16 @@ class _Logic(Logic):
 
         may_prev = waypoints[curr_wp]
         distances = []
-        for wp in may_prev:
-            distances += [self.pt_line_dst(node, wp, curr_wp)]
+        for waypoint in may_prev:
+            distances += [self.pt_line_dst(node, waypoint, curr_wp)]
         prev_idx = distances.index(min(distances))
         prev_wp = may_prev[prev_idx]
 
-        may_succ = [wp for wp in waypoints if curr_wp in waypoints[wp]]
+        may_succ = [waypoint for waypoint in waypoints
+                    if curr_wp in waypoints[waypoint]]
         distances = []
-        for wp in may_succ:
-            distances += [self.pt_line_dst(node, curr_wp, wp)]
+        for waypoint in may_succ:
+            distances += [self.pt_line_dst(node, curr_wp, waypoint)]
         next_idx = distances.index(min(distances))
         next_wp = may_succ[next_idx]
 
@@ -145,10 +162,12 @@ class _Logic(Logic):
 
     @property
     def current_wp(self):
+        '''The closest waypoint.'''
         return self.closest_wp()
 
     @property
     def car_vec(self):
+        '''Car's vector.'''
         car_rad = deg2Rad(self.mdt.gfx.nodepath.getH())
         car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         car_vec.normalize()
@@ -156,6 +175,7 @@ class _Logic(Logic):
 
     @property
     def direction(self):
+        '''Car's direction.'''
         start_wp, end_wp = self.current_wp
         wp_vec = Vec3(end_wp.getPos(start_wp).xy, 0)
         wp_vec.normalize()
@@ -163,20 +183,24 @@ class _Logic(Logic):
         return self.car_vec.dot(wp_vec)
 
     def __update_wp(self):
+        '''Updates the waypoints.'''
         way_str = _('wrong way') if self.direction < -.6 else ''
         game.track.gui.way_txt.setText(way_str)
 
     def get_closest(self, pos, tgt=None):
+        '''Return the closest node.'''
         tgt = tgt or self.mdt.gfx.nodepath.getPos()
         result = eng.phys.world_phys.rayTestClosest(pos, tgt)
         if result.hasHit():
             return result
 
     def update_cam(self):
+        '''Updates the camera.'''
         #eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
         self.update_cam_fp()
 
     def update_cam_fp(self):
+        '''Updates the camera.'''
         speed_ratio = self.mdt.phys.speed_ratio
         cam_dist_diff = cam_dist_max - cam_dist_min
         look_dist_diff = look_dist_max - look_dist_min
@@ -187,7 +211,8 @@ class _Logic(Logic):
         #car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         #car_vec.normalize()
 
-        fwd_vec = eng.base.render.getRelativeVector(self.mdt.gfx.nodepath, Vec3(0, 1, 0))
+        fwd_vec = eng.base.render.getRelativeVector(self.mdt.gfx.nodepath,
+                                                    Vec3(0, 1, 0))
         fwd_vec.normalize()
 
         car_pos = self.mdt.gfx.nodepath.getPos()
@@ -202,7 +227,9 @@ class _Logic(Logic):
                           car_pos.y + cam_vec.y,
                           car_pos.z + cam_vec.z + delta_pos_z)
         curr_cam_fact = cam_dist_min + cam_dist_diff * speed_ratio
+
         def cam_cond(curr_pos):
+            '''Camera condition.'''
             closest = self.get_closest(curr_pos)
             if closest:
                 closest_str = closest.getNode().getName()
@@ -217,7 +244,8 @@ class _Logic(Logic):
                 hit_pos.y - car_pos.y,
                 hit_pos.z - car_pos.z)
 
-        #game.track.gui.debug_txt.setText(curr_hit.getNode().getName() if curr_hit else '')
+        #game.track.gui.debug_txt.setText(
+        #    curr_hit.getNode().getName() if curr_hit else '')
 
         self.tgt_x = car_pos.x + cam_vec.x
         self.tgt_y = car_pos.y + cam_vec.y
@@ -228,7 +256,9 @@ class _Logic(Logic):
         self.tgt_look_z = car_pos.z + tgt_vec.z
 
         curr_incr = cam_speed * globalClock.getDt()
+
         def new_pos(cam_pos, tgt):
+            '''New position of the camera.'''
             if abs(cam_pos - tgt) <= curr_incr:
                 return tgt
             else:
@@ -250,10 +280,12 @@ class _Logic(Logic):
 
     @property
     def is_upside_down(self):
+        '''Is the car upside down?'''
         return globalClock.getFrameTime() - self.last_roll_ok_time > 5.0
 
     @property
     def is_rolling(self):
+        '''Is the car rolling?'''
         try:
             return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
         except TypeError:
@@ -261,6 +293,7 @@ class _Logic(Logic):
 
 
 class _PlayerLogic(_Logic):
+    '''This class models the logic of a car driven by a player.'''
 
     def update(self, input_dct):
         '''This callback method is invoked on each frame.'''

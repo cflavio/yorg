@@ -7,8 +7,16 @@ from .network import AbsNetwork
 class Server(AbsNetwork):
     '''This class models the server.'''
 
-    def __init__(self, reader_cb, connection_cb):
-        AbsNetwork.__init__(self, reader_cb)
+    def __init__(self, mdt):
+        AbsNetwork.__init__(self, mdt)
+        self.c_listener = None
+        self.tcp_socket = None
+        self.connection_cb = None
+        self.listener_tsk = None
+        self.connections = []
+
+    def start(self, reader_cb, connection_cb):
+        AbsNetwork.start(self, reader_cb)
         self.connection_cb = connection_cb
         self.c_listener = QueuedConnectionListener(self.c_mgr, 0)
         self.connections = []
@@ -43,7 +51,7 @@ class Server(AbsNetwork):
 
     def destroy(self):
         AbsNetwork.destroy(self)
-        map(lambda cln: self.c_reader.removeConnection(cln), self.connections)
+        map(self.c_reader.removeConnection, self.connections)
         self.c_mgr.closeConnection(self.tcp_socket)
         taskMgr.remove(self.listener_tsk)
         eng.log_mgr.log('the server has been destroyed')

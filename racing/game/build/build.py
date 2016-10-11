@@ -7,8 +7,6 @@ arguments. The meaning of these arguments is:
     |  *env*: builder's environment.
 More details about *target*, *source* and *env* files
 `here <http://www.scons.org/>`_.'''
-
-
 from os import path as os_path, walk, chdir, getcwd
 from subprocess import Popen, PIPE
 
@@ -49,10 +47,6 @@ def bld_cmd(ptools_path):
         "installer") % (('assets/images/icon/icon',) * 5)
 
 
-extensions = ['txt', 'ttf', 'dds', 'egg', 'ogg', 'py', 'lua', 'rst', 'pdef',
-              'mo']
-
-
 def image_extensions(files):
     '''The list of image extesions.'''
     ext = lambda _file: 'png' if _file.endswith('_png.psd') else 'dds'
@@ -66,16 +60,16 @@ def set_path(_path):
     return path
 
 
-def get_files(extensions, exclude_dir=''):
+def get_files(_extensions, exclude_dir=''):
     '''This function returns the list of all files in the current directory
     (and not in the *exclude_dir* directory) and whose name ends with an
     extension in the *extensions* list.'''
     return [os_path.join(root, filename)
-            for root, dirnames, filenames in walk('.')
+            for root, _, filenames in walk('.')
             for filename in [
                 filename
                 for filename in filenames
-                if any(filename.endswith('.'+ext) for ext in extensions)]
+                if any(filename.endswith('.'+ext) for ext in _extensions)]
             if not exclude_dir or exclude_dir not in root.split('/')]
 
 
@@ -119,3 +113,5 @@ devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
 devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
 docs_path_str = '{path}{name}-%s-docs.tar.gz' % ver_branch
 pdf_path_str = '{path}{name}-%s-code.tar.gz' % ver_branch
+extensions = ['txt', 'ttf', 'dds', 'egg', 'ogg', 'py', 'lua', 'rst', 'pdef',
+              'mo']

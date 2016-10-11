@@ -26,7 +26,7 @@ class EnginePhys(Phys):
 
     def start(self):
         '''Starts the physics.'''
-        eng.event.attach(self.__on_frame, 1)
+        eng.event.attach(self.__on_frame, 2)
 
     def __on_frame(self):
         '''Called on each frame.'''

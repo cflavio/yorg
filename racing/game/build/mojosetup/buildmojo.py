@@ -1,13 +1,11 @@
 '''This module allows building MojoSetup.'''
-
 from os import system
 from shutil import move
 from platform import architecture
 from tempfile import NamedTemporaryFile
 
 
-with NamedTemporaryFile(mode='w+t') as tmp:
-    tmp.write('''rm -rf mojosetup output
+cmd_build = '''rm -rf mojosetup output
 sudo apt-get install mercurial cmake libgtk2.0-dev
 hg clone http://hg.icculus.org/icculus/mojosetup
 cd mojosetup; mkdir cmake-build; cd cmake-build
@@ -30,8 +28,13 @@ cp mojosetup/cmake-build/mojosetup output/mojosetup
 cp mojosetup/scripts/* output/scripts
 # eventuali lib in guis
 cp -r mojosetup/meta output
-rm -rf mojosetup''')
+rm -rf mojosetup'''
+
+
+with NamedTemporaryFile(mode='w+t') as tmp:
+    tmp.write(cmd_build)
     tmp.seek(0)
     system('sh '+tmp.name)
-    move('output/mojosetup', 'output/mojosetupx86' +
-         {'32': '', '64': '_64'}[architecture()[0][:2]])
+    suff_dct = {'32': '', '64': '_64'}
+    dst = 'output/mojosetupx86' + suff_dct[architecture()[0][:2]]
+    move('output/mojosetup', dst)

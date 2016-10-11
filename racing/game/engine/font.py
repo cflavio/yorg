@@ -1,10 +1,12 @@
 '''This module provides functionalities for font managing.'''
+from ..gameobject.gameobject import Colleague
 
 
-class FontMgr(object):
+class FontMgr(Colleague):
     '''This class models the font manager.'''
 
-    def __init__(self):
+    def __init__(self, mdt):
+        Colleague.__init__(self, mdt)
         self.__fonts = {}
 
     def load_font(self, path):

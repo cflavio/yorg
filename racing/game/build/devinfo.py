@@ -49,5 +49,4 @@ def build_devinfo(target, source, env):
     build_command_str = \
         'tar -czf {out_name} -C {path} ' + names + ' && rm ' + rmnames
     fpath = devinfo_path_str.format(path=path, name=name, version=ver_branch)
-    build_command = build_command_str.format(path=path, out_name=fpath)
-    system(build_command)
+    system(build_command_str.format(path=path, out_name=fpath))

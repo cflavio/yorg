@@ -118,22 +118,22 @@ class _PlayerEvent(_Event):
     def __init__(self, mdt):
         _Event.__init__(self, mdt)
         self.accept('f11', self.mdt.gui.toggle)
-        if hasattr(game.logic, 'srv') and game.logic.srv:
+        if eng.server.is_active:
             self.server_info = {}
         self.last_sent = globalClock.getFrameTime()
 
     def eval_register(self):
-        if hasattr(game.logic, 'srv') and game.logic.srv:
-            game.logic.srv.register_cb(self.process_srv)
-        elif hasattr(game.logic, 'client') and game.logic.client:
-            game.logic.client.register_cb(self.process_client)
+        if eng.server.is_active:
+            eng.server.register_cb(self.process_srv)
+        elif eng.client.is_active:
+            eng.client.register_cb(self.process_client)
 
     def _on_frame(self, task):
         '''This callback method is invoked on each frame.'''
         _Event.process_frame(self)
         self.mdt.logic.update_cam()
         self.mdt.audio.update(self._get_input())
-        if hasattr(game.logic, 'srv') and game.logic.srv:
+        if eng.server.is_active:
             pos = self.mdt.gfx.nodepath.getPos()
             hpr = self.mdt.gfx.nodepath.getHpr()
             velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
@@ -144,16 +144,16 @@ class _PlayerEvent(_Event):
                 velocity = car.phys.vehicle.getChassis().getLinearVelocity()
                 self.server_info[car] = (pos, hpr, velocity)
             if globalClock.getFrameTime() - self.last_sent > .2:
-                game.logic.srv.send(self.__prepare_game_packet())
+                eng.server.send(self.__prepare_game_packet())
                 self.last_sent = globalClock.getFrameTime()
-        if hasattr(game.logic, 'client') and game.logic.client:
+        if eng.client.is_active:
             pos = self.mdt.gfx.nodepath.getPos()
             hpr = self.mdt.gfx.nodepath.getHpr()
             velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
             from itertools import chain
             packet = list(chain([NetMsgs.player_info], pos, hpr, velocity))
             if globalClock.getFrameTime() - self.last_sent > .2:
-                game.logic.client.send(packet)
+                eng.client.send(packet)
                 self.last_sent = globalClock.getFrameTime()
         return task.again
 
@@ -208,10 +208,10 @@ class _PlayerEvent(_Event):
                     self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))
             self.has_just_started = False
             if int(self.mdt.gui.lap_txt.getText().split('/')[0]) > laps:
-                if hasattr(game.logic, 'srv') and game.logic.srv:
-                    game.logic.srv.send([NetMsgs.end_race])
-                elif hasattr(game.logic, 'client') and game.logic.client:
-                    game.logic.client.send([NetMsgs.end_race_player])
+                if eng.server.is_active:
+                    eng.server.send([NetMsgs.end_race])
+                elif eng.client.is_active:
+                    eng.client.send([NetMsgs.end_race_player])
                 #TODO: compute the ranking
                 game.track.race_ranking = {
                     'kronos': 0,
@@ -227,13 +227,13 @@ class _PlayerEvent(_Event):
             hpr = (data_lst[4], data_lst[5], data_lst[6])
             velocity = (data_lst[7], data_lst[8], data_lst[9])
             self.server_info[sender] = (pos, hpr, velocity)
-            car_name = game.logic.srv.car_mapping[sender]
+            car_name = eng.server.car_mapping[sender]
             for car in [car for car in game.cars if car.__class__ == NetworkCar]:
                 if car_name in car.gfx.path:
                     LerpPosInterval(car.gfx.nodepath, .2, pos).start()
                     LerpHprInterval(car.gfx.nodepath, .2, hpr).start()
         if data_lst[0] == NetMsgs.end_race_player:
-            game.logic.srv.send([NetMsgs.end_race])
+            eng.server.send([NetMsgs.end_race])
             game.track.fsm.demand('Results')
             game.track.gui.show_results()
 

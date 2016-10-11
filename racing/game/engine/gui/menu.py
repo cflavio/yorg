@@ -33,6 +33,16 @@ class MenuGui(Gui):
         self.background.setBin('background', 10)
         self.rollover = loader.loadSfx(menu_args.rollover)
         self.click = loader.loadSfx(menu_args.click)
+        self.imgbtn_args = {
+            'rolloverSound': self.rollover, 'clickSound': self.click}
+        self.btn_args = {
+            'scale': self.menu_args.text_scale,
+            'text_font': self.font,
+            'text_fg': self.menu_args.text_fg,
+            'frameColor': self.menu_args.btn_color,
+            'frameSize': self.menu_args.btn_size,
+            'rolloverSound': self.rollover,
+            'clickSound': self.click}
 
     def destroy(self):
         '''Destroys the page.'''

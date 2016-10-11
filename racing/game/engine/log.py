@@ -3,12 +3,14 @@ from datetime import datetime
 from platform import system, release
 from panda3d.core import loadPrcFileData
 from direct.directnotify.DirectNotify import DirectNotify
+from ..gameobject.gameobject import Colleague
 
 
-class LogMgr(object):
+class LogMgr(Colleague):
     '''This class models the log manager.'''
 
-    def __init__(self):
+    def __init__(self, mdt):
+        Colleague.__init__(self, mdt)
         self.__notify = DirectNotify().newCategory('ya2')
 
     @staticmethod

@@ -1,5 +1,4 @@
-""" In this module there will be all classes related
-to the game abstract class """
+"""This module provides the abstraction of a game."""
 from abc import ABCMeta
 from .gameobject.gameobject import Logic, GameObjectMdt
 from .engine.engine import Engine

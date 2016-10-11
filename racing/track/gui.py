@@ -1,9 +1,9 @@
+'''This module provides the GUI of a track.'''
 from panda3d.core import TextNode
 from direct.gui.OnscreenText import OnscreenText
 from racing.game.gameobject.gameobject import Gui
 from racing.game.engine.gui.imgbtn import ImageButton
 from direct.gui.OnscreenImage import OnscreenImage
-from racing.game.dictfile import DictFile
 
 
 class _Gui(Gui):
@@ -12,6 +12,10 @@ class _Gui(Gui):
     def __init__(self, mdt, track):
         Gui.__init__(self, mdt)
         self.track = track
+        self.__res_txts = None
+        self.corners = None
+        self.__buttons = None
+        self.result_img = None
         self.debug_txt = OnscreenText(
             '', pos=(-.1, .1), scale=0.05, fg=(1, 1, 1, 1),
             parent=eng.base.a2dBottomRight, align=TextNode.ARight,
@@ -43,12 +47,15 @@ class _Gui(Gui):
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
 
     def set_corners(self):
+        '''Sets track's corners.'''
         corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
-        corners = [self.mdt.gfx.phys_model.find('**/Minimap'+corner) for corner in corners]
+        corners = [self.mdt.gfx.phys_model.find('**/Minimap'+corner)
+                   for corner in corners]
         if not any(corner.isEmpty() for corner in corners):
             self.corners = [corner.get_pos() for corner in corners]
 
     def update_minimap(self):
+        '''Updates the minimap.'''
         if not hasattr(self, 'corners'):
             return
         left = self.corners[0].getX()
@@ -71,6 +78,7 @@ class _Gui(Gui):
         self.car_handle.setR(-game.player_car.gfx.nodepath.getH())
 
     def process_countdown(self, task):
+        '''Processes the initial countdown.'''
         if self.countdown_cnt >= 0:
             self.mdt.audio.countdown_sfx.play()
             txt = str(self.countdown_cnt) if self.countdown_cnt else _('GO!')
@@ -84,6 +92,7 @@ class _Gui(Gui):
             game.track.fsm.demand('Race')
 
     def show_results(self):
+        '''Shows race results.'''
         self.result_img = OnscreenImage(image='assets/images/gui/results.png',
                                         scale=(.8, 1, .8))
         self.result_img.setTransparency(True)
@@ -108,21 +117,30 @@ class _Gui(Gui):
         self.__buttons = []
 
         curr_time = min(game.player_car.logic.lap_times or [0])
-        facebook_url = 'https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg'  #TODO: find a way to share the time on Facebook
-        twitter_url = 'https://twitter.com/share?text=I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech%21&hashtags=yorg'.format(time=curr_time, track=self.track)
-        plus_url = 'https://plus.google.com/share?url=ya2.it/yorg'  #TODO: find a way to share the time on Google Plus
-        tumblr_url = 'https://www.tumblr.com/widgets/share/tool?url=ya2.it'  #TODO: find a way to share the time on Tumblr
+        facebook_url = \
+            'https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg'
+        #TODO: find a way to share the time on Facebook
+        twitter_url = 'https://twitter.com/share?text=' + \
+            'I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on' + \
+            '%20Yorg%20by%20%40ya2tech%21&hashtags=yorg'
+        twitter_url = twitter_url.format(time=curr_time, track=self.track)
+        plus_url = 'https://plus.google.com/share?url=ya2.it/yorg'
+        #TODO: find a way to share the time on Google Plus
+        tumblr_url = 'https://www.tumblr.com/widgets/share/tool?url=ya2.it'
+        #TODO: find a way to share the time on Tumblr
         sites = [('facebook', facebook_url), ('twitter', twitter_url),
                  ('google_plus', plus_url), ('tumblr', tumblr_url)]
-        self.__buttons += [
-            ImageButton(scale=.1,
-                        pos=(.02 + i*.15, 1, -.62), frameColor=(0, 0, 0, 0),
-                        image='assets/images/icons/%s_png.png' % site[0],
-                        command=eng.gui.open_browser, extraArgs=[site[1]],
-                        rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-                        clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+        self.__buttons += [ImageButton(
+                scale=.1,
+                pos=(.02 + i*.15, 1, -.62), frameColor=(0, 0, 0, 0),
+                image='assets/images/icons/%s_png.png' % site[0],
+                command=eng.gui.open_browser, extraArgs=[site[1]],
+                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
             for i, site in enumerate(sites)]
-        def step(task):
+
+        def step():
+            '''Goes on.'''
             map(lambda txt: txt.destroy(), self.__res_txts)
             map(lambda btn: btn.destroy(), self.__buttons)
             self.result_img.destroy()
@@ -135,7 +153,7 @@ class _Gui(Gui):
                 game.fsm.demand('Ranking')
             else:
                 game.fsm.demand('Menu')
-        taskMgr.doMethodLater(10.0, step, 'step')
+        taskMgr.doMethodLater(10.0, lambda tsk: step(), 'step')
 
     def destroy(self):
         Gui.destroy(self)

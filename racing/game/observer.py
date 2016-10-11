@@ -7,7 +7,7 @@ class Subject(object):
     def __init__(self):
         self.observers = []
 
-    def attach(self, obs_meth, sort=100):
+    def attach(self, obs_meth, sort=10):
         '''Attaches an observer.'''
         self.observers += [(obs_meth, sort)]
 

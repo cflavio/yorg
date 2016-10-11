@@ -1,13 +1,13 @@
 '''In this module we define the Car classes.'''
 from abc import ABCMeta
-from gfx import _Gfx
-from phys import _Phys
-from event import _Event, _PlayerEvent, _NetworkEvent
-from logic import _Logic, _PlayerLogic
-from audio import _Audio
-from gui import _Gui
-from ai import _Ai
 from racing.game.gameobject.gameobject import GameObjectMdt
+from .gfx import _Gfx
+from .phys import _Phys
+from .event import _Event, _PlayerEvent, _NetworkEvent
+from .logic import _Logic, _PlayerLogic
+from .audio import _Audio
+from .gui import _Gui
+from .ai import _Ai
 
 
 class Car(GameObjectMdt):
@@ -21,7 +21,9 @@ class Car(GameObjectMdt):
     def __init__(self, path, pos, hpr, cb, ai=False):
         eng.log_mgr.log('init car')
         self.fsm = self.fsm_cls(self)
-        def post_gfx(task):
+
+        def post_gfx():
+            '''Called after the graphics.'''
             self.phys = self.phys_cls(self, path)
             self.gui = self.gui_cls(self)
             self.logic = self.logic_cls(self)
@@ -34,11 +36,11 @@ class Car(GameObjectMdt):
             self.logic.start_pos_hpr = hpr
             eng.log_mgr.log('end init car')
             cb()
-        self.gfx = self.gfx_cls(self, path, post_gfx)
+        self.gfx = self.gfx_cls(self, path, lambda task: post_gfx())
 
 
 class PlayerCar(Car):
-
+    '''A car driven by a player.'''
     event_cls = _PlayerEvent
     audio_cls = _Audio
     gui_cls = _Gui
@@ -46,5 +48,5 @@ class PlayerCar(Car):
 
 
 class NetworkCar(Car):
-
+    '''A car driven by the network.'''
     event_cls = _NetworkEvent

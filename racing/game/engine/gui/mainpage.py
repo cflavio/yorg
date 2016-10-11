@@ -23,16 +23,13 @@ class MainPageGui(PageGui):
             ('pinterest', 'http://www.pinterest.com/ya2tech'),
             ('tumblr', 'http://ya2tech.tumblr.com'),
             ('feed', 'http://www.ya2.it/feed-following')]
-        menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         self.widgets += [
             ImageButton(
                 parent=eng.base.a2dBottomRight, scale=.1,
                 pos=(-1.0 + i*.15, 1, .1), frameColor=(0, 0, 0, 0),
-                image=menu_args.social_path % site[0],
+                image=self.menu.gui.menu_args.social_path % site[0],
                 command=eng.gui.open_browser, extraArgs=[site[1]],
-                rolloverSound=menu_gui.rollover,
-                clickSound=menu_gui.click)
+                **self.menu.gui.imgbtn_args)
             for i, site in enumerate(sites)]
 
     def __build_version(self):
