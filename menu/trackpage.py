@@ -1,16 +1,19 @@
+'''This module provides the track page.'''
 from direct.gui.DirectButton import DirectButton
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
-from carpage import CarPage
-from netmsgs import NetMsgs
+from racing.game.engine.gui.page import Page, PageGui
+from .carpage import CarPage
+from .netmsgs import NetMsgs
 
 
 class TrackPageGui(PageGui):
+    '''This class defines the GUI of the track page.'''
 
     def build(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
+
         def on_track(track):
+            '''Called when the user clicks on a track.'''
             self.menu.track = track
             self.menu.logic.push_page(CarPage(self.menu))
             if eng.server.is_active:

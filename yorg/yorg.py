@@ -1,24 +1,15 @@
 '''In this module we define the global game classes.'''
-from racing.game.engine.engine import Engine
-from racing.car.car import Car, PlayerCar, NetworkCar
-from racing.track.track import Track
-from racing.game.game import Game, GameLogic
-from racing.game.gameobject.gameobject import Event, Fsm, Audio
-from direct.gui.OnscreenImage import OnscreenImage
-from direct.gui.OnscreenText import OnscreenText
-from racing.track.gfx import _Gfx as TrackGfx
-from racing.car.gfx import _Gfx as CarGfx
-from panda3d.core import NodePath, TextNode
-from direct.interval.LerpInterval import LerpHprInterval
+from racing.game.game import Game
 from racing.game.dictfile import DictFile
 from racing.game.engine.configuration import Configuration
-from logic import _Logic
-from event import _Event
-from fsm import _Fsm
-from audio import _Audio
+from .logic import _Logic
+from .event import _Event
+from .fsm import _Fsm
+from .audio import _Audio
 
 
 class Yorg(Game):
+    '''This class defines Yorg.'''
     logic_cls = _Logic
     event_cls = _Event
     fsm_cls = _Fsm

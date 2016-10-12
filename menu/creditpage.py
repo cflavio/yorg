@@ -1,14 +1,13 @@
-from direct.gui.DirectButton import DirectButton
+'''This module provides the credit page.'''
 from direct.gui.OnscreenText import OnscreenText
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
+from racing.game.engine.gui.page import Page, PageGui
 
 
 class CreditPageGui(PageGui):
+    '''This class defines the GUI of the credit page.'''
 
     def build(self):
         menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         self.widgets += [
             OnscreenText(text='', scale=.12, pos=(0, .4),
                          font=menu_gui.font, fg=(.75, .75, .75, 1))]

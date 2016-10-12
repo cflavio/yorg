@@ -1,9 +1,9 @@
+'''This module provides the event management of a car.'''
 from direct.showbase.InputStateGlobal import inputState
 from racing.game.gameobject.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
-from ai import _Ai
+from .ai import _Ai
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
-from racing.game.dictfile import DictFile
 from racing.game.observer import Observer
 
 
@@ -13,6 +13,7 @@ class _Event(Event, Observer):
     def __init__(self, mdt):
         Event.__init__(self, mdt)
         Observer.__init__(self)
+        self.tsk = None
         self.has_just_started = True
         eng.phys.attach(self.update)
         label_events = [('forward', 'arrow_up'),
@@ -24,12 +25,15 @@ class _Event(Event, Observer):
             label_events)
 
     def start(self):
+        '''Starts the car.'''
         self.tsk = taskMgr.add(self._on_frame, 'Track::__on_frame')
 
     def update(self, obj, obj_name):
+        '''Called on collisions.'''
         if obj != self.mdt.gfx.nodepath.node():
             return
-        print 'collision with %s %s' % (obj_name, round(globalClock.getFrameTime(), 2))
+        print 'collision with %s %s' % (obj_name,
+                                        round(globalClock.getFrameTime(), 2))
         if obj_name.startswith('Respawn'):
             last_pos = self.mdt.logic.last_contact_pos
             start_wp_n, end_wp_n = self.mdt.logic.closest_wp(last_pos)
@@ -56,6 +60,7 @@ class _Event(Event, Observer):
             self.mdt.gfx.nodepath.node().setAngularVelocity(0)
 
     def _get_input(self):
+        '''The input of a car.'''
         if self.mdt.ai.__class__ == _Ai:
             return self.mdt.ai.get_input()
         elif self.__class__ == _NetworkEvent:
@@ -72,12 +77,14 @@ class _Event(Event, Observer):
                 'right': inputState.isSet('right')}
 
     def reset_car(self):
+        '''Resets a car.'''
         self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
         self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
         wheels = self.mdt.phys.vehicle.get_wheels()
         map(lambda whl: whl.set_rotation(0), wheels)
 
     def process_frame(self):
+        '''Processes a frame.'''
         input_dct = self._get_input()
         if game.track.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
@@ -91,7 +98,8 @@ class _Event(Event, Observer):
         result = eng.phys.world_phys.rayTestAll(top, bottom)
         for hit in result.getHits():
             if 'Road' in hit.getNode().getName():
-                self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()
+                self.mdt.logic.last_contact_pos = \
+                    self.mdt.gfx.nodepath.getPos()
         self.mdt.phys.update_terrain()
 
     def _on_frame(self, task):
@@ -105,8 +113,8 @@ class _Event(Event, Observer):
         eng.phys.detach(self)
 
 
-class NetMsgs:
-
+class NetMsgs(object):
+    '''This class models net messages.'''
     game_packet = 0
     player_info = 1
     end_race_player = 2
@@ -114,6 +122,7 @@ class NetMsgs:
 
 
 class _PlayerEvent(_Event):
+    '''This class models the events for a player car.'''
 
     def __init__(self, mdt):
         _Event.__init__(self, mdt)
@@ -123,6 +132,7 @@ class _PlayerEvent(_Event):
         self.last_sent = globalClock.getFrameTime()
 
     def eval_register(self):
+        '''Evaluates if a registration is needed.'''
         if eng.server.is_active:
             eng.server.register_cb(self.process_srv)
         elif eng.client.is_active:
@@ -157,7 +167,9 @@ class _PlayerEvent(_Event):
                 self.last_sent = globalClock.getFrameTime()
         return task.again
 
-    def __prepare_game_packet(self):
+    @staticmethod
+    def __prepare_game_packet():
+        '''Prepares a game packet.'''
         packet = [NetMsgs.game_packet]
         for car in [game.player_car] + game.cars:
             name = car.gfx.path
@@ -169,6 +181,7 @@ class _PlayerEvent(_Event):
         return packet
 
     def __crash_sfx(self, speed, speed_ratio):
+        '''Plays a sfx on crashes.'''
         print 'crash speed', self.mdt.phys.speed, speed
         if abs(self.mdt.phys.speed) < abs(speed / 2.0) and speed_ratio > .5:
             self.mdt.audio.crash_high_speed_sfx.play()
@@ -182,7 +195,9 @@ class _PlayerEvent(_Event):
         if obj_name.startswith('Wall'):
             if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.crash_sfx.play()
-            taskMgr.doMethodLater(.1, self.__crash_sfx, 'crash sfx', [self.mdt.phys.speed, self.mdt.phys.speed_ratio])
+            taskMgr.doMethodLater(
+                .1, self.__crash_sfx, 'crash sfx',
+                [self.mdt.phys.speed, self.mdt.phys.speed_ratio])
         if any(obj_name.startswith(s) for s in ['Road', 'Offroad']):
             if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
                 self.mdt.audio.landing_sfx.play()
@@ -201,11 +216,13 @@ class _PlayerEvent(_Event):
                 fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
                 back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
                 if fwd or back:
-                    self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/'+str(laps))
+                    self.mdt.gui.lap_txt.setText(
+                        str(lap_number + 1)+'/'+str(laps))
                     if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
                         self.mdt.audio.lap_sfx.play()
                 else:
-                    self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))
+                    self.mdt.gui.lap_txt.setText(
+                        str(lap_number - 1)+'/'+str(laps))
             self.has_just_started = False
             if int(self.mdt.gui.lap_txt.getText().split('/')[0]) > laps:
                 if eng.server.is_active:
@@ -221,14 +238,16 @@ class _PlayerEvent(_Event):
                 game.track.gui.show_results()
 
     def process_srv(self, data_lst, sender):
-        from car import NetworkCar
+        '''Processes a message (server side.)'''
+        from .car import NetworkCar
         if data_lst[0] == NetMsgs.player_info:
             pos = (data_lst[1], data_lst[2], data_lst[3])
             hpr = (data_lst[4], data_lst[5], data_lst[6])
             velocity = (data_lst[7], data_lst[8], data_lst[9])
             self.server_info[sender] = (pos, hpr, velocity)
             car_name = eng.server.car_mapping[sender]
-            for car in [car for car in game.cars if car.__class__ == NetworkCar]:
+            for car in [car
+                        for car in game.cars if car.__class__ == NetworkCar]:
                 if car_name in car.gfx.path:
                     LerpPosInterval(car.gfx.nodepath, .2, pos).start()
                     LerpHprInterval(car.gfx.nodepath, .2, hpr).start()
@@ -237,16 +256,17 @@ class _PlayerEvent(_Event):
             game.track.fsm.demand('Results')
             game.track.gui.show_results()
 
-    def process_client(self, data_lst, sender):
-        from car import NetworkCar
-        car_info = {}
+    @staticmethod
+    def process_client(data_lst, sender):
+        '''Processes a message (client side.)'''
+        from .car import NetworkCar
         if data_lst[0] == NetMsgs.game_packet:
             for i in range(1, len(data_lst), 10):
                 car_name = data_lst[i]
                 car_pos = (data_lst[i + 1], data_lst[i + 2], data_lst[i + 3])
                 car_hpr = (data_lst[i + 4], data_lst[i + 5], data_lst[i + 6])
-                car_velocity = (data_lst[i + 7], data_lst[i + 8], data_lst[i + 9])
-                for car in [car for car in game.cars if car.__class__ == NetworkCar]:
+                for car in [car for car in game.cars
+                            if car.__class__ == NetworkCar]:
                     if car_name in car.gfx.path:
                         LerpPosInterval(car.gfx.nodepath, .2, car_pos).start()
                         LerpHprInterval(car.gfx.nodepath, .2, car_hpr).start()
@@ -257,5 +277,5 @@ class _PlayerEvent(_Event):
 
 
 class _NetworkEvent(_Event):
-
+    '''This class models a network event.'''
     pass

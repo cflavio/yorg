@@ -1,9 +1,9 @@
+'''This is Yorg's main file.'''
 # log ########################################################################
 from os import path
 from panda3d.core import MultiplexStream, Notify
 import sys
 from yorg.yorg import Yorg
-from racing.game.dictfile import DictFile
 
 
 if sys.platform != 'darwin' and \

@@ -1,3 +1,4 @@
+'''This file contains our roadmap.'''
 # BUGS =====
 
 
@@ -15,7 +16,8 @@
 
 # WAITING =====
 
-#TODO: (windows) the light is very bright when switching to fullscreen without shaders
+#TODO: (windows) the light is very bright when switching to fullscreen without
+#    shaders
 #TODO: (windows) it crashes when some resolutions are selected
 
 
@@ -25,7 +27,8 @@
 #TODO: water
 #TODO: driver selection
 #TODO: graphics buttons in the menu
-#TODO: modifying car setting between tracks: engine (speed), tires (friction), suspension (roll)
+#TODO: modifying car setting between tracks: engine (speed), tires (friction),
+#    suspension (roll)
 #TODO: port ai lookahead to 3D
 #TODO: ai - obstacle avoidance
 #TODO: particle effects and texturing for skid marks

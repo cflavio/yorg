@@ -1,3 +1,4 @@
+'''This module provides the GUI component of a car.'''
 from panda3d.core import TextNode
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
@@ -5,29 +6,35 @@ from direct.gui.OnscreenImage import OnscreenImage
 from racing.game.gameobject.gameobject import Gui
 
 
-class CarParameter:
+class CarParameter(object):
+    '''This class models a parameter of the car.'''
 
-    def __init__(self, attr, init_val, pos, val_range, cb):
-        self.__cb = cb
-        self.__lab = OnscreenText(text=attr, pos=pos, scale=.04,
-            align=TextNode.ARight, parent=eng.base.a2dTopLeft, fg=(1, 1, 1, 1))
+    def __init__(self, attr, init_val, pos, val_range, callback):
+        self.__callback = callback
+        self.__lab = OnscreenText(
+            text=attr, pos=pos, scale=.04, align=TextNode.ARight,
+            parent=eng.base.a2dTopLeft, fg=(1, 1, 1, 1))
         self.__slider = DirectSlider(
-            pos=(pos[0]+.5, 0, pos[1]+.01), scale=.4, parent=eng.base.a2dTopLeft,
-            value=init_val, range=val_range, command=self.__set_attr)
+            pos=(pos[0]+.5, 0, pos[1]+.01), scale=.4,
+            parent=eng.base.a2dTopLeft, value=init_val, range=val_range,
+            command=self.__set_attr)
         self.__val = OnscreenText(
             pos=(pos[0]+1.0, pos[1]), scale=.04, align=TextNode.ALeft,
             parent=eng.base.a2dTopLeft, fg=(1, 1, 1, 1))
         self.toggle()
 
     def toggle(self):
+        '''Toggles the visibility of a widget.'''
         for wdg in [self.__slider, self.__lab, self.__val]:
             (wdg.show if wdg.isHidden() else wdg.hide)()
 
     def __set_attr(self):
-        self.__cb(self.__slider['value'])
+        '''Sets a car's attribute.'''
+        self.__callback(self.__slider['value'])
         self.__val.setText(str(round(self.__slider['value'], 2)))
 
     def destroy(self):
+        '''The destroyer.'''
         map(lambda wdg: wdg.destroy(), [self.__slider, self.__lab, self.__val])
 
 
@@ -114,7 +121,8 @@ class _Gui(Gui):
             lambda val: map(lambda whl: whl.setWheelsDampingCompression(val),
                             self.mdt.phys.vehicle.get_wheels()))
         self.__friction_slip = CarParameter(
-            'friction_slip', self.mdt.phys.friction_slip, (.5, -1.56), (-1, 10),
+            'friction_slip', self.mdt.phys.friction_slip, (.5, -1.56),
+            (-1, 10),
             lambda val: map(lambda whl: whl.setFrictionSlip(val),
                             self.mdt.phys.vehicle.get_wheels()))
         self.__roll_influence = CarParameter(
@@ -131,7 +139,8 @@ class _Gui(Gui):
             self.__suspension_compression, self.__suspension_damping,
             self.__max_suspension_force, self.__max_suspension_travel_cm,
             self.__skid_info, self.__suspension_stiffness,
-            self.__wheels_damping_relaxation, self.__wheels_damping_compression,
+            self.__wheels_damping_relaxation,
+            self.__wheels_damping_compression,
             self.__friction_slip, self.__roll_influence]
         self.panel = OnscreenImage(
             'assets/images/gui/panel.png', scale=(.4, 1, .2),
@@ -155,6 +164,7 @@ class _Gui(Gui):
             parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
 
     def toggle(self):
+        '''Toggles the visibility of a component.'''
         map(lambda par: par.toggle(), self.__pars)
 
     def destroy(self):

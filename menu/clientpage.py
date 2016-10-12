@@ -1,13 +1,19 @@
+'''This module provides the client page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
-from carpage import CarPage
-from netmsgs import NetMsgs
+from racing.game.engine.gui.page import Page, PageGui
+from racing.game.engine.network.client import ClientError
+from .carpage import CarPage
+from .netmsgs import NetMsgs
 
 
 class ClientPageGui(PageGui):
+    '''This class defines the GUI of the client page.'''
+
+    def __init__(self, mdt, menu):
+        PageGui.__init__(self, mdt, menu)
+        self.ent = None
 
     def build(self):
         menu_gui = self.menu.gui
@@ -33,18 +39,22 @@ class ClientPageGui(PageGui):
         PageGui.build(self)
 
     def connect(self):
+        '''Connects to the server.'''
         try:
             print self.ent.get()
             eng.client.start(self.process_msg, self.ent.get())
             menu_gui = self.menu.gui
             self.widgets += [
                 OnscreenText(text=_('Waiting for the server'), scale=.12,
-                             pos=(0, -.5), font=menu_gui.font, fg=(.75, .75, .75, 1))]
+                             pos=(0, -.5), font=menu_gui.font,
+                             fg=(.75, .75, .75, 1))]
         except ClientError:
             txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)
-            taskMgr.doMethodLater(5.0, lambda tsk: txt.destroy(), 'destroy error text')
+            taskMgr.doMethodLater(
+                5.0, lambda tsk: txt.destroy(), 'destroy error text')
 
     def process_msg(self, data_lst, sender):
+        '''Processes a network message.'''
         if data_lst[0] == NetMsgs.track_selected:
             eng.log_mgr.log('track selected: ' + data_lst[1])
             self.menu.track = 'tracks/track_' + data_lst[1]

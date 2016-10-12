@@ -1,20 +1,14 @@
+'''This module provides Yorg's FSM.'''
 from racing.car.car import Car, PlayerCar, NetworkCar
 from racing.track.track import Track
-from racing.game.game import Game, GameLogic
-from racing.game.gameobject.gameobject import Event, Fsm, Audio
-from direct.gui.OnscreenImage import OnscreenImage
-from direct.gui.OnscreenText import OnscreenText
-from racing.track.gfx import _Gfx as TrackGfx
-from racing.car.gfx import _Gfx as CarGfx
-from panda3d.core import NodePath, TextNode
-from direct.interval.LerpInterval import LerpHprInterval
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
 from racing.game.gameobject.gameobject import Fsm
+from direct.gui.OnscreenText import OnscreenText
+from panda3d.core import NodePath, TextNode
 from menu.menu import YorgMenu
 
 
-class NetMsgs:
+class NetMsgs(object):
+    '''Network messages.'''
 
     client_ready = 0
     start_race = 1
@@ -29,18 +23,31 @@ class _Fsm(Fsm):
                                    'Loading': ['Play'],
                                    'Play': ['Ranking', 'Menu'],
                                    'Ranking': ['Play', 'Menu']}
+        self.load_txt = None
+        self.preview = None
+        self.cam_tsk = None
+        self.cam_node = None
+        self.ranking_texts = None
+        self.send_tsk = None
+        self.cam_pivot = None
+        self.ready_clients = None
+        self.curr_load_txt = None
+        self.__menu = None
 
     def enterMenu(self):
+        '''Called when we enter into the menu state.'''
         eng.log_mgr.log('entering Menu state')
         self.__menu = YorgMenu()
         self.mdt.audio.menu_music.play()
 
     def exitMenu(self):
+        '''Called when we exit from the menu state.'''
         eng.log_mgr.log('exiting Menu state')
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
     def enterLoading(self, track_path='', car_path='', player_cars=[]):
+        '''Called when we enter into the loading state.'''
         eng.log_mgr.log('entering Loading state')
         eng.gfx.init()
         if not track_path and not car_path:
@@ -76,33 +83,40 @@ class _Fsm(Fsm):
         taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, car_path, player_cars])
 
     def update_cam(self, task):
+        '''Updates the camera.'''
         pos = self.cam_node.get_pos(render)
         eng.base.camera.set_pos(pos[0], pos[1], 1000)
         eng.base.camera.look_at(0, 0, 0)
         return task.again
 
     def load_stuff(self, track_path, car_path, player_cars):
+        '''Loads stuff.'''
         eng.phys.init()
         player_cars = player_cars[1::2]
+
         def load_car():
+            '''Loads a car.'''
             cars = ['kronos', 'themis', 'diones']
             grid = ['kronos', 'themis', 'diones']
             cars.remove(car_path)
             ai = game.options['ai']
+
             def load_other_cars():
-               if not cars:
-                   self.mdt.fsm.demand('Play', track_path, car_path)
-               else:
-                   car = cars[0]
-                   cars.remove(car)
-                   car_class = Car
-                   ai = True
-                   if eng.server.is_active:
-                       car_class = NetworkCar if car in player_cars else Car
-                   if eng.client.is_active:
-                       car_class = NetworkCar
-                   self.mdt.cars += [
-                       car_class('cars/' + car,
+                '''Loads non-player cars.'''
+                if not cars:
+                    self.mdt.fsm.demand('Play', track_path, car_path)
+                else:
+                    car = cars[0]
+                    cars.remove(car)
+                    car_class = Car
+                    ai = True
+                    if eng.server.is_active:
+                        car_class = NetworkCar if car in player_cars else Car
+                    if eng.client.is_active:
+                        car_class = NetworkCar
+                    self.mdt.cars += [
+                        car_class(
+                            'cars/' + car,
                             self.mdt.track.gfx.get_start_pos(grid.index(car))[0],
                             self.mdt.track.gfx.get_start_pos(grid.index(car))[1],
                             load_other_cars, car not in player_cars)]
@@ -115,6 +129,7 @@ class _Fsm(Fsm):
         self.mdt.track = Track(track_path, load_car)
 
     def exitLoading(self):
+        '''Called when we exit from the loading state.'''
         eng.log_mgr.log('exiting Loading state')
         self.preview.remove_node()
         self.cam_pivot.remove_node()
@@ -124,6 +139,7 @@ class _Fsm(Fsm):
         eng.base.camera.set_pos(0, 0, 0)
 
     def enterPlay(self, track_path, car_path):
+        '''Called when we enter into the play state.'''
         eng.log_mgr.log('entering Play state')
         self.mdt.track.gfx.model.reparentTo(render)
         self.mdt.player_car.gfx.reparent()
@@ -133,7 +149,9 @@ class _Fsm(Fsm):
             eng.server.register_cb(self.process_srv)
         elif eng.client.is_active:
             eng.client.register_cb(self.process_client)
+
             def send_ready(task):
+                '''Sends the ready state.'''
                 eng.client.send([NetMsgs.client_ready])
                 eng.log_mgr.log('sent client ready')
                 return task.again
@@ -144,6 +162,7 @@ class _Fsm(Fsm):
             self.start_play()
 
     def process_srv(self, data_lst, sender):
+        '''Processes a message server-side.'''
         if data_lst[0] == NetMsgs.client_ready:
             eng.log_mgr.log('client ready: ' + sender.getAddress().getIpString())
             self.ready_clients += [sender]
@@ -152,12 +171,14 @@ class _Fsm(Fsm):
                 eng.server.send([NetMsgs.start_race])
 
     def process_client(self, data_lst, sender):
+        '''Processes a message client-side.'''
         if data_lst[0] == NetMsgs.start_race:
             eng.log_mgr.log('start race')
             taskMgr.remove(self.send_tsk)
             self.start_play()
 
     def start_play(self):
+        '''Starts the play.'''
         eng.phys.start()
         game.track.event.start()
         game.player_car.event.eval_register()
@@ -166,6 +187,7 @@ class _Fsm(Fsm):
         map(lambda car: car.event.start(), [self.mdt.player_car] + self.mdt.cars)
 
     def exitPlay(self):
+        '''Called when we exit from play.'''
         eng.log_mgr.log('exiting Play state')
         if eng.server.is_active:
             eng.server.destroy()
@@ -181,6 +203,7 @@ class _Fsm(Fsm):
         eng.gfx.clean()
 
     def enterRanking(self):
+        '''Called when we enter into the ranking.'''
         sorted_ranking = reversed(sorted(game.ranking.items(), key=lambda el: el[1]))
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.ranking_texts = []
@@ -188,7 +211,9 @@ class _Fsm(Fsm):
             self.ranking_texts += [OnscreenText(
                 '%s %s' % (name, score), pos=(0, .5 -.2 * i), font=font,
                 fg=(.75, .75, .75, 1), scale=.12)]
-        def step(task):
+
+        def step():
+            '''Goes on.'''
             current_track = game.track.gfx.track_path[13:]
             tracks = ['prototype', 'desert']
             if tracks.index(current_track) == len(tracks) - 1:
@@ -203,7 +228,8 @@ class _Fsm(Fsm):
                 next_track = tracks[tracks.index(current_track) + 1]
                 curr_car = game.options['last_car']
                 self.demand('Loading', next_track, curr_car)
-        taskMgr.doMethodLater(10, step, 'step')
+        taskMgr.doMethodLater(10, lambda task: step(), 'step')
 
     def exitRanking(self):
+        '''Called when we exit from ranking.'''
         map(lambda txt: txt.destroy(), self.ranking_texts)

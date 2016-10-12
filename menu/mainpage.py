@@ -1,20 +1,28 @@
+'''This is the main page of the menu.'''
 from direct.gui.DirectButton import DirectButton
 from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
-from singleplayerpage import SingleplayerPage
-from multiplayerpage import MultiplayerPage
-from optionpage import OptionPage
-from creditpage import CreditPage
+from racing.game.engine.gui.page import PageGui
+from .singleplayerpage import SingleplayerPage
+from .multiplayerpage import MultiplayerPage
+from .optionpage import OptionPage
+from .creditpage import CreditPage
 
 
 class YorgMainPageGui(MainPageGui):
+    '''This is the GUI of the main page.'''
 
     def build(self):
-        menu_data = [('Single Player', _('Single Player'), lambda: self.menu.logic.push_page(SingleplayerPage(self.menu))),
-                     ('Multiplayer', _('Multiplayer'), lambda: self.menu.logic.push_page(MultiplayerPage(self.menu))),
-                     ('Options', _('Options'), lambda: self.menu.logic.push_page(OptionPage(self.menu))),
-                     ('Credits', _('Credits'), lambda: self.menu.logic.push_page(CreditPage(self.menu))),
-                     ('Quit', _('Quit'), lambda: messenger.send('window-closed'))]
+        menu_data = [
+            ('Single Player', _('Single Player'),
+             lambda: self.menu.logic.push_page(SingleplayerPage(self.menu))),
+            ('Multiplayer', _('Multiplayer'),
+             lambda: self.menu.logic.push_page(MultiplayerPage(self.menu))),
+            ('Options', _('Options'),
+             lambda: self.menu.logic.push_page(OptionPage(self.menu))),
+            ('Credits', _('Credits'),
+             lambda: self.menu.logic.push_page(CreditPage(self.menu))),
+            ('Quit', _('Quit'),
+             lambda: messenger.send('window-closed'))]
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         self.widgets += [

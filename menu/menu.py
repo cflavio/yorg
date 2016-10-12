@@ -1,24 +1,7 @@
-from sys import exit
-from direct.gui.DirectButton import DirectButton
-from direct.gui.DirectCheckButton import DirectCheckButton
-from direct.gui.DirectGuiGlobals import FLAT, DISABLED, NORMAL
-from direct.gui.DirectLabel import DirectLabel
-from direct.gui.DirectOptionMenu import DirectOptionMenu
-from direct.gui.DirectSlider import DirectSlider
-from direct.gui.OnscreenText import OnscreenText
-from direct.showbase.DirectObject import DirectObject
-from direct.gui.DirectDialog import OkDialog
-from direct.gui.DirectGui import DirectEntry
-from panda3d.core import TextNode
-from racing.game.gameobject.gameobject import Fsm, GameObjectMdt, Gui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
+'''This module provides the menu.'''
+from racing.game.gameobject.gameobject import GameObjectMdt, Gui
 from racing.game.engine.gui.menu import MenuArgs, Menu
-from racing.game.engine.lang import LangMgr
-from racing.game.dictfile import DictFile
-from racing.game.engine.network.server import Server
-from racing.game.engine.network.client import Client, ClientError
-from mainpage import YorgMainPage
+from .mainpage import YorgMainPage
 
 
 class _Gui(Gui):
@@ -41,4 +24,5 @@ class _Gui(Gui):
 
 
 class YorgMenu(GameObjectMdt):
+    '''This class defines Yorg's menu.'''
     gui_cls = _Gui

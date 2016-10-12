@@ -1,19 +1,24 @@
+'''This module provides the server page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
-from trackpage import TrackPage
+from racing.game.engine.gui.page import Page, PageGui
+from .trackpage import TrackPage
 
 
 class ServerPageGui(PageGui):
+    '''This class defines the GUI of the server page.'''
+
+    def __init__(self, mdt, menu):
+        PageGui.__init__(self, mdt, menu)
+        self.conn_txt = None
 
     def build(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         import socket
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('ya2.it', 0))
-        local_addr = s.getsockname()[0]
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.connect(('ya2.it', 0))
+        local_addr = sock.getsockname()[0]
         from json import load
         from urllib2 import urlopen
         public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
@@ -21,8 +26,8 @@ class ServerPageGui(PageGui):
         self.widgets += [
             OnscreenText(text=addr, scale=.12, pos=(0, .4),
                          font=menu_gui.font, fg=(.75, .75, .75, 1))]
-        self.conn_txt = OnscreenText(scale=.12,
-                         pos=(0, .2), font=menu_gui.font, fg=(.75, .75, .75, 1))
+        self.conn_txt = OnscreenText(
+            scale=.12, pos=(0, .2), font=menu_gui.font, fg=(.75, .75, .75, 1))
         self.widgets += [self.conn_txt]
         self.widgets += [
             DirectButton(
@@ -36,10 +41,13 @@ class ServerPageGui(PageGui):
         PageGui.build(self)
         eng.server.start(self.process_msg, self.process_connection)
 
-    def process_msg(self, data_lst):
+    @staticmethod
+    def process_msg(data_lst):
+        '''Processes a message.'''
         print data_lst
 
     def process_connection(self, client_address):
+        '''Processes a connection.'''
         eng.log_mgr.log('connection from ' + client_address)
         self.conn_txt.setText(_('connection from ') + client_address)
 

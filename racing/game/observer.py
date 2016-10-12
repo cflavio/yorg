@@ -13,8 +13,10 @@ class Subject(object):
 
     def detach(self, obs_meth):
         '''Detaches an observer.'''
-        for obs in [obs for obs in self.observers if obs[0] == obs_meth]:
-            self.observers.remove(obs)
+        observers = [obs for obs in self.observers if obs[0] == obs_meth]
+        if not observers:
+            raise Exception
+        map(self.observers.remove, observers)
 
     def notify(self, *args):
         '''Notifies the observers.'''

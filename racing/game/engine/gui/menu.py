@@ -61,14 +61,14 @@ class MenuLogic(Logic):
         '''Pushes a page.'''
         if self.pages:
             self.pages[-1].gui.hide()
-            self.pages[-1].gui.detach(self.pages[-1])
+            self.pages[-1].gui.detach(self.pop_page)
         self.pages += [page]
         page.gui.attach(self.pop_page)
 
     def pop_page(self):
         '''Pops a page.'''
         page = self.pages.pop()
-        page.gui.detach(self)
+        page.gui.detach(self.pop_page)
         page.destroy()
         self.pages[-1].gui.show()
         self.pages[-1].gui.attach(self.pop_page)

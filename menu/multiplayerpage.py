@@ -1,18 +1,21 @@
+'''This is the multiplayer page of the menu.'''
 from direct.gui.DirectButton import DirectButton
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
-from serverpage import ServerPage
-from clientpage import ClientPage
+from racing.game.engine.gui.page import Page, PageGui
+from .serverpage import ServerPage
+from .clientpage import ClientPage
 
 
 class MultiplayerPageGui(PageGui):
+    '''This is the GUI of the multiplayer page.'''
 
     def build(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         menu_data = [
-            ('Server', lambda: self.menu.logic.push_page(ServerPage(self.menu))),
-            ('Client', lambda: self.menu.logic.push_page(ClientPage(self.menu)))]
+            ('Server',
+             lambda: self.menu.logic.push_page(ServerPage(self.menu))),
+            ('Client',
+             lambda: self.menu.logic.push_page(ClientPage(self.menu)))]
         self.widgets = [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),

@@ -1,4 +1,8 @@
-class NetMsgs:
+'''This module provides network messages.'''
+
+
+class NetMsgs(object):
+    '''Network messages.'''
 
     track_selected = 0
     car_request = 1

@@ -1,5 +1,6 @@
+'''This module defines Yorg's logic.'''
 from sys import exit
-from racing.game.game import Game, GameLogic
+from racing.game.game import GameLogic
 
 
 class _Logic(GameLogic):
@@ -21,7 +22,9 @@ class _Logic(GameLogic):
             self.mdt.fsm.demand('Menu')
         base.accept('escape-up', self.on_exit)
 
-    def on_exit(self):
+    @staticmethod
+    def on_exit():
+        '''Called at the exit.'''
         if game.options['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
         exit()
