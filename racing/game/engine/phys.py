@@ -26,9 +26,9 @@ class EnginePhys(Phys):
 
     def start(self):
         '''Starts the physics.'''
-        eng.event.attach(self.__on_frame, 2)
+        eng.event.attach(self._on_frame, 2)
 
-    def __on_frame(self):
+    def _on_frame(self):
         '''Called on each frame.'''
         self.world_phys.doPhysics(globalClock.getDt(), 10, 1/180.0)
         self.__do_collisions()
@@ -37,7 +37,7 @@ class EnginePhys(Phys):
         '''Stops the physics.'''
         self.world_phys = None
         self.__debug_np.removeNode()
-        eng.event.detach(self.__on_frame)
+        eng.event.detach(self._on_frame)
 
     def __process_contact(self, obj, node, to_clear):
         '''Processes a physics contact.'''

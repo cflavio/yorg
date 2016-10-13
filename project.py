@@ -4,6 +4,9 @@
 
 # TODO LIST =====
 
+#TODO: write better yorg package
+#TODO: refactoring: build(cb)
+#TODO: refactoring: build go as lists of lists of components
 #TODO: put collision meshes and physics info into car models
 #TODO: driving model
 #TODO: waypoints as a line
@@ -47,3 +50,4 @@
 #TODO: network: physics (collisions to players' car)
 #TODO: day/night cycle
 #TODO: shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
+#TODO: GLSL shaders

@@ -10,12 +10,12 @@ class _Gui(Gui):
     '''This class models the GUI component of a track.'''
 
     def __init__(self, mdt, track):
-        Gui.__init__(self, mdt)
-        self.track = track
         self.__res_txts = None
         self.corners = None
         self.__buttons = None
         self.result_img = None
+        Gui.__init__(self, mdt)
+        self.track = track
         self.debug_txt = OnscreenText(
             '', pos=(-.1, .1), scale=0.05, fg=(1, 1, 1, 1),
             parent=eng.base.a2dBottomRight, align=TextNode.ARight,
@@ -49,27 +49,24 @@ class _Gui(Gui):
     def set_corners(self):
         '''Sets track's corners.'''
         corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
-        corners = [self.mdt.gfx.phys_model.find('**/Minimap'+corner)
-                   for corner in corners]
-        if not any(corner.isEmpty() for corner in corners):
+        p_mod = self.mdt.gfx.phys_model
+        corners = [p_mod.find('**/Minimap' + crn) for crn in corners]
+        if not any(crn.isEmpty() for crn in corners):
             self.corners = [corner.get_pos() for corner in corners]
 
     def update_minimap(self):
         '''Updates the minimap.'''
         if not hasattr(self, 'corners'):
             return
-        left = self.corners[0].getX()
-        right = self.corners[1].getX()
-        top = self.corners[0].getY()
-        bottom = self.corners[3].getY()
+        left, right = self.corners[0].getX(), self.corners[1].getX()
+        top, bottom = self.corners[0].getY(), self.corners[3].getY()
         car_pos = game.player_car.gfx.nodepath.get_pos()
         pos_x_norm = (car_pos.getX() - left) / (right - left)
         pos_y_norm = (car_pos.getY() - bottom) / (top - bottom)
 
         width = self.minimap.getScale()[0] * 2.0
         height = self.minimap.getScale()[2] * 2.0
-        center_x = self.minimap.getX()
-        center_y = self.minimap.getZ()
+        center_x, center_y = self.minimap.getX(), self.minimap.getZ()
         left_img = center_x - width / 2.0
         bottom_img = center_y - height / 2.0
         pos_x = left_img + pos_x_norm * width
@@ -130,7 +127,8 @@ class _Gui(Gui):
         #TODO: find a way to share the time on Tumblr
         sites = [('facebook', facebook_url), ('twitter', twitter_url),
                  ('google_plus', plus_url), ('tumblr', tumblr_url)]
-        self.__buttons += [ImageButton(
+        self.__buttons += [
+            ImageButton(
                 scale=.1,
                 pos=(.02 + i*.15, 1, -.62), frameColor=(0, 0, 0, 0),
                 image='assets/images/icons/%s_png.png' % site[0],
@@ -147,9 +145,8 @@ class _Gui(Gui):
             if game.ranking:
                 for car in game.ranking:
                     game.ranking[car] += game.track.race_ranking[car]
-                conf = game.options
-                conf['last_ranking'] = game.ranking
-                conf.store()
+                game.options['last_ranking'] = game.ranking
+                game.options.store()
                 game.fsm.demand('Ranking')
             else:
                 game.fsm.demand('Menu')

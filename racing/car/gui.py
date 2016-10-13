@@ -25,8 +25,8 @@ class CarParameter(object):
 
     def toggle(self):
         '''Toggles the visibility of a widget.'''
-        for wdg in [self.__slider, self.__lab, self.__val]:
-            (wdg.show if wdg.isHidden() else wdg.hide)()
+        widgets = [self.__slider, self.__lab, self.__val]
+        map(lambda wdg: (wdg.show if wdg.isHidden() else wdg.hide)(), widgets)
 
     def __set_attr(self):
         '''Sets a car's attribute.'''

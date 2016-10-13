@@ -11,12 +11,10 @@ class _Ai(Ai):
         '''The current target of the car.'''
         curr_wp = self.mdt.logic.current_wp[1]
         waypoints = game.track.gfx.waypoints
-        curr_wp_idx = waypoints.keys().index(curr_wp)
-        next_wp_idx = (curr_wp_idx + 1) % len(waypoints)
-        next_wp = waypoints.keys()[next_wp_idx]
-        distance = (curr_wp.get_pos() -
-                    self.mdt.gfx.nodepath.get_pos()).length()
-        return curr_wp if distance > 15 else next_wp
+        next_wp_idx = (waypoints.keys().index(curr_wp) + 1) % len(waypoints)
+        dist_vec = curr_wp.get_pos() - self.mdt.gfx.nodepath.get_pos()
+        distance = dist_vec.length()
+        return curr_wp if distance > 15 else waypoints.keys()[next_wp_idx]
 
     @property
     def car_vec(self):
@@ -28,8 +26,9 @@ class _Ai(Ai):
     @property
     def curr_dot_prod(self):
         '''The current dot product of the car.'''
-        tgt_vec = Vec2(self.current_target.get_pos().xy -
-                       self.mdt.gfx.nodepath.get_pos().xy)
+        curr_tgt_pos = self.current_target.get_pos().xy
+        curr_pos = self.mdt.gfx.nodepath.get_pos().xy
+        tgt_vec = Vec2(curr_tgt_pos - curr_pos)
         tgt_vec.normalize()
         return self.car_vec.dot(tgt_vec)
 
@@ -45,16 +44,17 @@ class _Ai(Ai):
         '''The current acceleration computation of the car.'''
         if self.mdt.phys.speed < 40:
             return True
-        if not all(name.startswith('Road')
-                   for name in self.mdt.phys.ground_names):
+        grounds = self.mdt.phys.ground_names
+        if not all(name.startswith('Road') for name in grounds):
             return False
         return self.curr_dot_prod > .8
 
     @staticmethod
     def ground_name(pos):
         '''The ground name under the given position.'''
-        result = eng.phys.world_phys.rayTestClosest(
-            (pos.x, pos.y, pos.z + 1), (pos.x, pos.y, pos.z - 1))
+        top = (pos.x, pos.y, pos.z + 1)
+        bottom = (pos.x, pos.y, pos.z - 1)
+        result = eng.phys.world_phys.rayTestClosest(top, bottom)
         ground = result.get_node()
         return ground.get_name() if ground else ''
 
@@ -65,8 +65,8 @@ class _Ai(Ai):
         rot_mat = Mat4()
         rot_mat.setRotateMat(deg, (0, 0, 1))
         lookahead_rot = rot_mat.xformVec((lookahed_vec.x, lookahed_vec.y, 0))
-        lookahead_pos = self.mdt.gfx.nodepath.get_pos() + \
-            Point3(lookahead_rot.x, lookahead_rot.y, 0)
+        lookahead_pt = Point3(lookahead_rot.x, lookahead_rot.y, 0)
+        lookahead_pos = self.mdt.gfx.nodepath.get_pos() + lookahead_pt
         return self.ground_name(lookahead_pos)
 
     @property
@@ -90,15 +90,13 @@ class _Ai(Ai):
                 return False, True
         if abs(self.curr_dot_prod) > .9:
             return False, False
-        tgt = Vec2(self.current_target.get_pos().xy -
-                   self.mdt.gfx.nodepath.get_pos().xy)
+        curr_tgt_pos = self.current_target.get_pos().xy
+        curr_pos = self.mdt.gfx.nodepath.get_pos().xy
+        tgt = Vec2(curr_tgt_pos - curr_pos)
         car_vec = self.car_vec
         cross = Vec3(tgt.x, tgt.y, 0).cross(Vec3(car_vec.x, car_vec.y, 0))
         dot_res = cross.dot(Vec3(0, 0, 1))
-        left = dot_res < 0
-        right = not left
-
-        return left, right
+        return dot_res < 0, dot_res >= 0
 
     def get_input(self):
         '''The current computation of the car.'''

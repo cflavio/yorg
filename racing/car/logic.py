@@ -1,6 +1,6 @@
 '''This module provides the logic of a car.'''
 from racing.game.gameobject.gameobject import Logic
-from panda3d.core import Vec3, Vec2, deg2Rad, Point3
+from panda3d.core import Vec3, Vec2, deg2Rad
 import math
 
 
@@ -39,38 +39,34 @@ class _Logic(Logic):
         '''This callback method is invoked on each frame.'''
         eng_frc = brake_frc = 0
         d_t = globalClock.getDt()
-        steering_inc = d_t * self.mdt.phys.steering_inc
-        steering_dec = d_t * self.mdt.phys.steering_dec
+        phys = self.mdt.phys
+        steering_inc = d_t * phys.steering_inc
+        steering_dec = d_t * phys.steering_dec
 
-        speed_ratio = self.mdt.phys.speed_ratio
-        steering_range = self.mdt.phys.steering_min_speed - \
-            self.mdt.phys.steering_max_speed
-        steering_clamp = self.mdt.phys.steering_min_speed - \
-            speed_ratio * steering_range
+        speed_ratio = phys.speed_ratio
+        steering_range = phys.steering_min_speed - phys.steering_max_speed
+        steering_clamp = phys.steering_min_speed - speed_ratio * steering_range
 
+        can_accel = phys.speed < phys.curr_max_speed
         if input_dct['forward'] and input_dct['reverse']:
-            eng_frc = self.mdt.phys.engine_acc_frc \
-                if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
-            brake_frc = self.mdt.phys.brake_frc
+            eng_frc = phys.engine_acc_frc if can_accel else 0
+            brake_frc = phys.brake_frc
 
         if input_dct['forward'] and not input_dct['reverse']:
-            eng_frc = self.mdt.phys.engine_acc_frc \
-                if self.mdt.phys.speed < self.mdt.phys.curr_max_speed else 0
+            eng_frc = phys.engine_acc_frc if can_accel else 0
             brake_frc = 0
 
         if input_dct['reverse'] and not input_dct['forward']:
-            eng_frc = self.mdt.phys.engine_dec_frc \
-                if self.mdt.phys.speed < .05 else 0
-            brake_frc = self.mdt.phys.brake_frc
+            eng_frc = phys.engine_dec_frc if phys.speed < .05 else 0
+            brake_frc = phys.brake_frc
 
         if not input_dct['forward'] and not input_dct['reverse']:
-            brake_frc = self.mdt.phys.eng_brk_frc
+            brake_frc = phys.eng_brk_frc
 
         if input_dct['left']:
             if self.start_left is None:
                 self.start_left = globalClock.getFrameTime()
-            d_t = globalClock.getFrameTime() - self.start_left
-            mul = min(1, d_t / .1)
+            mul = min(1, (globalClock.getFrameTime() - self.start_left) / .1)
             self.__steering += steering_inc * mul
             self.__steering = min(self.__steering, steering_clamp)
         else:
@@ -79,8 +75,7 @@ class _Logic(Logic):
         if input_dct['right']:
             if self.start_right is None:
                 self.start_right = globalClock.getFrameTime()
-            d_t = globalClock.getFrameTime() - self.start_right
-            mul = min(1, d_t / .1)
+            mul = min(1, (globalClock.getFrameTime() - self.start_right) / .1)
             self.__steering -= steering_inc * mul
             self.__steering = max(self.__steering, -steering_clamp)
         else:
@@ -93,10 +88,10 @@ class _Logic(Logic):
                 steering_sign = (-1 if self.__steering > 0 else 1)
                 self.__steering += steering_sign * steering_dec
 
-        self.mdt.phys.set_forces(eng_frc, brake_frc, self.__steering)
+        phys.set_forces(eng_frc, brake_frc, self.__steering)
         if not self.mdt.event.has_just_started:
-            self.mdt.gui.time_txt.setText(str(round(
-                globalClock.getFrameTime() - self.last_time_start, 2)))
+            d_t = round(globalClock.getFrameTime() - self.last_time_start, 2)
+            self.mdt.gui.time_txt.setText(str(d_t))
         self.__update_roll_info()
         if game.track.gfx.waypoints:
             self.__update_wp()
@@ -129,17 +124,12 @@ class _Logic(Logic):
         curr_wp = waypoints.keys()[curr_wp_idx]
 
         may_prev = waypoints[curr_wp]
-        distances = []
-        for waypoint in may_prev:
-            distances += [self.pt_line_dst(node, waypoint, curr_wp)]
+        distances = [self.pt_line_dst(node, w_p, curr_wp) for w_p in may_prev]
         prev_idx = distances.index(min(distances))
         prev_wp = may_prev[prev_idx]
 
-        may_succ = [waypoint for waypoint in waypoints
-                    if curr_wp in waypoints[waypoint]]
-        distances = []
-        for waypoint in may_succ:
-            distances += [self.pt_line_dst(node, curr_wp, waypoint)]
+        may_succ = [w_p for w_p in waypoints if curr_wp in waypoints[w_p]]
+        distances = [self.pt_line_dst(node, curr_wp, w_p) for w_p in may_succ]
         next_idx = distances.index(min(distances))
         next_wp = may_succ[next_idx]
 
@@ -179,7 +169,6 @@ class _Logic(Logic):
         start_wp, end_wp = self.current_wp
         wp_vec = Vec3(end_wp.getPos(start_wp).xy, 0)
         wp_vec.normalize()
-
         return self.car_vec.dot(wp_vec)
 
     def __update_wp(self):
@@ -199,6 +188,14 @@ class _Logic(Logic):
         #eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
         self.update_cam_fp()
 
+    def __cam_cond(self, curr_pos, curr_cam_fact):
+        '''Camera condition.'''
+        closest = self.get_closest(curr_pos)
+        if closest:
+            cls_s = closest.getNode().getName()
+        if closest and cls_s not in ['Vehicle', 'Goal'] and curr_cam_fact > .1:
+            return closest
+
     def update_cam_fp(self):
         '''Updates the camera.'''
         speed_ratio = self.mdt.phys.speed_ratio
@@ -211,8 +208,8 @@ class _Logic(Logic):
         #car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         #car_vec.normalize()
 
-        fwd_vec = eng.base.render.getRelativeVector(self.mdt.gfx.nodepath,
-                                                    Vec3(0, 1, 0))
+        nodepath = self.mdt.gfx.nodepath
+        fwd_vec = eng.base.render.getRelativeVector(nodepath, Vec3(0, 1, 0))
         fwd_vec.normalize()
 
         car_pos = self.mdt.gfx.nodepath.getPos()
@@ -223,26 +220,13 @@ class _Logic(Logic):
         delta_pos_z = cam_z_max - cam_z_diff * speed_ratio
         delta_cam_z = look_z_min + look_z_diff * speed_ratio
 
-        curr_pos = Point3(car_pos.x + cam_vec.x,
-                          car_pos.y + cam_vec.y,
-                          car_pos.z + cam_vec.z + delta_pos_z)
+        curr_pos = car_pos + cam_vec + (0, 0, delta_pos_z)
         curr_cam_fact = cam_dist_min + cam_dist_diff * speed_ratio
 
-        def cam_cond(curr_pos):
-            '''Camera condition.'''
-            closest = self.get_closest(curr_pos)
-            if closest:
-                closest_str = closest.getNode().getName()
-            if closest and closest_str not in ['Vehicle', 'Goal'] and \
-                    curr_cam_fact > .1:
-                return closest
-        curr_hit = cam_cond(curr_pos)
+        curr_hit = self.__cam_cond(curr_pos, curr_cam_fact)
         if curr_hit:
             hit_pos = curr_hit.getHitPos()
-            cam_vec = Vec3(
-                hit_pos.x - car_pos.x,
-                hit_pos.y - car_pos.y,
-                hit_pos.z - car_pos.z)
+            cam_vec = hit_pos - car_pos
 
         #game.track.gui.debug_txt.setText(
         #    curr_hit.getNode().getName() if curr_hit else '')
@@ -262,8 +246,7 @@ class _Logic(Logic):
             if abs(cam_pos - tgt) <= curr_incr:
                 return tgt
             else:
-                sign = 1 if tgt > cam_pos else -1
-                return cam_pos + sign * curr_incr
+                return cam_pos + (1 if tgt > cam_pos else -1) * curr_incr
         new_x = new_pos(eng.base.camera.getX(), self.tgt_x)
         new_y = new_pos(eng.base.camera.getY(), self.tgt_y)
         new_z = new_pos(eng.base.camera.getZ(), self.tgt_z)
@@ -275,8 +258,8 @@ class _Logic(Logic):
 
         if not self.is_rolling:
             eng.base.camera.setPos(new_x, new_y, new_z)
-        eng.base.camera.look_at(
-            self.tgt_look_x, self.tgt_look_y, self.tgt_look_z + delta_cam_z)
+        look_z = self.tgt_look_z + delta_cam_z
+        eng.base.camera.look_at(self.tgt_look_x, self.tgt_look_y, look_z)
 
     @property
     def is_upside_down(self):

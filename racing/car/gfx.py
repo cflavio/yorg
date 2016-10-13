@@ -7,12 +7,12 @@ class _Gfx(Gfx):
     '''This class models the graphics component of a car.'''
 
     def __init__(self, mdt, path, callback):
-        Gfx.__init__(self, mdt)
         self.rear_right_wheel_np = None
         self.chassis_np = None
         self.front_left_wheel_np = None
         self.front_right_wheel_np = None
         self.rear_left_wheel_np = None
+        Gfx.__init__(self, mdt)
         self.path = path
         self.callback = callback
         vehicle_node = BulletRigidBodyNode('Vehicle')
@@ -35,32 +35,23 @@ class _Gfx(Gfx):
     def load_wheels(self, chassis_model):
         '''Loads the wheels.'''
         self.chassis_np = chassis_model
+        load = eng.base.loader.loadModel
         try:
-            self.front_right_wheel_np = eng.base.loader.loadModel(
-                self.path + '/frontwheel')
-            self.front_left_wheel_np = eng.base.loader.loadModel(
-                self.path + '/frontwheel')
-            self.rear_right_wheel_np = eng.base.loader.loadModel(
-                self.path + '/rearwheel')
-            self.rear_left_wheel_np = eng.base.loader.loadModel(
-                self.path + '/rearwheel')
+            self.front_right_wheel_np = load(self.path + '/frontwheel')
+            self.front_left_wheel_np = load(self.path + '/frontwheel')
+            self.rear_right_wheel_np = load(self.path + '/rearwheel')
+            self.rear_left_wheel_np = load(self.path + '/rearwheel')
         except IOError:
-            self.front_right_wheel_np = eng.base.loader.loadModel(
-                self.path + '/wheel')
-            self.front_left_wheel_np = eng.base.loader.loadModel(
-                self.path + '/wheel')
-            self.rear_right_wheel_np = eng.base.loader.loadModel(
-                self.path + '/wheel')
-            self.rear_left_wheel_np = eng.base.loader.loadModel(
-                self.path + '/wheel')
+            self.front_right_wheel_np = load(self.path + '/wheel')
+            self.front_left_wheel_np = load(self.path + '/wheel')
+            self.rear_right_wheel_np = load(self.path + '/wheel')
+            self.rear_left_wheel_np = load(self.path + '/wheel')
         taskMgr.doMethodLater(.01, self.callback, 'callback')
 
     def destroy(self):
         '''The destroyer.'''
-        meshes = [self.nodepath,
-                  self.chassis_np,
-                  self.front_right_wheel_np,
-                  self.front_left_wheel_np,
-                  self.rear_right_wheel_np,
-                  self.rear_right_wheel_np]
+        meshes = [
+            self.nodepath, self.chassis_np, self.front_right_wheel_np,
+            self.front_left_wheel_np, self.rear_right_wheel_np,
+            self.rear_right_wheel_np]
         map(lambda mesh: mesh.removeNode(), meshes)

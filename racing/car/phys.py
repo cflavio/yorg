@@ -12,41 +12,24 @@ class _Phys(Phys):
         Phys.__init__(self, mdt)
         self.__set_phys(path)
 
-        def find_geoms(model, name):
-            '''Finds the geoms with the given name.'''
-            def sibling_names(node):
-                '''Finds the sibling of a node.'''
-                siblings = node.getParent().getChildren()
-                return [child.getName() for child in siblings]
-
-            named_geoms = [
-                geom for geom in model.findAllMatches('**/+GeomNode')
-                if any([s.startswith(name) for s in sibling_names(geom)])]
-            in_vec = [name in named_geom.getName()
-                      for named_geom in named_geoms]
-            indexes = [i for i, el in enumerate(in_vec) if el]
-            return [named_geoms[i] for i in indexes]
-
         chassis_shape = BulletConvexHullShape()
         capsule = loader.loadModel('cars/capsule')
         capsule.setScale(*self.collision_box_scale)
         capsule.flattenLight()
-        for geom in find_geoms(capsule, 'Cube'):
-            geom_geom = geom.node().getGeom(0)
-            transf = geom.getTransform()
-            chassis_shape.addGeom(geom_geom, transf)
+        for geom in self.__find_geoms(capsule, 'Cube'):
+            chassis_shape.addGeom(geom.node().getGeom(0), geom.getTransform())
 
-        transform_state = TransformState.makePos(
-            LVecBase3f(*self.collision_box_pos))
+        coll_pos = LVecBase3f(*self.collision_box_pos)
+        transform_state = TransformState.makePos(coll_pos)
         mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
         mdt.gfx.nodepath.node().setMass(self.mass)
         mdt.gfx.nodepath.node().setDeactivationEnabled(False)
 
-        eng.phys.world_phys.attachRigidBody(mdt.gfx.nodepath.node())
-        eng.phys.collision_objs += [mdt.gfx.nodepath.node()]
+        node = mdt.gfx.nodepath.node()
+        eng.phys.world_phys.attachRigidBody(node)
+        eng.phys.collision_objs += [node]
 
-        self.vehicle = BulletVehicle(eng.phys.world_phys,
-                                     mdt.gfx.nodepath.node())
+        self.vehicle = BulletVehicle(eng.phys.world_phys, node)
         self.vehicle.setCoordinateSystem(ZUp)
         self.vehicle.setPitchControl(self.pitch_control)
         tuning = self.vehicle.getTuning()
@@ -55,15 +38,16 @@ class _Phys(Phys):
 
         eng.phys.world_phys.attachVehicle(self.vehicle)
 
+        frw = mdt.gfx.front_right_wheel_np
+        flw = mdt.gfx.front_left_wheel_np
+        rrw = mdt.gfx.rear_right_wheel_np
+        rlw = mdt.gfx.rear_left_wheel_np
         wheels_info = [
-            (self.wheel_fr_pos, True, mdt.gfx.front_right_wheel_np,
-             self.wheel_fr_radius),
-            (self.wheel_fl_pos, True, mdt.gfx.front_left_wheel_np,
-             self.wheel_fl_radius),
-            (self.wheel_rr_pos, False, mdt.gfx.rear_right_wheel_np,
-             self.wheel_rr_radius),
-            (self.wheel_rl_pos, False, mdt.gfx.rear_left_wheel_np,
-             self.wheel_rl_radius)]
+            (self.wheel_fr_pos, True, frw, self.wheel_fr_radius),
+            (self.wheel_fl_pos, True, flw, self.wheel_fl_radius),
+            (self.wheel_rr_pos, False, rrw, self.wheel_rr_radius),
+            (self.wheel_rl_pos, False, rlw, self.wheel_rl_radius)]
+        #TODO: change this to a for
         map(lambda (pos, front, nodepath, radius):
             self.__add_wheel(pos, front, nodepath.node(), radius),
             wheels_info)
@@ -72,6 +56,20 @@ class _Phys(Phys):
         #mdt.gfx.nodepath.node().setCcdSweptSphereRadius(3.50)
         #self.vehicle.get_chassis().setCcdMotionThreshold(.01)
         #self.vehicle.get_chassis().setCcdSweptSphereRadius(.2)
+
+    @staticmethod
+    def __find_geoms(model, name):
+        '''Finds the geoms with the given name.'''
+        def sibling_names(node):
+            '''Finds the sibling of a node.'''
+            return [chl.getName() for chl in node.getParent().getChildren()]
+
+        geoms = model.findAllMatches('**/+GeomNode')
+        cnd = lambda geo: any([s.startswith(name) for s in sibling_names(geo)])
+        named_geoms = [geom for geom in geoms if cnd(geom)]
+        in_vec = [name in named_geom.getName() for named_geom in named_geoms]
+        indexes = [i for i, el in enumerate(in_vec) if el]
+        return [named_geoms[i] for i in indexes]
 
     def __set_phys(self, path):
         '''Sets the physics.'''
@@ -139,9 +137,9 @@ class _Phys(Phys):
     def ground_name(wheel):
         '''The name of the ground under the wheel.'''
         contact_pos = wheel.get_raycast_info().getContactPointWs()
-        result = eng.phys.world_phys.rayTestClosest(
-            (contact_pos.x, contact_pos.y, contact_pos.z + .1),
-            (contact_pos.x, contact_pos.y, contact_pos.z - .1))
+        top = (contact_pos.x, contact_pos.y, contact_pos.z + .1)
+        bottom = (contact_pos.x, contact_pos.y, contact_pos.z - .1)
+        result = eng.phys.world_phys.rayTestClosest(top, bottom)
         ground = result.get_node()
         return ground.get_name() if ground else ''
 
@@ -163,14 +161,8 @@ class _Phys(Phys):
                     frictions += [float(gfx_node.get_tag('friction'))]
                 except ValueError:
                     pass
-        if speeds:
-            avg_speed = sum(speeds) / len(speeds)
-        else:
-            avg_speed = 1.0
-        if frictions:
-            avg_friction = sum(frictions) / len(frictions)
-        else:
-            avg_friction = 1.0
+        avg_speed = (sum(speeds) / len(speeds)) if speeds else 1.0
+        avg_friction = (sum(frictions) / len(frictions)) if frictions else 1.0
         self.curr_max_speed = self.max_speed * avg_speed
-        for wheel in self.vehicle.get_wheels():
-            wheel.setFrictionSlip(self.friction_slip * avg_friction)
+        fric = self.friction_slip * avg_friction
+        map(lambda whl: whl.setFrictionSlip(fric), self.vehicle.get_wheels())
