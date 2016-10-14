@@ -23,39 +23,10 @@ class CarPageGui(PageGui):
             eng.server.car_mapping = {}
         elif eng.client.is_active:
             eng.client.register_cb(self.process_client)
-
-        def on_car(car):
-            '''Called when the user clicks on a car.'''
-            if eng.server.is_active:
-                eng.log_mgr.log('car selected: ' + car)
-                eng.server.send([NetMsgs.car_selection, car])
-                for btn in [wdg for wdg in self.widgets
-                            if wdg.__class__ == DirectButton and
-                            wdg['extraArgs'] == [car]]:
-                    btn['state'] = DISABLED
-                    btn.setAlphaScale(.25)
-                if self in self.current_cars:
-                    eng.log_mgr.log('car deselected: ' +
-                                    self.current_cars[self])
-                    eng.server.send([NetMsgs.car_deselection,
-                                    self.current_cars[self]])
-                    for btn in [wdg for wdg in self.widgets
-                                if wdg.__class__ == DirectButton and
-                                wdg['extraArgs'] == [self.current_cars[self]]]:
-                        btn['state'] = NORMAL
-                        btn.setAlphaScale(1)
-                self.current_cars[self] = car
-                eng.server.car_mapping['self'] = car
-                self.evaluate_starting()
-            elif eng.client.is_active:
-                eng.log_mgr.log('car request: ' + car)
-                eng.client.send([NetMsgs.car_request, car])
-            else:
-                game.fsm.demand('Loading', self.track_path, car)
         menu_data = [
-            ('Kronos', on_car, ['kronos']),
-            ('Themis', on_car, ['themis']),
-            ('Diones', on_car, ['diones'])]
+            ('Kronos', self.on_car, ['kronos']),
+            ('Themis', self.on_car, ['themis']),
+            ('Diones', self.on_car, ['diones'])]
         self.widgets += [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
@@ -69,10 +40,39 @@ class CarPageGui(PageGui):
         self.current_cars = {}
         PageGui.build(self)
 
+    def __buttons(self, car):
+        is_btn = lambda wdg: wdg.__class__ == DirectButton
+        buttons = [wdg for wdg in self.widgets if is_btn(wdg)]
+        return [btn for btn in buttons if wdg['extraArgs'] == [car]]
+
+    def on_car(self, car):
+        '''Called when the user clicks on a car.'''
+        if eng.server.is_active:
+            eng.log_mgr.log('car selected: ' + car)
+            eng.server.send([NetMsgs.car_selection, car])
+            for btn in self.__buttons(car):
+                btn['state'] = DISABLED
+                btn.setAlphaScale(.25)
+            if self in self.current_cars:
+                curr_car = self.current_cars[self]
+                eng.log_mgr.log('car deselected: ' + curr_car)
+                eng.server.send([NetMsgs.car_deselection, curr_car])
+                for btn in self.__buttons(curr_car):
+                    btn['state'] = NORMAL
+                    btn.setAlphaScale(1)
+            self.current_cars[self] = car
+            eng.server.car_mapping['self'] = car
+            self.evaluate_starting()
+        elif eng.client.is_active:
+            eng.log_mgr.log('car request: ' + car)
+            eng.client.send([NetMsgs.car_request, car])
+        else:
+            game.fsm.demand('Loading', self.track_path, car)
+
     def evaluate_starting(self):
         '''Evaluate if we should start.'''
-        if all(conn in self.current_cars
-               for conn in eng.server.connections + [self]):
+        connections = eng.server.connections + [self]
+        if all(conn in self.current_cars for conn in connections):
             packet = [NetMsgs.start_race]
             packet += [len(self.current_cars)]
 
@@ -80,21 +80,18 @@ class CarPageGui(PageGui):
                 '''Processes a car.'''
                 return 'server' if k == self else k.getAddress().getIpString()
             for k, val in self.current_cars.items():
-                packet += [process(k)]
-                packet += [val]
+                packet += [process(k), val]
             eng.server.send(packet)
             eng.log_mgr.log('start race: ' + str(packet))
-            game.fsm.demand('Loading', self.track_path,
-                            self.current_cars[self], packet[2:])
+            curr_car = self.current_cars[self]
+            game.fsm.demand('Loading', self.track_path, curr_car, packet[2:])
 
     def process_srv(self, data_lst, sender):
         '''Processes a message server-side.'''
         if data_lst[0] == NetMsgs.car_request:
             car = data_lst[1]
             eng.log_mgr.log('car requested: ' + car)
-            btn = [wdg for wdg in self.widgets
-                   if wdg.__class__ == DirectButton and
-                   wdg['extraArgs'] == [car]][0]
+            btn = self.__buttons(car)[0]
             if btn['state'] == DISABLED:
                 eng.server.send([NetMsgs.car_deny], sender)
                 eng.log_mgr.log('car already selected: ' + car)
@@ -112,9 +109,7 @@ class CarPageGui(PageGui):
         if data_lst[0] == NetMsgs.car_confirm:
             self.car = car = data_lst[1]
             eng.log_mgr.log('car confirmed: ' + car)
-            btn = [wdg for wdg in self.widgets
-                   if wdg.__class__ == DirectButton and
-                   wdg['extraArgs'] == [car]][0]
+            btn = self.buttons(car)[0]
             btn['state'] = DISABLED
             btn.setAlphaScale(.25)
         if data_lst[0] == NetMsgs.car_deny:
@@ -122,17 +117,13 @@ class CarPageGui(PageGui):
         if data_lst[0] == NetMsgs.car_selection:
             car = data_lst[1]
             eng.log_mgr.log('car selection: ' + car)
-            btn = [wdg for wdg in self.widgets
-                   if wdg.__class__ == DirectButton and
-                   wdg['extraArgs'] == [car]][0]
+            btn = self.__buttons(car)[0]
             btn['state'] = DISABLED
             btn.setAlphaScale(.25)
         if data_lst[0] == NetMsgs.car_deselection:
             car = data_lst[1]
             eng.log_mgr.log('car deselection: ' + car)
-            btn = [wdg for wdg in self.widgets
-                   if wdg.__class__ == DirectButton and
-                   wdg['extraArgs'] == [car]][0]
+            btn = self.__buttons(car)[0]
             btn['state'] = NORMAL
             btn.setAlphaScale(1)
         if data_lst[0] == NetMsgs.start_race:

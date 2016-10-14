@@ -18,9 +18,9 @@ class ClientPageGui(PageGui):
     def build(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
-        self.widgets += [
-            OnscreenText(text='', scale=.12, pos=(0, .4),
-                         font=menu_gui.font, fg=(.75, .75, .75, 1))]
+        txt = OnscreenText(text='', scale=.12, pos=(0, .4),
+                           font=menu_gui.font, fg=(.75, .75, .75, 1))
+        self.widgets += [txt]
         PageGui.transl_text(self.widgets[0], _('Client'))
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_gui.font, width=12,
@@ -28,14 +28,14 @@ class ClientPageGui(PageGui):
             initialText='insert the server address')
         self.ent.onscreenText['fg'] = (.75, .75, .75, 1)
         self.widgets += [self.ent]
-        self.widgets += [
-            DirectButton(
-                text=_('Connect'), scale=.2, pos=(0, 1, -.2),
-                text_fg=(.75, .75, .75, 1),
-                text_font=menu_gui.font, frameColor=menu_args.btn_color,
-                command=self.connect, frameSize=menu_args.btn_size,
-                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))]
+        btn = DirectButton(
+            text=_('Connect'), scale=.2, pos=(0, 1, -.2),
+            text_fg=(.75, .75, .75, 1),
+            text_font=menu_gui.font, frameColor=menu_args.btn_color,
+            command=self.connect, frameSize=menu_args.btn_size,
+            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
+            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+        self.widgets += [btn]
         PageGui.build(self)
 
     def connect(self):
@@ -44,14 +44,14 @@ class ClientPageGui(PageGui):
             print self.ent.get()
             eng.client.start(self.process_msg, self.ent.get())
             menu_gui = self.menu.gui
-            self.widgets += [
-                OnscreenText(text=_('Waiting for the server'), scale=.12,
-                             pos=(0, -.5), font=menu_gui.font,
-                             fg=(.75, .75, .75, 1))]
+            txt = OnscreenText(
+                text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
+                font=menu_gui.font, fg=(.75, .75, .75, 1))
+            self.widgets += [txt]
         except ClientError:
             txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)
-            taskMgr.doMethodLater(
-                5.0, lambda tsk: txt.destroy(), 'destroy error text')
+            args = (5.0, lambda tsk: txt.destroy(), 'destroy error text')
+            taskMgr.doMethodLater(*args)
 
     def process_msg(self, data_lst, sender):
         '''Processes a network message.'''

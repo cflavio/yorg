@@ -9,9 +9,8 @@ class _Event(Event):
     def __init__(self, mdt):
         Event.__init__(self, mdt)
         self.accept('f12', eng.phys.toggle_debug)
-        now = time.strftime('%y_%m_%d_%H_%M_%S')
-        self.accept('f10',
-                    eng.base.win.saveScreenshot, ['yorg_' + now + '.png'])
+        fname = 'yorg_' + time.strftime('%y_%m_%d_%H_%M_%S') + '.png'
+        self.accept('f10', eng.base.win.saveScreenshot, [fname])
 
     def on_end(self):
         '''Called at the end.'''

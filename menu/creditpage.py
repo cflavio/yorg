@@ -8,9 +8,9 @@ class CreditPageGui(PageGui):
 
     def build(self):
         menu_gui = self.menu.gui
-        self.widgets += [
-            OnscreenText(text='', scale=.12, pos=(0, .4),
-                         font=menu_gui.font, fg=(.75, .75, .75, 1))]
+        txt = OnscreenText(text='', scale=.12, pos=(0, .4),
+                           font=menu_gui.font, fg=(.75, .75, .75, 1))
+        self.widgets += [txt]
         flavio = _('Code')+': Flavio Calva'
         luca = _('Art')+': Luca Quartero'
         text = '\n\n'.join([flavio, luca])

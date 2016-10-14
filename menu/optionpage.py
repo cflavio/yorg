@@ -22,14 +22,14 @@ class OptionEvent(PageEvent):
         except KeyError:
             track = ''
         conf = game.options
-        conf['lang'] = eng.lang_mgr.languages[
-            self.mdt.gui._lang_opt.selectedIndex][:2].lower()
+        lang_idx = self.mdt.gui._lang_opt.selectedIndex
+        conf['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
         conf['volume'] = self.mdt.gui._vol_slider.getValue()
         conf['fullscreen'] = self.mdt.gui._fullscreen_cb['indicatorValue']
         conf['resolution'] = self.mdt.gui._res_opt.get().replace('x', ' ')
         conf['aa'] = self.mdt.gui._aa_cb['indicatorValue']
-        conf['open_browser_at_exit'] = self.mdt.gui._browser_cb[
-            'indicatorValue']
+        browser = self.mdt.gui._browser_cb['indicatorValue']
+        conf['open_browser_at_exit'] = browser
         conf['multithreaded_render'] = game.options['multithreaded_render']
         conf['car'] = car
         conf['track'] = track
@@ -53,10 +53,9 @@ class OptionPageGui(PageGui):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
 
-        lang_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .5),
-                               text_fg=(.75, .75, .75, 1),
-                               text_font=menu_gui.font,
-                               text_align=TextNode.ARight)
+        lang_lab = DirectLabel(
+            text='', scale=.12, pos=(-.1, 1, .5), text_fg=(.75, .75, .75, 1),
+            text_font=menu_gui.font, text_align=TextNode.ARight)
         PageGui.transl_text(lang_lab, 'Language')
         self._lang_opt = DirectOptionMenu(
             text='', scale=.12, items=eng.lang_mgr.languages, pos=(.2, 1, .5),
@@ -71,19 +70,17 @@ class OptionPageGui(PageGui):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        vol_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .3),
-                              text_font=menu_gui.font,
-                              text_fg=(.75, .75, .75, 1),
-                              text_align=TextNode.ARight)
+        vol_lab = DirectLabel(
+            text='', scale=.12, pos=(-.1, 1, .3), text_font=menu_gui.font,
+            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
         PageGui.transl_text(vol_lab, 'Volume')
         self._vol_slider = DirectSlider(
             pos=(.47, 0, .33), scale=.47, value=conf['volume'],
             frameColor=menu_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
 
-        fullscreen_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, .1),
-                                     text_font=menu_gui.font,
-                                     text_fg=(.75, .75, .75, 1),
-                                     text_align=TextNode.ARight)
+        fullscreen_lab = DirectLabel(
+            text='', scale=.12, pos=(-.1, 1, .1), text_font=menu_gui.font,
+            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
         PageGui.transl_text(fullscreen_lab, 'Fullscreen')
         self._fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='', scale=.12, text_font=menu_gui.font,
@@ -94,10 +91,9 @@ class OptionPageGui(PageGui):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        res_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.1),
-                              text_font=menu_gui.font,
-                              text_fg=(.75, .75, .75, 1),
-                              text_align=TextNode.ARight)
+        res_lab = DirectLabel(
+            text='', scale=.12, pos=(-.1, 1, -.1), text_font=menu_gui.font,
+            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
         PageGui.transl_text(res_lab, 'Resolution')
         self._res_opt = DirectOptionMenu(
             text='', scale=.08,
@@ -114,15 +110,13 @@ class OptionPageGui(PageGui):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        aa_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.3),
-                             text_font=menu_gui.font,
-                             text_fg=(.75, .75, .75, 1),
-                             text_align=TextNode.ARight)
+        aa_lab = DirectLabel(
+            text='', scale=.12, pos=(-.1, 1, -.3), text_font=menu_gui.font,
+            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
         PageGui.transl_text(aa_lab, 'Antialiasing')
-        aa_next_lab = DirectLabel(text='', scale=.08, pos=(.2, 1, -.3),
-                                  text_font=menu_gui.font,
-                                  text_fg=(.75, .75, .75, 1),
-                                  text_align=TextNode.ALeft)
+        aa_next_lab = DirectLabel(
+            text='', scale=.08, pos=(.2, 1, -.3), text_font=menu_gui.font,
+            text_fg=(.75, .75, .75, 1), text_align=TextNode.ALeft)
         PageGui.transl_text(aa_next_lab, '(from the next execution)')
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', scale=.12, text_font=menu_gui.font,
@@ -132,10 +126,9 @@ class OptionPageGui(PageGui):
             rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
             clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
 
-        browser_lab = DirectLabel(text='', scale=.12, pos=(-.1, 1, -.5),
-                                  text_font=menu_gui.font,
-                                  text_fg=(.75, .75, .75, 1),
-                                  text_align=TextNode.ARight)
+        browser_lab = DirectLabel(
+            text='', scale=.12, pos=(-.1, 1, -.5), text_font=menu_gui.font,
+            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
         PageGui.transl_text(browser_lab, "See Ya2's news at exit")
         self._browser_cb = DirectCheckButton(
             pos=(.12, 1, -.47), text='', scale=.12, text_font=menu_gui.font,
@@ -149,7 +142,6 @@ class OptionPageGui(PageGui):
         if base.appRunner and base.appRunner.dom:
             fullscreen_lab['text_fg'] = (.75, .75, .75, 1)
             self.__fullscreen_cb['state'] = DISABLED
-
             self.__res_opt['text_fg'] = (.75, .75, .75, 1)
             self.__res_opt['state'] = DISABLED
 

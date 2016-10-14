@@ -13,22 +13,11 @@ class SingleplayerPageGui(PageGui):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         game.ranking = None
-
-        def on_continue():
-            '''Called if the user presses 'continue'.'''
-            game.ranking = game.options['last_ranking']
-            game.fsm.demand('Loading')
-
-        def on_tournament():
-            '''Called if the user presses 'tournament'.'''
-            game.ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
-            self.menu.track = 'prototype'
-            self.menu.logic.push_page(CarPage(self.menu))
         menu_data = [
             ('Single race',
              lambda: self.menu.logic.push_page(TrackPage(self.menu))),
-            ('New tournament', on_tournament),
-            ('Continue tournament', on_continue)]
+            ('New tournament', self.on_tournament),
+            ('Continue tournament', self.on_continue)]
         self.widgets += [
             DirectButton(
                 text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
@@ -42,6 +31,18 @@ class SingleplayerPageGui(PageGui):
             self.widgets[-1]['state'] = DISABLED
             self.widgets[-1].setAlphaScale(.25)
         PageGui.build(self)
+
+    @staticmethod
+    def on_continue():
+        '''Called if the user presses 'continue'.'''
+        game.ranking = game.options['last_ranking']
+        game.fsm.demand('Loading')
+
+    def on_tournament(self):
+        '''Called if the user presses 'tournament'.'''
+        game.ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
+        self.menu.track = 'prototype'
+        self.menu.logic.push_page(CarPage(self.menu))
 
 
 class SingleplayerPage(Page):

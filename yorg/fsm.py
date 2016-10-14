@@ -19,10 +19,11 @@ class _Fsm(Fsm):
 
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
-        self.defaultTransitions = {'Menu': ['Loading'],
-                                   'Loading': ['Play'],
-                                   'Play': ['Ranking', 'Menu'],
-                                   'Ranking': ['Play', 'Menu']}
+        self.defaultTransitions = {
+            'Menu': ['Loading'],
+            'Loading': ['Play'],
+            'Play': ['Ranking', 'Menu'],
+            'Ranking': ['Play', 'Menu']}
         self.load_txt = None
         self.preview = None
         self.cam_tsk = None
@@ -71,16 +72,18 @@ class _Fsm(Fsm):
         try:
             self.preview = loader.loadModel(track_path + '/preview/preview')
         except IOError:
-            self.preview = loader.loadModel(track_path + '/preview/preview.bam')
+            self.preview = loader.loadModel(track_path+'/preview/preview.bam')
         self.preview.reparent_to(render)
         self.cam_pivot = NodePath('cam pivot')
         self.cam_pivot.reparent_to(render)
         self.cam_node = NodePath('cam node')
         self.cam_node.set_pos(500, 0, 0)
         self.cam_node.reparent_to(self.cam_pivot)
-        self.cam_pivot.hprInterval(25, (360, 0, 0), blendType='easeInOut').loop()
+        hpr = (360, 0, 0)
+        self.cam_pivot.hprInterval(25, hpr, blendType='easeInOut').loop()
         self.cam_tsk = taskMgr.add(self.update_cam, 'update cam')
-        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', [track_path, car_path, player_cars])
+        args = [track_path, car_path, player_cars]
+        taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', args)
 
     def update_cam(self, task):
         '''Updates the camera.'''
@@ -105,26 +108,26 @@ class _Fsm(Fsm):
                 '''Loads non-player cars.'''
                 if not cars:
                     self.mdt.fsm.demand('Play', track_path, car_path)
-                else:
-                    car = cars[0]
-                    cars.remove(car)
-                    car_class = Car
-                    ai = True
-                    if eng.server.is_active:
-                        car_class = NetworkCar if car in player_cars else Car
-                    if eng.client.is_active:
-                        car_class = NetworkCar
-                    self.mdt.cars += [
-                        car_class(
-                            'cars/' + car,
-                            self.mdt.track.gfx.get_start_pos(grid.index(car))[0],
-                            self.mdt.track.gfx.get_start_pos(grid.index(car))[1],
-                            load_other_cars, car not in player_cars)]
-            self.mdt.player_car = PlayerCar(
-                'cars/' + car_path,
-                self.mdt.track.gfx.get_start_pos(grid.index(car_path))[0],
-                self.mdt.track.gfx.get_start_pos(grid.index(car_path))[1],
-                load_other_cars, ai)
+                    return
+                car = cars[0]
+                cars.remove(car)
+                car_class = Car
+                ai = True
+                if eng.server.is_active:
+                    car_class = NetworkCar if car in player_cars else Car
+                if eng.client.is_active:
+                    car_class = NetworkCar
+                pos = self.mdt.track.gfx.get_start_pos(grid.index(car))[0]
+                hpr = self.mdt.track.gfx.get_start_pos(grid.index(car))[1]
+                func = load_other_cars
+                no_p = car not in player_cars
+                new_car = car_class('cars/' + car, pos, hpr, func, no_p)
+                self.mdt.cars += [new_car]
+            path = 'cars/' + car_path
+            pos = self.mdt.track.gfx.get_start_pos(grid.index(car_path))[0]
+            hpr = self.mdt.track.gfx.get_start_pos(grid.index(car_path))[1]
+            func = load_other_cars
+            self.mdt.player_car = PlayerCar(path, pos, hpr, func, ai)
             self.mdt.cars = []
         self.mdt.track = Track(track_path, load_car)
 
@@ -156,17 +159,19 @@ class _Fsm(Fsm):
                 eng.log_mgr.log('sent client ready')
                 return task.again
             self.send_tsk = taskMgr.doMethodLater(.5, send_ready, 'send ready')
-            # the server could not be listen to this event if it is still loading
-            # we should do a global protocol, perhaps
+            # the server could not be listen to this event if it is still
+            # loading we should do a global protocol, perhaps
         else:
             self.start_play()
 
     def process_srv(self, data_lst, sender):
         '''Processes a message server-side.'''
         if data_lst[0] == NetMsgs.client_ready:
-            eng.log_mgr.log('client ready: ' + sender.getAddress().getIpString())
+            ipaddr = sender.getAddress().getIpString()
+            eng.log_mgr.log('client ready: ' + ipaddr)
             self.ready_clients += [sender]
-            if all(client in self.ready_clients for client in eng.server.connections):
+            connections = eng.server.connections
+            if all(client in self.ready_clients for client in connections):
                 self.start_play()
                 eng.server.send([NetMsgs.start_race])
 
@@ -183,8 +188,9 @@ class _Fsm(Fsm):
         game.track.event.start()
         game.player_car.event.eval_register()
         self.mdt.audio.game_music.play()
-        map(lambda car: car.event.reset_car(), [self.mdt.player_car] + self.mdt.cars)
-        map(lambda car: car.event.start(), [self.mdt.player_car] + self.mdt.cars)
+        cars = [self.mdt.player_car] + self.mdt.cars
+        map(lambda car: car.event.reset_car(), cars)
+        map(lambda car: car.event.start(), cars)
 
     def exitPlay(self):
         '''Called when we exit from play.'''
@@ -202,33 +208,35 @@ class _Fsm(Fsm):
         eng.phys.stop()
         eng.gfx.clean()
 
+    def __step():
+        '''Goes on.'''
+        current_track = game.track.gfx.track_path[13:]
+        tracks = ['prototype', 'desert']
+        if tracks.index(current_track) == len(tracks) - 1:
+            game.ranking = None
+            conf = game.options
+            del conf['last_car']
+            del conf['last_track']
+            del conf['last_ranking']
+            conf.store()
+            self.demand('Menu')
+        else:
+            next_track = tracks[tracks.index(current_track) + 1]
+            curr_car = game.options['last_car']
+            self.demand('Loading', next_track, curr_car)
+
     def enterRanking(self):
         '''Called when we enter into the ranking.'''
-        sorted_ranking = reversed(sorted(game.ranking.items(), key=lambda el: el[1]))
+        items = game.ranking.items()
+        sorted_ranking = reversed(sorted(items, key=lambda el: el[1]))
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.ranking_texts = []
         for i, (name, score) in enumerate(sorted_ranking):
-            self.ranking_texts += [OnscreenText(
+            txt = OnscreenText(
                 '%s %s' % (name, score), pos=(0, .5 -.2 * i), font=font,
-                fg=(.75, .75, .75, 1), scale=.12)]
-
-        def step():
-            '''Goes on.'''
-            current_track = game.track.gfx.track_path[13:]
-            tracks = ['prototype', 'desert']
-            if tracks.index(current_track) == len(tracks) - 1:
-                game.ranking = None
-                conf = game.options
-                del conf['last_car']
-                del conf['last_track']
-                del conf['last_ranking']
-                conf.store()
-                self.demand('Menu')
-            else:
-                next_track = tracks[tracks.index(current_track) + 1]
-                curr_car = game.options['last_car']
-                self.demand('Loading', next_track, curr_car)
-        taskMgr.doMethodLater(10, lambda task: step(), 'step')
+                fg=(.75, .75, .75, 1), scale=.12)
+            self.ranking_texts += [txt]
+        taskMgr.doMethodLater(10, lambda task: self.__step(), 'step')
 
     def exitRanking(self):
         '''Called when we exit from ranking.'''
