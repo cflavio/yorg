@@ -17,7 +17,7 @@ class CarPageGui(PageGui):
     def build(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
-        self.track_path = 'tracks/track_' + self.menu.track
+        self.track_path = 'tracks/' + self.menu.track
         if eng.server.is_active:
             eng.server.register_cb(self.process_srv)
             eng.server.car_mapping = {}
@@ -41,9 +41,10 @@ class CarPageGui(PageGui):
         PageGui.build(self)
 
     def __buttons(self, car):
+        '''The buttons of the given car.'''
         is_btn = lambda wdg: wdg.__class__ == DirectButton
         buttons = [wdg for wdg in self.widgets if is_btn(wdg)]
-        return [btn for btn in buttons if wdg['extraArgs'] == [car]]
+        return [btn for btn in buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
         '''Called when the user clicks on a car.'''
@@ -109,7 +110,7 @@ class CarPageGui(PageGui):
         if data_lst[0] == NetMsgs.car_confirm:
             self.car = car = data_lst[1]
             eng.log_mgr.log('car confirmed: ' + car)
-            btn = self.buttons(car)[0]
+            btn = self.__buttons(car)[0]
             btn['state'] = DISABLED
             btn.setAlphaScale(.25)
         if data_lst[0] == NetMsgs.car_deny:

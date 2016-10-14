@@ -17,7 +17,7 @@ class _Logic(GameLogic):
         except KeyError:
             track = ''
         if car and track:
-            self.mdt.fsm.demand('Loading', 'tracks/track_' + track, car)
+            self.mdt.fsm.demand('Loading', 'tracks/' + track, car)
         else:
             self.mdt.fsm.demand('Menu')
         base.accept('escape-up', self.on_exit)

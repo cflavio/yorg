@@ -297,7 +297,6 @@ class _PlayerEvent(_Event):
                     LerpPosInterval(car.gfx.nodepath, .2, car_pos).start()
                     LerpHprInterval(car.gfx.nodepath, .2, car_hpr).start()
 
-    @staticmethod
     def process_client(self, data_lst, sender):
         '''Processes a message (client side.)'''
         if data_lst[0] == NetMsgs.game_packet:

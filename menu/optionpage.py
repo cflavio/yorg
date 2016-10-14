@@ -170,6 +170,7 @@ class OptionPageGui(PageGui):
         self._lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
     def __change_lang(self, arg):
+        '''Changes the language.'''
         lang_dict = {'English': 'en', 'Italiano': 'it'}
         eng.lang_mgr.set_lang(lang_dict[arg])
         self.update_texts()

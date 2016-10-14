@@ -12,8 +12,8 @@ class ClientPageGui(PageGui):
     '''This class defines the GUI of the client page.'''
 
     def __init__(self, mdt, menu):
-        PageGui.__init__(self, mdt, menu)
         self.ent = None
+        PageGui.__init__(self, mdt, menu)
 
     def build(self):
         menu_gui = self.menu.gui
@@ -57,7 +57,7 @@ class ClientPageGui(PageGui):
         '''Processes a network message.'''
         if data_lst[0] == NetMsgs.track_selected:
             eng.log_mgr.log('track selected: ' + data_lst[1])
-            self.menu.track = 'tracks/track_' + data_lst[1]
+            self.menu.track = data_lst[1]
             self.menu.logic.push_page(CarPage(self.menu))
 
 

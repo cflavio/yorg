@@ -26,7 +26,7 @@ class Track(GameObjectMdt):
         def post_gfx():
             '''Called after the graphics.'''
             self.phys = self.phys_cls(self)
-            self.gui = self.gui_cls(self, track_path[13:])
+            self.gui = self.gui_cls(self, track_path[6:])
             self.logic = self.logic_cls(self)
             self.audio = self.audio_cls(self)
             self.ai = self.ai_cls(self)

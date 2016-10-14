@@ -76,7 +76,7 @@ env['SUPERMIRROR'] = '/home/flavio/runtime_panda3d'
 filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
 pdf_conf = {
     'sources': [
-        ('python', '.', '*.py', ['./racing/*'])],
+        ('python', '.', '*.py SConstruct', ['./racing/*'])],
     'sources_racing': [
         ('python', './racing', '*.py', ['./racing/game/*'])],
     'sources_game': [

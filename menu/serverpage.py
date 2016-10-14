@@ -12,8 +12,8 @@ class ServerPageGui(PageGui):
     '''This class defines the GUI of the server page.'''
 
     def __init__(self, mdt, menu):
-        PageGui.__init__(self, mdt, menu)
         self.conn_txt = None
+        PageGui.__init__(self, mdt, menu)
 
     def build(self):
         menu_gui = self.menu.gui

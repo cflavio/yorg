@@ -54,7 +54,7 @@ class _Fsm(Fsm):
         if not track_path and not car_path:
             tracks = ['prototype', 'desert']
             track = tracks[tracks.index(game.options['last_track']) + 1]
-            track_path = 'tracks/track_' + track
+            track_path = 'tracks/' + track
             car_path = game.options['last_car']
         conf = game.options
         conf['last_track'] = track_path[13:]
@@ -208,7 +208,7 @@ class _Fsm(Fsm):
         eng.phys.stop()
         eng.gfx.clean()
 
-    def __step():
+    def __step(self):
         '''Goes on.'''
         current_track = game.track.gfx.track_path[13:]
         tracks = ['prototype', 'desert']
