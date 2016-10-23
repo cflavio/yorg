@@ -1,10 +1,8 @@
-'''This module defines the configuration management.'''
 from panda3d.core import loadPrcFileData
 from .log import LogMgr
 
 
 class Configuration(object):
-    '''This class models the configuration.'''
 
     def __init__(
             self, fps=False, win_size='1280 720', win_title='Ya2',
@@ -30,11 +28,9 @@ class Configuration(object):
 
     @staticmethod
     def __set(key, value):
-        '''This method sets a configuration parameter.'''
         loadPrcFileData('', key + ' ' + str(value))
 
     def configure(self):
-        '''This sets the configuration.'''
         self.__set('show-frame-rate-meter', int(self.fps))
         if self.win_size:
             self.__set('win-size', self.win_size)

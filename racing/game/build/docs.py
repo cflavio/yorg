@@ -1,4 +1,3 @@
-'''This module builds the documentation.'''
 from os import path as os_path, system
 from os.path import dirname, realpath
 from shutil import rmtree, copytree
@@ -6,8 +5,6 @@ from .build import path, ver_branch, docs_path_str
 
 
 def build_docs(target, source, env):
-    '''This function creates the documentation using
-    `Sphinx <http://sphinx-doc.org>`_ .'''
     name = env['NAME']
     curr_path = dirname(realpath(__file__)) + '/'
     copytree(curr_path + 'docs', path+'docs_apidoc')

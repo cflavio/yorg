@@ -1,4 +1,3 @@
-'''This module allows building MojoSetup.'''
 from os import system
 from shutil import move
 from platform import architecture

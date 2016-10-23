@@ -1,4 +1,3 @@
-'''Apply gloss to an egg file.'''
 import sys
 
 if len(sys.argv) != 2:

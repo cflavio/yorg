@@ -1,14 +1,11 @@
-'''This module provides the client for a network application.'''
 from .network import AbsNetwork
 
 
 class ClientError(Exception):
-    '''The client can not connect.'''
     pass
 
 
 class Client(AbsNetwork):
-    '''This class models the client.'''
 
     def __init__(self, mdt):
         AbsNetwork.__init__(self, mdt)

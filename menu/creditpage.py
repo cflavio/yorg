@@ -1,10 +1,8 @@
-'''This module provides the credit page.'''
 from direct.gui.OnscreenText import OnscreenText
 from racing.game.engine.gui.page import Page, PageGui
 
 
 class CreditPageGui(PageGui):
-    '''This class defines the GUI of the credit page.'''
 
     def build(self):
         menu_gui = self.menu.gui
@@ -19,5 +17,4 @@ class CreditPageGui(PageGui):
 
 
 class CreditPage(Page):
-    '''This class models a page.'''
     gui_cls = CreditPageGui

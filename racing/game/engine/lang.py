@@ -1,10 +1,8 @@
-'''This module contains utilies for managing translations.'''
 from gettext import install, translation
 from ..gameobject.gameobject import Colleague
 
 
 class LangMgr(Colleague):
-    '''This class defines the manager of translations.'''
 
     def __init__(self, mdt):
         Colleague.__init__(self, mdt)
@@ -16,11 +14,9 @@ class LangMgr(Colleague):
 
     @property
     def lang_codes(self):
-        '''The codes of the supported languages.'''
         return [lang[:2].lower() for lang in self.languages]
 
     def set_lang(self, lang):
-        '''Setting the current language.'''
         self.curr_lang = lang
         try:
             lang = translation(self.domain, self.path, languages=[lang])

@@ -1,5 +1,3 @@
-'''based on ynjh_jo's module for pausing and resuming
-http://www.panda3d.org/forums/viewtopic.php?t=4439'''
 import os
 import sys
 from direct.task import Task
@@ -9,13 +7,11 @@ from ..gameobject.gameobject import Gui, Logic, GameObjectMdt, Colleague
 
 
 class PauseGui(Gui):
-    '''This class defines the GUI of the pause.'''
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
 
     def toggle(self):
-        '''Toggles the pause.'''
         if not self.mdt.logic.is_paused:
             self.pause_frame = DirectFrame(frameColor=(.3, .3, .3, .7),
                                            frameSize=(-1.8, 1.8, -1, 1))
@@ -24,7 +20,6 @@ class PauseGui(Gui):
 
 
 class PauseLogic(Logic):
-    '''This class defines the logic of the pause.'''
 
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
@@ -37,7 +32,6 @@ class PauseLogic(Logic):
         self.paused_tasks = []
 
     def __process_task(self, tsk):
-        '''Processes a task.'''
         func = tsk.getFunction()  # ordinary tasks
         mod = func.__module__
         sys_mod = sys.modules[mod].__file__.find(self.direct_dir) < 0
@@ -49,7 +43,6 @@ class PauseLogic(Logic):
             self.paused_tasks.append(tsk)
 
     def __pause_tsk(self, tsk):
-        '''Pauses a task.'''
         has_args = hasattr(tsk, 'getArgs')
         tsk.stored_extraArgs = tsk.getArgs() if has_args else None
         if hasattr(tsk, 'getFunction'):
@@ -65,7 +58,6 @@ class PauseLogic(Logic):
             tsk.setTaskChain(self.paused_taskchain)
 
     def pause_tasks(self):
-        '''Pauses tasks.'''
         self.paused_tasks = []
         is_tsk = lambda tsk: tsk and hasattr(tsk, 'getFunction')
         tasks = [tsk for tsk in taskMgr.getTasks() if is_tsk(tsk)]
@@ -79,7 +71,6 @@ class PauseLogic(Logic):
 
     @staticmethod
     def __resume_do_later(tsk):
-        '''Resumes a do-later task.'''
         d_t = globalClock.getRealTime() - globalClock.getFrameTime()
         temp_delay = tsk.remainingTime - d_t
         upon_death = tsk.uponDeath if hasattr(tsk, 'uponDeath') else None
@@ -92,7 +83,6 @@ class PauseLogic(Logic):
             new_task.delayTime = tsk.delayTime
 
     def __resume_tsk(self, tsk):
-        '''Resumes a task.'''
         if hasattr(tsk, 'interval'):  # it must be python-based intervals
             tsk.interval.resume()
             if hasattr(tsk, 'stored_call'):
@@ -106,7 +96,6 @@ class PauseLogic(Logic):
         tsk.clearDelay()  # to avoid assertion error on resume
 
     def pause(self):
-        '''Pause.'''
         self.paused_ivals = ivalMgr.getIntervalsMatching('*')
         self.pause_tasks()
         base.disableParticles()
@@ -114,7 +103,6 @@ class PauseLogic(Logic):
         return self.is_paused
 
     def resume(self):
-        '''Resume.'''
         map(lambda ival: ival.resume(), self.paused_ivals)
         map(lambda tsk: self.__resume_tsk(tsk), self.paused_tasks)
         base.enableParticles()
@@ -122,13 +110,11 @@ class PauseLogic(Logic):
         return self.is_paused
 
     def toggle(self):
-        '''Toggles the pause.'''
         self.mdt.gui.toggle()
         (self.resume if self.is_paused else self.pause)()
 
 
 class PauseMgr(GameObjectMdt, Colleague):
-    '''This class manages the pause.'''
     logic_cls = PauseLogic
     gui_cls = PauseGui
 

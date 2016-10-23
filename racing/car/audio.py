@@ -1,10 +1,8 @@
-'''This module defines the audio of a car.'''
 from panda3d.core import AudioSound
 from racing.game.gameobject.gameobject import Audio
 
 
 class _Audio(Audio):
-    '''This class models the audio component of a car.'''
 
     def __init__(self, mdt):
         Audio.__init__(self, mdt)
@@ -19,7 +17,6 @@ class _Audio(Audio):
         self.engine_sfx.play()
 
     def update(self, input_dct):
-        '''Updates the audio.'''
         hspeed = self.mdt.phys.speed > 50.0
         not_playing = self.brake_sfx.status() != AudioSound.PLAYING
         flying = self.mdt.phys.is_flying
@@ -32,5 +29,4 @@ class _Audio(Audio):
         self.engine_sfx.set_play_rate(max(.25, abs(speed_ratio)))
 
     def destroy(self):
-        '''The destroyer.'''
         self.engine_sfx.stop()

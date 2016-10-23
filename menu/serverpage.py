@@ -1,4 +1,3 @@
-'''This module provides the server page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from racing.game.engine.gui.page import Page, PageGui
@@ -9,7 +8,6 @@ from urllib2 import urlopen
 
 
 class ServerPageGui(PageGui):
-    '''This class defines the GUI of the server page.'''
 
     def __init__(self, mdt, menu):
         self.conn_txt = None
@@ -43,15 +41,12 @@ class ServerPageGui(PageGui):
 
     @staticmethod
     def process_msg(data_lst):
-        '''Processes a message.'''
         print data_lst
 
     def process_connection(self, client_address):
-        '''Processes a connection.'''
         eng.log_mgr.log('connection from ' + client_address)
         self.conn_txt.setText(_('connection from ') + client_address)
 
 
 class ServerPage(Page):
-    '''This class models a page.'''
     gui_cls = ServerPageGui

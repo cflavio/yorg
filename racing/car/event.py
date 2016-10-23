@@ -1,4 +1,3 @@
-'''This module provides the event management of a car.'''
 from itertools import chain
 from direct.showbase.InputStateGlobal import inputState
 from racing.game.gameobject.gameobject import Event
@@ -9,7 +8,6 @@ from racing.game.observer import Observer
 
 
 class _Event(Event, Observer):
-    '''This class manages the events of the Car class.'''
 
     def __init__(self, mdt):
         self.tsk = None
@@ -24,11 +22,9 @@ class _Event(Event, Observer):
         map(lambda (lab, evt): watch(lab, evt), label_events)
 
     def start(self):
-        '''Starts the car.'''
         self.tsk = taskMgr.add(self._on_frame, 'Track::__on_frame')
 
     def __process_respawn(self):
-        '''Processes the respawn.'''
         last_pos = self.mdt.logic.last_contact_pos
         start_wp_n, end_wp_n = self.mdt.logic.closest_wp(last_pos)
         #start_wp, end_wp = start_wp_n.get_pos(), end_wp_n.get_pos()
@@ -54,7 +50,6 @@ class _Event(Event, Observer):
         self.mdt.gfx.nodepath.node().setAngularVelocity(0)
 
     def update(self, obj, obj_name):
-        '''Called on collisions.'''
         if obj != self.mdt.gfx.nodepath.node():
             return
         curr_time = round(globalClock.getFrameTime(), 2)
@@ -63,7 +58,6 @@ class _Event(Event, Observer):
             self.__process_respawn()
 
     def _get_input(self):
-        '''The input of a car.'''
         if self.mdt.ai.__class__ == _Ai:
             return self.mdt.ai.get_input()
         elif self.__class__ == _NetworkEvent:
@@ -80,14 +74,12 @@ class _Event(Event, Observer):
                 'right': inputState.isSet('right')}
 
     def reset_car(self):
-        '''Resets a car.'''
         self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
         self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
         wheels = self.mdt.phys.vehicle.get_wheels()
         map(lambda whl: whl.set_rotation(0), wheels)
 
     def process_frame(self):
-        '''Processes a frame.'''
         input_dct = self._get_input()
         if game.track.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
@@ -105,7 +97,6 @@ class _Event(Event, Observer):
         self.mdt.phys.update_terrain()
 
     def _on_frame(self, task):
-        '''This callback method is invoked on each frame.'''
         self.process_frame()
         return task.again
 
@@ -116,7 +107,6 @@ class _Event(Event, Observer):
 
 
 class NetMsgs(object):
-    '''This class models net messages.'''
     game_packet = 0
     player_info = 1
     end_race_player = 2
@@ -124,7 +114,6 @@ class NetMsgs(object):
 
 
 class _PlayerEvent(_Event):
-    '''This class models the events for a player car.'''
 
     def __init__(self, mdt):
         _Event.__init__(self, mdt)
@@ -134,14 +123,12 @@ class _PlayerEvent(_Event):
         self.last_sent = globalClock.getFrameTime()
 
     def eval_register(self):
-        '''Evaluates if a registration is needed.'''
         if eng.server.is_active:
             eng.server.register_cb(self.process_srv)
         elif eng.client.is_active:
             eng.client.register_cb(self.process_client)
 
     def __on_frame_server(self):
-        '''Called at each frame on the server.'''
         pos = self.mdt.gfx.nodepath.getPos()
         hpr = self.mdt.gfx.nodepath.getHpr()
         velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
@@ -156,7 +143,6 @@ class _PlayerEvent(_Event):
             self.last_sent = globalClock.getFrameTime()
 
     def __on_frame_client(self):
-        '''Called at each frame on the client.'''
         pos = self.mdt.gfx.nodepath.getPos()
         hpr = self.mdt.gfx.nodepath.getHpr()
         velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
@@ -166,7 +152,6 @@ class _PlayerEvent(_Event):
             self.last_sent = globalClock.getFrameTime()
 
     def _on_frame(self, task):
-        '''This callback method is invoked on each frame.'''
         _Event.process_frame(self)
         self.mdt.logic.update_cam()
         self.mdt.audio.update(self._get_input())
@@ -178,7 +163,6 @@ class _PlayerEvent(_Event):
 
     @staticmethod
     def __prepare_game_packet():
-        '''Prepares a game packet.'''
         packet = [NetMsgs.game_packet]
         for car in [game.player_car] + game.cars:
             name = car.gfx.path
@@ -189,7 +173,6 @@ class _PlayerEvent(_Event):
         return packet
 
     def __crash_sfx(self, speed, speed_ratio):
-        '''Plays a sfx on crashes.'''
         print 'crash speed', self.mdt.phys.speed, speed
         if abs(self.mdt.phys.speed) >= abs(speed / 2.0) or speed_ratio < .5:
             return
@@ -199,7 +182,6 @@ class _PlayerEvent(_Event):
         eng.particle(part_path, node, eng.render, (0, 1.2, .75), .8)
 
     def __process_wall(self):
-        '''Processes walls.'''
         if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
             self.mdt.audio.crash_sfx.play()
         speed, speed_ratio = self.mdt.phys.speed, self.mdt.phys.speed_ratio
@@ -207,7 +189,6 @@ class _PlayerEvent(_Event):
         taskMgr.doMethodLater(*args)
 
     def __process_nonstart_goals(self, lap_number, laps):
-        '''Processes non-start goals.'''
         fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
         back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
         if fwd or back:
@@ -219,7 +200,6 @@ class _PlayerEvent(_Event):
 
     @staticmethod
     def __process_end_goal():
-        '''Processes the final goal.'''
         if eng.server.is_active:
             eng.server.send([NetMsgs.end_race])
         elif eng.client.is_active:
@@ -230,7 +210,6 @@ class _PlayerEvent(_Event):
         game.track.gui.show_results()
 
     def __process_goal(self):
-        '''Processes goals.'''
         lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
         if self.mdt.gui.time_txt.getText():
             lap_time = float(self.mdt.gui.time_txt.getText())
@@ -262,7 +241,6 @@ class _PlayerEvent(_Event):
             self.__process_goal()
 
     def __process_player_info(self, data_lst, sender):
-        '''Processes player information.'''
         from .car import NetworkCar
         pos = (data_lst[1], data_lst[2], data_lst[3])
         hpr = (data_lst[4], data_lst[5], data_lst[6])
@@ -275,7 +253,6 @@ class _PlayerEvent(_Event):
                 LerpHprInterval(car.gfx.nodepath, .2, hpr).start()
 
     def process_srv(self, data_lst, sender):
-        '''Processes a message (server side.)'''
         if data_lst[0] == NetMsgs.player_info:
             self.__process_player_info(data_lst, sender)
         if data_lst[0] == NetMsgs.end_race_player:
@@ -285,7 +262,6 @@ class _PlayerEvent(_Event):
 
     @staticmethod
     def __process_game_packet(data_lst):
-        '''Processes a game packet.'''
         from .car import NetworkCar
         for i in range(1, len(data_lst), 10):
             car_name = data_lst[i]
@@ -298,7 +274,6 @@ class _PlayerEvent(_Event):
                     LerpHprInterval(car.gfx.nodepath, .2, car_hpr).start()
 
     def process_client(self, data_lst, sender):
-        '''Processes a message (client side.)'''
         if data_lst[0] == NetMsgs.game_packet:
             self.__process_game_packet(data_lst)
         if data_lst[0] == NetMsgs.end_race:
@@ -308,5 +283,4 @@ class _PlayerEvent(_Event):
 
 
 class _NetworkEvent(_Event):
-    '''This class models a network event.'''
     pass

@@ -1,4 +1,3 @@
-'''This module provides the GUI component of a car.'''
 from panda3d.core import TextNode
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
@@ -7,7 +6,6 @@ from racing.game.gameobject.gameobject import Gui
 
 
 class CarParameter(object):
-    '''This class models a parameter of the car.'''
 
     def __init__(self, attr, init_val, pos, val_range, callback):
         self.__callback = callback
@@ -24,22 +22,18 @@ class CarParameter(object):
         self.toggle()
 
     def toggle(self):
-        '''Toggles the visibility of a widget.'''
         widgets = [self.__slider, self.__lab, self.__val]
         map(lambda wdg: (wdg.show if wdg.isHidden() else wdg.hide)(), widgets)
 
     def __set_attr(self):
-        '''Sets a car's attribute.'''
         self.__callback(self.__slider['value'])
         self.__val.setText(str(round(self.__slider['value'], 2)))
 
     def destroy(self):
-        '''The destroyer.'''
         map(lambda wdg: wdg.destroy(), [self.__slider, self.__lab, self.__val])
 
 
 class _Gui(Gui):
-    '''This class models the GUI component of a car.'''
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
@@ -164,7 +158,6 @@ class _Gui(Gui):
             parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
 
     def toggle(self):
-        '''Toggles the visibility of a component.'''
         map(lambda par: par.toggle(), self.__pars)
 
     def destroy(self):

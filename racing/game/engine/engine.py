@@ -1,4 +1,3 @@
-'''This module provides the engine object.'''
 from sys import path
 
 from os.path import dirname, realpath
@@ -21,13 +20,11 @@ from ..gameobject.gameobject import GameObjectMdt
 
 
 class EngineBase(ShowBase):
-    '''Panda3D ShowBase.'''
 
     pass
 
 
 class Engine(GameObjectMdt):
-    '''This class models the GameObject.'''
     gfx_cls = EngineGfx
     gui_cls = EngineGui
     logic_cls = EngineLogic

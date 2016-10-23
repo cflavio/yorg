@@ -1,4 +1,3 @@
-'''In this module we define the global game classes.'''
 from racing.game.game import Game
 from racing.game.dictfile import DictFile
 from racing.game.engine.configuration import Configuration
@@ -9,7 +8,6 @@ from .audio import _Audio
 
 
 class Yorg(Game):
-    '''This class defines Yorg.'''
     logic_cls = _Logic
     event_cls = _Event
     fsm_cls = _Fsm

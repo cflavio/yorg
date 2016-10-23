@@ -1,14 +1,11 @@
-'''This module gives the AI for a car.'''
 from racing.game.gameobject.gameobject import Ai
 from panda3d.core import Vec3, Vec2, Point3, Mat4
 
 
 class _Ai(Ai):
-    '''This class models the AI of a car.'''
 
     @property
     def current_target(self):
-        '''The current target of the car.'''
         curr_wp = self.mdt.logic.current_wp[1]
         waypoints = game.track.gfx.waypoints
         next_wp_idx = (waypoints.keys().index(curr_wp) + 1) % len(waypoints)
@@ -18,14 +15,12 @@ class _Ai(Ai):
 
     @property
     def car_vec(self):
-        '''The current vector of the car.'''
         car_vec = self.mdt.logic.car_vec.xy
         car_vec.normalize()
         return car_vec
 
     @property
     def curr_dot_prod(self):
-        '''The current dot product of the car.'''
         curr_tgt_pos = self.current_target.get_pos().xy
         curr_pos = self.mdt.gfx.nodepath.get_pos().xy
         tgt_vec = Vec2(curr_tgt_pos - curr_pos)
@@ -34,14 +29,12 @@ class _Ai(Ai):
 
     @property
     def brake(self):
-        '''The current braking computation of the car.'''
         if self.mdt.phys.speed < 40:
             return False
         return self.curr_dot_prod < .4
 
     @property
     def acceleration(self):
-        '''The current acceleration computation of the car.'''
         if self.mdt.phys.speed < 40:
             return True
         grounds = self.mdt.phys.ground_names
@@ -51,7 +44,6 @@ class _Ai(Ai):
 
     @staticmethod
     def ground_name(pos):
-        '''The ground name under the given position.'''
         top = (pos.x, pos.y, pos.z + 1)
         bottom = (pos.x, pos.y, pos.z - 1)
         result = eng.phys.world_phys.rayTestClosest(top, bottom)
@@ -59,7 +51,6 @@ class _Ai(Ai):
         return ground.get_name() if ground else ''
 
     def lookahead_ground(self, dist, deg):
-        '''The lookahead ground name.'''
         lookahed_vec = self.car_vec * dist
         #TODO: port this algorithm to 3D
         rot_mat = Mat4()
@@ -71,7 +62,6 @@ class _Ai(Ai):
 
     @property
     def left_right(self):
-        '''The current left/right computation of the car.'''
         fwd_ground = self.lookahead_ground(30, 0)
         right_ground = self.lookahead_ground(30, -20)
         left_ground = self.lookahead_ground(30, 20)
@@ -99,7 +89,6 @@ class _Ai(Ai):
         return dot_res < 0, dot_res >= 0
 
     def get_input(self):
-        '''The current computation of the car.'''
         brake = self.brake
         acceleration = False if brake else self.acceleration
         left, right = self.left_right

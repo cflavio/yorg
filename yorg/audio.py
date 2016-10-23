@@ -1,9 +1,7 @@
-'''This module provides Yorg's audio.'''
 from racing.game.gameobject.gameobject import Audio
 
 
 class _Audio(Audio):
-    '''This class defines Yorg's audio.'''
 
     def __init__(self, mdt):
         Audio.__init__(self, mdt)

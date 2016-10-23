@@ -1,4 +1,3 @@
-'''This module provides functionalities for creating pdfs of source.'''
 from os import system, rename, remove
 from itertools import product
 from shutil import move
@@ -6,7 +5,6 @@ from .build import path, ver_branch, pdf_path_str
 
 
 def __process(opt_lang, cmd_tmpl, name, i):
-    '''Processes a file.'''
     filt = ''.join(["-not -path '%s' " % fil for fil in opt_lang[3]])
     lang = ('--pretty-print=' + opt_lang[0]) if opt_lang[0] else ''
     wcard = '-o '.join(["-name '%s' " % wld for wld in opt_lang[2].split()])
@@ -27,7 +25,6 @@ def __process(opt_lang, cmd_tmpl, name, i):
 
 
 def build_pdf(target, source, env):
-    '''Pdf building.'''
     pdfname = env['NAME']
     conf = env['PDF_CONF']
     cmd_tmpl = "enscript --font=Courier10 --continuous-page-numbers " + \

@@ -1,10 +1,8 @@
-'''This module provides physics functionalities.'''
 from panda3d.bullet import BulletWorld, BulletDebugNode
 from ..gameobject.gameobject import Phys
 
 
 class EnginePhys(Phys):
-    '''This class models the physics manager.'''
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
@@ -14,7 +12,6 @@ class EnginePhys(Phys):
         self.__debug_np = None
 
     def init(self):
-        '''Inits the physics.'''
         self.collision_objs = []
         self.__coll_dct = {}
         self.world_phys = BulletWorld()
@@ -25,22 +22,18 @@ class EnginePhys(Phys):
         self.world_phys.setDebugNode(self.__debug_np.node())
 
     def start(self):
-        '''Starts the physics.'''
         eng.event.attach(self._on_frame, 2)
 
     def _on_frame(self):
-        '''Called on each frame.'''
         self.world_phys.doPhysics(globalClock.getDt(), 10, 1/180.0)
         self.__do_collisions()
 
     def stop(self):
-        '''Stops the physics.'''
         self.world_phys = None
         self.__debug_np.removeNode()
         eng.event.detach(self._on_frame)
 
     def __process_contact(self, obj, node, to_clear):
-        '''Processes a physics contact.'''
         if node == obj:
             return
         if obj in to_clear:
@@ -51,7 +44,6 @@ class EnginePhys(Phys):
         self.notify(obj, node.getName())
 
     def __do_collisions(self):
-        '''Computes the collisions.'''
         to_clear = self.collision_objs[:]
         for obj in self.collision_objs:
             if not obj in self.__coll_dct:
@@ -66,6 +58,5 @@ class EnginePhys(Phys):
                     self.__coll_dct[obj].remove(coll_pair)
 
     def toggle_debug(self):
-        '''Toggles the physics debug.'''
         is_hidden = self.__debug_np.isHidden()
         (self.__debug_np.show if is_hidden else self.__debug_np.hide)()

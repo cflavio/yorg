@@ -1,10 +1,8 @@
-'''Builds info for developers.'''
 from os import system
 from .build import path, ver_branch, exec_cmd, devinfo_path_str
 
 
 def __clean_pylint(pylint_out):
-    '''Cleans pylint stuff.'''
     clean_out = ''
     skipping = False
     err_str = 'No config file found, using default configuration'
@@ -21,7 +19,6 @@ def __clean_pylint(pylint_out):
 
 
 def __process(src, cond, outfile):
-    '''Appends a file.'''
     if cond(src):
         return
     outfile.write('    '+str(src)+'\n')
@@ -34,10 +31,6 @@ def __process(src, cond, outfile):
 
 
 def build_devinfo(target, source, env):
-    '''This function creates the
-    `pep8 <https://www.python.org/dev/peps/pep-0008>`_,
-    `Pylint <http://www.pylint.org>`_ and
-    `pyflakes <https://pypi.python.org/pypi/pyflakes>`_ code reports.'''
     name = env['NAME']
     dev_conf = env['DEV_CONF']
     for fname, cond in dev_conf.items():

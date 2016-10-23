@@ -1,10 +1,8 @@
-'''This module provides a menu.'''
 from direct.gui.OnscreenImage import OnscreenImage
 from ...gameobject.gameobject import Gui, Logic, GameObjectMdt
 
 
 class MenuArgs(object):
-    '''This class models the arguments of a menu.'''
 
     def __init__(self, font, text_fg, text_scale, btn_size, btn_color,
                  dial_color, background, rollover, click, social_path):
@@ -21,7 +19,6 @@ class MenuArgs(object):
 
 
 class MenuGui(Gui):
-    '''The GUI component of a menu.'''
 
     def __init__(self, mdt, menu_args):
         Gui.__init__(self, mdt)
@@ -45,20 +42,17 @@ class MenuGui(Gui):
             'clickSound': self.click}
 
     def destroy(self):
-        '''Destroys the page.'''
         Gui.destroy(self)
         self.background.destroy()
 
 
 class MenuLogic(Logic):
-    '''The logic component of a menu.'''
 
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
         self.pages = []
 
     def push_page(self, page):
-        '''Pushes a page.'''
         if self.pages:
             self.pages[-1].gui.hide()
             self.pages[-1].gui.detach(self.pop_page)
@@ -66,7 +60,6 @@ class MenuLogic(Logic):
         page.gui.attach(self.pop_page)
 
     def pop_page(self):
-        '''Pops a page.'''
         page = self.pages.pop()
         page.gui.detach(self.pop_page)
         page.destroy()
@@ -80,7 +73,6 @@ class MenuLogic(Logic):
 
 
 class Menu(GameObjectMdt):
-    '''This class models a page.'''
     gui_cls = MenuGui
     logic_cls = MenuLogic
 

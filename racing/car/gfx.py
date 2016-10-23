@@ -1,10 +1,8 @@
-'''This module provides the graphics of a car.'''
 from racing.game.gameobject.gameobject import Gfx
 from panda3d.bullet import BulletRigidBodyNode
 
 
 class _Gfx(Gfx):
-    '''This class models the graphics component of a car.'''
 
     def __init__(self, mdt, path, callback):
         self.rear_right_wheel_np = None
@@ -24,7 +22,6 @@ class _Gfx(Gfx):
         self.load_wheels(chassis_model)
 
     def reparent(self):
-        '''Reparents the car.'''
         self.chassis_np.reparentTo(self.nodepath)
         self.chassis_np.setDepthOffset(-2)
         self.front_right_wheel_np.reparentTo(eng.gfx.world_np)
@@ -33,7 +30,6 @@ class _Gfx(Gfx):
         self.rear_left_wheel_np.reparentTo(eng.gfx.world_np)
 
     def load_wheels(self, chassis_model):
-        '''Loads the wheels.'''
         self.chassis_np = chassis_model
         load = eng.base.loader.loadModel
         try:
@@ -49,7 +45,6 @@ class _Gfx(Gfx):
         taskMgr.doMethodLater(.01, self.callback, 'callback')
 
     def destroy(self):
-        '''The destroyer.'''
         meshes = [
             self.nodepath, self.chassis_np, self.front_right_wheel_np,
             self.front_left_wheel_np, self.rear_right_wheel_np,

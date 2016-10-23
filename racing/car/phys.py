@@ -1,4 +1,3 @@
-'''This module provides the physics of a car.'''
 from panda3d.bullet import BulletVehicle, ZUp, BulletConvexHullShape
 from panda3d.core import TransformState, LVecBase3f, LPoint3f
 from racing.game.gameobject.gameobject import Phys
@@ -6,7 +5,6 @@ import yaml
 
 
 class _Phys(Phys):
-    '''This class models the physics component of a car.'''
 
     def __init__(self, mdt, path):
         Phys.__init__(self, mdt)
@@ -59,9 +57,7 @@ class _Phys(Phys):
 
     @staticmethod
     def __find_geoms(model, name):
-        '''Finds the geoms with the given name.'''
         def sibling_names(node):
-            '''Finds the sibling of a node.'''
             return [chl.getName() for chl in node.getParent().getChildren()]
 
         geoms = model.findAllMatches('**/+GeomNode')
@@ -72,7 +68,6 @@ class _Phys(Phys):
         return [named_geoms[i] for i in indexes]
 
     def __set_phys(self, path):
-        '''Sets the physics.'''
         with open('assets/models/%s/phys.yml' % path) as phys_file:
             conf = yaml.load(phys_file)
         fields = [
@@ -90,7 +85,6 @@ class _Phys(Phys):
         map(lambda field: setattr(self, field, conf[field]), fields)
 
     def __add_wheel(self, pos, front, node, radius):
-        '''This method adds a wheel to the car.'''
         wheel = self.vehicle.createWheel()
         wheel.setNode(node)
         wheel.setChassisConnectionPointCs(LPoint3f(*pos))
@@ -109,23 +103,19 @@ class _Phys(Phys):
 
     @property
     def is_flying(self):
-        '''Is the car flying?'''
         rays = [wheel.getRaycastInfo() for wheel in self.vehicle.get_wheels()]
         return not any(ray.isInContact() for ray in rays)
 
     @property
     def speed(self):
-        '''The current speed.'''
         return self.vehicle.getCurrentSpeedKmHour()
 
     @property
     def speed_ratio(self):
-        '''The current speed ratio.'''
         is_race = game.track.fsm.getCurrentOrNextState() == 'Race'
         return min(1.0, self.speed / self.max_speed) if is_race else 0
 
     def set_forces(self, eng_frc, brake_frc, steering):
-        '''This callback method is invoked on each frame.'''
         self.vehicle.setSteeringValue(steering, 0)
         self.vehicle.setSteeringValue(steering, 1)
         self.vehicle.applyEngineForce(eng_frc, 2)
@@ -135,7 +125,6 @@ class _Phys(Phys):
 
     @staticmethod
     def ground_name(wheel):
-        '''The name of the ground under the wheel.'''
         contact_pos = wheel.get_raycast_info().getContactPointWs()
         top = (contact_pos.x, contact_pos.y, contact_pos.z + .1)
         bottom = (contact_pos.x, contact_pos.y, contact_pos.z - .1)
@@ -145,11 +134,9 @@ class _Phys(Phys):
 
     @property
     def ground_names(self):
-        '''The names of the grounds under the wheels.'''
         return [self.ground_name(wheel) for wheel in self.vehicle.get_wheels()]
 
     def update_terrain(self):
-        '''Update physics settings of the car depending of the terrain.'''
         speeds = []
         frictions = []
         for wheel in self.vehicle.get_wheels():

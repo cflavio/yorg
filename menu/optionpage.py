@@ -1,4 +1,3 @@
-'''This module defines the option page of the menu.'''
 from direct.gui.DirectCheckButton import DirectCheckButton
 from direct.gui.DirectGuiGlobals import FLAT, DISABLED
 from direct.gui.DirectLabel import DirectLabel
@@ -10,7 +9,6 @@ from racing.game.engine.gui.page import Page, PageEvent, PageGui
 
 
 class OptionEvent(PageEvent):
-    '''This class defines the events of the option page.'''
 
     def on_back(self):
         try:
@@ -37,7 +35,6 @@ class OptionEvent(PageEvent):
 
 
 class OptionPageGui(PageGui):
-    '''This class defines the GUI of the option page.'''
 
     def __init__(self, mdt, menu):
         self._vol_slider = None
@@ -154,7 +151,6 @@ class OptionPageGui(PageGui):
         PageGui.build(self)
 
     def on_browser(self, val):
-        '''Called if the user toggles the browser option.'''
         txt = _('Please, really consider enabling this option to see our news.'
                 '\nWe hope you will find interesting stuff there.\nMoreover, '
                 'this is how we can keep Yorg free.')
@@ -164,19 +160,16 @@ class OptionPageGui(PageGui):
             dial['command'] = lambda val: dial.cleanup()  # it destroys too
 
     def update_texts(self):
-        '''Updates the texts of the page.'''
         PageGui.update_texts(self)
         curr_lang = eng.lang_mgr.curr_lang
         self._lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
     def __change_lang(self, arg):
-        '''Changes the language.'''
         lang_dict = {'English': 'en', 'Italiano': 'it'}
         eng.lang_mgr.set_lang(lang_dict[arg])
         self.update_texts()
 
 
 class OptionPage(Page):
-    '''This class models a page.'''
     gui_cls = OptionPageGui
     event_cls = OptionEvent

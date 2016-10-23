@@ -1,4 +1,3 @@
-'''This module provides the logic of a car.'''
 from racing.game.gameobject.gameobject import Logic
 from panda3d.core import Vec3, Vec2, deg2Rad
 import math
@@ -17,7 +16,6 @@ look_z_min = 0
 
 
 class _Logic(Logic):
-    '''This class manages the events of the Car class.'''
 
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
@@ -36,7 +34,6 @@ class _Logic(Logic):
         self.start_right = None
 
     def update(self, input_dct):
-        '''This callback method is invoked on each frame.'''
         eng_frc = brake_frc = 0
         d_t = globalClock.getDt()
         phys = self.mdt.phys
@@ -97,7 +94,6 @@ class _Logic(Logic):
             self.__update_wp()
 
     def __update_roll_info(self):
-        '''Updates rolling information.'''
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:
             self.last_roll_ok_time = globalClock.getFrameTime()
         else:
@@ -105,14 +101,12 @@ class _Logic(Logic):
 
     @staticmethod
     def pt_line_dst(point, line_pt1, line_pt2):
-        '''Line distance.'''
         diff1 = line_pt2.get_pos() - line_pt1.get_pos()
         diff2 = line_pt1.get_pos() - point.get_pos()
         diff = abs(diff1.cross(diff2).length())
         return diff / abs((line_pt2.get_pos() - line_pt1.get_pos()).length())
 
     def closest_wp(self, pos=None):
-        '''The closest waypoint.'''
         if pos:
             node = render.attachNewNode('pos node')
             node.set_pos(pos)
@@ -152,12 +146,10 @@ class _Logic(Logic):
 
     @property
     def current_wp(self):
-        '''The closest waypoint.'''
         return self.closest_wp()
 
     @property
     def car_vec(self):
-        '''Car's vector.'''
         car_rad = deg2Rad(self.mdt.gfx.nodepath.getH())
         car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
         car_vec.normalize()
@@ -165,31 +157,26 @@ class _Logic(Logic):
 
     @property
     def direction(self):
-        '''Car's direction.'''
         start_wp, end_wp = self.current_wp
         wp_vec = Vec3(end_wp.getPos(start_wp).xy, 0)
         wp_vec.normalize()
         return self.car_vec.dot(wp_vec)
 
     def __update_wp(self):
-        '''Updates the waypoints.'''
         way_str = _('wrong way') if self.direction < -.6 else ''
         game.track.gui.way_txt.setText(way_str)
 
     def get_closest(self, pos, tgt=None):
-        '''Return the closest node.'''
         tgt = tgt or self.mdt.gfx.nodepath.getPos()
         result = eng.phys.world_phys.rayTestClosest(pos, tgt)
         if result.hasHit():
             return result
 
     def update_cam(self):
-        '''Updates the camera.'''
         #eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
         self.update_cam_fp()
 
     def __cam_cond(self, curr_pos, curr_cam_fact):
-        '''Camera condition.'''
         closest = self.get_closest(curr_pos)
         if closest:
             cls_s = closest.getNode().getName()
@@ -197,7 +184,6 @@ class _Logic(Logic):
             return closest
 
     def update_cam_fp(self):
-        '''Updates the camera.'''
         speed_ratio = self.mdt.phys.speed_ratio
         cam_dist_diff = cam_dist_max - cam_dist_min
         look_dist_diff = look_dist_max - look_dist_min
@@ -242,7 +228,6 @@ class _Logic(Logic):
         curr_incr = cam_speed * globalClock.getDt()
 
         def new_pos(cam_pos, tgt):
-            '''New position of the camera.'''
             if abs(cam_pos - tgt) <= curr_incr:
                 return tgt
             else:
@@ -263,12 +248,10 @@ class _Logic(Logic):
 
     @property
     def is_upside_down(self):
-        '''Is the car upside down?'''
         return globalClock.getFrameTime() - self.last_roll_ok_time > 5.0
 
     @property
     def is_rolling(self):
-        '''Is the car rolling?'''
         try:
             return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
         except TypeError:
@@ -276,10 +259,8 @@ class _Logic(Logic):
 
 
 class _PlayerLogic(_Logic):
-    '''This class models the logic of a car driven by a player.'''
 
     def update(self, input_dct):
-        '''This callback method is invoked on each frame.'''
         _Logic.update(self, input_dct)
         if game.track.fsm.getCurrentOrNextState() == 'Race':
             self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))

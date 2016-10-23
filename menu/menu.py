@@ -1,11 +1,9 @@
-'''This module provides the menu.'''
 from racing.game.gameobject.gameobject import GameObjectMdt, Gui
 from racing.game.engine.gui.menu import MenuArgs, Menu
 from .mainpage import YorgMainPage
 
 
 class _Gui(Gui):
-    """ Definition of the MenuGui Class """
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
@@ -24,5 +22,4 @@ class _Gui(Gui):
 
 
 class YorgMenu(GameObjectMdt):
-    '''This class defines Yorg's menu.'''
     gui_cls = _Gui

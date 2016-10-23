@@ -1,4 +1,3 @@
-'''This module provides an image button.'''
 from direct.gui.DirectButton import DirectButton
 from panda3d.core import PNMImage, Texture
 from itertools import product
@@ -6,7 +5,6 @@ from os.path import dirname, realpath
 
 
 class ImageButton(DirectButton):
-    '''This class models an image button.'''
 
     def __init__(self, image, *args, **kwargs):
         this_path = dirname(realpath(__file__))

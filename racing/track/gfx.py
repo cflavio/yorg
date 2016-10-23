@@ -1,11 +1,9 @@
-'''This module defines the graphics for a track.'''
 from panda3d.core import AmbientLight, BitMask32, Spotlight, NodePath
 from direct.actor.Actor import Actor
 from racing.game.gameobject.gameobject import Gfx
 
 
 class _Gfx(Gfx):
-    '''This class models the graphics component of a track.'''
 
     def __init__(self, mdt, track_path, callback):
         self.phys_model = None
@@ -25,7 +23,6 @@ class _Gfx(Gfx):
         #eng.cam.lookAt(0, 0, 0)
 
     def __set_model(self):
-        '''Sets the model.'''
         eng.log_mgr.log('loading track model')
         game.fsm.curr_load_txt.setText(_('loading track model'))
         path = self.track_path + '/track.bam'
@@ -33,7 +30,6 @@ class _Gfx(Gfx):
         loader.loadModel(path, callback=self.__load_coll, extraArgs=[time])
 
     def __load_coll(self, model, time):
-        '''Loads collisions.'''
         curr_t = globalClock.getFrameTime()
         d_t = round(curr_t - time, 2)
         eng.log_mgr.log('loaded track model (%s seconds)' % str(d_t))
@@ -45,14 +41,12 @@ class _Gfx(Gfx):
 
     @staticmethod
     def __flat_sm(submodel):
-        '''Flattening of submodels.'''
         s_n = submodel.getName()
         not_logic = s_n not in ['Minimap', 'Starts', 'Waypoints']
         if not_logic and not s_n.startswith('Empty'):
             submodel.flattenLight()
 
     def __set_submod(self, model, time):
-        '''Sets the submodels.'''
         d_t = round(globalClock.getFrameTime() - time, 2)
         eng.log_mgr.log('loaded track collision (%s seconds)' % str(d_t))
         eng.log_mgr.log("retrieve track's info")
@@ -90,7 +84,6 @@ class _Gfx(Gfx):
         self.__load_empties()
 
     def get_start_pos(self, i):
-        '''Returns the i-th start position.'''
         node_str = '**/Start' + str(i + 1)
         start_pos_node = self.phys_model.find(node_str)
         if start_pos_node:
@@ -102,14 +95,12 @@ class _Gfx(Gfx):
         return start_pos, start_pos_hpr
 
     def end_loading(self):
-        '''Called at the end of the loading.'''
         #self.model.clearModelNodes()
         #self.model.flattenStrong()
         self.model.prepareScene(eng.base.win.getGsg())
         taskMgr.doMethodLater(.01, lambda task: self.callback(), 'callback')
 
     def __preload_models(self, models, callback, model='', time=0):
-        '''Preloads models.'''
         curr_t = globalClock.getFrameTime()
         d_t = curr_t - time
         if model:
@@ -128,7 +119,6 @@ class _Gfx(Gfx):
             callback()
 
     def __process_static(self, model_name, model):
-        '''Processes static models.'''
         if model_name not in self.__flat_roots:
             nstr = lambda i: '%s_%s' % (model_name, str(i))
             flat_roots = [self.model.attachNewNode(nstr(i)) for i in range(4)]
@@ -151,7 +141,6 @@ class _Gfx(Gfx):
         model.reparentTo(parent)
 
     def __process_models(self, models, callback):
-        '''Processes models.'''
         for model in models:
             model_name = model.getName().split('.')[0][5:]
             if model_name.endswith('Anim'):
@@ -164,24 +153,20 @@ class _Gfx(Gfx):
         callback()
 
     def __load_empties(self):
-        '''Loads children of the empties.'''
         eng.log_mgr.log('loading track submodels')
         empty_models = self.model.findAllMatches('**/Empty*')
 
         def load_models():
-            '''Loads models.'''
             self.__process_models(list(empty_models), self.flattening)
         names = [model.getName().split('.')[0][5:] for model in empty_models]
         self.__preload_models(list(set(list(names))), load_models)
 
     def __process_flat_models(self, models, callback):
-        '''Processes flat models.'''
         curr_t = globalClock.getFrameTime()
         node = models[0]
         node.clearModelNodes()
 
         def process_flat(flatten_node, orig_node, model, time, number):
-            '''Processes a flattening.'''
             flatten_node.reparent_to(orig_node.get_parent())
             orig_node.remove_node()
             self.__flat_models(models[1:], callback, model, time, number)
@@ -200,7 +185,6 @@ class _Gfx(Gfx):
         #             globalClock.getFrameTime(), len_children)
 
     def __flat_models(self, models, callback, model='', time=0, number=0):
-        '''Flats models.'''
         curr_t = globalClock.getFrameTime()
         if model:
             str_tmpl = 'flattened model: %s (%s seconds, %s nodes)'
@@ -212,17 +196,14 @@ class _Gfx(Gfx):
             callback()
 
     def flattening(self):
-        '''Flattening of the track.'''
         eng.log_mgr.log('track flattening')
 
         def flatlist(lst):
-            '''Flats a list.'''
             return [item for sublist in lst for item in sublist]
         roots = self.__flat_roots.values()
         self.__flat_models(flatlist(roots), self.end_loading)
 
     def __set_light(self):
-        '''Sets the lighting.'''
         eng.base.render.clearLight()
 
         ambient_lgt = AmbientLight('ambient light')
@@ -248,7 +229,6 @@ class _Gfx(Gfx):
         render.setShaderAuto()
 
     def destroy(self):
-        '''The destroyer.'''
         self.model.removeNode()
         self.phys_model.removeNode()
         eng.base.render.clearLight(self.ambient_np)

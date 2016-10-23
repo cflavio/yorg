@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-'''This module contains Sphinx's configuration.'''
 
 import sys
 import os

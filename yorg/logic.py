@@ -1,10 +1,8 @@
-'''This module defines Yorg's logic.'''
 from sys import exit
 from racing.game.game import GameLogic
 
 
 class _Logic(GameLogic):
-    '''This class defines the logics of the game.'''
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -24,7 +22,6 @@ class _Logic(GameLogic):
 
     @staticmethod
     def on_exit():
-        '''Called at the exit.'''
         if game.options['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
         exit()

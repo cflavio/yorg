@@ -1,4 +1,3 @@
-'''This module provides functionalities for building translations.'''
 from os import system, makedirs, error
 from os.path import exists
 from shutil import move, copy
@@ -6,7 +5,6 @@ from .build import get_files
 
 
 def __build_language(lang_path, lang, name):
-    '''Builds a language.'''
     try:
         makedirs(lang_path + lang + '/LC_MESSAGES')
     except error:
@@ -32,8 +30,6 @@ def __build_language(lang_path, lang, name):
 
 
 def build_string_template(target, source, env):
-    '''This function creates the *gettext* templates (to manage localization)
-    merging with the already translated ones.'''
     name = env['NAME']
     lang_path = env['LANG']
     languages = env['LANGUAGES']
@@ -45,9 +41,6 @@ def build_string_template(target, source, env):
 
 
 def build_strings(target, source, env):
-    '''This function creates the *mo* files (binaries) containing the
-    translated strings that would be used in the game, starting from
-    the *po* files.'''
     name = env['NAME']
     lang_path = env['LANG']
     languages = env['LANGUAGES']

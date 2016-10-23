@@ -1,4 +1,3 @@
-'''This module provides the client page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
@@ -9,7 +8,6 @@ from .netmsgs import NetMsgs
 
 
 class ClientPageGui(PageGui):
-    '''This class defines the GUI of the client page.'''
 
     def __init__(self, mdt, menu):
         self.ent = None
@@ -39,7 +37,6 @@ class ClientPageGui(PageGui):
         PageGui.build(self)
 
     def connect(self):
-        '''Connects to the server.'''
         try:
             print self.ent.get()
             eng.client.start(self.process_msg, self.ent.get())
@@ -54,7 +51,6 @@ class ClientPageGui(PageGui):
             taskMgr.doMethodLater(*args)
 
     def process_msg(self, data_lst, sender):
-        '''Processes a network message.'''
         if data_lst[0] == NetMsgs.track_selected:
             eng.log_mgr.log('track selected: ' + data_lst[1])
             self.menu.track = data_lst[1]
@@ -62,5 +58,4 @@ class ClientPageGui(PageGui):
 
 
 class ClientPage(Page):
-    '''This class models a page.'''
     gui_cls = ClientPageGui

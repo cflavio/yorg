@@ -1,4 +1,3 @@
-'''This module provides the car page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from racing.game.engine.gui.page import Page, PageGui
@@ -6,7 +5,6 @@ from .netmsgs import NetMsgs
 
 
 class CarPageGui(PageGui):
-    '''This class defines the GUI of the car page.'''
 
     def __init__(self, mdt, menu):
         self.car = None
@@ -41,13 +39,11 @@ class CarPageGui(PageGui):
         PageGui.build(self)
 
     def __buttons(self, car):
-        '''The buttons of the given car.'''
         is_btn = lambda wdg: wdg.__class__ == DirectButton
         buttons = [wdg for wdg in self.widgets if is_btn(wdg)]
         return [btn for btn in buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
-        '''Called when the user clicks on a car.'''
         if eng.server.is_active:
             eng.log_mgr.log('car selected: ' + car)
             eng.server.send([NetMsgs.car_selection, car])
@@ -71,7 +67,6 @@ class CarPageGui(PageGui):
             game.fsm.demand('Loading', self.track_path, car)
 
     def evaluate_starting(self):
-        '''Evaluate if we should start.'''
         connections = eng.server.connections + [self]
         if all(conn in self.current_cars for conn in connections):
             packet = [NetMsgs.start_race]
@@ -88,7 +83,6 @@ class CarPageGui(PageGui):
             game.fsm.demand('Loading', self.track_path, curr_car, packet[2:])
 
     def process_srv(self, data_lst, sender):
-        '''Processes a message server-side.'''
         if data_lst[0] == NetMsgs.car_request:
             car = data_lst[1]
             eng.log_mgr.log('car requested: ' + car)
@@ -106,7 +100,6 @@ class CarPageGui(PageGui):
                 self.evaluate_starting()
 
     def process_client(self, data_lst, sender):
-        '''Processes a message client-side.'''
         if data_lst[0] == NetMsgs.car_confirm:
             self.car = car = data_lst[1]
             eng.log_mgr.log('car confirmed: ' + car)
@@ -133,5 +126,4 @@ class CarPageGui(PageGui):
 
 
 class CarPage(Page):
-    '''This class models a page.'''
     gui_cls = CarPageGui

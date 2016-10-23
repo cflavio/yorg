@@ -1,4 +1,3 @@
-'''This is the multiplayer page of the menu.'''
 from direct.gui.DirectButton import DirectButton
 from racing.game.engine.gui.page import Page, PageGui
 from .serverpage import ServerPage
@@ -6,7 +5,6 @@ from .clientpage import ClientPage
 
 
 class MultiplayerPageGui(PageGui):
-    '''This is the GUI of the multiplayer page.'''
 
     def build(self):
         menu_gui = self.menu.gui
@@ -29,5 +27,4 @@ class MultiplayerPageGui(PageGui):
 
 
 class MultiplayerPage(Page):
-    '''This class models a page.'''
     gui_cls = MultiplayerPageGui

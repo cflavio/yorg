@@ -1,11 +1,9 @@
-'''This module provides the server for a network application.'''
 from panda3d.core import QueuedConnectionListener, PointerToConnection, \
     NetAddress
 from .network import AbsNetwork
 
 
 class Server(AbsNetwork):
-    '''This class models the server.'''
 
     def __init__(self, mdt):
         AbsNetwork.__init__(self, mdt)
@@ -27,7 +25,6 @@ class Server(AbsNetwork):
         eng.log_mgr.log('the server is up')
 
     def tsk_listener(self, task):
-        '''The listener task.'''
         if not self.c_listener.newConnectionAvailable():
             return task.cont
         net_address = NetAddress()
@@ -44,7 +41,6 @@ class Server(AbsNetwork):
         return task.cont
 
     def _actual_send(self, datagram, receiver):
-        '''Sends a datagram.'''
         dests = [cln for cln in self.connections if cln == receiver] \
             if receiver else self.connections
         map(lambda cln: self.c_writer.send(datagram, cln), dests)

@@ -1,4 +1,3 @@
-'''This module provides the GUI of a track.'''
 from panda3d.core import TextNode
 from direct.gui.OnscreenText import OnscreenText
 from racing.game.gameobject.gameobject import Gui
@@ -7,7 +6,6 @@ from direct.gui.OnscreenImage import OnscreenImage
 
 
 class _Gui(Gui):
-    '''This class models the GUI component of a track.'''
 
     def __init__(self, mdt, track):
         self.__res_txts = None
@@ -47,7 +45,6 @@ class _Gui(Gui):
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
 
     def set_corners(self):
-        '''Sets track's corners.'''
         corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
         p_mod = self.mdt.gfx.phys_model
         corners = [p_mod.find('**/Minimap' + crn) for crn in corners]
@@ -55,7 +52,6 @@ class _Gui(Gui):
             self.corners = [corner.get_pos() for corner in corners]
 
     def update_minimap(self):
-        '''Updates the minimap.'''
         if not hasattr(self, 'corners'):
             return
         left, right = self.corners[0].getX(), self.corners[1].getX()
@@ -75,7 +71,6 @@ class _Gui(Gui):
         self.car_handle.setR(-game.player_car.gfx.nodepath.getH())
 
     def process_countdown(self, task):
-        '''Processes the initial countdown.'''
         if self.countdown_cnt >= 0:
             self.mdt.audio.countdown_sfx.play()
             txt = str(self.countdown_cnt) if self.countdown_cnt else _('GO!')
@@ -89,7 +84,6 @@ class _Gui(Gui):
             game.track.fsm.demand('Race')
 
     def show_results(self):
-        '''Shows race results.'''
         self.result_img = OnscreenImage(image='assets/images/gui/results.png',
                                         scale=(.8, 1, .8))
         self.result_img.setTransparency(True)
@@ -138,7 +132,6 @@ class _Gui(Gui):
             for i, site in enumerate(sites)]
 
         def step():
-            '''Goes on.'''
             map(lambda txt: txt.destroy(), self.__res_txts)
             map(lambda btn: btn.destroy(), self.__buttons)
             self.result_img.destroy()

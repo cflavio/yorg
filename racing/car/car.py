@@ -1,4 +1,3 @@
-'''In this module we define the Car classes.'''
 from abc import ABCMeta
 from racing.game.gameobject.gameobject import GameObjectMdt
 from .gfx import _Gfx
@@ -11,7 +10,6 @@ from .ai import _Ai
 
 
 class Car(GameObjectMdt):
-    '''The Car class models a car.'''
     __metaclass__ = ABCMeta
     gfx_cls = _Gfx
     phys_cls = _Phys
@@ -23,7 +21,6 @@ class Car(GameObjectMdt):
         self.fsm = self.fsm_cls(self)
 
         def post_gfx():
-            '''Called after the graphics.'''
             self.phys = self.phys_cls(self, path)
             self.gui = self.gui_cls(self)
             self.logic = self.logic_cls(self)
@@ -40,7 +37,6 @@ class Car(GameObjectMdt):
 
 
 class PlayerCar(Car):
-    '''A car driven by a player.'''
     event_cls = _PlayerEvent
     audio_cls = _Audio
     gui_cls = _Gui
@@ -48,5 +44,4 @@ class PlayerCar(Car):
 
 
 class NetworkCar(Car):
-    '''A car driven by the network.'''
     event_cls = _NetworkEvent

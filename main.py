@@ -1,4 +1,3 @@
-'''This is Yorg's main file.'''
 # log ########################################################################
 from os import path
 from panda3d.core import MultiplexStream, Notify

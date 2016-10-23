@@ -1,11 +1,9 @@
-'''This module provides physics for tracks.'''
 from panda3d.bullet import BulletRigidBodyNode, BulletTriangleMesh, \
     BulletTriangleMeshShape, BulletGhostNode
 from racing.game.gameobject.gameobject import Phys
 
 
 class _Phys(Phys):
-    '''This class models the physics component of a track.'''
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
@@ -30,7 +28,6 @@ class _Phys(Phys):
                 self.__process_ghost(geoms, geom_name)
 
     def __find_geoms(self, name):
-        '''Finds geoms with given name.'''
         # the list of geoms which have siblings named 'name'
         geoms = self.mdt.gfx.phys_model.findAllMatches('**/+GeomNode')
         is_nm = lambda geom: geom.getName().startswith(name)
@@ -40,7 +37,6 @@ class _Phys(Phys):
         return [named_geoms[i] for i in indexes]
 
     def __process_road(self, geom):
-        '''Processes roads.'''
         # we can't manage speed and friction if we merge meshes
         mesh = BulletTriangleMesh()
         for _geom in [g.decompose() for g in geom.node().getGeoms()]:
@@ -53,7 +49,6 @@ class _Phys(Phys):
         nodepath.node().notifyCollisions(True)
 
     def __process_wall(self, geoms, geom_name):
-        '''Processes walls.'''
         mesh = BulletTriangleMesh()
         for geom in geoms:
             transf = geom.getTransform(self.mdt.gfx.phys_model)
@@ -67,7 +62,6 @@ class _Phys(Phys):
         nodepath.node().notifyCollisions(True)
 
     def __process_ghost(self, geoms, geom_name):
-        '''Processes ghosts.'''
         mesh = BulletTriangleMesh()
         for geom in geoms:
             transf = geom.getTransform(self.mdt.gfx.phys_model)

@@ -1,4 +1,3 @@
-'''Linux build.'''
 from os import path as os_path, remove, system, makedirs
 from os.path import basename, dirname, realpath
 from shutil import move, rmtree, copytree, copy
@@ -7,7 +6,6 @@ from .build import ver, path, ver_branch, InsideDir, get_size, bld_cmd_pref, \
 
 
 def __prepare_folders(start_dir, platform):
-    '''Prepares the folders.'''
     makedirs('image/data')
     curr_path = dirname(realpath(__file__)) + '/'
     copytree(curr_path + 'mojosetup/meta', 'image/meta')
@@ -24,7 +22,6 @@ def __prepare_folders(start_dir, platform):
 
 
 def __build(name, start_dir, platform, ico_file):
-    '''Builds the build.'''
     arch_dict = {'i386': 'i686', 'amd64': 'x86_64'}
     cmd_tmpl = 'tar -zxvf %s-%s-1-%s.pkg.tar.gz'
     system(cmd_tmpl % (name, ver, arch_dict[platform]))
@@ -40,7 +37,6 @@ def __build(name, start_dir, platform, ico_file):
 
 
 def __build_no_internet(name, platform, ico_file, p3d_path, nointernet, mirr):
-    '''Builds for the no-internet scenario.'''
     copytree('usr/lib/'+name, 'image/data/lib')
     cmd_tmpl = bld_cmd_pref(mirr) + \
         '-o  . {nointernet} -t host_dir=./lib ' + \
@@ -59,7 +55,6 @@ def __build_no_internet(name, platform, ico_file, p3d_path, nointernet, mirr):
 
 
 def __build_packages(name, platform, int_str):
-    '''Builds the final package.'''
     with InsideDir('image'):
         system('zip -9r ../pdata.zip *')
     system('cat pdata.zip >> ./mojosetup_' + platform)
@@ -73,7 +68,6 @@ def __build_packages(name, platform, int_str):
 
 
 def build_linux(target, source, env):
-    '''This function builds the Linux installer.'''
     name = env['NAME']
     platform = env['PLATFORM']
     ico_file = env['ICO_FILE']

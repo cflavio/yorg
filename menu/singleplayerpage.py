@@ -1,4 +1,3 @@
-'''This module defines the single player page.'''
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED
 from racing.game.engine.gui.page import Page, PageGui
@@ -7,7 +6,6 @@ from .trackpage import TrackPage
 
 
 class SingleplayerPageGui(PageGui):
-    '''The GUI of the single player page.'''
 
     def build(self):
         menu_gui = self.menu.gui
@@ -34,17 +32,14 @@ class SingleplayerPageGui(PageGui):
 
     @staticmethod
     def on_continue():
-        '''Called if the user presses 'continue'.'''
         game.ranking = game.options['last_ranking']
         game.fsm.demand('Loading')
 
     def on_tournament(self):
-        '''Called if the user presses 'tournament'.'''
         game.ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
         self.menu.track = 'prototype'
         self.menu.logic.push_page(CarPage(self.menu))
 
 
 class SingleplayerPage(Page):
-    '''This class models a page.'''
     gui_cls = SingleplayerPageGui

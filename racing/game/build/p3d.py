@@ -1,4 +1,3 @@
-'''P3D build.'''
 from os import remove, system, path as os_path
 from os.path import dirname, realpath
 from shutil import move
@@ -6,9 +5,6 @@ from .build import ver, path
 
 
 def build_p3d(target, source, env):
-    '''This function builds the
-    `p3d <http://www.panda3d.org/manual/index.php/Introduction_to_p3d_files>`_
-    file of the game.'''
     name = env['NAME']
     mirr = env['SUPERMIRROR']
     start_dir = os_path.abspath('.') + '/'

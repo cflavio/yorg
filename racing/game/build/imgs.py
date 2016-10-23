@@ -1,10 +1,8 @@
-'''This module provides functionalities for building images.'''
 from os import system, remove
 from .build import exec_cmd
 
 
 def __get_img_fmt(_file):
-    '''Returns image info.'''
     cmd = 'identify -verbose "%s" | grep alpha' % _file
     alpha = exec_cmd(cmd).strip()
     geometry = exec_cmd('identify -verbose "%s" | grep Geometry' % _file)
@@ -14,7 +12,6 @@ def __get_img_fmt(_file):
 
 
 def __build_img(_file):
-    '''Builds an image.'''
     png = _file[:-3]+'png'
     alpha, size = __get_img_fmt(_file)
     sizes = [2**i for i in range(0, 12)]
@@ -30,5 +27,4 @@ def __build_img(_file):
 
 
 def build_images(target, source, env):
-    '''Builds the images.'''
     map(lambda _file: __build_img(_file), [str(src) for src in source])

@@ -1,4 +1,3 @@
-''''In this module we define the GameObject classes.'''
 from abc import ABCMeta
 from direct.fsm.FSM import FSM
 from direct.showbase.DirectObject import DirectObject
@@ -6,20 +5,17 @@ from ..observer import Subject
 
 
 class Colleague(Subject):
-    '''This class models a colleague (mediator pattern).'''
 
     def __init__(self, mdt):
         Subject.__init__(self)
         self.mdt = mdt
 
     def destroy(self):
-        '''Destroys the colleague.'''
         self.mdt = None
         Subject.destroy(self)
 
 
 class Fsm(FSM, Colleague):
-    '''The FSM of the GameObject.'''
     def __init__(self, mdt):
         FSM.__init__(self, self.__class__.__name__)
         Colleague.__init__(self, mdt)
@@ -31,7 +27,6 @@ class Fsm(FSM, Colleague):
 
 
 class Event(Colleague, DirectObject):
-    '''This class manages the events of the GameObject.'''
 
     def destroy(self):
         Colleague.destroy(self)
@@ -39,37 +34,30 @@ class Event(Colleague, DirectObject):
 
 
 class Audio(Colleague):
-    '''This is the audio component of the GameObject.'''
     pass
 
 
 class Ai(Colleague):
-    '''This is the AI component of the GameObject.'''
     pass
 
 
 class Gfx(Colleague):
-    '''This is the graphics component of the GameObject.'''
     pass
 
 
 class Gui(Colleague):
-    '''This is the GUI component of the GameObject.'''
     pass
 
 
 class Logic(Colleague):
-    '''This contains the business logics of the GameObject.'''
     pass
 
 
 class Phys(Colleague):
-    '''This is the physics component of the GameObject.'''
     pass
 
 
 class GameObjectMdt(object):
-    '''This class models the GameObject.'''
     __metaclass__ = ABCMeta
     gfx_cls = Gfx
     gui_cls = Gui
@@ -91,7 +79,6 @@ class GameObjectMdt(object):
         self.event = self.event_cls(self)
 
     def destroy(self):
-        '''Destroys the mediator.'''
         self.fsm.destroy()
         self.phys.destroy()
         self.gfx.destroy()

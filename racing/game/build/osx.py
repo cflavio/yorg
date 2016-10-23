@@ -1,11 +1,9 @@
-'''OSX build.'''
 from os import system
 from shutil import rmtree
 from .build import ver, path, ver_branch, bld_cmd
 
 
 def build_osx(target, source, env):
-    '''This function builds the OSX installer.'''
     name = env['NAME']
     mirr = env['SUPERMIRROR']
     nointernet = '-s' if env['NOINTERNET'] else ''

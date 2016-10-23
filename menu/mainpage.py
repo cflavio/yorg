@@ -1,4 +1,3 @@
-'''This is the main page of the menu.'''
 from direct.gui.DirectButton import DirectButton
 from racing.game.engine.gui.mainpage import MainPage, MainPageGui
 from racing.game.engine.gui.page import PageGui
@@ -9,7 +8,6 @@ from .creditpage import CreditPage
 
 
 class YorgMainPageGui(MainPageGui):
-    '''This is the GUI of the main page.'''
 
     def build(self):
         menu_data = [
@@ -40,5 +38,4 @@ class YorgMainPageGui(MainPageGui):
 
 
 class YorgMainPage(MainPage):
-    '''This class models a page.'''
     gui_cls = YorgMainPageGui

@@ -1,4 +1,3 @@
-'''This module provides functionalities for logging.'''
 from datetime import datetime
 from platform import system, release
 from panda3d.core import loadPrcFileData
@@ -7,7 +6,6 @@ from ..gameobject.gameobject import Colleague
 
 
 class LogMgr(Colleague):
-    '''This class models the log manager.'''
 
     def __init__(self, mdt):
         Colleague.__init__(self, mdt)
@@ -15,17 +13,14 @@ class LogMgr(Colleague):
 
     @staticmethod
     def configure():
-        '''Presets the log manager.'''
         loadPrcFileData('', 'notify-level-ya2 info')
 
     def log(self, msg):
-        '''Logs the message.'''
         str_time = datetime.now().strftime("%H:%M:%S")
         log_msg = '{time} {msg}'.format(time=str_time, msg=msg)
         self.__notify.info(log_msg)
 
     def log_conf(self):
-        '''Logs the system configuration.'''
         self.log('version: ' + eng.logic.version)
         self.log('operative system: ' + system() + ' ' + release())
         gsg = eng.base.win.get_gsg()
