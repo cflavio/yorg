@@ -32,16 +32,10 @@ class _Gfx(Gfx):
     def load_wheels(self, chassis_model):
         self.chassis_np = chassis_model
         load = eng.base.loader.loadModel
-        try:
-            self.front_right_wheel_np = load(self.path + '/frontwheel')
-            self.front_left_wheel_np = load(self.path + '/frontwheel')
-            self.rear_right_wheel_np = load(self.path + '/rearwheel')
-            self.rear_left_wheel_np = load(self.path + '/rearwheel')
-        except IOError:
-            self.front_right_wheel_np = load(self.path + '/wheel')
-            self.front_left_wheel_np = load(self.path + '/wheel')
-            self.rear_right_wheel_np = load(self.path + '/wheel')
-            self.rear_left_wheel_np = load(self.path + '/wheel')
+        self.front_right_wheel_np = load(self.path + '/frontwheel')
+        self.front_left_wheel_np = load(self.path + '/frontwheel')
+        self.rear_right_wheel_np = load(self.path + '/rearwheel')
+        self.rear_left_wheel_np = load(self.path + '/rearwheel')
         taskMgr.doMethodLater(.01, self.callback, 'callback')
 
     def destroy(self):
