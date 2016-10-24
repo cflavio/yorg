@@ -22,7 +22,7 @@ def __process(src, cond, outfile):
     if cond(src):
         return
     outfile.write('    '+str(src)+'\n')
-    out_pylint = __clean_pylint((exec_cmd('pylint -r n '+str(src))))
+    out_pylint = __clean_pylint((exec_cmd('pylint -r n -d C0111 '+str(src))))
     out_pyflakes = exec_cmd('pyflakes '+str(src))
     out_pep8 = exec_cmd('pep8 ' + str(src))
     outs = [out.strip() for out in [out_pylint, out_pyflakes, out_pep8]]
