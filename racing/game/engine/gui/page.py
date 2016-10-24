@@ -33,7 +33,7 @@ class PageGui(Gui):
 
     def __on_back(self):
         self.mdt.event.on_back()
-        self.notify()
+        self.notify('on_back')
 
     def show(self):
         map(lambda wdg: wdg.show(), self.widgets)

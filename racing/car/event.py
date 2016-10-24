@@ -14,7 +14,7 @@ class _Event(Event, Observer):
         Event.__init__(self, mdt)
         Observer.__init__(self)
         self.has_just_started = True
-        eng.phys.attach(self.update)
+        eng.phys.attach(self)
         label_events = [
             ('forward', 'arrow_up'), ('left', 'arrow_left'), ('reverse', 'z'),
             ('reverse', 'arrow_down'), ('right', 'arrow_right')]
@@ -49,7 +49,7 @@ class _Event(Event, Observer):
         self.mdt.gfx.nodepath.node().setLinearVelocity(0)
         self.mdt.gfx.nodepath.node().setAngularVelocity(0)
 
-    def update(self, obj, obj_name):
+    def on_collision(self, obj, obj_name):
         if obj != self.mdt.gfx.nodepath.node():
             return
         curr_time = round(globalClock.getFrameTime(), 2)
@@ -103,7 +103,7 @@ class _Event(Event, Observer):
     def destroy(self):
         Event.destroy(self)
         taskMgr.remove(self.tsk)
-        eng.phys.detach(self.update)
+        eng.phys.detach(self)
 
 
 class NetMsgs(object):
@@ -228,8 +228,8 @@ class _PlayerEvent(_Event):
         if int(self.mdt.gui.lap_txt.getText().split('/')[0]) > laps:
             self.__process_end_goal()
 
-    def update(self, obj, obj_name):
-        _Event.update(self, obj, obj_name)
+    def on_collision(self, obj, obj_name):
+        _Event.on_collision(self, obj, obj_name)
         if obj != self.mdt.gfx.nodepath.node():
             return
         if obj_name.startswith('Wall'):

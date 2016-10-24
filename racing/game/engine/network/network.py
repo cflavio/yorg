@@ -18,7 +18,7 @@ class AbsNetwork(Colleague):
         self.c_mgr = QueuedConnectionManager()
         self.c_reader = QueuedConnectionReader(self.c_mgr, 0)
         self.c_writer = ConnectionWriter(self.c_mgr, 0)
-        eng.event.attach(self.tsk_reader, 1)
+        eng.event.attach(self, 1)
         self.reader_cb = reader_cb
 
     def send(self, data_lst, receiver=None):
@@ -31,7 +31,7 @@ class AbsNetwork(Colleague):
         map(lambda part: dct_meths[type(part)](part), data_lst)
         self._actual_send(datagram, receiver)
 
-    def tsk_reader(self):
+    def on_frame(self):
         if not self.c_reader.dataAvailable():
             return
         datagram = NetDatagram()
@@ -48,7 +48,7 @@ class AbsNetwork(Colleague):
 
     @property
     def is_active(self):
-        return self.tsk_reader in [obs[0] for obs in eng.event.observers]
+        return self in [obs[0] for obs in eng.event.observers]
 
     def destroy(self):
-        eng.event.detach(self.tsk_reader)
+        eng.event.detach(self)

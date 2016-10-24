@@ -22,16 +22,16 @@ class EnginePhys(Phys):
         self.world_phys.setDebugNode(self.__debug_np.node())
 
     def start(self):
-        eng.event.attach(self._on_frame, 2)
+        eng.event.attach(self, 2)
 
-    def _on_frame(self):
+    def on_frame(self):
         self.world_phys.doPhysics(globalClock.getDt(), 10, 1/180.0)
         self.__do_collisions()
 
     def stop(self):
         self.world_phys = None
         self.__debug_np.removeNode()
-        eng.event.detach(self._on_frame)
+        eng.event.detach(self)
 
     def __process_contact(self, obj, node, to_clear):
         if node == obj:
@@ -41,7 +41,7 @@ class EnginePhys(Phys):
         if node in [coll_pair[0] for coll_pair in self.__coll_dct[obj]]:
             return
         self.__coll_dct[obj] += [(node, globalClock.getFrameTime())]
-        self.notify(obj, node.getName())
+        self.notify('on_collision', obj, node.getName())
 
     def __do_collisions(self):
         to_clear = self.collision_objs[:]

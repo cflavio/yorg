@@ -20,5 +20,5 @@ class EngineEvent(Event):
         exit()
 
     def __on_frame(self, task):
-        self.notify()
+        self.notify('on_frame')
         return task.cont
