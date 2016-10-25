@@ -44,8 +44,7 @@ class _Ai(Ai):
 
     @staticmethod
     def ground_name(pos):
-        top = (pos.x, pos.y, pos.z + 1)
-        bottom = (pos.x, pos.y, pos.z - 1)
+        top, bottom = pos + (0, 0, 1), pos + (0, 0, -1)
         result = eng.phys.world_phys.rayTestClosest(top, bottom)
         ground = result.get_node()
         return ground.get_name() if ground else ''
@@ -92,8 +91,5 @@ class _Ai(Ai):
         brake = self.brake
         acceleration = False if brake else self.acceleration
         left, right = self.left_right
-        return {
-            'forward': acceleration,
-            'left': left,
-            'reverse': brake,
-            'right': right}
+        return {'forward': acceleration, 'left': left, 'reverse': brake,
+                'right': right}

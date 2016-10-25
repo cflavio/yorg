@@ -8,26 +8,34 @@ class _Phys(Phys):
 
     def __init__(self, mdt, path):
         Phys.__init__(self, mdt)
-        self.__set_phys(path)
+        self.__load_phys(path)
+        self.__set_collision()
+        self.__set_phys_node()
+        self.__set_vehicle()
+        self.__set_wheels()
 
+    def __set_collision(self):
         chassis_shape = BulletConvexHullShape()
         capsule = loader.loadModel('cars/capsule')
         capsule.setScale(*self.collision_box_scale)
         capsule.flattenLight()
-        for geom in self.__find_geoms(capsule, 'Cube'):
+        for geom in eng.phys.find_geoms(capsule, 'Cube'):
             chassis_shape.addGeom(geom.node().getGeom(0), geom.getTransform())
 
         coll_pos = LVecBase3f(*self.collision_box_pos)
         transform_state = TransformState.makePos(coll_pos)
-        mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
-        mdt.gfx.nodepath.node().setMass(self.mass)
-        mdt.gfx.nodepath.node().setDeactivationEnabled(False)
+        self.mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
 
-        node = mdt.gfx.nodepath.node()
-        eng.phys.world_phys.attachRigidBody(node)
-        eng.phys.collision_objs += [node]
+    def __set_phys_node(self):
+        self.pnode = self.mdt.gfx.nodepath.node()
+        self.pnode.setMass(self.mass)
+        self.pnode.setDeactivationEnabled(False)
 
-        self.vehicle = BulletVehicle(eng.phys.world_phys, node)
+        eng.phys.world_phys.attachRigidBody(self.pnode)
+        eng.phys.collision_objs += [self.pnode]
+
+    def __set_vehicle(self):
+        self.vehicle = BulletVehicle(eng.phys.world_phys, self.pnode)
         self.vehicle.setCoordinateSystem(ZUp)
         self.vehicle.setPitchControl(self.pitch_control)
         tuning = self.vehicle.getTuning()
@@ -36,10 +44,11 @@ class _Phys(Phys):
 
         eng.phys.world_phys.attachVehicle(self.vehicle)
 
-        frw = mdt.gfx.front_right_wheel_np
-        flw = mdt.gfx.front_left_wheel_np
-        rrw = mdt.gfx.rear_right_wheel_np
-        rlw = mdt.gfx.rear_left_wheel_np
+    def __set_wheels(self):
+        frw = self.mdt.gfx.front_right_wheel_np
+        flw = self.mdt.gfx.front_left_wheel_np
+        rrw = self.mdt.gfx.rear_right_wheel_np
+        rlw = self.mdt.gfx.rear_left_wheel_np
         wheels_info = [
             (self.wheel_fr_pos, True, frw, self.wheel_fr_radius),
             (self.wheel_fl_pos, True, flw, self.wheel_fl_radius),
@@ -49,25 +58,8 @@ class _Phys(Phys):
         map(lambda (pos, front, nodepath, radius):
             self.__add_wheel(pos, front, nodepath.node(), radius),
             wheels_info)
-        self.curr_max_speed = self.max_speed
-        #mdt.gfx.nodepath.node().setCcdMotionThreshold(1e-7)
-        #mdt.gfx.nodepath.node().setCcdSweptSphereRadius(3.50)
-        #self.vehicle.get_chassis().setCcdMotionThreshold(.01)
-        #self.vehicle.get_chassis().setCcdSweptSphereRadius(.2)
 
-    @staticmethod
-    def __find_geoms(model, name):
-        def sibling_names(node):
-            return [chl.getName() for chl in node.getParent().getChildren()]
-
-        geoms = model.findAllMatches('**/+GeomNode')
-        cnd = lambda geo: any([s.startswith(name) for s in sibling_names(geo)])
-        named_geoms = [geom for geom in geoms if cnd(geom)]
-        in_vec = [name in named_geom.getName() for named_geom in named_geoms]
-        indexes = [i for i, el in enumerate(in_vec) if el]
-        return [named_geoms[i] for i in indexes]
-
-    def __set_phys(self, path):
+    def __load_phys(self, path):
         with open('assets/models/%s/phys.yml' % path) as phys_file:
             conf = yaml.load(phys_file)
         fields = [
@@ -83,6 +75,7 @@ class _Phys(Phys):
             'suspension_stiffness', 'wheels_damping_relaxation',
             'wheels_damping_compression', 'friction_slip', 'roll_influence']
         map(lambda field: setattr(self, field, conf[field]), fields)
+        self.curr_max_speed = self.max_speed
 
     def __add_wheel(self, pos, front, node, radius):
         wheel = self.vehicle.createWheel()
@@ -112,14 +105,20 @@ class _Phys(Phys):
 
     @property
     def speed_ratio(self):
-        is_race = game.track.fsm.getCurrentOrNextState() == 'Race'
-        return min(1.0, self.speed / self.max_speed) if is_race else 0
+        return max(0, min(1.0, self.speed / self.max_speed))
+
+    def get_eng_frc(self, eng_frc):
+        if self.speed / self.curr_max_speed < .99:
+            return eng_frc
+        tot = .01 * self.curr_max_speed
+        delta = self.curr_max_speed - self.speed
+        return eng_frc * min(1, delta/tot)
 
     def set_forces(self, eng_frc, brake_frc, steering):
         self.vehicle.setSteeringValue(steering, 0)
         self.vehicle.setSteeringValue(steering, 1)
-        self.vehicle.applyEngineForce(eng_frc, 2)
-        self.vehicle.applyEngineForce(eng_frc, 3)
+        self.vehicle.applyEngineForce(self.get_eng_frc(eng_frc), 2)
+        self.vehicle.applyEngineForce(self.get_eng_frc(eng_frc), 3)
         self.vehicle.setBrake(brake_frc, 2)
         self.vehicle.setBrake(brake_frc, 3)
 
@@ -142,14 +141,18 @@ class _Phys(Phys):
         for wheel in self.vehicle.get_wheels():
             ground_name = self.ground_name(wheel)
             if ground_name:
+                #TODO: pass the phys model or put outside
+                #TODO: bufferize find's result
                 gfx_node = game.track.gfx.phys_model.find('**/' + ground_name)
                 try:
                     speeds += [float(gfx_node.get_tag('speed'))]
+                    #TODO: apply different frictions to the wheels
                     frictions += [float(gfx_node.get_tag('friction'))]
                 except ValueError:
                     pass
         avg_speed = (sum(speeds) / len(speeds)) if speeds else 1.0
         avg_friction = (sum(frictions) / len(frictions)) if frictions else 1.0
+        #TODO: do curr_speed_factor in place of curr_max_speed
         self.curr_max_speed = self.max_speed * avg_speed
         fric = self.friction_slip * avg_friction
         map(lambda whl: whl.setFrictionSlip(fric), self.vehicle.get_wheels())

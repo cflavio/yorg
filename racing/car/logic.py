@@ -1,37 +1,25 @@
 from racing.game.gameobject.gameobject import Logic
 from panda3d.core import Vec3, Vec2, deg2Rad
 import math
+from racing.camera.camera import Camera
 
 
-#camera constants
-cam_speed = 50
-cam_dist_min = 12
-cam_dist_max = 18
-cam_z_max = 5
-cam_z_min = 3
-look_dist_min = 2
-look_dist_max = 6
-look_z_max = 2
-look_z_min = 0
 
 
 class _Logic(Logic):
 
+    react_time = .1
+
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
-        self.tgt_y = None
-        self.tgt_x = None
-        self.tgt_look_x = None
-        self.tgt_z = None
-        self.tgt_look_z = None
-        self.tgt_look_y = None
         self.__steering = 0  # degrees
         self.last_time_start = 0
-        self.last_roll_ok_time = None
-        self.last_roll_ko_time = None
+        self.last_roll_ok_time = globalClock.getFrameTime()
+        self.last_roll_ko_time = globalClock.getFrameTime()
         self.lap_times = []
         self.start_left = None
         self.start_right = None
+        self.camera = Camera(mdt)
 
     def update(self, input_dct):
         eng_frc = brake_frc = 0
@@ -46,6 +34,7 @@ class _Logic(Logic):
 
         can_accel = phys.speed < phys.curr_max_speed
         if input_dct['forward'] and input_dct['reverse']:
+            #TODO: replace can_accel with a factor
             eng_frc = phys.engine_acc_frc if can_accel else 0
             brake_frc = phys.brake_frc
 
@@ -63,7 +52,7 @@ class _Logic(Logic):
         if input_dct['left']:
             if self.start_left is None:
                 self.start_left = globalClock.getFrameTime()
-            mul = min(1, (globalClock.getFrameTime() - self.start_left) / .1)
+            mul = min(1, (globalClock.getFrameTime() - self.start_left) / self.react_time)
             self.__steering += steering_inc * mul
             self.__steering = min(self.__steering, steering_clamp)
         else:
@@ -72,7 +61,7 @@ class _Logic(Logic):
         if input_dct['right']:
             if self.start_right is None:
                 self.start_right = globalClock.getFrameTime()
-            mul = min(1, (globalClock.getFrameTime() - self.start_right) / .1)
+            mul = min(1, (globalClock.getFrameTime() - self.start_right) / self.react_time)
             self.__steering -= steering_inc * mul
             self.__steering = max(self.__steering, -steering_clamp)
         else:
@@ -86,12 +75,11 @@ class _Logic(Logic):
                 self.__steering += steering_sign * steering_dec
 
         phys.set_forces(eng_frc, brake_frc, self.__steering)
+        #replace with a query on the laps
         if not self.mdt.event.has_just_started:
             d_t = round(globalClock.getFrameTime() - self.last_time_start, 2)
             self.mdt.gui.time_txt.setText(str(d_t))
         self.__update_roll_info()
-        if game.track.gfx.waypoints:
-            self.__update_wp()
 
     def __update_roll_info(self):
         if -45 <= self.mdt.gfx.nodepath.getR() < 45:
@@ -162,105 +150,26 @@ class _Logic(Logic):
         wp_vec.normalize()
         return self.car_vec.dot(wp_vec)
 
-    def __update_wp(self):
-        way_str = _('wrong way') if self.direction < -.6 else ''
-        game.track.gui.way_txt.setText(way_str)
-
-    def get_closest(self, pos, tgt=None):
-        tgt = tgt or self.mdt.gfx.nodepath.getPos()
-        result = eng.phys.world_phys.rayTestClosest(pos, tgt)
-        if result.hasHit():
-            return result
-
-    def update_cam(self):
-        #eng.camera.setPos(self.mdt.gfx.nodepath.getPos())
-        self.update_cam_fp()
-
-    def __cam_cond(self, curr_pos, curr_cam_fact):
-        closest = self.get_closest(curr_pos)
-        if closest:
-            cls_s = closest.getNode().getName()
-        if closest and cls_s not in ['Vehicle', 'Goal'] and curr_cam_fact > .1:
-            return closest
-
-    def update_cam_fp(self):
-        speed_ratio = self.mdt.phys.speed_ratio
-        cam_dist_diff = cam_dist_max - cam_dist_min
-        look_dist_diff = look_dist_max - look_dist_min
-        cam_z_diff = cam_z_max - cam_z_min
-        look_z_diff = look_z_max - look_z_min
-        #car_np = self.mdt.gfx.nodepath
-        #car_rad = deg2Rad(car_np.getH())
-        #car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
-        #car_vec.normalize()
-
-        nodepath = self.mdt.gfx.nodepath
-        fwd_vec = eng.base.render.getRelativeVector(nodepath, Vec3(0, 1, 0))
-        fwd_vec.normalize()
-
-        car_pos = self.mdt.gfx.nodepath.getPos()
-        #cam_vec = -car_vec * (cam_dist_min + cam_dist_diff * speed_ratio)
-        #tgt_vec = car_vec * (look_dist_min + look_dist_diff * speed_ratio)
-        cam_vec = -fwd_vec * (cam_dist_min + cam_dist_diff * speed_ratio)
-        tgt_vec = fwd_vec * (look_dist_min + look_dist_diff * speed_ratio)
-        delta_pos_z = cam_z_max - cam_z_diff * speed_ratio
-        delta_cam_z = look_z_min + look_z_diff * speed_ratio
-
-        curr_pos = car_pos + cam_vec + (0, 0, delta_pos_z)
-        curr_cam_fact = cam_dist_min + cam_dist_diff * speed_ratio
-
-        curr_hit = self.__cam_cond(curr_pos, curr_cam_fact)
-        if curr_hit:
-            hit_pos = curr_hit.getHitPos()
-            cam_vec = hit_pos - car_pos
-
-        #game.track.gui.debug_txt.setText(
-        #    curr_hit.getNode().getName() if curr_hit else '')
-
-        self.tgt_x = car_pos.x + cam_vec.x
-        self.tgt_y = car_pos.y + cam_vec.y
-        self.tgt_z = car_pos.z + cam_vec.z + delta_pos_z
-
-        self.tgt_look_x = car_pos.x + tgt_vec.x
-        self.tgt_look_y = car_pos.y + tgt_vec.y
-        self.tgt_look_z = car_pos.z + tgt_vec.z
-
-        curr_incr = cam_speed * globalClock.getDt()
-
-        def new_pos(cam_pos, tgt):
-            if abs(cam_pos - tgt) <= curr_incr:
-                return tgt
-            else:
-                return cam_pos + (1 if tgt > cam_pos else -1) * curr_incr
-        new_x = new_pos(eng.base.camera.getX(), self.tgt_x)
-        new_y = new_pos(eng.base.camera.getY(), self.tgt_y)
-        new_z = new_pos(eng.base.camera.getZ(), self.tgt_z)
-
-        # overwrite camera's position to set the physics
-        #new_x = car_pos.x + 10
-        #new_y = car_pos.y - 5
-        #new_z = car_pos.z + 5
-
-        if not self.is_rolling:
-            eng.base.camera.setPos(new_x, new_y, new_z)
-        look_z = self.tgt_look_z + delta_cam_z
-        eng.base.camera.look_at(self.tgt_look_x, self.tgt_look_y, look_z)
-
     @property
     def is_upside_down(self):
         return globalClock.getFrameTime() - self.last_roll_ok_time > 5.0
 
     @property
     def is_rolling(self):
-        try:
-            return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
-        except TypeError:
-            return False
+        return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
 
 
 class _PlayerLogic(_Logic):
 
     def update(self, input_dct):
         _Logic.update(self, input_dct)
+        # use a fsm for the car too
         if game.track.fsm.getCurrentOrNextState() == 'Race':
             self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
+        self.__update_wp()
+
+    def __update_wp(self):
+        if game.track.gfx.waypoints:
+            way_str = _('wrong way') if self.direction < -.6 else ''
+            # notify to race
+            game.track.gui.way_txt.setText(way_str)

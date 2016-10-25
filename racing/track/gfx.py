@@ -5,13 +5,15 @@ from racing.game.gameobject.gameobject import Gfx
 
 class _Gfx(Gfx):
 
-    def __init__(self, mdt, track_path, callback):
+    def __init__(self, mdt, track_path, callback, split_world, submodels):
         self.phys_model = None
         self.waypoints = None
         self.ambient_np = None
         self.corners = None
         self.spot_lgt = None
         self.model = None
+        self.split_world = split_world
+        self.submodels = submodels
         Gfx.__init__(self, mdt)
         self.track_path = track_path
         self.callback = callback
@@ -19,23 +21,19 @@ class _Gfx(Gfx):
         self.__flat_roots = {}
         self.__set_model()
         self.__set_light()
-        #eng.cam.setPos(0, -40, 50)
-        #eng.cam.lookAt(0, 0, 0)
 
     def __set_model(self):
         eng.log_mgr.log('loading track model')
-        game.fsm.curr_load_txt.setText(_('loading track model'))
-        path = self.track_path + '/track.bam'
+        self.notify('on_loading', _('loading track model'))
         time = globalClock.getFrameTime()
-        loader.loadModel(path, callback=self.__load_coll, extraArgs=[time])
+        path = self.track_path + '/track'
+        eng.gfx.load_model(path, callback=self.__load_coll, extraArgs=[time])
 
     def __load_coll(self, model, time):
         curr_t = globalClock.getFrameTime()
         d_t = round(curr_t - time, 2)
         eng.log_mgr.log('loaded track model (%s seconds)' % str(d_t))
         self.model = model
-        if model is None:
-            self.model = loader.loadModel(self.track_path + '/track')
         path = self.track_path + '/collision'
         loader.loadModel(path, callback=self.__set_submod, extraArgs=[curr_t])
 
@@ -46,16 +44,14 @@ class _Gfx(Gfx):
         if not_logic and not s_n.startswith('Empty'):
             submodel.flattenLight()
 
+    def hide_models(self, models):
+        models = self.phys_model.findAllMatches(models)
+        map(lambda mod: mod.hide(), models)
+
     def __set_submod(self, model, time):
         d_t = round(globalClock.getFrameTime() - time, 2)
         eng.log_mgr.log('loaded track collision (%s seconds)' % str(d_t))
-        eng.log_mgr.log("retrieve track's info")
-        self.phys_model = model
-        p_mod = self.phys_model
-        corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
-        corners = [p_mod.find('**/Minimap' + crn) for crn in corners]
-        if not any(corner.isEmpty() for corner in corners):
-            self.corners = [corner.get_pos() for corner in corners]
+        p_mod = self.phys_model = model
         for submodel in self.model.getChildren() + p_mod.getChildren():
             self.__flat_sm(submodel)
         self.model.hide(BitMask32.bit(0))
@@ -68,55 +64,37 @@ class _Gfx(Gfx):
             lst_wp = [p_mod.find(wpstr + idx) for idx in prevs]
             self.waypoints[w_p] = lst_wp
 
-        road_models = self.phys_model.findAllMatches('**/Road*')
-        map(lambda mod: mod.hide(), road_models)
-        offroad_models = self.phys_model.findAllMatches('**/Offroad*')
-        map(lambda mod: mod.hide(), offroad_models)
-        wall_models = self.phys_model.findAllMatches('**/Wall*')
-        map(lambda mod: mod.hide(), wall_models)
-        respawn_models = self.phys_model.findAllMatches('**/Respawn*')
-        map(lambda mod: mod.hide(), respawn_models)
-        slow_models = self.phys_model.findAllMatches('**/Slow*')
-        map(lambda mod: mod.hide(), slow_models)
-        goal = self.phys_model.find('**/Goal')
-        if goal:
-            goal.hide()
+        models = ['Road', 'Offroad', 'Wall', 'Respawn', 'Slow', 'Goal']
+        map(self.hide_models, ['**/%s*' % model for model in models])
         self.__load_empties()
 
     def get_start_pos(self, i):
+        start_pos = (0, 0, 0)
+        start_pos_hpr = (0, 0, 0)
         node_str = '**/Start' + str(i + 1)
         start_pos_node = self.phys_model.find(node_str)
         if start_pos_node:
             start_pos = self.phys_model.find(node_str).get_pos()
             start_pos_hpr = self.phys_model.find(node_str).get_hpr()
-        else:
-            start_pos = (0, 0, 0)
-            start_pos_hpr = (0, 0, 0)
         return start_pos, start_pos_hpr
-
-    def end_loading(self):
-        #self.model.clearModelNodes()
-        #self.model.flattenStrong()
-        self.model.prepareScene(eng.base.win.getGsg())
-        taskMgr.doMethodLater(.01, lambda task: self.callback(), 'callback')
 
     def __preload_models(self, models, callback, model='', time=0):
         curr_t = globalClock.getFrameTime()
         d_t = curr_t - time
         if model:
             eng.log_mgr.log('loaded model: %s (%s seconds)' % (model, d_t))
-        if models:
-            model = models[0]
-            game.fsm.curr_load_txt.setText(_('loading model: ') + model)
-            path = self.track_path + '/' + model
-            if model.endswith('Anim'):
-                self.__actors += [Actor(path, {'anim': path + '-Anim'})]
-                self.__preload_models(models[1:], callback, model, curr_t)
-            else:
-                eng.base.loader.loadModel(path)
-                self.__preload_models(models[1:], callback, model, curr_t)
-        else:
+        if not models:
             callback()
+            return
+        model = models[0]
+        self.notify('on_loading', _('loading model: ') + model)
+        path = self.track_path + '/' + model
+        if model.endswith('Anim'):
+            self.__actors += [Actor(path, {'anim': path + '-Anim'})]
+            self.__preload_models(models[1:], callback, model, curr_t)
+        else:
+            eng.base.loader.loadModel(path)
+            self.__preload_models(models[1:], callback, model, curr_t)
 
     def __process_static(self, model_name, model):
         if model_name not in self.__flat_roots:
@@ -125,8 +103,12 @@ class _Gfx(Gfx):
             self.__flat_roots[model_name] = flat_roots
         path = self.track_path + '/' + model.getName().split('.')[0][5:]
         eng.base.loader.loadModel(path).reparent_to(model)
-        left, right = self.corners[0].getX(), self.corners[1].getX()
-        center_x, center_y = (left + right) / 2, (left + right) / 2
+        corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
+        corners = [self.phys_model.find('**/Minimap' + crn) for crn in corners]
+        left, right, top, bottom = corners[0].getX(), corners[1].getX(), \
+            corners[0].getY(), corners[3].getY()
+        #TODO: use self.mdt.phys.lrtb
+        center_x, center_y = (left + right) / 2, (top + bottom) / 2
         pos_x, pos_y = model.get_pos()[0], model.get_pos()[1]
         if not game.options['split_world']:
             parent = self.__flat_roots[model_name][0]
@@ -171,24 +153,19 @@ class _Gfx(Gfx):
             orig_node.remove_node()
             self.__flat_models(models[1:], callback, model, time, number)
         nname = node.get_name()
-        game.fsm.curr_load_txt.setText(_('flattening model: ') + nname)
-        if game.options['submodels']:
+        self.notify('on_loading', _('flattening model: ') + nname)
+        if self.submodels:
             loader.asyncFlattenStrong(
                 node, callback=process_flat, inPlace=False,
                 extraArgs=[node, nname, curr_t, len(node.get_children())])
         else:
             len_children = len(node.get_children())
             process_flat(node, NodePath(''), node, curr_t, len_children)
-        #len_children = len(node.get_children())
-        #node.flattenStrong()
-        #process_flat(node, node.get_name(),
-        #             globalClock.getFrameTime(), len_children)
 
     def __flat_models(self, models, callback, model='', time=0, number=0):
-        curr_t = globalClock.getFrameTime()
         if model:
             str_tmpl = 'flattened model: %s (%s seconds, %s nodes)'
-            d_t = round(curr_t - time, 2)
+            d_t = round(globalClock.getFrameTime() - time, 2)
             eng.log_mgr.log(str_tmpl % (model, d_t, number))
         if models:
             self.__process_flat_models(models, callback)
@@ -197,11 +174,12 @@ class _Gfx(Gfx):
 
     def flattening(self):
         eng.log_mgr.log('track flattening')
-
-        def flatlist(lst):
-            return [item for sublist in lst for item in sublist]
         roots = self.__flat_roots.values()
-        self.__flat_models(flatlist(roots), self.end_loading)
+        self.__flat_models(eng.logic.flatlist(roots), self.end_loading)
+
+    def end_loading(self):
+        self.model.prepareScene(eng.base.win.getGsg())
+        taskMgr.doMethodLater(.01, lambda task: self.callback(), 'callback')
 
     def __set_light(self):
         eng.base.render.clearLight()

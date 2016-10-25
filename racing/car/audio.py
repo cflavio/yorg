@@ -30,3 +30,4 @@ class _Audio(Audio):
 
     def destroy(self):
         self.engine_sfx.stop()
+        Audio.destroy(self)

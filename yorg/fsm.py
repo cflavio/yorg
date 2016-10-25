@@ -1,4 +1,4 @@
-from racing.car.car import Car, PlayerCar, NetworkCar
+from racing.car.car import Car, PlayerCar, NetworkCar, AiCar
 from racing.track.track import Track
 from racing.game.gameobject.gameobject import Fsm
 from direct.gui.OnscreenText import OnscreenText
@@ -79,6 +79,9 @@ class _Fsm(Fsm):
         args = [track_path, car_path, player_cars]
         taskMgr.doMethodLater(1.0, self.load_stuff, 'loading stuff', args)
 
+    def on_loading(self, msg):
+        self.curr_load_txt.setText(msg)
+
     def update_cam(self, task):
         pos = self.cam_node.get_pos(render)
         eng.base.camera.set_pos(pos[0], pos[1], 1000)
@@ -111,15 +114,20 @@ class _Fsm(Fsm):
                 hpr = self.mdt.track.gfx.get_start_pos(grid.index(car))[1]
                 func = load_other_cars
                 no_p = car not in player_cars
-                new_car = car_class('cars/' + car, pos, hpr, func, no_p)
+                car_class = AiCar if no_p else car_class
+                new_car = car_class('cars/' + car, pos, hpr, func)
                 self.mdt.cars += [new_car]
             path = 'cars/' + car_path
             pos = self.mdt.track.gfx.get_start_pos(grid.index(car_path))[0]
             hpr = self.mdt.track.gfx.get_start_pos(grid.index(car_path))[1]
             func = load_other_cars
-            self.mdt.player_car = PlayerCar(path, pos, hpr, func, ai)
+            car_cls = AiCar if ai else PlayerCar
+            self.mdt.player_car = car_cls(path, pos, hpr, func)
             self.mdt.cars = []
-        self.mdt.track = Track(track_path, load_car)
+        self.mdt.track = Track(
+            track_path, load_car, game.options['split_world'],
+            game.options['submodels'])
+        self.mdt.track.gfx.attach(self)
 
     def exitLoading(self):
         eng.log_mgr.log('exiting Loading state')

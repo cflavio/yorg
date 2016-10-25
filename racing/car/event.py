@@ -4,16 +4,14 @@ from racing.game.gameobject.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
 from .ai import _Ai
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
-from racing.game.observer import Observer
 
 
-class _Event(Event, Observer):
+class _Event(Event):
 
     def __init__(self, mdt):
         self.tsk = None
         Event.__init__(self, mdt)
-        Observer.__init__(self)
-        self.has_just_started = True
+        self.has_just_started = True  # do a query
         eng.phys.attach(self)
         label_events = [
             ('forward', 'arrow_up'), ('left', 'arrow_left'), ('reverse', 'z'),
@@ -22,7 +20,7 @@ class _Event(Event, Observer):
         map(lambda (lab, evt): watch(lab, evt), label_events)
 
     def start(self):
-        self.tsk = taskMgr.add(self._on_frame, 'Track::__on_frame')
+        eng.event.attach(self)
 
     def __process_respawn(self):
         last_pos = self.mdt.logic.last_contact_pos
@@ -53,25 +51,9 @@ class _Event(Event, Observer):
         if obj != self.mdt.gfx.nodepath.node():
             return
         curr_time = round(globalClock.getFrameTime(), 2)
-        print 'collision with %s %s' % (obj_name, curr_time)
+        eng.log_mgr.log('collision with %s %s' % (obj_name, curr_time))
         if obj_name.startswith('Respawn'):
             self.__process_respawn()
-
-    def _get_input(self):
-        if self.mdt.ai.__class__ == _Ai:
-            return self.mdt.ai.get_input()
-        elif self.__class__ == _NetworkEvent:
-            return {
-                'forward': False,
-                'left': False,
-                'reverse': False,
-                'right': False}
-        else:
-            return {
-                'forward': inputState.isSet('forward'),
-                'left': inputState.isSet('left'),
-                'reverse': inputState.isSet('reverse'),
-                'right': inputState.isSet('right')}
 
     def reset_car(self):
         self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
@@ -79,8 +61,9 @@ class _Event(Event, Observer):
         wheels = self.mdt.phys.vehicle.get_wheels()
         map(lambda whl: whl.set_rotation(0), wheels)
 
-    def process_frame(self):
+    def on_frame(self):
         input_dct = self._get_input()
+        # use car's fsm
         if game.track.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
             self.reset_car()
@@ -88,22 +71,17 @@ class _Event(Event, Observer):
         if self.mdt.logic.is_upside_down:
             self.mdt.gfx.nodepath.setR(0)
         car_pos = self.mdt.gfx.nodepath.get_pos()
-        top = (car_pos.x, car_pos.y, 100)
-        bottom = (car_pos.x, car_pos.y, -100)
+        top, bottom = (car_pos.x, car_pos.y, 100), (car_pos.x, car_pos.y, -100)
         result = eng.phys.world_phys.rayTestAll(top, bottom)
         hits = result.getHits()
         for hit in [hit for hit in hits if 'Road' in hit.getNode().getName()]:
             self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()
         self.mdt.phys.update_terrain()
 
-    def _on_frame(self, task):
-        self.process_frame()
-        return task.again
-
     def destroy(self):
         Event.destroy(self)
-        taskMgr.remove(self.tsk)
         eng.phys.detach(self)
+        eng.event.detach(self)
 
 
 class NetMsgs(object):
@@ -123,6 +101,7 @@ class _PlayerEvent(_Event):
         self.last_sent = globalClock.getFrameTime()
 
     def eval_register(self):
+        # make _PlayerEventServer, _PlayerEventClient
         if eng.server.is_active:
             eng.server.register_cb(self.process_srv)
         elif eng.client.is_active:
@@ -151,18 +130,18 @@ class _PlayerEvent(_Event):
             eng.client.send(packet)
             self.last_sent = globalClock.getFrameTime()
 
-    def _on_frame(self, task):
-        _Event.process_frame(self)
-        self.mdt.logic.update_cam()
+    def on_frame(self):
+        _Event.on_frame(self)
+        self.mdt.logic.camera.update_cam()
         self.mdt.audio.update(self._get_input())
         if eng.server.is_active:
             self.__on_frame_server()
         if eng.client.is_active:
             self.__on_frame_client()
-        return task.again
 
     @staticmethod
     def __prepare_game_packet():
+        #should be done by race
         packet = [NetMsgs.game_packet]
         for car in [game.player_car] + game.cars:
             name = car.gfx.path
@@ -172,20 +151,9 @@ class _PlayerEvent(_Event):
             packet += chain([name], pos, hpr, velocity)
         return packet
 
-    def __crash_sfx(self, speed, speed_ratio):
-        print 'crash speed', self.mdt.phys.speed, speed
-        if abs(self.mdt.phys.speed) >= abs(speed / 2.0) or speed_ratio < .5:
-            return
-        self.mdt.audio.crash_high_speed_sfx.play()
-        part_path = 'assets/particles/sparks.ptf'
-        node = self.mdt.gfx.nodepath
-        eng.particle(part_path, node, eng.render, (0, 1.2, .75), .8)
-
     def __process_wall(self):
-        if self.mdt.audio.crash_sfx.status() != AudioSound.PLAYING:
-            self.mdt.audio.crash_sfx.play()
-        speed, speed_ratio = self.mdt.phys.speed, self.mdt.phys.speed_ratio
-        args = .1, self.__crash_sfx, 'crash sfx', [speed, speed_ratio]
+        eng.audio.play(self.mdt.audio.crash_sfx)
+        args = .1, lambda tsk: self.mdt.gfx.crash_sfx(), 'crash sfx'
         taskMgr.doMethodLater(*args)
 
     def __process_nonstart_goals(self, lap_number, laps):
@@ -193,8 +161,7 @@ class _PlayerEvent(_Event):
         back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
         if fwd or back:
             self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/'+str(laps))
-            if self.mdt.audio.lap_sfx.status() != AudioSound.PLAYING:
-                self.mdt.audio.lap_sfx.play()
+            eng.audio.play(self.mdt.audio.lap_sfx)
         else:
             self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))
 
@@ -205,11 +172,13 @@ class _PlayerEvent(_Event):
         elif eng.client.is_active:
             eng.client.send([NetMsgs.end_race_player])
         #TODO: compute the ranking
+        # make classes Race, Ranking, Tournament
         game.track.race_ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
         game.track.fsm.demand('Results')
-        game.track.gui.show_results()
+        game.track.gui.results.show()
 
     def __process_goal(self):
+        # retrieve from logic
         lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
         if self.mdt.gui.time_txt.getText():
             lap_time = float(self.mdt.gui.time_txt.getText())
@@ -221,7 +190,7 @@ class _PlayerEvent(_Event):
         if not_started and (not_text or is_best_txt):
             self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
         self.mdt.logic.last_time_start = globalClock.getFrameTime()
-        laps = game.options['laps']
+        laps = game.options['laps']  # pass this to car's constructor
         if not self.has_just_started:
             self.__process_nonstart_goals(lap_number, laps)
         self.has_just_started = False
@@ -235,8 +204,7 @@ class _PlayerEvent(_Event):
         if obj_name.startswith('Wall'):
             self.__process_wall()
         if any(obj_name.startswith(s) for s in ['Road', 'Offroad']):
-            if self.mdt.audio.landing_sfx.status() != AudioSound.PLAYING:
-                self.mdt.audio.landing_sfx.play()
+            eng.audio.play(self.mdt.audio.landing_sfx)
         if obj_name.startswith('Goal'):
             self.__process_goal()
 
@@ -257,11 +225,13 @@ class _PlayerEvent(_Event):
             self.__process_player_info(data_lst, sender)
         if data_lst[0] == NetMsgs.end_race_player:
             eng.server.send([NetMsgs.end_race])
+            # move into race
             game.track.fsm.demand('Results')
             game.track.gui.show_results()
 
     @staticmethod
     def __process_game_packet(data_lst):
+        # into race
         from .car import NetworkCar
         for i in range(1, len(data_lst), 10):
             car_name = data_lst[i]
@@ -281,6 +251,25 @@ class _PlayerEvent(_Event):
                 game.track.fsm.demand('Results')
                 game.track.gui.show_results()
 
+    def _get_input(self):
+        return {
+            'forward': inputState.isSet('forward'),
+            'left': inputState.isSet('left'),
+            'reverse': inputState.isSet('reverse'),
+            'right': inputState.isSet('right')}
+
 
 class _NetworkEvent(_Event):
-    pass
+
+    def _get_input(self):
+        return {
+            'forward': False,
+            'left': False,
+            'reverse': False,
+            'right': False}
+
+
+class _AiEvent(_Event):
+
+    def _get_input(self):
+        return self.mdt.ai.get_input()

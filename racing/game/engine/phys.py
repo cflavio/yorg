@@ -60,3 +60,12 @@ class EnginePhys(Phys):
     def toggle_debug(self):
         is_hidden = self.__debug_np.isHidden()
         (self.__debug_np.show if is_hidden else self.__debug_np.hide)()
+
+    @staticmethod
+    def find_geoms(model, name):
+        geoms = model.findAllMatches('**/+GeomNode')
+        is_nm = lambda geom: geom.getName().startswith(name)
+        named_geoms = [geom for geom in geoms if is_nm(geom)]
+        in_vec = [name in named_geom.getName() for named_geom in named_geoms]
+        indexes = [i for i, el in enumerate(in_vec) if el]
+        return [named_geoms[i] for i in indexes]

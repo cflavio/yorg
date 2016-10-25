@@ -14,6 +14,7 @@ from .gui.gui import EngineGui
 from .phys import EnginePhys
 from .logic import EngineLogic
 from .event import EngineEvent
+from .audio import EngineAudio
 from .network.server import Server
 from .network.client import Client
 from ..gameobject.gameobject import GameObjectMdt
@@ -30,6 +31,7 @@ class Engine(GameObjectMdt):
     logic_cls = EngineLogic
     phys_cls = EnginePhys
     event_cls = EngineEvent
+    audio_cls = EngineAudio
 
     def __init__(self, conf=None):
         __builtin__.eng = self

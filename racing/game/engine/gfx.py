@@ -3,6 +3,7 @@ from panda3d.core import getModelPath, LightRampAttrib, PandaNode, NodePath, \
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.filter.CommonFilters import CommonFilters
 from ..gameobject.gameobject import Gfx
+import os
 
 
 class EngineGfx(Gfx):
@@ -22,6 +23,12 @@ class EngineGfx(Gfx):
 
     def clean(self):
         self.world_np.removeNode()
+
+    @staticmethod
+    def load_model(*args, **kwargs):
+        if os.path.exists(args[0] + '.bam'):
+            args[0] += '.bam'
+        loader.loadModel(*args, **kwargs)
 
     @staticmethod
     def __set_toon():

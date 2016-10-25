@@ -14,3 +14,7 @@ class EngineLogic(Logic):
             package = eng.base.appRunner.p3dInfo.FirstChildElement('package')
             return 'version: ' + package.Attribute('version')
         return 'version: source'
+
+    @staticmethod
+    def flatlist(lst):
+        return [item for sublist in lst for item in sublist]

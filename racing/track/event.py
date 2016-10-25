@@ -9,15 +9,14 @@ class _Event(Event):
         self.accept('p', eng.pause.logic.toggle)
 
     def start(self):
-        self.tsk = taskMgr.add(self.__on_frame, 'Track::__on_frame')
+        eng.event.attach(self)
 
-    def __on_frame(self, task):
+    def on_frame(self):
         cam_pos = eng.base.camera.get_pos()
         self.mdt.gfx.spot_lgt.setPos(cam_pos + (60, -60, 100))
         self.mdt.gfx.spot_lgt.lookAt(cam_pos + (-40, 60, -50))
-        self.mdt.gui.update_minimap()
-        return task.again
+        self.mdt.gui.minimap.update()
 
     def destroy(self):
         Event.destroy(self)
-        taskMgr.remove(self.tsk)
+        eng.event.detach(self)

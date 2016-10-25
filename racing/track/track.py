@@ -2,7 +2,7 @@ from abc import ABCMeta
 from racing.game.gameobject.gameobject import GameObjectMdt
 from .gfx import _Gfx
 from .phys import _Phys
-from .gui import _Gui
+from .gui.gui import _Gui
 from .event import _Event
 from .audio import _Audio
 from .fsm import _Fsm
@@ -17,7 +17,7 @@ class Track(GameObjectMdt):
     audio_cls = _Audio
     fsm_cls = _Fsm
 
-    def __init__(self, track_path, cb):
+    def __init__(self, track_path, cb, split_world, submodels):
         eng.log_mgr.log('init track')
         self.fsm = self.fsm_cls(self)
 
@@ -30,4 +30,5 @@ class Track(GameObjectMdt):
             self.event = self.event_cls(self)
             taskMgr.doMethodLater(.01, lambda task: cb(), 'callback')
             eng.log_mgr.log('end init track')
-        self.gfx = self.gfx_cls(self, track_path, post_gfx)
+        self.gfx = self.gfx_cls(self, track_path, post_gfx, split_world,
+                                submodels)

@@ -3,76 +3,80 @@ from panda3d.bullet import BulletRigidBodyNode, BulletTriangleMesh, \
 from racing.game.gameobject.gameobject import Phys
 
 
+class MergedBuilder:
+
+    def add_geoms(self, geoms, mesh, phys_model, geom_name):
+        for geom in geoms:
+            transf = geom.getTransform(phys_model)
+            for _geom in [g.decompose() for g in geom.node().getGeoms()]:
+                mesh.addGeom(_geom, transf)
+        return geom_name
+
+
+class UnmergedBuilder:
+
+    def add_geoms(self, geoms, mesh, phys_model, geom_name):
+        for _geom in [g.decompose() for g in geoms.node().getGeoms()]:
+            mesh.addGeom(_geom, geoms.getTransform(phys_model))
+        return geoms.get_name()
+
+
 class _Phys(Phys):
 
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
+        self.corners = None
+        self.__load(['Road', 'Offroad'], False, False)
+        self.__load(['Wall'], True, False)
+        self.__load(['Goal', 'Slow', 'Respawn'], True, True)
+        self.set_corners()
 
-        for geom_name in ['Road', 'Offroad']:
-            eng.log_mgr.log('setting physics for: ' + geom_name)
-            geoms = self.__find_geoms(geom_name)
-            if geoms:
-                for geom in geoms:
-                    self.__process_road(geom)
-
-        for geom_name in ['Wall']:
-            eng.log_mgr.log('setting physics for: ' + geom_name)
-            geoms = self.__find_geoms(geom_name)
-            if geoms:
-                self.__process_wall(geoms, geom_name)
-
-        for geom_name in ['Goal', 'Slow', 'Respawn']:
-            eng.log_mgr.log('setting physics for: ' + geom_name)
-            geoms = self.__find_geoms(geom_name)
-            if geoms:
-                self.__process_ghost(geoms, geom_name)
-
-    def __find_geoms(self, name):
-        # the list of geoms which have siblings named 'name'
-        geoms = self.mdt.gfx.phys_model.findAllMatches('**/+GeomNode')
-        is_nm = lambda geom: geom.getName().startswith(name)
-        named_geoms = [geom for geom in geoms if is_nm(geom)]
-        in_vec = [name in named_geom.getName() for named_geom in named_geoms]
-        indexes = [i for i, el in enumerate(in_vec) if el]
-        return [named_geoms[i] for i in indexes]
-
-    def __process_road(self, geom):
-        # we can't manage speed and friction if we merge meshes
-        mesh = BulletTriangleMesh()
-        for _geom in [g.decompose() for g in geom.node().getGeoms()]:
-            mesh.addGeom(_geom, geom.getTransform(self.mdt.gfx.phys_model))
-        shape = BulletTriangleMeshShape(mesh, dynamic=False)
-        wrl = eng.gfx.world_np
-        nodepath = wrl.attachNewNode(BulletRigidBodyNode(geom.get_name()))
+    def __build(self, geom, shape, geom_name, ghost):
+        if ghost:
+            ncls = BulletGhostNode
+            meth = eng.phys.world_phys.attachGhost
+        else:
+            ncls = BulletRigidBodyNode
+            meth = eng.phys.world_phys.attachRigidBody
+        nodepath = eng.gfx.world_np.attachNewNode(ncls(geom_name))
         nodepath.node().addShape(shape)
-        eng.phys.world_phys.attachRigidBody(nodepath.node())
+        meth(nodepath.node())
         nodepath.node().notifyCollisions(True)
 
-    def __process_wall(self, geoms, geom_name):
-        mesh = BulletTriangleMesh()
-        for geom in geoms:
-            transf = geom.getTransform(self.mdt.gfx.phys_model)
-            for _geom in [g.decompose() for g in geom.node().getGeoms()]:
-                mesh.addGeom(_geom, transf)
-        shape = BulletTriangleMeshShape(mesh, dynamic=False)
-        wrl = eng.gfx.world_np
-        nodepath = wrl.attachNewNode(BulletRigidBodyNode(geom_name))
-        nodepath.node().addShape(shape)
-        eng.phys.world_phys.attachRigidBody(nodepath.node())
-        nodepath.node().notifyCollisions(True)
+    def __load(self, names, merged, ghost):
+        for geom_name in names:
+            eng.log_mgr.log('setting physics for: ' + geom_name)
+            geoms = eng.phys.find_geoms(self.mdt.gfx.phys_model, geom_name)
+            if geoms:
+                self.__process_meshes(geoms, geom_name, merged, ghost)
 
-    def __process_ghost(self, geoms, geom_name):
+    def __build_mesh(self, geombuilder, geoms, geom_name, ghost):
         mesh = BulletTriangleMesh()
-        for geom in geoms:
-            transf = geom.getTransform(self.mdt.gfx.phys_model)
-            for geom in [g.decompose() for g in geom.node().getGeoms()]:
-                mesh.addGeom(geom, transf)
+        name = geombuilder.add_geoms(geoms, mesh, self.mdt.gfx.phys_model, geom_name)
         shape = BulletTriangleMeshShape(mesh, dynamic=False)
-        ghost = BulletGhostNode(geom_name)
-        ghost.addShape(shape)
-        ghost_np = eng.gfx.world_np.attachNewNode(ghost)
-        eng.phys.world_phys.attachGhost(ghost)
-        ghost_np.node().notifyCollisions(True)
+        self.__build(geoms, shape, name, ghost)
+
+    def __process_meshes(self, geoms, geom_name, merged, ghost):
+        geombuilder = (MergedBuilder if merged else UnmergedBuilder)()
+        if not merged:
+            for geom in geoms:
+                self.__build_mesh(geombuilder, geom, geom_name, ghost)
+        else:
+            self.__build_mesh(geombuilder, geoms, geom_name, ghost)
+
+    def set_corners(self):
+        if not self.corners:
+            corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
+            self.corners = [self.mdt.gfx.phys_model.find('**/Minimap' + crn) for crn in corners]
+        return self.corners
+
+    @property
+    def lrtb(self):
+        return self.corners[0].getX(), self.corners[1].getX(), \
+            self.corners[0].getY(), self.corners[3].getY()
 
     def destroy(self):
-        eng.phys.stop()
+        #TODO: remove only the nodes added by this class
+        map(lambda chl: chl.remove_node(), eng.gfx.world_np.get_children())
+        #replace with remove_ghost, remove_rigid_body
+        #map(lambda chl: chl.remove_node(), eng.phys.world_phys.get_children())
