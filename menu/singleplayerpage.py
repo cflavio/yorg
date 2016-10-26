@@ -7,7 +7,7 @@ from .trackpage import TrackPage
 
 class SingleplayerPageGui(PageGui):
 
-    def build(self):
+    def build_page(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         game.ranking = None
@@ -18,24 +18,22 @@ class SingleplayerPageGui(PageGui):
             ('Continue tournament', self.on_continue)]
         self.widgets += [
             DirectButton(
-                text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
-                text_fg=(.75, .75, .75, 1),
-                text_font=menu_gui.font, frameColor=menu_args.btn_color,
-                command=menu[1], frameSize=menu_args.btn_size,
-                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+                text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
+                **menu_gui.btn_args)
             for i, menu in enumerate(menu_data)]
         if 'last_ranking' not in game.options.dct:
             self.widgets[-1]['state'] = DISABLED
             self.widgets[-1].setAlphaScale(.25)
-        PageGui.build(self)
+        PageGui.build_page(self)
 
     @staticmethod
     def on_continue():
+        # into tournament
         game.ranking = game.options['last_ranking']
         game.fsm.demand('Loading')
 
     def on_tournament(self):
+        # into tournament
         game.ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
         self.menu.track = 'prototype'
         self.menu.logic.push_page(CarPage(self.menu))

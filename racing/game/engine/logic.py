@@ -18,3 +18,7 @@ class EngineLogic(Logic):
     @staticmethod
     def flatlist(lst):
         return [item for sublist in lst for item in sublist]
+
+    @property
+    def is_runtime(self):
+        return base.appRunner and base.appRunner.dom

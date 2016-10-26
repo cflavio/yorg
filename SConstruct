@@ -29,23 +29,20 @@ path = set_path(arguments['path'])
 app_name = 'yorg'
 lang_path = 'assets/locale/'
 
-p3d_path = p3d_path_str.format(path=path, name=app_name)
-win_path = win_path_str.format(path=path, name=app_name)
-osx_path = osx_path_str.format(path=path, name=app_name)
-linux_path_32 = linux_path_str.format(path=path, name=app_name,
-                                      platform='i386')
-linux_path_64 = linux_path_str.format(path=path, name=app_name,
-                                      platform='amd64')
-win_path_noint = win_path_noint_str.format(path=path, name=app_name)
-osx_path_noint = osx_path_noint_str.format(path=path, name=app_name)
-linux_path_32_noint = linux_path_noint_str.format(path=path, name=app_name,
-                                                  platform='i386')
-linux_path_64_noint = linux_path_noint_str.format(path=path, name=app_name,
-                                                  platform='amd64')
-src_path = src_path_str.format(path=path, name=app_name)
-devinfo_path = devinfo_path_str.format(path=path, name=app_name)
-docs_path = docs_path_str.format(path=path, name=app_name)
-pdf_path = pdf_path_str.format(path=path, name=app_name)
+args = {'path': path, 'name': app_name}
+p3d_path = p3d_path_str.format(**args)
+win_path = win_path_str.format(**args)
+osx_path = osx_path_str.format(**args)
+linux_path_32 = linux_path_str.format(platform='i386', **args)
+linux_path_64 = linux_path_str.format(platform='amd64', **args)
+win_path_noint = win_path_noint_str.format(**args)
+osx_path_noint = osx_path_noint_str.format(**args)
+linux_path_32_noint = linux_path_noint_str.format(platform='i386', **args)
+linux_path_64_noint = linux_path_noint_str.format(platform='amd64', **args)
+src_path = src_path_str.format(**args)
+devinfo_path = devinfo_path_str.format(**args)
+docs_path = docs_path_str.format(**args)
+pdf_path = pdf_path_str.format(**args)
 
 bld_p3d = Builder(action=build_p3d)
 bld_windows = Builder(action=build_windows)
@@ -60,12 +57,11 @@ bld_str = Builder(action=build_strings, suffix='.mo', src_suffix='.po')
 bld_str_tmpl = Builder(action=build_string_template, suffix='.pot',
                        src_suffix='.py')
 
-env = Environment(BUILDERS={'p3d': bld_p3d, 'windows': bld_windows,
-                            'osx': bld_osx, 'linux': bld_linux,
-                            'source': bld_src, 'devinfo': bld_devinfo,
-                            'docs': bld_docs, 'images': bld_images,
-                            'str': bld_str, 'str_tmpl': bld_str_tmpl,
-                            'pdf': bld_pdf})
+env = Environment(BUILDERS={
+    'p3d': bld_p3d, 'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
+    'source': bld_src, 'devinfo': bld_devinfo, 'docs': bld_docs,
+    'images': bld_images, 'str': bld_str, 'str_tmpl': bld_str_tmpl,
+    'pdf': bld_pdf})
 env['P3D_PATH'] = p3d_path
 env['NAME'] = app_name
 env['LANG'] = lang_path
@@ -87,16 +83,14 @@ pdf_conf = {
         ('javascript', './racing/game', '*.js', filt_game)]}
 env['PDF_CONF'] = pdf_conf
 
-cond_racing = lambda s: not str(s).startswith('racing') or str(s).startswith('racing/game/')
+def cond_racing(s):
+    return not str(s).startswith('racing') or str(s).startswith('racing/game/')
 def cond_game(src):
     not_game = not str(src).startswith('racing/game/')
     thirdparty = str(src).startswith('racing/game/thirdparty')
     return not_game or thirdparty or str(src).startswith('racing/game/tests')
-dev_conf = {
-    'devinfo': lambda s: str(s).startswith('racing'),
-    'devinfo_racing': cond_racing,
-    'devinfo_game': cond_game
-}
+dev_conf = {'devinfo': lambda s: str(s).startswith('racing'),
+            'devinfo_racing': cond_racing, 'devinfo_game': cond_game}
 env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
@@ -132,11 +126,15 @@ if arguments['docs']:
     env.docs([docs_path], get_files(['py']))
 if arguments['pdf']:
     env.pdf([pdf_path], get_files(['py']))
+
+def process_lang(lang_code):
+    tmpl = env.str_tmpl(
+        lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name,
+        get_files(['py']))
+    env.Precious(tmpl)
+    env.str(lang_path+lang_code+'/LC_MESSAGES/%s.mo' % app_name,
+            lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name)
+
 if arguments['lang']:
     for lang_code in ['it_IT']:
-        tmpl = env.str_tmpl(
-            lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name,
-            get_files(['py']))
-        env.Precious(tmpl)
-        env.str(lang_path+lang_code+'/LC_MESSAGES/%s.mo' % app_name,
-                lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name)
+        process_lang(lang_code)

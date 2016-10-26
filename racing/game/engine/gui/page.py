@@ -8,10 +8,10 @@ class PageGui(Gui):
         Gui.__init__(self, mdt)
         self.menu = menu
         self.widgets = []
-        self.build()
+        self.build_page()
         self.update_texts()
 
-    def build(self):
+    def build_page(self):
         self.__build_back_btn()
 
     @staticmethod

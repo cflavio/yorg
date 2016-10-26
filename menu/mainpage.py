@@ -9,7 +9,7 @@ from .creditpage import CreditPage
 
 class YorgMainPageGui(MainPageGui):
 
-    def build(self):
+    def build_page(self):
         menu_data = [
             ('Single Player', _('Single Player'),
              lambda: self.menu.logic.push_page(SingleplayerPage(self.menu))),
@@ -24,17 +24,12 @@ class YorgMainPageGui(MainPageGui):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         self.widgets += [
-            DirectButton(
-                text='', scale=.2, pos=(0, 1, .4-i*.28),
-                text_fg=(.75, .75, .75, 1),
-                text_font=menu_gui.font, frameColor=menu_args.btn_color,
-                command=menu[2], frameSize=menu_args.btn_size,
-                rolloverSound=menu_gui.rollover,
-                clickSound=menu_gui.click)
+            DirectButton(text='', pos=(0, 1, .4-i*.28), command=menu[2],
+                         **menu_gui.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(self.widgets):
             PageGui.transl_text(wdg, menu_data[i][0])
-        MainPageGui.build(self)
+        MainPageGui.build_page(self)
 
 
 class YorgMainPage(MainPage):

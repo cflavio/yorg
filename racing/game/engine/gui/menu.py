@@ -1,3 +1,4 @@
+from direct.gui.DirectGuiGlobals import FLAT
 from direct.gui.OnscreenImage import OnscreenImage
 from ...gameobject.gameobject import Gui, Logic, GameObjectMdt
 
@@ -38,6 +39,32 @@ class MenuGui(Gui):
             'text_fg': self.menu_args.text_fg,
             'frameColor': self.menu_args.btn_color,
             'frameSize': self.menu_args.btn_size,
+            'rolloverSound': self.rollover,
+            'clickSound': self.click}
+        self.label_args = {
+            'scale': self.menu_args.text_scale,
+            'text_fg': self.menu_args.text_fg,
+            'text_font': self.font}
+        self.option_args = {
+            'scale': self.menu_args.text_scale,
+            'text_font': self.font,
+            'text_fg': self.menu_args.text_fg,
+            'frameColor': self.menu_args.btn_color,
+            'frameSize': self.menu_args.btn_size,
+            'rolloverSound': self.rollover,
+            'clickSound': self.click,
+            'text_scale': .85,
+            'item_text_font': self.font,
+            'item_frameColor': (.6, .6, .6, 1),
+            'item_relief': FLAT,
+            'popupMarker_frameColor': self.menu_args.btn_color,
+            'textMayChange': 1,
+            'highlightColor': (.8, .8, .8, .2)}
+        self.checkbtn_args = {
+            'scale': self.menu_args.text_scale,
+            'text_font': self.font,
+            'text_fg': self.menu_args.text_fg,
+            'frameColor': self.menu_args.btn_color,
             'rolloverSound': self.rollover,
             'clickSound': self.click}
 

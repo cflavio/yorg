@@ -13,7 +13,7 @@ class ServerPageGui(PageGui):
         self.conn_txt = None
         PageGui.__init__(self, mdt, menu)
 
-    def build(self):
+    def build_page(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -22,28 +22,27 @@ class ServerPageGui(PageGui):
         public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
         addr = local_addr + ' - ' + public_addr
         txt = OnscreenText(text=addr, scale=.12, pos=(0, .4),
-                           font=menu_gui.font, fg=(.75, .75, .75, 1))
+                           font=menu_gui.font, fg=menu_args.text_fg)
         self.widgets += [txt]
         self.conn_txt = OnscreenText(
-            scale=.12, pos=(0, .2), font=menu_gui.font, fg=(.75, .75, .75, 1))
+            scale=.12, pos=(0, .2), font=menu_gui.font, fg=menu_args.text_fg)
         self.widgets += [self.conn_txt]
         btn = DirectButton(
-            text=_('Start'), scale=.2, pos=(0, 1, -.5),
-            text_fg=(.75, .75, .75, 1),
-            text_font=menu_gui.font, frameColor=menu_args.btn_color,
+            text=_('Start'), pos=(0, 1, -.5),
             command=lambda: self.menu.logic.push_page(TrackPage(self.menu)),
-            frameSize=menu_args.btn_size,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            **menu_gui.btn_args)
         self.widgets += [btn]
-        PageGui.build(self)
+        PageGui.build_page(self)
         eng.server.start(self.process_msg, self.process_connection)
+        # stop the server on back
 
     @staticmethod
     def process_msg(data_lst):
+        # into event
         print data_lst
 
     def process_connection(self, client_address):
+        # into event
         eng.log_mgr.log('connection from ' + client_address)
         self.conn_txt.setText(_('connection from ') + client_address)
 

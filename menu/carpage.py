@@ -12,31 +12,27 @@ class CarPageGui(PageGui):
         self.track_path = None
         PageGui.__init__(self, mdt, menu)
 
-    def build(self):
+    def build_page(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         self.track_path = 'tracks/' + self.menu.track
+        # into server
         if eng.server.is_active:
             eng.server.register_cb(self.process_srv)
             eng.server.car_mapping = {}
         elif eng.client.is_active:
+            # into client
             eng.client.register_cb(self.process_client)
         menu_data = [
             ('Kronos', self.on_car, ['kronos']),
             ('Themis', self.on_car, ['themis']),
             ('Diones', self.on_car, ['diones'])]
         self.widgets += [
-            DirectButton(
-                text=menu[0], scale=.2, pos=(0, 1, .4-i*.28),
-                text_fg=(.75, .75, .75, 1),
-                text_font=menu_gui.font, frameColor=menu_args.btn_color,
-                command=menu[1], extraArgs=menu[2],
-                frameSize=menu_args.btn_size,
-                rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-                clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
+                         extraArgs=menu[2], **menu_gui.btn_args)
             for i, menu in enumerate(menu_data)]
         self.current_cars = {}
-        PageGui.build(self)
+        PageGui.build_page(self)
 
     def __buttons(self, car):
         is_btn = lambda wdg: wdg.__class__ == DirectButton
@@ -44,6 +40,7 @@ class CarPageGui(PageGui):
         return [btn for btn in buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
+        # into the server
         if eng.server.is_active:
             eng.log_mgr.log('car selected: ' + car)
             eng.server.send([NetMsgs.car_selection, car])
@@ -61,12 +58,14 @@ class CarPageGui(PageGui):
             eng.server.car_mapping['self'] = car
             self.evaluate_starting()
         elif eng.client.is_active:
+            # into the client
             eng.log_mgr.log('car request: ' + car)
             eng.client.send([NetMsgs.car_request, car])
         else:
             game.fsm.demand('Loading', self.track_path, car)
 
     def evaluate_starting(self):
+        # into the server
         connections = eng.server.connections + [self]
         if all(conn in self.current_cars for conn in connections):
             packet = [NetMsgs.start_race]
@@ -83,6 +82,7 @@ class CarPageGui(PageGui):
             game.fsm.demand('Loading', self.track_path, curr_car, packet[2:])
 
     def process_srv(self, data_lst, sender):
+        # into the server
         if data_lst[0] == NetMsgs.car_request:
             car = data_lst[1]
             eng.log_mgr.log('car requested: ' + car)
@@ -100,6 +100,7 @@ class CarPageGui(PageGui):
                 self.evaluate_starting()
 
     def process_client(self, data_lst, sender):
+        # into the client
         if data_lst[0] == NetMsgs.car_confirm:
             self.car = car = data_lst[1]
             eng.log_mgr.log('car confirmed: ' + car)

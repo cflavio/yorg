@@ -13,6 +13,7 @@ class NetMsgs(object):
 
 
 class _Fsm(Fsm):
+    # make classes tournament, race
 
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
@@ -43,6 +44,7 @@ class _Fsm(Fsm):
         self.mdt.audio.menu_music.stop()
 
     def enterLoading(self, track_path='', car_path='', player_cars=[]):
+        # class loading
         eng.log_mgr.log('entering Loading state')
         eng.gfx.init()
         if not track_path and not car_path:
@@ -83,12 +85,14 @@ class _Fsm(Fsm):
         self.curr_load_txt.setText(msg)
 
     def update_cam(self, task):
+        # class loading
         pos = self.cam_node.get_pos(render)
         eng.base.camera.set_pos(pos[0], pos[1], 1000)
         eng.base.camera.look_at(0, 0, 0)
         return task.again
 
     def load_stuff(self, track_path, car_path, player_cars):
+        # class loading
         eng.phys.init()
         player_cars = player_cars[1::2]
 
@@ -130,6 +134,7 @@ class _Fsm(Fsm):
         self.mdt.track.gfx.attach(self)
 
     def exitLoading(self):
+        # class loading
         eng.log_mgr.log('exiting Loading state')
         self.preview.remove_node()
         self.cam_pivot.remove_node()
@@ -139,6 +144,7 @@ class _Fsm(Fsm):
         eng.base.camera.set_pos(0, 0, 0)
 
     def enterPlay(self, track_path, car_path):
+        # class race
         eng.log_mgr.log('entering Play state')
         self.mdt.track.gfx.model.reparentTo(render)
         self.mdt.player_car.gfx.reparent()
@@ -160,6 +166,7 @@ class _Fsm(Fsm):
             self.start_play()
 
     def process_srv(self, data_lst, sender):
+        # class race
         if data_lst[0] == NetMsgs.client_ready:
             ipaddr = sender.getAddress().getIpString()
             eng.log_mgr.log('client ready: ' + ipaddr)
@@ -170,12 +177,14 @@ class _Fsm(Fsm):
                 eng.server.send([NetMsgs.start_race])
 
     def process_client(self, data_lst, sender):
+        # class race
         if data_lst[0] == NetMsgs.start_race:
             eng.log_mgr.log('start race')
             taskMgr.remove(self.send_tsk)
             self.start_play()
 
     def start_play(self):
+        # class race
         eng.phys.start()
         game.track.event.start()
         game.player_car.event.eval_register()
@@ -185,6 +194,7 @@ class _Fsm(Fsm):
         map(lambda car: car.event.start(), cars)
 
     def exitPlay(self):
+        # class race
         eng.log_mgr.log('exiting Play state')
         if eng.server.is_active:
             eng.server.destroy()
@@ -200,6 +210,7 @@ class _Fsm(Fsm):
         eng.gfx.clean()
 
     def __step(self):
+        # class tournament
         current_track = game.track.gfx.track_path[13:]
         tracks = ['prototype', 'desert']
         if tracks.index(current_track) == len(tracks) - 1:
@@ -216,6 +227,7 @@ class _Fsm(Fsm):
             self.demand('Loading', next_track, curr_car)
 
     def enterRanking(self):
+        # class tournament
         items = game.ranking.items()
         sorted_ranking = reversed(sorted(items, key=lambda el: el[1]))
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')

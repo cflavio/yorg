@@ -1,4 +1,3 @@
-from sys import exit
 from racing.game.game import GameLogic
 
 
@@ -6,22 +5,9 @@ class _Logic(GameLogic):
 
     def on_start(self):
         GameLogic.on_start(self)
-        try:
-            car = game.options['car']
-        except KeyError:
-            car = ''
-        try:
-            track = game.options['track']
-        except KeyError:
-            track = ''
+        car = game.options['car'] if 'car' in game.options.dct else ''
+        track = game.options['track'] if 'track' in game.options.dct else ''
         if car and track:
             self.mdt.fsm.demand('Loading', 'tracks/' + track, car)
         else:
             self.mdt.fsm.demand('Menu')
-        base.accept('escape-up', self.on_exit)
-
-    @staticmethod
-    def on_exit():
-        if game.options['open_browser_at_exit']:
-            eng.open_browser('http://www.ya2.it')
-        exit()

@@ -13,11 +13,11 @@ class ClientPageGui(PageGui):
         self.ent = None
         PageGui.__init__(self, mdt, menu)
 
-    def build(self):
+    def build_page(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         txt = OnscreenText(text='', scale=.12, pos=(0, .4),
-                           font=menu_gui.font, fg=(.75, .75, .75, 1))
+                           font=menu_gui.font, fg=menu_args.text_fg)
         self.widgets += [txt]
         PageGui.transl_text(self.widgets[0], _('Client'))
         self.ent = DirectEntry(
@@ -26,24 +26,20 @@ class ClientPageGui(PageGui):
             initialText='insert the server address')
         self.ent.onscreenText['fg'] = (.75, .75, .75, 1)
         self.widgets += [self.ent]
-        btn = DirectButton(
-            text=_('Connect'), scale=.2, pos=(0, 1, -.2),
-            text_fg=(.75, .75, .75, 1),
-            text_font=menu_gui.font, frameColor=menu_args.btn_color,
-            command=self.connect, frameSize=menu_args.btn_size,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+        btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
+                           command=self.connect, **menu_gui.btn_args)
         self.widgets += [btn]
-        PageGui.build(self)
+        PageGui.build_page(self)
 
     def connect(self):
         try:
-            print self.ent.get()
+            eng.log_mgr.log(self.ent.get())
             eng.client.start(self.process_msg, self.ent.get())
+            # stop the client on back
             menu_gui = self.menu.gui
             txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
-                font=menu_gui.font, fg=(.75, .75, .75, 1))
+                font=menu_gui.font, fg=menu_gui.text_fg)
             self.widgets += [txt]
         except ClientError:
             txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)
@@ -51,6 +47,7 @@ class ClientPageGui(PageGui):
             taskMgr.doMethodLater(*args)
 
     def process_msg(self, data_lst, sender):
+        # into event component
         if data_lst[0] == NetMsgs.track_selected:
             eng.log_mgr.log('track selected: ' + data_lst[1])
             self.menu.track = data_lst[1]

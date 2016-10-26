@@ -11,14 +11,9 @@ from racing.game.engine.gui.page import Page, PageEvent, PageGui
 class OptionEvent(PageEvent):
 
     def on_back(self):
-        try:
-            car = game.options['car']
-        except KeyError:
-            car = ''
-        try:
-            track = game.options['track']
-        except KeyError:
-            track = ''
+        # are these needed?
+        car = game.options['car'] if 'car' in game.options.dct else ''
+        track = game.options['track'] if 'track' in game.options.dct else ''
         conf = game.options
         lang_idx = self.mdt.gui._lang_opt.selectedIndex
         conf['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
@@ -45,98 +40,71 @@ class OptionPageGui(PageGui):
         self._browser_cb = None
         PageGui.__init__(self, mdt, menu)
 
-    def build(self):
+    def build_page(self):
         conf = game.options
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
 
         lang_lab = DirectLabel(
-            text='', scale=.12, pos=(-.1, 1, .5), text_fg=(.75, .75, .75, 1),
-            text_font=menu_gui.font, text_align=TextNode.ARight)
+            text='', pos=(-.1, 1, .5), text_align=TextNode.ARight,
+            **menu_gui.label_args)
         PageGui.transl_text(lang_lab, 'Language')
         self._lang_opt = DirectOptionMenu(
-            text='', scale=.12, items=eng.lang_mgr.languages, pos=(.2, 1, .5),
-            frameColor=menu_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
-            text_font=menu_gui.font, text_scale=.85,
-            item_text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1),
-            item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
-            initialitem=conf['lang'],
-            popupMarker_frameColor=menu_args.btn_color, textMayChange=1,
-            highlightColor=(.8, .8, .8, .2), command=self.__change_lang,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
-
+            text='', items=eng.lang_mgr.languages, pos=(.2, 1, .5),
+            initialitem=conf['lang'], command=self.__change_lang,
+            **menu_gui.option_args)
         vol_lab = DirectLabel(
-            text='', scale=.12, pos=(-.1, 1, .3), text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
+            text='', pos=(-.1, 1, .3), text_align=TextNode.ARight,
+            **menu_gui.label_args)
         PageGui.transl_text(vol_lab, 'Volume')
         self._vol_slider = DirectSlider(
             pos=(.47, 0, .33), scale=.47, value=conf['volume'],
             frameColor=menu_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
 
         fullscreen_lab = DirectLabel(
-            text='', scale=.12, pos=(-.1, 1, .1), text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
+            text='', pos=(-.1, 1, .1), text_align=TextNode.ARight,
+            **menu_gui.label_args)
         PageGui.transl_text(fullscreen_lab, 'Fullscreen')
         self._fullscreen_cb = DirectCheckButton(
-            pos=(.12, 1, .12), text='', scale=.12, text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1), frameColor=menu_args.btn_color,
+            pos=(.12, 1, .12), text='',
             indicatorValue=conf['fullscreen'],
             indicator_frameColor=menu_args.btn_color,
-            command=eng.gui.toggle_fullscreen,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            command=eng.gui.toggle_fullscreen, **menu_gui.checkbtn_args)
 
         res_lab = DirectLabel(
-            text='', scale=.12, pos=(-.1, 1, -.1), text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
+            text='', pos=(-.1, 1, -.1), text_align=TextNode.ARight,
+            **menu_gui.label_args)
         PageGui.transl_text(res_lab, 'Resolution')
         self._res_opt = DirectOptionMenu(
-            text='', scale=.08,
+            text='',
             items=['x'.join([str(el_res) for el_res in res])
                    for res in eng.gui.resolutions],
             pos=(.2, 1, -.1),
-            frameColor=menu_args.btn_color, frameSize=(-1.6, 5.6, -.32, .88),
-            text_font=menu_gui.font, text_fg=(.75, .75, .75, 1),
-            item_text_font=menu_gui.font, item_text_fg=(.75, .75, .75, 1),
-            item_frameColor=(.6, .6, .6, 1), item_relief=FLAT,
             initialitem='x'.join(str(res) for res in eng.gui.closest_res),
-            popupMarker_frameColor=menu_args.btn_color, textMayChange=1,
-            highlightColor=(.8, .8, .8, .2), command=eng.gui.set_resolution,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            command=eng.gui.set_resolution, **menu_gui.option_args)
 
         aa_lab = DirectLabel(
-            text='', scale=.12, pos=(-.1, 1, -.3), text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
+            text='', pos=(-.1, 1, -.3), text_align=TextNode.ARight,
+            **menu_gui.label_args)
         PageGui.transl_text(aa_lab, 'Antialiasing')
         aa_next_lab = DirectLabel(
-            text='', scale=.08, pos=(.2, 1, -.3), text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1), text_align=TextNode.ALeft)
+            text='', pos=(.2, 1, -.3), text_align=TextNode.ALeft,
+            **menu_gui.label_args)
         PageGui.transl_text(aa_next_lab, '(from the next execution)')
         self._aa_cb = DirectCheckButton(
-            pos=(.12, 1, -.27), text='', scale=.12, text_font=menu_gui.font,
-            frameColor=menu_args.btn_color,
-            indicatorValue=conf['aa'],
-            indicator_frameColor=menu_args.btn_color,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'))
+            pos=(.12, 1, -.27), text='', indicatorValue=conf['aa'],
+             **menu_gui.checkbtn_args)
 
         browser_lab = DirectLabel(
-            text='', scale=.12, pos=(-.1, 1, -.5), text_font=menu_gui.font,
-            text_fg=(.75, .75, .75, 1), text_align=TextNode.ARight)
+            text='', pos=(-.1, 1, -.5), text_align=TextNode.ARight,
+             **menu_gui.label_args)
         PageGui.transl_text(browser_lab, "See Ya2's news at exit")
         self._browser_cb = DirectCheckButton(
-            pos=(.12, 1, -.47), text='', scale=.12, text_font=menu_gui.font,
-            frameColor=menu_args.btn_color,
+            pos=(.12, 1, -.47), text='',
             indicatorValue=conf['open_browser_at_exit'],
-            indicator_frameColor=menu_args.btn_color,
-            rolloverSound=loader.loadSfx('assets/sfx/menu_over.wav'),
-            clickSound=loader.loadSfx('assets/sfx/menu_clicked.ogg'),
-            command=self.on_browser)
+            command=self.on_browser, **menu_gui.checkbtn_args)
 
-        if base.appRunner and base.appRunner.dom:
+        if eng.logic.is_runtime:
             fullscreen_lab['text_fg'] = (.75, .75, .75, 1)
             self.__fullscreen_cb['state'] = DISABLED
             self.__res_opt['text_fg'] = (.75, .75, .75, 1)
@@ -148,7 +116,7 @@ class OptionPageGui(PageGui):
             aa_lab, self._aa_cb, aa_next_lab, browser_lab, self._browser_cb]
         idx = eng.lang_mgr.lang_codes.index(conf['lang'])
         self.__change_lang(eng.lang_mgr.languages[idx])
-        PageGui.build(self)
+        PageGui.build_page(self)
 
     def on_browser(self, val):
         txt = _('Please, really consider enabling this option to see our news.'
