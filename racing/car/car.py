@@ -17,8 +17,10 @@ class Car(GameObjectMdt):
     logic_cls = _Logic
     ai_cls = Ai
 
-    def __init__(self, path, pos, hpr, cb):
+    def __init__(self, path, pos, hpr, cb, race, laps):
         eng.log_mgr.log('init car')
+        self.race = race
+        self.laps = laps
         self.fsm = self.fsm_cls(self)
 
         def post_gfx():

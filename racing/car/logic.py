@@ -76,7 +76,7 @@ class _Logic(Logic):
 
         phys.set_forces(eng_frc, brake_frc, self.__steering)
         #replace with a query on the laps
-        if not self.mdt.event.has_just_started:
+        if self.last_time_start:
             d_t = round(globalClock.getFrameTime() - self.last_time_start, 2)
             self.mdt.gui.time_txt.setText(str(d_t))
         self.__update_roll_info()

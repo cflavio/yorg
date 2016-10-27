@@ -1,5 +1,6 @@
 from racing.car.car import Car, PlayerCar, NetworkCar, AiCar
 from racing.track.track import Track
+from racing.race.race import Race
 from racing.game.gameobject.gameobject import Fsm
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import NodePath, TextNode
@@ -119,19 +120,22 @@ class _Fsm(Fsm):
                 func = load_other_cars
                 no_p = car not in player_cars
                 car_class = AiCar if no_p else car_class
-                new_car = car_class('cars/' + car, pos, hpr, func)
+                new_car = car_class('cars/' + car, pos, hpr, func, self.race,
+                                    self.mdt.options['laps'])
                 self.mdt.cars += [new_car]
             path = 'cars/' + car_path
             pos = self.mdt.track.gfx.get_start_pos(grid.index(car_path))[0]
             hpr = self.mdt.track.gfx.get_start_pos(grid.index(car_path))[1]
             func = load_other_cars
             car_cls = AiCar if ai else PlayerCar
-            self.mdt.player_car = car_cls(path, pos, hpr, func)
+            self.mdt.player_car = car_cls(path, pos, hpr, func, self.race,
+                                          self.mdt.options['laps'])
             self.mdt.cars = []
         self.mdt.track = Track(
             track_path, load_car, game.options['split_world'],
             game.options['submodels'])
         self.mdt.track.gfx.attach(self)
+        self.race = Race(self.mdt.track)
 
     def exitLoading(self):
         # class loading

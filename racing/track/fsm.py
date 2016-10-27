@@ -7,3 +7,6 @@ class _Fsm(Fsm):
         Fsm.__init__(self, mdt)
         self.defaultTransitions = {'Countdown': ['Race'],
                                    'Race': ['Results']}
+
+    def enterResults(self, race_ranking):
+        self.mdt.gui.results.show(race_ranking)

@@ -12,7 +12,7 @@ class Results:
         self.result_img = None
         self.track = track
 
-    def show(self):
+    def show(self, race_ranking):
         self.result_img = OnscreenImage(image='assets/images/gui/results.png',
                                         scale=(.8, 1, .8))
         self.result_img.setTransparency(True)
@@ -65,7 +65,7 @@ class Results:
             #TODO: notify and manage into yorg's fsm
             if game.ranking:
                 for car in game.ranking:
-                    game.ranking[car] += game.track.race_ranking[car]
+                    game.ranking[car] += race_ranking[car]
                 game.options['last_ranking'] = game.ranking
                 game.options.store()
                 game.fsm.demand('Ranking')

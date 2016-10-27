@@ -11,7 +11,6 @@ class _Event(Event):
     def __init__(self, mdt):
         self.tsk = None
         Event.__init__(self, mdt)
-        self.has_just_started = True  # do a query
         eng.phys.attach(self)
         label_events = [
             ('forward', 'arrow_up'), ('left', 'arrow_left'), ('reverse', 'z'),
@@ -63,8 +62,7 @@ class _Event(Event):
 
     def on_frame(self):
         input_dct = self._get_input()
-        # use car's fsm
-        if game.track.fsm.getCurrentOrNextState() != 'Race':
+        if self.mdt.race.track.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
             self.reset_car()
         self.mdt.logic.update(input_dct)
@@ -172,30 +170,26 @@ class _PlayerEvent(_Event):
         elif eng.client.is_active:
             eng.client.send([NetMsgs.end_race_player])
         #TODO: compute the ranking
-        # make classes Race, Ranking, Tournament
-        game.track.race_ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
-        game.track.fsm.demand('Results')
-        game.track.gui.results.show()
+        race_ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
+        game.track.fsm.demand('Results', race_ranking)
 
     def __process_goal(self):
-        # retrieve from logic
-        lap_number = int(self.mdt.gui.lap_txt.getText().split('/')[0])
         if self.mdt.gui.time_txt.getText():
             lap_time = float(self.mdt.gui.time_txt.getText())
             self.mdt.logic.lap_times += [lap_time]
-        not_started = not self.has_just_started
+        lap_number = 1 + len(self.mdt.logic.lap_times)
+        not_started = self.mdt.logic.last_time_start
         best_txt = self.mdt.gui.best_txt
         not_text = not best_txt.getText()
         is_best_txt = not_text or float(best_txt.getText()) > lap_time
         if not_started and (not_text or is_best_txt):
             self.mdt.gui.best_txt.setText(self.mdt.gui.time_txt.getText())
-        self.mdt.logic.last_time_start = globalClock.getFrameTime()
-        laps = game.options['laps']  # pass this to car's constructor
-        if not self.has_just_started:
+        laps = self.mdt.laps
+        if self.mdt.logic.last_time_start:
             self.__process_nonstart_goals(lap_number, laps)
-        self.has_just_started = False
-        if int(self.mdt.gui.lap_txt.getText().split('/')[0]) > laps:
+        if lap_number == laps + 1:
             self.__process_end_goal()
+        self.mdt.logic.last_time_start = globalClock.getFrameTime()
 
     def on_collision(self, obj, obj_name):
         _Event.on_collision(self, obj, obj_name)
