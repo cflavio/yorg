@@ -18,7 +18,7 @@ class AbsNetwork(Colleague):
         self.c_mgr = QueuedConnectionManager()
         self.c_reader = QueuedConnectionReader(self.c_mgr, 0)
         self.c_writer = ConnectionWriter(self.c_mgr, 0)
-        eng.event.attach(self, 1)
+        eng.event.attach(self.on_frame, 1)
         self.reader_cb = reader_cb
 
     def send(self, data_lst, receiver=None):
@@ -51,4 +51,4 @@ class AbsNetwork(Colleague):
         return self in [obs[0] for obs in eng.event.observers]
 
     def destroy(self):
-        eng.event.detach(self)
+        eng.event.detach(self.on_frame)

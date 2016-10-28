@@ -134,11 +134,12 @@ class _Fsm(Fsm):
         self.mdt.track = Track(
             track_path, load_car, game.options['split_world'],
             game.options['submodels'])
-        self.mdt.track.gfx.attach(self)
+        self.mdt.track.gfx.attach(self.on_loading)
         self.race = Race(self.mdt.track)
 
     def exitLoading(self):
         # class loading
+        self.mdt.player_car.event.attach(self.race.event.on_wrong_way)
         eng.log_mgr.log('exiting Loading state')
         self.preview.remove_node()
         self.cam_pivot.remove_node()

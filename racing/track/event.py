@@ -9,7 +9,7 @@ class _Event(Event):
         self.accept('p', eng.pause.logic.toggle)
 
     def start(self):
-        eng.event.attach(self)
+        eng.event.attach(self.on_frame)
 
     def on_frame(self):
         cam_pos = eng.base.camera.get_pos()
@@ -19,4 +19,4 @@ class _Event(Event):
 
     def destroy(self):
         Event.destroy(self)
-        eng.event.detach(self)
+        eng.event.detach(self.on_frame)

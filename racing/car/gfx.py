@@ -15,11 +15,7 @@ class _Gfx(Gfx):
         self.callback = callback
         vehicle_node = BulletRigidBodyNode('Vehicle')
         self.nodepath = eng.gfx.world_np.attachNewNode(vehicle_node)
-
         loader.loadModel(path + '/car', callback=self.load_wheels)
-        # it doesn't work
-        #chassis_model = eng.base.loader.loadModel(path + '/car')
-        #self.load_wheels(chassis_model)
 
     def reparent(self):
         self.chassis_np.reparentTo(self.nodepath)

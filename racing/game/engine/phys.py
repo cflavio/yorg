@@ -22,7 +22,7 @@ class EnginePhys(Phys):
         self.world_phys.setDebugNode(self.__debug_np.node())
 
     def start(self):
-        eng.event.attach(self, 2)
+        eng.event.attach(self.on_frame, 2)
 
     def on_frame(self):
         self.world_phys.doPhysics(globalClock.getDt(), 10, 1/180.0)
@@ -31,7 +31,7 @@ class EnginePhys(Phys):
     def stop(self):
         self.world_phys = None
         self.__debug_np.removeNode()
-        eng.event.detach(self)
+        eng.event.detach(self.on_frame)
 
     def __process_contact(self, obj, node, to_clear):
         if node == obj:

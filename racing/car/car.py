@@ -24,7 +24,7 @@ class Car(GameObjectMdt):
         self.fsm = self.fsm_cls(self)
 
         def post_gfx():
-            self.phys = self.phys_cls(self, path)
+            self.phys = self.phys_cls(self, path, self.race.track.gfx.phys_model)
             self.gui = self.gui_cls(self)
             self.logic = self.logic_cls(self)
             self.audio = self.audio_cls(self)

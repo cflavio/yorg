@@ -75,7 +75,6 @@ class _Logic(Logic):
                 self.__steering += steering_sign * steering_dec
 
         phys.set_forces(eng_frc, brake_frc, self.__steering)
-        #replace with a query on the laps
         if self.last_time_start:
             d_t = round(globalClock.getFrameTime() - self.last_time_start, 2)
             self.mdt.gui.time_txt.setText(str(d_t))
@@ -163,13 +162,11 @@ class _PlayerLogic(_Logic):
 
     def update(self, input_dct):
         _Logic.update(self, input_dct)
-        # use a fsm for the car too
-        if game.track.fsm.getCurrentOrNextState() == 'Race':
+        if self.last_time_start:
             self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
         self.__update_wp()
 
     def __update_wp(self):
         if game.track.gfx.waypoints:
             way_str = _('wrong way') if self.direction < -.6 else ''
-            # notify to race
-            game.track.gui.way_txt.setText(way_str)
+            self.notify('on_wrong_way', way_str)

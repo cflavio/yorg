@@ -6,8 +6,10 @@ import yaml
 
 class _Phys(Phys):
 
-    def __init__(self, mdt, path):
+    def __init__(self, mdt, path, track_phys):
         Phys.__init__(self, mdt)
+        self.__finds = {}
+        self.__track_phys = track_phys
         self.__load_phys(path)
         self.__set_collision()
         self.__set_phys_node()
@@ -141,18 +143,15 @@ class _Phys(Phys):
         for wheel in self.vehicle.get_wheels():
             ground_name = self.ground_name(wheel)
             if ground_name:
-                #TODO: pass the phys model or put outside
-                #TODO: bufferize find's result
-                gfx_node = game.track.gfx.phys_model.find('**/' + ground_name)
+                if ground_name not in self.__finds:
+                    self.__finds[ground_name] = self.__track_phys.find('**/' + ground_name)
+                gfx_node = self.__finds[ground_name]
                 try:
                     speeds += [float(gfx_node.get_tag('speed'))]
-                    #TODO: apply different frictions to the wheels
-                    frictions += [float(gfx_node.get_tag('friction'))]
+                    fric = float(gfx_node.get_tag('friction'))
+                    wheel.setFrictionSlip(self.friction_slip * fric)
                 except ValueError:
                     pass
         avg_speed = (sum(speeds) / len(speeds)) if speeds else 1.0
-        avg_friction = (sum(frictions) / len(frictions)) if frictions else 1.0
         #TODO: do curr_speed_factor in place of curr_max_speed
         self.curr_max_speed = self.max_speed * avg_speed
-        fric = self.friction_slip * avg_friction
-        map(lambda whl: whl.setFrictionSlip(fric), self.vehicle.get_wheels())

@@ -83,16 +83,16 @@ class MenuLogic(Logic):
         if self.pages:
             self.pages[-1].gui.hide()
             if len(self.pages) > 1:
-                self.pages[-1].gui.detach(self)
+                self.pages[-1].gui.detach(self.on_back)
         self.pages += [page]
-        page.gui.attach(self)
+        page.gui.attach(self.on_back)
 
     def on_back(self):
         page = self.pages.pop()
-        page.gui.detach(self)
+        page.gui.detach(self.on_back)
         page.destroy()
         self.pages[-1].gui.show()
-        self.pages[-1].gui.attach(self)
+        self.pages[-1].gui.attach(self.on_back)
 
     def destroy(self):
         Logic.destroy(self)

@@ -11,7 +11,7 @@ class _Event(Event):
     def __init__(self, mdt):
         self.tsk = None
         Event.__init__(self, mdt)
-        eng.phys.attach(self)
+        eng.phys.attach(self.on_collision)
         label_events = [
             ('forward', 'arrow_up'), ('left', 'arrow_left'), ('reverse', 'z'),
             ('reverse', 'arrow_down'), ('right', 'arrow_right')]
@@ -19,7 +19,7 @@ class _Event(Event):
         map(lambda (lab, evt): watch(lab, evt), label_events)
 
     def start(self):
-        eng.event.attach(self)
+        eng.event.attach(self.on_frame)
 
     def __process_respawn(self):
         last_pos = self.mdt.logic.last_contact_pos
@@ -78,8 +78,8 @@ class _Event(Event):
 
     def destroy(self):
         Event.destroy(self)
-        eng.phys.detach(self)
-        eng.event.detach(self)
+        eng.phys.detach(self.on_collision)
+        eng.event.detach(self.on_frame)
 
 
 class NetMsgs(object):
