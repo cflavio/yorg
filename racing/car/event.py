@@ -158,7 +158,7 @@ class _PlayerEvent(_Event):
         fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
         back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
         if fwd or back:
-            self.mdt.gui.lap_txt.setText(str(lap_number + 1)+'/'+str(laps))
+            self.mdt.gui.lap_txt.setText(str(min(laps, lap_number))+'/'+str(laps))
             eng.audio.play(self.mdt.audio.lap_sfx)
         else:
             self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))

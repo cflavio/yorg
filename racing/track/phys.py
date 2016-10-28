@@ -26,6 +26,9 @@ class _Phys(Phys):
     def __init__(self, mdt):
         Phys.__init__(self, mdt)
         self.corners = None
+        self.rigid_bodies = []
+        self.ghosts = []
+        self.nodes = []
         self.__load(['Road', 'Offroad'], False, False)
         self.__load(['Wall'], True, False)
         self.__load(['Goal', 'Slow', 'Respawn'], True, True)
@@ -35,12 +38,16 @@ class _Phys(Phys):
         if ghost:
             ncls = BulletGhostNode
             meth = eng.phys.world_phys.attachGhost
+            lst = self.ghosts
         else:
             ncls = BulletRigidBodyNode
             meth = eng.phys.world_phys.attachRigidBody
+            lst = self.rigid_bodies
         nodepath = eng.gfx.world_np.attachNewNode(ncls(geom_name))
+        self.nodes += [nodepath]
         nodepath.node().addShape(shape)
         meth(nodepath.node())
+        lst += [nodepath.node()]
         nodepath.node().notifyCollisions(True)
 
     def __load(self, names, merged, ghost):
@@ -76,7 +83,6 @@ class _Phys(Phys):
             self.corners[0].getY(), self.corners[3].getY()
 
     def destroy(self):
-        #TODO: remove only the nodes added by this class
-        map(lambda chl: chl.remove_node(), eng.gfx.world_np.get_children())
-        #replace with remove_ghost, remove_rigid_body
-        #map(lambda chl: chl.remove_node(), eng.phys.world_phys.get_children())
+        map(lambda chl: chl.remove_node(), self.nodes)
+        map(eng.phys.world_phys.remove_rigid_body, self.rigid_bodies)
+        map(eng.phys.world_phys.remove_ghost, self.ghosts)

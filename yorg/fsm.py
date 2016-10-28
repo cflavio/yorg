@@ -14,7 +14,6 @@ class NetMsgs(object):
 
 
 class _Fsm(Fsm):
-    # make classes tournament, race
 
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
@@ -54,7 +53,7 @@ class _Fsm(Fsm):
             track_path = 'tracks/' + track
             car_path = game.options['last_car']
         conf = game.options
-        conf['last_track'] = track_path[13:]
+        conf['last_track'] = track_path[7:]
         conf['last_car'] = car_path
         conf.store()
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')

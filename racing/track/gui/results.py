@@ -21,8 +21,8 @@ class Results:
         pars = {'scale': .1, 'fg': (.75, .75, .75, 1),
                 'font': eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')}
         self.__res_txts = [OnscreenText(
-            str(game.player_car.logic.lap_times[i-1]) if i else '',
-            pos=(.3, .2 - .2 * i), **pars)
+            str(game.player_car.logic.lap_times[i]),
+            pos=(.3, - .2 * i), **pars)
             for i in range(laps)]
         self.__res_txts += [OnscreenText(_('LAP'), pos=(-.3, .35), **pars)
                             for i in range(4)]
@@ -63,7 +63,7 @@ class Results:
             map(lambda btn: btn.destroy(), self.__buttons)
             self.result_img.destroy()
             #TODO: notify and manage into yorg's fsm
-            if game.ranking:
+            if hasattr(game, 'ranking') and game.ranking:
                 for car in game.ranking:
                     game.ranking[car] += race_ranking[car]
                 game.options['last_ranking'] = game.ranking

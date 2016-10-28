@@ -145,7 +145,7 @@ class _Gui(Gui):
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
             parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
         self.lap_txt = OnscreenText(
-            text='1/3', pos=(-.5, -.38), scale=.065,
+            text='1/' + str(self.mdt.laps), pos=(-.5, -.38), scale=.065,
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
             parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
         self.time_txt = OnscreenText(
