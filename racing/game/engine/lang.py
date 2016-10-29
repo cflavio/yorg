@@ -1,5 +1,5 @@
 from gettext import install, translation
-from ..gameobject.gameobject import Colleague
+from ..gameobject import Colleague
 
 
 class LangMgr(Colleague):

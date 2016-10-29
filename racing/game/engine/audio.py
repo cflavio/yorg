@@ -1,5 +1,5 @@
 from panda3d.core import AudioSound
-from ..gameobject.gameobject import Audio
+from ..gameobject import Audio
 
 
 class EngineAudio(Audio):

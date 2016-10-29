@@ -1,5 +1,5 @@
 from panda3d.bullet import BulletWorld, BulletDebugNode
-from ..gameobject.gameobject import Phys
+from ..gameobject import Phys
 
 
 class EnginePhys(Phys):

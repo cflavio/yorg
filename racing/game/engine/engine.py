@@ -17,7 +17,7 @@ from .event import EngineEvent
 from .audio import EngineAudio
 from .network.server import Server
 from .network.client import Client
-from ..gameobject.gameobject import GameObjectMdt
+from ..gameobject import GameObjectMdt
 
 
 class EngineBase(ShowBase):

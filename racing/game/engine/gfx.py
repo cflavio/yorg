@@ -2,7 +2,7 @@ from panda3d.core import getModelPath, LightRampAttrib, PandaNode, NodePath, \
     AntialiasAttrib
 from direct.particles.ParticleEffect import ParticleEffect
 from direct.filter.CommonFilters import CommonFilters
-from ..gameobject.gameobject import Gfx
+from ..gameobject import Gfx
 import os
 
 

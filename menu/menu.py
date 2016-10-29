@@ -1,4 +1,4 @@
-from racing.game.gameobject.gameobject import GameObjectMdt, Gui
+from racing.game.gameobject import GameObjectMdt, Gui
 from racing.game.engine.gui.menu import MenuArgs, Menu
 from .mainpage import YorgMainPage
 

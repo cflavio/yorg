@@ -1,4 +1,4 @@
-from ..gameobject.gameobject import Logic
+from ..gameobject import Logic
 from .configuration import Configuration
 
 

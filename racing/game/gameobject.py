@@ -1,7 +1,7 @@
 from abc import ABCMeta
 from direct.fsm.FSM import FSM
 from direct.showbase.DirectObject import DirectObject
-from ..observer import Subject
+from .observer import Subject
 
 
 class Colleague(Subject):

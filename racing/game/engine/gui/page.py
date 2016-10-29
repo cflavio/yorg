@@ -1,5 +1,5 @@
 from direct.gui.DirectButton import DirectButton
-from ...gameobject.gameobject import GameObjectMdt, Gui, Event
+from ...gameobject import GameObjectMdt, Gui, Event
 
 
 class PageGui(Gui):

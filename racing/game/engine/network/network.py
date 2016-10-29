@@ -2,7 +2,7 @@ from panda3d.core import QueuedConnectionManager, QueuedConnectionReader, \
     ConnectionWriter, NetDatagram
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
-from ...gameobject.gameobject import Colleague
+from ...gameobject import Colleague
 
 
 class AbsNetwork(Colleague):

@@ -1,6 +1,6 @@
 from panda3d.bullet import BulletVehicle, ZUp, BulletConvexHullShape
 from panda3d.core import TransformState, LVecBase3f, LPoint3f
-from racing.game.gameobject.gameobject import Phys
+from racing.game.gameobject import Phys
 import yaml
 
 

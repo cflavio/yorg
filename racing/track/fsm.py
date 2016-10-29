@@ -1,4 +1,4 @@
-from racing.game.gameobject.gameobject import Fsm
+from racing.game.gameobject import Fsm
 
 
 class _Fsm(Fsm):

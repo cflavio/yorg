@@ -3,7 +3,7 @@ import sys
 from direct.task import Task
 from direct.interval.IntervalGlobal import ivalMgr
 from direct.gui.DirectFrame import DirectFrame
-from ..gameobject.gameobject import Gui, Logic, GameObjectMdt, Colleague
+from ..gameobject import Gui, Logic, GameObjectMdt, Colleague
 
 
 class PauseGui(Gui):

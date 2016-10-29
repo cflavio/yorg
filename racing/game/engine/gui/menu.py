@@ -1,6 +1,6 @@
 from direct.gui.DirectGuiGlobals import FLAT
 from direct.gui.OnscreenImage import OnscreenImage
-from ...gameobject.gameobject import Gui, Logic, GameObjectMdt
+from ...gameobject import Gui, Logic, GameObjectMdt
 
 
 class MenuArgs(object):

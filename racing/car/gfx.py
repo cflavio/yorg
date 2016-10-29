@@ -1,4 +1,4 @@
-from racing.game.gameobject.gameobject import Gfx
+from racing.game.gameobject import Gfx
 from panda3d.bullet import BulletRigidBodyNode
 
 

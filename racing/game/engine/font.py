@@ -1,4 +1,4 @@
-from ..gameobject.gameobject import Colleague
+from ..gameobject import Colleague
 
 
 class FontMgr(Colleague):

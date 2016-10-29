@@ -1,7 +1,7 @@
-from racing.game.gameobject.gameobject import Logic
+from racing.game.gameobject import Logic
 from panda3d.core import Vec3, Vec2, deg2Rad
 import math
-from racing.camera.camera import Camera
+from racing.camera import Camera
 
 
 

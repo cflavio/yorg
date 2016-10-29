@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from racing.game.gameobject.gameobject import GameObjectMdt
+from racing.game.gameobject import GameObjectMdt
 from .logic import _Logic
 
 

@@ -1,6 +1,6 @@
 from panda3d.core import AmbientLight, BitMask32, Spotlight, NodePath
 from direct.actor.Actor import Actor
-from racing.game.gameobject.gameobject import Gfx
+from racing.game.gameobject import Gfx
 
 
 class _Gfx(Gfx):

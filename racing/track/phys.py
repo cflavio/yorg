@@ -1,6 +1,6 @@
 from panda3d.bullet import BulletRigidBodyNode, BulletTriangleMesh, \
     BulletTriangleMeshShape, BulletGhostNode
-from racing.game.gameobject.gameobject import Phys
+from racing.game.gameobject import Phys
 
 
 class MergedBuilder:

@@ -2,7 +2,7 @@ from datetime import datetime
 from platform import system, release
 from panda3d.core import loadPrcFileData
 from direct.directnotify.DirectNotify import DirectNotify
-from ..gameobject.gameobject import Colleague
+from ..gameobject import Colleague
 
 
 class LogMgr(Colleague):

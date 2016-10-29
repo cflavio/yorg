@@ -1,4 +1,4 @@
-from racing.game.gameobject.gameobject import Event
+from racing.game.gameobject import Event
 
 
 class _Event(Event):

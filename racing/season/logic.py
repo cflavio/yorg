@@ -1,4 +1,4 @@
-from racing.game.gameobject.gameobject import Logic
+from racing.game.gameobject import Logic
 from racing.ranking.ranking import Ranking
 from racing.race.race import Race
 

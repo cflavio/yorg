@@ -12,8 +12,7 @@ class SingleplayerPageGui(PageGui):
         menu_args = self.menu.gui.menu_args
         game.ranking = None
         menu_data = [
-            ('Single race',
-             lambda: self.menu.logic.push_page(TrackPage(self.menu))),
+            ('Single race', self.on_single_race),
             ('New tournament', self.on_start),
             ('Continue tournament', game.logic.season.logic.load)]
         self.widgets += [
@@ -25,6 +24,10 @@ class SingleplayerPageGui(PageGui):
             self.widgets[-1]['state'] = DISABLED
             self.widgets[-1].setAlphaScale(.25)
         PageGui.build_page(self)
+
+    def on_single_race(self):
+        game.logic.season.logic.ranking = None
+        self.menu.logic.push_page(TrackPage(self.menu))
 
     def on_start(self):
         game.logic.season.logic.start()

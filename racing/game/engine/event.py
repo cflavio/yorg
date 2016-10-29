@@ -1,5 +1,5 @@
 from sys import exit
-from ..gameobject.gameobject import Event
+from ..gameobject import Event
 
 
 class EngineEvent(Event):

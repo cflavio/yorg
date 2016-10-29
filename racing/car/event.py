@@ -1,6 +1,6 @@
 from itertools import chain
 from direct.showbase.InputStateGlobal import inputState
-from racing.game.gameobject.gameobject import Event
+from racing.game.gameobject import Event
 from panda3d.core import AudioSound, Vec3, Vec2
 from .ai import _Ai
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval

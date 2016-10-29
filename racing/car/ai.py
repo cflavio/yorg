@@ -1,4 +1,4 @@
-from racing.game.gameobject.gameobject import Ai
+from racing.game.gameobject import Ai
 from panda3d.core import Vec3, Vec2, Point3, Mat4
 
 

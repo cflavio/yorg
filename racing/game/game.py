@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from .gameobject.gameobject import Logic, GameObjectMdt
+from .gameobject import Logic, GameObjectMdt
 from .engine.engine import Engine
 import __builtin__
 

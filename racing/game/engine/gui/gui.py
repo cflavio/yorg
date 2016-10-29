@@ -2,7 +2,7 @@ from sys import platform
 from os import environ, system
 from webbrowser import open_new_tab
 from panda3d.core import WindowProperties
-from ...gameobject.gameobject import Gui
+from ...gameobject import Gui
 
 
 class EngineGui(Gui):

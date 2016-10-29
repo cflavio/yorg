@@ -1,6 +1,6 @@
 from panda3d.core import TextNode
 from direct.gui.OnscreenText import OnscreenText
-from racing.game.gameobject.gameobject import Gui
+from racing.game.gameobject import Gui
 from racing.game.engine.gui.imgbtn import ImageButton
 from direct.gui.OnscreenImage import OnscreenImage
 from .countdown import Countdown

@@ -1,5 +1,5 @@
 from abc import ABCMeta
-from racing.game.gameobject.gameobject import GameObjectMdt, Ai
+from racing.game.gameobject import GameObjectMdt, Ai
 from .gfx import _Gfx
 from .phys import _Phys
 from .event import _Event, _PlayerEvent, _NetworkEvent, _AiEvent

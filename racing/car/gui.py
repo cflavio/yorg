@@ -2,7 +2,7 @@ from panda3d.core import TextNode
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
-from racing.game.gameobject.gameobject import Gui
+from racing.game.gameobject import Gui
 
 
 class CarParameter(object):
