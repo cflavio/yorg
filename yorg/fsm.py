@@ -139,6 +139,7 @@ class _Fsm(Fsm):
     def exitLoading(self):
         # class loading
         self.mdt.player_car.event.attach(self.race.event.on_wrong_way)
+        self.mdt.player_car.event.attach(self.race.event.on_end_race)
         eng.log_mgr.log('exiting Loading state')
         self.preview.remove_node()
         self.cam_pivot.remove_node()

@@ -163,15 +163,12 @@ class _PlayerEvent(_Event):
         else:
             self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))
 
-    @staticmethod
-    def __process_end_goal():
+    def __process_end_goal(self):
         if eng.server.is_active:
             eng.server.send([NetMsgs.end_race])
         elif eng.client.is_active:
             eng.client.send([NetMsgs.end_race_player])
-        #TODO: compute the ranking
-        race_ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
-        game.track.fsm.demand('Results', race_ranking)
+        self.notify('on_end_race')
 
     def __process_goal(self):
         if self.mdt.gui.time_txt.getText():
