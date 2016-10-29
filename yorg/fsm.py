@@ -217,33 +217,8 @@ class _Fsm(Fsm):
         eng.phys.stop()
         eng.gfx.clean()
 
-    def __step(self):
-        # class tournament
-        current_track = game.track.gfx.track_path[7:]
-        tracks = ['prototype', 'desert']
-        if tracks.index(current_track) == len(tracks) - 1:
-            game.ranking = None
-            conf = game.options
-            del conf['save']
-            conf.store()
-            self.demand('Menu')
-        else:
-            next_track = tracks[tracks.index(current_track) + 1]
-            curr_car = game.options['save']['car']
-            self.demand('Loading', 'tracks/' + next_track, curr_car)
-
     def enterRanking(self):
-        # class tournament
-        items = game.logic.season.logic.ranking.logic.ranking.items()
-        sorted_ranking = reversed(sorted(items, key=lambda el: el[1]))
-        font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
-        self.ranking_texts = []
-        for i, (name, score) in enumerate(sorted_ranking):
-            txt = OnscreenText(
-                '%s %s' % (name, score), pos=(0, .5 -.2 * i), font=font,
-                fg=(.75, .75, .75, 1), scale=.12)
-            self.ranking_texts += [txt]
-        taskMgr.doMethodLater(10, lambda task: self.__step(), 'step')
+        game.logic.season.logic.ranking.gui.show()
 
     def exitRanking(self):
-        map(lambda txt: txt.destroy(), self.ranking_texts)
+        game.logic.season.logic.ranking.gui.destroy()

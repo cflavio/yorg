@@ -6,6 +6,3 @@ from .logic import _Logic
 class Season(GameObjectMdt):
     __metaclass__ = ABCMeta
     logic_cls = _Logic
-
-    def __init__(self):
-        GameObjectMdt.__init__(self)

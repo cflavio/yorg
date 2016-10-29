@@ -13,3 +13,17 @@ class _Logic(Logic):
 
     def load(self, ranking):
         self.ranking = ranking
+
+    def step(self):
+        current_track = game.track.gfx.track_path[7:]
+        tracks = ['prototype', 'desert']
+        if tracks.index(current_track) == len(tracks) - 1:
+            game.ranking = None
+            conf = game.options
+            del conf['save']
+            conf.store()
+            game.fsm.demand('Menu')
+        else:
+            next_track = tracks[tracks.index(current_track) + 1]
+            curr_car = game.options['save']['car']
+            game.fsm.demand('Loading', 'tracks/' + next_track, curr_car)
