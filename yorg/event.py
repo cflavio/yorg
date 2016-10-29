@@ -13,6 +13,6 @@ class _Event(Event):
         base.accept('escape-up', self.on_end)
 
     def on_end(self):
-        if self.mdt.options['open_browser_at_exit']:
+        if self.mdt.options['settings']['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
         exit()

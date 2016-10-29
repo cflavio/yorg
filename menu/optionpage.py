@@ -13,14 +13,14 @@ class OptionEvent(PageEvent):
     def on_back(self):
         conf = game.options
         lang_idx = self.mdt.gui._lang_opt.selectedIndex
-        conf['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
-        conf['volume'] = self.mdt.gui._vol_slider.getValue()
-        conf['fullscreen'] = self.mdt.gui._fullscreen_cb['indicatorValue']
-        conf['resolution'] = self.mdt.gui._res_opt.get().replace('x', ' ')
-        conf['aa'] = self.mdt.gui._aa_cb['indicatorValue']
+        conf['settings']['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
+        conf['settings']['volume'] = self.mdt.gui._vol_slider.getValue()
+        conf['settings']['fullscreen'] = self.mdt.gui._fullscreen_cb['indicatorValue']
+        conf['settings']['resolution'] = self.mdt.gui._res_opt.get().replace('x', ' ')
+        conf['settings']['aa'] = self.mdt.gui._aa_cb['indicatorValue']
         browser = self.mdt.gui._browser_cb['indicatorValue']
-        conf['open_browser_at_exit'] = browser
-        conf['multithreaded_render'] = game.options['multithreaded_render']
+        conf['settings']['open_browser_at_exit'] = browser
+        conf['development']['multithreaded_render'] = game.options['development']['multithreaded_render']
         conf.store()
 
 
@@ -46,14 +46,14 @@ class OptionPageGui(PageGui):
         PageGui.transl_text(lang_lab, 'Language')
         self._lang_opt = DirectOptionMenu(
             text='', items=eng.lang_mgr.languages, pos=(.2, 1, .5),
-            initialitem=conf['lang'], command=self.__change_lang,
+            initialitem=conf['settings']['lang'], command=self.__change_lang,
             **menu_gui.option_args)
         vol_lab = DirectLabel(
             text='', pos=(-.1, 1, .3), text_align=TextNode.ARight,
             **menu_gui.label_args)
         PageGui.transl_text(vol_lab, 'Volume')
         self._vol_slider = DirectSlider(
-            pos=(.47, 0, .33), scale=.47, value=conf['volume'],
+            pos=(.47, 0, .33), scale=.47, value=conf['settings']['volume'],
             frameColor=menu_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
 
         fullscreen_lab = DirectLabel(
@@ -62,7 +62,7 @@ class OptionPageGui(PageGui):
         PageGui.transl_text(fullscreen_lab, 'Fullscreen')
         self._fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='',
-            indicatorValue=conf['fullscreen'],
+            indicatorValue=conf['settings']['fullscreen'],
             indicator_frameColor=menu_args.btn_color,
             command=eng.gui.toggle_fullscreen, **menu_gui.checkbtn_args)
 
@@ -87,7 +87,7 @@ class OptionPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(aa_next_lab, '(from the next execution)')
         self._aa_cb = DirectCheckButton(
-            pos=(.12, 1, -.27), text='', indicatorValue=conf['aa'],
+            pos=(.12, 1, -.27), text='', indicatorValue=conf['settings']['aa'],
              **menu_gui.checkbtn_args)
 
         browser_lab = DirectLabel(
@@ -96,7 +96,7 @@ class OptionPageGui(PageGui):
         PageGui.transl_text(browser_lab, "See Ya2's news at exit")
         self._browser_cb = DirectCheckButton(
             pos=(.12, 1, -.47), text='',
-            indicatorValue=conf['open_browser_at_exit'],
+            indicatorValue=conf['settings']['open_browser_at_exit'],
             command=self.on_browser, **menu_gui.checkbtn_args)
 
         if eng.logic.is_runtime:
@@ -109,7 +109,7 @@ class OptionPageGui(PageGui):
             lang_lab, self._lang_opt, vol_lab, self._vol_slider,
             fullscreen_lab, self._fullscreen_cb, res_lab, self._res_opt,
             aa_lab, self._aa_cb, aa_next_lab, browser_lab, self._browser_cb]
-        idx = eng.lang_mgr.lang_codes.index(conf['lang'])
+        idx = eng.lang_mgr.lang_codes.index(conf['settings']['lang'])
         self.__change_lang(eng.lang_mgr.languages[idx])
         PageGui.build_page(self)
 

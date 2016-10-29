@@ -13,6 +13,6 @@ class _Logic(Logic):
         self.ranking.logic.reset()
 
     def load(self):
-        self.ranking.logic.load(game.options['last_ranking'])
+        self.ranking.logic.load(game.options['save']['ranking'])
         game.race = Race()
         game.race.logic.start()

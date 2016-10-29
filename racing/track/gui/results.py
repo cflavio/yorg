@@ -63,10 +63,10 @@ class Results:
             map(lambda btn: btn.destroy(), self.__buttons)
             self.result_img.destroy()
             #TODO: notify and manage into yorg's fsm
-            if hasattr(game, 'ranking') and game.ranking:
-                for car in game.ranking:
-                    game.ranking[car] += race_ranking[car]
-                game.options['last_ranking'] = game.ranking
+            if hasattr(game.logic.season.logic, 'ranking'):
+                for car in game.logic.season.logic.ranking.logic.ranking:
+                    game.logic.season.logic.ranking.logic.ranking[car] += race_ranking[car]
+                game.options['save']['ranking'] = game.logic.season.logic.ranking.logic.ranking
                 game.options.store()
                 game.fsm.demand('Ranking')
             else:

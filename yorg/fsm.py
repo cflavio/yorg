@@ -21,7 +21,7 @@ class _Fsm(Fsm):
             'Menu': ['Loading'],
             'Loading': ['Play'],
             'Play': ['Ranking', 'Menu'],
-            'Ranking': ['Play', 'Menu']}
+            'Ranking': ['Play', 'Menu', 'Loading']}
         self.load_txt = None
         self.preview = None
         self.cam_tsk = None
@@ -49,12 +49,14 @@ class _Fsm(Fsm):
         eng.gfx.init()
         if not track_path and not car_path:
             tracks = ['prototype', 'desert']
-            track = tracks[tracks.index(game.options['last_track']) + 1]
+            track = tracks[tracks.index(game.options['save']['track']) + 1]
             track_path = 'tracks/' + track
-            car_path = game.options['last_car']
+            car_path = game.options['save']['car']
         conf = game.options
-        conf['last_track'] = track_path[7:]
-        conf['last_car'] = car_path
+        if 'save' not in conf.dct:
+            conf['save'] = {}
+        conf['save']['track'] = track_path[7:]
+        conf['save']['car'] = car_path
         conf.store()
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.load_txt = OnscreenText(
@@ -100,7 +102,7 @@ class _Fsm(Fsm):
             cars = ['kronos', 'themis', 'diones']
             grid = ['kronos', 'themis', 'diones']
             cars.remove(car_path)
-            ai = game.options['ai']
+            ai = game.options['development']['ai']
 
             def load_other_cars():
                 if not cars:
@@ -120,7 +122,7 @@ class _Fsm(Fsm):
                 no_p = car not in player_cars
                 car_class = AiCar if no_p else car_class
                 new_car = car_class('cars/' + car, pos, hpr, func, self.race,
-                                    self.mdt.options['laps'])
+                                    self.mdt.options['development']['laps'])
                 self.mdt.cars += [new_car]
             path = 'cars/' + car_path
             pos = self.mdt.track.gfx.get_start_pos(grid.index(car_path))[0]
@@ -128,11 +130,11 @@ class _Fsm(Fsm):
             func = load_other_cars
             car_cls = AiCar if ai else PlayerCar
             self.mdt.player_car = car_cls(path, pos, hpr, func, self.race,
-                                          self.mdt.options['laps'])
+                                          self.mdt.options['development']['laps'])
             self.mdt.cars = []
         self.mdt.track = Track(
-            track_path, load_car, game.options['split_world'],
-            game.options['submodels'])
+            track_path, load_car, game.options['development']['split_world'],
+            game.options['development']['submodels'])
         self.mdt.track.gfx.attach(self.on_loading)
         self.race = Race()
         self.race.track = self.mdt.track
@@ -217,24 +219,22 @@ class _Fsm(Fsm):
 
     def __step(self):
         # class tournament
-        current_track = game.track.gfx.track_path[13:]
+        current_track = game.track.gfx.track_path[7:]
         tracks = ['prototype', 'desert']
         if tracks.index(current_track) == len(tracks) - 1:
             game.ranking = None
             conf = game.options
-            del conf['last_car']
-            del conf['last_track']
-            del conf['last_ranking']
+            del conf['save']
             conf.store()
             self.demand('Menu')
         else:
             next_track = tracks[tracks.index(current_track) + 1]
-            curr_car = game.options['last_car']
-            self.demand('Loading', next_track, curr_car)
+            curr_car = game.options['save']['car']
+            self.demand('Loading', 'tracks/' + next_track, curr_car)
 
     def enterRanking(self):
         # class tournament
-        items = game.ranking.items()
+        items = game.logic.season.logic.ranking.logic.ranking.items()
         sorted_ranking = reversed(sorted(items, key=lambda el: el[1]))
         font = eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')
         self.ranking_texts = []

@@ -15,15 +15,29 @@ class Yorg(Game):
 
     def __init__(self):
         default_opt = {
-            'lang': 'en', 'volume': 1, 'fullscreen': 0,
-            'resolution': '1280 720', 'aa': 0,
-            'multithreaded_render': 0, 'open_browser_at_exit': 1,
-            'ai': 0, 'submodels': 1, 'split_world': 1, 'laps': 3, 'fps': 1}
+            'settings': {
+                'lang': 'en',
+                'volume': 1,
+                'fullscreen': 0,
+                'resolution': '1280 720',
+                'aa': 0,
+                'open_browser_at_exit': 1},
+            'development': {
+                'multithreaded_render': 0,
+                'ai': 0,
+                'submodels': 1,
+                'split_world': 1,
+                'laps': 3,
+                'fps': 1,
+                'car': '',
+                'track': ''}}
         self.options = DictFile('options.yml', default_opt)
         conf = Configuration(
-            fps=self.options['fps'], win_title='Yorg',
-            win_size=self.options['resolution'],
-            fullscreen=self.options['fullscreen'],
-            antialiasing=self.options['aa'], lang=self.options['lang'],
-            mt_render=self.options['multithreaded_render'], lang_domain='yorg')
+            fps=self.options['development']['fps'], win_title='Yorg',
+            win_size=self.options['settings']['resolution'],
+            fullscreen=self.options['settings']['fullscreen'],
+            antialiasing=self.options['settings']['aa'],
+            lang=self.options['settings']['lang'],
+            mt_render=self.options['development']['multithreaded_render'],
+            lang_domain='yorg')
         Game.__init__(self, conf)
