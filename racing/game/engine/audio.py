@@ -8,4 +8,3 @@ class EngineAudio(Audio):
     def play(sound):
         if sound.status() != AudioSound.PLAYING:
             sound.play()
-

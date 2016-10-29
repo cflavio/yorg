@@ -1,5 +1,5 @@
 import time
-from sys import exit
+import sys
 from racing.game.gameobject import Event
 
 
@@ -15,4 +15,4 @@ class _Event(Event):
     def on_end(self):
         if self.mdt.options['settings']['open_browser_at_exit']:
             eng.open_browser('http://www.ya2.it')
-        exit()
+        sys.exit()

@@ -5,6 +5,7 @@ class _Logic(Logic):
 
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
+        self.ranking = {}
         self.reset()
 
     def reset(self):

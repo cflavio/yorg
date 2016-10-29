@@ -14,7 +14,6 @@ class CarPageGui(PageGui):
 
     def build_page(self):
         menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         self.track_path = 'tracks/' + self.menu.track
         # into server
         if eng.server.is_active:

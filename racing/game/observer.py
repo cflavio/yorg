@@ -13,8 +13,8 @@ class Subject(object):
         map(self.observers.remove, observers)
 
     def notify(self, meth, *args, **kwargs):
-        meth_observers = [obs for obs in self.observers if obs[0].__name__ == meth]
-        sorted_observers = sorted(meth_observers, key=lambda obs: obs[1])
+        meths = [obs for obs in self.observers if obs[0].__name__ == meth]
+        sorted_observers = sorted(meths, key=lambda obs: obs[1])
         map(lambda obs: obs[0](*args, **kwargs), sorted_observers)
 
     def destroy(self):

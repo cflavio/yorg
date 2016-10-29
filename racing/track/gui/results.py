@@ -4,7 +4,7 @@ from direct.gui.OnscreenText import OnscreenText
 from racing.game.engine.gui.imgbtn import ImageButton
 
 
-class Results:
+class Results(object):
 
     def __init__(self, track):
         self.__res_txts = None
@@ -63,10 +63,11 @@ class Results:
             map(lambda btn: btn.destroy(), self.__buttons)
             self.result_img.destroy()
             #TODO: notify and manage into yorg's fsm
+            ranking = game.logic.season.logic.ranking
             if game.logic.season.logic.ranking:
-                for car in game.logic.season.logic.ranking.logic.ranking:
-                    game.logic.season.logic.ranking.logic.ranking[car] += race_ranking[car]
-                game.options['save']['ranking'] = game.logic.season.logic.ranking.logic.ranking
+                for car in ranking.logic.ranking:
+                    ranking.logic.ranking[car] += race_ranking[car]
+                game.options['save']['ranking'] = ranking.logic.ranking
                 game.options.store()
                 game.fsm.demand('Ranking')
             else:

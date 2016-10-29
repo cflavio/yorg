@@ -65,7 +65,7 @@ class _Gfx(Gfx):
             self.waypoints[w_p] = lst_wp
 
         models = ['Road', 'Offroad', 'Wall', 'Respawn', 'Slow', 'Goal']
-        map(self.hide_models, ['**/%s*' % model for model in models])
+        map(self.hide_models, ['**/%s*' % mod for mod in models])
         (self.__load_empties if self.submodels else self.end_loading)()
 
     def get_start_pos(self, i):
@@ -110,7 +110,7 @@ class _Gfx(Gfx):
         #TODO: use self.mdt.phys.lrtb
         center_x, center_y = (left + right) / 2, (top + bottom) / 2
         pos_x, pos_y = model.get_pos()[0], model.get_pos()[1]
-        if not game.options['split_world']:
+        if not game.options['development']['split_world']:
             parent = self.__flat_roots[model_name][0]
         elif pos_x < center_x and pos_y < center_y:
             parent = self.__flat_roots[model_name][0]

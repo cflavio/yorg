@@ -1,7 +1,7 @@
 from panda3d.core import Vec3
 
 
-class Camera:
+class Camera(object):
 
     cam_speed = 50
     cam_dist_min = 12

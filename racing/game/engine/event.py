@@ -1,5 +1,5 @@
-from sys import exit
 from ..gameobject import Event
+import sys
 
 
 class EngineEvent(Event):
@@ -17,7 +17,7 @@ class EngineEvent(Event):
     def __on_close(self):
         eng.base.closeWindow(eng.base.win)
         self.on_close_cb()
-        exit()
+        sys.exit()
 
     def __on_frame(self, task):
         self.notify('on_frame')

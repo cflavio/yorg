@@ -6,7 +6,6 @@ class CreditPageGui(PageGui):
 
     def build_page(self):
         menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         txt = OnscreenText(text='', pos=(0, .4), **menu_gui.text_args)
         self.widgets += [txt]
         flavio = _('Code')+': Flavio Calva'

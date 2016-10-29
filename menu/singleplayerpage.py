@@ -9,7 +9,6 @@ class SingleplayerPageGui(PageGui):
 
     def build_page(self):
         menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         game.ranking = None
         menu_data = [
             ('Single race', self.on_single_race),

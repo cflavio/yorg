@@ -2,7 +2,7 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 
 
-class Countdown:
+class Countdown(object):
 
     def __init__(self, mdt):
         self.mdt = mdt

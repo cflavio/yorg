@@ -22,7 +22,6 @@ class YorgMainPageGui(MainPageGui):
             ('Quit', _('Quit'),
              lambda: messenger.send('window-closed'))]
         menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         self.widgets += [
             DirectButton(text='', pos=(0, 1, .4-i*.28), command=menu[2],
                          **menu_gui.btn_args)

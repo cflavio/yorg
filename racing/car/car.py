@@ -24,7 +24,8 @@ class Car(GameObjectMdt):
         self.fsm = self.fsm_cls(self)
 
         def post_gfx():
-            self.phys = self.phys_cls(self, path, self.race.track.gfx.phys_model)
+            pmod = self.race.track.gfx.phys_model
+            self.phys = self.phys_cls(self, path, pmod)
             self.gui = self.gui_cls(self)
             self.logic = self.logic_cls(self)
             self.audio = self.audio_cls(self)
@@ -46,6 +47,7 @@ class PlayerCar(Car):
 
 class NetworkCar(Car):
     event_cls = _NetworkEvent
+
 
 class AiCar(Car):
     ai_cls = _Ai

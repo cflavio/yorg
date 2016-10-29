@@ -8,7 +8,6 @@ class TrackPageGui(PageGui):
 
     def build_page(self):
         menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
 
         def on_track(track):
             self.menu.track = track

@@ -10,6 +10,7 @@ class PauseGui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
+        self.pause_frame = None
 
     def toggle(self):
         if not self.mdt.logic.is_paused:

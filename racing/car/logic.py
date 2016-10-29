@@ -4,8 +4,6 @@ import math
 from racing.camera import Camera
 
 
-
-
 class _Logic(Logic):
 
     react_time = .1
@@ -24,6 +22,7 @@ class _Logic(Logic):
     def update(self, input_dct):
         eng_frc = brake_frc = 0
         d_t = globalClock.getDt()
+        f_t = globalClock.getFrameTime()
         phys = self.mdt.phys
         steering_inc = d_t * phys.steering_inc
         steering_dec = d_t * phys.steering_dec
@@ -51,8 +50,8 @@ class _Logic(Logic):
 
         if input_dct['left']:
             if self.start_left is None:
-                self.start_left = globalClock.getFrameTime()
-            mul = min(1, (globalClock.getFrameTime() - self.start_left) / self.react_time)
+                self.start_left = f_t
+            mul = min(1, (f_t - self.start_left) / self.react_time)
             self.__steering += steering_inc * mul
             self.__steering = min(self.__steering, steering_clamp)
         else:
@@ -61,7 +60,7 @@ class _Logic(Logic):
         if input_dct['right']:
             if self.start_right is None:
                 self.start_right = globalClock.getFrameTime()
-            mul = min(1, (globalClock.getFrameTime() - self.start_right) / self.react_time)
+            mul = min(1, (f_t - self.start_right) / self.react_time)
             self.__steering -= steering_inc * mul
             self.__steering = max(self.__steering, -steering_clamp)
         else:
@@ -76,7 +75,7 @@ class _Logic(Logic):
 
         phys.set_forces(eng_frc, brake_frc, self.__steering)
         if self.last_time_start:
-            d_t = round(globalClock.getFrameTime() - self.last_time_start, 2)
+            d_t = round(f_t - self.last_time_start, 2)
             self.mdt.gui.time_txt.setText(str(d_t))
         self.__update_roll_info()
 

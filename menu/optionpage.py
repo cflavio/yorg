@@ -1,5 +1,5 @@
 from direct.gui.DirectCheckButton import DirectCheckButton
-from direct.gui.DirectGuiGlobals import FLAT, DISABLED
+from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
@@ -11,17 +11,18 @@ from racing.game.engine.gui.page import Page, PageEvent, PageGui
 class OptionEvent(PageEvent):
 
     def on_back(self):
-        conf = game.options
+        settings = game.options['settings']
+        dev = game.options['development']
         lang_idx = self.mdt.gui._lang_opt.selectedIndex
-        conf['settings']['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
-        conf['settings']['volume'] = self.mdt.gui._vol_slider.getValue()
-        conf['settings']['fullscreen'] = self.mdt.gui._fullscreen_cb['indicatorValue']
-        conf['settings']['resolution'] = self.mdt.gui._res_opt.get().replace('x', ' ')
-        conf['settings']['aa'] = self.mdt.gui._aa_cb['indicatorValue']
+        settings['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
+        settings['volume'] = self.mdt.gui._vol_slider.getValue()
+        settings['fullscreen'] = self.mdt.gui._fullscreen_cb['indicatorValue']
+        settings['resolution'] = self.mdt.gui._res_opt.get().replace('x', ' ')
+        settings['aa'] = self.mdt.gui._aa_cb['indicatorValue']
         browser = self.mdt.gui._browser_cb['indicatorValue']
-        conf['settings']['open_browser_at_exit'] = browser
-        conf['development']['multithreaded_render'] = game.options['development']['multithreaded_render']
-        conf.store()
+        settings['open_browser_at_exit'] = browser
+        dev['multithreaded_render'] = dev['multithreaded_render']
+        game.options.store()
 
 
 class OptionPageGui(PageGui):
@@ -88,11 +89,11 @@ class OptionPageGui(PageGui):
         PageGui.transl_text(aa_next_lab, '(from the next execution)')
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', indicatorValue=conf['settings']['aa'],
-             **menu_gui.checkbtn_args)
+            **menu_gui.checkbtn_args)
 
         browser_lab = DirectLabel(
             text='', pos=(-.1, 1, -.5), text_align=TextNode.ARight,
-             **menu_gui.label_args)
+            **menu_gui.label_args)
         PageGui.transl_text(browser_lab, "See Ya2's news at exit")
         self._browser_cb = DirectCheckButton(
             pos=(.12, 1, -.47), text='',

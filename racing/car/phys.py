@@ -8,6 +8,9 @@ class _Phys(Phys):
 
     def __init__(self, mdt, path, track_phys):
         Phys.__init__(self, mdt)
+        self.pnode = None
+        self.curr_max_speed = None
+        self.vehicle = None
         self.__finds = {}
         self.__track_phys = track_phys
         self.__load_phys(path)
@@ -139,12 +142,12 @@ class _Phys(Phys):
 
     def update_terrain(self):
         speeds = []
-        frictions = []
         for wheel in self.vehicle.get_wheels():
             ground_name = self.ground_name(wheel)
             if ground_name:
                 if ground_name not in self.__finds:
-                    self.__finds[ground_name] = self.__track_phys.find('**/' + ground_name)
+                    ground = self.__track_phys.find('**/' + ground_name)
+                    self.__finds[ground_name] = ground
                 gfx_node = self.__finds[ground_name]
                 try:
                     speeds += [float(gfx_node.get_tag('speed'))]

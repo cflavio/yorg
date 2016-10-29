@@ -1,7 +1,7 @@
 from itertools import chain
 from direct.showbase.InputStateGlobal import inputState
 from racing.game.gameobject import Event
-from panda3d.core import AudioSound, Vec3, Vec2
+from panda3d.core import Vec3, Vec2
 from .ai import _Ai
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
 
@@ -158,7 +158,8 @@ class _PlayerEvent(_Event):
         fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
         back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
         if fwd or back:
-            self.mdt.gui.lap_txt.setText(str(min(laps, lap_number))+'/'+str(laps))
+            curr_lap = min(laps, lap_number)
+            self.mdt.gui.lap_txt.setText(str(curr_lap)+'/'+str(laps))
             eng.audio.play(self.mdt.audio.lap_sfx)
         else:
             self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))

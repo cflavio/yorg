@@ -1,7 +1,7 @@
 from direct.gui.OnscreenImage import OnscreenImage
 
 
-class Minimap:
+class Minimap(object):
 
     def __init__(self, track, lrtb):
         self.lrtb = lrtb

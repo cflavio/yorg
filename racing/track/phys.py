@@ -3,9 +3,10 @@ from panda3d.bullet import BulletRigidBodyNode, BulletTriangleMesh, \
 from racing.game.gameobject import Phys
 
 
-class MergedBuilder:
+class MergedBuilder(object):
 
-    def add_geoms(self, geoms, mesh, phys_model, geom_name):
+    @staticmethod
+    def add_geoms(geoms, mesh, phys_model, geom_name):
         for geom in geoms:
             transf = geom.getTransform(phys_model)
             for _geom in [g.decompose() for g in geom.node().getGeoms()]:
@@ -13,9 +14,10 @@ class MergedBuilder:
         return geom_name
 
 
-class UnmergedBuilder:
+class UnmergedBuilder(object):
 
-    def add_geoms(self, geoms, mesh, phys_model, geom_name):
+    @staticmethod
+    def add_geoms(geoms, mesh, phys_model, geom_name):
         for _geom in [g.decompose() for g in geoms.node().getGeoms()]:
             mesh.addGeom(_geom, geoms.getTransform(phys_model))
         return geoms.get_name()
@@ -34,7 +36,7 @@ class _Phys(Phys):
         self.__load(['Goal', 'Slow', 'Respawn'], True, True)
         self.set_corners()
 
-    def __build(self, geom, shape, geom_name, ghost):
+    def __build(self, shape, geom_name, ghost):
         if ghost:
             ncls = BulletGhostNode
             meth = eng.phys.world_phys.attachGhost
@@ -59,9 +61,10 @@ class _Phys(Phys):
 
     def __build_mesh(self, geombuilder, geoms, geom_name, ghost):
         mesh = BulletTriangleMesh()
-        name = geombuilder.add_geoms(geoms, mesh, self.mdt.gfx.phys_model, geom_name)
+        pmod = self.mdt.gfx.phys_model
+        name = geombuilder.add_geoms(geoms, mesh, pmod, geom_name)
         shape = BulletTriangleMeshShape(mesh, dynamic=False)
-        self.__build(geoms, shape, name, ghost)
+        self.__build(shape, name, ghost)
 
     def __process_meshes(self, geoms, geom_name, merged, ghost):
         geombuilder = (MergedBuilder if merged else UnmergedBuilder)()
@@ -74,7 +77,8 @@ class _Phys(Phys):
     def set_corners(self):
         if not self.corners:
             corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
-            self.corners = [self.mdt.gfx.phys_model.find('**/Minimap' + crn) for crn in corners]
+            pmod = self.mdt.gfx.phys_model
+            self.corners = [pmod.find('**/Minimap' + crn) for crn in corners]
         return self.corners
 
     @property

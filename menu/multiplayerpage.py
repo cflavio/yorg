@@ -8,7 +8,6 @@ class MultiplayerPageGui(PageGui):
 
     def build_page(self):
         menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
         menu_data = [
             ('Server',
              lambda: self.menu.logic.push_page(ServerPage(self.menu))),

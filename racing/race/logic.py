@@ -6,5 +6,6 @@ class _Logic(Logic):
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
 
-    def start(self):
+    @staticmethod
+    def start():
         game.fsm.demand('Loading')

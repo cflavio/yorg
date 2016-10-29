@@ -25,9 +25,11 @@
 #TODO: #gui graphics buttons in the menu
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai obstacle avoidance
-#TODO: #gameplay modifying car setting between tracks: engine (speed), tires (friction), suspension (roll)
+#TODO: #gameplay modifying car setting between tracks: engine (speed), tires
+# (friction), suspension (roll)
 #TODO: #gameplay driver selection
-#TODO: #engine hardware instancing or save flattened files on bam files (caching)
+#TODO: #engine hardware instancing or save flattened files on bam files
+# (caching)
 #TODO: #engine multi-threading physics loading
 #TODO: #gameplay weapons
 #TODO: #gameplay damages
@@ -39,11 +41,13 @@
 #TODO: #shaders GLSL shaders
 #TODO: #shaders particle effects and texturing for skid marks
 #TODO: #shaders day/night cycle
-#TODO: #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
+#TODO: #shaders shadows
+# https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 #TODO: #shaders water
 #TODO: #project make scons for racing and game
 #TODO: #project make uml diagrams with pyreverse into devinfo
 #TODO: #project git submodules racing/, racing/game
 #TODO: #project unit tests
-#TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
+#TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev
+# option
 #TODO: #mmog django webapp for scores

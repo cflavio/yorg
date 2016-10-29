@@ -32,6 +32,7 @@ class _Fsm(Fsm):
         self.ready_clients = None
         self.curr_load_txt = None
         self.__menu = None
+        self.race = None
 
     def enterMenu(self):
         eng.log_mgr.log('entering Menu state')
@@ -97,21 +98,21 @@ class _Fsm(Fsm):
         # class loading
         eng.phys.init()
         player_cars = player_cars[1::2]
+        dev = self.mdt.options['development']
 
         def load_car():
             cars = ['kronos', 'themis', 'diones']
             grid = ['kronos', 'themis', 'diones']
             cars.remove(car_path)
-            ai = game.options['development']['ai']
+            ai = dev['ai']
 
             def load_other_cars():
                 if not cars:
-                    self.mdt.fsm.demand('Play', track_path, car_path)
+                    self.mdt.fsm.demand('Play')
                     return
                 car = cars[0]
                 cars.remove(car)
                 car_class = Car
-                ai = True
                 if eng.server.is_active:
                     car_class = NetworkCar if car in player_cars else Car
                 if eng.client.is_active:
@@ -130,11 +131,10 @@ class _Fsm(Fsm):
             func = load_other_cars
             car_cls = AiCar if ai else PlayerCar
             self.mdt.player_car = car_cls(path, pos, hpr, func, self.race,
-                                          self.mdt.options['development']['laps'])
+                                          dev['laps'])
             self.mdt.cars = []
         self.mdt.track = Track(
-            track_path, load_car, game.options['development']['split_world'],
-            game.options['development']['submodels'])
+            track_path, load_car, dev['split_world'], dev['submodels'])
         self.mdt.track.gfx.attach(self.on_loading)
         self.race = Race()
         self.race.track = self.mdt.track
@@ -151,7 +151,7 @@ class _Fsm(Fsm):
         taskMgr.remove(self.cam_tsk)
         eng.base.camera.set_pos(0, 0, 0)
 
-    def enterPlay(self, track_path, car_path):
+    def enterPlay(self):
         # class race
         eng.log_mgr.log('entering Play state')
         self.mdt.track.gfx.model.reparentTo(render)
