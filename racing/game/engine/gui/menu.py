@@ -67,6 +67,10 @@ class MenuGui(Gui):
             'frameColor': self.menu_args.btn_color,
             'rolloverSound': self.rollover,
             'clickSound': self.click}
+        self.text_args = {
+            'scale': self.menu_args.text_scale,
+            'fg': self.menu_args.text_fg,
+            'font': self.font}
 
     def destroy(self):
         Gui.destroy(self)

@@ -134,7 +134,8 @@ class _Fsm(Fsm):
             track_path, load_car, game.options['split_world'],
             game.options['submodels'])
         self.mdt.track.gfx.attach(self.on_loading)
-        self.race = Race(self.mdt.track)
+        self.race = Race()
+        self.race.track = self.mdt.track
 
     def exitLoading(self):
         # class loading

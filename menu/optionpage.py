@@ -11,9 +11,6 @@ from racing.game.engine.gui.page import Page, PageEvent, PageGui
 class OptionEvent(PageEvent):
 
     def on_back(self):
-        # are these needed?
-        car = game.options['car'] if 'car' in game.options.dct else ''
-        track = game.options['track'] if 'track' in game.options.dct else ''
         conf = game.options
         lang_idx = self.mdt.gui._lang_opt.selectedIndex
         conf['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
@@ -24,8 +21,6 @@ class OptionEvent(PageEvent):
         browser = self.mdt.gui._browser_cb['indicatorValue']
         conf['open_browser_at_exit'] = browser
         conf['multithreaded_render'] = game.options['multithreaded_render']
-        conf['car'] = car
-        conf['track'] = track
         conf.store()
 
 

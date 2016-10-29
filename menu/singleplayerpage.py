@@ -14,8 +14,8 @@ class SingleplayerPageGui(PageGui):
         menu_data = [
             ('Single race',
              lambda: self.menu.logic.push_page(TrackPage(self.menu))),
-            ('New tournament', self.on_tournament),
-            ('Continue tournament', self.on_continue)]
+            ('New tournament', self.on_start),
+            ('Continue tournament', game.logic.season.logic.load)]
         self.widgets += [
             DirectButton(
                 text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
@@ -26,15 +26,8 @@ class SingleplayerPageGui(PageGui):
             self.widgets[-1].setAlphaScale(.25)
         PageGui.build_page(self)
 
-    @staticmethod
-    def on_continue():
-        # into tournament
-        game.ranking = game.options['last_ranking']
-        game.fsm.demand('Loading')
-
-    def on_tournament(self):
-        # into tournament
-        game.ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
+    def on_start(self):
+        game.logic.season.logic.start()
         self.menu.track = 'prototype'
         self.menu.logic.push_page(CarPage(self.menu))
 

@@ -66,7 +66,7 @@ class _Gfx(Gfx):
 
         models = ['Road', 'Offroad', 'Wall', 'Respawn', 'Slow', 'Goal']
         map(self.hide_models, ['**/%s*' % model for model in models])
-        self.__load_empties()
+        (self.__load_empties if self.submodels else self.end_loading)()
 
     def get_start_pos(self, i):
         start_pos = (0, 0, 0)
