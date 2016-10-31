@@ -109,11 +109,20 @@ class Menu(GameObjectMdt):
     logic_cls = MenuLogic
 
     def __init__(self, menu_args):
-        self.fsm = self.fsm_cls(self)
-        self.gfx = self.gfx_cls(self)
-        self.phys = self.phys_cls(self)
+        self.menu_args = menu_args
+        GameObjectMdt.__init__(self)
+
+    @property
+    def init_lst(self):
+        return [
+            [(self.build_fsm, 'Fsm')],
+            [(self.build_gfx, 'Gfx')],
+            [(self.build_phys, 'Phys')],
+            [(self.build_gui, 'MenuGui', [self.menu_args])],
+            [(self.build_logic, 'MenuLogic')],
+            [(self.build_audio, 'Audio')],
+            [(self.build_ai, 'Ai')],
+            [(self.build_event, 'Event')]]
+
+    def build_gui(self, menu_args):
         self.gui = self.gui_cls(self, menu_args)
-        self.logic = self.logic_cls(self)
-        self.audio = self.audio_cls(self)
-        self.ai = self.ai_cls(self)
-        self.event = self.event_cls(self)

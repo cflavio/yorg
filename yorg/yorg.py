@@ -41,3 +41,15 @@ class Yorg(Game):
             mt_render=self.options['development']['multithreaded_render'],
             lang_domain='yorg')
         Game.__init__(self, conf)
+
+    @property
+    def init_lst(self):
+        return [
+            [(self.build_fsm, '_Fsm')],
+            [(self.build_gfx, 'Gfx')],
+            [(self.build_phys, 'Phys')],
+            [(self.build_gui, 'Gui')],
+            [(self.build_logic, '_Logic')],
+            [(self.build_audio, '_Audio')],
+            [(self.build_ai, 'Ai')],
+            [(self.build_event, '_Event')]]

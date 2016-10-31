@@ -5,7 +5,7 @@ from racing.game.gameobject import Gfx
 
 class _Gfx(Gfx):
 
-    def __init__(self, mdt, track_path, callback, split_world, submodels):
+    def __init__(self, mdt, track_path, split_world, submodels):
         self.phys_model = None
         self.waypoints = None
         self.ambient_np = None
@@ -14,11 +14,12 @@ class _Gfx(Gfx):
         self.model = None
         self.split_world = split_world
         self.submodels = submodels
-        Gfx.__init__(self, mdt)
         self.track_path = track_path
-        self.callback = callback
         self.__actors = []
         self.__flat_roots = {}
+        Gfx.__init__(self, mdt)
+
+    def async_build(self):
         self.__set_model()
         self.__set_light()
 
@@ -179,7 +180,8 @@ class _Gfx(Gfx):
 
     def end_loading(self):
         self.model.prepareScene(eng.base.win.getGsg())
-        taskMgr.doMethodLater(.01, lambda task: self.callback(), 'callback')
+        #taskMgr.doMethodLater(.01, lambda task: self.callback(), 'callback')
+        Gfx.async_build(self)
 
     def __set_light(self):
         eng.base.render.clearLight()

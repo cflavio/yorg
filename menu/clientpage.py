@@ -61,3 +61,15 @@ class ClientPageGui(PageGui):
 class ClientPage(Page):
     gui_cls = ClientPageGui
     event_cls = ClientEvent
+
+    @property
+    def init_lst(self):
+        return [
+            [(self.build_fsm, 'Fsm')],
+            [(self.build_gfx, 'Gfx')],
+            [(self.build_phys, 'Phys')],
+            [(self.build_gui, 'ClientPageGui', [self.menu])],
+            [(self.build_logic, 'Logic')],
+            [(self.build_audio, 'Audio')],
+            [(self.build_ai, 'Ai')],
+            [(self.build_event, 'ClientEvent')]]

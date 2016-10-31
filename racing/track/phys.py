@@ -26,11 +26,13 @@ class UnmergedBuilder(object):
 class _Phys(Phys):
 
     def __init__(self, mdt):
-        Phys.__init__(self, mdt)
         self.corners = None
         self.rigid_bodies = []
         self.ghosts = []
         self.nodes = []
+        Phys.__init__(self, mdt)
+
+    def sync_build(self):
         self.__load(['Road', 'Offroad'], False, False)
         self.__load(['Wall'], True, False)
         self.__load(['Goal', 'Slow', 'Respawn'], True, True)
