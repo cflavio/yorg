@@ -1,7 +1,7 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from racing.game.engine.gui.page import Page, PageGui, PageEvent
-from .trackpage import TrackPage
+from .trackpage import TrackPageServer
 import socket
 from json import load
 from urllib2 import urlopen
@@ -19,7 +19,7 @@ class ServerEvent(PageEvent):
 
     def process_connection(self, client_address):
         eng.log_mgr.log('connection from ' + client_address)
-        self.conn_txt.setText(_('connection from ') + client_address)
+        self.mdt.gui.conn_txt.setText(_('connection from ') + client_address)
 
 
 class ServerPageGui(PageGui):
@@ -45,9 +45,10 @@ class ServerPageGui(PageGui):
         self.conn_txt = OnscreenText(
             scale=.12, pos=(0, .2), font=menu_gui.font, fg=menu_args.text_fg)
         self.widgets += [self.conn_txt]
+        push = self.menu.logic.push_page
         btn = DirectButton(
             text=_('Start'), pos=(0, 1, -.5),
-            command=lambda: self.menu.logic.push_page(TrackPage(self.menu)),
+            command=lambda: push(TrackPageServer(self.menu)),
             **menu_gui.btn_args)
         self.widgets += [btn]
         PageGui.build_page(self)

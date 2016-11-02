@@ -35,7 +35,8 @@ class Track(GameObjectMdt):
         #    eng.log_mgr.log('end init track')
         #self.gfx = self.gfx_cls(self, track_path, post_gfx, split_world,
         #                        submodels)
-
+        self.gfx = None
+        self.gui = None
         GameObjectMdt.__init__(self, cb)
 
     @property

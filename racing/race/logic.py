@@ -2,12 +2,27 @@ from panda3d.core import NodePath, TextNode
 from direct.gui.OnscreenText import OnscreenText
 from racing.game.gameobject import Logic
 from racing.track.track import Track
-from racing.car.car import Car, PlayerCar, NetworkCar, AiCar
+from racing.car.car import Car, PlayerCar, PlayerCarServer, PlayerCarClient, \
+    NetworkCar, AiCar
+
+
+class NetMsgs(object):
+
+    client_ready = 0
+    start_race = 1
 
 
 class _Logic(Logic):
 
     def __init__(self, mdt):
+        self.load_txt = None
+        self.cam_tsk = None
+        self.cam_node = None
+        self.send_tsk = None
+        self.cam_pivot = None
+        self.ready_clients = None
+        self.preview = None
+        self.curr_load_txt = None
         Logic.__init__(self, mdt)
 
     @staticmethod
@@ -80,7 +95,7 @@ class _Logic(Logic):
                 cars.remove(car)
                 car_class = Car
                 if eng.server.is_active:
-                    car_class = NetworkCar if car in player_cars else Car
+                    car_class = NetworkCar  # if car in player_cars else Car
                 if eng.client.is_active:
                     car_class = NetworkCar
                 pos = game.track.gfx.get_start_pos(grid.index(car))[0]
@@ -95,9 +110,16 @@ class _Logic(Logic):
             pos = game.track.gfx.get_start_pos(grid.index(car_path))[0]
             hpr = game.track.gfx.get_start_pos(grid.index(car_path))[1]
             func = load_other_cars
-            car_cls = AiCar if ai else PlayerCar
+            if ai:
+                car_cls = AiCar
+            else:
+                car_cls = PlayerCar
+                if eng.server.is_active:
+                    car_cls = PlayerCarServer
+                if eng.client.is_active:
+                    car_cls = PlayerCarClient
             game.player_car = car_cls(path, pos, hpr, func, self.mdt,
-                                          dev['laps'])
+                                      dev['laps'])
             game.cars = []
         game.track = Track(
             track_path, load_car, dev['split_world'], dev['submodels'])
@@ -150,7 +172,8 @@ class _Logic(Logic):
             taskMgr.remove(self.send_tsk)
             self.start_play()
 
-    def start_play(self):
+    @staticmethod
+    def start_play():
         eng.phys.start()
         game.track.event.start()
         game.player_car.event.eval_register()
@@ -159,7 +182,8 @@ class _Logic(Logic):
         map(lambda car: car.event.reset_car(), cars)
         map(lambda car: car.event.start(), cars)
 
-    def exit_play(self):
+    @staticmethod
+    def exit_play():
         if eng.server.is_active:
             eng.server.destroy()
             eng.server = None

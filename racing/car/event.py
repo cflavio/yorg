@@ -94,60 +94,15 @@ class _PlayerEvent(_Event):
     def __init__(self, mdt):
         _Event.__init__(self, mdt)
         self.accept('f11', self.mdt.gui.toggle)
-        if eng.server.is_active:
-            self.server_info = {}
         self.last_sent = globalClock.getFrameTime()
-
-    def eval_register(self):
-        # make _PlayerEventServer, _PlayerEventClient
-        if eng.server.is_active:
-            eng.server.register_cb(self.process_srv)
-        elif eng.client.is_active:
-            eng.client.register_cb(self.process_client)
-
-    def __on_frame_server(self):
-        pos = self.mdt.gfx.nodepath.getPos()
-        hpr = self.mdt.gfx.nodepath.getHpr()
-        velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
-        self.server_info['server'] = (pos, hpr, velocity)
-        for car in [car for car in game.cars if car.ai_cls == _Ai]:
-            pos = car.gfx.nodepath.getPos()
-            hpr = car.gfx.nodepath.getHpr()
-            velocity = car.phys.vehicle.getChassis().getLinearVelocity()
-            self.server_info[car] = (pos, hpr, velocity)
-        if globalClock.getFrameTime() - self.last_sent > .2:
-            eng.server.send(self.__prepare_game_packet())
-            self.last_sent = globalClock.getFrameTime()
-
-    def __on_frame_client(self):
-        pos = self.mdt.gfx.nodepath.getPos()
-        hpr = self.mdt.gfx.nodepath.getHpr()
-        velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
-        packet = list(chain([NetMsgs.player_info], pos, hpr, velocity))
-        if globalClock.getFrameTime() - self.last_sent > .2:
-            eng.client.send(packet)
-            self.last_sent = globalClock.getFrameTime()
 
     def on_frame(self):
         _Event.on_frame(self)
         self.mdt.logic.camera.update_cam()
         self.mdt.audio.update(self._get_input())
-        if eng.server.is_active:
-            self.__on_frame_server()
-        if eng.client.is_active:
-            self.__on_frame_client()
 
-    @staticmethod
-    def __prepare_game_packet():
-        #should be done by race
-        packet = [NetMsgs.game_packet]
-        for car in [game.player_car] + game.cars:
-            name = car.gfx.path
-            pos = car.gfx.nodepath.getPos()
-            hpr = car.gfx.nodepath.getHpr()
-            velocity = car.phys.vehicle.getChassis().getLinearVelocity()
-            packet += chain([name], pos, hpr, velocity)
-        return packet
+    def eval_register(self):
+        pass
 
     def __process_wall(self):
         eng.audio.play(self.mdt.audio.crash_sfx)
@@ -164,11 +119,7 @@ class _PlayerEvent(_Event):
         else:
             self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))
 
-    def __process_end_goal(self):
-        if eng.server.is_active:
-            eng.server.send([NetMsgs.end_race])
-        elif eng.client.is_active:
-            eng.client.send([NetMsgs.end_race_player])
+    def _process_end_goal(self):
         self.notify('on_end_race')
 
     def __process_goal(self):
@@ -186,7 +137,7 @@ class _PlayerEvent(_Event):
         if self.mdt.logic.last_time_start:
             self.__process_nonstart_goals(lap_number, laps)
         if lap_number == laps + 1:
-            self.__process_end_goal()
+            self._process_end_goal()
         self.mdt.logic.last_time_start = globalClock.getFrameTime()
 
     def on_collision(self, obj, obj_name):
@@ -199,6 +150,54 @@ class _PlayerEvent(_Event):
             eng.audio.play(self.mdt.audio.landing_sfx)
         if obj_name.startswith('Goal'):
             self.__process_goal()
+
+    def _get_input(self):
+        return {
+            'forward': inputState.isSet('forward'),
+            'left': inputState.isSet('left'),
+            'reverse': inputState.isSet('reverse'),
+            'right': inputState.isSet('right')}
+
+
+class _PlayerEventServer(_PlayerEvent):
+
+    def __init__(self, mdt):
+        _PlayerEvent.__init__(self, mdt)
+        self.server_info = {}
+
+    def eval_register(self):
+        eng.server.register_cb(self.process_srv)
+
+    def on_frame(self):
+        _PlayerEvent.on_frame(self)
+        pos = self.mdt.gfx.nodepath.getPos()
+        hpr = self.mdt.gfx.nodepath.getHpr()
+        velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
+        self.server_info['server'] = (pos, hpr, velocity)
+        for car in [car for car in game.cars if car.ai_cls == _Ai]:
+            pos = car.gfx.nodepath.getPos()
+            hpr = car.gfx.nodepath.getHpr()
+            velocity = car.phys.vehicle.getChassis().getLinearVelocity()
+            self.server_info[car] = (pos, hpr, velocity)
+        if globalClock.getFrameTime() - self.last_sent > .2:
+            eng.server.send(self.__prepare_game_packet())
+            self.last_sent = globalClock.getFrameTime()
+
+    @staticmethod
+    def __prepare_game_packet():
+        #should be done by race
+        packet = [NetMsgs.game_packet]
+        for car in [game.player_car] + game.cars:
+            name = car.gfx.path
+            pos = car.gfx.nodepath.getPos()
+            hpr = car.gfx.nodepath.getHpr()
+            velocity = car.phys.vehicle.getChassis().getLinearVelocity()
+            packet += chain([name], pos, hpr, velocity)
+        return packet
+
+    def _process_end_goal(self):
+        eng.server.send([NetMsgs.end_race])
+        _PlayerEvent._process_end_goal(self)
 
     def __process_player_info(self, data_lst, sender):
         from .car import NetworkCar
@@ -217,9 +216,31 @@ class _PlayerEvent(_Event):
             self.__process_player_info(data_lst, sender)
         if data_lst[0] == NetMsgs.end_race_player:
             eng.server.send([NetMsgs.end_race])
+            dct = {'kronos': 0, 'themis': 0, 'diones': 0}
             # move into race
-            game.track.fsm.demand('Results')
-            game.track.gui.show_results()
+            game.track.fsm.demand('Results', dct)
+            # forward the actual ranking
+            game.track.gui.results.show(dct)
+
+
+class _PlayerEventClient(_PlayerEvent):
+
+    def eval_register(self):
+        eng.client.register_cb(self.process_client)
+
+    def on_frame(self):
+        _PlayerEvent.on_frame(self)
+        pos = self.mdt.gfx.nodepath.getPos()
+        hpr = self.mdt.gfx.nodepath.getHpr()
+        velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
+        packet = list(chain([NetMsgs.player_info], pos, hpr, velocity))
+        if globalClock.getFrameTime() - self.last_sent > .2:
+            eng.client.send(packet)
+            self.last_sent = globalClock.getFrameTime()
+
+    def _process_end_goal(self):
+        eng.client.send([NetMsgs.end_race_player])
+        _PlayerEvent._process_end_goal(self)
 
     @staticmethod
     def __process_game_packet(data_lst):
@@ -240,15 +261,10 @@ class _PlayerEvent(_Event):
             self.__process_game_packet(data_lst)
         if data_lst[0] == NetMsgs.end_race:
             if game.track.fsm.getCurrentOrNextState() != 'Results':
-                game.track.fsm.demand('Results')
-                game.track.gui.show_results()
-
-    def _get_input(self):
-        return {
-            'forward': inputState.isSet('forward'),
-            'left': inputState.isSet('left'),
-            'reverse': inputState.isSet('reverse'),
-            'right': inputState.isSet('right')}
+                # forward the actual ranking
+                dct = {'kronos': 0, 'themis': 0, 'diones': 0}
+                game.track.fsm.demand('Results', dct)
+                game.track.gui.results.show(dct)
 
 
 class _NetworkEvent(_Event):

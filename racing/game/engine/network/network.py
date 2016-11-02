@@ -48,7 +48,7 @@ class AbsNetwork(Colleague):
 
     @property
     def is_active(self):
-        return self in [obs[0] for obs in eng.event.observers]
+        return self.on_frame in [obs[0] for obs in eng.event.observers]
 
     def destroy(self):
         eng.event.detach(self.on_frame)

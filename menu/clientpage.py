@@ -3,7 +3,7 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
 from racing.game.engine.gui.page import Page, PageGui, PageEvent
 from racing.game.engine.network.client import ClientError
-from .carpage import CarPage
+from .carpage import CarPageClient
 from .netmsgs import NetMsgs
 
 
@@ -16,8 +16,8 @@ class ClientEvent(PageEvent):
     def process_msg(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:
             eng.log_mgr.log('track selected: ' + data_lst[1])
-            self.menu.track = data_lst[1]
-            self.menu.logic.push_page(CarPage(self.menu))
+            self.mdt.gui.menu.track = data_lst[1]
+            self.mdt.gui.menu.logic.push_page(CarPageClient(self.mdt.gui.menu))
 
 
 class ClientPageGui(PageGui):
@@ -48,9 +48,10 @@ class ClientPageGui(PageGui):
             eng.log_mgr.log(self.ent.get())
             eng.client.start(self.mdt.event.process_msg, self.ent.get())
             menu_gui = self.menu.gui
+            menu_args = self.menu.gui.menu_args
             txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
-                font=menu_gui.font, fg=menu_gui.text_fg)
+                font=menu_gui.font, fg=menu_args.text_fg)
             self.widgets += [txt]
         except ClientError:
             txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)

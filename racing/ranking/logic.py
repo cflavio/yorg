@@ -14,7 +14,8 @@ class _Logic(Logic):
     def load(self, ranking):
         self.ranking = ranking
 
-    def step(self):
+    @staticmethod
+    def step():
         current_track = game.track.gfx.track_path[7:]
         tracks = ['prototype', 'desert']
         if tracks.index(current_track) == len(tracks) - 1:

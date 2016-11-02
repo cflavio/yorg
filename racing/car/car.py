@@ -2,7 +2,8 @@ from abc import ABCMeta
 from racing.game.gameobject import GameObjectMdt, Ai
 from .gfx import _Gfx
 from .phys import _Phys
-from .event import _Event, _PlayerEvent, _NetworkEvent, _AiEvent
+from .event import _Event, _PlayerEvent, _PlayerEventServer, \
+    _PlayerEventClient, _NetworkEvent, _AiEvent
 from .logic import _Logic, _PlayerLogic
 from .audio import _Audio
 from .gui import _Gui
@@ -39,6 +40,8 @@ class Car(GameObjectMdt):
         #    eng.log_mgr.log('end init car')
         #    cb()
         #self.gfx = self.gfx_cls(self, path, lambda task: post_gfx())
+        self.gfx = None
+        self.gui = None
         GameObjectMdt.__init__(self, cb)
 
     @property
@@ -46,7 +49,8 @@ class Car(GameObjectMdt):
         return [
             [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, '_Gfx', [self.path]),
-             (self.build_phys, '_Phys', [self.path, self.race.track.gfx.phys_model]),
+             (self.build_phys, '_Phys', [self.path,
+                                         self.race.track.gfx.phys_model]),
              (self.build_gui, 'Gui'),
              (self.build_event, '_Event')],
             [(self.build_logic, '_Logic')],
@@ -76,9 +80,50 @@ class PlayerCar(Car):
         return [
             [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, '_Gfx', [self.path]),
-             (self.build_phys, '_Phys', [self.path, self.race.track.gfx.phys_model]),
+             (self.build_phys, '_Phys', [self.path,
+                                         self.race.track.gfx.phys_model]),
              (self.build_gui, '_Gui'),
              (self.build_event, '_PlayerEvent')],
+            [(self.build_logic, '_PlayerLogic')],
+            [(self.build_audio, '_Audio')],
+            [(self.build_ai, 'Ai')]]
+
+
+class PlayerCarServer(Car):
+    event_cls = _PlayerEventServer
+    audio_cls = _Audio
+    gui_cls = _Gui
+    logic_cls = _PlayerLogic
+
+    @property
+    def init_lst(self):
+        return [
+            [(self.build_fsm, 'Fsm')],
+            [(self.build_gfx, '_Gfx', [self.path]),
+             (self.build_phys, '_Phys', [self.path,
+                                         self.race.track.gfx.phys_model]),
+             (self.build_gui, '_Gui'),
+             (self.build_event, '_PlayerEventServer')],
+            [(self.build_logic, '_PlayerLogic')],
+            [(self.build_audio, '_Audio')],
+            [(self.build_ai, 'Ai')]]
+
+
+class PlayerCarClient(Car):
+    event_cls = _PlayerEventClient
+    audio_cls = _Audio
+    gui_cls = _Gui
+    logic_cls = _PlayerLogic
+
+    @property
+    def init_lst(self):
+        return [
+            [(self.build_fsm, 'Fsm')],
+            [(self.build_gfx, '_Gfx', [self.path]),
+             (self.build_phys, '_Phys', [self.path,
+                                         self.race.track.gfx.phys_model]),
+             (self.build_gui, '_Gui'),
+             (self.build_event, '_PlayerEventClient')],
             [(self.build_logic, '_PlayerLogic')],
             [(self.build_audio, '_Audio')],
             [(self.build_ai, 'Ai')]]
@@ -92,7 +137,8 @@ class NetworkCar(Car):
         return [
             [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, '_Gfx', [self.path]),
-             (self.build_phys, '_Phys', [self.path, self.race.track.gfx.phys_model]),
+             (self.build_phys, '_Phys', [self.path,
+                                         self.race.track.gfx.phys_model]),
              (self.build_gui, 'Gui'),
              (self.build_event, '_NetworkEvent')],
             [(self.build_logic, '_Logic')],
@@ -109,7 +155,8 @@ class AiCar(Car):
         return [
             [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, '_Gfx', [self.path]),
-             (self.build_phys, '_Phys', [self.path, self.race.track.gfx.phys_model]),
+             (self.build_phys, '_Phys', [self.path,
+                                         self.race.track.gfx.phys_model]),
              (self.build_gui, 'Gui'),
              (self.build_event, '_AiEvent')],
             [(self.build_logic, '_Logic')],

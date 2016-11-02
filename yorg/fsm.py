@@ -1,16 +1,6 @@
-from racing.car.car import Car, PlayerCar, NetworkCar, AiCar
-from racing.track.track import Track
 from racing.race.race import Race
 from racing.game.gameobject import Fsm
-from direct.gui.OnscreenText import OnscreenText
-from panda3d.core import NodePath, TextNode
 from menu.menu import YorgMenu
-
-
-class NetMsgs(object):
-
-    client_ready = 0
-    start_race = 1
 
 
 class _Fsm(Fsm):
