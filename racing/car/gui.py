@@ -33,7 +33,7 @@ class CarParameter(object):
         map(lambda wdg: wdg.destroy(), [self.__slider, self.__lab, self.__val])
 
 
-class _Gui(Gui):
+class CarGui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)

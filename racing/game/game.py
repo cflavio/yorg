@@ -17,10 +17,10 @@ class Game(GameObjectMdt):
     __metaclass__ = ABCMeta
     logic_cls = GameLogic
 
-    def __init__(self, conf):
+    def __init__(self, init_lst, conf):
         __builtin__.game = self
         eng = Engine(conf)
-        GameObjectMdt.__init__(self)
+        GameObjectMdt.__init__(self, init_lst)
         eng.event.register_close_cb(self.logic.on_end)
         self.logic.on_start()
         eng.base.run()

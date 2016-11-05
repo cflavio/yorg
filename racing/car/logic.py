@@ -4,7 +4,7 @@ import math
 from racing.camera import Camera
 
 
-class _Logic(Logic):
+class CarLogic(Logic):
 
     react_time = .1
 
@@ -157,10 +157,10 @@ class _Logic(Logic):
         return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
 
 
-class _PlayerLogic(_Logic):
+class _PlayerLogic(CarLogic):
 
     def update(self, input_dct):
-        _Logic.update(self, input_dct)
+        CarLogic.update(self, input_dct)
         if self.last_time_start:
             self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
         self.__update_wp()

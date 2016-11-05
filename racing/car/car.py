@@ -4,9 +4,9 @@ from .gfx import _Gfx
 from .phys import _Phys
 from .event import _Event, _PlayerEvent, _PlayerEventServer, \
     _PlayerEventClient, _NetworkEvent, _AiEvent
-from .logic import _Logic, _PlayerLogic
+from .logic import CarLogic, _PlayerLogic
 from .audio import _Audio
-from .gui import _Gui
+from .gui import CarGui
 from .ai import _Ai
 
 
@@ -15,7 +15,8 @@ class Car(GameObjectMdt):
     gfx_cls = _Gfx
     phys_cls = _Phys
     event_cls = _Event
-    logic_cls = _Logic
+    logic_cls = CarLogic
+    gui_cls = CarGui
     ai_cls = Ai
 
     def __init__(self, path, pos, hpr, cb, race, laps):
@@ -25,24 +26,9 @@ class Car(GameObjectMdt):
         self.path = path
         self.race = race
         self.laps = laps
-        #self.fsm = self.fsm_cls(self)
-
-        #def post_gfx():
-        #    pmod = self.race.track.gfx.phys_model
-        #    self.phys = self.phys_cls(self, path, pmod)
-        #    self.gui = self.gui_cls(self)
-        #    self.logic = self.logic_cls(self)
-        #    self.audio = self.audio_cls(self)
-        #    self.ai = self.ai_cls(self)
-        #    self.event = self.event_cls(self)
-        #    self.logic.start_pos = pos
-        #    self.logic.start_pos_hpr = hpr
-        #    eng.log_mgr.log('end init car')
-        #    cb()
-        #self.gfx = self.gfx_cls(self, path, lambda task: post_gfx())
         self.gfx = None
         self.gui = None
-        GameObjectMdt.__init__(self, cb)
+        GameObjectMdt.__init__(self, self.init_lst, cb)
 
     @property
     def init_lst(self):
@@ -51,9 +37,9 @@ class Car(GameObjectMdt):
             [(self.build_gfx, '_Gfx', [self.path]),
              (self.build_phys, '_Phys', [self.path,
                                          self.race.track.gfx.phys_model]),
-             (self.build_gui, 'Gui'),
+             (self.build_gui, 'CarGui'),
              (self.build_event, '_Event')],
-            [(self.build_logic, '_Logic')],
+            [(self.build_logic, 'CarLogic')],
             [(self.build_audio, 'Audio')],
             [(self.build_ai, 'Ai')]]
 
@@ -72,7 +58,7 @@ class Car(GameObjectMdt):
 class PlayerCar(Car):
     event_cls = _PlayerEvent
     audio_cls = _Audio
-    gui_cls = _Gui
+    gui_cls = CarGui
     logic_cls = _PlayerLogic
 
     @property
@@ -82,7 +68,7 @@ class PlayerCar(Car):
             [(self.build_gfx, '_Gfx', [self.path]),
              (self.build_phys, '_Phys', [self.path,
                                          self.race.track.gfx.phys_model]),
-             (self.build_gui, '_Gui'),
+             (self.build_gui, 'CarGui'),
              (self.build_event, '_PlayerEvent')],
             [(self.build_logic, '_PlayerLogic')],
             [(self.build_audio, '_Audio')],
@@ -92,7 +78,7 @@ class PlayerCar(Car):
 class PlayerCarServer(Car):
     event_cls = _PlayerEventServer
     audio_cls = _Audio
-    gui_cls = _Gui
+    gui_cls = CarGui
     logic_cls = _PlayerLogic
 
     @property
@@ -102,7 +88,7 @@ class PlayerCarServer(Car):
             [(self.build_gfx, '_Gfx', [self.path]),
              (self.build_phys, '_Phys', [self.path,
                                          self.race.track.gfx.phys_model]),
-             (self.build_gui, '_Gui'),
+             (self.build_gui, 'CarGui'),
              (self.build_event, '_PlayerEventServer')],
             [(self.build_logic, '_PlayerLogic')],
             [(self.build_audio, '_Audio')],
@@ -112,7 +98,7 @@ class PlayerCarServer(Car):
 class PlayerCarClient(Car):
     event_cls = _PlayerEventClient
     audio_cls = _Audio
-    gui_cls = _Gui
+    gui_cls = CarGui
     logic_cls = _PlayerLogic
 
     @property
@@ -122,7 +108,7 @@ class PlayerCarClient(Car):
             [(self.build_gfx, '_Gfx', [self.path]),
              (self.build_phys, '_Phys', [self.path,
                                          self.race.track.gfx.phys_model]),
-             (self.build_gui, '_Gui'),
+             (self.build_gui, 'CarGui'),
              (self.build_event, '_PlayerEventClient')],
             [(self.build_logic, '_PlayerLogic')],
             [(self.build_audio, '_Audio')],
@@ -139,9 +125,9 @@ class NetworkCar(Car):
             [(self.build_gfx, '_Gfx', [self.path]),
              (self.build_phys, '_Phys', [self.path,
                                          self.race.track.gfx.phys_model]),
-             (self.build_gui, 'Gui'),
+             (self.build_gui, 'CarGui'),
              (self.build_event, '_NetworkEvent')],
-            [(self.build_logic, '_Logic')],
+            [(self.build_logic, 'CarLogic')],
             [(self.build_audio, 'Audio')],
             [(self.build_ai, 'Ai')]]
 
@@ -157,8 +143,8 @@ class AiCar(Car):
             [(self.build_gfx, '_Gfx', [self.path]),
              (self.build_phys, '_Phys', [self.path,
                                          self.race.track.gfx.phys_model]),
-             (self.build_gui, 'Gui'),
+             (self.build_gui, 'CarGui'),
              (self.build_event, '_AiEvent')],
-            [(self.build_logic, '_Logic')],
+            [(self.build_logic, 'CarLogic')],
             [(self.build_audio, 'Audio')],
             [(self.build_ai, '_Ai')]]

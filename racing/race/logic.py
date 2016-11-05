@@ -12,7 +12,7 @@ class NetMsgs(object):
     start_race = 1
 
 
-class _Logic(Logic):
+class RaceLogic(Logic):
 
     def __init__(self, mdt):
         self.load_txt = None

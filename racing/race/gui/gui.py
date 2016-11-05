@@ -4,7 +4,7 @@ from .tutorial import Tutorial
 from .results import Results
 
 
-class _Gui(Gui):
+class RaceGui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)

@@ -1,22 +1,22 @@
 from abc import ABCMeta
 from racing.game.gameobject import GameObjectMdt
-from .logic import _Logic
-from .gui import _Gui
+from .logic import RankingLogic
+from .gui import RankingGui
 
 
 class Ranking(GameObjectMdt):
     __metaclass__ = ABCMeta
-    logic_cls = _Logic
-    gui_cls = _Gui
+    logic_cls = RankingLogic
+    gui_cls = RankingGui
 
-    @property
-    def init_lst(self):
-        return [
+    def __init__(self, init_lst=[]):
+        init_lst = [
             [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, 'Gfx')],
             [(self.build_phys, 'Phys')],
-            [(self.build_gui, '_Gui')],
-            [(self.build_logic, '_Logic')],
+            [(self.build_gui, 'RankingGui')],
+            [(self.build_logic, 'RankingLogic')],
             [(self.build_audio, 'Audio')],
             [(self.build_ai, 'Ai')],
             [(self.build_event, 'Event')]]
+        GameObjectMdt.__init__(self, init_lst)

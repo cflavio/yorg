@@ -118,13 +118,9 @@ class GameObjectMdt(Subject):
     event_cls = Event
     fsm_cls = Fsm
 
-    def __init__(self, cb=None):
+    def __init__(self, init_lst=[], cb=None):
         Subject.__init__(self)
-        GODirector(self, self.init_lst, cb)
-
-    @property
-    def init_lst(self):
-        return [
+        init_lst = init_lst or [
             [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, 'Gfx')],
             [(self.build_phys, 'Phys')],
@@ -133,6 +129,7 @@ class GameObjectMdt(Subject):
             [(self.build_audio, 'Audio')],
             [(self.build_ai, 'Ai')],
             [(self.build_event, 'Event')]]
+        GODirector(self, init_lst, cb)
 
     def build_fsm(self):
         self.fsm = self.fsm_cls(self)

@@ -36,14 +36,9 @@ class Engine(GameObjectMdt):
     def __init__(self, conf=None):
         __builtin__.eng = self
         self.base = EngineBase()
-        self.conf = conf
-        GameObjectMdt.__init__(self)
-
-    @property
-    def init_lst(self):
-        return [
+        init_lst = [
             [(self.build_fsm, 'Fsm')],
-            [(self.build_logic, 'EngineLogic', [self.conf])],
+            [(self.build_logic, 'EngineLogic', [conf])],
             [(self.build_log_mgr, 'LogMgr')],
             [(self.build_lang_mgr, 'LangMgr')],
             [(self.build_gfx, 'EngineGfx')],
@@ -56,6 +51,7 @@ class Engine(GameObjectMdt):
             [(self.build_font_mgr, 'FontMgr')],
             [(self.build_server, 'Server')],
             [(self.build_client, 'Client')]]
+        GameObjectMdt.__init__(self, init_lst)
 
     def build_logic(self, conf):
         self.logic = self.logic_cls(self, conf)

@@ -58,7 +58,7 @@ class Page(GameObjectMdt):
 
     def __init__(self, menu):
         self.menu = menu
-        GameObjectMdt.__init__(self)
+        GameObjectMdt.__init__(self, self.init_lst)
 
     @property
     def init_lst(self):

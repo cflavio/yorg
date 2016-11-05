@@ -4,7 +4,7 @@ from racing.game.gameobject import Gui
 from .minimap import Minimap
 
 
-class _Gui(Gui):
+class TrackGui(Gui):
 
     def __init__(self, mdt, track):
         Gui.__init__(self, mdt)

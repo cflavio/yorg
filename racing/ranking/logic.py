@@ -1,7 +1,7 @@
 from racing.game.gameobject import Logic
 
 
-class _Logic(Logic):
+class RankingLogic(Logic):
 
     def __init__(self, mdt):
         Logic.__init__(self, mdt)

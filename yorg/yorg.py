@@ -1,14 +1,14 @@
 from racing.game.game import Game
 from racing.game.dictfile import DictFile
 from racing.game.engine.configuration import Configuration
-from .logic import _Logic
+from .logic import YorgLogic
 from .event import _Event
 from .fsm import _Fsm
 from .audio import _Audio
 
 
 class Yorg(Game):
-    logic_cls = _Logic
+    logic_cls = YorgLogic
     event_cls = _Event
     fsm_cls = _Fsm
     audio_cls = _Audio
@@ -40,16 +40,13 @@ class Yorg(Game):
             lang=self.options['settings']['lang'],
             mt_render=self.options['development']['multithreaded_render'],
             lang_domain='yorg')
-        Game.__init__(self, conf)
-
-    @property
-    def init_lst(self):
-        return [
+        init_lst = [
             [(self.build_fsm, '_Fsm')],
             [(self.build_gfx, 'Gfx')],
             [(self.build_phys, 'Phys')],
             [(self.build_gui, 'Gui')],
-            [(self.build_logic, '_Logic')],
+            [(self.build_logic, 'YorgLogic')],
             [(self.build_audio, '_Audio')],
             [(self.build_ai, 'Ai')],
             [(self.build_event, '_Event')]]
+        Game.__init__(self, init_lst, conf)

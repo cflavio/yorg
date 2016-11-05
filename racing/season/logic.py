@@ -3,7 +3,7 @@ from racing.ranking.ranking import Ranking
 from racing.race.race import Race
 
 
-class _Logic(Logic):
+class SeasonLogic(Logic):
 
     def __init__(self, mdt):
         Logic.__init__(self, mdt)

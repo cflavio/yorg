@@ -24,9 +24,9 @@ class _Gui(Gui):
 class YorgMenu(GameObjectMdt):
     gui_cls = _Gui
 
-    @property
-    def init_lst(self):
-        return [
+
+    def __init__(self, init_lst=[]):
+        init_lst = [
             [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, 'Gfx')],
             [(self.build_phys, 'Phys')],
@@ -35,3 +35,4 @@ class YorgMenu(GameObjectMdt):
             [(self.build_audio, 'Audio')],
             [(self.build_ai, 'Ai')],
             [(self.build_event, 'Event')]]
+        GameObjectMdt.__init__(self, init_lst)

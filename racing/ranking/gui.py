@@ -2,7 +2,7 @@ from direct.gui.OnscreenText import OnscreenText
 from racing.game.gameobject import Gui
 
 
-class _Gui(Gui):
+class RankingGui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)

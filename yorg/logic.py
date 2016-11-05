@@ -2,7 +2,7 @@ from racing.game.game import GameLogic
 from racing.season.season import Season
 
 
-class _Logic(GameLogic):
+class YorgLogic(GameLogic):
 
     def __init__(self, mdt):
         GameLogic.__init__(self, mdt)
