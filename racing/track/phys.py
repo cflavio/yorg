@@ -3,26 +3,6 @@ from panda3d.bullet import BulletRigidBodyNode, BulletTriangleMesh, \
 from racing.game.gameobject import Phys
 
 
-class MergedBuilder(object):
-
-    @staticmethod
-    def add_geoms(geoms, mesh, phys_model, geom_name):
-        for geom in geoms:
-            transf = geom.getTransform(phys_model)
-            for _geom in [g.decompose() for g in geom.node().getGeoms()]:
-                mesh.addGeom(_geom, transf)
-        return geom_name
-
-
-class UnmergedBuilder(object):
-
-    @staticmethod
-    def add_geoms(geoms, mesh, phys_model, geom_name):
-        for _geom in [g.decompose() for g in geoms.node().getGeoms()]:
-            mesh.addGeom(_geom, geoms.getTransform(phys_model))
-        return geoms.get_name()
-
-
 class _Phys(Phys):
 
     def __init__(self, mdt):
@@ -37,6 +17,42 @@ class _Phys(Phys):
         self.__load(['Wall'], True, False)
         self.__load(['Goal', 'Slow', 'Respawn'], True, True)
         self.set_corners()
+
+    def __load(self, names, merged, ghost):
+        for geom_name in names:
+            eng.log_mgr.log('setting physics for: ' + geom_name)
+            geoms = eng.phys.find_geoms(self.mdt.gfx.phys_model, geom_name)
+            if geoms:
+                self.__process_meshes(geoms, geom_name, merged, ghost)
+
+    def __process_meshes(self, geoms, geom_name, merged, ghost):
+        meth = self.add_geoms_merged if merged else self.add_geoms_unmerged
+        if not merged:
+            for geom in geoms:
+                self.__build_mesh(meth, geom, geom_name, ghost)
+        else:
+            self.__build_mesh(meth, geoms, geom_name, ghost)
+
+    @staticmethod
+    def add_geoms_merged(geoms, mesh, phys_model, geom_name):
+        for geom in geoms:
+            transf = geom.getTransform(phys_model)
+            for _geom in [g.decompose() for g in geom.node().getGeoms()]:
+                mesh.addGeom(_geom, transf)
+        return geom_name
+
+    @staticmethod
+    def add_geoms_unmerged(geoms, mesh, phys_model, geom_name):
+        for _geom in [g.decompose() for g in geoms.node().getGeoms()]:
+            mesh.addGeom(_geom, geoms.getTransform(phys_model))
+        return geoms.get_name()
+
+    def __build_mesh(self, meth, geoms, geom_name, ghost):
+        mesh = BulletTriangleMesh()
+        pmod = self.mdt.gfx.phys_model
+        name = meth(geoms, mesh, pmod, geom_name)
+        shape = BulletTriangleMeshShape(mesh, dynamic=False)
+        self.__build(shape, name, ghost)
 
     def __build(self, shape, geom_name, ghost):
         if ghost:
@@ -53,28 +69,6 @@ class _Phys(Phys):
         meth(nodepath.node())
         lst += [nodepath.node()]
         nodepath.node().notifyCollisions(True)
-
-    def __load(self, names, merged, ghost):
-        for geom_name in names:
-            eng.log_mgr.log('setting physics for: ' + geom_name)
-            geoms = eng.phys.find_geoms(self.mdt.gfx.phys_model, geom_name)
-            if geoms:
-                self.__process_meshes(geoms, geom_name, merged, ghost)
-
-    def __build_mesh(self, geombuilder, geoms, geom_name, ghost):
-        mesh = BulletTriangleMesh()
-        pmod = self.mdt.gfx.phys_model
-        name = geombuilder.add_geoms(geoms, mesh, pmod, geom_name)
-        shape = BulletTriangleMeshShape(mesh, dynamic=False)
-        self.__build(shape, name, ghost)
-
-    def __process_meshes(self, geoms, geom_name, merged, ghost):
-        geombuilder = (MergedBuilder if merged else UnmergedBuilder)()
-        if not merged:
-            for geom in geoms:
-                self.__build_mesh(geombuilder, geom, geom_name, ghost)
-        else:
-            self.__build_mesh(geombuilder, geoms, geom_name, ghost)
 
     def set_corners(self):
         if not self.corners:

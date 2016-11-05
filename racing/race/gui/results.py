@@ -6,13 +6,13 @@ from racing.game.engine.gui.imgbtn import ImageButton
 
 class Results(object):
 
-    def __init__(self, track):
+    def __init__(self):
         self.__res_txts = None
         self.__buttons = None
         self.result_img = None
-        self.track = track
 
     def show(self, race_ranking):
+        track = game.track.track_path
         self.result_img = OnscreenImage(image='assets/images/gui/results.png',
                                         scale=(.8, 1, .8))
         self.result_img.setTransparency(True)
@@ -41,7 +41,7 @@ class Results(object):
         twitter_url = 'https://twitter.com/share?text=' + \
             'I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on' + \
             '%20Yorg%20by%20%40ya2tech%21&hashtags=yorg'
-        twitter_url = twitter_url.format(time=curr_time, track=self.track)
+        twitter_url = twitter_url.format(time=curr_time, track=track)
         plus_url = 'https://plus.google.com/share?url=ya2.it/yorg'
         #TODO: find a way to share the time on Google Plus
         tumblr_url = 'https://www.tumblr.com/widgets/share/tool?url=ya2.it'

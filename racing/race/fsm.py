@@ -9,4 +9,4 @@ class _Fsm(Fsm):
                                    'Race': ['Results']}
 
     def enterResults(self, race_ranking):
-        self.mdt.gui.results.show(race_ranking)
+        game.fsm.race.gui.results.show(race_ranking)

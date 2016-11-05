@@ -62,7 +62,7 @@ class _Event(Event):
 
     def on_frame(self):
         input_dct = self._get_input()
-        if self.mdt.race.track.fsm.getCurrentOrNextState() != 'Race':
+        if game.fsm.race.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
             self.reset_car()
         self.mdt.logic.update(input_dct)
@@ -218,7 +218,7 @@ class _PlayerEventServer(_PlayerEvent):
             eng.server.send([NetMsgs.end_race])
             dct = {'kronos': 0, 'themis': 0, 'diones': 0}
             # move into race
-            game.track.fsm.demand('Results', dct)
+            game.fsm.race.fsm.demand('Results', dct)
             # forward the actual ranking
             game.track.gui.results.show(dct)
 
@@ -260,10 +260,10 @@ class _PlayerEventClient(_PlayerEvent):
         if data_lst[0] == NetMsgs.game_packet:
             self.__process_game_packet(data_lst)
         if data_lst[0] == NetMsgs.end_race:
-            if game.track.fsm.getCurrentOrNextState() != 'Results':
+            if game.fsm.race.fsm.getCurrentOrNextState() != 'Results':
                 # forward the actual ranking
                 dct = {'kronos': 0, 'themis': 0, 'diones': 0}
-                game.track.fsm.demand('Results', dct)
+                game.fsm.race.fsm.demand('Results', dct)
                 game.track.gui.results.show(dct)
 
 

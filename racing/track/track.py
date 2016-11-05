@@ -4,8 +4,6 @@ from .gfx import _Gfx
 from .phys import _Phys
 from .gui.gui import _Gui
 from .event import _Event
-from .audio import _Audio
-from .fsm import _Fsm
 
 
 class Track(GameObjectMdt):
@@ -14,8 +12,6 @@ class Track(GameObjectMdt):
     phys_cls = _Phys
     gui_cls = _Gui
     event_cls = _Event
-    audio_cls = _Audio
-    fsm_cls = _Fsm
 
     def __init__(self, track_path, cb, split_world, submodels):
         eng.log_mgr.log('init track')
@@ -42,13 +38,13 @@ class Track(GameObjectMdt):
     @property
     def init_lst(self):
         return [
-            [(self.build_fsm, '_Fsm')],
+            [(self.build_fsm, 'Fsm')],
             [(self.build_gfx, '_Gfx', [
                 self.track_path, self.split_world, self.submodels]),
              (self.build_phys, '_Phys'),
              (self.build_gui, '_Gui', [self.track_path[6:]])],
             [(self.build_logic, 'Logic')],
-            [(self.build_audio, '_Audio')],
+            [(self.build_audio, 'Audio')],
             [(self.build_ai, 'Ai')],
             [(self.build_event, '_Event')]]
 

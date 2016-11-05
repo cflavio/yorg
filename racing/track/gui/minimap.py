@@ -5,7 +5,6 @@ class Minimap(object):
 
     def __init__(self, track, lrtb):
         self.lrtb = lrtb
-        #TODO: pass arguments font, color, sfx, ...
         self.minimap = OnscreenImage(
             'assets/images/minimaps/%s.jpg' % track, pos=(-.25, 1, .25),
             scale=.2, parent=eng.base.a2dBottomRight)
@@ -14,11 +13,8 @@ class Minimap(object):
             scale=.03, parent=eng.base.a2dBottomRight)
         self.car_handle.setTransparency(True)
 
-    def update(self):
-        #TODO: race object which has references to the track and the car, it
-        # attaches to the car and updates the minimap
+    def update(self, car_pos):
         left, right, top, bottom = self.lrtb
-        car_pos = game.player_car.gfx.nodepath.get_pos()
         pos_x_norm = (car_pos.getX() - left) / (right - left)
         pos_y_norm = (car_pos.getY() - bottom) / (top - bottom)
 
