@@ -41,12 +41,12 @@ class Yorg(Game):
             mt_render=self.options['development']['multithreaded_render'],
             lang_domain='yorg')
         init_lst = [
-            [(self.build_fsm, '_Fsm')],
-            [(self.build_gfx, 'Gfx')],
-            [(self.build_phys, 'Phys')],
-            [(self.build_gui, 'Gui')],
-            [(self.build_logic, 'YorgLogic')],
-            [(self.build_audio, '_Audio')],
-            [(self.build_ai, 'Ai')],
-            [(self.build_event, '_Event')]]
+            [('fsm', self.fsm_cls, [self])],
+            [('gfx', self.gfx_cls, [self])],
+            [('phys', self.phys_cls, [self])],
+            [('gui', self.gui_cls, [self])],
+            [('logic', YorgLogic, [self])],
+            [('audio', _Audio, [self])],
+            [('ai', self.ai_cls, [self])],
+            [('event', _Event, [self])]]
         Game.__init__(self, init_lst, conf)

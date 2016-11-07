@@ -18,13 +18,10 @@ class Colleague(Subject):
 
     def _end_async(self):
         self.sync_build(*self._args, **self._kwargs)
-        #Subject.notify(self.mdt, 'on_component_built', self.__class__.__name__)
         taskMgr.doMethodLater(.001, self.__notify, 'wait')
-        #taskMgr.add(lambda tsk: Subject.notify, 'wait',
-        #    extraArgs=[self.mdt, 'on_component_built', self.__class__.__name__])
 
     def __notify(self, task):
-        Subject.notify(self.mdt, 'on_component_built', self.__class__.__name__)
+        self.mdt.notify('on_component_built', self)
 
     def sync_build(self, *args, **kwargs):
         pass
@@ -87,19 +84,19 @@ class GODirector(object):
         self.pending = {}
         self.__init_lst = init_lst
         for idx in range(len(init_lst)):
-            self.__process_lst(idx)
+            self.__process_lst(obj, idx)
 
-    def __process_lst(self, idx):
+    def __process_lst(self, obj, idx):
         if not self.__init_lst[idx]:
             self.end_lst(idx)
             return
         comp_info = self.__init_lst[idx].pop(0)
-        self.pending[comp_info[1]] = idx
+        self.pending[comp_info[1].__name__] = idx
         args = comp_info[2] if len(comp_info) > 2 else []
-        comp_info[0](*args)
+        setattr(obj, comp_info[0], comp_info[1](*args))
 
-    def on_component_built(self, comp_cls):
-        self.__process_lst(self.pending[comp_cls])
+    def on_component_built(self, obj):
+        self.__process_lst(obj.mdt, self.pending[obj.__class__.__name__])
 
     def end_lst(self, idx):
         self.completion[idx] = True
@@ -121,14 +118,14 @@ class GameObjectMdt(Subject):
     def __init__(self, init_lst=[], cb=None):
         Subject.__init__(self)
         init_lst = init_lst or [
-            [(self.build_fsm, 'Fsm')],
-            [(self.build_gfx, 'Gfx')],
-            [(self.build_phys, 'Phys')],
-            [(self.build_gui, 'Gui')],
-            [(self.build_logic, 'Logic')],
-            [(self.build_audio, 'Audio')],
-            [(self.build_ai, 'Ai')],
-            [(self.build_event, 'Event')]]
+            [('fsm', self.fsm_cls, [self])],
+            [('gfx', self.gfx_cls, [self])],
+            [('phys', self.phys_cls, [self])],
+            [('gui', self.gui_cls, [self])],
+            [('logic', self.logic_cls, [self])],
+            [('audio', self.audio_cls, [self])],
+            [('ai', self.ai_cls, [self])],
+            [('event', self.event_cls, [self])]]
         GODirector(self, init_lst, cb)
 
     def build_fsm(self):

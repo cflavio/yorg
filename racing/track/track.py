@@ -19,19 +19,12 @@ class Track(GameObjectMdt):
         self.gfx = None
         self.gui = None
         init_lst = [
-            [(self.build_fsm, 'Fsm')],
-            [(self.build_gfx, '_Gfx', [
-                self.track_path, split_world, submodels]),
-             (self.build_phys, '_Phys'),
-             (self.build_gui, 'TrackGui', [self.track_path[6:]])],
-            [(self.build_logic, 'Logic')],
-            [(self.build_audio, 'Audio')],
-            [(self.build_ai, 'Ai')],
-            [(self.build_event, '_Event')]]
+            [('fsm', self.fsm_cls, [self])],
+            [('gfx', self.gfx_cls, [self, self.track_path, split_world, submodels]),
+             ('phys', self.phys_cls, [self]),
+             ('gui', self.gui_cls, [self, self.track_path[6:]])],
+            [('logic', self.logic_cls, [self])],
+            [('audio', self.audio_cls, [self])],
+            [('ai', self.ai_cls, [self])],
+            [('event', self.event_cls, [self])]]
         GameObjectMdt.__init__(self, init_lst, cb)
-
-    def build_gfx(self, track_path, split_world, submodels):
-        self.gfx = self.gfx_cls(self, track_path, split_world, submodels)
-
-    def build_gui(self, track_path):
-        self.gui = self.gui_cls(self, track_path)

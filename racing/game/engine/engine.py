@@ -37,20 +37,20 @@ class Engine(GameObjectMdt):
         __builtin__.eng = self
         self.base = EngineBase()
         init_lst = [
-            [(self.build_fsm, 'Fsm')],
-            [(self.build_logic, 'EngineLogic', [conf])],
-            [(self.build_log_mgr, 'LogMgr')],
-            [(self.build_lang_mgr, 'LangMgr')],
-            [(self.build_gfx, 'EngineGfx')],
-            [(self.build_phys, 'EnginePhys')],
-            [(self.build_gui, 'EngineGui')],
-            [(self.build_audio, 'EngineAudio')],
-            [(self.build_ai, 'Ai')],
-            [(self.build_event, 'EngineEvent')],
-            [(self.build_pause, 'PauseMgr')],
-            [(self.build_font_mgr, 'FontMgr')],
-            [(self.build_server, 'Server')],
-            [(self.build_client, 'Client')]]
+            [('fsm', self.fsm_cls, [self])],
+            [('logic', EngineLogic, [self, conf])],
+            [('log_mgr', LogMgr, [self])],
+            [('lang_mgr', LangMgr, [self])],
+            [('gfx', EngineGfx, [self])],
+            [('phys', EnginePhys, [self])],
+            [('gui', EngineGui, [self])],
+            [('audio', EngineAudio, [self])],
+            [('ai', self.ai_cls, [self])],
+            [('event', EngineEvent, [self])],
+            [('pause', PauseMgr, [self])],
+            [('font_mgr', FontMgr, [self])],
+            [('server', Server, [self])],
+            [('client', Client, [self])]]
         GameObjectMdt.__init__(self, init_lst)
 
     def build_logic(self, conf):
