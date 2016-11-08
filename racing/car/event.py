@@ -24,18 +24,6 @@ class _Event(Event):
     def __process_respawn(self):
         last_pos = self.mdt.logic.last_contact_pos
         start_wp_n, end_wp_n = self.mdt.logic.closest_wp(last_pos)
-        #start_wp, end_wp = start_wp_n.get_pos(), end_wp_n.get_pos()
-        # A + dot(AP,AB) / dot(AB,AB) * AB
-        #point_vec = Vec3(last_pos.x - start_wp.x,
-        #                 last_pos.y - start_wp.y,
-        #                 last_pos.z - start_wp.z)
-        #wp_vec = Vec3(end_wp.x - start_wp.x,
-        #              end_wp.y - start_wp.y,
-        #              end_wp.z - start_wp.z)
-        #dot_point = point_vec.dot(wp_vec)
-        #dot_wp = wp_vec.dot(wp_vec)
-        #delta = wp_vec * (dot_point / dot_wp)
-        #new_pos = start_wp + delta
         new_pos = start_wp_n.get_pos()
         self.mdt.gfx.nodepath.setPos(new_pos.x, new_pos.y, new_pos.z + 2)
 
@@ -54,27 +42,24 @@ class _Event(Event):
         if obj_name.startswith('Respawn'):
             self.__process_respawn()
 
-    def reset_car(self):
-        self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
-        self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
-        wheels = self.mdt.phys.vehicle.get_wheels()
-        map(lambda whl: whl.set_rotation(0), wheels)
-
     def on_frame(self):
         input_dct = self._get_input()
         if game.fsm.race.fsm.getCurrentOrNextState() != 'Race':
             input_dct = {key: False for key in input_dct}
-            self.reset_car()
+            self.mdt.logic.reset_car()
         self.mdt.logic.update(input_dct)
         if self.mdt.logic.is_upside_down:
             self.mdt.gfx.nodepath.setR(0)
+        self.__update_contact_pos()
+        self.mdt.phys.update_car_props()
+
+    def __update_contact_pos(self):
         car_pos = self.mdt.gfx.nodepath.get_pos()
         top, bottom = (car_pos.x, car_pos.y, 100), (car_pos.x, car_pos.y, -100)
         result = eng.phys.world_phys.rayTestAll(top, bottom)
         hits = result.getHits()
         for hit in [hit for hit in hits if 'Road' in hit.getNode().getName()]:
             self.mdt.logic.last_contact_pos = self.mdt.gfx.nodepath.getPos()
-        self.mdt.phys.update_terrain()
 
     def destroy(self):
         Event.destroy(self)
@@ -101,7 +86,7 @@ class _PlayerEvent(_Event):
         self.mdt.logic.camera.update_cam()
         self.mdt.audio.update(self._get_input())
 
-    def eval_register(self):
+    def network_register(self):
         pass
 
     def __process_wall(self):
@@ -165,7 +150,7 @@ class _PlayerEventServer(_PlayerEvent):
         _PlayerEvent.__init__(self, mdt)
         self.server_info = {}
 
-    def eval_register(self):
+    def network_register(self):
         eng.server.register_cb(self.process_srv)
 
     def on_frame(self):
@@ -225,7 +210,7 @@ class _PlayerEventServer(_PlayerEvent):
 
 class _PlayerEventClient(_PlayerEvent):
 
-    def eval_register(self):
+    def network_register(self):
         eng.client.register_cb(self.process_client)
 
     def on_frame(self):

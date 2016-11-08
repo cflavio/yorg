@@ -3,6 +3,10 @@ from racing.game.gameobject import Event
 
 class _Event(Event):
 
+    def __init__(self, mdt):
+        Event.__init__(self, mdt)
+        self.accept('p', eng.pause.logic.toggle)
+
     def on_wrong_way(self, way_str):
         self.mdt.track.gui.way_txt.setText(way_str)
 

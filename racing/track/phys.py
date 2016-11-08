@@ -5,23 +5,51 @@ from racing.game.gameobject import Phys
 
 class _Phys(Phys):
 
-    def __init__(self, mdt):
+    def __init__(self, mdt, track_path):
         self.corners = None
         self.rigid_bodies = []
         self.ghosts = []
         self.nodes = []
+        self.track_path = track_path
         Phys.__init__(self, mdt)
 
     def sync_build(self):
+        self.model = loader.loadModel(self.track_path + '/collision')
+
         self.__load(['Road', 'Offroad'], False, False)
         self.__load(['Wall'], True, False)
         self.__load(['Goal', 'Slow', 'Respawn'], True, True)
         self.set_corners()
 
+        _waypoints = self.model.findAllMatches('**/Waypoints/Waypoint*')
+        self.waypoints = {}
+        for w_p in _waypoints:
+            wpstr = '**/Waypoints/Waypoint'
+            prevs = w_p.getTag('prev').split(',')
+            lst_wp = [self.model.find(wpstr + idx) for idx in prevs]
+            self.waypoints[w_p] = lst_wp
+
+        models = ['Road', 'Offroad', 'Wall', 'Respawn', 'Slow', 'Goal']
+        map(self.hide_models, ['**/%s*' % mod for mod in models])
+
+    def hide_models(self, models):
+        models = self.model.findAllMatches(models)
+        map(lambda mod: mod.hide(), models)
+
+    def get_start_pos(self, i):
+        start_pos = (0, 0, 0)
+        start_pos_hpr = (0, 0, 0)
+        node_str = '**/Start' + str(i + 1)
+        start_pos_node = self.model.find(node_str)
+        if start_pos_node:
+            start_pos = self.model.find(node_str).get_pos()
+            start_pos_hpr = self.model.find(node_str).get_hpr()
+        return start_pos, start_pos_hpr
+
     def __load(self, names, merged, ghost):
         for geom_name in names:
             eng.log_mgr.log('setting physics for: ' + geom_name)
-            geoms = eng.phys.find_geoms(self.mdt.gfx.phys_model, geom_name)
+            geoms = eng.phys.find_geoms(self.model, geom_name)
             if geoms:
                 self.__process_meshes(geoms, geom_name, merged, ghost)
 
@@ -49,8 +77,7 @@ class _Phys(Phys):
 
     def __build_mesh(self, meth, geoms, geom_name, ghost):
         mesh = BulletTriangleMesh()
-        pmod = self.mdt.gfx.phys_model
-        name = meth(geoms, mesh, pmod, geom_name)
+        name = meth(geoms, mesh, self.model, geom_name)
         shape = BulletTriangleMeshShape(mesh, dynamic=False)
         self.__build(shape, name, ghost)
 
@@ -73,7 +100,7 @@ class _Phys(Phys):
     def set_corners(self):
         if not self.corners:
             corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
-            pmod = self.mdt.gfx.phys_model
+            pmod = self.model
             self.corners = [pmod.find('**/Minimap' + crn) for crn in corners]
         return self.corners
 

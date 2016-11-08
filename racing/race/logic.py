@@ -98,8 +98,8 @@ class RaceLogic(Logic):
                     car_class = NetworkCar  # if car in player_cars else Car
                 if eng.client.is_active:
                     car_class = NetworkCar
-                pos = game.track.gfx.get_start_pos(grid.index(car))[0]
-                hpr = game.track.gfx.get_start_pos(grid.index(car))[1]
+                pos = game.track.phys.get_start_pos(grid.index(car))[0]
+                hpr = game.track.phys.get_start_pos(grid.index(car))[1]
                 func = load_other_cars
                 no_p = car not in player_cars
                 car_class = AiCar if no_p else car_class
@@ -107,8 +107,8 @@ class RaceLogic(Logic):
                                     game.options['development']['laps'])
                 game.cars += [new_car]
             path = 'cars/' + car_path
-            pos = game.track.gfx.get_start_pos(grid.index(car_path))[0]
-            hpr = game.track.gfx.get_start_pos(grid.index(car_path))[1]
+            pos = game.track.phys.get_start_pos(grid.index(car_path))[0]
+            hpr = game.track.phys.get_start_pos(grid.index(car_path))[1]
             func = load_other_cars
             if ai:
                 car_cls = AiCar
@@ -123,7 +123,7 @@ class RaceLogic(Logic):
             game.cars = []
         game.track = Track(
             track_path, load_car, dev['split_world'], dev['submodels'])
-        game.track.gfx.attach(self.on_loading)
+        game.track.attach(self.on_loading)
         self.mdt.track = game.track
 
     def exit_loading(self):
@@ -176,10 +176,10 @@ class RaceLogic(Logic):
     def start_play():
         eng.phys.start()
         game.track.event.start()
-        game.player_car.event.eval_register()
+        game.player_car.event.network_register()
         game.audio.game_music.play()
         cars = [game.player_car] + game.cars
-        map(lambda car: car.event.reset_car(), cars)
+        map(lambda car: car.logic.reset_car(), cars)
         map(lambda car: car.event.start(), cars)
 
     @staticmethod

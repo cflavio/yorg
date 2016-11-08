@@ -31,14 +31,12 @@ class CarLogic(Logic):
         steering_range = phys.steering_min_speed - phys.steering_max_speed
         steering_clamp = phys.steering_min_speed - speed_ratio * steering_range
 
-        can_accel = phys.speed < phys.curr_max_speed
         if input_dct['forward'] and input_dct['reverse']:
-            #TODO: replace can_accel with a factor
-            eng_frc = phys.engine_acc_frc if can_accel else 0
+            eng_frc = phys.engine_acc_frc
             brake_frc = phys.brake_frc
 
         if input_dct['forward'] and not input_dct['reverse']:
-            eng_frc = phys.engine_acc_frc if can_accel else 0
+            eng_frc = phys.engine_acc_frc
             brake_frc = 0
 
         if input_dct['reverse'] and not input_dct['forward']:
@@ -73,7 +71,7 @@ class CarLogic(Logic):
                 steering_sign = (-1 if self.__steering > 0 else 1)
                 self.__steering += steering_sign * steering_dec
 
-        phys.set_forces(eng_frc, brake_frc, self.__steering)
+        phys.set_forces(self.get_eng_frc(eng_frc), brake_frc, self.__steering)
         if self.last_time_start:
             d_t = round(f_t - self.last_time_start, 2)
             self.mdt.gui.time_txt.setText(str(d_t))
@@ -84,6 +82,20 @@ class CarLogic(Logic):
             self.last_roll_ok_time = globalClock.getFrameTime()
         else:
             self.last_roll_ko_time = globalClock.getFrameTime()
+
+    def get_eng_frc(self, eng_frc):
+        curr_max_speed = self.mdt.phys.max_speed * self.mdt.phys.curr_speed_factor
+        if self.mdt.phys.speed / curr_max_speed < .99:
+            return eng_frc
+        tot = .01 * curr_max_speed
+        delta = curr_max_speed - self.mdt.phys.speed
+        return eng_frc * min(1, delta/tot)
+
+    def reset_car(self):
+        self.mdt.gfx.nodepath.set_pos(self.mdt.logic.start_pos)
+        self.mdt.gfx.nodepath.set_hpr(self.mdt.logic.start_pos_hpr)
+        wheels = self.mdt.phys.vehicle.get_wheels()
+        map(lambda whl: whl.set_rotation(0), wheels)
 
     @staticmethod
     def pt_line_dst(point, line_pt1, line_pt2):
@@ -98,7 +110,7 @@ class CarLogic(Logic):
             node.set_pos(pos)
         else:
             node = self.mdt.gfx.nodepath
-        waypoints = game.track.gfx.waypoints
+        waypoints = game.track.phys.waypoints
         distances = [node.getDistance(wp) for wp in waypoints.keys()]
         curr_wp_idx = distances.index(min(distances))
         curr_wp = waypoints.keys()[curr_wp_idx]
@@ -123,11 +135,9 @@ class CarLogic(Logic):
         next_angle = next_vec.signedAngleDeg(curr_vec)
 
         if abs(prev_angle) > abs(next_angle):
-            start_wp = prev_wp
-            end_wp = curr_wp
+            start_wp, end_wp = prev_wp, curr_wp
         else:
-            start_wp = curr_wp
-            end_wp = next_wp
+            start_wp, end_wp = curr_wp, next_wp
         return start_wp, end_wp
 
     @property
@@ -166,6 +176,6 @@ class _PlayerLogic(CarLogic):
         self.__update_wp()
 
     def __update_wp(self):
-        if game.track.gfx.waypoints:
+        if game.track.phys.waypoints:
             way_str = _('wrong way') if self.direction < -.6 else ''
             self.notify('on_wrong_way', way_str)

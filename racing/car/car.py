@@ -32,7 +32,7 @@ class Car(GameObjectMdt):
             [('fsm', self.fsm_cls, [self])],
             [('gfx', self.gfx_cls, [self, self.path]),
              ('phys', self.phys_cls, [self, self.path,
-                                         self.race.track.gfx.phys_model]),
+                                         self.race.track.phys.model]),
              ('gui', self.gui_cls, [self]),
              ('event', self.event_cls, [self])],
             [('logic', self.logic_cls, [self])],

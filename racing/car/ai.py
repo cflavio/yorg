@@ -7,7 +7,7 @@ class _Ai(Ai):
     @property
     def current_target(self):
         curr_wp = self.mdt.logic.current_wp[1]
-        waypoints = game.track.gfx.waypoints
+        waypoints = game.track.phys.waypoints
         next_wp_idx = (waypoints.keys().index(curr_wp) + 1) % len(waypoints)
         dist_vec = curr_wp.get_pos() - self.mdt.gfx.nodepath.get_pos()
         distance = dist_vec.length()

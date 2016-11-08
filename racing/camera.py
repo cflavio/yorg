@@ -97,3 +97,7 @@ class Camera(object):
         result = eng.phys.world_phys.rayTestClosest(pos, tgt)
         if result.hasHit():
             return result
+
+    @property
+    def camera(self):
+        return eng.base.camera

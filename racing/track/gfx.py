@@ -6,8 +6,6 @@ from racing.game.gameobject import Gfx
 class _Gfx(Gfx):
 
     def __init__(self, mdt, track_path, split_world, submodels):
-        self.phys_model = None
-        self.waypoints = None
         self.ambient_np = None
         self.corners = None
         self.spot_lgt = None
@@ -28,15 +26,7 @@ class _Gfx(Gfx):
         self.notify('on_loading', _('loading track model'))
         time = globalClock.getFrameTime()
         path = self.track_path + '/track'
-        eng.gfx.load_model(path, callback=self.__load_coll, extraArgs=[time])
-
-    def __load_coll(self, model, time):
-        curr_t = globalClock.getFrameTime()
-        d_t = round(curr_t - time, 2)
-        eng.log_mgr.log('loaded track model (%s seconds)' % str(d_t))
-        self.model = model
-        path = self.track_path + '/collision'
-        loader.loadModel(path, callback=self.__set_submod, extraArgs=[curr_t])
+        eng.gfx.load_model(path, callback=self.__set_submod, extraArgs=[time])
 
     @staticmethod
     def __flat_sm(submodel):
@@ -45,39 +35,14 @@ class _Gfx(Gfx):
         if not_logic and not s_n.startswith('Empty'):
             submodel.flattenLight()
 
-    def hide_models(self, models):
-        models = self.phys_model.findAllMatches(models)
-        map(lambda mod: mod.hide(), models)
-
     def __set_submod(self, model, time):
         d_t = round(globalClock.getFrameTime() - time, 2)
-        eng.log_mgr.log('loaded track collision (%s seconds)' % str(d_t))
-        p_mod = self.phys_model = model
-        for submodel in self.model.getChildren() + p_mod.getChildren():
+        eng.log_mgr.log('loaded track model (%s seconds)' % str(d_t))
+        self.model = model
+        for submodel in self.model.getChildren() + self.mdt.phys.model.getChildren():
             self.__flat_sm(submodel)
         self.model.hide(BitMask32.bit(0))
-
-        _waypoints = self.phys_model.findAllMatches('**/Waypoints/Waypoint*')
-        self.waypoints = {}
-        for w_p in _waypoints:
-            wpstr = '**/Waypoints/Waypoint'
-            prevs = w_p.getTag('prev').split(',')
-            lst_wp = [p_mod.find(wpstr + idx) for idx in prevs]
-            self.waypoints[w_p] = lst_wp
-
-        models = ['Road', 'Offroad', 'Wall', 'Respawn', 'Slow', 'Goal']
-        map(self.hide_models, ['**/%s*' % mod for mod in models])
         (self.__load_empties if self.submodels else self.end_loading)()
-
-    def get_start_pos(self, i):
-        start_pos = (0, 0, 0)
-        start_pos_hpr = (0, 0, 0)
-        node_str = '**/Start' + str(i + 1)
-        start_pos_node = self.phys_model.find(node_str)
-        if start_pos_node:
-            start_pos = self.phys_model.find(node_str).get_pos()
-            start_pos_hpr = self.phys_model.find(node_str).get_hpr()
-        return start_pos, start_pos_hpr
 
     def __preload_models(self, models, callback, model='', time=0):
         curr_t = globalClock.getFrameTime()
@@ -105,10 +70,8 @@ class _Gfx(Gfx):
         path = self.track_path + '/' + model.getName().split('.')[0][5:]
         eng.base.loader.loadModel(path).reparent_to(model)
         corners = ['topleft', 'topright', 'bottomright', 'bottomleft']
-        corners = [self.phys_model.find('**/Minimap' + crn) for crn in corners]
-        left, right, top, bottom = corners[0].getX(), corners[1].getX(), \
-            corners[0].getY(), corners[3].getY()
-        #TODO: use self.mdt.phys.lrtb
+        corners = [self.mdt.phys.model.find('**/Minimap' + crn) for crn in corners]
+        left, right, top, bottom = self.mdt.phys.lrtb
         center_x, center_y = (left + right) / 2, (top + bottom) / 2
         pos_x, pos_y = model.get_pos()[0], model.get_pos()[1]
         if not game.options['development']['split_world']:
@@ -180,7 +143,6 @@ class _Gfx(Gfx):
 
     def end_loading(self):
         self.model.prepareScene(eng.base.win.getGsg())
-        #taskMgr.doMethodLater(.01, lambda task: self.callback(), 'callback')
         Gfx.async_build(self)
 
     def __set_light(self):
@@ -190,12 +152,6 @@ class _Gfx(Gfx):
         ambient_lgt.setColor((.7, .7, .55, 1))
         self.ambient_np = render.attachNewNode(ambient_lgt)
         render.setLight(self.ambient_np)
-
-        #directional_lgt = DirectionalLight('directional light')
-        #directional_lgt.setDirection((.5, .5, -1))
-        #directional_lgt.setColor((.75, .75, .75, 1))
-        #self.directional_np = eng.render.attachNewNode(directional_lgt)
-        #eng.render.setLight(self.directional_np)
 
         self.spot_lgt = render.attachNewNode(Spotlight('Spot'))
         self.spot_lgt.node().setScene(render)
@@ -214,4 +170,3 @@ class _Gfx(Gfx):
         eng.base.render.clearLight(self.ambient_np)
         eng.base.render.clearLight(self.spot_lgt)
         self.ambient_np.removeNode()
-        #self.spot_lgt.removeNode()

@@ -6,14 +6,14 @@ import yaml
 
 class _Phys(Phys):
 
-    def __init__(self, mdt, path, track_phys):
+    def __init__(self, mdt, name, track_phys):
         Phys.__init__(self, mdt)
         self.pnode = None
-        self.curr_max_speed = None
         self.vehicle = None
+        self.curr_speed_factor = 1.0
         self.__finds = {}
         self.__track_phys = track_phys
-        self.__load_phys(path)
+        self.__load_phys(name)
         self.__set_collision()
         self.__set_phys_node()
         self.__set_vehicle()
@@ -26,7 +26,6 @@ class _Phys(Phys):
         capsule.flattenLight()
         for geom in eng.phys.find_geoms(capsule, 'Cube'):
             chassis_shape.addGeom(geom.node().getGeom(0), geom.getTransform())
-
         coll_pos = LVecBase3f(*self.collision_box_pos)
         transform_state = TransformState.makePos(coll_pos)
         self.mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
@@ -35,7 +34,6 @@ class _Phys(Phys):
         self.pnode = self.mdt.gfx.nodepath.node()
         self.pnode.setMass(self.mass)
         self.pnode.setDeactivationEnabled(False)
-
         eng.phys.world_phys.attachRigidBody(self.pnode)
         eng.phys.collision_objs += [self.pnode]
 
@@ -46,7 +44,6 @@ class _Phys(Phys):
         tuning = self.vehicle.getTuning()
         tuning.setSuspensionCompression(self.suspension_compression)
         tuning.setSuspensionDamping(self.suspension_damping)
-
         eng.phys.world_phys.attachVehicle(self.vehicle)
 
     def __set_wheels(self):
@@ -64,8 +61,8 @@ class _Phys(Phys):
             self.__add_wheel(pos, front, nodepath.node(), radius),
             wheels_info)
 
-    def __load_phys(self, path):
-        with open('assets/models/%s/phys.yml' % path) as phys_file:
+    def __load_phys(self, name):
+        with open('assets/models/%s/phys.yml' % name) as phys_file:
             conf = yaml.load(phys_file)
         fields = [
             'collision_box_shape', 'collision_box_pos', 'collision_box_scale',
@@ -80,7 +77,6 @@ class _Phys(Phys):
             'suspension_stiffness', 'wheels_damping_relaxation',
             'wheels_damping_compression', 'friction_slip', 'roll_influence']
         map(lambda field: setattr(self, field, conf[field]), fields)
-        self.curr_max_speed = self.max_speed
 
     def __add_wheel(self, pos, front, node, radius):
         wheel = self.vehicle.createWheel()
@@ -112,18 +108,11 @@ class _Phys(Phys):
     def speed_ratio(self):
         return max(0, min(1.0, self.speed / self.max_speed))
 
-    def get_eng_frc(self, eng_frc):
-        if self.speed / self.curr_max_speed < .99:
-            return eng_frc
-        tot = .01 * self.curr_max_speed
-        delta = self.curr_max_speed - self.speed
-        return eng_frc * min(1, delta/tot)
-
     def set_forces(self, eng_frc, brake_frc, steering):
         self.vehicle.setSteeringValue(steering, 0)
         self.vehicle.setSteeringValue(steering, 1)
-        self.vehicle.applyEngineForce(self.get_eng_frc(eng_frc), 2)
-        self.vehicle.applyEngineForce(self.get_eng_frc(eng_frc), 3)
+        self.vehicle.applyEngineForce(eng_frc, 2)
+        self.vehicle.applyEngineForce(eng_frc, 3)
         self.vehicle.setBrake(brake_frc, 2)
         self.vehicle.setBrake(brake_frc, 3)
 
@@ -140,21 +129,19 @@ class _Phys(Phys):
     def ground_names(self):
         return [self.ground_name(wheel) for wheel in self.vehicle.get_wheels()]
 
-    def update_terrain(self):
+    def update_car_props(self):
         speeds = []
         for wheel in self.vehicle.get_wheels():
             ground_name = self.ground_name(wheel)
-            if ground_name:
-                if ground_name not in self.__finds:
-                    ground = self.__track_phys.find('**/' + ground_name)
-                    self.__finds[ground_name] = ground
-                gfx_node = self.__finds[ground_name]
-                try:
-                    speeds += [float(gfx_node.get_tag('speed'))]
-                    fric = float(gfx_node.get_tag('friction'))
-                    wheel.setFrictionSlip(self.friction_slip * fric)
-                except ValueError:
-                    pass
-        avg_speed = (sum(speeds) / len(speeds)) if speeds else 1.0
-        #TODO: do curr_speed_factor in place of curr_max_speed
-        self.curr_max_speed = self.max_speed * avg_speed
+            if not ground_name:
+                continue
+            if ground_name not in self.__finds:
+                ground = self.__track_phys.find('**/' + ground_name)
+                self.__finds[ground_name] = ground
+            gfx_node = self.__finds[ground_name]
+            if gfx_node.has_tag('speed'):
+                speeds += [float(gfx_node.get_tag('speed'))]
+            if gfx_node.has_tag('friction'):
+                fric = float(gfx_node.get_tag('friction'))
+                wheel.setFrictionSlip(self.friction_slip * fric)
+        self.curr_speed_factor = (sum(speeds) / len(speeds)) if speeds else 1.0
