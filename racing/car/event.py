@@ -44,7 +44,7 @@ class _Event(Event):
 
     def on_frame(self):
         input_dct = self._get_input()
-        if game.fsm.race.fsm.getCurrentOrNextState() != 'Race':
+        if game.fsm.race.fsm.getCurrentOrNextState() != 'Play':
             input_dct = {key: False for key in input_dct}
             self.mdt.logic.reset_car()
         self.mdt.logic.update(input_dct)
@@ -121,9 +121,9 @@ class _PlayerEvent(_Event):
         laps = self.mdt.laps
         if self.mdt.logic.last_time_start:
             self.__process_nonstart_goals(lap_number, laps)
+        self.mdt.logic.last_time_start = globalClock.getFrameTime()
         if lap_number == laps + 1:
             self._process_end_goal()
-        self.mdt.logic.last_time_start = globalClock.getFrameTime()
 
     def on_collision(self, obj, obj_name):
         _Event.on_collision(self, obj, obj_name)

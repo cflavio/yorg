@@ -1,5 +1,4 @@
 from racing.game.game import GameLogic
-from racing.season.season import Season
 
 
 class YorgLogic(GameLogic):
@@ -13,7 +12,6 @@ class YorgLogic(GameLogic):
         dev = game.options['development']
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
-        self.season = Season()
         if car and track:
             self.mdt.fsm.demand('Loading', 'tracks/' + track, car)
         else:

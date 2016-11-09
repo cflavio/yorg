@@ -18,8 +18,7 @@ class RankingGui(Gui):
                 '%s %s' % (name, score), pos=(0, .5 - .2 * i), font=font,
                 fg=(.75, .75, .75, 1), scale=.12)
             self.ranking_texts += [txt]
-        taskMgr.doMethodLater(10, lambda task: self.mdt.logic.step(), 'step')
+        taskMgr.doMethodLater(10, lambda task: game.logic.season.logic.step(), 'step')
 
-    def destroy(self):
-        Gui.destroy(self)
+    def hide(self):
         map(lambda txt: txt.destroy(), self.ranking_texts)

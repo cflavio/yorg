@@ -110,6 +110,7 @@ class _Phys(Phys):
             self.corners[0].getY(), self.corners[3].getY()
 
     def destroy(self):
+        self.model.removeNode()
         map(lambda chl: chl.remove_node(), self.nodes)
         map(eng.phys.world_phys.remove_rigid_body, self.rigid_bodies)
         map(eng.phys.world_phys.remove_ghost, self.ghosts)

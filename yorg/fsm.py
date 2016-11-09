@@ -8,10 +8,9 @@ class _Fsm(Fsm):
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
         self.defaultTransitions = {
-            'Menu': ['Loading'],
-            'Loading': ['Play'],
-            'Play': ['Ranking', 'Menu'],
-            'Ranking': ['Play', 'Menu', 'Loading']}
+            'Menu': ['Race'],
+            'Race': ['Ranking', 'Menu'],
+            'Ranking': ['Menu', 'Race']}
         self.load_txt = None
         self.preview = None
         self.cam_tsk = None
@@ -34,25 +33,13 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterLoading(self, track_path='', car_path='', player_cars=[]):
-        eng.log_mgr.log('entering Loading state')
+    def enterRace(self, track_path='', car_path='', player_cars=[]):
+        eng.log_mgr.log('entering Race state')
         self.race = Race()
-        self.race.logic.enter_loading(track_path, car_path, player_cars)
-
-    def exitLoading(self):
-        eng.log_mgr.log('exiting Loading state')
-        self.race.logic.exit_loading()
-
-    def enterPlay(self):
-        eng.log_mgr.log('entering Play state')
-        self.race.logic.enter_play()
-
-    def exitPlay(self):
-        eng.log_mgr.log('exiting Play state')
-        self.race.logic.exit_play()
+        self.race.fsm.demand('Loading', track_path, car_path, player_cars)
 
     def enterRanking(self):
         game.logic.season.logic.ranking.gui.show()
 
     def exitRanking(self):
-        game.logic.season.logic.ranking.gui.destroy()
+        game.logic.season.logic.ranking.gui.hide()

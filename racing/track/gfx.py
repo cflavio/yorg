@@ -166,7 +166,6 @@ class _Gfx(Gfx):
 
     def destroy(self):
         self.model.removeNode()
-        self.phys_model.removeNode()
         eng.base.render.clearLight(self.ambient_np)
         eng.base.render.clearLight(self.spot_lgt)
         self.ambient_np.removeNode()

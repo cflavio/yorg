@@ -35,18 +35,12 @@ class Camera(object):
         look_dist_diff = self.look_dist_max - self.look_dist_min
         cam_z_diff = self.cam_z_max - self.cam_z_min
         look_z_diff = self.look_z_max - self.look_z_min
-        #car_np = self.mdt.gfx.nodepath
-        #car_rad = deg2Rad(car_np.getH())
-        #car_vec = Vec3(-math.sin(car_rad), math.cos(car_rad), 1)
-        #car_vec.normalize()
 
         nodepath = self.mdt.gfx.nodepath
         fwd_vec = eng.base.render.getRelativeVector(nodepath, Vec3(0, 1, 0))
         fwd_vec.normalize()
 
-        car_pos = self.mdt.gfx.nodepath.getPos()
-        #cam_vec = -car_vec * (cam_dist_min + cam_dist_diff * speed_ratio)
-        #tgt_vec = car_vec * (look_dist_min + look_dist_diff * speed_ratio)
+        car_pos = nodepath.getPos()
         cam_vec = -fwd_vec * (self.cam_dist_min + cam_dist_diff * speed_ratio)
         tgt_vec = fwd_vec * (self.look_dist_min + look_dist_diff * speed_ratio)
         delta_pos_z = self.cam_z_max - cam_z_diff * speed_ratio
@@ -59,9 +53,6 @@ class Camera(object):
         if curr_hit:
             hit_pos = curr_hit.getHitPos()
             cam_vec = hit_pos - car_pos
-
-        #game.track.gui.debug_txt.setText(
-        #    curr_hit.getNode().getName() if curr_hit else '')
 
         self.tgt_x = car_pos.x + cam_vec.x
         self.tgt_y = car_pos.y + cam_vec.y

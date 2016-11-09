@@ -32,7 +32,7 @@ class CarPageGui(PageGui):
         return [btn for btn in buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
-        game.fsm.demand('Loading', self.track_path, car)
+        game.fsm.demand('Race', self.track_path, car)
 
 
 class CarPageGuiServer(CarPageGui):

@@ -1,16 +1,12 @@
 # BUGS =====
 # ai car aren't synced in multiplayer
+# multiple car guis
 
 
 # TODO LIST =====
 
-#TODO: remove missing comments notification from pylint
-#TODO: refactoring: build(cb)
-#TODO: refactoring: build go as lists of lists of components
 #TODO: put collision meshes and physics info into car models
 #TODO: driving model
-#TODO: waypoints as a line
-#TODO: forks
 
 
 # WAITING =====
@@ -29,6 +25,8 @@
 #TODO: #gameplay modifying car setting between tracks: engine (speed), tires
 # (friction), suspension (roll)
 #TODO: #gameplay driver selection
+#TODO: #gameplay waypoints as a line
+#TODO: #gameplay forks
 #TODO: #engine hardware instancing or save flattened files on bam files
 # (caching)
 #TODO: #engine multi-threading physics loading

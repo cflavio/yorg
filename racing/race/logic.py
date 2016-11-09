@@ -27,13 +27,13 @@ class RaceLogic(Logic):
 
     @staticmethod
     def start():
-        game.fsm.demand('Loading')
+        game.fsm.demand('Race')
 
     def enter_loading(self, track_path='', car_path='', player_cars=[]):
         eng.gfx.init()
         if not track_path and not car_path:
             tracks = ['prototype', 'desert']
-            track = tracks[tracks.index(game.options['save']['track']) + 1]
+            track = tracks[tracks.index(game.options['save']['track'])]
             track_path = 'tracks/' + track
             car_path = game.options['save']['car']
         conf = game.options
@@ -89,7 +89,7 @@ class RaceLogic(Logic):
 
             def load_other_cars():
                 if not cars:
-                    game.fsm.demand('Play')
+                    game.fsm.race.fsm.demand('Countdown')
                     return
                 car = cars[0]
                 cars.remove(car)
@@ -137,7 +137,7 @@ class RaceLogic(Logic):
         eng.base.camera.set_pos(0, 0, 0)
 
     def enter_play(self):
-        game.track.gfx.model.reparentTo(render)
+        game.track.gfx.model.reparentTo(eng.gfx.world_np)
         game.player_car.gfx.reparent()
         map(lambda car: car.gfx.reparent(), game.cars)
         if eng.server.is_active:

@@ -94,6 +94,8 @@ class GODirector(object):
         self.pending[comp_info[1].__name__] = idx
         args = comp_info[2] if len(comp_info) > 2 else []
         setattr(obj, comp_info[0], comp_info[1](*args))
+        if len(comp_info) > 3:
+            comp_info[3]()
 
     def on_component_built(self, obj):
         self.__process_lst(obj.mdt, self.pending[obj.__class__.__name__])

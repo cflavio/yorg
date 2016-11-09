@@ -1,6 +1,6 @@
 from abc import ABCMeta
 from racing.game.gameobject import GameObjectMdt
-from .logic import SeasonLogic
+from .logic import SeasonLogic, SingleRaceSeasonLogic
 
 
 class Season(GameObjectMdt):
@@ -19,3 +19,6 @@ class Season(GameObjectMdt):
             [('event', self.event_cls, [self])]]
         GameObjectMdt.__init__(self, init_lst)
 
+
+class SingleRaceSeason(Season):
+    logic_cls = SingleRaceSeasonLogic
