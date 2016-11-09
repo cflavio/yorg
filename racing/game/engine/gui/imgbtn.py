@@ -1,5 +1,5 @@
 from direct.gui.DirectButton import DirectButton
-from panda3d.core import PNMImage, Texture
+from panda3d.core import PNMImage, Texture, Filename
 from itertools import product
 from os.path import dirname, realpath
 
@@ -7,7 +7,7 @@ from os.path import dirname, realpath
 class ImageButton(DirectButton):
 
     def __init__(self, image, *args, **kwargs):
-        this_path = dirname(realpath(__file__))
+        this_path = Filename.fromOsSpecific(dirname(realpath(__file__)))
         maps = loader.loadModel(this_path + '/../../assets/img_btn')
         imgs = ['image', 'image', 'image_rollover']
         btn_geom = [maps.find('**/' + img) for img in imgs]
