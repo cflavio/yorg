@@ -14,11 +14,13 @@ class _Fsm(Fsm):
 
     def enterLoading(self, track_path='', car_path='', player_cars=[]):
         eng.log_mgr.log('entering Loading state')
-        self.mdt.logic.enter_loading(track_path, car_path, player_cars)
+        args = [track_path, car_path, player_cars]
+        self.mdt.gui.loading.enter_loading(*args)
+        taskMgr.doMethodLater(1.0, self.mdt.logic.load_stuff, 'loading stuff', args)
 
     def exitLoading(self):
         eng.log_mgr.log('exiting Loading state')
-        self.mdt.logic.exit_loading()
+        self.mdt.gui.loading.exit_loading()
 
     def enterCountdown(self):
         self.countdown = Countdown()

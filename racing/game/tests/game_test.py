@@ -3,9 +3,9 @@ from os import chdir, getcwd
 from panda3d.core import loadPrcFileData, NodePath
 from unittest import TestCase
 
-from ya2.engine import Engine
-from ya2.game import GameLogic, Game
-from ya2.gameobject import GameObjectMdt
+from racing.game.engine.engine import Engine
+from racing.game.game import GameLogic, Game
+from racing.game.gameobject import GameObjectMdt
 
 
 class LogicTests(TestCase):

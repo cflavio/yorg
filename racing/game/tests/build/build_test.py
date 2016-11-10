@@ -3,7 +3,7 @@ from os.path import basename
 from shutil import rmtree
 from unittest import TestCase
 
-from ya2.build.build import InsideDir, get_files, get_size, exec_cmd, set_path
+from racing.game.build.build import InsideDir, get_files, get_size, exec_cmd, set_path
 
 
 class BuildTests(TestCase):
@@ -25,7 +25,7 @@ class BuildTests(TestCase):
 
     def test_inside_dir(self):
         self.assertNotEqual(basename(getcwd()), 'tests')
-        with InsideDir('ya2/tests'):
+        with InsideDir('racing/game/tests'):
             self.assertEqual(basename(getcwd()), 'tests')
         self.assertNotEqual(basename(getcwd()), 'tests')
 

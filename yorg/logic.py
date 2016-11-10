@@ -13,6 +13,6 @@ class YorgLogic(GameLogic):
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         if car and track:
-            self.mdt.fsm.demand('Loading', 'tracks/' + track, car)
+            self.mdt.fsm.demand('Race', 'tracks/' + track, car)
         else:
             self.mdt.fsm.demand('Menu')

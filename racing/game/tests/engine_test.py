@@ -4,8 +4,8 @@ from panda3d.core import loadPrcFileData, NodePath, ConfigVariableBool,\
     MouseWatcher, Lens
 from unittest import TestCase
 
-from ya2.decorators.evtdec import evt_dec
-from ya2.engine import Engine, Configuration
+from racing.game.engine.engine import Engine
+from racing.game.engine.configuration import Configuration
 
 
 class ConfigurationTests(TestCase):

@@ -16,7 +16,6 @@ class Car(GameObjectMdt):
     phys_cls = _Phys
     event_cls = _Event
     logic_cls = CarLogic
-    gui_cls = CarGui
     ai_cls = Ai
 
     def __init__(self, path, pos, hpr, cb, race, laps):

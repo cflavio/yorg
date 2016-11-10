@@ -1,13 +1,14 @@
 from racing.game.build.build import extensions, get_files, image_extensions, \
     set_path, p3d_path_str, win_path_str, osx_path_str, linux_path_str, \
     src_path_str, devinfo_path_str, docs_path_str, win_path_noint_str,\
-    osx_path_noint_str, linux_path_noint_str, pdf_path_str
+    osx_path_noint_str, linux_path_noint_str, pdf_path_str, test_path_str
 from racing.game.build.p3d import build_p3d
 from racing.game.build.windows import build_windows
 from racing.game.build.osx import build_osx
 from racing.game.build.linux import build_linux
 from racing.game.build.src import build_src
 from racing.game.build.devinfo import build_devinfo
+from racing.game.build.test import build_tests
 from racing.game.build.docs import build_docs
 from racing.game.build.strings import build_strings, build_string_template
 from racing.game.build.imgs import build_images
@@ -17,7 +18,7 @@ from racing.game.build.pdf import build_pdf
 argument_info = [
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
-    ('images', 0), ('nointernet', 0), ('pdf', 0)]
+    ('images', 0), ('nointernet', 0), ('pdf', 0), ('tests', 0)]
 arguments = dict((arg, ARGUMENTS.get(arg, default))
                   for arg, default in argument_info)
 if any(arguments[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64']):
@@ -41,6 +42,7 @@ linux_path_32_noint = linux_path_noint_str.format(platform='i386', **args)
 linux_path_64_noint = linux_path_noint_str.format(platform='amd64', **args)
 src_path = src_path_str.format(**args)
 devinfo_path = devinfo_path_str.format(**args)
+tests_path = test_path_str.format(**args)
 docs_path = docs_path_str.format(**args)
 pdf_path = pdf_path_str.format(**args)
 
@@ -50,6 +52,7 @@ bld_osx = Builder(action=build_osx)
 bld_linux = Builder(action=build_linux)
 bld_src = Builder(action=build_src)
 bld_devinfo = Builder(action=build_devinfo)
+bld_tests = Builder(action=build_tests)
 bld_docs = Builder(action=build_docs)
 bld_pdf = Builder(action=build_pdf)
 bld_images = Builder(action=build_images)
@@ -59,9 +62,9 @@ bld_str_tmpl = Builder(action=build_string_template, suffix='.pot',
 
 env = Environment(BUILDERS={
     'p3d': bld_p3d, 'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
-    'source': bld_src, 'devinfo': bld_devinfo, 'docs': bld_docs,
-    'images': bld_images, 'str': bld_str, 'str_tmpl': bld_str_tmpl,
-    'pdf': bld_pdf})
+    'source': bld_src, 'devinfo': bld_devinfo, 'tests': bld_tests,
+    'docs': bld_docs, 'images': bld_images, 'str': bld_str,
+    'str_tmpl': bld_str_tmpl, 'pdf': bld_pdf})
 env['P3D_PATH'] = p3d_path
 env['NAME'] = app_name
 env['LANG'] = lang_path
@@ -80,7 +83,9 @@ pdf_conf = {
         ('lua', './racing/game', 'config.lua', filt_game),
         ('', './racing/game', '*.rst *.css_t *.conf', filt_game),
         ('html', './racing/game', '*.html', filt_game),
-        ('javascript', './racing/game', '*.js', filt_game)]}
+        ('javascript', './racing/game', '*.js', filt_game)],
+    'tests': [
+        ('python', './racing/game/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
 
 def cond_racing(s):
@@ -108,6 +113,8 @@ if arguments['source']:
     env.source([src_path], src_src)
 if arguments['devinfo']:
     env.devinfo([devinfo_path], get_files(['py']))
+if arguments['tests']:
+    env.tests([tests_path], get_files(['py']))
 if arguments['windows']:
     out_path = win_path_noint if arguments['nointernet'] else win_path
     env.windows([out_path], [p3d_path])

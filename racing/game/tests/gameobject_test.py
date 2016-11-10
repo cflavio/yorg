@@ -2,9 +2,8 @@ from mock import patch, create_autospec
 from panda3d.core import loadPrcFileData
 from unittest import TestCase
 
-from ya2.decorators.evtdec import evt_dec
-from ya2.engine import Engine
-from ya2.gameobject import Ai, Audio, Event, Fsm, GameObjectMdt, Gfx, Gui, \
+from racing.game.engine.engine import Engine
+from racing.game.gameobject import Ai, Audio, Event, Fsm, GameObjectMdt, Gfx, Gui, \
     Logic, Phys, Colleague
 
 
