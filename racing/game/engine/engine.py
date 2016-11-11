@@ -10,10 +10,10 @@ from .font import FontMgr
 from .log import LogMgr
 from .lang import LangMgr
 from .gfx import EngineGfx
-from .gui.gui import EngineGui
+from .gui.gui import EngineGui, EngineGuiWindow
 from .phys import EnginePhys
 from .logic import EngineLogic
-from .event import EngineEvent
+from .event import EngineEvent, EngineEventWindow
 from .audio import EngineAudio
 from .network.server import Server
 from .network.client import Client
@@ -74,3 +74,13 @@ class Engine(GameObjectMdt):
 
     def build_client(self):
         self.client = Client(self)
+
+    def destroy(self):
+        GameObjectMdt.destroy(self)
+        self.base.destroy()
+
+
+class EngineWindow(Engine):
+
+    gui_cls = EngineGuiWindow
+    event_cls = EngineEventWindow

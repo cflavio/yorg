@@ -10,10 +10,6 @@ class EngineGui(Gui):
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
         eng.base.disableMouse()
-        resol = eng.logic.conf.win_size.split()
-        self.set_resolution(tuple(int(size) for size in resol))
-        if eng.logic.conf.fullscreen:
-            self.toggle_fullscreen()
         self.pause_frame = None
 
     @staticmethod
@@ -52,16 +48,6 @@ class EngineGui(Gui):
         except ValueError:  # sometimes we have empty resolutions
             return self.resolution
 
-    def set_resolution(self, res, check=True):
-        eng.log_mgr.log('setting resolution ' + str(res))
-        props = WindowProperties()
-        props.set_size(res)
-        eng.base.win.request_properties(props)
-        if not check:
-            return
-        args = 3.0, self.set_resolution_check, 'resolution check', [res]
-        taskMgr.doMethodLater(*args)
-
     def set_resolution_check(self, res):
         res_msg = 'resolutions: {curr} (current), {res} (wanted)'
         eng.log_mgr.log(res_msg.format(curr=self.resolution, res=res))
@@ -76,3 +62,23 @@ class EngineGui(Gui):
         props = WindowProperties()
         props.set_fullscreen(not eng.base.win.is_fullscreen())
         base.win.requestProperties(props)
+
+
+class EngineGuiWindow(Gui):
+
+    def __init__(self, mdt):
+        EngineGui.__init__(self, mdt)
+        resol = eng.logic.conf.win_size.split()
+        self.set_resolution(tuple(int(size) for size in resol))
+        if eng.logic.conf.fullscreen:
+            self.toggle_fullscreen()
+
+    def set_resolution(self, res, check=True):
+        eng.log_mgr.log('setting resolution ' + str(res))
+        props = WindowProperties()
+        props.set_size(res)
+        eng.base.win.request_properties(props)
+        if not check:
+            return
+        args = 3.0, self.set_resolution_check, 'resolution check', [res]
+        taskMgr.doMethodLater(*args)

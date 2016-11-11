@@ -8,7 +8,7 @@ from racing.game.build.osx import build_osx
 from racing.game.build.linux import build_linux
 from racing.game.build.src import build_src
 from racing.game.build.devinfo import build_devinfo
-from racing.game.build.test import build_tests
+from racing.game.build.test import build_ut
 from racing.game.build.docs import build_docs
 from racing.game.build.strings import build_strings, build_string_template
 from racing.game.build.imgs import build_images
@@ -52,7 +52,7 @@ bld_osx = Builder(action=build_osx)
 bld_linux = Builder(action=build_linux)
 bld_src = Builder(action=build_src)
 bld_devinfo = Builder(action=build_devinfo)
-bld_tests = Builder(action=build_tests)
+bld_tests = Builder(action=build_ut)
 bld_docs = Builder(action=build_docs)
 bld_pdf = Builder(action=build_pdf)
 bld_images = Builder(action=build_images)

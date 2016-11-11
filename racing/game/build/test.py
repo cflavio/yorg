@@ -2,7 +2,7 @@ from os import system
 from .build import path, ver_branch, exec_cmd, test_path_str
 
 
-def build_tests(target, source, env):
+def build_ut(target, source, env):
     name = env['NAME']
     with open('tests.txt', 'w') as outfile:
         outfile.write(exec_cmd('nosetests'))

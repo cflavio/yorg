@@ -1,7 +1,7 @@
 from direct.showbase.DirectObject import DirectObject
 from mock import create_autospec
 from panda3d.core import loadPrcFileData, NodePath, ConfigVariableBool,\
-    MouseWatcher, Lens
+    MouseWatcher, Lens, GraphicsWindow
 from unittest import TestCase
 
 from racing.game.engine.engine import Engine
@@ -34,21 +34,20 @@ class EngineTests(TestCase):
         self.engine = Engine()
         self.engine.camera = create_autospec(NodePath)
         self.assertIsInstance(self.engine, Engine)
-        self.engine.toggle_debug()
 
 
-class Accepter(DirectObject):
-
-    def __init__(self):
-        self = evt_dec(self)
-
-    def evt_MouseClick(self, arg):
-        self.button = arg.button, 0
-
-    def evt_MouseClickUp(self, arg):
-        self.button = arg.button, 1
-
-
+#class Accepter(DirectObject):
+#
+#    def __init__(self):
+#        self = evt_dec(self)
+#
+#    def evt_MouseClick(self, arg):
+#        self.button = arg.button, 0
+#
+#    def evt_MouseClickUp(self, arg):
+#        self.button = arg.button, 1
+#
+#
 # class EventsTests(TestCase):
 #
 #     def setUp(self):

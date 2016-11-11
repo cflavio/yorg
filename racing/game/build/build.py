@@ -88,7 +88,7 @@ linux_path_noint_str = '{path}{name}-%s-nointernet-linux_{platform}' % \
     ver_branch
 src_path_str = '{path}{name}-%s-src.tar.gz' % ver_branch
 devinfo_path_str = '{path}{name}-%s-devinfo.tar.gz' % ver_branch
-test_path_str = '{path}{name}-%s-test.tar.gz' % ver_branch
+test_path_str = '{path}{name}-%s-tests.tar.gz' % ver_branch
 docs_path_str = '{path}{name}-%s-docs.tar.gz' % ver_branch
 pdf_path_str = '{path}{name}-%s-code.tar.gz' % ver_branch
 extensions = ['txt', 'ttf', 'dds', 'egg', 'ogg', 'py', 'lua', 'rst', 'pdef',
