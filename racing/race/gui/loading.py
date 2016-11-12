@@ -1,8 +1,9 @@
 from panda3d.core import TextNode, NodePath
 from direct.gui.OnscreenText import OnscreenText
+from racing.game.gameobject import Colleague
 
 
-class Loading:
+class Loading(Colleague):
 
     def __init__(self, mdt):
         self.mdt = mdt

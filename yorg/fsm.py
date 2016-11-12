@@ -1,4 +1,5 @@
-from racing.race.race import Race
+from racing.race.race import Race, RaceSinglePlayer, RaceServer, \
+    RaceClient
 from racing.game.gameobject import Fsm
 from menu.menu import YorgMenu
 
@@ -35,8 +36,16 @@ class _Fsm(Fsm):
 
     def enterRace(self, track_path='', car_path='', player_cars=[]):
         eng.log_mgr.log('entering Race state')
-        self.race = Race()
+        if eng.server.is_active:
+            self.race = RaceServer()
+        elif eng.client.is_active:
+            self.race = RaceClient()
+        else:
+            self.race = RaceSinglePlayer()
         self.race.fsm.demand('Loading', track_path, car_path, player_cars)
+
+    def exitRace(self):
+        self.race.destroy()
 
     def enterRanking(self):
         game.logic.season.logic.ranking.gui.show()

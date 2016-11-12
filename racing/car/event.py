@@ -1,9 +1,8 @@
 from itertools import chain
 from direct.showbase.InputStateGlobal import inputState
 from racing.game.gameobject import Event
+from racing.race.event import NetMsgs
 from panda3d.core import Vec3, Vec2
-from .ai import _Ai
-from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
 
 
 class _Event(Event):
@@ -67,27 +66,16 @@ class _Event(Event):
         eng.event.detach(self.on_frame)
 
 
-class NetMsgs(object):
-    game_packet = 0
-    player_info = 1
-    end_race_player = 2
-    end_race = 3
-
-
 class _PlayerEvent(_Event):
 
     def __init__(self, mdt):
         _Event.__init__(self, mdt)
         self.accept('f11', self.mdt.gui.toggle)
-        self.last_sent = globalClock.getFrameTime()
 
     def on_frame(self):
         _Event.on_frame(self)
         self.mdt.logic.camera.update_cam()
         self.mdt.audio.update(self._get_input())
-
-    def network_register(self):
-        pass
 
     def __process_wall(self):
         eng.audio.play(self.mdt.audio.crash_sfx)
@@ -148,70 +136,17 @@ class _PlayerEventServer(_PlayerEvent):
 
     def __init__(self, mdt):
         _PlayerEvent.__init__(self, mdt)
-        self.server_info = {}
-
-    def network_register(self):
-        eng.server.register_cb(self.process_srv)
-
-    def on_frame(self):
-        _PlayerEvent.on_frame(self)
-        pos = self.mdt.gfx.nodepath.getPos()
-        hpr = self.mdt.gfx.nodepath.getHpr()
-        velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
-        self.server_info['server'] = (pos, hpr, velocity)
-        for car in [car for car in game.cars if car.ai_cls == _Ai]:
-            pos = car.gfx.nodepath.getPos()
-            hpr = car.gfx.nodepath.getHpr()
-            velocity = car.phys.vehicle.getChassis().getLinearVelocity()
-            self.server_info[car] = (pos, hpr, velocity)
-        if globalClock.getFrameTime() - self.last_sent > .2:
-            eng.server.send(self.__prepare_game_packet())
-            self.last_sent = globalClock.getFrameTime()
-
-    @staticmethod
-    def __prepare_game_packet():
-        #should be done by race
-        packet = [NetMsgs.game_packet]
-        for car in [game.player_car] + game.cars:
-            name = car.gfx.path
-            pos = car.gfx.nodepath.getPos()
-            hpr = car.gfx.nodepath.getHpr()
-            velocity = car.phys.vehicle.getChassis().getLinearVelocity()
-            packet += chain([name], pos, hpr, velocity)
-        return packet
 
     def _process_end_goal(self):
         eng.server.send([NetMsgs.end_race])
         _PlayerEvent._process_end_goal(self)
 
-    def __process_player_info(self, data_lst, sender):
-        from .car import NetworkCar
-        pos = (data_lst[1], data_lst[2], data_lst[3])
-        hpr = (data_lst[4], data_lst[5], data_lst[6])
-        velocity = (data_lst[7], data_lst[8], data_lst[9])
-        self.server_info[sender] = (pos, hpr, velocity)
-        car_name = eng.server.car_mapping[sender]
-        for car in [car for car in game.cars if car.__class__ == NetworkCar]:
-            if car_name in car.gfx.path:
-                LerpPosInterval(car.gfx.nodepath, .2, pos).start()
-                LerpHprInterval(car.gfx.nodepath, .2, hpr).start()
-
-    def process_srv(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.player_info:
-            self.__process_player_info(data_lst, sender)
-        if data_lst[0] == NetMsgs.end_race_player:
-            eng.server.send([NetMsgs.end_race])
-            dct = {'kronos': 0, 'themis': 0, 'diones': 0}
-            # move into race
-            game.fsm.race.fsm.demand('Results', dct)
-            # forward the actual ranking
-            game.track.gui.results.show(dct)
-
 
 class _PlayerEventClient(_PlayerEvent):
 
-    def network_register(self):
-        eng.client.register_cb(self.process_client)
+    def __init__(self, mdt):
+        _PlayerEvent.__init__(self, mdt)
+        self.last_sent = globalClock.getFrameTime()
 
     def on_frame(self):
         _PlayerEvent.on_frame(self)
@@ -227,39 +162,12 @@ class _PlayerEventClient(_PlayerEvent):
         eng.client.send([NetMsgs.end_race_player])
         _PlayerEvent._process_end_goal(self)
 
-    @staticmethod
-    def __process_game_packet(data_lst):
-        # into race
-        from .car import NetworkCar
-        for i in range(1, len(data_lst), 10):
-            car_name = data_lst[i]
-            car_pos = (data_lst[i + 1], data_lst[i + 2], data_lst[i + 3])
-            car_hpr = (data_lst[i + 4], data_lst[i + 5], data_lst[i + 6])
-            netcars = [car for car in game.cars if car.__class__ == NetworkCar]
-            for car in netcars:
-                if car_name in car.gfx.path:
-                    LerpPosInterval(car.gfx.nodepath, .2, car_pos).start()
-                    LerpHprInterval(car.gfx.nodepath, .2, car_hpr).start()
-
-    def process_client(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.game_packet:
-            self.__process_game_packet(data_lst)
-        if data_lst[0] == NetMsgs.end_race:
-            if game.fsm.race.fsm.getCurrentOrNextState() != 'Results':
-                # forward the actual ranking
-                dct = {'kronos': 0, 'themis': 0, 'diones': 0}
-                game.fsm.race.fsm.demand('Results', dct)
-                game.track.gui.results.show(dct)
-
 
 class _NetworkEvent(_Event):
 
     def _get_input(self):
-        return {
-            'forward': False,
-            'left': False,
-            'reverse': False,
-            'right': False}
+        return {'forward': False, 'left': False, 'reverse': False,
+                'right': False}
 
 
 class _AiEvent(_Event):

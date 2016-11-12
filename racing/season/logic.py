@@ -33,7 +33,7 @@ class SeasonLogic(Logic):
             game.fsm.demand('Race', 'tracks/' + next_track, curr_car)
 
 
-class SingleRaceSeasonLogic(Logic):
+class SingleRaceSeasonLogic(SeasonLogic):
 
     @staticmethod
     def step():

@@ -1,6 +1,7 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from racing.game.engine.gui.page import Page, PageGui
+from racing.season.season import SingleRaceSeason
 from .netmsgs import NetMsgs
 
 
@@ -73,7 +74,8 @@ class CarPageGuiServer(CarPageGui):
             eng.server.send(packet)
             eng.log_mgr.log('start race: ' + str(packet))
             curr_car = self.current_cars[self]
-            game.fsm.demand('Loading', self.track_path, curr_car, packet[2:])
+            game.logic.season = SingleRaceSeason()
+            game.fsm.demand('Race', self.track_path, curr_car, packet[2:])
 
     def process_srv(self, data_lst, sender):
         if data_lst[0] == NetMsgs.car_request:
@@ -126,7 +128,8 @@ class CarPageGuiClient(CarPageGui):
             btn.setAlphaScale(1)
         if data_lst[0] == NetMsgs.start_race:
             eng.log_mgr.log('start_race: ' + str(data_lst))
-            game.fsm.demand('Loading', self.track_path, self.car, data_lst[2:])
+            game.logic.season = SingleRaceSeason()
+            game.fsm.demand('Race', self.track_path, self.car, data_lst[2:])
 
 
 class CarPage(Page):

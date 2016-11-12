@@ -1,5 +1,7 @@
 # BUGS =====
 # ai car aren't synced in multiplayer
+# the server doesn't see client's car selection
+# some phys meshes (e.g. WallMilestone) are misplaced
 
 
 # TODO LIST =====

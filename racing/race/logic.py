@@ -83,21 +83,39 @@ class RaceLogic(Logic):
         game.track.gfx.model.reparentTo(eng.gfx.world_np)
         game.player_car.gfx.reparent()
         map(lambda car: car.gfx.reparent(), game.cars)
-        if eng.server.is_active:
-            self.ready_clients = []
-            eng.server.register_cb(self.process_srv)
-        elif eng.client.is_active:
-            eng.client.register_cb(self.process_client)
 
-            def send_ready(task):
-                eng.client.send([NetMsgs.client_ready])
-                eng.log_mgr.log('sent client ready')
-                return task.again
-            self.send_tsk = taskMgr.doMethodLater(.5, send_ready, 'send ready')
-            # the server could not be listen to this event if it is still
-            # loading we should do a global protocol, perhaps
-        else:
-            self.start_play()
+    def start_play(self):
+        eng.phys.start()
+        game.track.event.start()
+        self.mdt.event.network_register()
+        game.audio.game_music.play()
+        cars = [game.player_car] + game.cars
+        map(lambda car: car.logic.reset_car(), cars)
+        map(lambda car: car.event.start(), cars)
+
+    @staticmethod
+    def exit_play():
+        game.audio.game_music.stop()
+        game.track.destroy()
+        game.player_car.destroy()
+        map(lambda car: car.destroy(), game.cars)
+        eng.phys.stop()
+        eng.gfx.clean()
+
+
+class RaceLogicSinglePlayer(RaceLogic):
+
+    def enter_play(self):
+        RaceLogic.enter_play(self)
+        self.start_play()
+
+
+class RaceLogicServer(RaceLogic):
+
+    def enter_play(self):
+        RaceLogic.enter_play(self)
+        self.ready_clients = []
+        eng.server.register_cb(self.process_srv)
 
     def process_srv(self, data_lst, sender):
         if data_lst[0] == NetMsgs.client_ready:
@@ -109,6 +127,27 @@ class RaceLogic(Logic):
                 self.start_play()
                 eng.server.send([NetMsgs.start_race])
 
+    @staticmethod
+    def exit_play():
+        eng.server.destroy()
+        eng.server = None
+        RaceLogic.exit_play()
+
+
+class RaceLogicClient(RaceLogic):
+
+    def enter_play(self):
+        RaceLogic.enter_play(self)
+        eng.client.register_cb(self.process_client)
+
+        def send_ready(task):
+            eng.client.send([NetMsgs.client_ready])
+            eng.log_mgr.log('sent client ready')
+            return task.again
+        self.send_tsk = taskMgr.doMethodLater(.5, send_ready, 'send ready')
+        # the server could not be listen to this event if it is still
+        # loading we should do a global protocol, perhaps
+
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.start_race:
             eng.log_mgr.log('start race')
@@ -116,26 +155,7 @@ class RaceLogic(Logic):
             self.start_play()
 
     @staticmethod
-    def start_play():
-        eng.phys.start()
-        game.track.event.start()
-        game.player_car.event.network_register()
-        game.audio.game_music.play()
-        cars = [game.player_car] + game.cars
-        map(lambda car: car.logic.reset_car(), cars)
-        map(lambda car: car.event.start(), cars)
-
-    @staticmethod
     def exit_play():
-        if eng.server.is_active:
-            eng.server.destroy()
-            eng.server = None
-        elif eng.client.is_active:
-            eng.client.destroy()
-            eng.client = None
-        game.audio.game_music.stop()
-        game.track.destroy()
-        game.player_car.destroy()
-        map(lambda car: car.destroy(), game.cars)
-        eng.phys.stop()
-        eng.gfx.clean()
+        eng.client.destroy()
+        eng.client = None
+        RaceLogic.exit_play()
