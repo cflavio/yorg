@@ -64,7 +64,7 @@ class EngineGui(Gui):
         base.win.requestProperties(props)
 
 
-class EngineGuiWindow(Gui):
+class EngineGuiWindow(EngineGui):
 
     def __init__(self, mdt):
         EngineGui.__init__(self, mdt)

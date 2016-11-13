@@ -23,7 +23,7 @@ class EngineEvent(Event):
         return task.cont
 
 
-class EngineEventWindow(Event):
+class EngineEventWindow(EngineEvent):
 
     def __init__(self, mdt):
         EngineEvent.__init__(self, mdt)

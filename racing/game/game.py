@@ -1,6 +1,6 @@
 from abc import ABCMeta
 from .gameobject import Logic, GameObjectMdt
-from .engine.engine import EngineWindow
+from .engine.engine import Engine, EngineWindow
 import __builtin__
 import sys
 
@@ -17,10 +17,11 @@ class GameLogic(Logic):
 class Game(GameObjectMdt):
     __metaclass__ = ABCMeta
     logic_cls = GameLogic
+    engine_cls = Engine
 
     def __init__(self, classes, conf):
         __builtin__.game = self
-        eng = EngineWindow(conf)
+        eng = self.engine_cls(conf)
         init_lst = [
             [('fsm', classes[0], [self])],
             [('gfx', classes[1], [self])],
@@ -36,6 +37,7 @@ class Game(GameObjectMdt):
 
 
 class GameWindow(Game):
+    engine_cls = EngineWindow
 
     def __init__(self, classes, conf):
         Game.__init__(self, classes, conf)
