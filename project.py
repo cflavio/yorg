@@ -1,5 +1,4 @@
 # BUGS =====
-# ai car aren't synced in multiplayer
 
 
 # TODO LIST =====

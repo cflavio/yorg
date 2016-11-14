@@ -55,7 +55,7 @@ class RaceLogic(Logic):
                 hpr = game.track.phys.get_start_pos(grid.index(car))[1]
                 func = load_other_cars
                 no_p = car not in player_cars
-                car_class = AiCar if no_p else car_class
+                car_class = AiCar if no_p and eng.server.is_active else car_class
                 new_car = car_class('cars/' + car, pos, hpr, func, self.mdt,
                                     game.options['development']['laps'])
                 game.cars += [new_car]
