@@ -87,8 +87,13 @@ class CarPageGuiServer(CarPageGui):
                 eng.log_mgr.log('car already selected: ' + car)
             elif btn['state'] == NORMAL:
                 eng.log_mgr.log('car selected: ' + car)
+                if sender in self.current_cars:
+                    _btn = self._buttons(self.current_cars[sender])[0]
+                    _btn['state'] = NORMAL
+                    _btn.setAlphaScale(1)
                 self.current_cars[sender] = car
                 btn['state'] = DISABLED
+                btn.setAlphaScale(.25)
                 eng.server.send([NetMsgs.car_confirm, car], sender)
                 eng.server.send([NetMsgs.car_selection, car])
                 eng.server.car_mapping[sender] = car
@@ -107,6 +112,10 @@ class CarPageGuiClient(CarPageGui):
 
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.car_confirm:
+            if self.car:
+                _btn = self._buttons(self.car)[0]
+                _btn['state'] = NORMAL
+                _btn.setAlphaScale(1)
             self.car = car = data_lst[1]
             eng.log_mgr.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
