@@ -64,6 +64,7 @@ class _Phys(Phys):
     @staticmethod
     def add_geoms_merged(geoms, mesh, phys_model, geom_name):
         for geom in geoms:
+            geom.flattenLight()
             transf = geom.getTransform(phys_model)
             for _geom in [g.decompose() for g in geom.node().getGeoms()]:
                 mesh.addGeom(_geom, transf)
@@ -71,6 +72,7 @@ class _Phys(Phys):
 
     @staticmethod
     def add_geoms_unmerged(geoms, mesh, phys_model, geom_name):
+        geoms.flattenLight()
         for _geom in [g.decompose() for g in geoms.node().getGeoms()]:
             mesh.addGeom(_geom, geoms.getTransform(phys_model))
         return geoms.get_name()
