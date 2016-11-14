@@ -11,6 +11,7 @@ class AiTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -26,6 +27,7 @@ class AudioTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -41,6 +43,7 @@ class ColleagueTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -56,6 +59,7 @@ class EventTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -71,6 +75,7 @@ class FsmTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -86,6 +91,7 @@ class GfxTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -101,6 +107,7 @@ class GuiTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -116,6 +123,7 @@ class LogicTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -131,6 +139,7 @@ class PhysicsTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -146,6 +155,7 @@ class GameObjectTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()

@@ -13,6 +13,7 @@ class LogicTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.eng.destroy()
@@ -28,6 +29,7 @@ class GameTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def test_init(self):
         conf = Configuration()

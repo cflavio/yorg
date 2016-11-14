@@ -12,6 +12,7 @@ class ConfigurationTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
@@ -26,6 +27,7 @@ class EngineTests(TestCase):
 
     def setUp(self):
         loadPrcFileData('', 'window-type none')
+        loadPrcFileData('', 'audio-library-name null')
 
     def tearDown(self):
         self.engine.destroy()
