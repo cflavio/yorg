@@ -22,6 +22,8 @@
 #TODO: #ai obstacle avoidance
 #TODO: #gameplay modifying car setting between tracks: engine (speed), tires
 # (friction), suspension (roll)
+#TODO: #gameplay at end of a multiplayer race wait for other cars
+#TODO: #gameplay minimap should show all cars
 #TODO: #gameplay driver selection
 #TODO: #gameplay waypoints as a line
 #TODO: #gameplay forks

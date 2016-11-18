@@ -12,7 +12,7 @@ class Results(object):
         self.result_img = None
 
     def show(self, race_ranking):
-        track = game.track.track_path
+        track = game.track.path
         self.result_img = OnscreenImage(image='assets/images/gui/results.png',
                                         scale=(.8, 1, .8))
         self.result_img.setTransparency(True)
