@@ -4,7 +4,7 @@ from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectDialog import OkDialog
-from panda3d.core import TextNode
+from panda3d.core import TextNode, LVector2i
 from racing.game.engine.gui.page import Page, PageEvent, PageGui
 
 
@@ -65,19 +65,22 @@ class OptionPageGui(PageGui):
             pos=(.12, 1, .12), text='',
             indicatorValue=conf['settings']['fullscreen'],
             indicator_frameColor=menu_args.btn_color,
-            command=eng.gui.toggle_fullscreen, **menu_gui.checkbtn_args)
+            command=lambda val: eng.gui.toggle_fullscreen(),
+            **menu_gui.checkbtn_args)
 
         res_lab = DirectLabel(
             text='', pos=(-.1, 1, -.1), text_align=TextNode.ARight,
             **menu_gui.label_args)
         PageGui.transl_text(res_lab, 'Resolution')
+        res2vec = lambda res: LVector2i(*[int(val) for val in res.split('x')])
         self._res_opt = DirectOptionMenu(
             text='',
             items=['x'.join([str(el_res) for el_res in res])
                    for res in eng.gui.resolutions],
             pos=(.2, 1, -.1),
             initialitem='x'.join(str(res) for res in eng.gui.closest_res),
-            command=eng.gui.set_resolution, **menu_gui.option_args)
+            command=lambda res: eng.gui.set_resolution(res2vec(res)),
+            **menu_gui.option_args)
 
         aa_lab = DirectLabel(
             text='', pos=(-.1, 1, -.3), text_align=TextNode.ARight,
