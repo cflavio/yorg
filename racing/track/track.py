@@ -1,5 +1,5 @@
 from racing.game.gameobject import GameObjectMdt
-from .gfx import _Gfx
+from .gfx import TrackGfx
 from .phys import TrackPhys
 from .gui.gui import TrackGui
 from .event import _Event
@@ -11,8 +11,8 @@ class Track(GameObjectMdt):
         eng.log_mgr.log('init track')
         self.path = path
         init_lst = [
-            [('phys', TrackPhys, [self, path]),
-             ('gfx', _Gfx, [self, path, split_world, submodels],
+            [('phys', TrackPhys, [self]),
+             ('gfx', TrackGfx, [self, split_world, submodels],
               lambda: self.gfx.attach(self.on_loading)),
              ('gui', TrackGui, [self, path[6:]])],
             [('event', _Event, [self])]]

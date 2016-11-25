@@ -5,7 +5,7 @@ from racing.game.gameobject import Phys
 
 class TrackPhys(Phys):
 
-    def __init__(self, mdt, track_path):
+    def __init__(self, mdt):
         self.corners = None
         self.rigid_bodies = []
         self.ghosts = []
