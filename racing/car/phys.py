@@ -4,7 +4,7 @@ from racing.game.gameobject import Phys
 import yaml
 
 
-class _Phys(Phys):
+class CarPhys(Phys):
 
     def __init__(self, mdt, name, track_phys):
         Phys.__init__(self, mdt)
@@ -18,6 +18,11 @@ class _Phys(Phys):
         self.__set_phys_node()
         self.__set_vehicle()
         self.__set_wheels()
+
+    def __load_phys(self, name):
+        with open('assets/models/%s/phys.yml' % name) as phys_file:
+            conf = yaml.load(phys_file)
+        map(lambda field: setattr(self, field, conf[field]), conf.keys())
 
     def __set_collision(self):
         chassis_shape = BulletConvexHullShape()
@@ -61,23 +66,6 @@ class _Phys(Phys):
             self.__add_wheel(pos, front, nodepath.node(), radius),
             wheels_info)
 
-    def __load_phys(self, name):
-        with open('assets/models/%s/phys.yml' % name) as phys_file:
-            conf = yaml.load(phys_file)
-        fields = [
-            'collision_box_shape', 'collision_box_pos', 'collision_box_scale',
-            'wheel_fr_pos', 'wheel_fr_radius', 'wheel_fl_pos',
-            'wheel_fl_radius', 'wheel_rr_pos', 'wheel_rr_radius',
-            'wheel_rl_pos', 'wheel_rl_radius', 'max_speed', 'mass',
-            'steering_min_speed', 'steering_max_speed', 'steering_clamp',
-            'steering_inc', 'steering_dec', 'engine_acc_frc', 'engine_dec_frc',
-            'brake_frc', 'eng_brk_frc', 'pitch_control',
-            'suspension_compression', 'suspension_damping',
-            'max_suspension_force', 'max_suspension_travel_cm', 'skid_info',
-            'suspension_stiffness', 'wheels_damping_relaxation',
-            'wheels_damping_compression', 'friction_slip', 'roll_influence']
-        map(lambda field: setattr(self, field, conf[field]), fields)
-
     def __add_wheel(self, pos, front, node, radius):
         wheel = self.vehicle.createWheel()
         wheel.setNode(node)
@@ -116,19 +104,6 @@ class _Phys(Phys):
         self.vehicle.setBrake(brake_frc, 2)
         self.vehicle.setBrake(brake_frc, 3)
 
-    @staticmethod
-    def ground_name(wheel):
-        contact_pos = wheel.get_raycast_info().getContactPointWs()
-        top = (contact_pos.x, contact_pos.y, contact_pos.z + .1)
-        bottom = (contact_pos.x, contact_pos.y, contact_pos.z - .1)
-        result = eng.phys.world_phys.rayTestClosest(top, bottom)
-        ground = result.get_node()
-        return ground.get_name() if ground else ''
-
-    @property
-    def ground_names(self):
-        return [self.ground_name(wheel) for wheel in self.vehicle.get_wheels()]
-
     def update_car_props(self):
         speeds = []
         for wheel in self.vehicle.get_wheels():
@@ -145,3 +120,21 @@ class _Phys(Phys):
                 fric = float(gfx_node.get_tag('friction'))
                 wheel.setFrictionSlip(self.friction_slip * fric)
         self.curr_speed_factor = (sum(speeds) / len(speeds)) if speeds else 1.0
+
+    @property
+    def ground_names(self):
+        return map(self.ground_name, self.vehicle.get_wheels())
+
+    @staticmethod
+    def ground_name(wheel):
+        contact_pos = wheel.get_raycast_info().getContactPointWs()
+        top = contact_pos + (0, 0, .1)
+        bottom = contact_pos + (0, 0, -.1)
+        result = eng.phys.world_phys.rayTestClosest(top, bottom)
+        ground = result.get_node()
+        return ground.get_name() if ground else ''
+
+    def destroy(self):
+        eng.phys.world_phys.remove_vehicle(self.vehicle)
+        self.pnode = self.vehicle = self.__finds = self.__track_phys = None
+        Phys.destroy(self)

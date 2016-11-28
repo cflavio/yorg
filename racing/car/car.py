@@ -1,7 +1,7 @@
 from abc import ABCMeta
 from racing.game.gameobject import GameObjectMdt, Ai
 from .gfx import _Gfx
-from .phys import _Phys
+from .phys import CarPhys
 from .event import _Event, _PlayerEvent, _PlayerEventServer, \
     _PlayerEventClient, _NetworkEvent, _AiEvent
 from .logic import CarLogic, _PlayerLogic
@@ -13,7 +13,7 @@ from .ai import _Ai
 class Car(GameObjectMdt):
     __metaclass__ = ABCMeta
     gfx_cls = _Gfx
-    phys_cls = _Phys
+    phys_cls = CarPhys
     event_cls = _Event
     logic_cls = CarLogic
     ai_cls = Ai

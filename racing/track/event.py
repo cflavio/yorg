@@ -1,7 +1,7 @@
 from racing.game.gameobject import Event
 
 
-class _Event(Event):
+class TrackEvent(Event):
 
     def __init__(self, mdt):
         Event.__init__(self, mdt)
