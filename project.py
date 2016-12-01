@@ -1,35 +1,35 @@
 # BUGS =====
 
-
-# TODO LIST =====
-
-#TODO: put collision meshes and physics info into car models
-#TODO: driving model
-
-
-# WAITING =====
-
 #TODO: (windows) the light is very bright when switching to fullscreen without
 #    shaders
 #TODO: (windows) it crashes when some resolutions are selected
 
 
-# MAYBE/SOMEDAY =====
+# TODO LIST =====
 
 #TODO: #engine embed into a wx window
+#TODO: #gameplay compute the ranking at the end of a race
+#TODO: #gameplay at end of a multiplayer race wait for other cars
+#TODO: driving model
+
+
+# WAITING =====
+
+
+# MAYBE/SOMEDAY =====
+
 #TODO: #gui graphics buttons in the menu
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai obstacle avoidance
 #TODO: #gameplay modifying car setting between tracks: engine (speed), tires
 # (friction), suspension (roll)
-#TODO: #gameplay at end of a multiplayer race wait for other cars
-#TODO: #gameplay minimap should show all cars
 #TODO: #gameplay driver selection
-#TODO: #gameplay waypoints as a line
-#TODO: #gameplay forks
 #TODO: #engine hardware instancing or save flattened files on bam files
 # (caching)
 #TODO: #engine multi-threading physics loading
+#TODO: #gameplay minimap should show all cars
+#TODO: #gameplay waypoints as a line
+#TODO: #gameplay forks
 #TODO: #gameplay weapons
 #TODO: #gameplay damages
 #TODO: #network wheels animations

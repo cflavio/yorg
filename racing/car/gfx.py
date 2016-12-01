@@ -1,3 +1,4 @@
+from os.path import exists
 from racing.game.gameobject import Gfx
 from panda3d.bullet import BulletRigidBodyNode
 
@@ -28,10 +29,15 @@ class _Gfx(Gfx):
     def load_wheels(self, chassis_model):
         self.chassis_np = chassis_model
         load = eng.base.loader.loadModel
-        self.front_right_wheel_np = load(self.path + '/frontwheel')
-        self.front_left_wheel_np = load(self.path + '/frontwheel')
-        self.rear_right_wheel_np = load(self.path + '/rearwheel')
-        self.rear_left_wheel_np = load(self.path + '/rearwheel')
+        fpath = 'assets/models/' + self.path + '/wheelfront'
+        rpath = 'assets/models/' + self.path + '/wheelrear'
+        m_exists = lambda path: exists(path + '.egg') or exists(path + '.bam')
+        front_path = fpath if m_exists(fpath) else self.path + '/wheel'
+        rear_path = rpath if m_exists(rpath) else self.path + '/wheel'
+        self.front_right_wheel_np = load(front_path)
+        self.front_left_wheel_np = load(front_path)
+        self.rear_right_wheel_np = load(rear_path)
+        self.rear_left_wheel_np = load(rear_path)
         Gfx._end_async(self)
 
     def crash_sfx(self):

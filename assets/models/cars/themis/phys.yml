@@ -1,14 +1,3 @@
-collision_box_shape: [.75, 1.4, .25]  # meters
-collision_box_pos: [0, 0, .27]  # meters
-collision_box_scale: [.8, .6, .25]
-wheel_fr_pos: [.68, .85, .3]  # meters
-wheel_fr_radius: .3  # meters
-wheel_fl_pos: [-0.68, .85, .3]  # meters
-wheel_fl_radius: .3  # meters
-wheel_rr_pos: [.68, -1.0, .3]  # meters
-wheel_rr_radius: .3  # meters
-wheel_rl_pos: [-0.68, -1.0, .3]  # meters
-wheel_rl_radius: .3  # meters
 max_speed: 140.0  # Km/h
 mass: 1400  # kilograms
 steering_min_speed: 40  # degrees

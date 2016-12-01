@@ -14,7 +14,7 @@ class CarPhys(Phys):
         self.__finds = {}
         self.__track_phys = track_phys
         self.__load_phys(name)
-        self.__set_collision()
+        self.__set_collision(name)
         self.__set_phys_node()
         self.__set_vehicle()
         self.__set_wheels()
@@ -24,16 +24,12 @@ class CarPhys(Phys):
             conf = yaml.load(phys_file)
         map(lambda field: setattr(self, field, conf[field]), conf.keys())
 
-    def __set_collision(self):
+    def __set_collision(self, name):
+        self.capsule = loader.loadModel('%s/capsule' % name)
         chassis_shape = BulletConvexHullShape()
-        capsule = loader.loadModel('cars/capsule')
-        capsule.setScale(*self.collision_box_scale)
-        capsule.flattenLight()
-        for geom in eng.phys.find_geoms(capsule, 'Cube'):
+        for geom in eng.phys.find_geoms(self.capsule, 'Capsule'):
             chassis_shape.addGeom(geom.node().getGeom(0), geom.getTransform())
-        coll_pos = LVecBase3f(*self.collision_box_pos)
-        transform_state = TransformState.makePos(coll_pos)
-        self.mdt.gfx.nodepath.node().addShape(chassis_shape, transform_state)
+        self.mdt.gfx.nodepath.node().addShape(chassis_shape)
 
     def __set_phys_node(self):
         self.pnode = self.mdt.gfx.nodepath.node()
@@ -52,6 +48,24 @@ class CarPhys(Phys):
         eng.phys.world_phys.attachVehicle(self.vehicle)
 
     def __set_wheels(self):
+        fwheel_bounds = self.mdt.gfx.front_right_wheel_np.get_tight_bounds()
+        f_radius = (fwheel_bounds[1][2] - fwheel_bounds[0][2]) / 2.0  + .01
+        self.wheel_fr_radius = self.wheel_fl_radius = f_radius
+        rwheel_bounds = self.mdt.gfx.rear_right_wheel_np.get_tight_bounds()
+        r_radius = (rwheel_bounds[1][2] - rwheel_bounds[0][2]) / 2.0 + .01
+        self.wheel_rr_radius = self.wheel_rl_radius = r_radius
+        ffr = self.capsule.find('**/EmptyWheelFront')
+        ffl = self.capsule.find('**/EmptyWheelFront.001')
+        rrr = self.capsule.find('**/EmptyWheelRear')
+        rrl = self.capsule.find('**/EmptyWheelRear.001')
+        fr_node = ffr if ffr else self.capsule.find('**/EmptyWheel')
+        fl_node = ffl if ffl else self.capsule.find('**/EmptyWheel.001')
+        rr_node = rrr if rrr else self.capsule.find('**/EmptyWheel.002')
+        rl_node = rrl if rrl else self.capsule.find('**/EmptyWheel.003')
+        self.wheel_fr_pos = fr_node.get_pos() + (0, 0, f_radius)
+        self.wheel_fl_pos = fl_node.get_pos() + (0, 0, f_radius)
+        self.wheel_rr_pos = rr_node.get_pos() + (0, 0, r_radius)
+        self.wheel_rl_pos = rl_node.get_pos() + (0, 0, r_radius)
         frw = self.mdt.gfx.front_right_wheel_np
         flw = self.mdt.gfx.front_left_wheel_np
         rrw = self.mdt.gfx.rear_right_wheel_np
@@ -136,5 +150,6 @@ class CarPhys(Phys):
 
     def destroy(self):
         eng.phys.world_phys.remove_vehicle(self.vehicle)
-        self.pnode = self.vehicle = self.__finds = self.__track_phys = None
+        self.pnode = self.vehicle = self.__finds = self.__track_phys = \
+            self.capsule = None
         Phys.destroy(self)
