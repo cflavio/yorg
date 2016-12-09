@@ -24,9 +24,8 @@ class CarAudio(Audio):
             self.brake_sfx.play()
         if not input_dct['reverse'] or not hspeed or flying:
             self.brake_sfx.stop()
-        speed_ratio = self.mdt.phys.speed / self.mdt.phys.max_speed
-        self.engine_sfx.set_volume(max(.25, abs(speed_ratio)))
-        self.engine_sfx.set_play_rate(max(.25, abs(speed_ratio)))
+        self.engine_sfx.set_volume(max(.25, abs(self.mdt.phys.speed_ratio)))
+        self.engine_sfx.set_play_rate(max(.25, abs(self.mdt.phys.speed_ratio)))
 
     def destroy(self):
         self.engine_sfx.stop()

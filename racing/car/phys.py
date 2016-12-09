@@ -48,10 +48,10 @@ class CarPhys(Phys):
         eng.phys.world_phys.attachVehicle(self.vehicle)
 
     def __set_wheels(self):
-        fwheel_bounds = self.mdt.gfx.front_right_wheel_np.get_tight_bounds()
+        fwheel_bounds = self.mdt.gfx.wheels['fr'].get_tight_bounds()
         f_radius = (fwheel_bounds[1][2] - fwheel_bounds[0][2]) / 2.0  + .01
         self.wheel_fr_radius = self.wheel_fl_radius = f_radius
-        rwheel_bounds = self.mdt.gfx.rear_right_wheel_np.get_tight_bounds()
+        rwheel_bounds = self.mdt.gfx.wheels['rr'].get_tight_bounds()
         r_radius = (rwheel_bounds[1][2] - rwheel_bounds[0][2]) / 2.0 + .01
         self.wheel_rr_radius = self.wheel_rl_radius = r_radius
         ffr = self.capsule.find('**/EmptyWheelFront')
@@ -66,10 +66,10 @@ class CarPhys(Phys):
         self.wheel_fl_pos = fl_node.get_pos() + (0, 0, f_radius)
         self.wheel_rr_pos = rr_node.get_pos() + (0, 0, r_radius)
         self.wheel_rl_pos = rl_node.get_pos() + (0, 0, r_radius)
-        frw = self.mdt.gfx.front_right_wheel_np
-        flw = self.mdt.gfx.front_left_wheel_np
-        rrw = self.mdt.gfx.rear_right_wheel_np
-        rlw = self.mdt.gfx.rear_left_wheel_np
+        frw = self.mdt.gfx.wheels['fr']
+        flw = self.mdt.gfx.wheels['fl']
+        rrw = self.mdt.gfx.wheels['rr']
+        rlw = self.mdt.gfx.wheels['rl']
         wheels_info = [
             (self.wheel_fr_pos, True, frw, self.wheel_fr_radius),
             (self.wheel_fl_pos, True, flw, self.wheel_fl_radius),
