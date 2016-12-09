@@ -1,7 +1,7 @@
 from itertools import chain
 from direct.interval.LerpInterval import LerpPosInterval, LerpHprInterval
 from racing.game.gameobject import Event
-from racing.car.ai import _Ai
+from racing.car.ai import CarAi
 
 
 class NetMsgs(object):

@@ -149,7 +149,7 @@ class CarLogic(Logic):
         Logic.destroy(self)
 
 
-class _PlayerLogic(CarLogic):
+class CarPlayerLogic(CarLogic):
 
     def update(self, input_dct):
         CarLogic.update(self, input_dct)

@@ -3,7 +3,7 @@ from racing.game.gameobject import Gfx
 from panda3d.bullet import BulletRigidBodyNode
 
 
-class _Gfx(Gfx):
+class CarGfx(Gfx):
 
     def __init__(self, mdt, path):
         self.rear_right_wheel_np = None

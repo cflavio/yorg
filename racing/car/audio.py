@@ -2,7 +2,7 @@ from panda3d.core import AudioSound
 from racing.game.gameobject import Audio
 
 
-class _Audio(Audio):
+class CarAudio(Audio):
 
     def __init__(self, mdt):
         Audio.__init__(self, mdt)

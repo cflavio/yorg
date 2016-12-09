@@ -2,7 +2,7 @@ from racing.game.gameobject import Ai
 from panda3d.core import Vec3, Vec2, Point3, Mat4
 
 
-class _Ai(Ai):
+class CarAi(Ai):
 
     @property
     def current_target(self):

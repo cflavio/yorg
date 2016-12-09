@@ -1,20 +1,18 @@
-from abc import ABCMeta
 from racing.game.gameobject import GameObjectMdt, Ai
-from .gfx import _Gfx
+from .gfx import CarGfx
 from .phys import CarPhys
-from .event import _Event, _PlayerEvent, _PlayerEventServer, \
-    _PlayerEventClient, _NetworkEvent, _AiEvent
-from .logic import CarLogic, _PlayerLogic
-from .audio import _Audio
+from .event import CarEvent, CarPlayerEvent, CarPlayerEventServer, \
+    CarPlayerEventClient, CarNetworkEvent, CarAiEvent
+from .logic import CarLogic, CarPlayerLogic
+from .audio import CarAudio
 from .gui import CarGui
-from .ai import _Ai
+from .ai import CarAi
 
 
 class Car(GameObjectMdt):
-    __metaclass__ = ABCMeta
-    gfx_cls = _Gfx
+    gfx_cls = CarGfx
     phys_cls = CarPhys
-    event_cls = _Event
+    event_cls = CarEvent
     logic_cls = CarLogic
     ai_cls = Ai
 
@@ -25,13 +23,10 @@ class Car(GameObjectMdt):
         self.path = path
         self.race = race
         self.laps = laps
-        self.gfx = None
-        self.gui = None
         init_lst = [
-            [('fsm', self.fsm_cls, [self])],
             [('gfx', self.gfx_cls, [self, self.path]),
              ('phys', self.phys_cls, [self, self.path,
-                                         self.race.track.phys.model]),
+                                      self.race.track.phys.model]),
              ('gui', self.gui_cls, [self]),
              ('event', self.event_cls, [self])],
             [('logic', self.logic_cls, [self])],
@@ -43,30 +38,30 @@ class Car(GameObjectMdt):
 
 
 class PlayerCar(Car):
-    event_cls = _PlayerEvent
-    audio_cls = _Audio
+    event_cls = CarPlayerEvent
+    audio_cls = CarAudio
     gui_cls = CarGui
-    logic_cls = _PlayerLogic
+    logic_cls = CarPlayerLogic
 
 
 class PlayerCarServer(Car):
-    event_cls = _PlayerEventServer
-    audio_cls = _Audio
+    event_cls = CarPlayerEventServer
+    audio_cls = CarAudio
     gui_cls = CarGui
-    logic_cls = _PlayerLogic
+    logic_cls = CarPlayerLogic
 
 
 class PlayerCarClient(Car):
-    event_cls = _PlayerEventClient
-    audio_cls = _Audio
+    event_cls = CarPlayerEventClient
+    audio_cls = CarAudio
     gui_cls = CarGui
-    logic_cls = _PlayerLogic
+    logic_cls = CarPlayerLogic
 
 
 class NetworkCar(Car):
-    event_cls = _NetworkEvent
+    event_cls = CarNetworkEvent
 
 
 class AiCar(Car):
-    ai_cls = _Ai
-    event_cls = _AiEvent
+    ai_cls = CarAi
+    event_cls = CarAiEvent

@@ -5,7 +5,7 @@ from racing.race.event import NetMsgs
 from panda3d.core import Vec3, Vec2
 
 
-class _Event(Event):
+class CarEvent(Event):
 
     def __init__(self, mdt):
         self.tsk = None
@@ -66,14 +66,14 @@ class _Event(Event):
         eng.event.detach(self.on_frame)
 
 
-class _PlayerEvent(_Event):
+class CarPlayerEvent(CarEvent):
 
     def __init__(self, mdt):
-        _Event.__init__(self, mdt)
+        CarEvent.__init__(self, mdt)
         self.accept('f11', self.mdt.gui.toggle)
 
     def on_frame(self):
-        _Event.on_frame(self)
+        CarEvent.on_frame(self)
         self.mdt.logic.camera.update_cam()
         self.mdt.audio.update(self._get_input())
 
@@ -114,7 +114,7 @@ class _PlayerEvent(_Event):
             self._process_end_goal()
 
     def on_collision(self, obj, obj_name):
-        _Event.on_collision(self, obj, obj_name)
+        CarEvent.on_collision(self, obj, obj_name)
         if obj != self.mdt.gfx.nodepath.node():
             return
         if obj_name.startswith('Wall'):
@@ -132,7 +132,7 @@ class _PlayerEvent(_Event):
             'right': inputState.isSet('right')}
 
 
-class _PlayerEventServer(_PlayerEvent):
+class CarPlayerEventServer(CarPlayerEvent):
 
     def __init__(self, mdt):
         _PlayerEvent.__init__(self, mdt)
@@ -142,14 +142,14 @@ class _PlayerEventServer(_PlayerEvent):
         _PlayerEvent._process_end_goal(self)
 
 
-class _PlayerEventClient(_PlayerEvent):
+class CarPlayerEventClient(CarPlayerEvent):
 
     def __init__(self, mdt):
-        _PlayerEvent.__init__(self, mdt)
+        CarPlayerEvent.__init__(self, mdt)
         self.last_sent = globalClock.getFrameTime()
 
     def on_frame(self):
-        _PlayerEvent.on_frame(self)
+        CarPlayerEvent.on_frame(self)
         pos = self.mdt.gfx.nodepath.getPos()
         hpr = self.mdt.gfx.nodepath.getHpr()
         velocity = self.mdt.phys.vehicle.getChassis().getLinearVelocity()
@@ -160,17 +160,17 @@ class _PlayerEventClient(_PlayerEvent):
 
     def _process_end_goal(self):
         eng.client.send([NetMsgs.end_race_player])
-        _PlayerEvent._process_end_goal(self)
+        CarPlayerEvent._process_end_goal(self)
 
 
-class _NetworkEvent(_Event):
+class CarNetworkEvent(CarEvent):
 
     def _get_input(self):
         return {'forward': False, 'left': False, 'reverse': False,
                 'right': False}
 
 
-class _AiEvent(_Event):
+class CarAiEvent(CarEvent):
 
     def _get_input(self):
         return self.mdt.ai.get_input()
