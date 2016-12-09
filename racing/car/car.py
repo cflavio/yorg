@@ -36,6 +36,10 @@ class Car(GameObjectMdt):
         self.logic.start_pos = self.pos
         self.logic.start_pos_hpr = self.hpr
 
+    def destroy(self):
+        self.race = None
+        GameObjectMdt.destroy(self)
+
 
 class PlayerCar(Car):
     event_cls = CarPlayerEvent
