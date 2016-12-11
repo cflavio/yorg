@@ -18,7 +18,7 @@ class SeasonLogic(Logic):
 
     @staticmethod
     def step():
-        current_track = game.track.gfx.track_path[7:]
+        current_track = game.track.path[7:]
         tracks = ['prototype', 'desert']
         if tracks.index(current_track) == len(tracks) - 1:
             conf = game.options

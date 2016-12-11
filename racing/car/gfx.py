@@ -44,10 +44,7 @@ class CarGfx(Gfx):
         eng.gfx.particle(part_path, node, eng.base.render, (0, 1.2, .75), .8)
 
     def destroy(self):
-        meshes = [
-            self.nodepath, self.chassis_np, self.front_right_wheel_np,
-            self.front_left_wheel_np, self.rear_right_wheel_np,
-            self.rear_right_wheel_np]
+        meshes = [self.nodepath, self.chassis_np] + self.wheels.values()
         map(lambda mesh: mesh.removeNode(), meshes)
         self.wheels = None
         Gfx.destroy(self)

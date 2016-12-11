@@ -3,12 +3,13 @@
 #TODO: (windows) the light is very bright when switching to fullscreen without
 #    shaders
 #TODO: (windows) it crashes when some resolutions are selected
+#TODO: cheating (going forward and back on the goal)
+#TODO: it crashes if you select specific car and track at the end of the race
 
 
 # TODO LIST =====
 
 #TODO: #engine embed into a wx window
-#TODO: #gameplay compute the ranking at the end of a race
 #TODO: #gameplay at end of a multiplayer race wait for other cars
 #TODO: driving model
 
@@ -19,6 +20,7 @@
 # MAYBE/SOMEDAY =====
 
 #TODO: #gui graphics buttons in the menu
+#TODO: #gui put a background on the ranking page
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai obstacle avoidance
 #TODO: #gameplay modifying car setting between tracks: engine (speed), tires

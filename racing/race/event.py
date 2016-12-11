@@ -25,8 +25,8 @@ class RaceEvent(Event):
         self.mdt.track.gui.way_txt.setText(way_str)
 
     def on_end_race(self):
-        #TODO: compute the ranking
-        race_ranking = {'kronos': 0, 'themis': 0, 'diones': 0}
+        points = [10,8, 6]
+        race_ranking = {car: point for car, point in zip(self.mdt.logic.ranking(), points)}
         self.mdt.fsm.demand('Results', race_ranking)
 
 

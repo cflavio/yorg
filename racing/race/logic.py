@@ -94,6 +94,19 @@ class RaceLogic(Logic):
         map(lambda car: car.logic.reset_car(), cars)
         map(lambda car: car.event.start(), cars)
 
+    def ranking(self):
+        cars = [game.player_car] + game.cars
+        info = []
+        for car in cars:
+            past_wp = car.logic.closest_wp()[0].get_pos()
+            wp_num = int(car.logic.closest_wp()[0].get_name()[8:])
+            dist = (past_wp - car.gfx.nodepath.get_pos()).length()
+            info += [(car.path[5:], len(car.logic.lap_times), wp_num, dist)]
+        by_dist = sorted(info, key=lambda val: val[3])
+        by_wp_num = sorted(by_dist, key=lambda val: val[2])
+        by_laps = sorted(by_wp_num, key=lambda val: val[1])
+        return [car[0] for car in reversed(by_laps)]
+
     @staticmethod
     def exit_play():
         game.audio.game_music.stop()
