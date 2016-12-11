@@ -17,6 +17,7 @@ class CarLogic(Logic):
         self.lap_times = []
         self.start_left = None
         self.start_right = None
+        self.waypoints = []
         self.camera = Camera(mdt)
 
     def update(self, input_dct):
@@ -114,6 +115,19 @@ class CarLogic(Logic):
         if pos:
             node.remove_node()
         return start_wp, end_wp
+
+    def update_waypoints(self):
+        closest_wp = int(self.closest_wp()[0].get_name()[8:])
+        if closest_wp not in self.waypoints:
+            self.waypoints += [closest_wp]
+
+    def reset_waypoints(self):
+        self.waypoints = []
+
+    @property
+    def correct_lap(self):
+        all_wp = [int(w_p.get_name()[8:]) for w_p in game.track.phys.waypoints]
+        return all(w_p in self.waypoints for w_p in all_wp)
 
     @staticmethod
     def pt_line_dst(point, line_pt1, line_pt2):

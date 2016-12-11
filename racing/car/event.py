@@ -51,6 +51,7 @@ class CarEvent(Event):
             self.mdt.gfx.nodepath.setR(0)
         self.__update_contact_pos()
         self.mdt.phys.update_car_props()
+        self.mdt.logic.update_waypoints()
 
     def __update_contact_pos(self):
         car_pos = self.mdt.gfx.nodepath.get_pos()
@@ -83,19 +84,17 @@ class CarPlayerEvent(CarEvent):
         taskMgr.doMethodLater(*args)
 
     def __process_nonstart_goals(self, lap_number, laps):
-        fwd = self.mdt.logic.direction > 0 and self.mdt.phys.speed > 0
-        back = self.mdt.logic.direction < 0 and self.mdt.phys.speed < 0
-        if fwd or back:
-            curr_lap = min(laps, lap_number)
-            self.mdt.gui.lap_txt.setText(str(curr_lap)+'/'+str(laps))
-            eng.audio.play(self.mdt.audio.lap_sfx)
-        else:
-            self.mdt.gui.lap_txt.setText(str(lap_number - 1)+'/'+str(laps))
+        curr_lap = min(laps, lap_number)
+        self.mdt.gui.lap_txt.setText(str(curr_lap)+'/'+str(laps))
+        eng.audio.play(self.mdt.audio.lap_sfx)
 
     def _process_end_goal(self):
         self.notify('on_end_race')
 
     def __process_goal(self):
+        if self.mdt.logic.last_time_start and not self.mdt.logic.correct_lap:
+            return
+        self.mdt.logic.reset_waypoints()
         if self.mdt.gui.time_txt.getText():
             lap_time = float(self.mdt.gui.time_txt.getText())
             self.mdt.logic.lap_times += [lap_time]

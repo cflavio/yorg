@@ -3,7 +3,6 @@
 #TODO: (windows) the light is very bright when switching to fullscreen without
 #    shaders
 #TODO: (windows) it crashes when some resolutions are selected
-#TODO: cheating (going forward and back on the goal)
 #TODO: it crashes if you select specific car and track at the end of the race
 
 
@@ -11,10 +10,11 @@
 
 #TODO: #engine embed into a wx window
 #TODO: #gameplay at end of a multiplayer race wait for other cars
-#TODO: driving model
 
 
 # WAITING =====
+
+#TODO: (Bullet 2.83) driving model
 
 
 # MAYBE/SOMEDAY =====
