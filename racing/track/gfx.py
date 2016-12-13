@@ -1,4 +1,5 @@
-from panda3d.core import AmbientLight, BitMask32, Spotlight, NodePath
+from panda3d.core import AmbientLight, BitMask32, Spotlight, NodePath,\
+    OmniBoundingVolume
 from direct.actor.Actor import Actor
 from racing.game.gameobject import Gfx
 
@@ -76,6 +77,11 @@ class TrackGfx(Gfx):
                 self.__actors += [Actor(path, {'anim': path + '-Anim'})]
                 self.__actors[-1].loop('anim')
                 self.__actors[-1].reparent_to(model)
+                omni_names = ['Cableway', 'Hotairballon']
+                if any(model.get_name()[5:].startswith(name) for name in omni_names):
+                    eng.log_mgr.log('set omni for ' + self.__actors[-1].get_name())
+                    self.__actors[-1].node().setBounds(OmniBoundingVolume())
+                    self.__actors[-1].node().setFinal(True)
             else:
                 self.__process_static(model)
         self.flattening()
