@@ -127,7 +127,11 @@ class CarLogic(Logic):
     @property
     def correct_lap(self):
         all_wp = [int(w_p.get_name()[8:]) for w_p in game.track.phys.waypoints]
-        return all(w_p in self.waypoints for w_p in all_wp)
+        is_correct = all(w_p in self.waypoints for w_p in all_wp)
+        if not is_correct:
+            skipped = [str(w_p) for w_p in all_wp if w_p not in self.waypoints]
+            eng.log_mgr.log('skipped waypoints: ' + ', '.join(skipped))
+        return is_correct
 
     @staticmethod
     def pt_line_dst(point, line_pt1, line_pt2):
