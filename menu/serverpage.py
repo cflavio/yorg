@@ -11,7 +11,7 @@ class ServerEvent(PageEvent):
 
     def on_back(self):
         if eng.server.is_active:
-            eng.server.stop()
+            eng.server.destroy()
 
     @staticmethod
     def process_msg(data_lst):

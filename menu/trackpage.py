@@ -23,7 +23,8 @@ class TrackPageGui(PageGui):
         self.menu.logic.push_page(CarPage(self.menu))
 
     def destroy(self):
-        del self.menu.track
+        if hasattr(self.menu, 'track'):
+            del self.menu.track
         PageGui.destroy(self)
 
 
