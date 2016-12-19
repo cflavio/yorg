@@ -31,6 +31,9 @@ class Configuration(object):
         loadPrcFileData('', key + ' ' + str(value))
 
     def configure(self):
+        self.__set('texture-anosotropic-degree', 2)
+        self.__set('texture-magfilter', 'linear')
+        self.__set('texture-minfilter', 'mipmap')
         self.__set('show-frame-rate-meter', int(self.fps))
         if self.win_size:
             self.__set('win-size', self.win_size)
