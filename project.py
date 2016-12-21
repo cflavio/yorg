@@ -3,7 +3,6 @@
 #TODO: (windows) the light is very bright when switching to fullscreen without
 #    shaders
 #TODO: (windows) it crashes when some resolutions are selected
-#TODO: it crashes if you select specific car and track at the end of the race
 
 
 # TODO LIST =====
@@ -16,6 +15,8 @@
 
 #TODO: (Bullet 2.83) driving model
 #TODO: (wx can show html) embed into a wx window
+#TODO: (Panda3D 1.10) #shaders shadows
+# https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 
 
 # MAYBE/SOMEDAY =====
@@ -43,8 +44,6 @@
 #TODO: #shaders GLSL shaders
 #TODO: #shaders particle effects and texturing for skid marks
 #TODO: #shaders day/night cycle
-#TODO: #shaders shadows
-# https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 #TODO: #shaders water
 #TODO: #project make scons for racing and game
 #TODO: #project make uml diagrams with pyreverse into devinfo
