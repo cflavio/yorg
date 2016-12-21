@@ -76,6 +76,7 @@ class TrackGfx(Gfx):
                 path = self.mdt.path + '/' + model_name
                 self.__actors += [Actor(path, {'anim': path + '-Anim'})]
                 self.__actors[-1].loop('anim')
+                self.__actors[-1].setPlayRate(.5, 'anim')
                 self.__actors[-1].reparent_to(model)
                 omni_names = ['Cableway', 'Hotairballon']
                 if any(model.get_name()[5:].startswith(name) for name in omni_names):
