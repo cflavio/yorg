@@ -78,8 +78,7 @@ class TrackGfx(Gfx):
                 self.__actors[-1].loop('anim')
                 self.__actors[-1].setPlayRate(.5, 'anim')
                 self.__actors[-1].reparent_to(model)
-                omni_names = ['Cableway', 'Hotairballon']
-                if any(model.get_name()[5:].startswith(name) for name in omni_names):
+                if model.has_tag('omni') and model.get_tag('omni'):
                     eng.log_mgr.log('set omni for ' + self.__actors[-1].get_name())
                     self.__actors[-1].node().setBounds(OmniBoundingVolume())
                     self.__actors[-1].node().setFinal(True)

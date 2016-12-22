@@ -8,7 +8,6 @@
 # TODO LIST =====
 
 #TODO: #gameplay at end of a multiplayer race wait for other cars
-#TODO: set OmniBoundingVolume only for meshes with omni logic field
 
 
 # WAITING =====
