@@ -26,6 +26,8 @@ class _Fsm(Fsm):
         self.countdown = Countdown()
         self.countdown.attach(self.on_start_race)
         self.mdt.logic.enter_play()
+        if game.options['development']['shaders']:
+            eng.shader_mgr.toggle_shader()
 
     def exitCountdown(self):
         self.countdown.destroy()
@@ -44,3 +46,5 @@ class _Fsm(Fsm):
 
     def exitResults(self):
         self.mdt.logic.exit_play()
+        if game.options['development']['shaders']:
+            eng.shader_mgr.toggle_shader()

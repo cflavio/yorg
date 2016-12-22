@@ -34,6 +34,8 @@ class Configuration(object):
         self.__set('texture-anosotropic-degree', 2)
         self.__set('texture-magfilter', 'linear')
         self.__set('texture-minfilter', 'mipmap')
+        self.__set('gl-coordinate-system', 'default')
+        self.__set('textures-power-2', 'none')
         self.__set('show-frame-rate-meter', int(self.fps))
         if self.win_size:
             self.__set('win-size', self.win_size)

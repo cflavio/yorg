@@ -147,6 +147,10 @@ class TrackGfx(Gfx):
         Gfx.async_build(self)
 
     def __set_light(self):
+        if game.options['development']['shaders']:
+            eng.shader_mgr.set_amb_lgt((.15, .15, .15, 1))
+            eng.shader_mgr.set_dir_lgt((.8, .8, .8, 1), (-25, -65, 0))
+            return
         ambient_lgt = AmbientLight('ambient light')
         ambient_lgt.setColor((.7, .7, .55, 1))
         self.ambient_np = render.attachNewNode(ambient_lgt)
@@ -165,8 +169,11 @@ class TrackGfx(Gfx):
 
     def destroy(self):
         self.model.removeNode()
-        eng.base.render.clearLight(self.ambient_np)
-        eng.base.render.clearLight(self.spot_lgt)
-        self.ambient_np.removeNode()
-        self.spot_lgt.removeNode()
+        if not game.options['development']['shaders']:
+            eng.base.render.clearLight(self.ambient_np)
+            eng.base.render.clearLight(self.spot_lgt)
+            self.ambient_np.removeNode()
+            self.spot_lgt.removeNode()
+        else:
+            eng.shader_mgr.clear_lights()
         self.__actors = self.__flat_roots = None

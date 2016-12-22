@@ -41,10 +41,7 @@
 #TODO: #network drivers' names on their cars during multiplayer matches
 #TODO: #network print if the port is closed when creating the server
 #TODO: #network send game packets using udp in place of tcp
-#TODO: #shaders GLSL shaders
 #TODO: #shaders particle effects and texturing for skid marks
-#TODO: #shaders day/night cycle
-#TODO: #shaders water
 #TODO: #project make scons for racing and game
 #TODO: #project make uml diagrams with pyreverse into devinfo
 #TODO: #project git submodules racing/, racing/game

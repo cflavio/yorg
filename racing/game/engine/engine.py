@@ -9,6 +9,7 @@ from .pause import PauseMgr
 from .font import FontMgr
 from .log import LogMgr
 from .lang import LangMgr
+from .shader import ShaderMgr
 from .gfx import EngineGfx
 from .gui.gui import EngineGui, EngineGuiWindow
 from .phys import EnginePhys
@@ -50,7 +51,8 @@ class Engine(GameObjectMdt):
             [('pause', PauseMgr, [self])],
             [('font_mgr', FontMgr, [self])],
             [('server', Server, [self])],
-            [('client', Client, [self])]]
+            [('client', Client, [self])],
+            [('shader_mgr', ShaderMgr, [self])]]
         GameObjectMdt.__init__(self, init_lst)
 
     def build_logic(self, conf):
