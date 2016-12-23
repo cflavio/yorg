@@ -31,7 +31,8 @@ class Yorg(GameWindow):
                 'fps': 1,
                 'car': '',
                 'track': '',
-                'shaders': 0}}
+                'shaders': 0,
+                'gamma': 2.2}}
         self.options = DictFile('options.yml', default_opt)
         conf = Configuration(
             fps=self.options['development']['fps'], win_title='Yorg',

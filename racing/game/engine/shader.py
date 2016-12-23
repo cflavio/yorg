@@ -105,6 +105,8 @@ class ShaderMgr(Colleague):
         with open('racing/game/assets/shaders/pass.frag') as f:
             frag = f.read()
         final_quad.setShader(Shader.make(Shader.SLGLSL, vert, frag))
+        gamma_val = game.options['development']['gamma']
+        final_quad.set_shader_input('gamma', gamma_val)
         final_quad.setShaderInput('input_tex', final_tex)
 
     def toggle_shader(self):
