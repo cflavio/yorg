@@ -1,5 +1,6 @@
 from panda3d.core import AmbientLight, DirectionalLight, PointLight, \
-    Spotlight, LVector4f, LVector3f, Vec3, Shader, Texture
+    Spotlight, LVector4f, LVector3f, Vec3, Shader, Texture, WindowProperties,\
+    FrameBufferProperties, GraphicsPipe, GraphicsOutput, NodePath, PandaNode
 from direct.filter.FilterManager import FilterManager
 from ..gameobject import Colleague
 
@@ -9,10 +10,6 @@ class ShaderMgr(Colleague):
     def __init__(self, mdt):
         Colleague.__init__(self, mdt)
         self.lights = []
-        with open('racing/game/assets/shaders/main.vert') as f:
-            self.vert = f.read()
-        with open('racing/game/assets/shaders/main.frag') as f:
-            self.frag = f.read()
         if game.options['development']['shaders']:
             self.setup_post_fx()
 
@@ -109,12 +106,57 @@ class ShaderMgr(Colleague):
         final_quad.set_shader_input('gamma', gamma_val)
         final_quad.setShaderInput('input_tex', final_tex)
 
+    def apply(self):
+        winprops = WindowProperties.size(2048, 2048)
+        props = FrameBufferProperties()
+        props.setRgbColor(1)
+        props.setAlphaBits(1)
+        props.setDepthBits(1)
+        lbuffer = base.graphicsEngine.makeOutput(
+            base.pipe, 'offscreen buffer', -2, props, winprops,
+            GraphicsPipe.BFRefuseWindow, base.win.getGsg(), base.win)
+        self.buffer = lbuffer
+        ldepthmap = Texture()
+        lbuffer.addRenderTexture(ldepthmap, GraphicsOutput.RTMBindOrCopy,
+                                 GraphicsOutput.RTPDepthStencil)
+        ldepthmap.setMinfilter(Texture.FTShadow)
+        ldepthmap.setMagfilter(Texture.FTShadow)
+
+        base.camLens.setNearFar(1.0, 10000)
+        base.camLens.setFov(75)
+
+        self.lcam = base.makeCamera(lbuffer)
+        self.lcam.node().setScene(render)
+        self.lcam.node().getLens().setFov(45)
+        self.lcam.node().getLens().setNearFar(1, 100)
+
+        render.setShaderInput('light', self.lcam)
+        render.setShaderInput('depthmap', ldepthmap)
+        render.setShaderInput('ambient', .15, .15, .15, 1.0)
+
+        lci = NodePath(PandaNode('light camera initializer'))
+        with open('racing/game/assets/shaders/caster.vert') as f: vert = f.read()
+        with open('racing/game/assets/shaders/caster.frag') as f: frag = f.read()
+        lci.setShader(Shader.make(Shader.SLGLSL, vert, frag))
+        self.lcam.node().setInitialState(lci.getState())
+
+        mci = NodePath(PandaNode('main camera initializer'))
+        with open('racing/game/assets/shaders/main.vert') as f: vert = f.read()
+        with open('racing/game/assets/shaders/main.frag') as f: frag = f.read()
+        frag = frag.replace('<LIGHTS>', str(len(self.lights)))
+        render.setShader(Shader.make(Shader.SLGLSL, vert, frag))
+        render.setShaderInput('num_lights', len(self.lights))
+        map(lambda lgt: self.set_lgt_args(*lgt), enumerate(self.lights))
+        mci.setShader(Shader.make(Shader.SLGLSL, vert, frag))
+        base.cam.node().setInitialState(mci.getState())
+
+        self.lcam.setPos(15, 30, 45)
+        self.lcam.lookAt(0, 15, 0)
+        self.lcam.node().getLens().setNearFar(1, 100)
+
     def toggle_shader(self):
         if render.getShader():
             render.set_shader_off()
             render.setShaderAuto()
             return
-        frag = self.frag.replace('<LIGHTS>', str(len(self.lights)))
-        render.setShader(Shader.make(Shader.SLGLSL, self.vert, frag))
-        render.setShaderInput('num_lights', len(self.lights))
-        map(lambda lgt: self.set_lgt_args(*lgt), enumerate(self.lights))
+        self.apply()

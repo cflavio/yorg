@@ -1,11 +1,10 @@
 #version 130
 in vec2 texcoord;
 uniform sampler2D input_tex;
+out vec4 p3d_FragColor;
 const vec3 lum = vec3(.2126, .7152, .0722);
 
-float luminance(vec3 col) {
-    return dot(lum, col);
-}
+float luminance(vec3 col) { return dot(lum, col); }
 
 vec4 sobel() {
     ivec2 pix = ivec2(gl_FragCoord.xy);
@@ -24,5 +23,5 @@ vec4 sobel() {
 }
 
 void main() {
-    gl_FragColor = sobel() * texture(input_tex, texcoord);
+    p3d_FragColor = sobel() * texture(input_tex, texcoord);
 }
