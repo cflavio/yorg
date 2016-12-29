@@ -1,6 +1,7 @@
 from racing.game.gameobject import Logic
 from racing.ranking.ranking import Ranking
 from racing.race.race import Race
+from racing.tuning.tuning import Tuning
 
 
 class SeasonLogic(Logic):
@@ -8,12 +9,15 @@ class SeasonLogic(Logic):
     def __init__(self, mdt):
         Logic.__init__(self, mdt)
         self.ranking = Ranking()
+        self.tuning = Tuning()
 
     def start(self):
         self.ranking.logic.reset()
+        self.tuning.logic.reset()
 
     def load(self):
         self.ranking.logic.load(game.options['save']['ranking'])
+        self.tuning.logic.load(game.options['save']['tuning'])
 
     @staticmethod
     def step():

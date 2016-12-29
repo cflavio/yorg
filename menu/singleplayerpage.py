@@ -37,7 +37,7 @@ class SingleplayerPageGui(PageGui):
     def on_continue(self):
         game.logic.season = Season()
         game.logic.season.logic.load()
-        game.fsm.demand('Race')
+        game.fsm.demand('Race', 'tracks/' + game.options['save']['track'], game.options['save']['car'])
 
 class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui

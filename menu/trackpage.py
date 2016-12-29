@@ -1,6 +1,7 @@
 from direct.gui.DirectButton import DirectButton
 from racing.game.engine.gui.page import Page, PageGui
 from .carpage import CarPage, CarPageServer
+from racing.game.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
 
 
@@ -9,12 +10,13 @@ class TrackPageGui(PageGui):
     def build_page(self):
         menu_gui = self.menu.gui
 
-        menu_data = [
-            ('Desert', self.on_track, ['desert']),
-            ('Prototype', self.on_track, ['prototype'])]
+        menu_data = ['desert', 'prototype']
         self.widgets += [
-            DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                         extraArgs=menu[2], **menu_gui.btn_args)
+            ImageButton(
+                scale=.8, pos=(-.5 + i * 1.0, 1, .1), frameColor=(0, 0, 0, 0),
+                image='assets/images/tracks/%s.png' % menu,
+                command=self.on_track, extraArgs=[menu],
+                **self.menu.gui.imgbtn_args)
             for i, menu in enumerate(menu_data)]
         PageGui.build_page(self)
 

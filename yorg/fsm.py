@@ -11,7 +11,8 @@ class _Fsm(Fsm):
         self.defaultTransitions = {
             'Menu': ['Race'],
             'Race': ['Ranking', 'Menu'],
-            'Ranking': ['Menu', 'Race']}
+            'Ranking': ['Tuning'],
+            'Tuning': ['Menu', 'Race']}
         self.load_txt = None
         self.preview = None
         self.cam_tsk = None
@@ -34,7 +35,7 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterRace(self, track_path='', car_path='', player_cars=[]):
+    def enterRace(self, track_path='', car_path='', player_cars=[], driver=''):
         eng.log_mgr.log('entering Race state')
         if eng.server.is_active:
             self.race = RaceServer()
@@ -42,6 +43,7 @@ class _Fsm(Fsm):
             self.race = RaceClient()
         else:
             self.race = RaceSinglePlayer()
+        eng.log_mgr.log('selected driver: ' + driver)
         self.race.fsm.demand('Loading', track_path, car_path, player_cars)
 
     def exitRace(self):
@@ -52,3 +54,9 @@ class _Fsm(Fsm):
 
     def exitRanking(self):
         game.logic.season.logic.ranking.gui.hide()
+
+    def enterTuning(self):
+        game.logic.season.logic.tuning.gui.show()
+
+    def exitTuning(self):
+        game.logic.season.logic.tuning.gui.hide()

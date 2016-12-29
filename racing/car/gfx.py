@@ -13,6 +13,9 @@ class CarGfx(Gfx):
         Gfx.__init__(self, mdt)
 
     def async_build(self):
+        self.chassis_np_low = loader.loadModel(self.mdt.path + '/damage_low/car_low')
+        self.chassis_np_mid = loader.loadModel(self.mdt.path + '/damage_mid/car_mid')
+        self.chassis_np_hi = loader.loadModel(self.mdt.path + '/damage_hi/car_hi')
         loader.loadModel(self.mdt.path + '/car', callback=self.load_wheels)
 
     def reparent(self):
@@ -38,10 +41,25 @@ class CarGfx(Gfx):
         speed, speed_ratio = self.mdt.phys.speed, self.mdt.phys.speed_ratio
         if speed_ratio < .5:
             return
+        self.__apply_damage()
         self.mdt.audio.crash_high_speed_sfx.play()
         part_path = 'assets/particles/sparks.ptf'
         node = self.mdt.gfx.nodepath
         eng.gfx.particle(part_path, node, eng.base.render, (0, 1.2, .75), .8)
+
+    def __apply_damage(self):
+        curr_chassis = self.nodepath.get_children()[0]
+        if 'car_low' in curr_chassis.get_name():
+            next_chassis = self.chassis_np_mid
+        elif 'car_mid' in curr_chassis.get_name():
+            next_chassis = self.chassis_np_hi
+        elif 'car_hi' in curr_chassis.get_name():
+            return
+        else:
+            next_chassis = self.chassis_np_low
+        curr_chassis.remove_node()
+        next_chassis.reparent_to(self.nodepath)
+        self.mdt.phys.apply_damage()
 
     def destroy(self):
         meshes = [self.nodepath, self.chassis_np] + self.wheels.values()

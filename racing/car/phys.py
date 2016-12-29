@@ -13,13 +13,13 @@ class CarPhys(Phys):
         self.curr_speed_factor = 1.0
         self.__finds = {}
         self.__track_phys = track_phys
-        self.__load_phys(name)
+        self._load_phys(name)
         self.__set_collision(name)
         self.__set_phys_node()
         self.__set_vehicle()
         self.__set_wheels()
 
-    def __load_phys(self, name):
+    def _load_phys(self, name):
         with open('assets/models/%s/phys.yml' % name) as phys_file:
             conf = yaml.load(phys_file)
         map(lambda field: setattr(self, field, conf[field]), conf.keys())
@@ -148,8 +148,35 @@ class CarPhys(Phys):
         ground = result.get_node()
         return ground.get_name() if ground else ''
 
+    def apply_damage(self):
+        self.max_speed *= .95
+        self.friction_slip *= .95
+        self.roll_influence *= .95
+        map(lambda whl: whl.setFrictionSlip(self.friction_slip), self.vehicle.get_wheels())
+        map(lambda whl: whl.setRollInfluence(self.roll_influence), self.vehicle.get_wheels())
+        eng.log_mgr.log('speed: ' + str(round(self.max_speed, 2)))
+        eng.log_mgr.log('friction: ' + str(round(self.friction_slip, 2)))
+        eng.log_mgr.log('roll: ' + str(round(self.roll_influence, 2)))
+
     def destroy(self):
         eng.phys.world_phys.remove_vehicle(self.vehicle)
         self.pnode = self.vehicle = self.__finds = self.__track_phys = \
             self.capsule = None
         Phys.destroy(self)
+
+
+class CarPlayerPhys(CarPhys):
+
+    def _load_phys(self, name):
+        with open('assets/models/%s/phys.yml' % name) as phys_file:
+            conf = yaml.load(phys_file)
+        new_speed = conf['max_speed'] * (1 + .1 * game.logic.season.logic.tuning.logic.tuning['engine'])
+        conf['max_speed'] = new_speed
+        new_fric = conf['friction_slip'] * (1 + .1 * game.logic.season.logic.tuning.logic.tuning['tires'])
+        conf['friction_slip'] = new_fric
+        new_roll = conf['roll_influence'] * (1 + .1 * game.logic.season.logic.tuning.logic.tuning['suspensions'])
+        conf['roll_influence'] = new_roll
+        eng.log_mgr.log('speed: ' + str(round(new_speed, 2)))
+        eng.log_mgr.log('friction: ' + str(round(new_fric, 2)))
+        eng.log_mgr.log('roll: ' + str(round(new_roll, 2)))
+        map(lambda field: setattr(self, field, conf[field]), conf.keys())

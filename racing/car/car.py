@@ -1,7 +1,7 @@
 from racing.game.gameobject import GameObjectMdt, Ai
 from .fsm import CarFsm
 from .gfx import CarGfx
-from .phys import CarPhys
+from .phys import CarPhys, CarPlayerPhys
 from .event import CarEvent, CarPlayerEvent, CarPlayerEventServer, \
     CarPlayerEventClient, CarNetworkEvent, CarAiEvent
 from .logic import CarLogic, CarPlayerLogic
@@ -49,6 +49,7 @@ class PlayerCar(Car):
     audio_cls = CarAudio
     gui_cls = CarGui
     logic_cls = CarPlayerLogic
+    phys_cls = CarPlayerPhys
 
 
 class PlayerCarServer(Car):

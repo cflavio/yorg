@@ -2,7 +2,9 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from racing.game.engine.gui.page import Page, PageGui
 from racing.season.season import SingleRaceSeason
+from racing.game.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
+from .driverpage import DriverPage
 
 
 class CarPageGui(PageGui):
@@ -16,13 +18,13 @@ class CarPageGui(PageGui):
     def build_page(self):
         menu_gui = self.menu.gui
         self.track_path = 'tracks/' + self.menu.track
-        menu_data = [
-            ('Kronos', self.on_car, ['kronos']),
-            ('Themis', self.on_car, ['themis']),
-            ('Diones', self.on_car, ['diones'])]
+        menu_data = ['kronos', 'themis', 'diones']
         self.widgets += [
-            DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                         extraArgs=menu[2], **menu_gui.btn_args)
+            ImageButton(
+                scale=.8, pos=(-1.2 + i * 1.2, 1, .1), frameColor=(0, 0, 0, 0),
+                image='assets/images/cars/%s.png' % menu,
+                command=self.on_car, extraArgs=[menu],
+                **self.menu.gui.imgbtn_args)
             for i, menu in enumerate(menu_data)]
         self.current_cars = {}
         PageGui.build_page(self)
@@ -33,7 +35,7 @@ class CarPageGui(PageGui):
         return [btn for btn in buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
-        game.fsm.demand('Race', self.track_path, car)
+        self.menu.logic.push_page(DriverPage(self.menu, self.track_path, car))
 
 
 class CarPageGuiServer(CarPageGui):

@@ -64,11 +64,13 @@ class Results(object):
             self.result_img.destroy()
             #TODO: notify and manage into yorg's fsm
             ranking = game.logic.season.logic.ranking
+            tuning = game.logic.season.logic.tuning
             from racing.season.season import SingleRaceSeason
             if game.logic.season.__class__ != SingleRaceSeason:
                 for car in ranking.logic.ranking:
                     ranking.logic.ranking[car] += race_ranking[car]
                 game.options['save']['ranking'] = ranking.logic.ranking
+                game.options['save']['tuning'] = tuning.logic.tuning
                 game.options.store()
                 game.fsm.demand('Ranking')
             else:
