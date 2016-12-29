@@ -28,12 +28,14 @@ class _Fsm(Fsm):
         self.mdt.logic.enter_play()
         if game.options['development']['shaders']:
             eng.shader_mgr.toggle_shader()
+        map(lambda car: car.fsm.demand('Countdown'), [game.player_car] + game.cars)
 
     def exitCountdown(self):
         self.countdown.destroy()
 
     def enterPlay(self):
         eng.log_mgr.log('entering Play state')
+        map(lambda car: car.fsm.demand('Play'), [game.player_car] + game.cars)
 
     def on_start_race(self):
         self.mdt.fsm.demand('Play')
@@ -43,6 +45,7 @@ class _Fsm(Fsm):
 
     def enterResults(self, race_ranking):
         game.fsm.race.gui.results.show(race_ranking)
+        map(lambda car: car.fsm.demand('Results'), [game.player_car] + game.cars)
 
     def exitResults(self):
         self.mdt.logic.exit_play()

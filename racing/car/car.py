@@ -1,4 +1,5 @@
 from racing.game.gameobject import GameObjectMdt, Ai
+from .fsm import CarFsm
 from .gfx import CarGfx
 from .phys import CarPhys
 from .event import CarEvent, CarPlayerEvent, CarPlayerEventServer, \
@@ -10,6 +11,7 @@ from .ai import CarAi
 
 
 class Car(GameObjectMdt):
+    fsm_cls = CarFsm
     gfx_cls = CarGfx
     phys_cls = CarPhys
     event_cls = CarEvent
@@ -24,6 +26,7 @@ class Car(GameObjectMdt):
         self.race = race
         self.laps = laps
         init_lst = [
+            [('fsm', self.fsm_cls, [self])],
             [('gfx', self.gfx_cls, [self, self.path]),
              ('phys', self.phys_cls, [self, self.path,
                                       self.race.track.phys.model]),

@@ -21,7 +21,7 @@ class Results(object):
         pars = {'scale': .1, 'fg': (.75, .75, .75, 1),
                 'font': eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')}
         self.__res_txts = [OnscreenText(
-            str(game.player_car.logic.lap_times[i]),
+            str(round(game.player_car.logic.lap_times[i], 2)),
             pos=(.3, - .2 * i), **pars)
             for i in range(laps)]
         self.__res_txts += [OnscreenText(_('LAP'), pos=(-.3, .35), **pars)

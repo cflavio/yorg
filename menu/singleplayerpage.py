@@ -37,6 +37,7 @@ class SingleplayerPageGui(PageGui):
     def on_continue(self):
         game.logic.season = Season()
         game.logic.season.logic.load()
+        game.fsm.demand('Race')
 
 class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui

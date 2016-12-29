@@ -76,14 +76,43 @@ filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
 pdf_conf = {
     'sources': [
         ('python', '.', '*.py SConstruct', ['./racing/*'])],
+    'sources_menu': [
+        ('python', './menu', '*.py', [])],
+    'sources_yorg': [
+        ('python', './yorg', '*.py', [])],
+    'sources_root': [
+        ('python', '.', '*.py SConstruct', ['./racing/*', './menu/*', './yorg/*'])],
     'sources_racing': [
         ('python', './racing', '*.py', ['./racing/game/*'])],
+    'sources_racing_car': [
+        ('python', './racing/car', '*.py', [])],
+    'sources_racing_race': [
+        ('python', './racing/race', '*.py', [])],
+    'sources_racing_ranking': [
+        ('python', './racing/ranking', '*.py', [])],
+    'sources_racing_season': [
+        ('python', './racing/season', '*.py', [])],
+    'sources_racing_track': [
+        ('python', './racing/track', '*.py', [])],
+    'sources_racing_other': [
+        ('python', './racing', '*.py', ['./racing/game/*', './racing/car/*', './racing/race/*', './racing/ranking/*', './racing/season/*', './racing/track/*'])],
     'sources_game': [
         ('python', './racing/game', '*.py *.pdef', filt_game),
         ('lua', './racing/game', 'config.lua', filt_game),
+        ('c', './racing/game', '*.vert *.frag', filt_game),
         ('', './racing/game', '*.rst *.css_t *.conf', filt_game),
         ('html', './racing/game', '*.html', filt_game),
         ('javascript', './racing/game', '*.js', filt_game)],
+    'sources_game_build': [
+        ('python', './racing/game/build', '*.py *.pdef', filt_game),
+        ('lua', './racing/game/build', 'config.lua', filt_game),
+        ('', './racing/game/build', '*.rst *.css_t *.conf', filt_game),
+        ('html', './racing/game/build', '*.html', filt_game),
+        ('javascript', './racing/game/build', '*.js', filt_game)],
+    'sources_game_engine': [
+        ('python', './racing/game/engine', '*.py *.pdef', filt_game)],
+    'sources_game_other': [
+        ('python', './racing/game', '*.py *.pdef', filt_game + ['./racing/game/build/*', './racing/game/engine/*'])],
     'tests': [
         ('python', './racing/game/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf

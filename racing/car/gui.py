@@ -1,4 +1,4 @@
-from panda3d.core import TextNode
+from panda3d.core import TextNode, LVector3f
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
@@ -9,16 +9,16 @@ class CarParameter(object):
 
     def __init__(self, attr, init_val, pos, val_range, callback):
         self.__callback = callback
+        pars = {'scale': .04, 'parent': eng.base.a2dTopLeft}
         self.__lab = OnscreenText(
-            text=attr, pos=pos, scale=.04, align=TextNode.ARight,
-            parent=eng.base.a2dTopLeft, fg=(1, 1, 1, 1))
+            text=attr, pos=pos, align=TextNode.ARight, fg=(1, 1, 1, 1), **pars)
+        _pos = LVector3f(pos[0], 1, pos[1]) + (.5, 0, .01)
         self.__slider = DirectSlider(
-            pos=(pos[0]+.5, 0, pos[1]+.01), scale=.4,
-            parent=eng.base.a2dTopLeft, value=init_val, range=val_range,
-            command=self.__set_attr)
-        self.__val = OnscreenText(
-            pos=(pos[0]+1.0, pos[1]), scale=.04, align=TextNode.ALeft,
-            parent=eng.base.a2dTopLeft, fg=(1, 1, 1, 1))
+            pos=_pos, value=init_val, range=val_range, command=self.__set_attr,
+            **pars)
+        _pos = LVector3f(pos[0], 1, pos[1]) + (1, 0, 0)
+        self.__val = OnscreenText(pos=_pos, align=TextNode.ALeft,
+                                  fg=(1, 1, 1, 1), **pars)
         self.toggle()
 
     def toggle(self):
@@ -37,6 +37,10 @@ class CarGui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
+        self.set_pars()
+        self.set_panel()
+
+    def set_pars(self):
         self.__max_speed_par = CarParameter(
             'max_speed', self.mdt.phys.max_speed, (.5, -.04), (10.0, 200.0),
             lambda val: setattr(self.mdt.phys, 'max_speed', val))
@@ -136,26 +140,20 @@ class CarGui(Gui):
             self.__wheels_damping_relaxation,
             self.__wheels_damping_compression,
             self.__friction_slip, self.__roll_influence]
+
+    def set_panel(self):
         self.panel = OnscreenImage(
             'assets/images/gui/panel.png', scale=(.4, 1, .2),
             parent=eng.base.a2dTopRight, pos=(-.45, 1, -.25))
         self.panel.setTransparency(True)
-        self.speed_txt = OnscreenText(
-            pos=(-.7, -.38), scale=.065,
-            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
+        pars = {'scale': .065, 'parent': eng.base.a2dTopRight,
+                'fg': (1, 1, 1, 1),
+                'font': eng.font_mgr.load_font('assets/fonts/zekton rg.ttf')}
+        self.speed_txt = OnscreenText(pos=(-.7, -.38), **pars)
         self.lap_txt = OnscreenText(
-            text='1/' + str(self.mdt.laps), pos=(-.5, -.38), scale=.065,
-            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
-        self.time_txt = OnscreenText(
-            pos=(-.3, -.38), scale=.065,
-            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
-        self.best_txt = OnscreenText(
-            pos=(-.1, -.38), scale=.065,
-            font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            parent=eng.base.a2dTopRight, fg=(1, 1, 1, 1))
+            text='1/' + str(self.mdt.laps), pos=(-.5, -.38), **pars)
+        self.time_txt = OnscreenText(pos=(-.3, -.38), **pars)
+        self.best_txt = OnscreenText(pos=(-.1, -.38), **pars)
 
     def toggle(self):
         map(lambda par: par.toggle(), self.__pars)

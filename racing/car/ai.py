@@ -20,12 +20,16 @@ class CarAi(Ai):
         return car_vec
 
     @property
-    def curr_dot_prod(self):
+    def tgt_vec(self):
         curr_tgt_pos = self.current_target.get_pos().xy
         curr_pos = self.mdt.gfx.nodepath.get_pos().xy
         tgt_vec = Vec2(curr_tgt_pos - curr_pos)
         tgt_vec.normalize()
-        return self.car_vec.dot(tgt_vec)
+        return tgt_vec
+
+    @property
+    def curr_dot_prod(self):
+        return self.car_vec.dot(self.tgt_vec)
 
     @property
     def brake(self):
@@ -79,11 +83,9 @@ class CarAi(Ai):
                 return False, True
         if abs(self.curr_dot_prod) > .9:
             return False, False
-        curr_tgt_pos = self.current_target.get_pos().xy
-        curr_pos = self.mdt.gfx.nodepath.get_pos().xy
-        tgt = Vec2(curr_tgt_pos - curr_pos)
         car_vec = self.car_vec
-        cross = Vec3(tgt.x, tgt.y, 0).cross(Vec3(car_vec.x, car_vec.y, 0))
+        tgt = Vec3(self.tgt_vec.x, self.tgt_vec.y, 0)
+        cross = tgt.cross(Vec3(car_vec.x, car_vec.y, 0))
         dot_res = cross.dot(Vec3(0, 0, 1))
         return dot_res < 0, dot_res >= 0
 

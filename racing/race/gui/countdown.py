@@ -12,10 +12,6 @@ class Countdown(Subject):
             '', pos=(0, 0), scale=.2, fg=(1, 1, 1, 1),
             font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         self.countdown_cnt = 3
-        self.__keys_img = OnscreenImage(
-            image='assets/images/gui/keys.png', parent=eng.base.a2dTopLeft,
-            pos=(.7, 1, -.4), scale=(.6, 1, .3))
-        self.__keys_img.setTransparency(True)
         taskMgr.doMethodLater(1.0, self.process_countdown, 'coutdown')
 
     def process_countdown(self, task):
@@ -26,9 +22,4 @@ class Countdown(Subject):
             self.countdown_cnt -= 1
             return task.again
         self.__countdown_txt.destroy()
-        destroy_keys = lambda task: self.__keys_img.destroy()
-        taskMgr.doMethodLater(5.0, destroy_keys, 'destroy keys')
         self.notify('on_start_race')
-
-    def destroy(self):
-        Subject.destroy(self)

@@ -179,6 +179,10 @@ class CarPlayerLogic(CarLogic):
             self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
         self.__update_wp()
 
+    @property
+    def lap_time(self):
+        return globalClock.getFrameTime() - self.last_time_start
+
     def __update_wp(self):
         if game.track.phys.waypoints:
             way_str = _('wrong way') if self.direction < -.6 else ''
