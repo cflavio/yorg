@@ -19,6 +19,7 @@ class CarLogic(Logic):
         self.start_right = None
         self.waypoints = []
         self.camera = Camera(mdt)
+        self.weapon = None
 
     def update(self, input_dct):
         eng_frc = brake_frc = 0
@@ -164,6 +165,9 @@ class CarLogic(Logic):
 
     def destroy(self):
         self.camera = None
+        if self.weapon:
+            self.weapon.destroy()
+        self.weapon = None
         Logic.destroy(self)
 
 
@@ -178,6 +182,9 @@ class CarPlayerLogic(CarLogic):
         if self.last_time_start:
             self.mdt.gui.speed_txt.setText(str(round(self.mdt.phys.speed, 2)))
         self.__update_wp()
+
+    def fire(self):
+        self.weapon.logic.fire()
 
     @property
     def lap_time(self):

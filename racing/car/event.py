@@ -2,6 +2,7 @@ from itertools import chain
 from direct.showbase.InputStateGlobal import inputState
 from racing.game.gameobject import Event
 from racing.race.event import NetMsgs
+from racing.weapon.rocket.rocket import Rocket
 from panda3d.core import Vec3, Vec2
 
 
@@ -83,6 +84,17 @@ class CarPlayerEvent(CarEvent):
             eng.audio.play(self.mdt.audio.landing_sfx)
         if obj_name.startswith('Goal'):
             self.__process_goal()
+        if obj_name.startswith('Bonus'):
+            self.on_bonus()
+
+    def on_bonus(self):
+        if not self.mdt.logic.weapon:
+            self.mdt.logic.weapon = Rocket(self.mdt)
+            self.accept('x', self.on_fire)
+
+    def on_fire(self):
+        self.ignore('x')
+        self.mdt.logic.fire()
 
     def __process_wall(self):
         eng.audio.play(self.mdt.audio.crash_sfx)
@@ -124,7 +136,7 @@ class CarPlayerEvent(CarEvent):
 
     def destroy(self):
         CarEvent.destroy(self)
-        self.ignore('f11')
+        map(self.ignore, ['f11', 'x'])
 
 
 class CarPlayerEventServer(CarPlayerEvent):

@@ -1,6 +1,7 @@
 from panda3d.bullet import BulletRigidBodyNode, BulletTriangleMesh, \
     BulletTriangleMeshShape, BulletGhostNode
 from racing.game.gameobject import Phys
+from racing.weapon.bonus.bonus import Bonus
 
 
 class TrackPhys(Phys):
@@ -80,11 +81,13 @@ class TrackPhys(Phys):
         wp_root = self.model.find('**/Waypoints')
         _waypoints = wp_root.findAllMatches('**/Waypoint*')
         self.waypoints = {}
+        self.bonuses = []
         for w_p in _waypoints:
             wpstr = '**/Waypoint'
             prevs = w_p.getTag('prev').split(',')
             lst_wp = [wp_root.find(wpstr + idx) for idx in prevs]
             self.waypoints[w_p] = lst_wp
+            self.bonuses += [Bonus(w_p.get_pos())]
 
     def __hide_models(self):
         for mod in ['Road', 'Offroad', 'Wall', 'Respawn', 'Slow', 'Goal']:
@@ -113,3 +116,4 @@ class TrackPhys(Phys):
         map(eng.phys.world_phys.remove_ghost, self.ghosts)
         self.corners = self.rigid_bodies = self.ghosts = self.nodes = \
             self.waypoints = None
+        map(lambda bon: bon.destroy(), self.bonuses)

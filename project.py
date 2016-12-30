@@ -3,8 +3,8 @@
 
 # TODO LIST =====
 
-#TODO: #gameplay weapons
 #TODO: skid marks
+#TODO: #project git submodules racing/, racing/game
 
 
 # WAITING =====
@@ -20,6 +20,7 @@
 #TODO: #gameplay minimap should show all cars
 #TODO: #gameplay waypoints as a line
 #TODO: #gameplay forks
+#TODO: #gameplay regenerate weapons
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai weapons
 #TODO: #ai obstacle avoidance
@@ -31,7 +32,6 @@
 #TODO: #network send game packets using udp in place of tcp
 #TODO: #network weapons
 #TODO: #project make scons for racing and game
-#TODO: #project git submodules racing/, racing/game
 #TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
 #TODO: #engine hardware instancing or save flattened files on bam files (caching)
 #TODO: #engine multi-threading physics loading
