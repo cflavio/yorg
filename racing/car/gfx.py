@@ -1,6 +1,7 @@
 from os.path import exists
 from racing.game.gameobject import Gfx
 from panda3d.bullet import BulletRigidBodyNode
+from .skidmark import Skidmark
 
 
 class CarGfx(Gfx):
@@ -11,6 +12,21 @@ class CarGfx(Gfx):
         vehicle_node = BulletRigidBodyNode('Vehicle')
         self.nodepath = eng.gfx.world_np.attachNewNode(vehicle_node)
         Gfx.__init__(self, mdt)
+        self.l_skidmark = self.r_skidmark = None
+        self.skidmarks = []
+
+    def on_skidmarking(self):
+        if self.r_skidmark:
+            self.r_skidmark.update()
+            self.l_skidmark.update()
+        else:
+            self.r_skidmark = Skidmark(self.mdt, 'fr')
+            self.l_skidmark = Skidmark(self.mdt, 'fl')
+            self.skidmarks += [self.l_skidmark, self.r_skidmark]
+
+    def on_no_skidmarking(self):
+        self.r_skidmark = None
+        self.l_skidmark = None
 
     def async_build(self):
         self.chassis_np_low = loader.loadModel(self.mdt.path + '/damage_low/car_low')
@@ -65,4 +81,5 @@ class CarGfx(Gfx):
         meshes = [self.nodepath, self.chassis_np] + self.wheels.values()
         map(lambda mesh: mesh.removeNode(), meshes)
         self.wheels = None
+        map(lambda skd: skd.destroy(), self.skidmarks)
         Gfx.destroy(self)

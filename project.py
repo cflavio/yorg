@@ -3,7 +3,6 @@
 
 # TODO LIST =====
 
-#TODO: skid marks
 #TODO: #project git submodules racing/, racing/game
 
 
@@ -21,6 +20,7 @@
 #TODO: #gameplay waypoints as a line
 #TODO: #gameplay forks
 #TODO: #gameplay regenerate weapons
+#TODO: remove skid marks after some time
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai weapons
 #TODO: #ai obstacle avoidance

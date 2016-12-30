@@ -66,6 +66,10 @@ class CarLogic(Logic):
                 self.__steering += steering_sign * steering_dec
         phys.set_forces(self.get_eng_frc(eng_frc), brake_frc, self.__steering)
         self.__update_roll_info()
+        if self.is_skidmarking:
+            self.mdt.gfx.on_skidmarking()
+        else:
+            self.mdt.gfx.on_no_skidmarking()
 
     def get_eng_frc(self, eng_frc):
         curr_max_speed = self.mdt.phys.max_speed * self.mdt.phys.curr_speed_factor
@@ -162,6 +166,13 @@ class CarLogic(Logic):
     @property
     def is_rolling(self):
         return globalClock.getFrameTime() - self.last_roll_ko_time < 1.0
+
+    @property
+    def is_skidmarking(self):
+        hspeed = self.mdt.phys.speed > 50.0
+        flying = self.mdt.phys.is_flying
+        input_dct = self.mdt.event._get_input()
+        return input_dct['reverse'] and hspeed and not flying
 
     def destroy(self):
         self.camera = None

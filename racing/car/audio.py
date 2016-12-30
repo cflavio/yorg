@@ -17,12 +17,10 @@ class CarAudio(Audio):
         self.engine_sfx.play()
 
     def update(self, input_dct):
-        hspeed = self.mdt.phys.speed > 50.0
-        not_playing = self.brake_sfx.status() != AudioSound.PLAYING
-        flying = self.mdt.phys.is_flying
-        if input_dct['reverse'] and hspeed and not_playing and not flying:
+        playing = self.brake_sfx.status() == AudioSound.PLAYING
+        if self.mdt.logic.is_skidmarking and not playing:
             self.brake_sfx.play()
-        if not input_dct['reverse'] or not hspeed or flying:
+        elif not self.mdt.logic.is_skidmarking and playing:
             self.brake_sfx.stop()
         self.engine_sfx.set_volume(max(.25, abs(self.mdt.phys.speed_ratio)))
         self.engine_sfx.set_play_rate(max(.25, abs(self.mdt.phys.speed_ratio)))
