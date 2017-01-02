@@ -5,7 +5,7 @@ from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectDialog import OkDialog
 from panda3d.core import TextNode, LVector2i
-from racing.game.engine.gui.page import Page, PageEvent, PageGui
+from yyagl.engine.gui.page import Page, PageEvent, PageGui
 
 
 class OptionEvent(PageEvent):

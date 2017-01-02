@@ -1,5 +1,5 @@
-from racing.game.game import GameLogic
-from racing.season.season import SingleRaceSeason
+from yyagl.game import GameLogic
+from yyagl.racing.season.season import SingleRaceSeason
 
 
 class YorgLogic(GameLogic):

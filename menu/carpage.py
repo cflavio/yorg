@@ -1,8 +1,8 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
-from racing.game.engine.gui.page import Page, PageGui
-from racing.season.season import SingleRaceSeason
-from racing.game.engine.gui.imgbtn import ImageButton
+from yyagl.engine.gui.page import Page, PageGui
+from yyagl.racing.season.season import SingleRaceSeason
+from yyagl.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
 from .driverpage import DriverPage
 

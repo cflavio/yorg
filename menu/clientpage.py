@@ -1,8 +1,8 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
-from racing.game.engine.gui.page import Page, PageGui, PageEvent
-from racing.game.engine.network.client import ClientError
+from yyagl.engine.gui.page import Page, PageGui, PageEvent
+from yyagl.engine.network.client import ClientError
 from .carpage import CarPageClient
 from .netmsgs import NetMsgs
 

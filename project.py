@@ -3,8 +3,6 @@
 
 # TODO LIST =====
 
-#TODO: #project git submodules racing/, racing/game
-
 
 # WAITING =====
 

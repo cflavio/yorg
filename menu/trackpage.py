@@ -1,7 +1,7 @@
 from direct.gui.DirectButton import DirectButton
-from racing.game.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page, PageGui
 from .carpage import CarPage, CarPageServer
-from racing.game.engine.gui.imgbtn import ImageButton
+from yyagl.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
 
 

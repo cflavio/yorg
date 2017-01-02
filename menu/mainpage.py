@@ -1,6 +1,6 @@
 from direct.gui.DirectButton import DirectButton
-from racing.game.engine.gui.mainpage import MainPage, MainPageGui
-from racing.game.engine.gui.page import PageGui
+from yyagl.engine.gui.mainpage import MainPage, MainPageGui
+from yyagl.engine.gui.page import PageGui
 from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
 from .optionpage import OptionPage

@@ -1,5 +1,5 @@
 from direct.gui.DirectButton import DirectButton
-from racing.game.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page, PageGui
 from .serverpage import ServerPage
 from .clientpage import ClientPage
 

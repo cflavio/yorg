@@ -1,9 +1,9 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED
-from racing.game.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page, PageGui
 from .carpage import CarPage
 from .trackpage import TrackPage
-from racing.season.season import Season, SingleRaceSeason
+from yyagl.racing.season.season import Season, SingleRaceSeason
 
 
 class SingleplayerPageGui(PageGui):

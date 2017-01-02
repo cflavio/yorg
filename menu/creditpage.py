@@ -1,5 +1,5 @@
 from direct.gui.OnscreenText import OnscreenText
-from racing.game.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page, PageGui
 
 
 class CreditPageGui(PageGui):

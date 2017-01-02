@@ -1,6 +1,6 @@
 import time
 import sys
-from racing.game.gameobject import Event
+from yyagl.gameobject import Event
 
 
 class _Event(Event):

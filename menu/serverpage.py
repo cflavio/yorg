@@ -1,6 +1,6 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
-from racing.game.engine.gui.page import Page, PageGui, PageEvent
+from yyagl.engine.gui.page import Page, PageGui, PageEvent
 from .trackpage import TrackPageServer
 import socket
 from json import load

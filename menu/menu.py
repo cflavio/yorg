@@ -1,5 +1,5 @@
-from racing.game.gameobject import GameObjectMdt, Gui
-from racing.game.engine.gui.menu import MenuArgs, Menu
+from yyagl.gameobject import GameObjectMdt, Gui
+from yyagl.engine.gui.menu import MenuArgs, Menu
 from .mainpage import YorgMainPage
 
 

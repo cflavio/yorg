@@ -1,4 +1,4 @@
-from racing.game.gameobject import Audio
+from yyagl.gameobject import Audio
 
 
 class _Audio(Audio):

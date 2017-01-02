@@ -1,6 +1,6 @@
-from racing.race.race import Race, RaceSinglePlayer, RaceServer, \
+from yyagl.racing.race.race import Race, RaceSinglePlayer, RaceServer, \
     RaceClient
-from racing.game.gameobject import Fsm
+from yyagl.gameobject import Fsm
 from menu.menu import YorgMenu
 
 
