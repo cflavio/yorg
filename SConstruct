@@ -1,18 +1,18 @@
-from racing.game.build.build import extensions, get_files, image_extensions, \
+from yyagl.build.build import extensions, get_files, image_extensions, \
     set_path, p3d_path_str, win_path_str, osx_path_str, linux_path_str, \
     src_path_str, devinfo_path_str, docs_path_str, win_path_noint_str,\
     osx_path_noint_str, linux_path_noint_str, pdf_path_str, test_path_str
-from racing.game.build.p3d import build_p3d
-from racing.game.build.windows import build_windows
-from racing.game.build.osx import build_osx
-from racing.game.build.linux import build_linux
-from racing.game.build.src import build_src
-from racing.game.build.devinfo import build_devinfo
-from racing.game.build.test import build_ut
-from racing.game.build.docs import build_docs
-from racing.game.build.strings import build_strings, build_string_template
-from racing.game.build.imgs import build_images
-from racing.game.build.pdf import build_pdf
+from yyagl.build.p3d import build_p3d
+from yyagl.build.windows import build_windows
+from yyagl.build.osx import build_osx
+from yyagl.build.linux import build_linux
+from yyagl.build.src import build_src
+from yyagl.build.devinfo import build_devinfo
+from yyagl.build.test import build_ut
+from yyagl.build.docs import build_docs
+from yyagl.build.strings import build_strings, build_string_template
+from yyagl.build.imgs import build_images
+from yyagl.build.pdf import build_pdf
 
 
 argument_info = [
@@ -75,46 +75,46 @@ env['SUPERMIRROR'] = '/home/flavio/runtime_panda3d'
 filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
 pdf_conf = {
     'sources': [
-        ('python', '.', '*.py SConstruct', ['./racing/*'])],
+        ('python', '.', '*.py SConstruct', ['./yyagl/*'])],
     'sources_menu': [
         ('python', './menu', '*.py', [])],
     'sources_yorg': [
         ('python', './yorg', '*.py', [])],
     'sources_root': [
-        ('python', '.', '*.py SConstruct', ['./racing/*', './menu/*', './yorg/*'])],
+        ('python', '.', '*.py SConstruct', ['./yyagl/*', './menu/*', './yorg/*'])],
     'sources_racing': [
-        ('python', './racing', '*.py', ['./racing/game/*'])],
+        ('python', './yyagl/racing', '*.py', [])],
     'sources_racing_car': [
-        ('python', './racing/car', '*.py', [])],
+        ('python', './yyagl/racing/car', '*.py', [])],
     'sources_racing_race': [
-        ('python', './racing/race', '*.py', [])],
+        ('python', './yyagl/racing/race', '*.py', [])],
     'sources_racing_ranking': [
-        ('python', './racing/ranking', '*.py', [])],
+        ('python', './yyagl/racing/ranking', '*.py', [])],
     'sources_racing_season': [
-        ('python', './racing/season', '*.py', [])],
+        ('python', './yyagl/racing/season', '*.py', [])],
     'sources_racing_track': [
-        ('python', './racing/track', '*.py', [])],
+        ('python', './yyagl/racing/track', '*.py', [])],
     'sources_racing_other': [
-        ('python', './racing', '*.py', ['./racing/game/*', './racing/car/*', './racing/race/*', './racing/ranking/*', './racing/season/*', './racing/track/*'])],
+        ('python', './yyagl/racing', '*.py', ['./yyagl/racing/game/*', './yyagl/racing/car/*', './yyagl/racing/race/*', './yyagl/racing/ranking/*', './yyagl/racing/season/*', './yyagl/racing/track/*'])],
     'sources_game': [
-        ('python', './racing/game', '*.py *.pdef', filt_game),
-        ('lua', './racing/game', 'config.lua', filt_game),
-        ('c', './racing/game', '*.vert *.frag', filt_game),
-        ('', './racing/game', '*.rst *.css_t *.conf', filt_game),
-        ('html', './racing/game', '*.html', filt_game),
-        ('javascript', './racing/game', '*.js', filt_game)],
+        ('python', './yyagl', '*.py *.pdef', filt_game),
+        ('lua', './yyagl', 'config.lua', filt_game),
+        ('c', './yyagl', '*.vert *.frag', filt_game),
+        ('', './yyagl', '*.rst *.css_t *.conf', filt_game),
+        ('html', './yyagl', '*.html', filt_game),
+        ('javascript', './yyagl', '*.js', filt_game)],
     'sources_game_build': [
-        ('python', './racing/game/build', '*.py *.pdef', filt_game),
-        ('lua', './racing/game/build', 'config.lua', filt_game),
-        ('', './racing/game/build', '*.rst *.css_t *.conf', filt_game),
-        ('html', './racing/game/build', '*.html', filt_game),
-        ('javascript', './racing/game/build', '*.js', filt_game)],
+        ('python', './yyagl/build', '*.py *.pdef', filt_game),
+        ('lua', './yyagl/build', 'config.lua', filt_game),
+        ('', './yyagl/build', '*.rst *.css_t *.conf', filt_game),
+        ('html', './yyagl/build', '*.html', filt_game),
+        ('javascript', './yyagl/build', '*.js', filt_game)],
     'sources_game_engine': [
-        ('python', './racing/game/engine', '*.py *.pdef', filt_game)],
+        ('python', './yyagl/engine', '*.py *.pdef', filt_game)],
     'sources_game_other': [
-        ('python', './racing/game', '*.py *.pdef', filt_game + ['./racing/game/build/*', './racing/game/engine/*'])],
+        ('python', './yyagl', '*.py *.pdef', filt_game + ['./yyagl/build/*', './yyagl/engine/*'])],
     'tests': [
-        ('python', './racing/game/tests', '*.py', [])]}
+        ('python', './yyagl/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
 
 def cond_racing(s):
