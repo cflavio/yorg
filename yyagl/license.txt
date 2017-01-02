@@ -1,6 +1,0 @@
-The code is licensed under LGPLv3 (see the file licenses/lgpl.txt for details).
-
-Several assets are from OpenGameArt.com, they are licensed under several forms
-of CC, look at licenses/licenses.txt for details.
-
-The remaining assets are licensed under CC BY-SA.
