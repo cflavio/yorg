@@ -1,4 +1,4 @@
 [submodule "yyagl"]
 	path = yyagl
-	url = https://github.com/cflavio/yyagl
+	url = git@github.com:/cflavio/yyagl
 	branch = master
