@@ -16,7 +16,6 @@
 
 #TODO: set_diffuse.py script for setting diffuse to 1.0 (it applies to a folder)
 #TODO: bug shader transparency tuftsgrass1.egg
-#TODO: rotating the weapon
 #TODO: put a button for opening the site at loading and exit
 #TODO: #gameplay minimap should show all cars
 #TODO: #gameplay waypoints as a line
