@@ -14,6 +14,8 @@
 
 # MAYBE/SOMEDAY =====
 
+#TODO: bug shader transparency tuftsgrass1.egg
+#TODO: put a button for opening the site at loading and exit
 #TODO: #gameplay minimap should show all cars
 #TODO: #gameplay waypoints as a line
 #TODO: #gameplay forks
@@ -31,6 +33,7 @@
 #TODO: #network weapons
 #TODO: #project make scons for racing and game
 #TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
+#TODO: #shaders deferred shading, tone mapping
 #TODO: #engine hardware instancing or save flattened files on bam files (caching)
 #TODO: #engine multi-threading physics loading
 #TODO: #backlog #project make uml diagrams with pyreverse into devinfo
