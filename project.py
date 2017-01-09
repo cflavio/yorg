@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 #TODO: #gameplay regenerate weapons
-#TODO: #gameplay minimap should show all cars
 
 
 # WAITING =====
@@ -19,6 +18,7 @@
 
 #TODO: put a button for opening the site at loading and exit
 #TODO: bug shader transparency tuftsgrass1.egg
+#TODO: supporters' signs
 #TODO: #gameplay waypoints as a line
 #TODO: #gameplay forks
 #TODO: #ai port ai lookahead to 3D
