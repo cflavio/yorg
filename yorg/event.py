@@ -14,5 +14,5 @@ class _Event(Event):
 
     def on_end(self):
         if self.mdt.options['settings']['open_browser_at_exit']:
-            eng.open_browser('http://www.ya2.it')
+            eng.gui.open_browser('http://www.ya2.it')
         sys.exit()

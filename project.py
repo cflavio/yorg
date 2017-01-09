@@ -3,6 +3,9 @@
 
 # TODO LIST =====
 
+#TODO: #gameplay regenerate weapons
+#TODO: #gameplay minimap should show all cars
+
 
 # WAITING =====
 
@@ -14,13 +17,10 @@
 
 # MAYBE/SOMEDAY =====
 
-#TODO: bug shader transparency tuftsgrass1.egg
 #TODO: put a button for opening the site at loading and exit
-#TODO: #gameplay minimap should show all cars
+#TODO: bug shader transparency tuftsgrass1.egg
 #TODO: #gameplay waypoints as a line
 #TODO: #gameplay forks
-#TODO: #gameplay regenerate weapons
-#TODO: remove skid marks after some time
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai weapons
 #TODO: #ai obstacle avoidance
@@ -36,6 +36,7 @@
 #TODO: #shaders deferred shading, tone mapping
 #TODO: #engine hardware instancing or save flattened files on bam files (caching)
 #TODO: #engine multi-threading physics loading
+#TODO: #backlog #project preload assets (cars on application's start, track on menu selection)
 #TODO: #backlog #project make uml diagrams with pyreverse into devinfo
 #TODO: #backlog #project unit tests
 #TODO: #backlog #shaders particle effects
