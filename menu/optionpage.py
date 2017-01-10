@@ -19,8 +19,6 @@ class OptionEvent(PageEvent):
         settings['fullscreen'] = self.mdt.gui._fullscreen_cb['indicatorValue']
         settings['resolution'] = self.mdt.gui._res_opt.get().replace('x', ' ')
         settings['aa'] = self.mdt.gui._aa_cb['indicatorValue']
-        browser = self.mdt.gui._browser_cb['indicatorValue']
-        settings['open_browser_at_exit'] = browser
         dev['multithreaded_render'] = dev['multithreaded_render']
         game.options.store()
 
@@ -94,15 +92,6 @@ class OptionPageGui(PageGui):
             pos=(.12, 1, -.27), text='', indicatorValue=conf['settings']['aa'],
             **menu_gui.checkbtn_args)
 
-        browser_lab = DirectLabel(
-            text='', pos=(-.1, 1, -.5), text_align=TextNode.ARight,
-            **menu_gui.label_args)
-        PageGui.transl_text(browser_lab, "See Ya2's news at exit")
-        self._browser_cb = DirectCheckButton(
-            pos=(.12, 1, -.47), text='',
-            indicatorValue=conf['settings']['open_browser_at_exit'],
-            command=self.on_browser, **menu_gui.checkbtn_args)
-
         if eng.logic.is_runtime:
             fullscreen_lab['text_fg'] = (.75, .75, .75, 1)
             self.__fullscreen_cb['state'] = DISABLED
@@ -112,19 +101,10 @@ class OptionPageGui(PageGui):
         self.widgets += [
             lang_lab, self._lang_opt, vol_lab, self._vol_slider,
             fullscreen_lab, self._fullscreen_cb, res_lab, self._res_opt,
-            aa_lab, self._aa_cb, aa_next_lab, browser_lab, self._browser_cb]
+            aa_lab, self._aa_cb, aa_next_lab]
         idx = eng.lang_mgr.lang_codes.index(conf['settings']['lang'])
         self.__change_lang(eng.lang_mgr.languages[idx])
         PageGui.build_page(self)
-
-    def on_browser(self, val):
-        txt = _('Please, really consider enabling this option to see our news.'
-                '\nWe hope you will find interesting stuff there.\nMoreover, '
-                'this is how we can keep Yorg free.')
-        if not val:
-            dial = OkDialog(dialogName="Ya2's news", text=txt,
-                            frameColor=self.menu.gui.menu_args.dial_color)
-            dial['command'] = lambda val: dial.cleanup()  # it destroys too
 
     def update_texts(self):
         PageGui.update_texts(self)

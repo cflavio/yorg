@@ -20,8 +20,7 @@ class Yorg(GameWindow):
                 'volume': 1,
                 'fullscreen': 0,
                 'resolution': '1280 720',
-                'aa': 0,
-                'open_browser_at_exit': 1},
+                'aa': 0},
             'development': {
                 'multithreaded_render': 0,
                 'ai': 0,
