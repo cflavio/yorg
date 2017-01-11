@@ -17,6 +17,8 @@
 
 # MAYBE/SOMEDAY =====
 
+#TODO: #options key selection
+#TODO: #options joypad
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai weapons
 #TODO: #ai obstacle avoidance
@@ -30,6 +32,7 @@
 #TODO: #network weapons
 #TODO: #project make scons for racing and game
 #TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
+#TODO: #graphics three-points lighting
 #TODO: #shaders deferred shading, tone mapping
 #TODO: #engine hardware instancing or save flattened files on bam files (caching)
 #TODO: #engine multi-threading physics loading
