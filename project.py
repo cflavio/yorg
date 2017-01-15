@@ -4,8 +4,8 @@
 # TODO LIST =====
 
 #TODO: supporters' signs
-#TODO: #gameplay waypoints as a line
-#TODO: #gameplay forks
+#TODO: #gameplay waypoints as a line; forks
+#TODO: #options key selection and joypad
 
 
 # WAITING =====
@@ -17,8 +17,6 @@
 
 # MAYBE/SOMEDAY =====
 
-#TODO: #options key selection
-#TODO: #options joypad
 #TODO: #ai port ai lookahead to 3D
 #TODO: #ai weapons
 #TODO: #ai obstacle avoidance
@@ -36,6 +34,7 @@
 #TODO: #shaders deferred shading, tone mapping
 #TODO: #engine hardware instancing or save flattened files on bam files (caching)
 #TODO: #engine multi-threading physics loading
+#TODO: #design use mediator (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ...
 #TODO: #backlog #project preload assets (cars on application's start, track on menu selection)
 #TODO: #backlog #project make uml diagrams with pyreverse into devinfo
 #TODO: #backlog #project unit tests
