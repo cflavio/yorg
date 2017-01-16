@@ -31,7 +31,7 @@
 #TODO: #project make scons for racing and game
 #TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
 #TODO: #graphics three-points lighting
-#TODO: #shaders deferred shading, tone mapping
+#TODO: #shaders deferred shading, tone mapping; fxaa
 #TODO: #engine hardware instancing or save flattened files on bam files (caching)
 #TODO: #engine multi-threading physics loading
 #TODO: #design use mediator (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ...
