@@ -20,7 +20,14 @@ class Yorg(GameWindow):
                 'volume': 1,
                 'fullscreen': 0,
                 'resolution': '1280 720',
-                'aa': 0},
+                'aa': 0,
+                'keys': {
+                    'forward': 'arrow_up',
+                    'rear': 'z',
+                    'left': 'arrow_left',
+                    'right': 'arrow_right',
+                    'button': 'x'},
+                'joystick': 0},
             'development': {
                 'multithreaded_render': 0,
                 'ai': 0,
@@ -31,8 +38,7 @@ class Yorg(GameWindow):
                 'car': '',
                 'track': '',
                 'shaders': 0,
-                'gamma': 2.2,
-                'joystick': 0}}
+                'gamma': 2.2}}
         self.options = DictFile('options.yml', default_opt)
         conf = Configuration(
             fps=self.options['development']['fps'], win_title='Yorg',

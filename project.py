@@ -5,7 +5,6 @@
 
 #TODO: supporters' signs
 #TODO: #gameplay waypoints as a line; forks
-#TODO: #options key selection and joypad
 
 
 # WAITING =====
@@ -18,8 +17,8 @@
 # MAYBE/SOMEDAY =====
 
 #TODO: #ai port ai lookahead to 3D
-#TODO: #ai weapons
 #TODO: #ai obstacle avoidance
+#TODO: #ai weapons
 #TODO: #ai add pit stop to ai
 #TODO: #network at end of a multiplayer race wait for other cars
 #TODO: #network wheels animations
@@ -28,9 +27,9 @@
 #TODO: #network print if the port is closed when creating the server
 #TODO: #network send game packets using udp in place of tcp
 #TODO: #network weapons
-#TODO: #project make scons for racing and game
-#TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
 #TODO: #graphics three-points lighting
+#TODO: #project make scons for yyagl
+#TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
 #TODO: #shaders deferred shading, tone mapping; fxaa
 #TODO: #engine hardware instancing or save flattened files on bam files (caching)
 #TODO: #engine multi-threading physics loading

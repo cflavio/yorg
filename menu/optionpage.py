@@ -6,6 +6,8 @@ from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectDialog import OkDialog
 from panda3d.core import TextNode, LVector2i
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
+from direct.gui.DirectButton import DirectButton
+from .inputpage import InputPage
 
 
 class OptionEvent(PageEvent):
@@ -92,6 +94,11 @@ class OptionPageGui(PageGui):
             pos=(.12, 1, -.27), text='', indicatorValue=conf['settings']['aa'],
             **menu_gui.checkbtn_args)
 
+        input_btn = DirectButton(
+            text=_('Configure input'), pos=(0, 1, -.5),
+            command=lambda: self.menu.logic.push_page(InputPage(self.menu)),
+            **menu_gui.btn_args)
+
         if eng.logic.is_runtime:
             fullscreen_lab['text_fg'] = (.75, .75, .75, 1)
             self.__fullscreen_cb['state'] = DISABLED
@@ -101,7 +108,7 @@ class OptionPageGui(PageGui):
         self.widgets += [
             lang_lab, self._lang_opt, vol_lab, self._vol_slider,
             fullscreen_lab, self._fullscreen_cb, res_lab, self._res_opt,
-            aa_lab, self._aa_cb, aa_next_lab]
+            aa_lab, self._aa_cb, aa_next_lab, input_btn]
         idx = eng.lang_mgr.lang_codes.index(conf['settings']['lang'])
         self.__change_lang(eng.lang_mgr.languages[idx])
         PageGui.build_page(self)
