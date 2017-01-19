@@ -3,8 +3,7 @@
 
 # TODO LIST =====
 
-#TODO: supporters' signs
-#TODO: #gameplay waypoints as a line; forks
+#TODO: #gameplay forks
 
 
 # WAITING =====
