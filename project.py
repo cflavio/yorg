@@ -1,9 +1,14 @@
 # BUGS =====
 
+# back on driver page
+# link project page on yorg's page
+# linux installer is not executable
+# extension for linux installer / show as binary
+# linux build doesn't start
+
 
 # TODO LIST =====
 
-#TODO: #gameplay forks
 
 
 # WAITING =====
