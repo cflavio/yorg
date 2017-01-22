@@ -33,6 +33,7 @@ class DriverPageGui(PageGui):
         ts = TextureStage('ts')
         ts.setMode(TextureStage.MDecal)
         self.img.setTexture(ts, loader.loadTexture('assets/images/drivers/driver%s_sel.png' % i))
+        self.widgets[-1]['state'] = DISABLED
         taskMgr.doMethodLater(2.0, lambda tsk: game.fsm.demand('Race', self.mdt.track, self.mdt.car, [], str(i)), 'start')
 
     def destroy(self):

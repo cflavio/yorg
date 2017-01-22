@@ -1,6 +1,5 @@
 # BUGS =====
 
-# back on driver page
 # link project page on yorg's page
 # linux installer is not executable
 # extension for linux installer / show as binary
@@ -9,6 +8,10 @@
 
 # TODO LIST =====
 
+#TODO: tracks' images into the menu
+#TODO: menu refinement
+#TODO: gui on loading
+#TODO: gui ingame
 
 
 # WAITING =====
