@@ -10,7 +10,8 @@ class CreditPageGui(PageGui):
         self.widgets += [txt]
         flavio = _('Code')+': Flavio Calva'
         luca = _('Art')+': Luca Quartero'
-        text = '\n\n'.join([flavio, luca])
+        dario = _('Testing')+': Dario Murgia'
+        text = '\n\n'.join([flavio, luca, dario])
         PageGui.transl_text(self.widgets[0], text)
         PageGui.build_page(self)
 

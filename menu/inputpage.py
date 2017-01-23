@@ -47,7 +47,7 @@ class InputPageGui(PageGui):
         self._joypad_cb = DirectCheckButton(
             pos=(.42, 1, .52), text='',
             indicatorValue=conf['settings']['fullscreen'],
-            indicator_frameColor=menu_args.btn_color,
+            indicator_frameColor=(.75, .75, .25, 1),
             **menu_gui.checkbtn_args)
 
         forward_lab = DirectLabel(

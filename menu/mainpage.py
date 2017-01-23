@@ -5,6 +5,7 @@ from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
 from .optionpage import OptionPage
 from .creditpage import CreditPage
+from direct.gui.OnscreenImage import OnscreenImage
 
 
 class YorgMainPageGui(MainPageGui):
@@ -28,6 +29,11 @@ class YorgMainPageGui(MainPageGui):
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(self.widgets):
             PageGui.transl_text(wdg, menu_data[i][0])
+        self.widgets += [OnscreenImage(
+            'assets/images/gui/yorg_title.png',
+            scale=(.8, 1, .8 * (380.0 / 772)), parent=base.a2dTopRight,
+            pos=(-.8, 1, -.4))]
+        self.widgets[-1].setTransparency(True)
         MainPageGui.build_page(self)
 
 

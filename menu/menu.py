@@ -8,7 +8,7 @@ class _Gui(Gui):
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
         menu_args = MenuArgs(
-            'assets/fonts/zekton rg.ttf', (.75, .75, .75, 1), .12,
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1), .12,
             (-3, 3, -.32, .88), (0, 0, 0, .2), (.9, .9, .9, .8),
             'assets/images/gui/menu_background.jpg',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',

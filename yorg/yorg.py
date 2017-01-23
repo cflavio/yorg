@@ -39,7 +39,8 @@ class Yorg(GameWindow):
                 'track': '',
                 'shaders': 0,
                 'gamma': 2.2,
-                'show_waypoints': 0}}
+                'show_waypoints': 0,
+                'show_exit': 1}}
         self.options = DictFile('options.yml', default_opt)
         conf = Configuration(
             fps=self.options['development']['fps'], win_title='Yorg',

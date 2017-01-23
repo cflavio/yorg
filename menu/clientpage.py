@@ -36,7 +36,7 @@ class ClientPageGui(PageGui):
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_gui.font, width=12,
             frameColor=menu_args.btn_color,
             initialText='insert the server address')
-        self.ent.onscreenText['fg'] = (.75, .75, .75, 1)
+        self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
         self.widgets += [self.ent]
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_gui.btn_args)

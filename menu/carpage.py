@@ -5,6 +5,7 @@ from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
 from .driverpage import DriverPage
+from direct.gui.OnscreenText import OnscreenText
 
 
 class CarPageGui(PageGui):
@@ -17,11 +18,15 @@ class CarPageGui(PageGui):
 
     def build_page(self):
         menu_gui = self.menu.gui
+
+        txt = OnscreenText(text=_('Select the car'), pos=(0, .8), **menu_gui.text_args)
+        self.widgets += [txt]
+
         self.track_path = 'tracks/' + self.menu.track
         menu_data = ['kronos', 'themis', 'diones']
         self.widgets += [
             ImageButton(
-                scale=.8, pos=(-1.2 + i * 1.2, 1, .1), frameColor=(0, 0, 0, 0),
+                scale=.5, pos=(-1.2 + i * 1.2, 1, .1), frameColor=(0, 0, 0, 0),
                 image='assets/images/cars/%s.png' % menu,
                 command=self.on_car, extraArgs=[menu],
                 **self.menu.gui.imgbtn_args)

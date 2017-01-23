@@ -71,14 +71,16 @@ class _Fsm(Fsm):
         game.logic.season.logic.tuning.gui.hide()
 
     def enterExit(self):
-        self.frm = DirectFrame(frameSize=(-1.5, 1.5, -.9, .9), frameColor=(1, 1, 1, .85))
+        if not game.options['development']['show_exit']:
+            sys.exit()
+        self.frm = DirectFrame(frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         menu_gui = self.__menu.gui.menu
         txt = _(
             'Please, visit our site! We hope you can find interesting stuff there. '
             'Moreover, by visiting it (especially disabling your adblocker onto the site) '
             'you support us and contribute to keep Yorg as free as possible. Thank you very much! :)')
         self.txt = OnscreenText(text=txt, pos=(0, .8), scale=.08, wordwrap=32,
-            fg=(1, 1, 1, 1), font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+            fg=(.75, .75, .25, 1), font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
         menu_data = [
             ('Visit and exit', _('visit our site and exit\n(I love to support you!)'),
              lambda: self.on_end(True)),
@@ -87,7 +89,7 @@ class _Fsm(Fsm):
         self.widgets = []
         btn_args = {
             'text_font': eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
-            'text_fg': (.75, .75, .75, 1),
+            'text_fg': (.75, .75, .25, 1),
             'frameColor': (0, 0, 0, .2),
             'relief': FLAT,
             'frameSize': (-1, 1, -.2, .16),

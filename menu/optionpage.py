@@ -55,7 +55,7 @@ class OptionPageGui(PageGui):
         PageGui.transl_text(vol_lab, 'Volume')
         self._vol_slider = DirectSlider(
             pos=(.47, 0, .33), scale=.47, value=conf['settings']['volume'],
-            frameColor=menu_args.btn_color, thumb_frameColor=(.4, .4, .4, 1))
+            frameColor=menu_args.btn_color, thumb_frameColor=(.75, .75, .25, 1))
 
         fullscreen_lab = DirectLabel(
             text='', pos=(-.1, 1, .1), text_align=TextNode.ARight,
@@ -64,7 +64,7 @@ class OptionPageGui(PageGui):
         self._fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='',
             indicatorValue=conf['settings']['fullscreen'],
-            indicator_frameColor=menu_args.btn_color,
+            indicator_frameColor=(.75, .75, .25, 1),
             command=lambda val: eng.gui.toggle_fullscreen(),
             **menu_gui.checkbtn_args)
 
@@ -92,6 +92,7 @@ class OptionPageGui(PageGui):
         PageGui.transl_text(aa_next_lab, '(from the next execution)')
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', indicatorValue=conf['settings']['aa'],
+            indicator_frameColor=(.75, .75, .25, 1),
             **menu_gui.checkbtn_args)
 
         input_btn = DirectButton(
