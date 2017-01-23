@@ -1,15 +1,10 @@
 # BUGS =====
 
-# link project page on yorg's page
-# linux installer is not executable
-# extension for linux installer / show as binary
-# linux build doesn't start
-# some buttons into the menu aren't well sized
-
 
 # TODO LIST =====
 
 #TODO: use the menu with the keyboard and the joypad
+#TODO: some buttons into the menu aren't properly sized
 #TODO: gui on loading
 #TODO: gui ingame
 

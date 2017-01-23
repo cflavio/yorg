@@ -14,14 +14,22 @@ class TrackPageGui(PageGui):
         txt = OnscreenText(text=_('Select the track'), pos=(0, .8), **menu_gui.text_args)
         self.widgets += [txt]
 
+        tracks = ['desert', 'prototype']
+        names = ['Jeff SkyRunner', 'Sara Quartero']
         menu_data = ['desert', 'prototype']
-        self.widgets += [
-            ImageButton(
+        t_a = self.menu.gui.text_args.copy()
+        del t_a['scale']
+        for i in range(len(tracks)):
+            img = ImageButton(
                 scale=.5, pos=(-.5 + i * 1.0, 1, .1), frameColor=(0, 0, 0, 0),
-                image='assets/images/tracks/%s.png' % menu,
-                command=self.on_track, extraArgs=[menu],
+                image='assets/images/tracks/%s.png' % tracks[i],
+                command=self.on_track, extraArgs=[tracks[i]],
                 **self.menu.gui.imgbtn_args)
-            for i, menu in enumerate(menu_data)]
+            txt = OnscreenText(tracks[i], pos=(-.5 + i * 1.0, .45), scale=.08, **t_a)
+            thanks = OnscreenText(_('thanks to:'), pos=(-.5 + i * 1.0, -.2), scale=.06, **t_a)
+            name = OnscreenText(names[i], pos=(-.5 + i * 1.0, -.3), scale=.08, **t_a)
+            self.widgets += [img, txt, thanks, name]
+
         PageGui.build_page(self)
 
     def on_track(self, track):

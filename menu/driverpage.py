@@ -52,13 +52,17 @@ class DriverPageGui(PageGui):
         self.widgets += [txt]
 
         self.track_path = 'tracks/' + self.menu.track
-        self.widgets += [
-            ImageButton(
-                scale=.4, pos=(-1.6 + i * .8, 1, .3), frameColor=(0, 0, 0, 0),
-                image='assets/images/drivers/driver%s.png' % i,
-                command=self.on_click, extraArgs=[i],
+        names = ['Flavio Calva', 'Teresa Montanaro', 'Jonathan Casazza']
+        t_a = self.menu.gui.text_args.copy()
+        del t_a['scale']
+        for i in range(len(names)):
+            img = ImageButton(
+                scale=.4, pos=(-.8 + i * .8, 1, .3), frameColor=(0, 0, 0, 0),
+                image='assets/images/drivers/driver%s.png' % (i + 1),
+                command=self.on_click, extraArgs=[i + 1],
                 **self.menu.gui.imgbtn_args)
-            for i in range(1, 4)]
+            name = OnscreenText(names[i], pos=(-.8 + i * .8, -.05), scale=.06, **t_a)
+            self.widgets += [img, name]
         self.img = OnscreenImage(
                 'assets/images/cars/%s_sel.png' % self.mdt.car,
                 parent=base.a2dBottomRight, pos=(-.5, 1, .5), scale=.4)
