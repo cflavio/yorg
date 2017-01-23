@@ -45,7 +45,7 @@ class InputPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(joypad_lab, 'Use the joypad when present')
         self._joypad_cb = DirectCheckButton(
-            pos=(.42, 1, .52), text='',
+            pos=(.09, 1, .52), text='',
             indicatorValue=conf['settings']['fullscreen'],
             indicator_frameColor=(.75, .75, .25, 1),
             **menu_gui.checkbtn_args)
@@ -55,7 +55,7 @@ class InputPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(forward_lab, 'Forward key')
         self._forward_btn = DirectButton(
-            pos=(.42, 1, .3), text=conf['settings']['keys']['forward'],
+            pos=(.46, 1, .3), text=conf['settings']['keys']['forward'],
             command=self.start_rec, **menu_gui.btn_args)
         self._forward_btn['extraArgs'] = [self._forward_btn]
 
@@ -64,7 +64,7 @@ class InputPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(rear_lab, 'Rear key')
         self._rear_btn = DirectButton(
-            pos=(.42, 1, .1), text=conf['settings']['keys']['rear'],
+            pos=(.46, 1, .1), text=conf['settings']['keys']['rear'],
             command=self.start_rec, **menu_gui.btn_args)
         self._rear_btn['extraArgs'] = [self._rear_btn]
 
@@ -73,7 +73,7 @@ class InputPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(left_lab, 'Left key')
         self._left_btn = DirectButton(
-            pos=(.42, 1, -.1), text=conf['settings']['keys']['left'],
+            pos=(.46, 1, -.1), text=conf['settings']['keys']['left'],
             command=self.start_rec, **menu_gui.btn_args)
         self._left_btn['extraArgs'] = [self._left_btn]
 
@@ -82,7 +82,7 @@ class InputPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(right_lab, 'Right key')
         self._right_btn = DirectButton(
-            pos=(.42, 1, -.3), text=conf['settings']['keys']['right'],
+            pos=(.46, 1, -.3), text=conf['settings']['keys']['right'],
             command=self.start_rec, **menu_gui.btn_args)
         self._right_btn['extraArgs'] = [self._right_btn]
 
@@ -91,7 +91,7 @@ class InputPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(button_lab, 'Button key')
         self._button_btn = DirectButton(
-            pos=(.42, 1, -.5), text=conf['settings']['keys']['button'],
+            pos=(.46, 1, -.5), text=conf['settings']['keys']['button'],
             command=self.start_rec, **menu_gui.btn_args)
         self._button_btn['extraArgs'] = [self._button_btn]
 

@@ -46,7 +46,7 @@ class OptionPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(lang_lab, 'Language')
         self._lang_opt = DirectOptionMenu(
-            text='', items=eng.lang_mgr.languages, pos=(.2, 1, .5),
+            text='', items=eng.lang_mgr.languages, pos=(.49, 1, .5),
             initialitem=conf['settings']['lang'], command=self.__change_lang,
             **menu_gui.option_args)
         vol_lab = DirectLabel(
@@ -54,7 +54,7 @@ class OptionPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(vol_lab, 'Volume')
         self._vol_slider = DirectSlider(
-            pos=(.47, 0, .33), scale=.47, value=conf['settings']['volume'],
+            pos=(.52, 0, .33), scale=.49, value=conf['settings']['volume'],
             frameColor=menu_args.btn_color, thumb_frameColor=(.75, .75, .25, 1))
 
         fullscreen_lab = DirectLabel(
@@ -77,7 +77,7 @@ class OptionPageGui(PageGui):
             text='',
             items=['x'.join([str(el_res) for el_res in res])
                    for res in eng.gui.resolutions],
-            pos=(.2, 1, -.1),
+            pos=(.49, 1, -.1),
             initialitem='x'.join(str(res) for res in eng.gui.closest_res),
             command=lambda res: eng.gui.set_resolution(res2vec(res)),
             **menu_gui.option_args)

@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 #TODO: use the menu with the keyboard and the joypad
-#TODO: some buttons into the menu aren't properly sized
 #TODO: gui on loading
 #TODO: gui ingame
 
