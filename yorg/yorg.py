@@ -40,10 +40,14 @@ class Yorg(GameWindow):
                 'shaders': 0,
                 'gamma': 2.2,
                 'show_waypoints': 0,
-                'show_exit': 1}}
+                'show_exit': 1,
+                'menu_joypad': 1,
+                'multiplayer': 0,
+                'win_orig': ''}}
         self.options = DictFile('options.yml', default_opt)
         conf = Configuration(
-            fps=self.options['development']['fps'], win_title='Yorg',
+            fps=self.options['development']['fps'],
+            win_title='Yorg', win_orig = self.options['development']['win_orig'],
             win_size=self.options['settings']['resolution'],
             fullscreen=self.options['settings']['fullscreen'],
             antialiasing=self.options['settings']['aa'],

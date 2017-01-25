@@ -1,13 +1,9 @@
 # BUGS =====
 
-# fix languages
-
 
 # TODO LIST =====
 
-# use the menu with the joypad
-# transitions and fade out at exit
-# mouse cursor
+# change language strings on language change
 # gui on loading
 # gui ingame
 
@@ -23,10 +19,12 @@
 
 # #graphics camera's set-up
 # #graphics three-points lighting
+# #gaming analogic joypad
 # #ai port ai lookahead to 3D
 # #ai obstacle avoidance
 # #ai weapons
 # #ai add pit stop to ai
+# #gaming other weapons
 # #network at end of a multiplayer race wait for other cars
 # #network wheels animations
 # #network physics (collisions to players' car)
