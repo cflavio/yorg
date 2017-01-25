@@ -1,4 +1,5 @@
 from direct.gui.DirectButton import DirectButton
+from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import PageGui
 from .singleplayerpage import SingleplayerPage
@@ -29,6 +30,7 @@ class YorgMainPageGui(MainPageGui):
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(self.widgets):
             PageGui.transl_text(wdg, menu_data[i][0])
+        self.widgets[-4]['state'] = NORMAL if game.options['development']['multiplayer'] else DISABLED
         self.widgets += [OnscreenImage(
             'assets/images/gui/yorg_title.png',
             scale=(.8, 1, .8 * (380.0 / 772)), parent=base.a2dTopRight,
