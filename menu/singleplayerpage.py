@@ -11,9 +11,9 @@ class SingleplayerPageGui(PageGui):
     def build_page(self):
         menu_gui = self.menu.gui
         menu_data = [
-            ('Single race', self.on_single_race),
-            ('New tournament', self.on_start),
-            ('Continue tournament', self.on_continue)]
+            (_('Single race'), self.on_single_race),
+            (_('New season'), self.on_start),
+            (_('Continue season'), self.on_continue)]
         self.widgets += [
             DirectButton(
                 text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],

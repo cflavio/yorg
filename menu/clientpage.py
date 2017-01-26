@@ -29,13 +29,12 @@ class ClientPageGui(PageGui):
     def build_page(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
-        txt = OnscreenText(text='', pos=(0, .4), **menu_gui.text_args)
+        txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.text_args)
         self.widgets += [txt]
-        PageGui.transl_text(self.widgets[0], _('Client'))
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_gui.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText='insert the server address')
+            initialText=_('insert the server address'))
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
         self.widgets += [self.ent]
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),

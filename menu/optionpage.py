@@ -44,7 +44,7 @@ class OptionPageGui(PageGui):
         lang_lab = DirectLabel(
             text='', pos=(-.1, 1, .5), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(lang_lab, 'Language')
+        PageGui.transl_text(lang_lab, 'Language', _('Language'))
         self._lang_opt = DirectOptionMenu(
             text='', items=eng.lang_mgr.languages, pos=(.49, 1, .5),
             initialitem=conf['settings']['lang'], command=self.__change_lang,
@@ -52,7 +52,7 @@ class OptionPageGui(PageGui):
         vol_lab = DirectLabel(
             text='', pos=(-.1, 1, .3), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(vol_lab, 'Volume')
+        PageGui.transl_text(vol_lab, 'Volume', _('Volume'))
         self._vol_slider = DirectSlider(
             pos=(.52, 0, .33), scale=.49, value=conf['settings']['volume'],
             frameColor=menu_args.btn_color, thumb_frameColor=(.75, .75, .25, 1))
@@ -60,7 +60,7 @@ class OptionPageGui(PageGui):
         fullscreen_lab = DirectLabel(
             text='', pos=(-.1, 1, .1), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(fullscreen_lab, 'Fullscreen')
+        PageGui.transl_text(fullscreen_lab, 'Fullscreen', _('Fullscreen'))
         self._fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='',
             indicatorValue=conf['settings']['fullscreen'],
@@ -71,7 +71,7 @@ class OptionPageGui(PageGui):
         res_lab = DirectLabel(
             text='', pos=(-.1, 1, -.1), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(res_lab, 'Resolution')
+        PageGui.transl_text(res_lab, 'Resolution', _('Resolution'))
         res2vec = lambda res: LVector2i(*[int(val) for val in res.split('x')])
         self._res_opt = DirectOptionMenu(
             text='',
@@ -85,20 +85,21 @@ class OptionPageGui(PageGui):
         aa_lab = DirectLabel(
             text='', pos=(-.1, 1, -.3), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(aa_lab, 'Antialiasing')
+        PageGui.transl_text(aa_lab, 'Antialiasing', _('Antialiasing'))
         aa_next_lab = DirectLabel(
             text='', pos=(.2, 1, -.3), text_align=TextNode.ALeft,
             **menu_gui.label_args)
-        PageGui.transl_text(aa_next_lab, '(from the next execution)')
+        PageGui.transl_text(aa_next_lab, '(from the next execution)', _('(from the next execution)'))
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', indicatorValue=conf['settings']['aa'],
             indicator_frameColor=(.75, .75, .25, 1),
             **menu_gui.checkbtn_args)
 
         input_btn = DirectButton(
-            text=_('Configure input'), pos=(0, 1, -.5),
+            text='', pos=(0, 1, -.5),
             command=lambda: self.menu.logic.push_page(InputPage(self.menu)),
             **menu_gui.btn_args)
+        PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
 
         if eng.logic.is_runtime:
             fullscreen_lab['text_fg'] = (.75, .75, .75, 1)

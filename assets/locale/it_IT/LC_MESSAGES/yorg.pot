@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-09 10:17+0200\n"
+"POT-Creation-Date: 2017-01-26 16:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,100 +17,227 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:84
+#: menu/creditpage.py:11
+msgid "Code"
+msgstr ""
+
+#: menu/creditpage.py:12
+msgid "Art"
+msgstr ""
+
+#: menu/creditpage.py:13
+msgid "Testing"
+msgstr ""
+
+#: menu/inputpage.py:44 menu/inputpage.py:46
+msgid "Use the joypad when present"
+msgstr ""
+
+#: menu/inputpage.py:54
+msgid "Accelerate"
+msgstr ""
+
+#: menu/inputpage.py:62
+msgid "Brake"
+msgstr ""
+
+#: menu/inputpage.py:70
+msgid "Left"
+msgstr ""
+
+#: menu/inputpage.py:78
+msgid "Right"
+msgstr ""
+
+#: menu/inputpage.py:86
+msgid "Weapon"
+msgstr ""
+
+#: menu/inputpage.py:96
+msgid "Press the key to record it"
+msgstr ""
+
+#: menu/optionpage.py:47
+msgid "Language"
+msgstr ""
+
+#: menu/optionpage.py:55
+msgid "Volume"
+msgstr ""
+
+#: menu/optionpage.py:63
+msgid "Fullscreen"
+msgstr ""
+
+#: menu/optionpage.py:74
+msgid "Resolution"
+msgstr ""
+
+#: menu/optionpage.py:88
+msgid "Antialiasing"
+msgstr ""
+
+#: menu/optionpage.py:92
+msgid "(from the next execution)"
+msgstr ""
+
+#: menu/optionpage.py:102
+msgid "Configure input"
+msgstr ""
+
+#: menu/carpage.py:22
+msgid "Select the car"
+msgstr ""
+
+#: menu/trackpage.py:14
+msgid "Select the track"
+msgstr ""
+
+#: menu/trackpage.py:18
+msgid "desert"
+msgstr ""
+
+#: menu/trackpage.py:18
+msgid "prototype"
+msgstr ""
+
+#: menu/trackpage.py:30
+msgid "thanks to:"
+msgstr ""
+
+#: menu/driverpage.py:51
+msgid "Select the driver"
+msgstr ""
+
+#: menu/mainpage.py:16
+msgid "Single Player"
+msgstr ""
+
+#: menu/mainpage.py:18
+msgid "Multiplayer"
+msgstr ""
+
+#: menu/mainpage.py:20
+msgid "Options"
+msgstr ""
+
+#: menu/mainpage.py:22
+msgid "Credits"
+msgstr ""
+
+#: menu/mainpage.py:24
+msgid "Quit"
+msgstr ""
+
+#: menu/clientpage.py:32
+msgid "Client"
+msgstr ""
+
+#: menu/clientpage.py:37
+msgid "insert the server address"
+msgstr ""
+
+#: menu/clientpage.py:40
+msgid "Connect"
+msgstr ""
+
+#: menu/clientpage.py:52
+msgid "Waiting for the server"
+msgstr ""
+
+#: menu/clientpage.py:56
+msgid "Error"
+msgstr ""
+
+#: menu/serverpage.py:22
+msgid "connection from "
+msgstr ""
+
+#: menu/serverpage.py:50
+msgid "Start"
+msgstr ""
+
+#: menu/singleplayerpage.py:14
+msgid "Single race"
+msgstr ""
+
+#: menu/singleplayerpage.py:15
+msgid "New season"
+msgstr ""
+
+#: menu/singleplayerpage.py:16
+msgid "Continue season"
+msgstr ""
+
+#: yorg/fsm.py:79
+msgid ""
+"Please, visit our site! We hope you can find interesting stuff there. "
+"Moreover, by visiting it (especially disabling your adblocker onto the site) "
+"you support us and contribute to keep Yorg as free as possible. Thank you "
+"very much! :)"
+msgstr ""
+
+#: yorg/fsm.py:85
+msgid ""
+"visit our site and exit\n"
+"(I love to support you!)"
+msgstr ""
+
+#: yorg/fsm.py:87
+msgid ""
+"exit without visiting our site\n"
+"(I don't want to support you)"
+msgstr ""
+
+#: yyagl/engine/gui/page.py:198
+msgid "Back"
+msgstr ""
+
+#: yyagl/racing/car/logic.py:206
+msgid "wrong way"
+msgstr ""
+
+#: yyagl/racing/track/gfx.py:28
+msgid "loading track model"
+msgstr ""
+
+#: yyagl/racing/track/gfx.py:66
+msgid "loading model: "
+msgstr ""
+
+#: yyagl/racing/track/gfx.py:138
+msgid "flattening model: "
+msgstr ""
+
+#: yyagl/racing/race/gui/countdown.py:20
+msgid "GO!"
+msgstr ""
+
+#: yyagl/racing/race/gui/loading.py:29
 msgid ""
 "LOADING...\n"
 "\n"
 "PLEASE WAIT, IT MAY REQUIRE SOME TIME"
 msgstr ""
 
-#: menu.py:37
-msgid "Single Player"
-msgstr ""
-
-#: menu.py:38
-msgid "Multiplayer"
-msgstr ""
-
-#: menu.py:39
-msgid "Options"
-msgstr ""
-
-#: menu.py:40
-msgid "Credits"
-msgstr ""
-
-#: menu.py:41
-msgid "Quit"
-msgstr ""
-
-#: menu.py:146
-msgid "Start"
-msgstr ""
-
-#: menu.py:161
-msgid "connection from "
-msgstr ""
-
-#: menu.py:177
-msgid "Client"
-msgstr ""
-
-#: menu.py:186
-msgid "Connect"
-msgstr ""
-
-#: menu.py:199
-msgid "Waiting for the server"
-msgstr ""
-
-#: menu.py:202
-msgid "Error"
-msgstr ""
-
-#: menu.py:350
+#: yyagl/racing/race/gui/loading.py:50
 msgid ""
-"Please, really consider enabling this option to see our news.\n"
-"We hope you will find interesting stuff there.\n"
-"Moreover, this is how we can keep Yorg free."
+"Please, visit our site while the track is loading! We hope you can find "
+"interesting stuff there. Moreover, by visiting it (especially disabling your "
+"adblocker onto the site) you support us and contribute to keep Yorg as free "
+"as possible. Thank you very much! :)"
 msgstr ""
 
-#: menu.py:526
-msgid "Code"
+#: yyagl/racing/race/gui/loading.py:57
+msgid ""
+"visit our site\n"
+"I love to support you!"
 msgstr ""
 
-#: menu.py:527
-msgid "Art"
-msgstr ""
-
-#: racing/track/gfx.py:22
-msgid "loading track model"
-msgstr ""
-
-#: racing/track/gfx.py:100
-msgid "loading model: "
-msgstr ""
-
-#: racing/track/gfx.py:163
-msgid "flattening model: "
-msgstr ""
-
-#: racing/track/gui.py:20
-msgid "work in progress"
-msgstr ""
-
-#: racing/track/gui.py:76
-msgid "GO!"
-msgstr ""
-
-#: racing/track/gui.py:97
+#: yyagl/racing/race/gui/results.py:27
 msgid "LAP"
 msgstr ""
 
-#: racing/track/gui.py:105
+#: yyagl/racing/race/gui/results.py:33
 msgid "share:"
-msgstr ""
-
-#: racing/car/logic.py:166
-msgid "wrong way"
 msgstr ""

@@ -3,7 +3,7 @@
 
 # TODO LIST =====
 
-# change language strings on language change
+# add iapeto
 # gui on loading
 # gui ingame
 

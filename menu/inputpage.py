@@ -41,9 +41,9 @@ class InputPageGui(PageGui):
         menu_args = self.menu.gui.menu_args
 
         joypad_lab = DirectLabel(
-            text='', pos=(-.1, 1, .7), text_align=TextNode.ARight,
+            text=_('Use the joypad when present'), pos=(-.1, 1, .7), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(joypad_lab, 'Use the joypad when present')
+        PageGui.transl_text(joypad_lab, 'Use the joypad when present', _('Use the joypad when present'))
         self._joypad_cb = DirectCheckButton(
             pos=(.09, 1, .72), text='',
             indicatorValue=conf['settings']['fullscreen'],
@@ -51,45 +51,40 @@ class InputPageGui(PageGui):
             **menu_gui.checkbtn_args)
 
         forward_lab = DirectLabel(
-            text='', pos=(-.1, 1, .5), text_align=TextNode.ARight,
+            text=_('Accelerate'), pos=(-.1, 1, .5), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(forward_lab, 'Forward key')
         self._forward_btn = DirectButton(
             pos=(.46, 1, .5), text=conf['settings']['keys']['forward'],
             command=self.start_rec, **menu_gui.btn_args)
         self._forward_btn['extraArgs'] = [self._forward_btn]
 
         rear_lab = DirectLabel(
-            text='', pos=(-.1, 1, .3), text_align=TextNode.ARight,
+            text=_('Brake'), pos=(-.1, 1, .3), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(rear_lab, 'Rear key')
         self._rear_btn = DirectButton(
             pos=(.46, 1, .3), text=conf['settings']['keys']['rear'],
             command=self.start_rec, **menu_gui.btn_args)
         self._rear_btn['extraArgs'] = [self._rear_btn]
 
         left_lab = DirectLabel(
-            text='', pos=(-.1, 1, .1), text_align=TextNode.ARight,
+            text=_('Left'), pos=(-.1, 1, .1), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(left_lab, 'Left key')
         self._left_btn = DirectButton(
             pos=(.46, 1, .1), text=conf['settings']['keys']['left'],
             command=self.start_rec, **menu_gui.btn_args)
         self._left_btn['extraArgs'] = [self._left_btn]
 
         right_lab = DirectLabel(
-            text='', pos=(-.1, 1, -.1), text_align=TextNode.ARight,
+            text=_('Right'), pos=(-.1, 1, -.1), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(right_lab, 'Right key')
         self._right_btn = DirectButton(
             pos=(.46, 1, -.1), text=conf['settings']['keys']['right'],
             command=self.start_rec, **menu_gui.btn_args)
         self._right_btn['extraArgs'] = [self._right_btn]
 
         button_lab = DirectLabel(
-            text='', pos=(-.1, 1, -.3), text_align=TextNode.ARight,
+            text=_('Weapon'), pos=(-.1, 1, -.3), text_align=TextNode.ARight,
             **menu_gui.label_args)
-        PageGui.transl_text(button_lab, 'Button key')
         self._button_btn = DirectButton(
             pos=(.46, 1, -.3), text=conf['settings']['keys']['button'],
             command=self.start_rec, **menu_gui.btn_args)
@@ -98,9 +93,8 @@ class InputPageGui(PageGui):
         la = menu_gui.label_args.copy()
         del la['scale']
         self.hint_lab = DirectLabel(
-            text='', pos=(0, 1, -.5), scale=.065,
+            text=_('Press the key to record it'), pos=(0, 1, -.5), scale=.065,
             **la)
-        PageGui.transl_text(self.hint_lab, 'Press the key to record it')
         self.hint_lab.hide()
 
         self.keys = list(string.ascii_lowercase) + [str(n) for n in range(10)] + [
@@ -109,7 +103,8 @@ class InputPageGui(PageGui):
             'arrow_up', 'arrow_down', 'arrow_right', 'lshift', 'rshift',
             'lcontrol', 'lalt', 'space', 'ralt', 'rcontrol']
         self.widgets += [
-            joypad_lab, self._joypad_cb, forward_lab, self._forward_btn,
+            joypad_lab,
+            self._joypad_cb, forward_lab, self._forward_btn,
             rear_lab, self._rear_btn, left_lab, self._left_btn,
             right_lab, self._right_btn, button_lab, self._button_btn, self.hint_lab]
         PageGui.build_page(self)

@@ -15,6 +15,7 @@ class TrackPageGui(PageGui):
         self.widgets += [txt]
 
         tracks = ['desert', 'prototype']
+        track_names = [_('desert'), _('prototype')]
         names = ['Jeff SkyRunner', 'Sara Quartero']
         menu_data = ['desert', 'prototype']
         t_a = self.menu.gui.text_args.copy()
@@ -25,7 +26,7 @@ class TrackPageGui(PageGui):
                 image='assets/images/tracks/%s.png' % tracks[i],
                 command=self.on_track, extraArgs=[tracks[i]],
                 **self.menu.gui.imgbtn_args)
-            txt = OnscreenText(tracks[i], pos=(-.5 + i * 1.0, .45), scale=.08, **t_a)
+            txt = OnscreenText(track_names[i], pos=(-.5 + i * 1.0, .45), scale=.08, **t_a)
             thanks = OnscreenText(_('thanks to:'), pos=(-.5 + i * 1.0, -.2), scale=.06, **t_a)
             name = OnscreenText(names[i], pos=(-.5 + i * 1.0, -.3), scale=.08, **t_a)
             self.widgets += [img, txt, thanks, name]

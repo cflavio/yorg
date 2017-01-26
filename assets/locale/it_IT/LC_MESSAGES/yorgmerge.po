@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-09 10:17+0200\n"
+"POT-Creation-Date: 2017-01-26 16:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,211 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:84
+#: menu/creditpage.py:11
+msgid "Code"
+msgstr "Codice"
+
+#: menu/creditpage.py:12
+msgid "Art"
+msgstr "Grafica"
+
+#: menu/creditpage.py:13
+msgid "Testing"
+msgstr "Testing"
+
+#: menu/inputpage.py:44 menu/inputpage.py:46
+msgid "Use the joypad when present"
+msgstr "Usa il joypad se presente"
+
+#: menu/inputpage.py:54
+msgid "Accelerate"
+msgstr "Accelerazione"
+
+#: menu/inputpage.py:62
+msgid "Brake"
+msgstr "Freno"
+
+#: menu/inputpage.py:70
+msgid "Left"
+msgstr "Sinistra"
+
+#: menu/inputpage.py:78
+msgid "Right"
+msgstr "Destra"
+
+#: menu/inputpage.py:86
+msgid "Weapon"
+msgstr "Arma"
+
+#: menu/inputpage.py:96
+msgid "Press the key to record it"
+msgstr "Premi il tasto per memorizzarlo"
+
+#: menu/optionpage.py:47
+msgid "Language"
+msgstr "Lingua"
+
+#: menu/optionpage.py:55
+msgid "Volume"
+msgstr "Volume"
+
+#: menu/optionpage.py:63
+msgid "Fullscreen"
+msgstr "Schermo intero"
+
+#: menu/optionpage.py:74
+msgid "Resolution"
+msgstr "Risoluzione"
+
+#: menu/optionpage.py:88
+msgid "Antialiasing"
+msgstr "Antialiasing"
+
+#: menu/optionpage.py:92
+msgid "(from the next execution)"
+msgstr "(dalla prossima esecuzione)"
+
+#: menu/optionpage.py:102
+msgid "Configure input"
+msgstr "Configura input"
+
+#: menu/carpage.py:22
+msgid "Select the car"
+msgstr "Seleziona la macchina"
+
+#: menu/trackpage.py:14
+msgid "Select the track"
+msgstr "Seleziona la pista"
+
+#: menu/trackpage.py:18
+msgid "desert"
+msgstr ""
+
+#: menu/trackpage.py:18
+msgid "prototype"
+msgstr ""
+
+#: menu/trackpage.py:30
+msgid "thanks to:"
+msgstr "grazie a:"
+
+#: menu/driverpage.py:51
+msgid "Select the driver"
+msgstr "Seleziona il pilota"
+
+#: menu/mainpage.py:16
+msgid "Single Player"
+msgstr "Single player"
+
+#: menu/mainpage.py:18
+msgid "Multiplayer"
+msgstr "Multiplayer"
+
+#: menu/mainpage.py:20
+msgid "Options"
+msgstr "Opzioni"
+
+#: menu/mainpage.py:22
+msgid "Credits"
+msgstr "Riconoscimenti"
+
+#: menu/mainpage.py:24
+msgid "Quit"
+msgstr "Esci"
+
+#: menu/clientpage.py:32
+msgid "Client"
+msgstr "Client"
+
+#: menu/clientpage.py:37
+msgid "insert the server address"
+msgstr "inserisci l'indirizzo del server"
+
+#: menu/clientpage.py:40
+msgid "Connect"
+msgstr "Connetti"
+
+#: menu/clientpage.py:52
+msgid "Waiting for the server"
+msgstr "Aspettando il server"
+
+#: menu/clientpage.py:56
+msgid "Error"
+msgstr "Errore"
+
+#: menu/serverpage.py:22
+msgid "connection from "
+msgstr "connessione da"
+
+#: menu/serverpage.py:50
+msgid "Start"
+msgstr "Avvia"
+
+#: menu/singleplayerpage.py:14
+msgid "Single race"
+msgstr "Gara singola"
+
+#: menu/singleplayerpage.py:15
+msgid "New season"
+msgstr "Nuova stagione"
+
+#: menu/singleplayerpage.py:16
+msgid "Continue season"
+msgstr "Continua stagione"
+
+#: yorg/fsm.py:79
+msgid ""
+"Please, visit our site! We hope you can find interesting stuff there. "
+"Moreover, by visiting it (especially disabling your adblocker onto the site) "
+"you support us and contribute to keep Yorg as free as possible. Thank you "
+"very much! :)"
+msgstr ""
+"Per favore, visita il nostro sito! Speriamo che tu riesca a trovarci roba "
+"intessante. Inoltre, visitandolo (specialmente disabilitando il tuo "
+"adblocker sul nostro sito) ci supporti e contribuisci a mantenere Yorg il "
+"più gratis possibile! Grazie mille! :)"
+
+#: yorg/fsm.py:85
+msgid ""
+"visit our site and exit\n"
+"(I love to support you!)"
+msgstr ""
+"visita il nostro sito ed esci\n"
+"(adoro supportarvi!)"
+
+#: yorg/fsm.py:87
+msgid ""
+"exit without visiting our site\n"
+"(I don't want to support you)"
+msgstr ""
+"esci senza visitare il nostro sito\n"
+"(non voglio supportarvi)"
+
+#: yyagl/engine/gui/page.py:198
+msgid "Back"
+msgstr "Indietro"
+
+#: yyagl/racing/car/logic.py:206
+msgid "wrong way"
+msgstr "direzione sbagliata"
+
+#: yyagl/racing/track/gfx.py:28
+msgid "loading track model"
+msgstr "caricamento modello pista"
+
+#: yyagl/racing/track/gfx.py:66
+msgid "loading model: "
+msgstr "caricamento modello: "
+
+#: yyagl/racing/track/gfx.py:138
+msgid "flattening model: "
+msgstr "elaborazione modello: "
+
+#: yyagl/racing/race/gui/countdown.py:20
+msgid "GO!"
+msgstr "VIA!"
+
+#: yyagl/racing/race/gui/loading.py:29
 msgid ""
 "LOADING...\n"
 "\n"
@@ -27,124 +231,30 @@ msgstr ""
 "\n"
 "ATTENDERE PREGO, SERVE TEMPO... :)"
 
-#: menu.py:37
-msgid "Single Player"
-msgstr ""
-
-#: menu.py:38
-msgid "Multiplayer"
-msgstr ""
-
-#: menu.py:39
-msgid "Options"
-msgstr "Opzioni"
-
-#: menu.py:40
-msgid "Credits"
-msgstr "Riconoscimenti"
-
-#: menu.py:41
-msgid "Quit"
-msgstr "Esci"
-
-#: menu.py:146
-msgid "Start"
-msgstr ""
-
-#: menu.py:161
-msgid "connection from "
-msgstr ""
-
-#: menu.py:177
-msgid "Client"
-msgstr ""
-
-#: menu.py:186
-msgid "Connect"
-msgstr ""
-
-#: menu.py:199
-msgid "Waiting for the server"
-msgstr ""
-
-#: menu.py:202
-msgid "Error"
-msgstr ""
-
-#: menu.py:350
+#: yyagl/racing/race/gui/loading.py:50
 msgid ""
-"Please, really consider enabling this option to see our news.\n"
-"We hope you will find interesting stuff there.\n"
-"Moreover, this is how we can keep Yorg free."
+"Please, visit our site while the track is loading! We hope you can find "
+"interesting stuff there. Moreover, by visiting it (especially disabling your "
+"adblocker onto the site) you support us and contribute to keep Yorg as free "
+"as possible. Thank you very much! :)"
 msgstr ""
-"Per favore, considera seriamente di abilitare questa opzione per vedere le "
-"nostre notizie.\n"
-"Speriamo che ci troverai roba interessante.\n"
-"Inoltre, è così che possiamo mantenere Yorg gratis."
+"Per favore, visita il nostro sito mentre la pista sta caricando!Speriamo che "
+"tu riesca a trovarci roba intessante. Inoltre, visitandolo (specialmente "
+"disabilitando il tuo adblocker sul nostro sito) ci supporti e contribuisci a "
+"mantenere Yorg il più free possibile! Grazie mille! :)"
 
-#: menu.py:526
-msgid "Code"
-msgstr "Codice"
+#: yyagl/racing/race/gui/loading.py:57
+msgid ""
+"visit our site\n"
+"I love to support you!"
+msgstr ""
+"visita il nostro sito\n"
+"adoro supportarvi!"
 
-#: menu.py:527
-msgid "Art"
-msgstr "Grafica"
-
-#: racing/track/gfx.py:22
-msgid "loading track model"
-msgstr "caricamento modello pista"
-
-#: racing/track/gfx.py:100
-msgid "loading model: "
-msgstr "caricamento modello: "
-
-#: racing/track/gfx.py:163
-msgid "flattening model: "
-msgstr "elaborazione modello: "
-
-#: racing/track/gui.py:20
-msgid "work in progress"
-msgstr "stiamo lavorando per voi"
-
-#: racing/track/gui.py:76
-msgid "GO!"
-msgstr "VIA!"
-
-#: racing/track/gui.py:97
+#: yyagl/racing/race/gui/results.py:27
 msgid "LAP"
 msgstr "GIRO"
 
-#: racing/track/gui.py:105
+#: yyagl/racing/race/gui/results.py:33
 msgid "share:"
-msgstr ""
-
-#: racing/car/logic.py:166
-msgid "wrong way"
-msgstr "direzione sbagliata"
-
-#~ msgid "Language"
-#~ msgstr "Lingua"
-
-#~ msgid "Volume"
-#~ msgstr "Volume"
-
-#~ msgid "Fullscreen"
-#~ msgstr "Schermo intero"
-
-#~ msgid "Resolution"
-#~ msgstr "Risoluzione"
-
-#~ msgid "Antialiasing"
-#~ msgstr "Antialiasing"
-
-#~ msgid "(from the next execution)"
-#~ msgstr "(dalla prossima esecuzione)"
-
-#~ msgid "See Ya2's news at exit"
-#~ msgstr "Vedi le notizie di Ya2 all'uscita"
-
-#~ msgid "Back"
-#~ msgstr "Indietro"
-
-#~ msgid "Play"
-#~ msgstr "Gioca"
+msgstr "condividi:"

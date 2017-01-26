@@ -29,7 +29,7 @@ class YorgMainPageGui(MainPageGui):
                          **menu_gui.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(self.widgets):
-            PageGui.transl_text(wdg, menu_data[i][0])
+            PageGui.transl_text(wdg, menu_data[i][0], menu_data[i][1])
         self.widgets[-4]['state'] = NORMAL if game.options['development']['multiplayer'] else DISABLED
         self.widgets += [OnscreenImage(
             'assets/images/gui/yorg_title.png',
