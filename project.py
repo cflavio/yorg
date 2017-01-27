@@ -3,7 +3,6 @@
 
 # TODO LIST =====
 
-# add iapeto
 # gui on loading
 # gui ingame
 
@@ -25,6 +24,7 @@
 # #ai weapons
 # #ai add pit stop to ai
 # #gaming other weapons
+# #design use mediator (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ...
 # #network at end of a multiplayer race wait for other cars
 # #network wheels animations
 # #network physics (collisions to players' car)
@@ -37,7 +37,6 @@
 # #shaders deferred shading, tone mapping; fxaa
 # #engine hardware instancing or save flattened files on bam files (caching)
 # #engine multi-threading physics loading
-# #design use mediator (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ...
 # #backlog #project preload assets (cars on application's start, track on menu selection)
 # #backlog #project make uml diagrams with pyreverse into devinfo
 # #backlog #project unit tests

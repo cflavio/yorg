@@ -23,17 +23,17 @@ class CarPageGui(PageGui):
         self.widgets += [txt]
 
         self.track_path = 'tracks/' + self.menu.track
-        menu_data = ['kronos', 'themis', 'diones']
-        names = ['Quartero', 'Calva', 'Murgia']
+        menu_data = ['kronos', 'themis', 'diones', 'iapeto']
+        names = ['Quartero', 'Calva', 'Murgia', 'Baronio']
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
         for i in range(len(menu_data)):
             img = ImageButton(
-                scale=.5, pos=(-1.2 + i * 1.2, 1, .1), frameColor=(0, 0, 0, 0),
+                scale=.38, pos=(-1.2 + i * .8, 1, .1), frameColor=(0, 0, 0, 0),
                 image='assets/images/cars/%s.png' % menu_data[i],
                 command=self.on_car, extraArgs=[menu_data[i]],
                 **self.menu.gui.imgbtn_args)
-            name = OnscreenText(' '.join([names[i], menu_data[i].capitalize()]), pos=(-1.2 + i * 1.2, -.3), scale=.08, **t_a)
+            name = OnscreenText(' '.join([names[i], menu_data[i].capitalize()]), pos=(-1.2 + i * .8, -.25), scale=.065, **t_a)
             self.widgets += [img, name]
         self.current_cars = {}
         PageGui.build_page(self)
