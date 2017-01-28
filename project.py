@@ -3,7 +3,6 @@
 
 # TODO LIST =====
 
-# #gui gui on escape
 # #gui gui on loading (wait bar or progress loading text, screenshot for the background)
 # #gui gui ingame
 
