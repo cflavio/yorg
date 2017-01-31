@@ -4,6 +4,7 @@ from .carpage import CarPage, CarPageServer
 from yyagl.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
 from direct.gui.OnscreenText import OnscreenText
+from random import shuffle
 
 
 class TrackPageGui(PageGui):
@@ -16,7 +17,9 @@ class TrackPageGui(PageGui):
 
         tracks = ['desert', 'prototype']
         track_names = [_('desert'), _('prototype')]
-        names = ['Jeff SkyRunner', 'Sara Quartero']
+        names = open('assets/thanks.txt').readlines()
+        shuffle(names)
+        names = names[:2]
         menu_data = ['desert', 'prototype']
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
@@ -30,7 +33,6 @@ class TrackPageGui(PageGui):
             thanks = OnscreenText(_('thanks to:'), pos=(-.5 + i * 1.0, -.2), scale=.06, **t_a)
             name = OnscreenText(names[i], pos=(-.5 + i * 1.0, -.3), scale=.08, **t_a)
             self.widgets += [img, txt, thanks, name]
-
         PageGui.build_page(self)
 
     def on_track(self, track):

@@ -3,8 +3,11 @@
 
 # TODO LIST =====
 
-# #gui gui on loading (wait bar or progress loading text, screenshot for the background)
+# #gui select driver's name
+# #gui drivers' logic (bind name, face, car and store it for the season)
 # #gui gui ingame
+# #shaders #menu on nvidia
+# #gaming publish the third track
 
 
 # WAITING =====

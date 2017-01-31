@@ -6,6 +6,7 @@ from yyagl.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
 from .driverpage import DriverPage
 from direct.gui.OnscreenText import OnscreenText
+from random import shuffle
 
 
 class CarPageGui(PageGui):
@@ -24,7 +25,9 @@ class CarPageGui(PageGui):
 
         self.track_path = 'tracks/' + self.menu.track
         menu_data = ['kronos', 'themis', 'diones', 'iapeto']
-        names = ['Quartero', 'Calva', 'Murgia', 'Baronio']
+        names = open('assets/thanks.txt').readlines()
+        shuffle(names)
+        names = names[:5]
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
         for i in range(len(menu_data)):
@@ -33,8 +36,10 @@ class CarPageGui(PageGui):
                 image='assets/images/cars/%s.png' % menu_data[i],
                 command=self.on_car, extraArgs=[menu_data[i]],
                 **self.menu.gui.imgbtn_args)
-            name = OnscreenText(' '.join([names[i], menu_data[i].capitalize()]), pos=(-1.2 + i * .8, -.25), scale=.065, **t_a)
-            self.widgets += [img, name]
+            txt = OnscreenText(menu_data[i], pos=(-1.2 + i * .8, .38), scale=.072, **t_a)
+            thanks = OnscreenText(_('thanks to:'), pos=(-1.2 + i * .8, -.14), scale=.052, **t_a)
+            name = OnscreenText(names[i], pos=(-1.2 + i * .8, -.24), scale=.072, **t_a)
+            self.widgets += [img, txt, name, thanks]
         self.current_cars = {}
         PageGui.build_page(self)
 

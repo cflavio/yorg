@@ -46,7 +46,7 @@ class InputPageGui(PageGui):
         PageGui.transl_text(joypad_lab, 'Use the joypad when present', _('Use the joypad when present'))
         self._joypad_cb = DirectCheckButton(
             pos=(.09, 1, .72), text='',
-            indicatorValue=conf['settings']['fullscreen'],
+            indicatorValue=conf['settings']['joystick'],
             indicator_frameColor=(.75, .75, .25, 1),
             **menu_gui.checkbtn_args)
 
