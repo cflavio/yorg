@@ -44,7 +44,7 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterRace(self, track_path='', car_path='', player_cars=[], driver=''):
+    def enterRace(self, track_path='', car_path='', player_cars=[], drivers=''):
         eng.log_mgr.log('entering Race state')
         if eng.server.is_active:
             self.race = RaceServer()
@@ -52,8 +52,8 @@ class _Fsm(Fsm):
             self.race = RaceClient()
         else:
             self.race = RaceSinglePlayer()
-        eng.log_mgr.log('selected driver: ' + driver)
-        self.race.fsm.demand('Loading', track_path, car_path, player_cars)
+        eng.log_mgr.log('selected drivers: ' + str(drivers))
+        self.race.fsm.demand('Loading', track_path, car_path, player_cars, drivers)
 
     def exitRace(self):
         eng.log_mgr.log('exiting Race state')

@@ -3,4 +3,6 @@ The code is licensed under GPLv3 (see the file licenses/gpl.txt for details).
 Several assets are from OpenGameArt.com, they are licensed under several forms
 of CC, look at licenses/licenses.txt for details.
 
+"Thanks" texture is CC BY (https://commons.wikimedia.org/wiki/File:Thank-you-word-cloud.jpg).
+
 The remaining assets are licensed under CC BY-SA.
