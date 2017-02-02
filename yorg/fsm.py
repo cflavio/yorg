@@ -10,6 +10,7 @@ from direct.gui.DirectButton import DirectButton
 import sys
 from direct.gui.DirectGuiGlobals import FLAT
 from direct.gui.DirectFrame import DirectFrame
+from panda3d.core import WindowProperties
 
 
 class _Fsm(Fsm):

@@ -3,23 +3,20 @@
 
 # TODO LIST =====
 
-# #gui gui ingame
-# #shaders #menu on nvidia
-# #gaming publish the third track
+# #graphics camera's set-up
+# #graphics three-points lighting
+# #gaming analogic joypad
 
 
 # WAITING =====
 
-# (Bullet 2.83) driving model
+# #gaming publish the third track
 # (wx can show html) embed into a wx window
 # (Panda3D 1.10) #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 
 
 # MAYBE/SOMEDAY =====
 
-# #graphics camera's set-up
-# #graphics three-points lighting
-# #gaming analogic joypad
 # #ai port ai lookahead to 3D
 # #ai obstacle avoidance
 # #ai weapons
