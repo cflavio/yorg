@@ -23,6 +23,14 @@
   <Scalar> wrap { REPEAT }
 }
 
+<Texture> GLOSSWeaponboxAnim {
+  "./tex/GLOSSWeaponboxAnim.jpg"
+  <Scalar> envtype { GLOSS }
+  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> wrap { REPEAT }
+}
+
   <Group> Armature {
     <Dart> { 1 }
     <Joint> Bone {
@@ -35,12 +43,12 @@
         }
       }
       <VertexRef> {
-        0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 19 20 21 22 24 25 26 27 36 37 38 39 40 41 42 43 45 46 48 49 55 56 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 77 78 80 82 83 84 86 87 88 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 116 117 118 119 120 121 123 124 125 126 127 132 133 134 135 136 137 140 143 147 149 150 152 153 154 155 156 157 158 159 160 161 162 163 164 165 167 168 169 170 171 174 175 177 178 180 181 182 184 185 186 187 188 191 193 196 197 198 199 200 201 202 204 205 206 207 208 209 210 211 212 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 235 236 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 255 257 258 260 261 262 263 268 269 270 271 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 317 318 319 320 321 322 323 324 325 326 327 328 329 330 331 332 333 334 335 336 337 338 339 340 341 342 343 344 345 346 347 349 350 352 353 354 357 358 360 361 362 363 364 365 366 368 369 370 371 373 374 376 379 380 381 382 383 385 386 388 389 390 391 392 395 396 397 398 399 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 421 422 424 425 426 427 429 430 432 435 436 437 438 439 440 441 442 443 444 445 446 447 449 450 452 453 454 455 456 457 458 459 460 461 462 463 465 466 472 473 474 475 476 477 478 479 480 483 484 485 486 487 488 489 490 491 493 494 496 499 500 501 502 503 508 509 510 511 512 513 514 515 516 517 518 519 520 521 522 523 524 527 529 530 532 533 534 535 536 537 538 539 540 541 543 544 547 548 549 550 551 552 553 554 555 556 559 564 565 566 567 568 569 570 571 572 573 574 575 576 579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 601 602 604 605 606 607 608 609 610 611 612 615 616 617 618 619 620 621 622 623 624 625 626 627 628 631 632 634 635 636 640 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 659 661 662 664 665 666 667 669 670 672 673 674 675 676 677 678 679 681 682 689 690 691 696 697 698 699 700 701 702 703 704 705 706 707 708 709 710 711 712 713 714 715 716 717 718 719 720 721 722 723 724 725 726 727 728 729 730 731 732 733 734 735 736 737 738 739 741 742 744 745 746 747 748 749 750 751 752 753 754 755 756 757 758 759 761 762 764 765 766 767 772 773 774 775 776 777 778 779 780 781 782 783 784 786 787 788 789 790 791 792 793 794 795 796 799 800 801 803 804 807 808 809 810 811 812 813 814 815 816 817 818 819 820 823 824 825 826 827 829 1024 1025 1026 1027 1029 1030 1034 1036 1037 1038 1039 1041 1042 1043 1044 1045 1046 1047 1048 1049 1050 1051 1052 1053 1054 1055 1056 1057 1058 1059 1061 1064 1067 1068 1069 1070 1071 1072 1073 1074 1076 1077 1078 1079 1080 1081 1082 1083 1084 1085 1086 1087 1088 1091 1092 1093 1094 1095 1096 1097 1098 1100 1101 1102 1104 1105 1106 1107 1108 1109 1110 1111 1112 1113 1114 1115 1116 1117 1118 1119 1120 1121 1122 1123 1126 1127 1128 1129 1131 1132 1133 1134 1135 1136 1137 1138 1139 1140 1141 1142 1143 1144 1145 1147 1148 1149 1150 1151 1153 1154 1155 1156 1157 1159 1160 1161 1162 1163 1164 1165 1166 1167 1168 1169 1170 1171 1172 1173 1174 1175 1176 1177 1178 1179
-        <Scalar> membership { 1.000000 }  <Ref> { WeaponboxAnim }
-      }
-      <VertexRef> {
         17 18 23 28 29 30 31 32 33 34 35 44 47 50 51 52 53 54 57 76 79 81 85 89 90 115 122 128 129 130 131 138 139 141 142 144 145 146 148 151 166 172 173 176 179 183 189 190 192 194 195 203 213 214 233 234 237 238 254 256 259 264 265 266 267 348 351 355 356 359 367 372 375 377 378 384 387 393 394 416 417 418 419 420 423 428 431 433 434 448 451 464 467 468 469 470 471 481 482 492 495 497 498 504 505 506 507 525 526 528 531 542 545 546 557 558 560 561 562 563 577 578 600 603 613 614 629 630 633 637 638 639 641 642 660 663 668 671 680 683 684 685 686 687 688 692 693 694 695 740 743 760 763 768 769 770 771 785 797 798 802 805 806 821 822 828 830 831 1028 1031 1032 1033 1035 1040 1060 1062 1063 1065 1066 1075 1089 1090 1099 1103 1124 1125 1130 1146 1152 1158
         <Scalar> membership { 1.000001 }  <Ref> { WeaponboxAnim }
+      }
+      <VertexRef> {
+        0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 19 20 21 22 24 25 26 27 36 37 38 39 40 41 42 43 45 46 48 49 55 56 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 77 78 80 82 83 84 86 87 88 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 116 117 118 119 120 121 123 124 125 126 127 132 133 134 135 136 137 140 143 147 149 150 152 153 154 155 156 157 158 159 160 161 162 163 164 165 167 168 169 170 171 174 175 177 178 180 181 182 184 185 186 187 188 191 193 196 197 198 199 200 201 202 204 205 206 207 208 209 210 211 212 215 216 217 218 219 220 221 222 223 224 225 226 227 228 229 230 231 232 235 236 239 240 241 242 243 244 245 246 247 248 249 250 251 252 253 255 257 258 260 261 262 263 268 269 270 271 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290 291 292 293 294 295 296 297 298 299 300 301 302 303 304 305 306 307 308 309 310 311 312 313 314 315 316 317 318 319 320 321 322 323 324 325 326 327 328 329 330 331 332 333 334 335 336 337 338 339 340 341 342 343 344 345 346 347 349 350 352 353 354 357 358 360 361 362 363 364 365 366 368 369 370 371 373 374 376 379 380 381 382 383 385 386 388 389 390 391 392 395 396 397 398 399 400 401 402 403 404 405 406 407 408 409 410 411 412 413 414 415 421 422 424 425 426 427 429 430 432 435 436 437 438 439 440 441 442 443 444 445 446 447 449 450 452 453 454 455 456 457 458 459 460 461 462 463 465 466 472 473 474 475 476 477 478 479 480 483 484 485 486 487 488 489 490 491 493 494 496 499 500 501 502 503 508 509 510 511 512 513 514 515 516 517 518 519 520 521 522 523 524 527 529 530 532 533 534 535 536 537 538 539 540 541 543 544 547 548 549 550 551 552 553 554 555 556 559 564 565 566 567 568 569 570 571 572 573 574 575 576 579 580 581 582 583 584 585 586 587 588 589 590 591 592 593 594 595 596 597 598 599 601 602 604 605 606 607 608 609 610 611 612 615 616 617 618 619 620 621 622 623 624 625 626 627 628 631 632 634 635 636 640 643 644 645 646 647 648 649 650 651 652 653 654 655 656 657 658 659 661 662 664 665 666 667 669 670 672 673 674 675 676 677 678 679 681 682 689 690 691 696 697 698 699 700 701 702 703 704 705 706 707 708 709 710 711 712 713 714 715 716 717 718 719 720 721 722 723 724 725 726 727 728 729 730 731 732 733 734 735 736 737 738 739 741 742 744 745 746 747 748 749 750 751 752 753 754 755 756 757 758 759 761 762 764 765 766 767 772 773 774 775 776 777 778 779 780 781 782 783 784 786 787 788 789 790 791 792 793 794 795 796 799 800 801 803 804 807 808 809 810 811 812 813 814 815 816 817 818 819 820 823 824 825 826 827 829 1024 1025 1026 1027 1029 1030 1034 1036 1037 1038 1039 1041 1042 1043 1044 1045 1046 1047 1048 1049 1050 1051 1052 1053 1054 1055 1056 1057 1058 1059 1061 1064 1067 1068 1069 1070 1071 1072 1073 1074 1076 1077 1078 1079 1080 1081 1082 1083 1084 1085 1086 1087 1088 1091 1092 1093 1094 1095 1096 1097 1098 1100 1101 1102 1104 1105 1106 1107 1108 1109 1110 1111 1112 1113 1114 1115 1116 1117 1118 1119 1120 1121 1122 1123 1126 1127 1128 1129 1131 1132 1133 1134 1135 1136 1137 1138 1139 1140 1141 1142 1143 1144 1145 1147 1148 1149 1150 1151 1153 1154 1155 1156 1157 1159 1160 1161 1162 1163 1164 1165 1166 1167 1168 1169 1170 1171 1172 1173 1174 1175 1176 1177 1178 1179
+        <Scalar> membership { 1.000000 }  <Ref> { WeaponboxAnim }
       }
       <VertexRef> {
         832 833 836 837 838 839 841 844 845 846 847 848 849 853 860 861 862 864 865 866 867 868 869 871 872 873 880 881 882 883 884 885 886 887 900 908 916 917 918 919 920 922 923 932 939 940 941 943 951 953 956 957 958 960 961 968 970 971 976 977 980 981 982 986 987 996 1005 1007
@@ -6451,1722 +6459,2009 @@
       
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.163068 0.000000 -0.986615}
         <VertexRef> { 0 1 2 3 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.070154 0.917473 0.391564}
         <VertexRef> { 4 5 6 7 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.163580 0.000000 0.986530}
         <VertexRef> { 8 9 10 11 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464397 0.885627 -0.000000}
         <VertexRef> { 12 13 14 15 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464398 0.885627 -0.000000}
         <VertexRef> { 16 17 18 19 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.087129 0.900915 -0.425159}
         <VertexRef> { 20 21 22 23 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.228590 0.000000 0.973523}
         <VertexRef> { 24 25 26 27 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.328379 0.885627 -0.328379}
         <VertexRef> { 28 29 30 31 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464398 0.885627 -0.000000}
         <VertexRef> { 32 33 34 35 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.047607 0.888697 0.456017}
         <VertexRef> { 36 37 38 39 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.047598 0.888739 0.455936}
         <VertexRef> { 40 41 42 43 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.329607 0.885626 0.327147}
         <VertexRef> { 44 45 46 47 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.290293 0.000000 0.956938}
         <VertexRef> { 48 49 50 51 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.107452 0.903783 -0.414282}
         <VertexRef> { 52 53 54 55 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464398 0.885627 -0.000000}
         <VertexRef> { 56 57 58 59 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.322126 0.885627 -0.334515}
         <VertexRef> { 60 61 62 63 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.137476 0.888870 -0.437047}
         <VertexRef> { 64 65 66 67 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.322126 0.885627 -0.334515}
         <VertexRef> { 68 69 70 71 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464398 0.885627 -0.000000}
         <VertexRef> { 72 73 74 75 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.707107 0.000000 0.707107}
         <VertexRef> { 76 77 78 79 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.178904 0.000000 -0.983867}
         <VertexRef> { 80 81 82 83 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.228590 0.000000 0.973523}
         <VertexRef> { 84 85 86 87 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.707107 0.000000 -0.707107}
         <VertexRef> { 88 89 90 91 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 92 93 94 95 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.693642 0.000000 -0.720320}
         <VertexRef> { 96 97 98 99 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.275022 0.000000 0.961438}
         <VertexRef> { 100 101 102 103 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 104 105 106 107 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.693642 0.000000 -0.720320}
         <VertexRef> { 108 109 110 111 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 112 113 114 115 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.709750 0.000000 -0.704454}
         <VertexRef> { 116 117 118 119 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 120 121 122 123 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.107460 0.000000 -0.994209}
         <VertexRef> { 124 125 126 127 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 128 129 130 131 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.707107 0.000000 0.707107}
         <VertexRef> { 132 133 134 135 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.707107 0.000000 -0.707107}
         <VertexRef> { 136 137 138 139 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 140 141 142 143 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 144 145 146 147 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.328379 0.885627 0.328378}
         <VertexRef> { 148 149 150 151 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 152 153 154 155 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.693642 0.000000 0.720320}
         <VertexRef> { 156 157 158 159 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.275022 0.000000 0.961438}
         <VertexRef> { 160 161 162 163 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.221078 -0.000000 -0.975256}
         <VertexRef> { 164 165 166 167 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 168 169 170 171 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.290293 0.000000 0.956938}
         <VertexRef> { 172 173 174 175 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.107451 -0.903784 -0.414280}
         <VertexRef> { 176 177 178 179 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.709750 0.000000 0.704453}
         <VertexRef> { 180 181 182 183 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.107460 0.000000 -0.994209}
         <VertexRef> { 184 185 186 187 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.707107 0.000000 0.707107}
         <VertexRef> { 188 189 190 191 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 192 193 194 195 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.047606 -0.888699 0.456013}
         <VertexRef> { 196 197 198 199 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 200 201 202 203 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.178904 0.000000 -0.983866}
         <VertexRef> { 204 205 206 207 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.322126 -0.885627 -0.334515}
         <VertexRef> { 208 209 210 211 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.087129 -0.900915 -0.425160}
         <VertexRef> { 212 213 214 215 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464398 -0.885626 0.000000}
         <VertexRef> { 216 217 218 219 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.322126 -0.885627 -0.334515}
         <VertexRef> { 220 221 222 223 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.330159 0.000000 -0.943925}
         <VertexRef> { 224 225 226 227 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.137475 -0.888871 -0.437046}
         <VertexRef> { 228 229 230 231 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.328378 -0.885627 0.328378}
         <VertexRef> { 232 233 234 235 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.107452 -0.903784 -0.414281}
         <VertexRef> { 236 237 238 239 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464399 -0.885626 0.000000}
         <VertexRef> { 240 241 242 243 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.137475 -0.888871 -0.437046}
         <VertexRef> { 244 245 246 247 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.047598 -0.888741 0.455933}
         <VertexRef> { 248 249 250 251 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.328379 -0.885627 -0.328379}
         <VertexRef> { 252 253 254 255 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464397 -0.885627 0.000000}
         <VertexRef> { 256 257 258 259 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.999986 0.000000 0.005319}
         <VertexRef> { 260 261 262 263 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464398 -0.885627 0.000000}
         <VertexRef> { 264 265 266 267 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.087129 -0.900915 -0.425160}
         <VertexRef> { 268 269 270 271 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.070452 0.917325 -0.391856}
         <VertexRef> { 272 273 274 275 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.163580 0.000000 0.986530}
         <VertexRef> { 276 277 278 279 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 280 281 282 283 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464391 0.885627 -0.002470}
         <VertexRef> { 284 285 286 287 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.186349 0.000000 0.982484}
         <VertexRef> { 288 289 290 291 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.187013 0.000000 -0.982357}
         <VertexRef> { 292 293 294 295 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.163068 0.000000 -0.986615}
         <VertexRef> { 296 297 298 299 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.070113 -0.917462 0.391597}
         <VertexRef> { 300 301 302 303 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.186348 0.000000 0.982484}
         <VertexRef> { 304 305 306 307 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.070410 -0.917314 -0.391890}
         <VertexRef> { 308 309 310 311 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464392 -0.885627 -0.002470}
         <VertexRef> { 312 313 314 315 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464398 -0.885627 0.000000}
         <VertexRef> { 316 317 318 319 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.070159 -0.917348 0.391854}
         <VertexRef> { 320 321 322 323 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.070364 -0.917427 -0.391634}
         <VertexRef> { 324 325 326 327 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.070200 0.917360 0.391820}
         <VertexRef> { 328 329 330 331 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.999986 0.000000 -0.005319}
         <VertexRef> { 332 333 334 335 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.070406 0.917438 -0.391600}
         <VertexRef> { 336 337 338 339 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.187013 0.000000 -0.982358}
         <VertexRef> { 340 341 342 343 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 344 345 346 347 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.328379 -0.885626 0.328379}
         <VertexRef> { 348 349 350 351 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464398 -0.885627 0.000000}
         <VertexRef> { 352 353 354 355 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 356 357 358 359 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.087129 0.900915 -0.425160}
         <VertexRef> { 360 361 362 363 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.221078 -0.000000 -0.975256}
         <VertexRef> { 364 365 366 367 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464398 -0.885627 0.000000}
         <VertexRef> { 368 369 370 371 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.107452 0.903783 -0.414282}
         <VertexRef> { 372 373 374 375 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.464399 0.885626 -0.000000}
         <VertexRef> { 376 377 378 379 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.100419 0.000000 0.994945}
         <VertexRef> { 380 381 382 383 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.707107 0.000000 -0.707107}
         <VertexRef> { 384 385 386 387 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.100419 0.000000 0.994945}
         <VertexRef> { 388 389 390 391 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.328379 0.885627 0.328379}
         <VertexRef> { 392 393 394 395 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.329606 -0.885627 0.327146}
         <VertexRef> { 396 397 398 399 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.330159 0.000000 -0.943925}
         <VertexRef> { 400 401 402 403 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.137476 0.888870 -0.437047}
         <VertexRef> { 404 405 406 407 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.693642 0.000000 0.720320}
         <VertexRef> { 408 409 410 411 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.173509 0.968209 0.180182}
         <VertexRef> { 412 413 414 415 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.792289 0.610147 -0.000000}
         <VertexRef> { 416 417 418 419 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.560233 0.610145 0.560233}
         <VertexRef> { 420 421 422 423 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.799483 0.600674 -0.004253}
         <VertexRef> { 424 425 426 427 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.055099 0.983357 0.173127}
         <VertexRef> { 428 429 430 431 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.176876 -0.968209 -0.176876}
         <VertexRef> { 432 433 434 435 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.799495 -0.600672 0.000000}
         <VertexRef> { 436 437 438 439 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.025787 -0.971131 -0.237150}
         <VertexRef> { 440 441 442 443 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.034759 0.976087 -0.214584}
         <VertexRef> { 444 445 446 447 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.177538 0.968209 -0.176213}
         <VertexRef> { 448 449 450 451 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.253280 -0.621342 -0.741473}
         <VertexRef> { 452 453 454 455 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.792289 -0.610146 0.000000}
         <VertexRef> { 456 457 458 459 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.239948 0.970786 0.000000}
         <VertexRef> { 460 461 462 463 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.172071 0.652393 -0.738089}
         <VertexRef> { 464 465 466 467 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.250140 -0.968210 0.000000}
         <VertexRef> { 468 469 470 471 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.239948 0.970785 0.001276}
         <VertexRef> { 472 473 474 475 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.250140 -0.968210 0.000000}
         <VertexRef> { 476 477 478 479 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.250144 0.968209 -0.000000}
         <VertexRef> { 480 481 482 483 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.038459 -0.971031 0.235838}
         <VertexRef> { 484 485 486 487 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.061373 -0.973912 0.218469}
         <VertexRef> { 488 489 490 491 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.562326 0.610149 0.558129}
         <VertexRef> { 492 493 494 495 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.560233 -0.610145 0.560233}
         <VertexRef> { 496 497 498 499 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.250143 0.968209 -0.000000}
         <VertexRef> { 500 501 502 503 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.176876 0.968209 0.176876}
         <VertexRef> { 504 505 506 507 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.792290 0.610145 -0.000000}
         <VertexRef> { 508 509 510 511 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.250140 -0.968210 0.000000}
         <VertexRef> { 512 513 514 515 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.250141 -0.968209 0.000000}
         <VertexRef> { 516 517 518 519 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.792288 -0.610147 0.000000}
         <VertexRef> { 520 521 522 523 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.176876 0.968209 -0.176876}
         <VertexRef> { 524 525 526 527 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.250142 -0.968209 0.000000}
         <VertexRef> { 528 529 530 531 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.250142 -0.968209 0.000000}
         <VertexRef> { 532 533 534 535 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.250142 0.968209 -0.000000}
         <VertexRef> { 536 537 538 539 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.792289 -0.610145 0.000000}
         <VertexRef> { 540 541 542 543 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.792289 0.610146 -0.000000}
         <VertexRef> { 544 545 546 547 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.061374 0.973912 0.218471}
         <VertexRef> { 548 549 550 551 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.137936 -0.667948 -0.731314}
         <VertexRef> { 552 553 554 555 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.250141 0.968209 -0.000000}
         <VertexRef> { 556 557 558 559 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.250141 0.968209 0.000000}
         <VertexRef> { 560 561 562 563 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.253281 0.621341 -0.741474}
         <VertexRef> { 564 565 566 567 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.061374 0.973912 0.218471}
         <VertexRef> { 568 569 570 571 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.253281 0.621341 -0.741474}
         <VertexRef> { 572 573 574 575 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.560232 0.610148 0.560232}
         <VertexRef> { 576 577 578 579 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.025787 0.971131 -0.237150}
         <VertexRef> { 580 581 582 583 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.034859 0.976097 0.214524}
         <VertexRef> { 584 585 586 587 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.549565 -0.610146 -0.570701}
         <VertexRef> { 588 589 590 591 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.061373 -0.973912 0.218469}
         <VertexRef> { 592 593 594 595 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.253280 -0.621342 -0.741474}
         <VertexRef> { 596 597 598 599 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.176875 -0.968210 -0.176875}
         <VertexRef> { 600 601 602 603 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.079457 0.618518 0.781743}
         <VertexRef> { 604 605 606 607 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.079457 -0.618512 0.781748}
         <VertexRef> { 608 609 610 611 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.045863 -0.981055 0.188221}
         <VertexRef> { 612 613 614 615 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.025781 0.971144 -0.237098}
         <VertexRef> { 616 617 618 619 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.025781 -0.971144 -0.237098}
         <VertexRef> { 620 621 622 623 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.038351 -0.971017 -0.235914}
         <VertexRef> { 624 625 626 627 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.055099 -0.983357 0.173128}
         <VertexRef> { 628 629 630 631 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.172072 -0.652391 -0.738090}
         <VertexRef> { 632 633 634 635 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.172071 0.652393 -0.738089}
         <VertexRef> { 636 637 638 639 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.055099 0.983357 0.173127}
         <VertexRef> { 640 641 642 643 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.045863 0.981055 0.188224}
         <VertexRef> { 644 645 646 647 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.139826 -0.646305 -0.750159}
         <VertexRef> { 648 649 650 651 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.264826 -0.964296 0.000000}
         <VertexRef> { 652 653 654 655 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.173507 -0.968210 0.180180}
         <VertexRef> { 656 657 658 659 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.176878 0.968209 -0.176878}
         <VertexRef> { 660 661 662 663 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.139826 0.646304 -0.750160}
         <VertexRef> { 664 665 666 667 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.045863 0.981055 0.188223}
         <VertexRef> { 668 669 670 671 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.045863 -0.981055 0.188222}
         <VertexRef> { 672 673 674 675 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.264818 -0.964297 0.001409}
         <VertexRef> { 676 677 678 679 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.792289 -0.610145 0.000000}
         <VertexRef> { 680 681 682 683 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.250142 0.968209 -0.000000}
         <VertexRef> { 684 685 686 687 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.172071 -0.652390 -0.738091}
         <VertexRef> { 688 689 690 691 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.792289 -0.610146 0.000000}
         <VertexRef> { 692 693 694 695 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.137986 0.667647 -0.731579}
         <VertexRef> { 696 697 698 699 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.034884 0.976064 0.214668}
         <VertexRef> { 700 701 702 703 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.137986 -0.667647 -0.731579}
         <VertexRef> { 704 705 706 707 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.173507 -0.968210 0.180180}
         <VertexRef> { 708 709 710 711 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.038486 -0.970992 0.235994}
         <VertexRef> { 712 713 714 715 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.562327 -0.610147 0.558130}
         <VertexRef> { 716 717 718 719 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.137481 0.667760 0.731570}
         <VertexRef> { 720 721 722 723 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.176876 -0.968209 0.176877}
         <VertexRef> { 724 725 726 727 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.173509 0.968209 0.180182}
         <VertexRef> { 728 729 730 731 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.177538 -0.968209 -0.176213}
         <VertexRef> { 732 733 734 735 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.137432 -0.668060 0.731306}
         <VertexRef> { 736 737 738 739 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.055100 -0.983357 0.173129}
         <VertexRef> { 740 741 742 743 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.137432 0.668060 0.731306}
         <VertexRef> { 744 745 746 747 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.038324 -0.971057 -0.235754}
         <VertexRef> { 748 749 750 751 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.034736 0.976119 -0.214442}
         <VertexRef> { 752 753 754 755 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.139826 0.646305 -0.750159}
         <VertexRef> { 756 757 758 759 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.560233 -0.610146 0.560233}
         <VertexRef> { 760 761 762 763 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.549565 0.610145 -0.570702}
         <VertexRef> { 764 765 766 767 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.560232 0.610147 -0.560233}
         <VertexRef> { 768 769 770 771 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.799483 -0.600674 -0.004253}
         <VertexRef> { 772 773 774 775 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.792289 -0.610146 0.000000}
         <VertexRef> { 776 777 778 779 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.549565 0.610145 -0.570702}
         <VertexRef> { 780 781 782 783 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.560233 -0.610146 -0.560233}
         <VertexRef> { 784 785 786 787 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.079464 -0.618428 0.781813}
         <VertexRef> { 788 789 790 791 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.137936 0.667948 -0.731314}
         <VertexRef> { 792 793 794 795 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.139826 -0.646304 -0.750160}
         <VertexRef> { 796 797 798 799 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.792289 0.610146 -0.000000}
         <VertexRef> { 800 801 802 803 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.792288 0.610147 -0.000000}
         <VertexRef> { 804 805 806 807 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.549565 -0.610146 -0.570701}
         <VertexRef> { 808 809 810 811 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.079464 0.618434 0.781808}
         <VertexRef> { 812 813 814 815 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.137481 -0.667760 0.731570}
         <VertexRef> { 816 817 818 819 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.792289 0.610146 0.000000}
         <VertexRef> { 820 821 822 823 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.799495 0.600672 -0.000000}
         <VertexRef> { 824 825 826 827 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.464398 0.885627 0.000000}
         <VertexRef> { 828 829 830 831 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.306144 0.080745 0.948555}
         <VertexRef> { 832 833 834 835 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.306144 -0.080745 0.948555}
         <VertexRef> { 836 837 838 839 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.254862 -0.966309 -0.035954}
         <VertexRef> { 840 841 842 843 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.080745 -0.306144 0.948555}
         <VertexRef> { 844 845 846 847 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.080745 0.306144 0.948555}
         <VertexRef> { 848 849 850 851 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.966309 0.254862 -0.035954}
         <VertexRef> { 852 853 854 855 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.966309 -0.254862 -0.035954}
         <VertexRef> { 856 857 858 859 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.306144 -0.080745 0.948555}
         <VertexRef> { 860 861 862 863 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.080745 -0.306144 0.948555}
         <VertexRef> { 864 865 866 867 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.306144 0.080745 0.948555}
         <VertexRef> { 868 869 870 871 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.080745 0.306144 0.948555}
         <VertexRef> { 872 873 874 875 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.966309 0.254862 -0.035954}
         <VertexRef> { 876 877 878 879 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.000000 0.000000 -1.000000}
         <VertexRef> { 880 881 882 883 884 885 886 887 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.048004 -0.182006 0.982125}
         <VertexRef> { 888 889 890 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.182006 0.048004 0.982125}
         <VertexRef> { 891 892 893 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.048004 0.182006 0.982125}
         <VertexRef> { 894 895 896 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.182006 0.048004 0.982125}
         <VertexRef> { 897 898 899 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.254862 0.966309 -0.035954}
         <VertexRef> { 900 901 902 903 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.966309 -0.254862 -0.035954}
         <VertexRef> { 904 905 906 907 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.254862 -0.966309 -0.035954}
         <VertexRef> { 908 909 910 911 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.254862 0.966309 -0.035954}
         <VertexRef> { 912 913 914 915 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.019493 -0.073907 0.997075}
         <VertexRef> { 916 917 918 919 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.073907 -0.019493 0.997075}
         <VertexRef> { 920 921 922 923 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.019493 0.073907 0.997075}
         <VertexRef> { 924 925 926 927 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.073907 0.019493 0.997075}
         <VertexRef> { 928 929 930 931 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.073907 -0.019493 0.997075}
         <VertexRef> { 932 933 934 935 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.073907 0.019493 0.997075}
         <VertexRef> { 936 937 938 939 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.019493 -0.073907 0.997075}
         <VertexRef> { 940 941 942 943 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.966913 0.255021 -0.006537}
         <VertexRef> { 944 945 946 947 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.255021 -0.966913 -0.006537}
         <VertexRef> { 948 949 950 951 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.255022 0.966913 -0.006537}
         <VertexRef> { 952 953 954 955 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.966913 -0.255022 -0.006537}
         <VertexRef> { 956 957 958 959 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.966913 0.255022 -0.006537}
         <VertexRef> { 960 961 962 963 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.966913 -0.255021 -0.006537}
         <VertexRef> { 964 965 966 967 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.255021 -0.966913 -0.006537}
         <VertexRef> { 968 969 970 971 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.182006 -0.048004 0.982125}
         <VertexRef> { 972 973 974 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.198262 -0.052291 -0.978753}
         <VertexRef> { 975 976 977 978 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.198262 0.052291 -0.978753}
         <VertexRef> { 979 980 981 982 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.182006 -0.048004 0.982125}
         <VertexRef> { 983 984 985 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.052291 0.198262 -0.978753}
         <VertexRef> { 986 987 988 989 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.048004 -0.182006 0.982125}
         <VertexRef> { 990 991 992 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.052291 -0.198262 -0.978753}
         <VertexRef> { 993 994 995 996 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.052291 0.198262 -0.978753}
         <VertexRef> { 997 998 999 1000 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.198262 0.052291 -0.978753}
         <VertexRef> { 1001 1002 1003 1004 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.052291 -0.198262 -0.978753}
         <VertexRef> { 1005 1006 1007 1008 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.198262 -0.052291 -0.978753}
         <VertexRef> { 1009 1010 1011 1012 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.255022 0.966913 -0.006537}
         <VertexRef> { 1013 1014 1015 1016 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.048004 0.182006 0.982125}
         <VertexRef> { 1017 1018 1019 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.019493 0.073907 0.997075}
         <VertexRef> { 1020 1021 1022 1023 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.693642 0.000000 0.720320}
         <VertexRef> { 1024 1025 1026 1027 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.707107 0.000000 -0.707107}
         <VertexRef> { 1028 1029 1030 1031 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 1032 1033 1034 1035 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.107460 0.000000 -0.994209}
         <VertexRef> { 1036 1037 1038 1039 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.290293 0.000000 0.956938}
         <VertexRef> { 1040 1041 1042 1043 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.275022 0.000000 0.961438}
         <VertexRef> { 1044 1045 1046 1047 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.693642 0.000000 0.720320}
         <VertexRef> { 1048 1049 1050 1051 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 1052 1053 1054 1055 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 1056 1057 1058 1059 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.707107 0.000000 0.707107}
         <VertexRef> { 1060 1061 1062 1063 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 1064 1065 1066 1067 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.107460 0.000000 -0.994209}
         <VertexRef> { 1068 1069 1070 1071 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.709750 0.000000 -0.704454}
         <VertexRef> { 1072 1073 1074 1075 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 1076 1077 1078 1079 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-1.000000 0.000000 0.000000}
         <VertexRef> { 1080 1081 1082 1083 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.275022 0.000000 0.961438}
         <VertexRef> { 1084 1085 1086 1087 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.707107 0.000000 -0.707107}
         <VertexRef> { 1088 1089 1090 1091 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.228590 0.000000 0.973523}
         <VertexRef> { 1092 1093 1094 1095 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.290293 0.000000 0.956938}
         <VertexRef> { 1096 1097 1098 1099 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.228590 0.000000 0.973523}
         <VertexRef> { 1100 1101 1102 1103 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {1.000000 0.000000 0.000000}
         <VertexRef> { 1104 1105 1106 1107 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.163068 0.000000 -0.986615}
         <VertexRef> { 1108 1109 1110 1111 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.163580 0.000000 0.986530}
         <VertexRef> { 1112 1113 1114 1115 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.000000 1.000000 -0.000000}
         <VertexRef> { 1116 1117 1118 1119 1120 1121 1122 1123 1124 1125 1126 1127 1128 1129 1130 1131 1132 1133 1134 1135 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.999986 0.000000 0.005319}
         <VertexRef> { 1136 1137 1138 1139 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.000000 -1.000000 0.000000}
         <VertexRef> { 1140 1141 1142 1143 1144 1145 1146 1147 1148 1149 1150 1151 1152 1153 1154 1155 1156 1157 1158 1159 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.163580 0.000000 0.986530}
         <VertexRef> { 1160 1161 1162 1163 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.000000 1.000000 -0.000000}
         <VertexRef> { 1164 1165 1166 1167 1168 1169 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {-0.163068 0.000000 -0.986615}
         <VertexRef> { 1170 1171 1172 1173 <Ref> { WeaponboxAnim }} 
       }
       <Polygon> {
         <TRef> { TEXWeaponboxAnim }
+        <TRef> { GLOSSWeaponboxAnim }
         <MRef> { MATWeaponboxAnim }
         <Normal> {0.000000 -1.000000 0.000000}
         <VertexRef> { 1174 1175 1176 1177 1178 1179 <Ref> { WeaponboxAnim }} 

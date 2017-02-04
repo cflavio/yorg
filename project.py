@@ -1,5 +1,7 @@
 # BUGS =====
 
+# physics on windows and osx
+ 
 
 # TODO LIST =====
 
@@ -11,7 +13,6 @@
 # WAITING =====
 
 # #gaming publish the third track
-# (wx can show html) embed into a wx window
 # (Panda3D 1.10) #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 
 
@@ -32,6 +33,7 @@
 # #network weapons
 # #project make scons for yyagl
 # #project build only nointernet, linux64, win64, osx64, runtime-dev option
+# #project embed into a pyqt window
 # #shaders deferred shading, tone mapping; fxaa
 # #engine hardware instancing or save flattened files on bam files (caching)
 # #engine multi-threading physics loading
