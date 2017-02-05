@@ -1,13 +1,33 @@
 # BUGS =====
 
-# physics on windows and osx
- 
+# it doesn't start on ubuntu 16.04
+
 
 # TODO LIST =====
 
+# 0.6
 # #graphics camera's set-up
 # #graphics three-points lighting
 # #gaming analogic joypad
+# #design use mediator (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ...
+
+# 0.7
+# #gaming other weapons
+
+# 0.8
+# #ai port ai lookahead to 3D
+# #ai obstacle avoidance
+# #ai weapons
+# #ai add pit stop to ai
+
+# 0.9
+# #network at end of a multiplayer race wait for other cars
+# #network wheels animations
+# #network physics (collisions to players' car)
+# #network drivers' names on their cars during multiplayer matches
+# #network print if the port is closed when creating the server
+# #network send game packets using udp in place of tcp
+# #network weapons
 
 
 # WAITING =====
@@ -18,19 +38,6 @@
 
 # MAYBE/SOMEDAY =====
 
-# #ai port ai lookahead to 3D
-# #ai obstacle avoidance
-# #ai weapons
-# #ai add pit stop to ai
-# #gaming other weapons
-# #design use mediator (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ...
-# #network at end of a multiplayer race wait for other cars
-# #network wheels animations
-# #network physics (collisions to players' car)
-# #network drivers' names on their cars during multiplayer matches
-# #network print if the port is closed when creating the server
-# #network send game packets using udp in place of tcp
-# #network weapons
 # #project make scons for yyagl
 # #project build only nointernet, linux64, win64, osx64, runtime-dev option
 # #project embed into a pyqt window
