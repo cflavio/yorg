@@ -5,20 +5,21 @@
 
 # TODO LIST =====
 
-# 0.6
-# #graphics camera's set-up
+# 0.5
 # #graphics three-points lighting
-# #gaming analogic joypad
-# #design use mediator (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ...
+# #design use mediator and facade (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ... ; each mediator provides also a facade to the system
 
-# 0.7
+# 0.6
 # #gaming other weapons
 
-# 0.8
+# 0.7
 # #ai port ai lookahead to 3D
 # #ai obstacle avoidance
 # #ai weapons
 # #ai add pit stop to ai
+
+# 0.8
+# #gaming season
 
 # 0.9
 # #network at end of a multiplayer race wait for other cars
@@ -32,7 +33,6 @@
 
 # WAITING =====
 
-# #gaming publish the third track
 # (Panda3D 1.10) #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 
 
