@@ -22,6 +22,14 @@ class SingleplayerPageGui(PageGui):
         if 'save' not in game.options.dct:
             self.widgets[-1]['state'] = DISABLED
             self.widgets[-1].setAlphaScale(.25)
+        if not game.options['development']['season']:
+            for idx in [-2, -1]:
+                self.widgets[idx]['state'] = DISABLED
+                _fg = menu_gui.btn_args['text_fg']
+                _fc = self.widgets[idx]['frameColor']
+                clc = lambda val: max(0, val)
+                self.widgets[idx]['text_fg'] = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
+                self.widgets[idx]['frameColor'] = (clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3), _fc[3])
         PageGui.build_page(self)
 
     def on_single_race(self):

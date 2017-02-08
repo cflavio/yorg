@@ -43,6 +43,7 @@ class Yorg(GameWindow):
                 'show_exit': 1,
                 'menu_joypad': 1,
                 'multiplayer': 0,
+                'season': 0,
                 'weapons': 0,
                 'win_orig': ''}}
         self.options = DictFile('options.yml', default_opt)
