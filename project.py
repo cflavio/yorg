@@ -6,7 +6,10 @@
 # TODO LIST =====
 
 # 0.5
-# #graphics three-points lighting
+# add ranking to race's conclusion
+# at end of race slowly drive player's car by ai
+# #music integrate menu's theme
+# #music integrate desert's theme
 # #design use mediator and facade (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ... ; each mediator provides also a facade to the system
 
 # 0.6
@@ -30,6 +33,9 @@
 # #network send game packets using udp in place of tcp
 # #network weapons
 
+# 1.0
+# refinements
+
 
 # WAITING =====
 
@@ -40,7 +46,7 @@
 
 # #project make scons for yyagl
 # #project build only nointernet, linux64, win64, osx64, runtime-dev option
-# #project embed into a pyqt window
+# #project embed into a wx / pyqt window
 # #shaders deferred shading, tone mapping; fxaa
 # #engine hardware instancing or save flattened files on bam files (caching)
 # #engine multi-threading physics loading
