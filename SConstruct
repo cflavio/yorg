@@ -72,47 +72,42 @@ env['NOINTERNET'] = arguments['nointernet']
 env['ICO_FILE'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT']
 env['SUPERMIRROR'] = ''
-filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
+filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 pdf_conf = {
-    'sources': [
-        ('python', '.', '*.py SConstruct', ['./yyagl/*'])],
-    'sources_menu': [
+    'yorg_menu': [
         ('python', './menu', '*.py', [])],
-    'sources_yorg': [
+    'yorg_yorg': [
         ('python', './yorg', '*.py', [])],
-    'sources_root': [
-        ('python', '.', '*.py SConstruct', ['./yyagl/*', './menu/*', './yorg/*'])],
-    'sources_racing': [
-        ('python', './yyagl/racing', '*.py', [])],
-    'sources_racing_car': [
+    'yorg': [
+        ('python', '.', '*.py SConstruct *.md *.txt', ['./yyagl/*', './menu/*', './yorg/*', './licenses/*', './assets/*'])],
+    'racing': [
+        ('python', './yyagl/racing', '*.py', ['./yyagl/racing/game/*', './yyagl/racing/car/*', './yyagl/racing/race/*', './yyagl/racing/ranking/*', './yyagl/racing/season/*', './yyagl/racing/track/*', './yyagl/racing/tuning/*', './yyagl/racing/weapon/*'])],
+    'racing_car': [
         ('python', './yyagl/racing/car', '*.py', [])],
-    'sources_racing_race': [
+    'racing_race': [
         ('python', './yyagl/racing/race', '*.py', [])],
-    'sources_racing_ranking': [
+    'racing_ranking': [
         ('python', './yyagl/racing/ranking', '*.py', [])],
-    'sources_racing_season': [
+    'racing_season': [
         ('python', './yyagl/racing/season', '*.py', [])],
-    'sources_racing_track': [
+    'racing_track': [
         ('python', './yyagl/racing/track', '*.py', [])],
-    'sources_racing_other': [
-        ('python', './yyagl/racing', '*.py', ['./yyagl/racing/game/*', './yyagl/racing/car/*', './yyagl/racing/race/*', './yyagl/racing/ranking/*', './yyagl/racing/season/*', './yyagl/racing/track/*'])],
-    'sources_game': [
-        ('python', './yyagl', '*.py *.pdef', filt_game),
-        ('lua', './yyagl', 'config.lua', filt_game),
-        ('c', './yyagl', '*.vert *.frag', filt_game),
-        ('', './yyagl', '*.rst *.css_t *.conf', filt_game),
-        ('html', './yyagl', '*.html', filt_game),
-        ('javascript', './yyagl', '*.js', filt_game)],
-    'sources_game_build': [
+    'racing_tuning': [
+        ('python', './yyagl/racing/tuning', '*.py', [])],
+    'racing_weapon': [
+        ('python', './yyagl/racing/weapon', '*.py', [])],
+    'yyagl': [
+        ('python', './yyagl', '*.py *.pdef', filt_game + ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),
+        ('c', './yyagl', '*.vert *.frag', filt_game + ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),
+        ],
+    'build': [
         ('python', './yyagl/build', '*.py *.pdef', filt_game),
         ('lua', './yyagl/build', 'config.lua', filt_game),
         ('', './yyagl/build', '*.rst *.css_t *.conf', filt_game),
         ('html', './yyagl/build', '*.html', filt_game),
         ('javascript', './yyagl/build', '*.js', filt_game)],
-    'sources_game_engine': [
-        ('python', './yyagl/engine', '*.py *.pdef', filt_game)],
-    'sources_game_other': [
-        ('python', './yyagl', '*.py *.pdef', filt_game + ['./yyagl/build/*', './yyagl/engine/*'])],
+    'engine': [
+        ('python', './yyagl/engine', '*.py', filt_game)],
     'tests': [
         ('python', './yyagl/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
