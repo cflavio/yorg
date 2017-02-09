@@ -6,11 +6,9 @@
 # TODO LIST =====
 
 # 0.5
-# add ranking to race's conclusion
 # at end of race slowly drive player's car by ai
-# #music integrate menu's theme
 # #music integrate desert's theme
-# #design use mediator and facade (see summerfield's book) e.g. cargui is mediated by car, car is mediated by race, race is mediated by game, ... ; each mediator provides also a facade to the system
+# refactoring: use observers
 
 # 0.6
 # #gaming other weapons

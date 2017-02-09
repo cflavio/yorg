@@ -54,6 +54,7 @@ class _Fsm(Fsm):
         else:
             self.race = RaceSinglePlayer()
         eng.log_mgr.log('selected drivers: ' + str(drivers))
+        self.race.logic.drivers = drivers
         self.race.fsm.demand('Loading', track_path, car_path, player_cars, drivers)
 
     def exitRace(self):
