@@ -13,23 +13,21 @@ class ExitPageGui(PageGui):
 
         self.frm = DirectFrame(frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         txt = _(
-            'Please, visit our site! We hope you can find interesting stuff there. '
-            'Moreover, by visiting it (especially disabling your adblocker onto the site) '
-            'you support us and contribute to keep Yorg as free as possible. Thank you very much! :)')
-        self.txt = OnscreenText(text=txt, pos=(0, .8), scale=.08, wordwrap=32,
-            fg=(.75, .75, .25, 1), font=eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'))
+            'Please, visit our site after exiting!\n\nIt helps us! Thank you!')
+        self.txt = OnscreenText(text=txt, pos=(0, .64), scale=.08, wordwrap=32,
+            fg=(.75, .75, .25, 1), font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
         menu_data = [
-            ('Visit and exit', _('visit our site and exit\n(I love to support you!)'),
+            ('visit our site after exiting', _('visit our site after exiting'),
              lambda: self.on_end(True)),
-            ('Only exit', _("exit without visiting our site\n(I don't want to support you)"),
+            ("don't visit our site after exiting", _("don't visit our site after exiting"),
              lambda: self.on_end(False))]
         self.widgets = [self.frm, self.txt]
         btn_args = {
-            'text_font': eng.font_mgr.load_font('assets/fonts/zekton rg.ttf'),
+            'text_font': eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'),
             'text_fg': (.75, .75, .25, 1),
             'frameColor': (0, 0, 0, .2),
             'relief': FLAT,
-            'frameSize': (-1, 1, -.2, .16),
+            'frameSize': (-1, 1, -.18, .19),
             'rolloverSound': loader.loadSfx('assets/sfx/menu_over.wav'),
             'clickSound': loader.loadSfx('assets/sfx/menu_clicked.ogg')}
         btn_visit = DirectButton(text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2], text_scale=.12, **btn_args)

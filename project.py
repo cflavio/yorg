@@ -1,12 +1,10 @@
 # BUGS =====
 
-# it doesn't start on ubuntu 16.04
-
 
 # TODO LIST =====
 
 # 0.5
-# at end of race slowly drive player's car by ai
+# ingame menu
 # #music integrate desert's theme
 # refactoring: use observers
 
