@@ -6,6 +6,7 @@ from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectDialog import OkDialog
 from panda3d.core import TextNode, LVector2i
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
+from yyagl.engine.event import has_pygame
 from direct.gui.DirectButton import DirectButton
 import string
 
@@ -49,6 +50,8 @@ class InputPageGui(PageGui):
             indicatorValue=conf['settings']['joystick'],
             indicator_frameColor=(.75, .75, .25, 1),
             **menu_gui.checkbtn_args)
+        if not has_pygame():
+            self._joypad_cb['state'] = DISABLED
 
         forward_lab = DirectLabel(
             text=_('Accelerate'), pos=(-.1, 1, .5), text_align=TextNode.ARight,
