@@ -82,7 +82,7 @@ class DriverPageGui(PageGui):
                 'assets/images/cars/%s_sel.png' % self.mdt.car,
                 parent=base.a2dBottomRight, pos=(-.38, 1, .38), scale=.32)
         self.widgets += [self.img]
-        shader = Shader.make(Shader.SL_GLSL, vertex=vert, fragment=frag)
+        shader = Shader.make(Shader.SL_GLSL, vert, frag)
         self.img.setShader(shader)
         self.img.setTransparency(True)
         self.ts = TextureStage('ts')
