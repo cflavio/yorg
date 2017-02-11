@@ -4,9 +4,7 @@
 # TODO LIST =====
 
 # 0.5
-# ingame menu
-# #music integrate desert's theme
-# refactoring: use observers
+# #waiting #music integrate desert's theme
 
 # 0.6
 # #gaming other weapons
@@ -33,7 +31,7 @@
 # refinements
 
 
-# WAITING =====
+# 0.5 WAITING =====
 
 # (Panda3D 1.10) #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 

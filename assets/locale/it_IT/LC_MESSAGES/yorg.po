@@ -199,6 +199,24 @@ msgstr "visita il nostro sito dopo l'uscita"
 msgid "don't visit our site after exiting"
 msgstr "non visitare il nostro sito dopo l'uscita"
 
+#: menu/ingamemenu/ingamepage.py:16
+msgid ""
+"What do you want to do?\n"
+"\n"
+"NB Use 'p' for pausing the game."
+msgstr ""
+"Cosa vuoi fare?\n"
+"\n"
+"NB Usa 'p' per mettere il gioco in pausa."
+
+#: menu/ingamemenu/ingamepage.py:20
+msgid "back to the game"
+msgstr "torna al gioco"
+
+#: menu/ingamemenu/ingamepage.py:22
+msgid "back to the main menu"
+msgstr "torna al menu principale"
+
 #: yyagl/engine/gui/page.py:222
 msgid "Back"
 msgstr "Indietro"

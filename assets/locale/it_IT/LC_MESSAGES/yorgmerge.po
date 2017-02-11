@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-10 12:28+0100\n"
+"POT-Creation-Date: 2017-02-11 09:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -199,6 +199,21 @@ msgstr "visita il nostro sito dopo l'uscita"
 msgid "don't visit our site after exiting"
 msgstr "non visitare il nostro sito dopo l'uscita"
 
+#: menu/ingamemenu/ingamepage.py:16
+msgid ""
+"What do you want to do?\n"
+"\n"
+"NB Use 'p' for pausing the game."
+msgstr ""
+
+#: menu/ingamemenu/ingamepage.py:20
+msgid "back to the game"
+msgstr ""
+
+#: menu/ingamemenu/ingamepage.py:22
+msgid "back to the main menu"
+msgstr ""
+
 #: yyagl/engine/gui/page.py:222
 msgid "Back"
 msgstr "Indietro"
@@ -277,7 +292,7 @@ msgstr "CARICAMENTO..."
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:122
 msgid "track: "
-msgstr "pista:"
+msgstr "pista: "
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:134
 msgid "Starting grid"
