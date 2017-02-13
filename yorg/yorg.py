@@ -33,7 +33,6 @@ class Yorg(GameWindow):
                 'ai': 0,
                 'submodels': 1,
                 'split_world': 1,
-                'laps': 3,
                 'fps': 1,
                 'car': '',
                 'track': '',

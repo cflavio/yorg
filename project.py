@@ -4,10 +4,14 @@
 # TODO LIST =====
 
 # 0.5
-# #waiting #music integrate desert's theme
+# #waiting #music integrate desert's and mountain's theme
 
 # 0.6
-# #gaming other weapons
+# forward missile
+# backward missile
+# turbo
+# drop a fixed bomb
+# rotate-all bomb
 
 # 0.7
 # #ai port ai lookahead to 3D
@@ -41,6 +45,7 @@
 # #project make scons for yyagl
 # #project build only nointernet, linux64, win64, osx64, runtime-dev option
 # #project embed into a wx / pyqt window
+# #project port to python 3
 # #shaders deferred shading, tone mapping; fxaa
 # #engine hardware instancing or save flattened files on bam files (caching)
 # #engine multi-threading physics loading
