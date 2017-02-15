@@ -3,9 +3,6 @@
 
 # TODO LIST =====
 
-# 0.5
-# #waiting #music integrate desert's and mountain's theme
-
 # 0.6
 # forward missile
 # backward missile
@@ -35,7 +32,7 @@
 # refinements
 
 
-# 0.5 WAITING =====
+# WAITING =====
 
 # (Panda3D 1.10) #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 
@@ -47,7 +44,7 @@
 # #project embed into a wx / pyqt window
 # #project port to python 3
 # #shaders deferred shading, tone mapping; fxaa
-# #engine hardware instancing or save flattened files on bam files (caching)
+# #engine hardware instancing
 # #engine multi-threading physics loading
 # #backlog #project preload assets (cars on application's start, track on menu selection)
 # #backlog #project make uml diagrams with pyreverse into devinfo
