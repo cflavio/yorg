@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-11 09:57+0100\n"
+"POT-Creation-Date: 2017-02-15 16:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgid "Accelerate"
 msgstr ""
 
 #: menu/inputpage.py:65
-msgid "Brake"
+msgid "Brake/Reverse"
 msgstr ""
 
 #: menu/inputpage.py:73
@@ -93,7 +93,7 @@ msgstr ""
 msgid "Select the car"
 msgstr ""
 
-#: menu/carpage.py:40 menu/trackpage.py:33 menu/driverpage.py:78
+#: menu/carpage.py:40 menu/trackpage.py:33 menu/driverpage.py:79
 msgid "thanks to:"
 msgstr ""
 
@@ -101,11 +101,11 @@ msgstr ""
 msgid "Select the track"
 msgstr ""
 
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:114
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:115
 msgid "desert"
 msgstr ""
 
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:113
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:114
 msgid "prototype"
 msgstr ""
 
@@ -117,7 +117,8 @@ msgstr ""
 msgid "Write your name:"
 msgstr ""
 
-#: menu/driverpage.py:67
+#: menu/driverpage.py:67 menu/driverpage.py:105 menu/driverpage.py:106
+#: menu/driverpage.py:110 menu/driverpage.py:115
 msgid "your name"
 msgstr ""
 
@@ -215,7 +216,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: yyagl/racing/car/logic.py:233
+#: yyagl/racing/car/logic.py:260
 msgid "wrong way"
 msgstr ""
 
@@ -251,15 +252,15 @@ msgstr ""
 msgid "hi"
 msgstr ""
 
-#: yyagl/racing/track/gfx.py:28
+#: yyagl/racing/track/gfx.py:29
 msgid "loading track model"
 msgstr ""
 
-#: yyagl/racing/track/gfx.py:66
+#: yyagl/racing/track/gfx.py:72
 msgid "loading model: "
 msgstr ""
 
-#: yyagl/racing/track/gfx.py:138
+#: yyagl/racing/track/gfx.py:144
 msgid "flattening model: "
 msgstr ""
 
@@ -283,46 +284,55 @@ msgstr ""
 msgid "share:"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:104
+#: yyagl/racing/race/gui/loading/loadingpage.py:105
 msgid "LOADING..."
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:122
+#: yyagl/racing/race/gui/loading/loadingpage.py:123
 msgid "track: "
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:134
+#: yyagl/racing/race/gui/loading/loadingpage.py:136
 msgid "Starting grid"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:162
+#: yyagl/racing/race/gui/loading/loadingpage.py:164
 msgid "Ranking"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:190
+#: yyagl/racing/race/gui/loading/loadingpage.py:192
 msgid "Controls"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:196
+#: yyagl/racing/race/gui/loading/loadingpage.py:198
 msgid "joypad"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:201
+#: yyagl/racing/race/gui/loading/loadingpage.py:203
 msgid "accelerate"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:205
-msgid "brake"
+#: yyagl/racing/race/gui/loading/loadingpage.py:207
+msgid "brake/reverse"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:209
+#: yyagl/racing/race/gui/loading/loadingpage.py:211
 msgid "left"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:213
+#: yyagl/racing/race/gui/loading/loadingpage.py:215
 msgid "right"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:217
+#: yyagl/racing/race/gui/loading/loadingpage.py:219
 msgid "fire"
+msgstr ""
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:227
+msgid ""
+"This is the first time that you are loading this track: it will require more "
+"time since we are computing several information on your system in place of "
+"putting them into the game package in order to reduce the bandwith required "
+"to you for downloading the game. Don't worry: the loading process will be a "
+"lot faster from the next time!"
 msgstr ""

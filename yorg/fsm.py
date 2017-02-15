@@ -11,6 +11,7 @@ import sys
 from direct.gui.DirectGuiGlobals import FLAT
 from direct.gui.DirectFrame import DirectFrame
 from panda3d.core import WindowProperties
+import os
 
 
 class _Fsm(Fsm):
@@ -39,6 +40,13 @@ class _Fsm(Fsm):
         eng.log_mgr.log('entering Menu state')
         self.__menu = YorgMenu()
         self.mdt.audio.menu_music.play()
+        for file in os.listdir('.'):
+            if file.endswith('.bam'):
+                curr_version = eng.logic.version.strip().split()[-1]
+                file_version = file[:-4].split('_')[-1]
+                if curr_version != file_version:
+                    eng.log_mgr.log('removing ' + file)
+                    os.remove(file)
 
     def exitMenu(self):
         eng.log_mgr.log('exiting Menu state')
