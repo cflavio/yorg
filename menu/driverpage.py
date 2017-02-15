@@ -67,6 +67,7 @@ class DriverPageGui(PageGui):
             initialText=_('your name'))
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
         self.widgets += [name, self.ent]
+        self.drivers = []
         for row in range(2):
             for col in range(4):
                 idx = (col + 1) + row * 4
@@ -78,6 +79,7 @@ class DriverPageGui(PageGui):
                 thanks = OnscreenText(_('thanks to:'), pos=(-.75 + col * .5, .1 - row * .5), scale=.038, **t_a)
                 name = OnscreenText(names[idx - 1], pos=(-.75 + col * .5, .04 - row * .5), scale=.045, **t_a)
                 self.widgets += [img, thanks, name]
+                self.drivers += [img]
         self.img = OnscreenImage(
                 'assets/images/cars/%s_sel.png' % self.mdt.car,
                 parent=base.a2dBottomRight, pos=(-.38, 1, .38), scale=.32)
@@ -94,6 +96,27 @@ class DriverPageGui(PageGui):
         tex.load(empty_img)
         self.img.setTexture(self.ts, tex)
         PageGui.build_page(self)
+        self.update_tsk = taskMgr.add(self.update_text, 'update text')
+        for drv in self.drivers:
+            drv['state'] = DISABLED
+            drv.setShaderInput('enable', .2)
+
+    def update_text(self, task):
+        if self.ent.get() != _('your name') and self.ent.get().startswith(_('your name')):
+            self.ent.enterText(self.ent.get()[len(_('your name')):])
+            for drv in self.drivers:
+                drv['state'] = NORMAL
+                drv.setShaderInput('enable', 1)
+        elif self.ent.get() in [_('your name')[:-1], '']:
+            self.ent.enterText('')
+            for drv in self.drivers:
+                drv['state'] = DISABLED
+                drv.setShaderInput('enable', .2)
+        elif self.ent.get() not in [_('your name'), '']:
+            for drv in self.drivers:
+                drv['state'] = NORMAL
+                drv.setShaderInput('enable', 1)
+        return task.cont
 
     def on_click(self, i):
         self.img.setTexture(self.ts, loader.loadTexture('assets/images/drivers/driver%s_sel.png' % i))
@@ -115,6 +138,7 @@ class DriverPageGui(PageGui):
     def destroy(self):
         PageGui.destroy(self)
         self.img = None
+        taskMgr.remove(self.update_tsk)
 
 
 class DriverPage(Page):
