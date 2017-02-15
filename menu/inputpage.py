@@ -62,7 +62,7 @@ class InputPageGui(PageGui):
         self._forward_btn['extraArgs'] = [self._forward_btn]
 
         rear_lab = DirectLabel(
-            text=_('Brake'), pos=(-.1, 1, .3), text_align=TextNode.ARight,
+            text=_('Brake/Reverse'), pos=(-.1, 1, .3), text_align=TextNode.ARight,
             **menu_gui.label_args)
         self._rear_btn = DirectButton(
             pos=(.46, 1, .3), text=conf['settings']['keys']['rear'],
