@@ -46,6 +46,7 @@
 # #shaders deferred shading, tone mapping; fxaa
 # #engine hardware instancing
 # #engine multi-threading physics loading
+# refactoring observers, DIP
 # #backlog #project preload assets (cars on application's start, track on menu selection)
 # #backlog #project make uml diagrams with pyreverse into devinfo
 # #backlog #project unit tests

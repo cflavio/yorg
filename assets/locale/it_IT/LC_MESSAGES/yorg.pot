@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 16:13+0100\n"
+"POT-Creation-Date: 2017-02-16 17:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu/creditpage.py:11
-msgid "Code"
+#: menu/mainpage.py:21
+msgid "Single Player"
 msgstr ""
 
-#: menu/creditpage.py:12
-msgid "Art"
+#: menu/mainpage.py:23
+msgid "Multiplayer"
 msgstr ""
 
-#: menu/creditpage.py:13
-msgid "Audio"
+#: menu/mainpage.py:25
+msgid "Options"
 msgstr ""
 
-#: menu/creditpage.py:14
-msgid "Testing"
+#: menu/mainpage.py:27
+msgid "Credits"
+msgstr ""
+
+#: menu/mainpage.py:29
+msgid "Quit"
+msgstr ""
+
+#: menu/mainpage.py:78
+msgid "Last news:"
+msgstr ""
+
+#: menu/mainpage.py:88
+msgid "show"
 msgstr ""
 
 #: menu/inputpage.py:45 menu/inputpage.py:47
@@ -89,57 +101,16 @@ msgstr ""
 msgid "Configure input"
 msgstr ""
 
-#: menu/carpage.py:23
-msgid "Select the car"
+#: menu/singleplayerpage.py:14
+msgid "Single race"
 msgstr ""
 
-#: menu/carpage.py:40 menu/trackpage.py:33 menu/driverpage.py:79
-msgid "thanks to:"
+#: menu/singleplayerpage.py:15
+msgid "New season"
 msgstr ""
 
-#: menu/trackpage.py:15
-msgid "Select the track"
-msgstr ""
-
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:115
-msgid "desert"
-msgstr ""
-
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:114
-msgid "prototype"
-msgstr ""
-
-#: menu/driverpage.py:54
-msgid "Select the driver"
-msgstr ""
-
-#: menu/driverpage.py:63
-msgid "Write your name:"
-msgstr ""
-
-#: menu/driverpage.py:67 menu/driverpage.py:105 menu/driverpage.py:106
-#: menu/driverpage.py:110 menu/driverpage.py:115
-msgid "your name"
-msgstr ""
-
-#: menu/mainpage.py:16
-msgid "Single Player"
-msgstr ""
-
-#: menu/mainpage.py:18
-msgid "Multiplayer"
-msgstr ""
-
-#: menu/mainpage.py:20
-msgid "Options"
-msgstr ""
-
-#: menu/mainpage.py:22
-msgid "Credits"
-msgstr ""
-
-#: menu/mainpage.py:24
-msgid "Quit"
+#: menu/singleplayerpage.py:16
+msgid "Continue season"
 msgstr ""
 
 #: menu/clientpage.py:32
@@ -162,24 +133,61 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
+#: menu/creditpage.py:11
+msgid "Code"
+msgstr ""
+
+#: menu/creditpage.py:12
+msgid "Art"
+msgstr ""
+
+#: menu/creditpage.py:13
+msgid "Audio"
+msgstr ""
+
+#: menu/creditpage.py:14
+msgid "Testing"
+msgstr ""
+
+#: menu/trackpage.py:15
+msgid "Select the track"
+msgstr ""
+
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:115
+msgid "desert"
+msgstr ""
+
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:114
+msgid "prototype"
+msgstr ""
+
+#: menu/trackpage.py:33 menu/driverpage.py:79 menu/carpage.py:40
+msgid "thanks to:"
+msgstr ""
+
+#: menu/driverpage.py:54
+msgid "Select the driver"
+msgstr ""
+
+#: menu/driverpage.py:63
+msgid "Write your name:"
+msgstr ""
+
+#: menu/driverpage.py:67 menu/driverpage.py:105 menu/driverpage.py:106
+#: menu/driverpage.py:110 menu/driverpage.py:115
+msgid "your name"
+msgstr ""
+
+#: menu/carpage.py:23
+msgid "Select the car"
+msgstr ""
+
 #: menu/serverpage.py:22
 msgid "connection from "
 msgstr ""
 
 #: menu/serverpage.py:50
 msgid "Start"
-msgstr ""
-
-#: menu/singleplayerpage.py:14
-msgid "Single race"
-msgstr ""
-
-#: menu/singleplayerpage.py:15
-msgid "New season"
-msgstr ""
-
-#: menu/singleplayerpage.py:16
-msgid "Continue season"
 msgstr ""
 
 #: menu/exitmenu/exitpage.py:16
@@ -212,8 +220,16 @@ msgstr ""
 msgid "back to the main menu"
 msgstr ""
 
-#: yyagl/engine/gui/page.py:222
-msgid "Back"
+#: yyagl/racing/track/gfx.py:29
+msgid "loading track model"
+msgstr ""
+
+#: yyagl/racing/track/gfx.py:72
+msgid "loading model: "
+msgstr ""
+
+#: yyagl/racing/track/gfx.py:144
+msgid "flattening model: "
 msgstr ""
 
 #: yyagl/racing/car/logic.py:260
@@ -250,18 +266,6 @@ msgstr ""
 
 #: yyagl/racing/car/gui.py:177
 msgid "hi"
-msgstr ""
-
-#: yyagl/racing/track/gfx.py:29
-msgid "loading track model"
-msgstr ""
-
-#: yyagl/racing/track/gfx.py:72
-msgid "loading model: "
-msgstr ""
-
-#: yyagl/racing/track/gfx.py:144
-msgid "flattening model: "
 msgstr ""
 
 #: yyagl/racing/race/gui/countdown.py:20
@@ -335,4 +339,8 @@ msgid ""
 "putting them into the game package in order to reduce the bandwith required "
 "to you for downloading the game. Don't worry: the loading process will be a "
 "lot faster from the next time!"
+msgstr ""
+
+#: yyagl/engine/gui/page.py:222
+msgid "Back"
 msgstr ""
