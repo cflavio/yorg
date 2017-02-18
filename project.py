@@ -34,7 +34,8 @@
 
 # WAITING =====
 
-# (Panda3D 1.10) #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
+# (Panda3D 1.10) #shaders shadows
+#     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 
 
 # MAYBE/SOMEDAY =====

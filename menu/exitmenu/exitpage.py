@@ -9,17 +9,18 @@ import sys
 class ExitPageGui(PageGui):
 
     def build_page(self):
-        menu_gui = self.menu.gui
-
-        self.frm = DirectFrame(frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
+        self.frm = DirectFrame(
+            frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         txt = _(
             'Please, visit our site after exiting!\n\nIt helps us! Thank you!')
         self.txt = OnscreenText(text=txt, pos=(0, .64), scale=.08, wordwrap=32,
-            fg=(.75, .75, .25, 1), font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
+            fg=(.75, .75, .25, 1),
+            font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
         menu_data = [
             ('visit our site after exiting', _('visit our site after exiting'),
              lambda: self.on_end(True)),
-            ("don't visit our site after exiting", _("don't visit our site after exiting"),
+            ("don't visit our site after exiting",
+             _("don't visit our site after exiting"),
              lambda: self.on_end(False))]
         self.widgets = [self.frm, self.txt]
         btn_args = {
@@ -30,8 +31,12 @@ class ExitPageGui(PageGui):
             'frameSize': (-1, 1, -.18, .19),
             'rolloverSound': loader.loadSfx('assets/sfx/menu_over.wav'),
             'clickSound': loader.loadSfx('assets/sfx/menu_clicked.ogg')}
-        btn_visit = DirectButton(text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2], text_scale=.12, **btn_args)
-        btn_dont_visit = DirectButton(text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2], text_scale=.08, **btn_args)
+        btn_visit = DirectButton(
+            text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2],
+            text_scale=.12, **btn_args)
+        btn_dont_visit = DirectButton(
+            text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
+            text_scale=.08, **btn_args)
         self.widgets += [btn_visit, btn_dont_visit]
         PageGui.build_page(self, False)
 

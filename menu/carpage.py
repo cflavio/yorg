@@ -20,7 +20,8 @@ class CarPageGui(PageGui):
     def build_page(self):
         menu_gui = self.menu.gui
 
-        txt = OnscreenText(text=_('Select the car'), pos=(0, .8), **menu_gui.text_args)
+        txt = OnscreenText(text=_('Select the car'), pos=(0, .8),
+                           **menu_gui.text_args)
         self.widgets += [txt]
 
         self.track_path = 'tracks/' + self.menu.track
@@ -36,9 +37,12 @@ class CarPageGui(PageGui):
                 image='assets/images/cars/%s.png' % menu_data[i],
                 command=self.on_car, extraArgs=[menu_data[i]],
                 **self.menu.gui.imgbtn_args)
-            txt = OnscreenText(menu_data[i], pos=(-1.2 + i * .8, .38), scale=.072, **t_a)
-            thanks = OnscreenText(_('thanks to:'), pos=(-1.2 + i * .8, -.14), scale=.052, **t_a)
-            name = OnscreenText(names[i], pos=(-1.2 + i * .8, -.24), scale=.072, **t_a)
+            txt = OnscreenText(menu_data[i], pos=(-1.2 + i * .8, .38),
+                               scale=.072, **t_a)
+            thanks = OnscreenText(_('thanks to:'), pos=(-1.2 + i * .8, -.14),
+                                  scale=.052, **t_a)
+            name = OnscreenText(names[i], pos=(-1.2 + i * .8, -.24),
+                                scale=.072, **t_a)
             self.widgets += [img, txt, name, thanks]
         self.current_cars = {}
         PageGui.build_page(self)
@@ -163,6 +167,7 @@ class CarPage(Page):
 
 class CarPageServer(Page):
     gui_cls = CarPageGuiServer
+
 
 class CarPageClient(Page):
     gui_cls = CarPageGuiClient

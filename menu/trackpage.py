@@ -1,4 +1,3 @@
-from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageGui
 from .carpage import CarPage, CarPageServer
 from yyagl.engine.gui.imgbtn import ImageButton
@@ -12,7 +11,8 @@ class TrackPageGui(PageGui):
     def build_page(self):
         menu_gui = self.menu.gui
 
-        txt = OnscreenText(text=_('Select the track'), pos=(0, .8), **menu_gui.text_args)
+        txt = OnscreenText(text=_('Select the track'), pos=(0, .8),
+                           **menu_gui.text_args)
         self.widgets += [txt]
 
         tracks = ['desert', 'prototype']
@@ -20,7 +20,6 @@ class TrackPageGui(PageGui):
         names = open('assets/thanks.txt').readlines()
         shuffle(names)
         names = names[:2]
-        menu_data = ['desert', 'prototype']
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
         for i in range(len(tracks)):
@@ -29,9 +28,12 @@ class TrackPageGui(PageGui):
                 image='assets/images/tracks/%s.png' % tracks[i],
                 command=self.on_track, extraArgs=[tracks[i]],
                 **self.menu.gui.imgbtn_args)
-            txt = OnscreenText(track_names[i], pos=(-.5 + i * 1.0, .45), scale=.08, **t_a)
-            thanks = OnscreenText(_('thanks to:'), pos=(-.5 + i * 1.0, -.2), scale=.06, **t_a)
-            name = OnscreenText(names[i], pos=(-.5 + i * 1.0, -.3), scale=.08, **t_a)
+            txt = OnscreenText(track_names[i], pos=(-.5 + i * 1.0, .45),
+                               scale=.08, **t_a)
+            thanks = OnscreenText(_('thanks to:'), pos=(-.5 + i * 1.0, -.2),
+                                  scale=.06, **t_a)
+            name = OnscreenText(names[i], pos=(-.5 + i * 1.0, -.3), scale=.08,
+                                **t_a)
             self.widgets += [img, txt, thanks, name]
         PageGui.build_page(self)
 

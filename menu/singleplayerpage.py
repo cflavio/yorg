@@ -28,8 +28,11 @@ class SingleplayerPageGui(PageGui):
                 _fg = menu_gui.btn_args['text_fg']
                 _fc = self.widgets[idx]['frameColor']
                 clc = lambda val: max(0, val)
-                self.widgets[idx]['text_fg'] = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
-                self.widgets[idx]['frameColor'] = (clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3), _fc[3])
+                self.widgets[idx]['text_fg'] = (
+                    _fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
+                self.widgets[idx]['frameColor'] = (
+                    clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3),
+                    _fc[3])
         PageGui.build_page(self)
 
     def on_single_race(self):
@@ -45,7 +48,10 @@ class SingleplayerPageGui(PageGui):
     def on_continue(self):
         game.logic.season = Season()
         game.logic.season.logic.load()
-        game.fsm.demand('Race', 'tracks/' + game.options['save']['track'], game.options['save']['car'])
+        track_path = 'tracks/' + game.options['save']['track']
+        car_path = game.options['save']['car']
+        game.fsm.demand('Race', track_path, car_path)
+
 
 class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui

@@ -3,7 +3,6 @@ from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
-from direct.gui.DirectDialog import OkDialog
 from panda3d.core import TextNode, LVector2i
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
 from direct.gui.DirectButton import DirectButton
@@ -55,7 +54,8 @@ class OptionPageGui(PageGui):
         PageGui.transl_text(vol_lab, 'Volume', _('Volume'))
         self._vol_slider = DirectSlider(
             pos=(.52, 0, .33), scale=.49, value=conf['settings']['volume'],
-            frameColor=menu_args.btn_color, thumb_frameColor=(.75, .75, .25, 1))
+            frameColor=menu_args.btn_color,
+            thumb_frameColor=(.75, .75, .25, 1))
 
         fullscreen_lab = DirectLabel(
             text='', pos=(-.1, 1, .1), text_align=TextNode.ARight,
@@ -89,7 +89,8 @@ class OptionPageGui(PageGui):
         aa_next_lab = DirectLabel(
             text='', pos=(.2, 1, -.3), text_align=TextNode.ALeft,
             **menu_gui.label_args)
-        PageGui.transl_text(aa_next_lab, '(from the next execution)', _('(from the next execution)'))
+        PageGui.transl_text(aa_next_lab, '(from the next execution)',
+                            _('(from the next execution)'))
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', indicatorValue=conf['settings']['aa'],
             indicator_frameColor=(.75, .75, .25, 1),

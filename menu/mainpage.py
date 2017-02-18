@@ -1,5 +1,5 @@
 from direct.gui.DirectButton import DirectButton
-from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
+from direct.gui.DirectGuiGlobals import DISABLED
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import PageGui
 from .singleplayerpage import SingleplayerPage
@@ -8,7 +8,7 @@ from .optionpage import OptionPage
 from .creditpage import CreditPage
 from direct.gui.OnscreenImage import OnscreenImage
 import feedparser
-from datetime import datetime, date
+from datetime import datetime
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TextNode
@@ -40,8 +40,10 @@ class YorgMainPageGui(MainPageGui):
             _fg = menu_gui.btn_args['text_fg']
             _fc = self.widgets[-4]['frameColor']
             clc = lambda val: max(0, val)
-            self.widgets[-4]['text_fg'] = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
-            self.widgets[-4]['frameColor'] = (clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3), _fc[3])
+            self.widgets[-4]['text_fg'] = (
+                _fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
+            self.widgets[-4]['frameColor'] = (
+                clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3), _fc[3])
         self.widgets += [OnscreenImage(
             'assets/images/gui/yorg_title.png',
             scale=(.8, 1, .8 * (380.0 / 772)), parent=base.a2dTopRight,
@@ -51,42 +53,56 @@ class YorgMainPageGui(MainPageGui):
         MainPageGui.build_page(self)
 
     def set_news(self):
-        feeds = feedparser.parse('http://feeds.feedburner.com/ya2tech?format=xml')
+        rss_path = 'http://feeds.feedburner.com/ya2tech?format=xml'
+        feeds = feedparser.parse(rss_path)
         entries = []
         for feed in feeds['entries']:
             entries += [feed]
+
         def conv(datestr):
             months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
                       'Sep', 'Oct', 'Nov', 'Dec']
             date_el = datestr.split()[1:-2]
-            day, month, year = date_el[0], months.index(date_el[1]) + 1, date_el[2]
+            month = months.index(date_el[1]) + 1
+            day, year = date_el[0], date_el[2]
             return datetime(int(year), month, int(day))
         rss = sorted(entries, key=lambda entry: conv(entry['published']))
-        rss = [(datetime.strftime(conv(ent['published']), '%b %d'), ent['title']) for ent in rss]
+        rss = [(datetime.strftime(conv(ent['published']), '%b %d'),
+                ent['title']) for ent in rss]
         rss.reverse()
         rss = rss[:5]
+
         def conv_str(_str):
-            if len(_str) <=20:
+            if len(_str) <= 20:
                 return _str
             else:
                 return _str[:20] + '...'
         if not rss:
             return
         rss = [(_rss[0], conv_str(_rss[1])) for _rss in rss]
-        frm = DirectFrame(frameSize=(0, 1.0, 0, .75), frameColor=(.2, .2, .2, .5), pos=(.05, 1, .1), parent=base.a2dBottomLeft)
+        frm = DirectFrame(
+            frameSize=(0, 1.0, 0, .75), frameColor=(.2, .2, .2, .5),
+            pos=(.05, 1, .1), parent=base.a2dBottomLeft)
         texts = []
-        txt = OnscreenText(_('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32, parent=base.a2dBottomLeft,
-            fg=(.75, .75, .75, 1), font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
+        txt = OnscreenText(
+            _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
+            parent=base.a2dBottomLeft, fg=(.75, .75, .75, 1),
+            font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
         texts += [txt]
         for i in range(5):
-            txt = OnscreenText(': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055, wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
-                fg=(.75, .75, .75, 1), font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
+            txt = OnscreenText(
+                ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
+                wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
+                fg=(.75, .75, .75, 1),
+                font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
             texts += [txt]
         menu_gui = self.menu.gui
         btn_args = menu_gui.btn_args.copy()
         btn_args['scale'] = .055
-        btn = DirectButton(text=_('show'), pos=(.55, 1, .15), command=eng.gui.open_browser, extraArgs=['http://www.ya2.it'],
-                           parent=base.a2dBottomLeft, **btn_args)
+        btn = DirectButton(
+            text=_('show'), pos=(.55, 1, .15), command=eng.gui.open_browser,
+            extraArgs=['http://www.ya2.it'], parent=base.a2dBottomLeft,
+            **btn_args)
         self.widgets += [frm] + texts + [btn]
 
 

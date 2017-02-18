@@ -24,7 +24,6 @@ class _Gui(Gui):
 class ExitMenu(GameObjectMdt):
     gui_cls = _Gui
 
-
     def __init__(self, init_lst=[]):
         init_lst = [
             [('fsm', self.fsm_cls, [self])],
