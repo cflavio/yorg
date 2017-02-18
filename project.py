@@ -28,8 +28,8 @@
 # #network send game packets using udp in place of tcp
 # #network weapons
 
-# 1.0
-# refinements
+# 1.0 (refinements)
+# preload assets (cars on application's start, track on menu selection)
 
 
 # WAITING =====
@@ -47,7 +47,6 @@
 # #engine hardware instancing
 # #engine multi-threading physics loading
 # refactoring observers, DIP
-# #backlog #project preload assets (cars on application's start, track on menu selection)
 # #backlog #project make uml diagrams with pyreverse into devinfo
 # #backlog #project unit tests
 # #backlog #shaders particle effects

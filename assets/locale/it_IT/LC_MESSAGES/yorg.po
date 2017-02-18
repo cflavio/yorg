@@ -17,33 +17,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu/mainpage.py:21
-msgid "Single Player"
-msgstr "Single player"
+#: menu/creditpage.py:11
+msgid "Code"
+msgstr "Codice"
 
-#: menu/mainpage.py:23
-msgid "Multiplayer"
-msgstr "Multiplayer"
+#: menu/creditpage.py:12
+msgid "Art"
+msgstr "Grafica"
 
-#: menu/mainpage.py:25
-msgid "Options"
-msgstr "Opzioni"
+#: menu/creditpage.py:13
+msgid "Audio"
+msgstr "Audio"
 
-#: menu/mainpage.py:27
-msgid "Credits"
-msgstr "Riconoscimenti"
-
-#: menu/mainpage.py:29
-msgid "Quit"
-msgstr "Esci"
-
-#: menu/mainpage.py:78
-msgid "Last news:"
-msgstr "Ultime notizie:"
-
-#: menu/mainpage.py:88
-msgid "show"
-msgstr "vedi"
+#: menu/creditpage.py:14
+msgid "Testing"
+msgstr "Testing"
 
 #: menu/inputpage.py:45 menu/inputpage.py:47
 msgid "Use the joypad when present"
@@ -101,17 +89,66 @@ msgstr "(dalla prossima esecuzione)"
 msgid "Configure input"
 msgstr "Configura input"
 
-#: menu/singleplayerpage.py:14
-msgid "Single race"
-msgstr "Gara singola"
+#: menu/carpage.py:23
+msgid "Select the car"
+msgstr "Seleziona la macchina"
 
-#: menu/singleplayerpage.py:15
-msgid "New season"
-msgstr "Nuova stagione"
+#: menu/carpage.py:40 menu/trackpage.py:33 menu/driverpage.py:79
+msgid "thanks to:"
+msgstr "grazie a:"
 
-#: menu/singleplayerpage.py:16
-msgid "Continue season"
-msgstr "Continua stagione"
+#: menu/trackpage.py:15
+msgid "Select the track"
+msgstr "Seleziona la pista"
+
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:115
+msgid "desert"
+msgstr "deserto"
+
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:114
+msgid "prototype"
+msgstr "prototipo"
+
+#: menu/driverpage.py:54
+msgid "Select the driver"
+msgstr "Seleziona il pilota"
+
+#: menu/driverpage.py:63
+msgid "Write your name:"
+msgstr "Scrivi il tuo nome:"
+
+#: menu/driverpage.py:67 menu/driverpage.py:105 menu/driverpage.py:106
+#: menu/driverpage.py:110 menu/driverpage.py:115
+msgid "your name"
+msgstr "tuo nome"
+
+#: menu/mainpage.py:21
+msgid "Single Player"
+msgstr "Single player"
+
+#: menu/mainpage.py:23
+msgid "Multiplayer"
+msgstr "Multiplayer"
+
+#: menu/mainpage.py:25
+msgid "Options"
+msgstr "Opzioni"
+
+#: menu/mainpage.py:27
+msgid "Credits"
+msgstr "Riconoscimenti"
+
+#: menu/mainpage.py:29
+msgid "Quit"
+msgstr "Esci"
+
+#: menu/mainpage.py:78
+msgid "Last news:"
+msgstr "Ultime notizie:"
+
+#: menu/mainpage.py:88
+msgid "show"
+msgstr "vedi"
 
 #: menu/clientpage.py:32
 msgid "Client"
@@ -133,55 +170,6 @@ msgstr "Aspettando il server"
 msgid "Error"
 msgstr "Errore"
 
-#: menu/creditpage.py:11
-msgid "Code"
-msgstr "Codice"
-
-#: menu/creditpage.py:12
-msgid "Art"
-msgstr "Grafica"
-
-#: menu/creditpage.py:13
-msgid "Audio"
-msgstr "Audio"
-
-#: menu/creditpage.py:14
-msgid "Testing"
-msgstr "Testing"
-
-#: menu/trackpage.py:15
-msgid "Select the track"
-msgstr "Seleziona la pista"
-
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:115
-msgid "desert"
-msgstr "deserto"
-
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:114
-msgid "prototype"
-msgstr "prototipo"
-
-#: menu/trackpage.py:33 menu/driverpage.py:79 menu/carpage.py:40
-msgid "thanks to:"
-msgstr "grazie a:"
-
-#: menu/driverpage.py:54
-msgid "Select the driver"
-msgstr "Seleziona il pilota"
-
-#: menu/driverpage.py:63
-msgid "Write your name:"
-msgstr "Scrivi il tuo nome:"
-
-#: menu/driverpage.py:67 menu/driverpage.py:105 menu/driverpage.py:106
-#: menu/driverpage.py:110 menu/driverpage.py:115
-msgid "your name"
-msgstr "tuo nome"
-
-#: menu/carpage.py:23
-msgid "Select the car"
-msgstr "Seleziona la macchina"
-
 #: menu/serverpage.py:22
 msgid "connection from "
 msgstr "connessione da"
@@ -189,6 +177,18 @@ msgstr "connessione da"
 #: menu/serverpage.py:50
 msgid "Start"
 msgstr "Avvia"
+
+#: menu/singleplayerpage.py:14
+msgid "Single race"
+msgstr "Gara singola"
+
+#: menu/singleplayerpage.py:15
+msgid "New season"
+msgstr "Nuova stagione"
+
+#: menu/singleplayerpage.py:16
+msgid "Continue season"
+msgstr "Continua stagione"
 
 #: menu/exitmenu/exitpage.py:16
 msgid ""
@@ -226,17 +226,9 @@ msgstr "torna al gioco"
 msgid "back to the main menu"
 msgstr "torna al menu principale"
 
-#: yyagl/racing/track/gfx.py:29
-msgid "loading track model"
-msgstr "caricamento modello pista"
-
-#: yyagl/racing/track/gfx.py:72
-msgid "loading model: "
-msgstr "caricamento modello: "
-
-#: yyagl/racing/track/gfx.py:144
-msgid "flattening model: "
-msgstr "elaborazione modello: "
+#: yyagl/engine/gui/page.py:222
+msgid "Back"
+msgstr "Indietro"
 
 #: yyagl/racing/car/logic.py:260
 msgid "wrong way"
@@ -273,6 +265,14 @@ msgstr "basso"
 #: yyagl/racing/car/gui.py:177
 msgid "hi"
 msgstr "alto"
+
+#: yyagl/racing/track/gfx.py:31
+msgid "loading track model"
+msgstr "caricamento modello pista"
+
+#: yyagl/racing/track/gfx.py:74
+msgid "loading model: "
+msgstr "caricamento modello: "
 
 #: yyagl/racing/race/gui/countdown.py:20
 msgid "GO!"
@@ -340,18 +340,15 @@ msgstr "fuoco"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:227
 msgid ""
-"This is the first time that you are loading this track: it will require more "
-"time since we are computing several information on your system in place of "
-"putting them into the game package in order to reduce the bandwith required "
-"to you for downloading the game. Don't worry: the loading process will be a "
-"lot faster from the next time!"
+"This is the first time that you are playing this track: we are going to "
+"recreate the track on your system, so you may notice some slowdonws while "
+"you play (this process reduces the bandwith required to you for downloading "
+"the game). Everything will be smoother from the next time!"
 msgstr ""
-"Questa è la prima volta che stai caricando questa pista: richiederà più "
-"tempo poiché stiamo calcolando diverse informazioni sul tuo sistema invece "
-"di metterle nel pacchetto del gioco al fine di ridurre la banda necessaria a "
-"te per scaricare il gioco. Non preoccuparti: il processo di caricamento sarà "
-"molto più veloce dalla prossima volta!"
+"Questa è la prima volta che stai giocando questa pista: stiamo per ricreare "
+"la pista sul tuo sistema, quindi potresti notare dei rallentamenti mentre "
+"giochi (questo processo riduce la banda richiesta a te per scaricare il "
+"gioco). Tutto sarà più liscio dalla prossima volta!"
 
-#: yyagl/engine/gui/page.py:222
-msgid "Back"
-msgstr "Indietro"
+#~ msgid "flattening model: "
+#~ msgstr "elaborazione modello: "

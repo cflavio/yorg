@@ -83,7 +83,7 @@ class YorgMainPageGui(MainPageGui):
                 fg=(.75, .75, .75, 1), font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
             texts += [txt]
         menu_gui = self.menu.gui
-        btn_args = menu_gui.btn_args
+        btn_args = menu_gui.btn_args.copy()
         btn_args['scale'] = .055
         btn = DirectButton(text=_('show'), pos=(.55, 1, .15), command=eng.gui.open_browser, extraArgs=['http://www.ya2.it'],
                            parent=base.a2dBottomLeft, **btn_args)
