@@ -113,13 +113,14 @@ pdf_conf = {
 env['PDF_CONF'] = pdf_conf
 
 def cond_racing(s):
-    return not str(s).startswith('racing') or str(s).startswith('racing/game/')
-def cond_game(src):
-    not_game = not str(src).startswith('racing/game/')
-    thirdparty = str(src).startswith('racing/game/thirdparty')
-    return not_game or thirdparty or str(src).startswith('racing/game/tests')
-dev_conf = {'devinfo': lambda s: str(s).startswith('racing'),
-            'devinfo_racing': cond_racing, 'devinfo_game': cond_game}
+    return not str(s).startswith('yyagl/racing/')# or str(s).startswith('racing/game/')
+def cond_yyagl(src):
+    not_yyagl = not str(src).startswith('yyagl/')
+    thirdparty = str(src).startswith('yyagl/thirdparty/')
+    racing = str(src).startswith('yyagl/racing/')
+    return not_yyagl or thirdparty or racing or str(src).startswith('yyagl/tests')
+dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/'),
+            'devinfo_racing': cond_racing, 'devinfo_yyagl': cond_yyagl}
 env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
