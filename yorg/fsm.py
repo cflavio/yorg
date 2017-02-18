@@ -1,16 +1,8 @@
-from yyagl.racing.race.race import Race, RaceSinglePlayer, RaceServer, \
-    RaceClient
+from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
 from yyagl.gameobject import Fsm
-from yyagl.engine.gui.page import PageGui
 from menu.menu import YorgMenu
 from menu.exitmenu.menu import ExitMenu
-from direct.gui.OnscreenImage import OnscreenImage
-from direct.gui.OnscreenText import OnscreenText
-from direct.gui.DirectButton import DirectButton
 import sys
-from direct.gui.DirectGuiGlobals import FLAT
-from direct.gui.DirectFrame import DirectFrame
-from panda3d.core import WindowProperties
 import os
 
 
@@ -53,7 +45,8 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterRace(self, track_path='', car_path='', player_cars=[], drivers=''):
+    def enterRace(self, track_path='', car_path='', player_cars=[],
+                  drivers=''):
         eng.log_mgr.log('entering Race state')
         if eng.server.is_active:
             self.race = RaceServer()
@@ -63,7 +56,8 @@ class _Fsm(Fsm):
             self.race = RaceSinglePlayer()
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
-        self.race.fsm.demand('Loading', track_path, car_path, player_cars, drivers)
+        self.race.fsm.demand('Loading', track_path, car_path, player_cars,
+                             drivers)
 
     def exitRace(self):
         eng.log_mgr.log('exiting Race state')
