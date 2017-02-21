@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 12:32+0100\n"
+"POT-Creation-Date: 2017-02-21 21:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,39 +33,39 @@ msgstr ""
 msgid "Testing"
 msgstr ""
 
-#: menu/inputpage.py:45 menu/inputpage.py:47
+#: menu/inputpage.py:41 menu/inputpage.py:44
 msgid "Use the joypad when present"
 msgstr ""
 
-#: menu/inputpage.py:57
+#: menu/inputpage.py:54
 msgid "Accelerate"
 msgstr ""
 
-#: menu/inputpage.py:65
+#: menu/inputpage.py:62
 msgid "Brake/Reverse"
 msgstr ""
 
-#: menu/inputpage.py:73
+#: menu/inputpage.py:70
 msgid "Left"
 msgstr ""
 
-#: menu/inputpage.py:81
+#: menu/inputpage.py:78
 msgid "Right"
 msgstr ""
 
-#: menu/inputpage.py:89
+#: menu/inputpage.py:86
 msgid "Weapon"
 msgstr ""
 
-#: menu/inputpage.py:99
+#: menu/inputpage.py:96
 msgid "Press the key to record it"
 msgstr ""
 
-#: menu/optionpage.py:47
+#: menu/optionpage.py:46
 msgid "Language"
 msgstr ""
 
-#: menu/optionpage.py:55
+#: menu/optionpage.py:54
 msgid "Volume"
 msgstr ""
 
@@ -81,11 +81,11 @@ msgstr ""
 msgid "Antialiasing"
 msgstr ""
 
-#: menu/optionpage.py:92
+#: menu/optionpage.py:93
 msgid "(from the next execution)"
 msgstr ""
 
-#: menu/optionpage.py:102
+#: menu/optionpage.py:103
 msgid "Configure input"
 msgstr ""
 
@@ -93,32 +93,32 @@ msgstr ""
 msgid "Select the car"
 msgstr ""
 
-#: menu/carpage.py:40 menu/trackpage.py:33 menu/driverpage.py:79
+#: menu/carpage.py:42 menu/trackpage.py:33 menu/driverpage.py:80
 msgid "thanks to:"
 msgstr ""
 
-#: menu/trackpage.py:15
+#: menu/trackpage.py:14
 msgid "Select the track"
 msgstr ""
 
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:115
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:111
 msgid "desert"
 msgstr ""
 
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:114
+#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:110
 msgid "prototype"
 msgstr ""
 
-#: menu/driverpage.py:54
+#: menu/driverpage.py:51
 msgid "Select the driver"
 msgstr ""
 
-#: menu/driverpage.py:63
+#: menu/driverpage.py:61
 msgid "Write your name:"
 msgstr ""
 
-#: menu/driverpage.py:67 menu/driverpage.py:105 menu/driverpage.py:106
-#: menu/driverpage.py:110 menu/driverpage.py:115
+#: menu/driverpage.py:66 menu/driverpage.py:109 menu/driverpage.py:110
+#: menu/driverpage.py:111 menu/driverpage.py:115 menu/driverpage.py:120
 msgid "your name"
 msgstr ""
 
@@ -142,11 +142,11 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: menu/mainpage.py:78
+#: menu/mainpage.py:88
 msgid "Last news:"
 msgstr ""
 
-#: menu/mainpage.py:88
+#: menu/mainpage.py:103
 msgid "show"
 msgstr ""
 
@@ -190,7 +190,7 @@ msgstr ""
 msgid "Continue season"
 msgstr ""
 
-#: menu/exitmenu/exitpage.py:16
+#: menu/exitmenu/exitpage.py:15
 msgid ""
 "Please, visit our site after exiting!\n"
 "\n"
@@ -201,70 +201,70 @@ msgstr ""
 msgid "visit our site after exiting"
 msgstr ""
 
-#: menu/exitmenu/exitpage.py:22
+#: menu/exitmenu/exitpage.py:23
 msgid "don't visit our site after exiting"
 msgstr ""
 
-#: menu/ingamemenu/ingamepage.py:16
+#: menu/ingamemenu/ingamepage.py:14
 msgid ""
 "What do you want to do?\n"
 "\n"
 "NB Use 'p' for pausing the game."
 msgstr ""
 
-#: menu/ingamemenu/ingamepage.py:20
+#: menu/ingamemenu/ingamepage.py:19
 msgid "back to the game"
 msgstr ""
 
-#: menu/ingamemenu/ingamepage.py:22
+#: menu/ingamemenu/ingamepage.py:21
 msgid "back to the main menu"
 msgstr ""
 
-#: yyagl/engine/gui/page.py:222
+#: yyagl/engine/gui/page.py:237
 msgid "Back"
 msgstr ""
 
-#: yyagl/racing/car/logic.py:260
+#: yyagl/racing/car/logic.py:263
 msgid "wrong way"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:160
+#: yyagl/racing/car/gui.py:159
 msgid "speed:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:162
+#: yyagl/racing/car/gui.py:161
 msgid "lap:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:163
+#: yyagl/racing/car/gui.py:162
 msgid "time:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:164
+#: yyagl/racing/car/gui.py:163
 msgid "best time:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:165
+#: yyagl/racing/car/gui.py:164
 msgid "ranking:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:166
+#: yyagl/racing/car/gui.py:165
 msgid "damages:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:174 yyagl/racing/car/gui.py:176
+#: yyagl/racing/car/gui.py:173 yyagl/racing/car/gui.py:175
 msgid "low"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:177
+#: yyagl/racing/car/gui.py:176
 msgid "hi"
 msgstr ""
 
-#: yyagl/racing/track/gfx.py:31
+#: yyagl/racing/track/gfx.py:30
 msgid "loading track model"
 msgstr ""
 
-#: yyagl/racing/track/gfx.py:74
+#: yyagl/racing/track/gfx.py:76
 msgid "loading model: "
 msgstr ""
 
@@ -272,31 +272,31 @@ msgstr ""
 msgid "GO!"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:59
+#: yyagl/racing/race/gui/results.py:58
 msgid "LAP"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:60
+#: yyagl/racing/race/gui/results.py:59
 msgid "TIME"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:61
+#: yyagl/racing/race/gui/results.py:60
 msgid "RANKING"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:88
+#: yyagl/racing/race/gui/results.py:91
 msgid "share:"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:105
+#: yyagl/racing/race/gui/loading/loadingpage.py:100
 msgid "LOADING..."
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:123
+#: yyagl/racing/race/gui/loading/loadingpage.py:119
 msgid "track: "
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:136
+#: yyagl/racing/race/gui/loading/loadingpage.py:132
 msgid "Starting grid"
 msgstr ""
 
@@ -304,38 +304,38 @@ msgstr ""
 msgid "Ranking"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:192
+#: yyagl/racing/race/gui/loading/loadingpage.py:196
 msgid "Controls"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:198
+#: yyagl/racing/race/gui/loading/loadingpage.py:202
 msgid "joypad"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:203
+#: yyagl/racing/race/gui/loading/loadingpage.py:207
 msgid "accelerate"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:207
+#: yyagl/racing/race/gui/loading/loadingpage.py:212
 msgid "brake/reverse"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:211
+#: yyagl/racing/race/gui/loading/loadingpage.py:217
 msgid "left"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:215
+#: yyagl/racing/race/gui/loading/loadingpage.py:222
 msgid "right"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:219
+#: yyagl/racing/race/gui/loading/loadingpage.py:227
 msgid "fire"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:227
+#: yyagl/racing/race/gui/loading/loadingpage.py:238
 msgid ""
-"This is the first time that you are playing this track: we are going to "
-"recreate the track on your system, so you may notice some slowdonws while "
-"you play (this process reduces the bandwith required to you for downloading "
-"the game). Everything will be smoother from the next time!"
+"We need to elaborate the track on your system (this process reduces the "
+"bandwith required to you for downloading the game), so you may notice some "
+"slowdonws while you play. Everything will be smoother once the track has "
+"been processed!"
 msgstr ""

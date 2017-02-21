@@ -31,7 +31,6 @@ class Yorg(GameWindow):
             'development': {
                 'multithreaded_render': 0,
                 'ai': 0,
-                'split_world': 1,
                 'fps': 1,
                 'car': '',
                 'track': '',
