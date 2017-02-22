@@ -53,6 +53,9 @@ class Yorg(GameWindow):
             lang=self.options['settings']['lang'],
             mt_render=self.options['development']['multithreaded_render'],
             lang_domain='yorg')
-        classes = [self.fsm_cls, self.gfx_cls, self.phys_cls, self.gui_cls,
-                   YorgLogic, _Audio, self.ai_cls, _Event]
-        GameWindow.__init__(self, classes, conf)
+        init_lst = [
+            [('fsm', self.fsm_cls, [self])],
+            [('logic', YorgLogic, [self])],
+            [('audio', _Audio, [self])],
+            [('event', _Event, [self])]]
+        GameWindow.__init__(self, init_lst, conf)
