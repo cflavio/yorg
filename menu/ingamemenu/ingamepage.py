@@ -42,7 +42,7 @@ class InGamePageGui(PageGui):
     def on_end(self, back_to_game):
         if back_to_game:
             game.fsm.race.event.register_menu()
-            eng.gui.hide_cursor()
+            eng.gui.cursor.hide()
             self.mdt.destroy()
         else:
             if game.fsm.race.fsm.getCurrentOrNextState() != 'Results':

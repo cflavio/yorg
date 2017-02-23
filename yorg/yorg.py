@@ -52,7 +52,9 @@ class Yorg(GameWindow):
             antialiasing=self.options['settings']['aa'],
             lang=self.options['settings']['lang'],
             mt_render=self.options['development']['multithreaded_render'],
-            lang_domain='yorg')
+            lang_domain='yorg',
+            shaders=self.options['development']['shaders'],
+            gamma=self.options['development']['gamma'])
         init_lst = [
             [('fsm', self.fsm_cls, [self])],
             [('logic', YorgLogic, [self])],

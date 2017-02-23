@@ -3,7 +3,7 @@ from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
-from yyagl.engine.event import has_pygame
+from yyagl.engine.joystick import has_pygame
 from direct.gui.DirectButton import DirectButton
 import string
 
