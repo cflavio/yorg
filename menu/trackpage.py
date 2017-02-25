@@ -15,8 +15,8 @@ class TrackPageGui(PageGui):
                            **menu_gui.text_args)
         self.widgets += [txt]
 
-        tracks = ['desert', 'prototype']
-        track_names = [_('desert'), _('prototype')]
+        tracks = ['desert', 'mountain']
+        track_names = [_('desert'), _('mountain')]
         names = open('assets/thanks.txt').readlines()
         shuffle(names)
         names = names[:2]

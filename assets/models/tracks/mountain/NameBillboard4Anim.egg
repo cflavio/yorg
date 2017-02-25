@@ -1,0 +1,631 @@
+<CoordinateSystem> { Z-up } 
+<Material> MATNameBillboard4 {
+  <Scalar> diffr { 0.800000 }
+  <Scalar> diffg { 0.800000 }
+  <Scalar> diffb { 0.800000 }
+  <Scalar> specr { 0.500000 }
+  <Scalar> specg { 0.500000 }
+  <Scalar> specb { 0.500000 }
+  <Scalar> shininess { 12.5 }
+  <Scalar> ambr { 1.000000 }
+  <Scalar> ambg { 1.000000 }
+  <Scalar> ambb { 1.000000 }
+  <Scalar> emitr { 0.000000 }
+  <Scalar> emitg { 0.000000 }
+  <Scalar> emitb { 0.000000 }
+}
+
+<Texture> TEXNameBillboard4 {
+  "./tex/TEXNameBillboard4.jpg"
+  <Scalar> envtype { MODULATE }
+  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> wrap { REPEAT }
+}
+
+  <Group> ArmatureNameBillboard4Anim {
+    <Dart> { 1 }
+    <Joint> Bone {
+      <Transform> {
+        <Matrix4> {
+          -1.0 8.244055038630904e-08 -2.3343635291439568e-07 0.0 
+          2.3343635291439568e-07 0.0 -1.0 0.0 
+          -8.244055038630904e-08 -1.0 -7.373714540435256e-14 0.0 
+          1.480345368385315 3.1081270890354062e-09 3.702387809753418 1.0 
+        }
+      }
+      <VertexRef> {
+        0 1 2 3 6 7 8 9 10 11 14 15 18 19 22 23 24 25 31 32 33 38 41 44 48 49 56 57
+        <Scalar> membership { 0.000000 }  <Ref> { NameBillboard4Anim }
+      }
+      <VertexRef> {
+        39 40 54 69
+        <Scalar> membership { 0.035430 }  <Ref> { NameBillboard4Anim }
+      }
+      <VertexRef> {
+        26 27 28 29 34 35 36 37 50 51 52 53 58 59 60 61
+        <Scalar> membership { 1.000000 }  <Ref> { NameBillboard4Anim }
+      }
+      <Joint> Bone.001 {
+        <Transform> {
+          <Matrix4> {
+            1.0 -3.500393859212636e-07 3.450571739449515e-07 0.0 
+            3.500393859212636e-07 1.0 3.0518363308479e-14 0.0 
+            -3.450571739449515e-07 9.026523831775352e-14 1.0 0.0 
+            -2.980686986120418e-08 1.0213431119918823 5.2477282502100264e-15 1.0 
+          }
+        }
+        <VertexRef> {
+          26 29 59 60
+          <Scalar> membership { 0.020060 }  <Ref> { NameBillboard4Anim }
+        }
+        <VertexRef> {
+          39 40 54 69
+          <Scalar> membership { 0.953457 }  <Ref> { NameBillboard4Anim }
+        }
+        <VertexRef> {
+          30 31 38 41 44 45 55 62 63 64 65 68
+          <Scalar> membership { 1.000000 }  <Ref> { NameBillboard4Anim }
+        }
+        <VertexRef> {
+          12 17 43 70
+          <Scalar> membership { 0.033416 }  <Ref> { NameBillboard4Anim }
+        }
+        <VertexRef> {
+          51 52 58 61
+          <Scalar> membership { 0.020125 }  <Ref> { NameBillboard4Anim }
+        }
+        <VertexRef> {
+          0 1 2 3 6 7 8 9 10 11 13 14 15 18 19 20 22 23 24 25 27 28 32 33 34 35 36 37 42 47 48 49 50 53 56 57
+          <Scalar> membership { 0.000000 }  <Ref> { NameBillboard4Anim }
+        }
+        <Joint> Bone.002 {
+          <Transform> {
+            <Matrix4> {
+              1.0 1.1920928955078125e-07 -1.1162082103055582e-07 0.0 
+              -1.1920928955078125e-07 1.0 2.842170943040401e-14 0.0 
+              1.1162082103055582e-07 -1.511547235034244e-14 1.0 0.0 
+              -5.033083994021581e-08 1.0679844617843628 -2.306877291188142e-15 1.0 
+            }
+          }
+          <VertexRef> {
+            30 45 63 64
+            <Scalar> membership { 0.043908 }  <Ref> { NameBillboard4Anim }
+          }
+          <VertexRef> {
+            3 6 7 8 9 10 11 14 15 18 19 22 23 26 29 31 32 35 36 38 39 40 41 44 49 50 53 54 59 60 69
+            <Scalar> membership { 0.000000 }  <Ref> { NameBillboard4Anim }
+          }
+          <VertexRef> {
+            4 5 16 21 46 66 67 71
+            <Scalar> membership { 1.000000 }  <Ref> { NameBillboard4Anim }
+          }
+          <VertexRef> {
+            55 62 65 68
+            <Scalar> membership { 0.043925 }  <Ref> { NameBillboard4Anim }
+          }
+          <VertexRef> {
+            13 20 42 47
+            <Scalar> membership { 0.962076 }  <Ref> { NameBillboard4Anim }
+          }
+          <VertexRef> {
+            12 17 43 70
+            <Scalar> membership { 0.949658 }  <Ref> { NameBillboard4Anim }
+          }
+          <Joint> Bone.003 {
+            <Transform> {
+              <Matrix4> {
+                1.0 1.1452161885472378e-07 -1.1452161885472378e-07 0.0 
+                -1.1452161885472378e-07 1.0 1.7292284344347895e-14 0.0 
+                1.1452161885472378e-07 -4.177084957627695e-15 1.0 0.0 
+                -1.4645993307027538e-09 1.0511054992675781 -2.243155002566201e-17 1.0 
+              }
+            }
+            <VertexRef> {
+              9 15 18
+              <Scalar> membership { 0.525262 }  <Ref> { NameBillboard4Anim }
+            }
+            <VertexRef> {
+              7 11 22
+              <Scalar> membership { 0.503505 }  <Ref> { NameBillboard4Anim }
+            }
+            <VertexRef> {
+              10 14 23
+              <Scalar> membership { 0.534783 }  <Ref> { NameBillboard4Anim }
+            }
+            <VertexRef> {
+              2 3 4 5 12 13 16 17 20 21 24 31 32 33 38 39 40 41 42 43 44 46 47 49 54 66 67 69 70 71
+              <Scalar> membership { 0.000000 }  <Ref> { NameBillboard4Anim }
+            }
+            <VertexRef> {
+              6 8 19
+              <Scalar> membership { 0.510911 }  <Ref> { NameBillboard4Anim }
+            }
+          }
+        }
+      }
+    }
+    <Group> NameBillboard4Anim {
+      <Transform> {
+        <Matrix4> {
+          0.9999999403953552 6.603677305475852e-24 9.920880783553798e-10 0.0 
+          -6.631213678663949e-24 1.0 2.7755575615628914e-17 0.0 
+          -9.920881893776823e-10 -2.7755575615628914e-17 1.0 0.0 
+          0.0 0.0 0.0 1.0 
+        }
+      }
+      
+      <VertexPool> NameBillboard4Anim {
+      
+        <Vertex> 0 {2.685648 -0.000000 3.735520
+          <UV>  {
+            0.370020 0.028394 
+          }
+        }
+        <Vertex> 1 {2.685648 0.013535 3.735520
+          <UV>  {
+            0.370020 0.030420 
+          }
+        }
+        <Vertex> 2 {0.261124 0.013535 3.735521
+          <UV>  {
+            0.007069 0.030420 
+          }
+        }
+        <Vertex> 3 {0.261124 -0.000000 3.735521
+          <UV>  {
+            0.007069 0.028396 
+          }
+        }
+        <Vertex> 4 {2.685648 0.013535 0.564643
+          <UV>  {
+            0.165828 0.007693 
+          }
+        }
+        <Vertex> 5 {2.685648 -0.000000 0.564643
+          <UV>  {
+            0.165828 0.009719 
+          }
+        }
+        <Vertex> 6 {2.685648 0.000000 -0.492317
+          <UV>  {
+            0.007661 0.009718 
+          }
+        }
+        <Vertex> 7 {2.685648 0.013535 -0.492317
+          <UV>  {
+            0.007661 0.007693 
+          }
+        }
+        <Vertex> 8 {2.685648 0.000000 -0.492317
+          <UV>  {
+            0.370020 0.034613 
+          }
+        }
+        <Vertex> 9 {0.261124 0.000000 -0.492316
+          <UV>  {
+            0.007069 0.034615 
+          }
+        }
+        <Vertex> 10 {0.261124 0.013535 -0.492316
+          <UV>  {
+            0.007069 0.032589 
+          }
+        }
+        <Vertex> 11 {2.685648 0.013535 -0.492317
+          <UV>  {
+            0.370020 0.032589 
+          }
+        }
+        <Vertex> 12 {0.261124 -0.000000 0.564644
+          <UV>  {
+            0.165828 0.011889 
+          }
+        }
+        <Vertex> 13 {0.261124 0.013535 0.564644
+          <UV>  {
+            0.165828 0.013914 
+          }
+        }
+        <Vertex> 14 {0.261124 0.013535 -0.492316
+          <UV>  {
+            0.007661 0.013913 
+          }
+        }
+        <Vertex> 15 {0.261124 0.000000 -0.492316
+          <UV>  {
+            0.007661 0.011888 
+          }
+        }
+        <Vertex> 16 {2.685648 -0.000000 0.564643
+          <UV>  {
+            0.994490 0.356744 
+          }
+        }
+        <Vertex> 17 {0.261124 -0.000000 0.564644
+          <UV>  {
+            0.504874 0.356744 
+          }
+        }
+        <Vertex> 18 {0.261124 0.000000 -0.492316
+          <UV>  {
+            0.504874 0.143299 
+          }
+        }
+        <Vertex> 19 {2.685648 0.000000 -0.492317
+          <UV>  {
+            0.994490 0.143298 
+          }
+        }
+        <Vertex> 20 {0.261124 0.013535 0.564644
+          <UV>  {
+            0.492453 0.356746 
+          }
+        }
+        <Vertex> 21 {2.685648 0.013535 0.564643
+          <UV>  {
+            0.002837 0.356746 
+          }
+        }
+        <Vertex> 22 {2.685648 0.013535 -0.492317
+          <UV>  {
+            0.002837 0.143300 
+          }
+        }
+        <Vertex> 23 {0.261124 0.013535 -0.492316
+          <UV>  {
+            0.492453 0.143300 
+          }
+        }
+        <Vertex> 24 {0.261124 0.013535 3.735521
+          <UV>  {
+            0.492453 0.997084 
+          }
+        }
+        <Vertex> 25 {2.685648 0.013535 3.735520
+          <UV>  {
+            0.002837 0.997083 
+          }
+        }
+        <Vertex> 26 {2.685648 0.013535 2.678561
+          <UV>  {
+            0.002837 0.783638 
+          }
+        }
+        <Vertex> 27 {0.261124 0.013535 2.678562
+          <UV>  {
+            0.492453 0.783638 
+          }
+        }
+        <Vertex> 28 {0.261124 0.013535 2.678562
+          <UV>  {
+            0.492453 0.783638 
+          }
+        }
+        <Vertex> 29 {2.685648 0.013535 2.678561
+          <UV>  {
+            0.002837 0.783638 
+          }
+        }
+        <Vertex> 30 {2.685648 0.013535 1.621602
+          <UV>  {
+            0.002837 0.570192 
+          }
+        }
+        <Vertex> 31 {0.261124 0.013535 1.621603
+          <UV>  {
+            0.492453 0.570192 
+          }
+        }
+        <Vertex> 32 {0.261124 -0.000000 3.735521
+          <UV>  {
+            0.640450 0.011888 
+          }
+        }
+        <Vertex> 33 {0.261124 0.013535 3.735521
+          <UV>  {
+            0.640450 0.013914 
+          }
+        }
+        <Vertex> 34 {0.261124 0.013535 2.678562
+          <UV>  {
+            0.482251 0.013915 
+          }
+        }
+        <Vertex> 35 {0.261124 -0.000000 2.678562
+          <UV>  {
+            0.482251 0.011889 
+          }
+        }
+        <Vertex> 36 {0.261124 -0.000000 2.678562
+          <UV>  {
+            0.482251 0.011889 
+          }
+        }
+        <Vertex> 37 {0.261124 0.013535 2.678562
+          <UV>  {
+            0.482251 0.013915 
+          }
+        }
+        <Vertex> 38 {0.261124 0.013535 1.621603
+          <UV>  {
+            0.324025 0.013915 
+          }
+        }
+        <Vertex> 39 {0.261124 -0.000000 1.621603
+          <UV>  {
+            0.324025 0.011889 
+          }
+        }
+        <Vertex> 40 {0.261124 -0.000000 1.621603
+          <UV>  {
+            0.324025 0.011889 
+          }
+        }
+        <Vertex> 41 {0.261124 0.013535 1.621603
+          <UV>  {
+            0.324025 0.013915 
+          }
+        }
+        <Vertex> 42 {0.261124 0.013535 0.564644
+          <UV>  {
+            0.165828 0.013914 
+          }
+        }
+        <Vertex> 43 {0.261124 -0.000000 0.564644
+          <UV>  {
+            0.165828 0.011889 
+          }
+        }
+        <Vertex> 44 {0.261124 0.013535 1.621603
+          <UV>  {
+            0.492453 0.570192 
+          }
+        }
+        <Vertex> 45 {2.685648 0.013535 1.621602
+          <UV>  {
+            0.002837 0.570192 
+          }
+        }
+        <Vertex> 46 {2.685648 0.013535 0.564643
+          <UV>  {
+            0.002837 0.356746 
+          }
+        }
+        <Vertex> 47 {0.261124 0.013535 0.564644
+          <UV>  {
+            0.492453 0.356746 
+          }
+        }
+        <Vertex> 48 {2.685648 -0.000000 3.735520
+          <UV>  {
+            0.994490 0.997082 
+          }
+        }
+        <Vertex> 49 {0.261124 -0.000000 3.735521
+          <UV>  {
+            0.504874 0.997082 
+          }
+        }
+        <Vertex> 50 {0.261124 -0.000000 2.678562
+          <UV>  {
+            0.504874 0.783636 
+          }
+        }
+        <Vertex> 51 {2.685648 -0.000000 2.678561
+          <UV>  {
+            0.994490 0.783636 
+          }
+        }
+        <Vertex> 52 {2.685648 -0.000000 2.678561
+          <UV>  {
+            0.994490 0.783636 
+          }
+        }
+        <Vertex> 53 {0.261124 -0.000000 2.678562
+          <UV>  {
+            0.504874 0.783636 
+          }
+        }
+        <Vertex> 54 {0.261124 -0.000000 1.621603
+          <UV>  {
+            0.504874 0.570190 
+          }
+        }
+        <Vertex> 55 {2.685648 -0.000000 1.621602
+          <UV>  {
+            0.994490 0.570190 
+          }
+        }
+        <Vertex> 56 {2.685648 0.013535 3.735520
+          <UV>  {
+            0.640450 0.007693 
+          }
+        }
+        <Vertex> 57 {2.685648 -0.000000 3.735520
+          <UV>  {
+            0.640450 0.009719 
+          }
+        }
+        <Vertex> 58 {2.685648 -0.000000 2.678561
+          <UV>  {
+            0.482251 0.009719 
+          }
+        }
+        <Vertex> 59 {2.685648 0.013535 2.678561
+          <UV>  {
+            0.482251 0.007693 
+          }
+        }
+        <Vertex> 60 {2.685648 0.013535 2.678561
+          <UV>  {
+            0.482251 0.007693 
+          }
+        }
+        <Vertex> 61 {2.685648 -0.000000 2.678561
+          <UV>  {
+            0.482251 0.009719 
+          }
+        }
+        <Vertex> 62 {2.685648 -0.000000 1.621602
+          <UV>  {
+            0.324025 0.009719 
+          }
+        }
+        <Vertex> 63 {2.685648 0.013535 1.621602
+          <UV>  {
+            0.324025 0.007693 
+          }
+        }
+        <Vertex> 64 {2.685648 0.013535 1.621602
+          <UV>  {
+            0.324025 0.007693 
+          }
+        }
+        <Vertex> 65 {2.685648 -0.000000 1.621602
+          <UV>  {
+            0.324025 0.009719 
+          }
+        }
+        <Vertex> 66 {2.685648 -0.000000 0.564643
+          <UV>  {
+            0.165828 0.009719 
+          }
+        }
+        <Vertex> 67 {2.685648 0.013535 0.564643
+          <UV>  {
+            0.165828 0.007693 
+          }
+        }
+        <Vertex> 68 {2.685648 -0.000000 1.621602
+          <UV>  {
+            0.994490 0.570190 
+          }
+        }
+        <Vertex> 69 {0.261124 -0.000000 1.621603
+          <UV>  {
+            0.504874 0.570190 
+          }
+        }
+        <Vertex> 70 {0.261124 -0.000000 0.564644
+          <UV>  {
+            0.504874 0.356744 
+          }
+        }
+        <Vertex> 71 {2.685648 -0.000000 0.564643
+          <UV>  {
+            0.994490 0.356744 
+          }
+        }}
+      
+      
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {0.000000 -0.000000 1.000000}
+        <VertexRef> { 0 1 2 3 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {1.000000 0.000000 0.000000}
+        <VertexRef> { 4 5 6 7 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-0.000000 0.000000 -1.000000}
+        <VertexRef> { 8 9 10 11 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-1.000000 -0.000000 -0.000000}
+        <VertexRef> { 12 13 14 15 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {0.000000 -1.000000 -0.000000}
+        <VertexRef> { 16 17 18 19 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-0.000000 1.000000 0.000000}
+        <VertexRef> { 20 21 22 23 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-0.000000 1.000000 0.000000}
+        <VertexRef> { 24 25 26 27 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-0.000000 1.000000 0.000000}
+        <VertexRef> { 28 29 30 31 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-1.000000 -0.000000 -0.000000}
+        <VertexRef> { 32 33 34 35 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-1.000000 -0.000000 -0.000000}
+        <VertexRef> { 36 37 38 39 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-1.000000 -0.000000 -0.000000}
+        <VertexRef> { 40 41 42 43 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {-0.000000 1.000000 0.000000}
+        <VertexRef> { 44 45 46 47 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {0.000000 -1.000000 -0.000000}
+        <VertexRef> { 48 49 50 51 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {0.000000 -1.000000 -0.000000}
+        <VertexRef> { 52 53 54 55 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {1.000000 0.000000 0.000000}
+        <VertexRef> { 56 57 58 59 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {1.000000 0.000000 0.000000}
+        <VertexRef> { 60 61 62 63 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {1.000000 0.000000 0.000000}
+        <VertexRef> { 64 65 66 67 <Ref> { NameBillboard4Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXNameBillboard4 }
+        <MRef> { MATNameBillboard4 }
+        <Normal> {0.000000 -1.000000 -0.000000}
+        <VertexRef> { 68 69 70 71 <Ref> { NameBillboard4Anim }} 
+      }
+    }
+  }
