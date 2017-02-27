@@ -3,6 +3,9 @@
 
 # TODO LIST =====
 
+#0.5
+# write bam at race exit
+
 # 0.6
 # forward missile
 # backward missile
