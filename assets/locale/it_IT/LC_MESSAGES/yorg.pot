@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-21 21:24+0100\n"
+"POT-Creation-Date: 2017-02-28 10:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,8 +105,8 @@ msgstr ""
 msgid "desert"
 msgstr ""
 
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:110
-msgid "prototype"
+#: menu/trackpage.py:19
+msgid "mountain"
 msgstr ""
 
 #: menu/driverpage.py:51
@@ -220,7 +220,7 @@ msgstr ""
 msgid "back to the main menu"
 msgstr ""
 
-#: yyagl/engine/gui/page.py:237
+#: yyagl/engine/gui/page.py:178
 msgid "Back"
 msgstr ""
 
@@ -290,6 +290,10 @@ msgstr ""
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:100
 msgid "LOADING..."
+msgstr ""
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:110
+msgid "prototype"
 msgstr ""
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:119

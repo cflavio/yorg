@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-21 21:24+0100\n"
+"POT-Creation-Date: 2017-02-28 10:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,9 +105,9 @@ msgstr "Seleziona la pista"
 msgid "desert"
 msgstr "deserto"
 
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:110
-msgid "prototype"
-msgstr "prototipo"
+#: menu/trackpage.py:19
+msgid "mountain"
+msgstr ""
 
 #: menu/driverpage.py:51
 msgid "Select the driver"
@@ -226,7 +226,7 @@ msgstr "torna al gioco"
 msgid "back to the main menu"
 msgstr "torna al menu principale"
 
-#: yyagl/engine/gui/page.py:237
+#: yyagl/engine/gui/page.py:178
 msgid "Back"
 msgstr "Indietro"
 
@@ -298,6 +298,10 @@ msgstr "condividi:"
 msgid "LOADING..."
 msgstr "CARICAMENTO..."
 
+#: yyagl/racing/race/gui/loading/loadingpage.py:110
+msgid "prototype"
+msgstr "prototipo"
+
 #: yyagl/racing/race/gui/loading/loadingpage.py:119
 msgid "track: "
 msgstr "pista: "
@@ -339,17 +343,13 @@ msgid "fire"
 msgstr "fuoco"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:238
-#, fuzzy
 msgid ""
 "We need to elaborate the track on your system (this process reduces the "
 "bandwith required to you for downloading the game), so you may notice some "
 "slowdonws while you play. Everything will be smoother once the track has "
 "been processed!"
 msgstr ""
-"Questa è la prima volta che stai giocando questa pista: stiamo per ricreare "
-"la pista sul tuo sistema, quindi potresti notare dei rallentamenti mentre "
-"giochi (questo processo riduce la banda richiesta a te per scaricare il "
-"gioco). Tutto sarà più liscio dalla prossima volta!"
-
-#~ msgid "flattening model: "
-#~ msgstr "elaborazione modello: "
+"Bisogna elabarare la pista sul tuo sistema (questo processo riduce la banda "
+"richiesta a te per scaricare il gioco), quindi potresti notare dei "
+"rallentamenti mentre giochi. Tutto sarà più liscio una volta che la pista è "
+"stata elaborata!"

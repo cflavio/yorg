@@ -3,9 +3,6 @@
 
 # TODO LIST =====
 
-#0.5
-# write bam at race exit
-
 # 0.6
 # forward missile
 # backward missile
@@ -39,12 +36,12 @@
 
 # (Panda3D 1.10) #shaders shadows
 #     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
+# (Panda3D 1.10) build only nointernet
 
 
 # MAYBE/SOMEDAY =====
 
 # #project make scons for yyagl
-# #project build only nointernet, linux64, win64, osx64, runtime-dev option
 # #project embed into a wx / pyqt window
 # #project port to python 3
 # #shaders deferred shading, tone mapping; fxaa

@@ -105,9 +105,9 @@ msgstr "Seleziona la pista"
 msgid "desert"
 msgstr "deserto"
 
-#: menu/trackpage.py:19 yyagl/racing/race/gui/loading/loadingpage.py:110
-msgid "prototype"
-msgstr "prototipo"
+#: menu/trackpage.py:19
+msgid "mountain"
+msgstr "montagna"
 
 #: menu/driverpage.py:51
 msgid "Select the driver"
@@ -226,7 +226,7 @@ msgstr "torna al gioco"
 msgid "back to the main menu"
 msgstr "torna al menu principale"
 
-#: yyagl/engine/gui/page.py:237
+#: yyagl/engine/gui/page.py:178
 msgid "Back"
 msgstr "Indietro"
 
@@ -297,6 +297,10 @@ msgstr "condividi:"
 #: yyagl/racing/race/gui/loading/loadingpage.py:100
 msgid "LOADING..."
 msgstr "CARICAMENTO..."
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:110
+msgid "prototype"
+msgstr "prototipo"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:119
 msgid "track: "

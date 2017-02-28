@@ -10,7 +10,7 @@ from yyagl.build.src import build_src
 from yyagl.build.devinfo import build_devinfo
 from yyagl.build.test import build_ut
 from yyagl.build.docs import build_docs
-from yyagl.build.strings import build_strings, build_string_template
+from yyagl.build.strings import build_strings, build_templ_merge
 from yyagl.build.imgs import build_images
 from yyagl.build.pdf import build_pdf
 
@@ -57,7 +57,7 @@ bld_docs = Builder(action=build_docs)
 bld_pdf = Builder(action=build_pdf)
 bld_images = Builder(action=build_images)
 bld_str = Builder(action=build_strings, suffix='.mo', src_suffix='.po')
-bld_str_tmpl = Builder(action=build_string_template, suffix='.pot',
+bld_str_tmpl = Builder(action=build_templ_merge, suffix='.pot',
                        src_suffix='.py')
 
 env = Environment(BUILDERS={
