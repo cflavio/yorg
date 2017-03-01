@@ -4,17 +4,17 @@
 # TODO LIST =====
 
 # 0.6
+# #ai port ai lookahead to 3D
+# #ai obstacle avoidance
+# #ai weapons
+# #ai add pit stop to ai
+
+# 0.7
 # forward missile
 # backward missile
 # turbo
 # drop a fixed bomb
 # rotate-all bomb
-
-# 0.7
-# #ai port ai lookahead to 3D
-# #ai obstacle avoidance
-# #ai weapons
-# #ai add pit stop to ai
 
 # 0.8
 # #gaming season
@@ -47,7 +47,7 @@
 # #shaders deferred shading, tone mapping; fxaa
 # #engine hardware instancing
 # #engine multi-threading physics loading
-# refactoring observers, DIP
+# refactoring observers, DIP, facade, mediator
 # #backlog #project make uml diagrams with pyreverse into devinfo
 # #backlog #project unit tests
 # #backlog #shaders particle effects

@@ -38,12 +38,12 @@ class ServerPageGui(PageGui):
             public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
             addr = local_addr + ' - ' + public_addr
             txt = OnscreenText(text=addr, scale=.12, pos=(0, .4),
-                               font=menu_gui.font, fg=menu_args.text_fg)
+                               font=menu_args.font, fg=menu_args.text_fg)
             self.widgets += [txt]
         except socket.gaierror:
             eng.log_mgr.log('no connection')
         self.conn_txt = OnscreenText(
-            scale=.12, pos=(0, .2), font=menu_gui.font, fg=menu_args.text_fg)
+            scale=.12, pos=(0, .2), font=menu_args.font, fg=menu_args.text_fg)
         self.widgets += [self.conn_txt]
         push = self.menu.logic.push_page
         btn = DirectButton(

@@ -15,7 +15,7 @@ class OptionEvent(PageEvent):
         settings = game.options['settings']
         dev = game.options['development']
         lang_idx = self.mdt.gui._lang_opt.selectedIndex
-        settings['lang'] = eng.lang_mgr.languages[lang_idx][:2].lower()
+        settings['lang'] = eng.logic.cfg.languages[lang_idx][:2].lower()
         settings['volume'] = self.mdt.gui._vol_slider.getValue()
         settings['fullscreen'] = self.mdt.gui._fullscreen_cb['indicatorValue']
         settings['resolution'] = self.mdt.gui._res_opt.get().replace('x', ' ')
@@ -45,7 +45,7 @@ class OptionPageGui(PageGui):
             **menu_gui.label_args)
         PageGui.transl_text(lang_lab, 'Language', _('Language'))
         self._lang_opt = DirectOptionMenu(
-            text='', items=eng.lang_mgr.languages, pos=(.49, 1, .5),
+            text='', items=eng.logic.cfg.languages, pos=(.49, 1, .5),
             initialitem=conf['settings']['lang'], command=self.__change_lang,
             **menu_gui.option_args)
         vol_lab = DirectLabel(
@@ -113,7 +113,7 @@ class OptionPageGui(PageGui):
             fullscreen_lab, self._fullscreen_cb, res_lab, self._res_opt,
             aa_lab, self._aa_cb, aa_next_lab, input_btn]
         idx = eng.lang_mgr.lang_codes.index(conf['settings']['lang'])
-        self.__change_lang(eng.lang_mgr.languages[idx])
+        self.__change_lang(eng.logic.cfg.languages[idx])
         PageGui.build_page(self)
 
     def update_texts(self):

@@ -34,7 +34,7 @@ class _Fsm(Fsm):
         self.mdt.audio.menu_music.play()
         for file in os.listdir('.'):
             if file.endswith('.bam'):
-                curr_version = eng.logic.version.strip().split()[-1]
+                curr_version = eng.logic.version
                 file_version = file[:-4].split('_')[-1]
                 if curr_version != file_version:
                     eng.log_mgr.log('removing ' + file)

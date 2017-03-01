@@ -32,7 +32,7 @@ class ClientPageGui(PageGui):
         txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.text_args)
         self.widgets += [txt]
         self.ent = DirectEntry(
-            scale=.12, pos=(-.68, 1, .2), entryFont=menu_gui.font, width=12,
+            scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=_('insert the server address'))
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)

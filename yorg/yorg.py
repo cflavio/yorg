@@ -54,7 +54,8 @@ class Yorg(GameWindow):
             mt_render=self.options['development']['multithreaded_render'],
             lang_domain='yorg',
             shaders=self.options['development']['shaders'],
-            gamma=self.options['development']['gamma'])
+            gamma=self.options['development']['gamma'],
+            menu_joypad=self.options['development']['menu_joypad'])
         init_lst = [
             [('fsm', self.fsm_cls, [self])],
             [('logic', YorgLogic, [self])],

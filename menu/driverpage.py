@@ -61,7 +61,7 @@ class DriverPageGui(PageGui):
         name = OnscreenText(_('Write your name:'), pos=(-.1, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
         self.ent = DirectEntry(
-            scale=.08, pos=(0, 1, .6), entryFont=menu_gui.font, width=12,
+            scale=.08, pos=(0, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=_('your name'))
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
