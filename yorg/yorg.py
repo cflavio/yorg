@@ -55,7 +55,10 @@ class Yorg(GameWindow):
             lang_domain='yorg',
             shaders=self.options['development']['shaders'],
             gamma=self.options['development']['gamma'],
-            menu_joypad=self.options['development']['menu_joypad'])
+            menu_joypad=self.options['development']['menu_joypad'],
+            cursor_path='assets/images/gui/cursor.png',
+            cursor_scale=((256/352.0) * .08, 1, .08),
+            cursor_hotspot=(.1, .06))
         init_lst = [
             [('fsm', self.fsm_cls, [self])],
             [('logic', YorgLogic, [self])],

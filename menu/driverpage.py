@@ -127,6 +127,10 @@ class DriverPageGui(PageGui):
         txt_path = 'assets/images/drivers/driver%s_sel.png'
         self.img.setTexture(self.ts, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
+        for drv in self.drivers:
+            drv['state'] = DISABLED
+            drv.setShaderInput('enable', .2)
+        taskMgr.remove(self.update_tsk)
         names = open('assets/thanks.txt').readlines()
         shuffle(names)
         names = names[:5]
