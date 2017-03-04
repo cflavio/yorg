@@ -3,6 +3,11 @@
 
 # TODO LIST =====
 
+# 0.5
+# store the last name inserted
+# change car's physics properties, report these into the gui
+# modify physics properties depending of driver's selection
+
 # 0.6
 # #ai port ai lookahead to 3D
 # #ai obstacle avoidance
