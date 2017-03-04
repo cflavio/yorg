@@ -27,7 +27,8 @@ class Yorg(GameWindow):
                     'left': 'arrow_left',
                     'right': 'arrow_right',
                     'button': 'x'},
-                'joystick': 0},
+                'joystick': 0,
+                'player_name': ''},
             'development': {
                 'multithreaded_render': 0,
                 'ai': 0,

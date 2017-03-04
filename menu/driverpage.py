@@ -63,7 +63,7 @@ class DriverPageGui(PageGui):
         self.ent = DirectEntry(
             scale=.08, pos=(0, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText=_('your name'))
+            initialText=game.options['settings']['player_name'] or _('your name'))
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
         self.widgets += [name, self.ent]
         self.drivers = []
@@ -142,6 +142,8 @@ class DriverPageGui(PageGui):
         shuffle(drv_idx)
         drivers = [(i, self.ent.get(), self.mdt.car)]
         drivers += [(drv_idx[j], names[j], cars[j]) for j in range(3)]
+        game.options['settings']['player_name'] = self.ent.get()
+        game.options.store()
         game.logic.season.logic.drivers = drivers
         args = ('Race', self.mdt.track, self.mdt.car, [], drivers)
         taskMgr.doMethodLater(2.0, lambda tsk: game.fsm.demand(*args), 'start')
