@@ -30,6 +30,7 @@
 
 # 1.0 (refinements)
 # preload assets (cars on application's start, track on menu selection)
+# there is a loud sound before the race
 
 
 # WAITING =====
@@ -37,6 +38,7 @@
 # (Panda3D 1.10) #shaders shadows
 #     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 # (Panda3D 1.10) build only nointernet
+# (Panda3D 1.10) make 'testing' branch
 
 
 # MAYBE/SOMEDAY =====
