@@ -48,12 +48,21 @@ class _Fsm(Fsm):
     def enterRace(self, track_path='', car_path='', player_cars=[],
                   drivers=''):
         eng.log_mgr.log('entering Race state')
+        keys = self.mdt.options['settings']['keys']
+        joystick = self.mdt.options['settings']['joystick']
+        sounds = {
+            'engine': 'assets/sfx/engine.ogg',
+            'brake': 'assets/sfx/brake.ogg',
+            'crash': 'assets/sfx/crash.ogg',
+            'crash_hs': 'assets/sfx/crash_high_speed.ogg',
+            'lap': 'assets/sfx/lap.ogg',
+            'landing': 'assets/sfx/landing.ogg'}
         if eng.server.is_active:
-            self.race = RaceServer()
+            self.race = RaceServer(keys, joystick, sounds)
         elif eng.client.is_active:
-            self.race = RaceClient()
+            self.race = RaceClient(keys, joystick, sounds)
         else:
-            self.race = RaceSinglePlayer()
+            self.race = RaceSinglePlayer(keys, joystick, sounds)
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
         self.race.fsm.demand('Loading', track_path, car_path, player_cars,
