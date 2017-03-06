@@ -60,10 +60,11 @@ class DriverPageGui(PageGui):
         names = names[:9]
         name = OnscreenText(_('Write your name:'), pos=(-.1, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
+        player_name = game.options['settings']['player_name']
         self.ent = DirectEntry(
             scale=.08, pos=(0, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText=game.options['settings']['player_name'] or _('your name'))
+            initialText=player_name or _('your name'))
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
         self.widgets += [name, self.ent]
         self.drivers = []

@@ -27,18 +27,19 @@ class _Fsm(Fsm):
         self.curr_load_txt = None
         self.__menu = None
         self.race = None
+        self.__exit_menu = None
 
     def enterMenu(self):
         eng.log_mgr.log('entering Menu state')
         self.__menu = YorgMenu()
         self.mdt.audio.menu_music.play()
-        for file in os.listdir('.'):
-            if file.endswith('.bam'):
+        for file_ in os.listdir('.'):
+            if file_.endswith('.bam'):
                 curr_version = eng.logic.version
-                file_version = file[:-4].split('_')[-1]
+                file_version = file_[:-4].split('_')[-1]
                 if curr_version != file_version:
-                    eng.log_mgr.log('removing ' + file)
-                    os.remove(file)
+                    eng.log_mgr.log('removing ' + file_)
+                    os.remove(file_)
 
     def exitMenu(self):
         eng.log_mgr.log('exiting Menu state')
@@ -62,9 +63,20 @@ class _Fsm(Fsm):
         elif eng.client.is_active:
             self.race = RaceClient(keys, joystick, sounds)
         else:
+            wheel_names = [['EmptyWheelFront', 'EmptyWheelFront.001',
+                            'EmptyWheelRear', 'EmptyWheelRear.001'],
+                           ['EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
+                            'EmptyWheel.003']]
+            tuning = self.mdt.logic.season.logic.tuning.logic.tuning
             self.race = RaceSinglePlayer(
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
-                'assets/fonts/Hanken-Book.ttf')  # use global template args
+                'assets/fonts/Hanken-Book.ttf', 'capsule', 'Capsule',
+                'assets/models/cars', 'phys.yml', wheel_names,
+                tuning['engine'], tuning['tires'], tuning['suspensions'],
+                'Road', 'assets/models/cars', 'car',
+                ['cardamage1', 'cardamage2'],
+                ['wheelfront', 'wheelrear', 'wheel'],
+                'assets/particles/sparks.ptf')  # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
         self.race.fsm.demand('Loading', track_path, car_path, player_cars,

@@ -12,16 +12,16 @@ class InGamePageGui(PageGui):
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         txt = _(
             "What do you want to do?\n\nNB Use 'p' for pausing the game.")
-        self.txt = OnscreenText(text=txt, pos=(0, .64), scale=.08, wordwrap=32,
-            fg=(.75, .75, .25, 1),
-            font=eng.font_mgr.load_font('assets/fonts/Hanken-Book.ttf'))
+        font_path = 'assets/fonts/Hanken-Book.ttf'
+        self.txt = OnscreenText(
+            text=txt, pos=(0, .64), scale=.08, wordwrap=32,
+            fg=(.75, .75, .25, 1), font=eng.font_mgr.load_font(font_path))
         menu_data = [
             ('back to the game', _('back to the game'),
              lambda: self.on_end(True)),
             ('back to the main menu', _('back to the main menu'),
              lambda: self.on_end(False))]
         self.widgets = [self.frm, self.txt]
-        font_path = 'assets/fonts/Hanken-Book.ttf'
         btn_args = {
             'text_font': eng.font_mgr.load_font(font_path),
             'text_fg': (.75, .75, .25, 1),
