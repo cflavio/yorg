@@ -3,9 +3,6 @@
 
 # TODO LIST =====
 
-# 0.5
-# modify physics properties depending of driver's selection
-
 # 0.6
 # #ai port ai lookahead to 3D
 # #ai obstacle avoidance

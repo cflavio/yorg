@@ -47,7 +47,7 @@ class _Fsm(Fsm):
         self.mdt.audio.menu_music.stop()
 
     def enterRace(self, track_path='', car_path='', player_cars=[],
-                  drivers=''):
+                  drivers='', skills=''):
         eng.log_mgr.log('entering Race state')
         keys = self.mdt.options['settings']['keys']
         joystick = self.mdt.options['settings']['joystick']
@@ -68,6 +68,11 @@ class _Fsm(Fsm):
                            ['EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
                             'EmptyWheel.003']]
             tuning = self.mdt.logic.season.logic.tuning.logic.tuning
+            def get_driver(car):
+                for driver in drivers:
+                    if driver[2] == car:
+                        return driver
+            driver_engine, driver_tires, driver_suspensions = skills[get_driver(car_path)[0] - 1]
             self.race = RaceSinglePlayer(
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
                 'assets/fonts/Hanken-Book.ttf', 'capsule', 'Capsule',
@@ -76,7 +81,9 @@ class _Fsm(Fsm):
                 'Road', 'assets/models/cars', 'car',
                 ['cardamage1', 'cardamage2'],
                 ['wheelfront', 'wheelrear', 'wheel'],
-                'assets/particles/sparks.ptf')  # use global template args
+                'assets/particles/sparks.ptf', driver_engine, driver_tires,
+                driver_suspensions)
+            # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
         self.race.fsm.demand('Loading', track_path, car_path, player_cars,

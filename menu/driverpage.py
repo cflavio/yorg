@@ -2,7 +2,8 @@ from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.gui.imgbtn import ImageButton
 from direct.gui.OnscreenImage import OnscreenImage
-from panda3d.core import TextureStage, Shader, Texture, PNMImage, TextNode
+from panda3d.core import TextureStage, Shader, Texture, PNMImage, TextNode,\
+    TextPropertiesManager, TextProperties
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectEntry import DirectEntry
 from random import shuffle
@@ -68,6 +69,8 @@ class DriverPageGui(PageGui):
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
         self.widgets += [name, self.ent]
         self.drivers = []
+        self.skills = [(4, -2, -2), (-2, 4, -2), (0, 4, -4), (4, -4, 0),
+                  (-2, -2, 4), (-4, 0, 4), (4, 0, -4), (-4, 4, 0)]
         for row in range(2):
             for col in range(4):
                 idx = (col + 1) + row * 4
@@ -83,7 +86,44 @@ class DriverPageGui(PageGui):
                 name = OnscreenText(
                     names[idx - 1], pos=(-.75 + col * .5, .04 - row * .5),
                     scale=.045, **t_a)
-                self.widgets += [img, thanks, name]
+                tp_mgr = TextPropertiesManager.getGlobalPtr()
+                tp_red = TextProperties()
+                tp_red.setTextColor(.75, .25, .25, 1)
+                tp_green = TextProperties()
+                tp_green.setTextColor(.25, .75, .25, 1)
+                tp_mgr.setProperties('red', tp_red)
+                tp_mgr.setProperties('green', tp_green)
+                sign = lambda x: '\1green\1+\2' if x > 0 else ''
+                psign = lambda x: '+' if x == 0 else sign(x)
+                ppcol = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
+                pcol = lambda x: x if x == 0 else ppcol(x)
+                fric_lab = OnscreenText(
+                    _('adherence') + ':',
+                    pos=(-.95 + col * .5, .4 - row * .5), scale=.046, align=TextNode.A_left,
+                    **t_a)
+                speed_lab = OnscreenText(
+                    _('speed') + ':',
+                    pos=(-.95 + col * .5, .3 - row * .5), scale=.046, align=TextNode.A_left,
+                    **t_a)
+                roll_lab = OnscreenText(
+                    _('stability') + ':',
+                    pos=(-.95 + col * .5, .2 - row * .5), scale=.046, align=TextNode.A_left,
+                    **t_a)
+                fric_txt = OnscreenText(
+                    '%s%s%%' % (psign(self.skills[idx - 1][1]), pcol(self.skills[idx - 1][1])),
+                    pos=(-.55 + col * .5, .4 - row * .5), scale=.052, align=TextNode.A_right,
+                    **t_a)
+                speed_txt = OnscreenText(
+                    '%s%s%%' % (psign(self.skills[idx - 1][0]), pcol(self.skills[idx - 1][0])),
+                    pos=(-.55 + col * .5, .3 - row * .5), scale=.052, align=TextNode.A_right,
+                    **t_a)
+                roll_txt = OnscreenText(
+                    '%s%s%%' % (psign(self.skills[idx - 1][2]), pcol(self.skills[idx - 1][2])),
+                    pos=(-.55 + col * .5, .2 - row * .5), scale=.052, align=TextNode.A_right,
+                    **t_a)
+                self.widgets += [
+                    img, thanks, name, speed_lab, fric_lab, roll_lab,
+                    speed_txt, fric_txt, roll_txt]
                 self.drivers += [img]
         self.img = OnscreenImage(
             'assets/images/cars/%s_sel.png' % self.mdt.car,
@@ -146,7 +186,7 @@ class DriverPageGui(PageGui):
         game.options['settings']['player_name'] = self.ent.get()
         game.options.store()
         game.logic.season.logic.drivers = drivers
-        args = ('Race', self.mdt.track, self.mdt.car, [], drivers)
+        args = ('Race', self.mdt.track, self.mdt.car, [], drivers, self.skills)
         taskMgr.doMethodLater(2.0, lambda tsk: game.fsm.demand(*args), 'start')
 
     def destroy(self):

@@ -65,12 +65,12 @@ class CarPageGui(PageGui):
             psign = lambda x: '+' if x == 0 else sign(x)
             col = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
             pcol = lambda x: x if x == 0 else col(x)
-            speed_txt = OnscreenText(
-                '%s: %s%s%%' % (_('speed'), psign(speed), pcol(speed)),
-                pos=(-.87 + i * .8, .28), scale=.052, align=TextNode.A_right,
-                **t_a)
             fric_txt = OnscreenText(
                 '%s: %s%s%%' % (_('adherence'), psign(fric), pcol(fric)),
+                pos=(-.87 + i * .8, .28), scale=.052, align=TextNode.A_right,
+                **t_a)
+            speed_txt = OnscreenText(
+                '%s: %s%s%%' % (_('speed'), psign(speed), pcol(speed)),
                 pos=(-.87 + i * .8, .18), scale=.052, align=TextNode.A_right,
                 **t_a)
             roll_txt = OnscreenText(
