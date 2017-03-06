@@ -4,8 +4,6 @@
 # TODO LIST =====
 
 # 0.5
-# add inertia to camera's target point (high speed crash)
-# change car's physics properties, report these into the gui
 # modify physics properties depending of driver's selection
 
 # 0.6

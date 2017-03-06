@@ -1,3 +1,4 @@
+from yaml import load
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.engine.gui.page import Page, PageGui
@@ -7,6 +8,7 @@ from .netmsgs import NetMsgs
 from .driverpage import DriverPage
 from direct.gui.OnscreenText import OnscreenText
 from random import shuffle
+from panda3d.core import TextNode, TextPropertiesManager, TextProperties
 
 
 class CarPageGui(PageGui):
@@ -43,7 +45,40 @@ class CarPageGui(PageGui):
                                   scale=.052, **t_a)
             name = OnscreenText(names[i], pos=(-1.2 + i * .8, -.24),
                                 scale=.072, **t_a)
-            self.widgets += [img, txt, name, thanks]
+            ppath = 'assets/models/cars/%s/phys.yml' % menu_data[i]
+            with open(ppath) as phys_file:
+                cfg = load(phys_file)
+            speed = cfg['max_speed'] / 140.0
+            fric = cfg['friction_slip'] / 3.0
+            roll = cfg['roll_influence'] /.2
+            speed = int(round((speed - 1) * 100))
+            fric = int(round((fric - 1) * 100))
+            roll = -int(round((roll - 1) * 100))
+            tp_mgr = TextPropertiesManager.getGlobalPtr()
+            tp_red = TextProperties()
+            tp_red.setTextColor(.75, .25, .25, 1)
+            tp_green = TextProperties()
+            tp_green.setTextColor(.25, .75, .25, 1)
+            tp_mgr.setProperties('red', tp_red)
+            tp_mgr.setProperties('green', tp_green)
+            sign = lambda x: '\1green\1+\2' if x > 0 else ''
+            psign = lambda x: '+' if x == 0 else sign(x)
+            col = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
+            pcol = lambda x: x if x == 0 else col(x)
+            speed_txt = OnscreenText(
+                '%s: %s%s%%' % (_('speed'), psign(speed), pcol(speed)),
+                pos=(-.87 + i * .8, .28), scale=.052, align=TextNode.A_right,
+                **t_a)
+            fric_txt = OnscreenText(
+                '%s: %s%s%%' % (_('adherence'), psign(fric), pcol(fric)),
+                pos=(-.87 + i * .8, .18), scale=.052, align=TextNode.A_right,
+                **t_a)
+            roll_txt = OnscreenText(
+                '%s: %s%s%%' % (_('stability'), psign(roll), pcol(roll)),
+                pos=(-.87 + i * .8, .08), scale=.052, align=TextNode.A_right,
+                **t_a)
+            self.widgets += [img, txt, name, thanks, speed_txt, fric_txt,
+                             roll_txt]
         self.current_cars = {}
         PageGui.build_page(self)
 
