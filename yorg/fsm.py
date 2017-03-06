@@ -62,7 +62,9 @@ class _Fsm(Fsm):
         elif eng.client.is_active:
             self.race = RaceClient(keys, joystick, sounds)
         else:
-            self.race = RaceSinglePlayer(keys, joystick, sounds)
+            self.race = RaceSinglePlayer(
+                keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
+                'assets/fonts/Hanken-Book.ttf')  # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
         self.race.fsm.demand('Loading', track_path, car_path, player_cars,
