@@ -81,21 +81,13 @@ pdf_conf = {
     'yorg': [
         ('python', '.', '*.py SConstruct *.md *.txt', ['./yyagl/*', './menu/*', './yorg/*', './licenses/*', './assets/*'])],
     'racing': [
-        ('python', './yyagl/racing', '*.py', ['./yyagl/racing/game/*', './yyagl/racing/car/*', './yyagl/racing/race/*', './yyagl/racing/ranking/*', './yyagl/racing/season/*', './yyagl/racing/track/*', './yyagl/racing/tuning/*', './yyagl/racing/weapon/*'])],
+        ('python', './yyagl/racing', '*.py', ['./yyagl/racing/game/*', './yyagl/racing/car/*', './yyagl/racing/race/*', './yyagl/racing/track/*'])],
     'racing_car': [
         ('python', './yyagl/racing/car', '*.py', [])],
     'racing_race': [
         ('python', './yyagl/racing/race', '*.py', [])],
-    'racing_ranking': [
-        ('python', './yyagl/racing/ranking', '*.py', [])],
-    'racing_season': [
-        ('python', './yyagl/racing/season', '*.py', [])],
     'racing_track': [
         ('python', './yyagl/racing/track', '*.py', [])],
-    'racing_tuning': [
-        ('python', './yyagl/racing/tuning', '*.py', [])],
-    'racing_weapon': [
-        ('python', './yyagl/racing/weapon', '*.py', [])],
     'yyagl': [
         ('python', './yyagl', '*.py *.pdef', filt_game + ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),
         ('c', './yyagl', '*.vert *.frag', filt_game + ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),

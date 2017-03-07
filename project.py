@@ -31,6 +31,7 @@
 # 1.0 (refinements)
 # preload assets (cars on application's start, track on menu selection)
 # there is a loud sound before the race
+# give loading feedback for physics parts
 
 
 # WAITING =====

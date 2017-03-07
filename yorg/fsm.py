@@ -1,4 +1,6 @@
+from yaml import load
 from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
+from yyagl.racing.driver.driver import Driver
 from yyagl.gameobject import Fsm
 from menu.menu import YorgMenu
 from menu.exitmenu.menu import ExitMenu
@@ -73,6 +75,28 @@ class _Fsm(Fsm):
                     if driver[2] == car:
                         return driver
             driver_engine, driver_tires, driver_suspensions = skills[get_driver(car_path)[0] - 1]
+            drivers_dct = {}
+            for driver in drivers:
+                d_s = skills[get_driver(driver[2])[0] - 1]
+                drv = Driver(str(driver[0]), d_s[0], d_s[1], d_s[2])
+                drivers_dct[driver[2]] = drv
+            with open('assets/models/%s/track.yml' % track_path) as track_file:
+                track_conf = load(track_file)
+                music_name = track_conf['music']
+            music_path = 'assets/music/%s.ogg' % music_name
+            corner_names = ['topleft', 'topright', 'bottomright', 'bottomleft']
+            corner_names = ['Minimap' + crn for crn in corner_names]
+            thanks = open('assets/thanks.txt').readlines()
+            col_dct = {
+                'kronos': (0, 0, 1, 1),
+                'themis': (1, 0, 0, 1),
+                'diones': (1, 1, 1, 1),
+                'iapeto': (1, 1, 0, 1)}
+            with open('assets/models/%s/track.yml' % track_path) as track_file:
+                track_cfg = load(track_file)
+                camera_vec = track_cfg['camera_vector']
+                shadow_src = track_cfg['shadow_source']
+                laps = track_cfg['laps']
             self.race = RaceSinglePlayer(
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
                 'assets/fonts/Hanken-Book.ttf', 'capsule', 'Capsule',
@@ -81,8 +105,17 @@ class _Fsm(Fsm):
                 'Road', 'assets/models/cars', 'car',
                 ['cardamage1', 'cardamage2'],
                 ['wheelfront', 'wheelrear', 'wheel'],
-                'assets/particles/sparks.ptf', driver_engine, driver_tires,
-                driver_suspensions)
+                'assets/particles/sparks.ptf', drivers_dct,
+                game.options['development']['shaders'], music_path,
+                'assets/models/%s/collision' % track_path, ['Road', 'Offroad'],
+                ['Wall'], ['Goal', 'Slow', 'Respawn', 'PitStop'],
+                corner_names, ['Waypoints', 'Waypoint', 'prev'],
+                game.options['development']['show_waypoints'],
+                game.options['development']['weapons'],
+                ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path[7:],
+                 track_path, 'track', 'Empty', 'Anim', 'omni',
+                 thanks, 'EmptyNameBillboard4Anim', 'assets/images/minimaps',
+                 'car_handle.png', col_dct, camera_vec, shadow_src, laps)
             # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
