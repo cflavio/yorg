@@ -9,6 +9,7 @@ from .driverpage import DriverPage
 from direct.gui.OnscreenText import OnscreenText
 from random import shuffle
 from panda3d.core import TextNode, TextPropertiesManager, TextProperties
+from yyagl.racing.season.season import Season, SingleRaceSeason
 
 
 class CarPageGui(PageGui):
@@ -88,6 +89,33 @@ class CarPageGui(PageGui):
         return [btn for btn in buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
+        game.logic.season = SingleRaceSeason(
+            ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.skills,
+            'assets/images/gui/menu_background.jpg',
+            'assets/images/tuning/engine.png',
+            'assets/images/tuning/tires.png',
+            'assets/images/tuning/suspensions.png',
+            ['prototype', 'desert'],
+            'assets/fonts/Hanken-Book.ttf')
+        game.logic.season.logic.attach(game.event.on_season_end)
+        game.logic.season.logic.attach(game.event.on_season_cont)
+        self.menu.logic.push_page(DriverPage(self.menu, self.track_path, car))
+
+
+class CarPageGuiSeason(CarPageGui):
+
+    def on_car(self, car):
+        game.logic.season = Season(
+            ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.skills,
+            'assets/images/gui/menu_background.jpg',
+            'assets/images/tuning/engine.png',
+            'assets/images/tuning/tires.png',
+            'assets/images/tuning/suspensions.png',
+            ['prototype', 'desert'],
+            'assets/fonts/Hanken-Book.ttf')
+        game.logic.season.logic.attach(game.event.on_season_end)
+        game.logic.season.logic.attach(game.event.on_season_cont)
+        game.logic.season.logic.start()
         self.menu.logic.push_page(DriverPage(self.menu, self.track_path, car))
 
 
@@ -198,6 +226,10 @@ class CarPageGuiClient(CarPageGui):
 
 class CarPage(Page):
     gui_cls = CarPageGui
+
+
+class CarPageSeason(CarPage):
+    gui_cls = CarPageGuiSeason
 
 
 class CarPageServer(Page):

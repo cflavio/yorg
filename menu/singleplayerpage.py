@@ -1,7 +1,7 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED
 from yyagl.engine.gui.page import Page, PageGui
-from .carpage import CarPage
+from .carpage import CarPage, CarPageSeason
 from .trackpage import TrackPage
 from yyagl.racing.season.season import Season, SingleRaceSeason
 
@@ -36,21 +36,28 @@ class SingleplayerPageGui(PageGui):
         PageGui.build_page(self)
 
     def on_single_race(self):
-        game.logic.season = SingleRaceSeason()
         self.menu.logic.push_page(TrackPage(self.menu))
 
     def on_start(self):
-        game.logic.season = Season()
-        game.logic.season.logic.start()
         self.menu.track = 'prototype'
-        self.menu.logic.push_page(CarPage(self.menu))
+        self.menu.logic.push_page(CarPageSeason(self.menu))
 
     def on_continue(self):
-        game.logic.season = Season()
-        game.logic.season.logic.load()
+        game.logic.season = Season(
+            ['kronos', 'themis', 'diones', 'iapeto'],
+            game.options['save']['car'], game.logic.skills,
+            'assets/images/gui/menu_background.jpg',
+            'assets/images/tuning/engine.png',
+            'assets/images/tuning/tires.png',
+            'assets/images/tuning/suspensions.png',
+            ['prototype', 'desert'])
+        game.logic.season.logic.load(game.options['save']['ranking'],
+                                     game.options['save']['tuning'],
+                                     game.options['save']['drivers'])
         track_path = 'tracks/' + game.options['save']['track']
         car_path = game.options['save']['car']
-        game.fsm.demand('Race', track_path, car_path)
+        drivers = game.options['save']['drivers']
+        game.fsm.demand('Race', track_path, car_path, car_path, drivers, game.logic.skills)
 
 
 class SingleplayerPage(Page):

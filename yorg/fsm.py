@@ -42,6 +42,9 @@ class _Fsm(Fsm):
                 if curr_version != file_version:
                     eng.log_mgr.log('removing ' + file_)
                     os.remove(file_)
+        if game.logic.season:
+            game.logic.season.logic.detach(game.event.on_season_end)
+            game.logic.season.logic.detach(game.event.on_season_cont)
 
     def exitMenu(self):
         eng.log_mgr.log('exiting Menu state')
@@ -69,7 +72,7 @@ class _Fsm(Fsm):
                             'EmptyWheelRear', 'EmptyWheelRear.001'],
                            ['EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
                             'EmptyWheel.003']]
-            tuning = self.mdt.logic.season.logic.tuning.logic.tuning
+            tuning = self.mdt.logic.season.logic.tuning.logic.tunings[car_path]
             def get_driver(car):
                 for driver in drivers:
                     if driver[2] == car:
@@ -101,7 +104,7 @@ class _Fsm(Fsm):
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
                 'assets/fonts/Hanken-Book.ttf', 'capsule', 'Capsule',
                 'assets/models/cars', 'phys.yml', wheel_names,
-                tuning['engine'], tuning['tires'], tuning['suspensions'],
+                tuning.engine, tuning.tires, tuning.suspensions,
                 'Road', 'assets/models/cars', 'car',
                 ['cardamage1', 'cardamage2'],
                 ['wheelfront', 'wheelrear', 'wheel'],
@@ -115,7 +118,9 @@ class _Fsm(Fsm):
                 ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path[7:],
                  track_path, 'track', 'Empty', 'Anim', 'omni',
                  thanks, 'EmptyNameBillboard4Anim', 'assets/images/minimaps',
-                 'car_handle.png', col_dct, camera_vec, shadow_src, laps)
+                 'car_handle.png', col_dct, camera_vec, shadow_src, laps,
+                 'assets/models/weapons/rocket/rocket',
+                 'assets/models/weapons/bonus/WeaponboxAnim', 'Anim')
             # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
@@ -128,6 +133,8 @@ class _Fsm(Fsm):
 
     def enterRanking(self):
         game.logic.season.logic.ranking.gui.show()
+        to_tun = lambda task: game.fsm.demand('Tuning')
+        taskMgr.doMethodLater(10, to_tun, 'tuning')
 
     def exitRanking(self):
         game.logic.season.logic.ranking.gui.hide()

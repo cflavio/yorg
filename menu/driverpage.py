@@ -46,6 +46,7 @@ class DriverPageGui(PageGui):
         PageGui.__init__(self, mdt, menu)
 
     def build_page(self):
+        self.skills = game.logic.skills
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
 
@@ -69,8 +70,6 @@ class DriverPageGui(PageGui):
         self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
         self.widgets += [name, self.ent]
         self.drivers = []
-        self.skills = [(4, -2, -2), (-2, 4, -2), (0, 4, -4), (4, -4, 0),
-                  (-2, -2, 4), (-4, 0, 4), (4, 0, -4), (-4, 4, 0)]
         for row in range(2):
             for col in range(4):
                 idx = (col + 1) + row * 4
