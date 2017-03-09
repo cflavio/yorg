@@ -50,7 +50,7 @@ class SingleplayerPageGui(PageGui):
             'assets/images/tuning/engine.png',
             'assets/images/tuning/tires.png',
             'assets/images/tuning/suspensions.png',
-            ['prototype', 'desert'])
+            ['prototype', 'desert'], 'assets/fonts/Hanken-Book.ttf')
         game.logic.season.logic.load(game.options['save']['ranking'],
                                      game.options['save']['tuning'],
                                      game.options['save']['drivers'])

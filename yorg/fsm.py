@@ -1,9 +1,11 @@
 from yaml import load
 from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
+from yyagl.racing.race.raceprops import RaceProps
 from yyagl.racing.driver.driver import Driver
 from yyagl.gameobject import Fsm
 from menu.menu import YorgMenu
 from menu.exitmenu.menu import ExitMenu
+from menu.ingamemenu.menu import InGameMenu
 import sys
 import os
 
@@ -54,6 +56,7 @@ class _Fsm(Fsm):
     def enterRace(self, track_path='', car_path='', player_cars=[],
                   drivers='', skills=''):
         eng.log_mgr.log('entering Race state')
+        base.ignore('escape-up')
         keys = self.mdt.options['settings']['keys']
         joystick = self.mdt.options['settings']['joystick']
         sounds = {
@@ -100,7 +103,7 @@ class _Fsm(Fsm):
                 camera_vec = track_cfg['camera_vector']
                 shadow_src = track_cfg['shadow_source']
                 laps = track_cfg['laps']
-            self.race = RaceSinglePlayer(
+            race_props = RaceProps(
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
                 'assets/fonts/Hanken-Book.ttf', 'capsule', 'Capsule',
                 'assets/models/cars', 'phys.yml', wheel_names,
@@ -120,7 +123,10 @@ class _Fsm(Fsm):
                  thanks, 'EmptyNameBillboard4Anim', 'assets/images/minimaps',
                  'car_handle.png', col_dct, camera_vec, shadow_src, laps,
                  'assets/models/weapons/rocket/rocket',
-                 'assets/models/weapons/bonus/WeaponboxAnim', 'Anim')
+                 'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
+                 ['kronos', 'themis', 'diones', 'iapeto'],
+                 game.options['development']['ai'], InGameMenu)
+            self.race = RaceSinglePlayer(race_props)
             # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
@@ -130,6 +136,7 @@ class _Fsm(Fsm):
     def exitRace(self):
         eng.log_mgr.log('exiting Race state')
         self.race.destroy()
+        base.accept('escape-up', self.demand, ['Exit'])
 
     def enterRanking(self):
         game.logic.season.logic.ranking.gui.show()

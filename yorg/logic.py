@@ -27,6 +27,8 @@ class YorgLogic(GameLogic):
                 'assets/images/tuning/suspensions.png',
                 ['prototype', 'desert'],
                 'assets/fonts/Hanken-Book.ttf')
+            game.logic.season.logic.attach(game.event.on_season_end)
+            game.logic.season.logic.attach(game.event.on_season_cont)
             skills = [(4, -2, -2), (-2, 4, -2), (0, 4, -4), (4, -4, 0),
                   (-2, -2, 4), (-4, 0, 4), (4, 0, -4), (-4, 4, 0)]
             self.mdt.fsm.demand(
