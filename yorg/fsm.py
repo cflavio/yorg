@@ -1,8 +1,11 @@
+from random import randint
 from yaml import load
 from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
 from yyagl.racing.race.raceprops import RaceProps
 from yyagl.racing.driver.driver import Driver
 from yyagl.gameobject import Fsm
+from yyagl.racing.season.season import SingleRaceSeason
+from yyagl.engine.gui.menu import MenuArgs
 from menu.menu import YorgMenu
 from menu.exitmenu.menu import ExitMenu
 from menu.ingamemenu.menu import InGameMenu
@@ -53,12 +56,22 @@ class _Fsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterRace(self, track_path='', car_path='', player_cars=[],
-                  drivers='', skills=''):
+    def enterRace(self, track_path='', car_path='', drivers='', skills=''):
         eng.log_mgr.log('entering Race state')
         base.ignore('escape-up')
+        if 'save' not in game.options.dct:
+            game.options['save'] = {}
+        game.options['save']['track'] = track_path[7:]
+        game.options['save']['car'] = car_path
+        game.options['save']['drivers'] = drivers
+        game.options.store()
         keys = self.mdt.options['settings']['keys']
         joystick = self.mdt.options['settings']['joystick']
+        menu_args = MenuArgs(
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
+            (.75, .75, .75, 1), .1, (-4.6, 4.6, -.32, .88), (0, 0, 0, .2),
+            'assets/images/loading/%s%s.jpg' % (track_path[7:], randint(1, 4)),
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg', '')
         sounds = {
             'engine': 'assets/sfx/engine.ogg',
             'brake': 'assets/sfx/brake.ogg',
@@ -120,18 +133,60 @@ class _Fsm(Fsm):
                 game.options['development']['weapons'],
                 ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path[7:],
                  track_path, 'track', 'Empty', 'Anim', 'omni',
-                 thanks, 'EmptyNameBillboard4Anim', 'assets/images/minimaps',
-                 'car_handle.png', col_dct, camera_vec, shadow_src, laps,
-                 'assets/models/weapons/rocket/rocket',
+                 thanks, 'EmptyNameBillboard4Anim',
+                 'assets/images/minimaps/%s.png' % track_path[7:],
+                 'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
+                 shadow_src, laps, 'assets/models/weapons/rocket/rocket',
                  'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
                  ['kronos', 'themis', 'diones', 'iapeto'],
-                 game.options['development']['ai'], InGameMenu)
+                 game.options['development']['ai'], InGameMenu,
+                 menu_args, 'assets/images/drivers/driver%s_sel.png',
+                 'assets/images/cars/%s_sel.png',
+                 ['https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg',
+                  'https://twitter.com/share?text=I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech%21&hashtags=yorg',
+                  'https://plus.google.com/share?url=ya2.it/yorg',
+                  'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
+                 'assets/images/icons/%s_png.png')
             self.race = RaceSinglePlayer(race_props)
             # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
-        self.race.fsm.demand('Loading', track_path, car_path, player_cars,
-                             drivers)
+        track_name_transl = track_path[7:]
+        track_dct = {
+            'desert': _('desert'),
+            'mountain': _('mountain')}
+        if track_path[7:] in track_dct:
+            track_name_transl = track_dct[track_path[7:]]
+        singlerace = game.logic.season.__class__ == SingleRaceSeason
+        self.race.fsm.demand(
+            'Loading', track_path, car_path, [], drivers,
+            ['prototype', 'desert'], track_name_transl, singlerace,
+            ['kronos', 'themis', 'diones', 'iapeto'],
+            'assets/images/cars/%s_sel.png',
+            'assets/images/drivers/driver%s_sel.png',
+            game.options['settings']['joystick'],
+            game.options['settings']['keys'], menu_args,
+            'assets/sfx/countdown.ogg')
+        self.race.event.attach(self.on_race_loaded)
+
+    def on_race_loaded(self):
+        self.race.event.detach(self.on_race_loaded)
+        self.race.gui.results.attach(self.on_race_step)
+
+    def on_race_step(self, race_ranking):
+        self.race.gui.results.detach(self.on_race_step)
+        ranking = game.logic.season.logic.ranking
+        tuning = game.logic.season.logic.tuning
+        from yyagl.racing.season.season import SingleRaceSeason
+        if game.logic.season.__class__ != SingleRaceSeason:
+            for car in ranking.logic.ranking:
+                ranking.logic.ranking[car] += race_ranking[car]
+            game.options['save']['ranking'] = ranking.logic.ranking
+            game.options['save']['tuning'] = tuning.logic.tunings
+            game.options.store()
+            game.fsm.demand('Ranking')
+        else:
+            game.fsm.demand('Menu')
 
     def exitRace(self):
         eng.log_mgr.log('exiting Race state')

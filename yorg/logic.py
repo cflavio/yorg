@@ -32,6 +32,6 @@ class YorgLogic(GameLogic):
             skills = [(4, -2, -2), (-2, 4, -2), (0, 4, -4), (4, -4, 0),
                   (-2, -2, 4), (-4, 0, 4), (4, 0, -4), (-4, 4, 0)]
             self.mdt.fsm.demand(
-                'Race', 'tracks/' + track, car, [], drivers, self.skills)
+                'Race', 'tracks/' + track, car, drivers, self.skills)
         else:
             self.mdt.fsm.demand('Menu')

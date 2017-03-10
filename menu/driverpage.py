@@ -185,7 +185,7 @@ class DriverPageGui(PageGui):
         game.options['settings']['player_name'] = self.ent.get()
         game.options.store()
         game.logic.season.logic.drivers = drivers
-        args = ('Race', self.mdt.track, self.mdt.car, [], drivers, self.skills)
+        args = ('Race', self.mdt.track, self.mdt.car, drivers, self.skills)
         taskMgr.doMethodLater(2.0, lambda tsk: game.fsm.demand(*args), 'start')
 
     def destroy(self):
