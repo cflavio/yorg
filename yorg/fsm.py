@@ -88,6 +88,9 @@ class _Fsm(Fsm):
                             'EmptyWheelRear', 'EmptyWheelRear.001'],
                            ['EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
                             'EmptyWheel.003']]
+            wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
+            wheel_gfx_names = ['assets/models/cars/%s/' + elm
+                               for elm in wheel_gfx_names]
             tuning = self.mdt.logic.season.logic.tuning.logic.tunings[car_path]
             def get_driver(car):
                 for driver in drivers:
@@ -118,12 +121,13 @@ class _Fsm(Fsm):
                 laps = track_cfg['laps']
             race_props = RaceProps(
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
-                'assets/fonts/Hanken-Book.ttf', 'capsule', 'Capsule',
-                'assets/models/cars', 'phys.yml', wheel_names,
-                tuning.engine, tuning.tires, tuning.suspensions,
-                'Road', 'assets/models/cars', 'car',
-                ['cardamage1', 'cardamage2'],
-                ['wheelfront', 'wheelrear', 'wheel'],
+                'assets/fonts/Hanken-Book.ttf',
+                'assets/models/cars/%s/capsule', 'Capsule',
+                'assets/models/cars', 'assets/models/cars/%s/phys.yml',
+                wheel_names, tuning.engine, tuning.tires, tuning.suspensions,
+                'Road', 'assets/models/cars/%s/car',
+                ['assets/models/cars/%s/cardamage1',
+                 'assets/models/cars/%s/cardamage2'], wheel_gfx_names,
                 'assets/particles/sparks.ptf', drivers_dct,
                 game.options['development']['shaders'], music_path,
                 'assets/models/%s/collision' % track_path, ['Road', 'Offroad'],
