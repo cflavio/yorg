@@ -1,4 +1,5 @@
-from random import randint
+from random import shuffle, randint
+from direct.gui.OnscreenText import OnscreenText
 from yaml import load
 from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
 from yyagl.racing.race.raceprops import RaceProps
@@ -108,7 +109,6 @@ class _Fsm(Fsm):
             music_path = 'assets/music/%s.ogg' % music_name
             corner_names = ['topleft', 'topright', 'bottomright', 'bottomleft']
             corner_names = ['Minimap' + crn for crn in corner_names]
-            thanks = open('assets/thanks.txt').readlines()
             col_dct = {
                 'kronos': (0, 0, 1, 1),
                 'themis': (1, 0, 0, 1),
@@ -119,6 +119,17 @@ class _Fsm(Fsm):
                 camera_vec = track_cfg['camera_vector']
                 shadow_src = track_cfg['shadow_source']
                 laps = track_cfg['laps']
+            def sign_cb(parent):
+                thanks = open('assets/thanks.txt').readlines()
+                shuffle(thanks)
+                text = '\n\n'.join(thanks[:3])
+                txt = OnscreenText(text, parent=parent, scale=.2,
+                                   fg=(0, 0, 0, 1), pos=(.245, 0))
+                bounds = lambda: txt.getTightBounds()
+                while bounds()[1][0] - bounds()[0][0] > .48:
+                    txt.setScale(txt.getScale()[0] - .01, txt.getScale()[0] - .01)
+                height = txt.getTightBounds()[1][2] - txt.getTightBounds()[0][2]
+                txt.setZ(.06 + height / 2)
             race_props = RaceProps(
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
                 'assets/fonts/Hanken-Book.ttf',
@@ -137,7 +148,7 @@ class _Fsm(Fsm):
                 game.options['development']['weapons'],
                 ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path[7:],
                  track_path, 'track', 'Empty', 'Anim', 'omni',
-                 thanks, 'EmptyNameBillboard4Anim',
+                 sign_cb, 'EmptyNameBillboard4Anim',
                  'assets/images/minimaps/%s.png' % track_path[7:],
                  'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
                  shadow_src, laps, 'assets/models/weapons/rocket/rocket',
@@ -150,7 +161,8 @@ class _Fsm(Fsm):
                   'https://twitter.com/share?text=I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech%21&hashtags=yorg',
                   'https://plus.google.com/share?url=ya2.it/yorg',
                   'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
-                 'assets/images/icons/%s_png.png')
+                 'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
+                 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'])
             self.race = RaceSinglePlayer(race_props)
             # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
