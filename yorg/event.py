@@ -19,6 +19,7 @@ class _Event(Event):
 
     def on_season_cont(self, next_track, curr_car, drivers, skills):
         game.fsm.race.destroy()
-        game.options['save']['tuning'] = game.logic.season.logic.tuning.logic.to_dct()
+        tuning = game.logic.season.logic.tuning
+        game.options['save']['tuning'] = tuning.logic.to_dct()
         game.options.store()
-        game.fsm.demand('Race', next_track, curr_car, [], drivers, skills)
+        game.fsm.demand('Race', next_track, curr_car, drivers, skills)

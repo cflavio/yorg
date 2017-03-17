@@ -2,14 +2,13 @@ from yaml import load
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.engine.gui.page import Page, PageGui
-from yyagl.racing.season.season import SingleRaceSeason
+from yyagl.racing.season.season import SeasonProps,  Season, SingleRaceSeason
 from yyagl.engine.gui.imgbtn import ImageButton
 from .netmsgs import NetMsgs
 from .driverpage import DriverPage
 from direct.gui.OnscreenText import OnscreenText
 from random import shuffle
 from panda3d.core import TextNode, TextPropertiesManager, TextProperties
-from yyagl.racing.season.season import Season, SingleRaceSeason
 
 
 class CarPageGui(PageGui):
@@ -51,7 +50,7 @@ class CarPageGui(PageGui):
                 cfg = load(phys_file)
             speed = cfg['max_speed'] / 140.0
             fric = cfg['friction_slip'] / 3.0
-            roll = cfg['roll_influence'] /.2
+            roll = cfg['roll_influence'] / .2
             speed = int(round((speed - 1) * 100))
             fric = int(round((fric - 1) * 100))
             roll = -int(round((roll - 1) * 100))
@@ -89,14 +88,15 @@ class CarPageGui(PageGui):
         return [btn for btn in buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
-        game.logic.season = SingleRaceSeason(
+        season_props = SeasonProps(
             ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.skills,
             'assets/images/gui/menu_background.jpg',
             'assets/images/tuning/engine.png',
             'assets/images/tuning/tires.png',
             'assets/images/tuning/suspensions.png',
             ['prototype', 'desert'],
-            'assets/fonts/Hanken-Book.ttf')
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
+        game.logic.season = SingleRaceSeason(season_props)
         game.logic.season.logic.attach(game.event.on_season_end)
         game.logic.season.logic.attach(game.event.on_season_cont)
         self.menu.logic.push_page(DriverPage(self.menu, self.track_path, car))
@@ -105,14 +105,15 @@ class CarPageGui(PageGui):
 class CarPageGuiSeason(CarPageGui):
 
     def on_car(self, car):
-        game.logic.season = Season(
+        season_props = SeasonProps(
             ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.skills,
             'assets/images/gui/menu_background.jpg',
             'assets/images/tuning/engine.png',
             'assets/images/tuning/tires.png',
             'assets/images/tuning/suspensions.png',
             ['prototype', 'desert'],
-            'assets/fonts/Hanken-Book.ttf')
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
+        game.logic.season = Season(season_props)
         game.logic.season.logic.attach(game.event.on_season_end)
         game.logic.season.logic.attach(game.event.on_season_cont)
         game.logic.season.logic.start()

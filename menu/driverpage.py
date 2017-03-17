@@ -94,32 +94,33 @@ class DriverPageGui(PageGui):
                 tp_mgr.setProperties('green', tp_green)
                 sign = lambda x: '\1green\1+\2' if x > 0 else ''
                 psign = lambda x: '+' if x == 0 else sign(x)
-                ppcol = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
+                def ppcol(x):
+                    return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
                 pcol = lambda x: x if x == 0 else ppcol(x)
                 fric_lab = OnscreenText(
-                    _('adherence') + ':',
-                    pos=(-.95 + col * .5, .4 - row * .5), scale=.046, align=TextNode.A_left,
-                    **t_a)
+                    _('adherence') + ':', pos=(-.95 + col * .5, .4 - row * .5),
+                    scale=.046, align=TextNode.A_left, **t_a)
                 speed_lab = OnscreenText(
-                    _('speed') + ':',
-                    pos=(-.95 + col * .5, .3 - row * .5), scale=.046, align=TextNode.A_left,
-                    **t_a)
+                    _('speed') + ':', pos=(-.95 + col * .5, .3 - row * .5),
+                    scale=.046, align=TextNode.A_left, **t_a)
                 roll_lab = OnscreenText(
-                    _('stability') + ':',
-                    pos=(-.95 + col * .5, .2 - row * .5), scale=.046, align=TextNode.A_left,
-                    **t_a)
+                    _('stability') + ':', pos=(-.95 + col * .5, .2 - row * .5),
+                    scale=.046, align=TextNode.A_left, **t_a)
                 fric_txt = OnscreenText(
-                    '%s%s%%' % (psign(self.skills[idx - 1][1]), pcol(self.skills[idx - 1][1])),
-                    pos=(-.55 + col * .5, .4 - row * .5), scale=.052, align=TextNode.A_right,
-                    **t_a)
+                    '%s%s%%' % (psign(self.skills[idx - 1][1]),
+                                pcol(self.skills[idx - 1][1])),
+                    pos=(-.55 + col * .5, .4 - row * .5), scale=.052,
+                    align=TextNode.A_right, **t_a)
                 speed_txt = OnscreenText(
-                    '%s%s%%' % (psign(self.skills[idx - 1][0]), pcol(self.skills[idx - 1][0])),
-                    pos=(-.55 + col * .5, .3 - row * .5), scale=.052, align=TextNode.A_right,
-                    **t_a)
+                    '%s%s%%' % (psign(self.skills[idx - 1][0]),
+                                pcol(self.skills[idx - 1][0])),
+                    pos=(-.55 + col * .5, .3 - row * .5), scale=.052,
+                    align=TextNode.A_right, **t_a)
                 roll_txt = OnscreenText(
-                    '%s%s%%' % (psign(self.skills[idx - 1][2]), pcol(self.skills[idx - 1][2])),
-                    pos=(-.55 + col * .5, .2 - row * .5), scale=.052, align=TextNode.A_right,
-                    **t_a)
+                    '%s%s%%' % (psign(self.skills[idx - 1][2]),
+                                pcol(self.skills[idx - 1][2])),
+                    pos=(-.55 + col * .5, .2 - row * .5), scale=.052,
+                    align=TextNode.A_right, **t_a)
                 self.widgets += [
                     img, thanks, name, speed_lab, fric_lab, roll_lab,
                     speed_txt, fric_txt, roll_txt]

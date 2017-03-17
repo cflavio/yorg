@@ -3,7 +3,7 @@ from direct.gui.OnscreenText import OnscreenText
 from yaml import load
 from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
 from yyagl.racing.race.raceprops import RaceProps
-from yyagl.racing.driver.driver import Driver
+from yyagl.racing.driver.driver import Driver, DriverProps
 from yyagl.gameobject import Fsm
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.gui.menu import MenuArgs
@@ -93,15 +93,19 @@ class _Fsm(Fsm):
             wheel_gfx_names = ['assets/models/cars/%s/' + elm
                                for elm in wheel_gfx_names]
             tuning = self.mdt.logic.season.logic.tuning.logic.tunings[car_path]
+
             def get_driver(car):
                 for driver in drivers:
                     if driver[2] == car:
                         return driver
-            driver_engine, driver_tires, driver_suspensions = skills[get_driver(car_path)[0] - 1]
+            driver_engine, driver_tires, driver_suspensions = \
+                skills[get_driver(car_path)[0] - 1]
             drivers_dct = {}
             for driver in drivers:
                 d_s = skills[get_driver(driver[2])[0] - 1]
-                drv = Driver(str(driver[0]), d_s[0], d_s[1], d_s[2])
+                driver_props = DriverProps(
+                    str(driver[0]), d_s[0], d_s[1], d_s[2])
+                drv = Driver(driver_props)
                 drivers_dct[driver[2]] = drv
             with open('assets/models/%s/track.yml' % track_path) as track_file:
                 track_conf = load(track_file)
@@ -119,6 +123,7 @@ class _Fsm(Fsm):
                 camera_vec = track_cfg['camera_vector']
                 shadow_src = track_cfg['shadow_source']
                 laps = track_cfg['laps']
+
             def sign_cb(parent):
                 thanks = open('assets/thanks.txt').readlines()
                 shuffle(thanks)
@@ -127,8 +132,10 @@ class _Fsm(Fsm):
                                    fg=(0, 0, 0, 1), pos=(.245, 0))
                 bounds = lambda: txt.getTightBounds()
                 while bounds()[1][0] - bounds()[0][0] > .48:
-                    txt.setScale(txt.getScale()[0] - .01, txt.getScale()[0] - .01)
-                height = txt.getTightBounds()[1][2] - txt.getTightBounds()[0][2]
+                    scale = txt.getScale()[0]
+                    txt.setScale(scale - .01, scale - .01)
+                bounds = txt.getTightBounds()
+                height = bounds[1][2] - bounds[0][2]
                 txt.setZ(.06 + height / 2)
             race_props = RaceProps(
                 keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
@@ -147,22 +154,24 @@ class _Fsm(Fsm):
                 game.options['development']['show_waypoints'],
                 game.options['development']['weapons'],
                 ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path[7:],
-                 track_path, 'track', 'Empty', 'Anim', 'omni',
-                 sign_cb, 'EmptyNameBillboard4Anim',
-                 'assets/images/minimaps/%s.png' % track_path[7:],
-                 'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
-                 shadow_src, laps, 'assets/models/weapons/rocket/rocket',
-                 'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
-                 ['kronos', 'themis', 'diones', 'iapeto'],
-                 game.options['development']['ai'], InGameMenu,
-                 menu_args, 'assets/images/drivers/driver%s_sel.png',
-                 'assets/images/cars/%s_sel.png',
-                 ['https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg',
-                  'https://twitter.com/share?text=I%27ve%20achieved%20{time}%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech%21&hashtags=yorg',
-                  'https://plus.google.com/share?url=ya2.it/yorg',
-                  'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
-                 'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
-                 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'])
+                track_path, 'track', 'Empty', 'Anim', 'omni',
+                sign_cb, 'EmptyNameBillboard4Anim',
+                'assets/images/minimaps/%s.png' % track_path[7:],
+                'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
+                shadow_src, laps, 'assets/models/weapons/rocket/rocket',
+                'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
+                ['kronos', 'themis', 'diones', 'iapeto'],
+                game.options['development']['ai'], InGameMenu,
+                menu_args, 'assets/images/drivers/driver%s_sel.png',
+                'assets/images/cars/%s_sel.png',
+                ['https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg',
+                 'https://twitter.com/share?text=I%27ve%20achieved%20{time}'
+                 '%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech'
+                 '%21&hashtags=yorg',
+                 'https://plus.google.com/share?url=ya2.it/yorg',
+                 'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
+                'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
+                'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'])
             self.race = RaceSinglePlayer(race_props)
             # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
