@@ -72,7 +72,8 @@ class _Fsm(Fsm):
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
             (.75, .75, .75, 1), .1, (-4.6, 4.6, -.32, .88), (0, 0, 0, .2),
             'assets/images/loading/%s%s.jpg' % (track_path[7:], randint(1, 4)),
-            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg', '')
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg', '',
+            (.75, .25, .25, 1))
         sounds = {
             'engine': 'assets/sfx/engine.ogg',
             'brake': 'assets/sfx/brake.ogg',
@@ -171,7 +172,9 @@ class _Fsm(Fsm):
                  'https://plus.google.com/share?url=ya2.it/yorg',
                  'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
                 'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
-                'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'])
+                'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
+                ['kronos', 'themis', 'diones', 'iapeto'], car_path)
+            #todo compute the grid
             self.race = RaceSinglePlayer(race_props)
             # use global template args
         eng.log_mgr.log('selected drivers: ' + str(drivers))
