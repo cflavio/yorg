@@ -45,22 +45,23 @@ class SingleplayerPageGui(PageGui):
     def on_continue(self):
         season_props = SeasonProps(
             ['kronos', 'themis', 'diones', 'iapeto'],
-            game.options['save']['car'], game.logic.skills,
+            game.options['save']['car'], game.logic.drivers,
             'assets/images/gui/menu_background.jpg',
-            'assets/images/tuning/engine.png',
-            'assets/images/tuning/tires.png',
-            'assets/images/tuning/suspensions.png',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
             ['prototype', 'desert'], 'assets/fonts/Hanken-Book.ttf',
             (.75, .75, .75, 1))
         game.logic.season = Season(season_props)
         game.logic.season.logic.load(game.options['save']['ranking'],
                                      game.options['save']['tuning'],
                                      game.options['save']['drivers'])
-        track_path = 'tracks/' + game.options['save']['track']
+        game.logic.season.logic.attach(game.event.on_season_end)
+        game.logic.season.logic.attach(game.event.on_season_cont)
+        track_path = game.options['save']['track']
         car_path = game.options['save']['car']
         drivers = game.options['save']['drivers']
-        skills = game.logic.skills
-        game.fsm.demand('Race', track_path, car_path, drivers, skills)
+        game.fsm.demand('Race', track_path, car_path, drivers)
 
 
 class SingleplayerPage(Page):

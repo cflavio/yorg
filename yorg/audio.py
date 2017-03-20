@@ -1,7 +1,7 @@
 from yyagl.gameobject import Audio
 
 
-class _Audio(Audio):
+class YorgAudio(Audio):
 
     def __init__(self, mdt):
         Audio.__init__(self, mdt)

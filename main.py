@@ -1,8 +1,8 @@
 # log ########################################################################
 from os import path
 from panda3d.core import MultiplexStream, Notify
-import sys
 from yorg.yorg import Yorg
+import sys
 
 
 if sys.platform != 'darwin' and \

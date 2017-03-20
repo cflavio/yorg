@@ -26,7 +26,7 @@ class CarPageGui(PageGui):
                            **menu_gui.text_args)
         self.widgets += [txt]
 
-        self.track_path = 'tracks/' + self.menu.track
+        self.track_path = self.menu.track
         menu_data = ['kronos', 'themis', 'diones', 'iapeto']
         names = open('assets/thanks.txt').readlines()
         shuffle(names)
@@ -89,11 +89,11 @@ class CarPageGui(PageGui):
 
     def on_car(self, car):
         season_props = SeasonProps(
-            ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.skills,
+            ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.drivers,
             'assets/images/gui/menu_background.jpg',
-            'assets/images/tuning/engine.png',
-            'assets/images/tuning/tires.png',
-            'assets/images/tuning/suspensions.png',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
             ['prototype', 'desert'],
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
         game.logic.season = SingleRaceSeason(season_props)
@@ -106,11 +106,11 @@ class CarPageGuiSeason(CarPageGui):
 
     def on_car(self, car):
         season_props = SeasonProps(
-            ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.skills,
+            ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.drivers,
             'assets/images/gui/menu_background.jpg',
-            'assets/images/tuning/engine.png',
-            'assets/images/tuning/tires.png',
-            'assets/images/tuning/suspensions.png',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
             ['prototype', 'desert'],
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
         game.logic.season = Season(season_props)

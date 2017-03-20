@@ -74,23 +74,24 @@ env['LANGUAGES'] = ['it_IT']
 env['SUPERMIRROR'] = ''
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 pdf_conf = {
-    'yorg_menu': [
-        ('python', './menu', '*.py', [])],
-    'yorg_yorg': [
-        ('python', './yorg', '*.py', [])],
+    'yorg_menu': [('python', './menu', '*.py', [])],
+    'yorg_yorg': [('python', './yorg', '*.py', [])],
     'yorg': [
-        ('python', '.', '*.py SConstruct *.md *.txt', ['./yyagl/*', './menu/*', './yorg/*', './licenses/*', './assets/*'])],
+        ('python', '.', '*.py SConstruct *.md *.txt', [
+            './yyagl/*', './menu/*', './yorg/*', './licenses/*',
+            './assets/*'])],
     'racing': [
-        ('python', './yyagl/racing', '*.py', ['./yyagl/racing/game/*', './yyagl/racing/car/*', './yyagl/racing/race/*', './yyagl/racing/track/*'])],
-    'racing_car': [
-        ('python', './yyagl/racing/car', '*.py', [])],
-    'racing_race': [
-        ('python', './yyagl/racing/race', '*.py', [])],
-    'racing_track': [
-        ('python', './yyagl/racing/track', '*.py', [])],
+        ('python', './yyagl/racing', '*.py', [
+            './yyagl/racing/game/*', './yyagl/racing/car/*',
+            './yyagl/racing/race/*', './yyagl/racing/track/*'])],
+    'racing_car': [('python', './yyagl/racing/car', '*.py', [])],
+    'racing_race': [('python', './yyagl/racing/race', '*.py', [])],
+    'racing_track': [('python', './yyagl/racing/track', '*.py', [])],
     'yyagl': [
-        ('python', './yyagl', '*.py *.pdef', filt_game + ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),
-        ('c', './yyagl', '*.vert *.frag', filt_game + ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),
+        ('python', './yyagl', '*.py *.pdef', filt_game + [
+            './yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),
+        ('c', './yyagl', '*.vert *.frag', filt_game + [
+            './yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']),
         ],
     'build': [
         ('python', './yyagl/build', '*.py *.pdef', filt_game),
@@ -105,12 +106,13 @@ pdf_conf = {
 env['PDF_CONF'] = pdf_conf
 
 def cond_racing(s):
-    return not str(s).startswith('yyagl/racing/')# or str(s).startswith('racing/game/')
+    return not str(s).startswith('yyagl/racing/')
 def cond_yyagl(src):
     not_yyagl = not str(src).startswith('yyagl/')
     thirdparty = str(src).startswith('yyagl/thirdparty/')
     racing = str(src).startswith('yyagl/racing/')
-    return not_yyagl or thirdparty or racing or str(src).startswith('yyagl/tests')
+    return not_yyagl or thirdparty or racing or \
+        str(src).startswith('yyagl/tests')
 dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/'),
             'devinfo_racing': cond_racing, 'devinfo_yyagl': cond_yyagl}
 env['DEV_CONF'] = dev_conf
@@ -122,11 +124,11 @@ if arguments['images']:
     env.images(img_files, get_files(['psd']))
 if arguments['p3d']:
     src_p3d = get_files(extensions) + img_files + \
-        [lang_path+'it_IT/LC_MESSAGES/%s.mo' % app_name]
+        [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
     env.p3d([p3d_path], src_p3d)
 if arguments['source']:
     src_src = get_files(extensions) + img_files + \
-        [lang_path+'it_IT/LC_MESSAGES/%s.mo' % app_name]
+        [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
     env.source([src_path], src_src)
 if arguments['devinfo']:
     env.devinfo([devinfo_path], get_files(['py']))
@@ -153,11 +155,11 @@ if arguments['pdf']:
 
 def process_lang(lang_code):
     tmpl = env.str_tmpl(
-        lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name,
+        lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name,
         get_files(['py']))
     env.Precious(tmpl)
-    env.str(lang_path+lang_code+'/LC_MESSAGES/%s.mo' % app_name,
-            lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name)
+    env.str(lang_path + lang_code + '/LC_MESSAGES/%s.mo' % app_name,
+            lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name)
 
 if arguments['lang']:
     for lang_code in ['it_IT']:

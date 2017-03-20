@@ -2,16 +2,12 @@ from yyagl.game import GameWindow
 from yyagl.dictfile import DictFile
 from yyagl.engine.configuration import Configuration
 from .logic import YorgLogic
-from .event import _Event
-from .fsm import _Fsm
-from .audio import _Audio
+from .event import YorgEvent
+from .fsm import YorgFsm
+from .audio import YorgAudio
 
 
 class Yorg(GameWindow):
-    logic_cls = YorgLogic
-    event_cls = _Event
-    fsm_cls = _Fsm
-    audio_cls = _Audio
 
     def __init__(self):
         default_opt = {
@@ -61,8 +57,8 @@ class Yorg(GameWindow):
             cursor_scale=((256/352.0) * .08, 1, .08),
             cursor_hotspot=(.1, .06))
         init_lst = [
-            [('fsm', self.fsm_cls, [self])],
+            [('fsm', YorgFsm, [self])],
             [('logic', YorgLogic, [self])],
-            [('audio', _Audio, [self])],
-            [('event', _Event, [self])]]
+            [('audio', YorgAudio, [self])],
+            [('event', YorgEvent, [self])]]
         GameWindow.__init__(self, init_lst, conf)

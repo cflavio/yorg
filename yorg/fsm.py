@@ -1,6 +1,8 @@
-from random import shuffle, randint
-from direct.gui.OnscreenText import OnscreenText
+from sys import exit
 from yaml import load
+from random import shuffle, randint
+from os import listdir, remove
+from direct.gui.OnscreenText import OnscreenText
 from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
 from yyagl.racing.race.raceprops import RaceProps
 from yyagl.racing.driver.driver import Driver, DriverProps
@@ -10,11 +12,9 @@ from yyagl.engine.gui.menu import MenuArgs
 from menu.menu import YorgMenu
 from menu.exitmenu.menu import ExitMenu
 from menu.ingamemenu.menu import InGameMenu
-import sys
-import os
 
 
-class _Fsm(Fsm):
+class YorgFsm(Fsm):
 
     def __init__(self, mdt):
         Fsm.__init__(self, mdt)
@@ -38,40 +38,39 @@ class _Fsm(Fsm):
         self.__exit_menu = None
 
     def enterMenu(self):
-        eng.log_mgr.log('entering Menu state')
+        eng.log('entering Menu state')
         self.__menu = YorgMenu()
         self.mdt.audio.menu_music.play()
-        for file_ in os.listdir('.'):
-            if file_.endswith('.bam'):
-                curr_version = eng.logic.version
-                file_version = file_[:-4].split('_')[-1]
-                if curr_version != file_version:
-                    eng.log_mgr.log('removing ' + file_)
-                    os.remove(file_)
-        if game.logic.season:
-            game.logic.season.logic.detach(game.event.on_season_end)
-            game.logic.season.logic.detach(game.event.on_season_cont)
+        for file_ in [f_ for f_ in listdir('.') if f_.endswith('.bam')]:
+            curr_version = eng.version
+            file_version = file_[:-4].split('_')[-1]
+            if curr_version != file_version:
+                eng.log('removing ' + file_)
+                remove(file_)
+        if self.mdt.logic.season:
+            self.mdt.logic.season.detach_obs(self.mdt.event.on_season_end)
+            self.mdt.logic.season.detach_obs(self.mdt.event.on_season_cont)
 
     def exitMenu(self):
-        eng.log_mgr.log('exiting Menu state')
+        eng.log('exiting Menu state')
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterRace(self, track_path='', car_path='', drivers='', skills=''):
+    def enterRace(self, track_path='', car_path='', drivers=''):
         eng.log_mgr.log('entering Race state')
         base.ignore('escape-up')
-        if 'save' not in game.options.dct:
-            game.options['save'] = {}
-        game.options['save']['track'] = track_path[7:]
-        game.options['save']['car'] = car_path
-        game.options['save']['drivers'] = drivers
-        game.options.store()
+        if 'save' not in self.mdt.options.dct:
+            self.mdt.options['save'] = {}
+        self.mdt.options['save']['track'] = track_path
+        self.mdt.options['save']['car'] = car_path
+        self.mdt.options['save']['drivers'] = drivers
+        self.mdt.options.store()
         keys = self.mdt.options['settings']['keys']
         joystick = self.mdt.options['settings']['joystick']
         menu_args = MenuArgs(
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
             (.75, .75, .75, 1), .1, (-4.6, 4.6, -.32, .88), (0, 0, 0, .2),
-            'assets/images/loading/%s%s.jpg' % (track_path[7:], randint(1, 4)),
+            'assets/images/loading/%s%s.jpg' % (track_path, randint(1, 4)),
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg', '',
             (.75, .25, .25, 1))
         sounds = {
@@ -81,9 +80,9 @@ class _Fsm(Fsm):
             'crash_hs': 'assets/sfx/crash_high_speed.ogg',
             'lap': 'assets/sfx/lap.ogg',
             'landing': 'assets/sfx/landing.ogg'}
-        if eng.server.is_active:
+        if eng.is_server_active:
             self.race = RaceServer(keys, joystick, sounds)
-        elif eng.client.is_active:
+        elif eng.is_client_active:
             self.race = RaceClient(keys, joystick, sounds)
         else:
             wheel_names = [['EmptyWheelFront', 'EmptyWheelFront.001',
@@ -97,18 +96,18 @@ class _Fsm(Fsm):
 
             def get_driver(car):
                 for driver in drivers:
-                    if driver[2] == car:
+                    if driver[3] == car:
                         return driver
-            driver_engine, driver_tires, driver_suspensions = \
-                skills[get_driver(car_path)[0] - 1]
+            driver = get_driver(car_path)
+            driver_engine, driver_tires, driver_suspensions = driver[2]
             drivers_dct = {}
             for driver in drivers:
-                d_s = skills[get_driver(driver[2])[0] - 1]
+                d_s = driver[2]
                 driver_props = DriverProps(
                     str(driver[0]), d_s[0], d_s[1], d_s[2])
                 drv = Driver(driver_props)
-                drivers_dct[driver[2]] = drv
-            with open('assets/models/%s/track.yml' % track_path) as track_file:
+                drivers_dct[driver[3]] = drv
+            with open('assets/models/tracks/%s/track.yml' % track_path) as track_file:
                 track_conf = load(track_file)
                 music_name = track_conf['music']
             music_path = 'assets/music/%s.ogg' % music_name
@@ -119,7 +118,7 @@ class _Fsm(Fsm):
                 'themis': (1, 0, 0, 1),
                 'diones': (1, 1, 1, 1),
                 'iapeto': (1, 1, 0, 1)}
-            with open('assets/models/%s/track.yml' % track_path) as track_file:
+            with open('assets/models/tracks/%s/track.yml' % track_path) as track_file:
                 track_cfg = load(track_file)
                 camera_vec = track_cfg['camera_vector']
                 shadow_src = track_cfg['shadow_source']
@@ -149,15 +148,15 @@ class _Fsm(Fsm):
                  'assets/models/cars/%s/cardamage2'], wheel_gfx_names,
                 'assets/particles/sparks.ptf', drivers_dct,
                 game.options['development']['shaders'], music_path,
-                'assets/models/%s/collision' % track_path, ['Road', 'Offroad'],
+                'assets/models/tracks/%s/collision' % track_path, ['Road', 'Offroad'],
                 ['Wall'], ['Goal', 'Slow', 'Respawn', 'PitStop'],
                 corner_names, ['Waypoints', 'Waypoint', 'prev'],
                 game.options['development']['show_waypoints'],
                 game.options['development']['weapons'],
-                ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path[7:],
-                track_path, 'track', 'Empty', 'Anim', 'omni',
+                ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path,
+                'tracks/' + track_path, 'track', 'Empty', 'Anim', 'omni',
                 sign_cb, 'EmptyNameBillboard4Anim',
-                'assets/images/minimaps/%s.png' % track_path[7:],
+                'assets/images/minimaps/%s.png' % track_path,
                 'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
                 shadow_src, laps, 'assets/models/weapons/rocket/rocket',
                 'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
@@ -176,15 +175,12 @@ class _Fsm(Fsm):
                 ['kronos', 'themis', 'diones', 'iapeto'], car_path)
             #todo compute the grid
             self.race = RaceSinglePlayer(race_props)
-            # use global template args
-        eng.log_mgr.log('selected drivers: ' + str(drivers))
+        eng.log('selected drivers: ' + str(drivers))
         self.race.logic.drivers = drivers
-        track_name_transl = track_path[7:]
-        track_dct = {
-            'desert': _('desert'),
-            'mountain': _('mountain')}
-        if track_path[7:] in track_dct:
-            track_name_transl = track_dct[track_path[7:]]
+        track_name_transl = track_path
+        track_dct = {'desert': _('desert'), 'mountain': _('mountain')}
+        if track_path in track_dct:
+            track_name_transl = track_dct[track_path]
         singlerace = game.logic.season.__class__ == SingleRaceSeason
         self.race.fsm.demand(
             'Loading', track_path, car_path, [], drivers,
@@ -195,49 +191,48 @@ class _Fsm(Fsm):
             game.options['settings']['joystick'],
             game.options['settings']['keys'], menu_args,
             'assets/sfx/countdown.ogg')
-        self.race.event.attach(self.on_race_loaded)
+        self.race.attach_obs(self.on_race_loaded)
 
     def on_race_loaded(self):
         self.race.event.detach(self.on_race_loaded)
-        self.race.gui.results.attach(self.on_race_step)
+        self.race.results.attach(self.on_race_step)
 
     def on_race_step(self, race_ranking):
-        self.race.gui.results.detach(self.on_race_step)
-        ranking = game.logic.season.logic.ranking
-        tuning = game.logic.season.logic.tuning
+        self.race.results.detach(self.on_race_step)
+        ranking = self.mdt.logic.season.ranking
+        tuning = self.mdt.logic.season.logic.tuning
         from yyagl.racing.season.season import SingleRaceSeason
-        if game.logic.season.__class__ != SingleRaceSeason:
-            for car in ranking.logic.ranking:
-                ranking.logic.ranking[car] += race_ranking[car]
-            game.options['save']['ranking'] = ranking.logic.ranking
-            game.options['save']['tuning'] = tuning.logic.tunings
-            game.options.store()
-            game.fsm.demand('Ranking')
+        if self.mdt.logic.season.__class__ != SingleRaceSeason:
+            for car in ranking.ranking:
+                ranking.ranking[car] += race_ranking[car]
+            self.mdt.options['save']['ranking'] = ranking.ranking
+            self.mdt.options['save']['tuning'] = tuning.logic.tunings
+            self.mdt.options.store()
+            self.mdt.fsm.demand('Ranking')
         else:
-            game.fsm.demand('Menu')
+            self.mdt.fsm.demand('Menu')
 
     def exitRace(self):
-        eng.log_mgr.log('exiting Race state')
+        eng.log('exiting Race state')
         self.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
 
     def enterRanking(self):
-        game.logic.season.logic.ranking.gui.show()
-        to_tun = lambda task: game.fsm.demand('Tuning')
-        taskMgr.doMethodLater(10, to_tun, 'tuning')
+        self.mdt.logic.season.ranking.show()
+        eng.do_later(10, self.mdt.fsm.demand, ['Tuning'])
 
     def exitRanking(self):
-        game.logic.season.logic.ranking.gui.hide()
+        self.mdt.logic.season.ranking.hide()
 
     def enterTuning(self):
-        game.logic.season.logic.tuning.gui.show()
+        self.mdt.logic.season.logic.tuning.gui.show()
 
     def exitTuning(self):
-        game.logic.season.logic.tuning.gui.hide()
+        self.mdt.logic.season.logic.tuning.gui.hide()
 
     def enterExit(self):
-        if not game.options['development']['show_exit']:
-            sys.exit()
+        if not self.mdt.options['development']['show_exit']:
+            exit()
         self.__exit_menu = ExitMenu()
 
     def exitExit(self):

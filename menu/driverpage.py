@@ -46,7 +46,7 @@ class DriverPageGui(PageGui):
         PageGui.__init__(self, mdt, menu)
 
     def build_page(self):
-        self.skills = game.logic.skills
+        self.skills = [drv[2] for drv in game.logic.drivers]
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
 
@@ -54,7 +54,7 @@ class DriverPageGui(PageGui):
                            **menu_gui.text_args)
         self.widgets += [txt]
 
-        self.track_path = 'tracks/' + self.menu.track
+        self.track_path = self.menu.track
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
         names = open('assets/thanks.txt').readlines()
@@ -181,12 +181,12 @@ class DriverPageGui(PageGui):
         drv_idx = range(1, 9)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        drivers = [(i, self.ent.get(), self.mdt.car)]
-        drivers += [(drv_idx[j], names[j], cars[j]) for j in range(3)]
+        drivers = [(i, self.ent.get(), self.skills[i], self.mdt.car)]
+        drivers += [(drv_idx[j], names[j], self.skills[j], cars[j]) for j in range(3)]
         game.options['settings']['player_name'] = self.ent.get()
         game.options.store()
         game.logic.season.logic.drivers = drivers
-        args = ('Race', self.mdt.track, self.mdt.car, drivers, self.skills)
+        args = ('Race', self.mdt.track, self.mdt.car, drivers)
         taskMgr.doMethodLater(2.0, lambda tsk: game.fsm.demand(*args), 'start')
 
     def destroy(self):
