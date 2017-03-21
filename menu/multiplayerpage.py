@@ -13,10 +13,11 @@ class MultiplayerPageGui(PageGui):
              lambda: self.menu.logic.push_page(ServerPage(self.menu))),
             ('Client',
              lambda: self.menu.logic.push_page(ClientPage(self.menu)))]
-        self.widgets = [
+        widgets = [
             DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
                          **menu_gui.btn_args)
             for i, menu in enumerate(menu_data)]
+        map(self.add_widget, widgets)
         PageGui.build_page(self)
 
 

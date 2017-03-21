@@ -7,8 +7,9 @@ from yyagl.racing.race.race import RaceSinglePlayer, RaceServer, RaceClient
 from yyagl.racing.race.raceprops import RaceProps
 from yyagl.racing.driver.driver import Driver, DriverProps
 from yyagl.gameobject import Fsm
-from yyagl.racing.season.season import SingleRaceSeason
+from yyagl.racing.season.season import SingleRaceSeason, Season
 from yyagl.engine.gui.menu import MenuArgs
+from yyagl.racing.season.season import SeasonProps
 from menu.menu import YorgMenu
 from menu.exitmenu.menu import ExitMenu
 from menu.ingamemenu.menu import InGameMenu
@@ -39,7 +40,23 @@ class YorgFsm(Fsm):
 
     def enterMenu(self):
         eng.log('entering Menu state')
-        self.__menu = YorgMenu()
+        menu_args = MenuArgs(
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
+            (.75, .75, .75, 1), .1, (-4.6, 4.6, -.32, .88), (0, 0, 0, .2),
+            'assets/images/gui/menu_background.jpg',
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
+            'assets/images/icons/%s_png.png', (.75, .25, .25, 1))
+        sett = self.mdt.options['settings']
+        self.__menu = YorgMenu(
+            menu_args, self.mdt.options,
+            ['kronos', 'themis', 'diones', 'iapeto'],
+            'assets/images/cars/%s.png', 'assets/models/cars/%s/phys.yml',
+            ['desert', 'mountain'], [_('desert'), _('mountain')],
+            'assets/images/tracks/%s.png')
+        self.__menu.gui.menu.attach_obs(self.on_input_back)
+        self.__menu.gui.menu.attach_obs(self.on_options_back)
+        self.__menu.gui.menu.attach_obs(self.on_car_selected)
+        self.__menu.gui.menu.attach_obs(self.on_car_selected_season)
         self.mdt.audio.menu_music.play()
         for file_ in [f_ for f_ in listdir('.') if f_.endswith('.bam')]:
             curr_version = eng.version
@@ -50,6 +67,42 @@ class YorgFsm(Fsm):
         if self.mdt.logic.season:
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_end)
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_cont)
+
+    def on_input_back(self, dct):
+        self.mdt.options['settings'].update(dct)
+        self.mdt.options.store()
+
+    def on_options_back(self, dct):
+        self.mdt.options['settings'].update(dct)
+        self.mdt.options.store()
+
+    def on_car_selected(self, car):
+        season_props = SeasonProps(
+            ['kronos', 'themis', 'diones', 'iapeto'], car,
+            self.mdt.logic.drivers,
+            'assets/images/gui/menu_background.jpg',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
+            ['prototype', 'desert'],
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
+        self.mdt.logic.season = SingleRaceSeason(season_props)
+        self.mdt.logic.season.attach_obs(self.mdt.event.on_season_end)
+        self.mdt.logic.season.attach_obs(self.mdt.event.on_season_cont)
+
+    def on_car_selected_season(self, car):
+        season_props = SeasonProps(
+            ['kronos', 'themis', 'diones', 'iapeto'], car, game.logic.drivers,
+            'assets/images/gui/menu_background.jpg',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
+            ['prototype', 'desert'],
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
+        self.mdt.logic.season = Season(season_props)
+        self.mdt.logic.season.logic.attach(self.mdt.event.on_season_end)
+        self.mdt.logic.season.logic.attach(self.mdt.event.on_season_cont)
+        self.mdt.logic.season.logic.start()
 
     def exitMenu(self):
         eng.log('exiting Menu state')
@@ -233,7 +286,12 @@ class YorgFsm(Fsm):
     def enterExit(self):
         if not self.mdt.options['development']['show_exit']:
             exit()
-        self.__exit_menu = ExitMenu()
+        menu_args = MenuArgs(
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
+            (.75, .75, .25, 1), .1, (-4.6, 4.6, -.32, .88), (0, 0, 0, .2), '',
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg', '',
+            (.75, .25, .25, 1))
+        self.__exit_menu = ExitMenu(menu_args)
 
     def exitExit(self):
         self.__exit_menu.destroy()

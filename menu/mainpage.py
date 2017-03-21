@@ -12,18 +12,43 @@ from datetime import datetime
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.OnscreenText import OnscreenText
 from panda3d.core import TextNode
+from yyagl.gameobject import GameObjectMdt
+from ibus import lang
 
 
 class YorgMainPageGui(MainPageGui):
 
+    def __init__(self, mdt, menu, opt_file, cars, car_path, phys_path, tracks,
+                 tracks_tr, track_img):
+        self.menu = menu
+        self.cars = cars
+        self.car_path = car_path
+        self.phys_path = phys_path
+        self.tracks = tracks
+        self.tracks_tr = tracks_tr
+        self.track_img = track_img
+        self.opt_file = opt_file
+        self.load_settings()
+        MainPageGui.__init__(self, mdt, menu)
+
+    def load_settings(self):
+        sett = self.opt_file['settings']
+        self.joystick = sett['joystick']
+        self.keys = sett['keys']
+        self.lang = sett['lang']
+        self.volume = sett['volume']
+        self.fullscreen = sett['fullscreen']
+        self.aa = sett['aa']
+
     def build_page(self):
         menu_data = [
             ('Single Player', _('Single Player'),
-             lambda: self.menu.logic.push_page(SingleplayerPage(self.menu))),
+             lambda: self.menu.logic.push_page(SingleplayerPage(
+                 self.menu, self.cars, self.car_path, self.phys_path,
+                 self.tracks, self.tracks_tr, self.track_img))),
             ('Multiplayer', _('Multiplayer'),
              lambda: self.menu.logic.push_page(MultiplayerPage(self.menu))),
-            ('Options', _('Options'),
-             lambda: self.menu.logic.push_page(OptionPage(self.menu))),
+            ('Options', _('Options'), self.on_options),
             ('Credits', _('Credits'),
              lambda: self.menu.logic.push_page(CreditPage(self.menu))),
             ('Quit', _('Quit'),
@@ -51,6 +76,12 @@ class YorgMainPageGui(MainPageGui):
         self.widgets[-1].setTransparency(True)
         self.set_news()
         MainPageGui.build_page(self)
+
+    def on_options(self):
+        self.load_settings()
+        self.menu.logic.push_page(OptionPage(
+            self.menu, self.joystick, self.keys, self.lang, self.volume,
+            self.fullscreen, self.aa))
 
     def set_news(self):
         rss_path = 'http://feeds.feedburner.com/ya2tech?format=xml'
@@ -108,3 +139,12 @@ class YorgMainPageGui(MainPageGui):
 
 class YorgMainPage(MainPage):
     gui_cls = YorgMainPageGui
+
+    def __init__(self, menu, opt_file, cars, car_path, phys_path, tracks,
+                 tracks_tr, track_img):
+        self.menu = menu
+        init_lst = [
+            [('event', self.event_cls, [self])],
+            [('gui', self.gui_cls, [self, self.menu, opt_file, cars, car_path,
+                                    phys_path, tracks, tracks_tr, track_img])]]
+        GameObjectMdt.__init__(self, init_lst)

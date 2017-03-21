@@ -50,7 +50,8 @@
 # #shaders deferred shading, tone mapping; fxaa
 # #engine hardware instancing
 # #engine multi-threading physics loading
-# refactoring observers, DIP, facade, mediator
+# refactoring DIP, mediator
+# refactoring engine -> several singletons (LogMgr, PhysMgr, ...)
 # #backlog #project make uml diagrams with pyreverse into devinfo
 # #backlog #project unit tests
 # #backlog #shaders particle effects

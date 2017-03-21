@@ -3,28 +3,26 @@ from yyagl.engine.gui.menu import MenuArgs, Menu
 from .mainpage import YorgMainPage
 
 
-class _Gui(Gui):
+class YorgMenuGui(Gui):
 
-    def __init__(self, mdt):
+    def __init__(self, mdt, menu_args, opt_file, cars, car_path, phys_path,
+                 tracks, tracks_tr, track_img):
         Gui.__init__(self, mdt)
-        menu_args = MenuArgs(
-            'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
-            (.75, .75, .75, 1), .1, (-4.6, 4.6, -.32, .88), (0, 0, 0, .2),
-            'assets/images/gui/menu_background.jpg',
-            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png', (.75, .25, .25, 1))
         self.menu = Menu(menu_args)
-        self.menu.logic.push_page(YorgMainPage(self.menu))
+        self.menu.logic.push_page(YorgMainPage(
+            self.menu, opt_file, cars, car_path, phys_path, tracks, tracks_tr,
+            track_img))
 
     def destroy(self):
-        Gui.destroy(self)
         self.menu = self.menu.destroy()
+        Gui.destroy(self)
 
 
 class YorgMenu(GameObjectMdt):
-    gui_cls = _Gui
 
-    def __init__(self, init_lst=[]):
-        init_lst = [
-            [('gui', self.gui_cls, [self])]]
+    def __init__(self, menu_args, opt_file, cars, car_path, phys_path, tracks,
+                 tracks_tr, track_img):
+        init_lst = [[('gui', YorgMenuGui, [
+            self, menu_args, opt_file, cars, car_path, phys_path, tracks,
+            tracks_tr, track_img])]]
         GameObjectMdt.__init__(self, init_lst)

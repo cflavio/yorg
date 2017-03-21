@@ -1,12 +1,23 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED
 from yyagl.engine.gui.page import Page, PageGui
+from yyagl.racing.season.season import Season, SeasonProps
+from yyagl.gameobject import GameObjectMdt
 from .carpage import CarPageSeason
 from .trackpage import TrackPage
-from yyagl.racing.season.season import Season, SeasonProps
 
 
 class SingleplayerPageGui(PageGui):
+
+    def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
+                 track_img):
+        self.cars = cars
+        self.car_path = car_path
+        self.phys_path = phys_path
+        self.tracks = tracks
+        self.tracks_tr = tracks_tr
+        self.track_img = track_img
+        PageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -36,11 +47,14 @@ class SingleplayerPageGui(PageGui):
         PageGui.build_page(self)
 
     def on_single_race(self):
-        self.menu.logic.push_page(TrackPage(self.menu))
+        self.menu.logic.push_page(TrackPage(
+            self.menu, self.cars, self.car_path, self.phys_path, self.tracks,
+            self.tracks_tr, self.track_img))
 
     def on_start(self):
         self.menu.track = 'prototype'
-        self.menu.logic.push_page(CarPageSeason(self.menu))
+        self.menu.logic.push_page(CarPageSeason(self.menu, self.cars,
+                                                self.car_path, self.phys_path))
 
     def on_continue(self):
         season_props = SeasonProps(
@@ -66,3 +80,12 @@ class SingleplayerPageGui(PageGui):
 
 class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui
+
+    def __init__(self, menu, cars, car_path, phys_path, tracks, tracks_tr,
+                 track_img):
+        self.menu = menu
+        init_lst = [
+            [('event', self.event_cls, [self])],
+            [('gui', self.gui_cls, [self, self.menu, cars, car_path,
+                                    phys_path, tracks, tracks_tr, track_img])]]
+        GameObjectMdt.__init__(self, init_lst)
