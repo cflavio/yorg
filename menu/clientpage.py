@@ -10,14 +10,14 @@ from .netmsgs import NetMsgs
 class ClientEvent(PageEvent):
 
     def on_back(self):
-        if eng.client.is_active:
-            eng.client.stop()
+        if eng.is_client_active:
+            eng.client_stop()
 
     def process_msg(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:
-            eng.log_mgr.log('track selected: ' + data_lst[1])
+            eng.log('track selected: ' + data_lst[1])
             self.mdt.gui.menu.track = data_lst[1]
-            self.mdt.gui.menu.logic.push_page(CarPageClient(self.mdt.gui.menu))
+            self.mdt.gui.menu.push_page(CarPageClient(self.mdt.gui.menu))
 
 
 class ClientPageGui(PageGui):
@@ -30,32 +30,31 @@ class ClientPageGui(PageGui):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.text_args)
-        self.widgets += [txt]
+        widgets = [txt]
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=_('insert the server address'))
-        self.ent.onscreenText['fg'] = (.75, .75, .25, 1)
-        self.widgets += [self.ent]
+        self.ent.onscreenText['fg'] = menu_args.text_fg
+        widgets += [self.ent]
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_gui.btn_args)
-        self.widgets += [btn]
+        widgets += [btn]
+        map(self.add_widget, widgets)
         PageGui.build_page(self)
 
     def connect(self):
         try:
-            eng.log_mgr.log(self.ent.get())
-            eng.client.start(self.mdt.event.process_msg, self.ent.get())
+            eng.log(self.ent.get())
+            eng.client_start(self.mdt.event.process_msg, self.ent.get())
             menu_gui = self.menu.gui
             menu_args = self.menu.gui.menu_args
-            txt = OnscreenText(
+            self.add_widget(OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
-                font=menu_gui.font, fg=menu_args.text_fg)
-            self.widgets += [txt]
+                font=menu_gui.font, fg=menu_args.text_fg))
         except ClientError:
             txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)
-            args = (5.0, lambda tsk: txt.destroy(), 'destroy error text')
-            taskMgr.doMethodLater(*args)
+            eng.do_later(5, txt.destroy)
 
 
 class ClientPage(Page):

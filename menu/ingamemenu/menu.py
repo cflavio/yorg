@@ -1,17 +1,16 @@
 from yyagl.gameobject import GameObjectMdt, Gui
 from yyagl.engine.gui.menu import MenuArgs, Menu
 from .ingamepage import InGamePage
+from yorg.utils import Utils
 
 
-class _Gui(Gui):
+class InGameMenuGui(Gui):
 
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
-        menu_args = MenuArgs(
-            'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
-            (.75, .75, .75, 1), .1, (-4.6, 4.6, -.32, .88), (0, 0, 0, .2), '',
-            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg', '',
-            (.75, .25, .25, 1))
+        menu_args = Utils().menu_args
+        menu_args.background = ''
+        menu_args.btn_size = (-8.6, 8.6, -.42, .98)
         self.menu = Menu(menu_args)
         self.menu.logic.push_page(InGamePage(self.menu))
 
@@ -21,9 +20,8 @@ class _Gui(Gui):
 
 
 class InGameMenu(GameObjectMdt):
-    gui_cls = _Gui
+    gui_cls = InGameMenuGui
 
     def __init__(self, init_lst=[]):
-        init_lst = [
-            [('gui', self.gui_cls, [self])]]
+        init_lst = [[('gui', self.gui_cls, [self])]]
         GameObjectMdt.__init__(self, init_lst)

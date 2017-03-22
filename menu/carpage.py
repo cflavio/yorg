@@ -14,13 +14,17 @@ from .driverpage import DriverPage
 
 class CarPageGui(PageGui):
 
-    def __init__(self, mdt, menu, cars, car_path, phys_path):
+    def __init__(self, mdt, menu, cars, car_path, phys_path, player_name,
+                 drivers_img, cars_img):
         self.car = None
         self.current_cars = None
         self.track_path = None
         self.cars = cars
         self.car_path = car_path
         self.phys_path = phys_path
+        self.player_name = player_name
+        self.drivers_img = drivers_img
+        self.cars_img = cars_img
         PageGui.__init__(self, mdt, menu)
 
     def build_page(self):
@@ -92,14 +96,18 @@ class CarPageGui(PageGui):
 
     def on_car(self, car):
         self.mdt.menu.gui.notify('on_car_selected', car)
-        self.menu.push_page(DriverPage(self.menu, self.track_path, car))
+        self.menu.push_page(DriverPage(
+            self.menu, self.track_path, car, self.player_name,
+            self.drivers_img, self.cars_img, self.cars))
 
 
 class CarPageGuiSeason(CarPageGui):
 
     def on_car(self, car):
         self.mdt.menu.gui.notify('on_car_selected_season', car)
-        self.menu.push_page(DriverPage(self.menu, self.track_path, car))
+        self.menu.push_page(DriverPage(
+            self.menu, self.track_path, car, self.player_name,
+            self.drivers_img, self.cars_img, self.cars))
 
 
 class CarPageGuiServer(CarPageGui):
@@ -212,12 +220,14 @@ class CarPageGuiClient(CarPageGui):
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, menu, cars, car_path, phys_path):
+    def __init__(self, menu, cars, car_path, phys_path, player_name,
+                 drivers_img, cars_img):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, cars, car_path,
-                                    phys_path])]]
+                                    phys_path, player_name, drivers_img,
+                                    cars_img])]]
         GameObjectMdt.__init__(self, init_lst)
 
 

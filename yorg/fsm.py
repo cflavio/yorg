@@ -52,11 +52,23 @@ class YorgFsm(Fsm):
             ['kronos', 'themis', 'diones', 'iapeto'],
             'assets/images/cars/%s.png', 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain'], [_('desert'), _('mountain')],
-            'assets/images/tracks/%s.png')
+            'assets/images/tracks/%s.png',
+            self.mdt.options['settings']['player_name'],
+            ['assets/images/drivers/driver%s.png',
+             'assets/images/drivers/driver%s_sel.png'],
+            'assets/images/cars/%s_sel.png',
+            self.mdt.options['development']['multiplayer'],
+            'assets/images/gui/yorg_title.png',
+            'http://feeds.feedburner.com/ya2tech?format=xml',
+            'http://www.ya2.it', 'save' in self.mdt.options.dct,
+            self.mdt.options['development']['season'], ['prototype', 'desert'])
         self.__menu.gui.menu.attach_obs(self.on_input_back)
         self.__menu.gui.menu.attach_obs(self.on_options_back)
         self.__menu.gui.menu.attach_obs(self.on_car_selected)
         self.__menu.gui.menu.attach_obs(self.on_car_selected_season)
+        self.__menu.gui.menu.attach_obs(self.on_driver_selected)
+        self.__menu.gui.menu.attach_obs(self.on_exit)
+        self.__menu.gui.menu.attach_obs(self.on_continue)
         self.mdt.audio.menu_music.play()
         for file_ in [f_ for f_ in listdir('.') if f_.endswith('.bam')]:
             curr_version = eng.version
@@ -103,6 +115,37 @@ class YorgFsm(Fsm):
         self.mdt.logic.season.logic.attach(self.mdt.event.on_season_end)
         self.mdt.logic.season.logic.attach(self.mdt.event.on_season_cont)
         self.mdt.logic.season.logic.start()
+
+    def on_driver_selected(self, player_name, drivers, track, car):
+        self.mdt.options['settings']['player_name'] = player_name
+        self.mdt.options.store()
+        self.mdt.logic.season.drivers = drivers
+        args = ['Race', track, car, drivers]
+        eng.do_later(2.0, game.fsm.demand, args)
+
+    def on_continue(self):
+        season_props = SeasonProps(
+            ['kronos', 'themis', 'diones', 'iapeto'],
+            self.mdt.options['save']['car'], self.mdt.logic.drivers,
+            'assets/images/gui/menu_background.jpg',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
+            ['prototype', 'desert'], 'assets/fonts/Hanken-Book.ttf',
+            (.75, .75, .75, 1))
+        self.mdt.logic.season = Season(season_props)
+        self.mdt.logic.season.logic.load(game.options['save']['ranking'],
+                                     game.options['save']['tuning'],
+                                     game.options['save']['drivers'])
+        self.mdt.logic.season.logic.attach(self.mdt.event.on_season_end)
+        self.mdt.logic.season.logic.attach(self.mdt.event.on_season_cont)
+        track_path = self.mdt.options['save']['track']
+        car_path = self.mdt.options['save']['car']
+        drivers = self.mdt.options['save']['drivers']
+        self.demand('Race', track_path, car_path, drivers)
+
+    def on_exit(self):
+        self.demand('Exit')
 
     def exitMenu(self):
         eng.log('exiting Menu state')
@@ -245,6 +288,10 @@ class YorgFsm(Fsm):
             game.options['settings']['keys'], menu_args,
             'assets/sfx/countdown.ogg')
         self.race.attach_obs(self.on_race_loaded)
+        self.race.attach_obs(self.on_ingame_exit_confirm)
+
+    def on_ingame_exit_confirm(self):
+        self.demand('Menu')
 
     def on_race_loaded(self):
         self.race.event.detach(self.on_race_loaded)
