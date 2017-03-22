@@ -61,7 +61,8 @@ class YorgFsm(Fsm):
             'assets/images/gui/yorg_title.png',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
-            self.mdt.options['development']['season'], ['prototype', 'desert'])
+            self.mdt.options['development']['season'], ['prototype', 'desert'],
+            'http://patreon.com/ya2')
         self.__menu.gui.menu.attach_obs(self.on_input_back)
         self.__menu.gui.menu.attach_obs(self.on_options_back)
         self.__menu.gui.menu.attach_obs(self.on_car_selected)

@@ -5,9 +5,10 @@ from yyagl.engine.gui.imgbtn import ImageButton
 from yyagl.gameobject import GameObjectMdt
 from .carpage import CarPage, CarPageServer
 from .netmsgs import NetMsgs
+from .thankspage import ThanksPageGui
 
 
-class TrackPageGui(PageGui):
+class TrackPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
                  track_img, player_name, drivers_img, cars_img):
@@ -20,7 +21,7 @@ class TrackPageGui(PageGui):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -29,9 +30,6 @@ class TrackPageGui(PageGui):
                            **menu_gui.text_args)
         widgets = [txt]
 
-        names = open('assets/thanks.txt').readlines()
-        shuffle(names)
-        names = names[:2]
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
         for i in range(len(self.tracks)):
@@ -40,15 +38,11 @@ class TrackPageGui(PageGui):
                 image=self.track_img % self.tracks[i],
                 command=self.on_track, extraArgs=[self.tracks[i]],
                 **self.menu.gui.imgbtn_args)
-            txt = OnscreenText(self.tracks_tr[i], pos=(-.5 + i * 1.0, .45),
+            txt = OnscreenText(self.tracks_tr[i], pos=(-.5 + i * 1.0, -.32),
                                scale=.08, **t_a)
-            thanks = OnscreenText(_('thanks to:'), pos=(-.5 + i * 1.0, -.2),
-                                  scale=.06, **t_a)
-            name = OnscreenText(names[i], pos=(-.5 + i * 1.0, -.3), scale=.08,
-                                **t_a)
-            widgets += [img, txt, thanks, name]
+            widgets += [img, txt]
         map(self.add_widget, widgets)
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
 
     def on_track(self, track):
         self.menu.track = track

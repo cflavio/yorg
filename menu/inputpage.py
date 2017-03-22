@@ -7,6 +7,7 @@ from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
 from yyagl.engine.joystick import has_pygame
 from yyagl.gameobject import GameObjectMdt
+from .thankspage import ThanksPageGui
 
 
 class InputEvent(PageEvent):
@@ -23,7 +24,7 @@ class InputEvent(PageEvent):
         self.mdt.menu.gui.notify('on_input_back', dct)
 
 
-class InputPageGui(PageGui):
+class InputPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, joystick, keys):
         self._joypad_cb = None
@@ -34,7 +35,7 @@ class InputPageGui(PageGui):
         self._button_btn = None
         self.joystick = joystick
         self.keys = keys
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -110,7 +111,7 @@ class InputPageGui(PageGui):
             rear_lab, self._rear_btn, left_lab, self._left_btn, right_lab,
             self._right_btn, button_lab, self._button_btn, self.hint_lab]
         map(self.add_widget, widgets)
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
 
     def start_rec(self, btn):
         self.hint_lab.show()

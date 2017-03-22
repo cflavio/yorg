@@ -8,7 +8,7 @@ from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
 from yyagl.gameobject import GameObjectMdt
 from .inputpage import InputPage
-from ibus import lang
+from .thankspage import ThanksPageGui
 
 
 class OptionEvent(PageEvent):
@@ -24,7 +24,7 @@ class OptionEvent(PageEvent):
         self.mdt.menu.gui.notify('on_options_back', dct)
 
 
-class OptionPageGui(PageGui):
+class OptionPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, joystick, keys, lang, volume, fullscreen,
                  aa):
@@ -40,7 +40,7 @@ class OptionPageGui(PageGui):
         self.volume = volume
         self.fullscreen = fullscreen
         self.aa = aa
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -122,7 +122,7 @@ class OptionPageGui(PageGui):
         map(self.add_widget, widgets)
         idx = eng.lang_codes.index(self.lang)
         self.__change_lang(eng.languages[idx])
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
 
     def update_texts(self):
         PageGui.update_texts(self)

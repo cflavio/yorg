@@ -5,6 +5,7 @@ from yyagl.engine.gui.page import Page, PageGui, PageEvent
 from yyagl.engine.network.client import ClientError
 from .carpage import CarPageClient
 from .netmsgs import NetMsgs
+from .thankspage import ThanksPageGui
 
 
 class ClientEvent(PageEvent):
@@ -20,11 +21,11 @@ class ClientEvent(PageEvent):
             self.mdt.gui.menu.push_page(CarPageClient(self.mdt.gui.menu))
 
 
-class ClientPageGui(PageGui):
+class ClientPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu):
         self.ent = None
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -41,7 +42,7 @@ class ClientPageGui(PageGui):
                            command=self.connect, **menu_gui.btn_args)
         widgets += [btn]
         map(self.add_widget, widgets)
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
 
     def connect(self):
         try:

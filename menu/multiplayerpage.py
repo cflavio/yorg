@@ -3,9 +3,10 @@ from yyagl.engine.gui.page import Page, PageGui
 from yyagl.gameobject import GameObjectMdt
 from .serverpage import ServerPage
 from .clientpage import ClientPage
+from .thankspage import ThanksPageGui
 
 
-class MultiplayerPageGui(PageGui):
+class MultiplayerPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
                  track_img, player_name, drivers_img, cars_img):
@@ -18,7 +19,7 @@ class MultiplayerPageGui(PageGui):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -35,7 +36,7 @@ class MultiplayerPageGui(PageGui):
                          **menu_gui.btn_args)
             for i, menu in enumerate(menu_data)]
         map(self.add_widget, widgets)
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
 
 
 class MultiplayerPage(Page):

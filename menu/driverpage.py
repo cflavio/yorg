@@ -9,6 +9,7 @@ from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.gui.imgbtn import ImageButton
 from yyagl.gameobject import GameObjectMdt
 from yorg.utils import Utils
+from .thankspage import ThanksPageGui
 
 
 frag = '''#version 130
@@ -30,14 +31,14 @@ void main() {
 }'''
 
 
-class DriverPageGui(PageGui):
+class DriverPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, player_name, drivers_img, cars_img, cars):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
         self.cars = cars
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         self.skills = [drv[2] for drv in game.logic.drivers]
@@ -51,7 +52,6 @@ class DriverPageGui(PageGui):
         self.track_path = self.menu.track
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
-        names = Utils().get_thanks(8)
         name = OnscreenText(_('Write your name:'), pos=(-.1, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
         player_name = self.player_name
@@ -71,12 +71,6 @@ class DriverPageGui(PageGui):
                     image=self.drivers_img[0] % idx,
                     command=self.on_click, extraArgs=[idx],
                     **self.menu.gui.imgbtn_args)
-                thanks = OnscreenText(
-                    _('thanks to:'), pos=(-.75 + col * .5, .1 - row * .5),
-                    scale=.038, **t_a)
-                name = OnscreenText(
-                    names[idx - 1], pos=(-.75 + col * .5, .04 - row * .5),
-                    scale=.045, **t_a)
                 tp_mgr = TextPropertiesManager.getGlobalPtr()
                 colors = [(.75, .25, .25, 1), (.25, .75, .25, 1)]
                 for namecol, tpcol in zip(['red', 'green'], colors):
@@ -89,32 +83,32 @@ class DriverPageGui(PageGui):
                     return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
                 pcol = lambda x: x if x == 0 else ppcol(x)
                 fric_lab = OnscreenText(
-                    _('adherence') + ':', pos=(-.95 + col * .5, .4 - row * .5),
+                    _('adherence') + ':', pos=(-.95 + col * .5, .04 - row * .5),
                     scale=.046, align=TextNode.A_left, **t_a)
                 speed_lab = OnscreenText(
-                    _('speed') + ':', pos=(-.95 + col * .5, .3 - row * .5),
+                    _('speed') + ':', pos=(-.95 + col * .5, .16 - row * .5),
                     scale=.046, align=TextNode.A_left, **t_a)
                 roll_lab = OnscreenText(
-                    _('stability') + ':', pos=(-.95 + col * .5, .2 - row * .5),
+                    _('stability') + ':', pos=(-.95 + col * .5, .1 - row * .5),
                     scale=.046, align=TextNode.A_left, **t_a)
                 fric_txt = OnscreenText(
                     '%s%s%%' % (psign(self.skills[idx - 1][1]),
                                 pcol(self.skills[idx - 1][1])),
-                    pos=(-.55 + col * .5, .4 - row * .5), scale=.052,
+                    pos=(-.55 + col * .5, .04 - row * .5), scale=.052,
                     align=TextNode.A_right, **t_a)
                 speed_txt = OnscreenText(
                     '%s%s%%' % (psign(self.skills[idx - 1][0]),
                                 pcol(self.skills[idx - 1][0])),
-                    pos=(-.55 + col * .5, .3 - row * .5), scale=.052,
+                    pos=(-.55 + col * .5, .16 - row * .5), scale=.052,
                     align=TextNode.A_right, **t_a)
                 roll_txt = OnscreenText(
                     '%s%s%%' % (psign(self.skills[idx - 1][2]),
                                 pcol(self.skills[idx - 1][2])),
-                    pos=(-.55 + col * .5, .2 - row * .5), scale=.052,
+                    pos=(-.55 + col * .5, .1 - row * .5), scale=.052,
                     align=TextNode.A_right, **t_a)
                 widgets += [
-                    img, thanks, name, speed_lab, fric_lab, roll_lab,
-                    speed_txt, fric_txt, roll_txt]
+                    img, speed_lab, fric_lab, roll_lab, speed_txt, fric_txt,
+                    roll_txt]
                 self.drivers += [img]
         self.img = OnscreenImage(
             self.cars_img % self.mdt.car,
@@ -134,7 +128,7 @@ class DriverPageGui(PageGui):
         tex = Texture()
         tex.load(empty_img)
         self.img.setTexture(self.ts, tex)
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)
 

@@ -10,9 +10,10 @@ from yyagl.engine.gui.imgbtn import ImageButton
 from yyagl.gameobject import GameObjectMdt
 from .netmsgs import NetMsgs
 from .driverpage import DriverPage
+from .thankspage import ThanksPageGui
 
 
-class CarPageGui(PageGui):
+class CarPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, player_name,
                  drivers_img, cars_img):
@@ -25,7 +26,7 @@ class CarPageGui(PageGui):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -36,9 +37,6 @@ class CarPageGui(PageGui):
 
         self.track_path = self.menu.track
         self.cars = ['kronos', 'themis', 'diones', 'iapeto']
-        names = open('assets/thanks.txt').readlines()
-        shuffle(names)
-        names = names[:5]
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
         for i in range(len(self.cars)):
@@ -49,10 +47,6 @@ class CarPageGui(PageGui):
                 **self.menu.gui.imgbtn_args)
             txt = OnscreenText(self.cars[i], pos=(-1.2 + i * .8, .38),
                                scale=.072, **t_a)
-            thanks = OnscreenText(_('thanks to:'), pos=(-1.2 + i * .8, -.14),
-                                  scale=.052, **t_a)
-            name = OnscreenText(names[i], pos=(-1.2 + i * .8, -.24),
-                                scale=.072, **t_a)
             ppath = self.phys_path % self.cars[i]
             with open(ppath) as phys_file:
                 cfg = load(phys_file)
@@ -74,20 +68,20 @@ class CarPageGui(PageGui):
             pcol = lambda x: x if x == 0 else col(x)
             fric_txt = OnscreenText(
                 '%s: %s%s%%' % (_('adherence'), psign(fric), pcol(fric)),
-                pos=(-.87 + i * .8, .28), scale=.052, align=TextNode.A_right,
+                pos=(-.87 + i * .8, -.24), scale=.052, align=TextNode.A_right,
                 **t_a)
             speed_txt = OnscreenText(
                 '%s: %s%s%%' % (_('speed'), psign(speed), pcol(speed)),
-                pos=(-.87 + i * .8, .18), scale=.052, align=TextNode.A_right,
+                pos=(-.87 + i * .8, -.08), scale=.052, align=TextNode.A_right,
                 **t_a)
             roll_txt = OnscreenText(
                 '%s: %s%s%%' % (_('stability'), psign(roll), pcol(roll)),
-                pos=(-.87 + i * .8, .08), scale=.052, align=TextNode.A_right,
+                pos=(-.87 + i * .8, -.16), scale=.052, align=TextNode.A_right,
                 **t_a)
-            widgets += [img, txt, name, thanks, speed_txt, fric_txt, roll_txt]
+            widgets += [img, txt, speed_txt, fric_txt, roll_txt]
         map(self.add_widget, widgets)
         self.current_cars = {}
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
 
     def _buttons(self, car):
         is_btn = lambda wdg: wdg.__class__ == DirectButton

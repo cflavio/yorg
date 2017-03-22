@@ -5,9 +5,10 @@ from yyagl.racing.season.season import Season, SeasonProps
 from yyagl.gameobject import GameObjectMdt
 from .carpage import CarPageSeason
 from .trackpage import TrackPage
+from .thankspage import ThanksPageGui
 
 
-class SingleplayerPageGui(PageGui):
+class SingleplayerPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
                  track_img, player_name, drivers_img, cars_img, has_save,
@@ -24,7 +25,7 @@ class SingleplayerPageGui(PageGui):
         self.has_save = has_save
         self.season = season
         self.season_tracks = season_tracks
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -52,7 +53,7 @@ class SingleplayerPageGui(PageGui):
                     clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3),
                     _fc[3])
         map(self.add_widget, widgets)
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
 
     def on_single_race(self):
         self.menu.push_page(TrackPage(

@@ -20,7 +20,7 @@ class YorgMainPageGui(MainPageGui):
     def __init__(self, mdt, menu, opt_file, cars, car_path, phys_path, tracks,
                  tracks_tr, track_img, player_name, drivers_img, cars_img,
                  multiplayer, title_img, feed_url, site_url, has_save, season,
-                 season_tracks):
+                 season_tracks, support_url):
         self.menu = menu
         self.cars = cars
         self.car_path = car_path
@@ -38,6 +38,7 @@ class YorgMainPageGui(MainPageGui):
         self.has_save = has_save
         self.season = season
         self.season_tracks = season_tracks
+        self.support_url = support_url
         self.opt_file = opt_file
         self.load_settings()
         MainPageGui.__init__(self, mdt, menu)
@@ -65,12 +66,14 @@ class YorgMainPageGui(MainPageGui):
                  self.tracks, self.tracks_tr, self.track_img, self.player_name,
                  self.drivers_img, self.cars_img))),
             ('Options', _('Options'), self.on_options),
+            ('Support us', _('Support us'),
+             lambda: eng.open_browser(self.support_url)),
             ('Credits', _('Credits'),
              lambda: self.menu.push_page(CreditPage(self.menu))),
             ('Quit', _('Quit'), lambda: self.mdt.menu.gui.notify('on_exit'))]
         menu_gui = self.menu.gui
         widgets = [
-            DirectButton(text='', pos=(0, 1, .4-i*.28), command=menu[2],
+            DirectButton(text='', pos=(0, 1, .45-i*.23), command=menu[2],
                          **menu_gui.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(widgets):
@@ -153,7 +156,7 @@ class YorgMainPage(MainPage):
     def __init__(self, menu, opt_file, cars, car_path, phys_path, tracks,
                  tracks_tr, track_img, player_name, drivers_img, cars_img,
                  multiplayer, title_img, feed_url, site_url, has_save, season,
-                 season_tracks):
+                 season_tracks, support_url):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
@@ -161,5 +164,5 @@ class YorgMainPage(MainPage):
                 self, self.menu, opt_file, cars, car_path, phys_path, tracks,
                 tracks_tr, track_img, player_name, drivers_img, cars_img,
                 multiplayer, title_img, feed_url, site_url, has_save, season,
-                season_tracks])]]
+                season_tracks, support_url])]]
         GameObjectMdt.__init__(self, init_lst)

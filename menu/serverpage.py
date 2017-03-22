@@ -6,6 +6,7 @@ from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageGui, PageEvent
 from yyagl.gameobject import GameObjectMdt
 from .trackpage import TrackPageServer
+from .thankspage import ThanksPageGui
 
 
 class ServerEvent(PageEvent):
@@ -23,7 +24,7 @@ class ServerEvent(PageEvent):
         self.mdt.gui.conn_txt.setText(_('connection from ') + client_address)
 
 
-class ServerPageGui(PageGui):
+class ServerPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
                  track_img, player_name, drivers_img, cars_img):
@@ -37,7 +38,7 @@ class ServerPageGui(PageGui):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -64,7 +65,7 @@ class ServerPageGui(PageGui):
                 self.tracks, self.tracks_tr, self.track_img, self.player_name,
                 self.drivers_img, self.cars_img)),
             **menu_gui.btn_args))
-        PageGui.build_page(self)
+        ThanksPageGui.build_page(self)
         evt = self.mdt.event
         eng.server.start(evt.process_msg, evt.process_connection)
 
