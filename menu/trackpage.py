@@ -1,4 +1,3 @@
-from random import shuffle
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.gui.imgbtn import ImageButton

@@ -8,7 +8,8 @@ class SupportersPageGui(PageGui):
     def build_page(self):
         menu_gui = self.menu.gui
         text = ', '.join(Utils().get_all_thanks())
-        txt = OnscreenText(text=text, pos=(0, .6), wordwrap=32, **menu_gui.text_args)
+        txt = OnscreenText(text=text, pos=(0, .6), wordwrap=32,
+                           **menu_gui.text_args)
         self.add_widget(txt)
         PageGui.build_page(self)
 

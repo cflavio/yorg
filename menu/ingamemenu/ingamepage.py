@@ -1,6 +1,5 @@
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectFrame import DirectFrame
-from direct.gui.DirectGuiGlobals import FLAT
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageGui
 

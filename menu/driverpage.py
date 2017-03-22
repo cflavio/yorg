@@ -79,12 +79,14 @@ class DriverPageGui(ThanksPageGui):
                     tp_mgr.setProperties(namecol, _tp)
                 sign = lambda x: '\1green\1+\2' if x > 0 else ''
                 psign = lambda x: '+' if x == 0 else sign(x)
+
                 def ppcol(x):
                     return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
                 pcol = lambda x: x if x == 0 else ppcol(x)
                 fric_lab = OnscreenText(
-                    _('adherence') + ':', pos=(-.95 + col * .5, .04 - row * .5),
-                    scale=.046, align=TextNode.A_left, **t_a)
+                    _('adherence') + ':',
+                    pos=(-.95 + col * .5, .04 - row * .5), scale=.046,
+                    align=TextNode.A_left, **t_a)
                 speed_lab = OnscreenText(
                     _('speed') + ':', pos=(-.95 + col * .5, .16 - row * .5),
                     scale=.046, align=TextNode.A_left, **t_a)
@@ -163,7 +165,8 @@ class DriverPageGui(ThanksPageGui):
         drv_idx.remove(i)
         shuffle(drv_idx)
         drivers = [(i, self.ent.get(), self.skills[i], self.mdt.car)]
-        drivers += [(drv_idx[j], names[j], self.skills[j], cars[j]) for j in range(3)]
+        drivers += [(drv_idx[j], names[j], self.skills[j], cars[j])
+                    for j in range(3)]
         self.mdt.menu.gui.notify('on_driver_selected', self.ent.get(), drivers,
                                  self.mdt.track, self.mdt.car)
 

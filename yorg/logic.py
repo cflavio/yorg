@@ -8,6 +8,7 @@ class YorgLogic(GameLogic):
     def __init__(self, mdt):
         GameLogic.__init__(self, mdt)
         self.season = None
+        self.drivers = []
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -20,15 +21,15 @@ class YorgLogic(GameLogic):
         self.drivers = [
             (1, names[0], (4, -2, -2)),
             (2, names[1], (-2, 4, -2)),
-            (3,  names[2], (0, 4, -4)),
-            (4,  names[3], (4, -4, 0)),
-            (5,  names[4], (-2, -2, 4)),
-            (6,  names[5], (-4, 0, 4)),
-            (7,  names[6], (4, 0, -4)),
-            (8,  names[7], (-4, 4, 0))]
+            (3, names[2], (0, 4, -4)),
+            (4, names[3], (4, -4, 0)),
+            (5, names[4], (-2, -2, 4)),
+            (6, names[5], (-4, 0, 4)),
+            (7, names[6], (4, 0, -4)),
+            (8, names[7], (-4, 4, 0))]
         cars = ['kronos', 'themis', 'diones', 'iapeto', '', '', '', '']
         for i, _car in enumerate(cars):
-          self.drivers[i] = self.drivers[i] + (_car, )
+            self.drivers[i] = self.drivers[i] + (_car, )
         if car and track:
             season_props = SeasonProps(
                 ['kronos', 'themis', 'diones', 'iapeto'], car, self.drivers,

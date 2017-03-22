@@ -3,7 +3,7 @@ from json import load
 from urllib2 import urlopen
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
-from yyagl.engine.gui.page import Page, PageGui, PageEvent
+from yyagl.engine.gui.page import Page, PageEvent
 from yyagl.gameobject import GameObjectMdt
 from .trackpage import TrackPageServer
 from .thankspage import ThanksPageGui

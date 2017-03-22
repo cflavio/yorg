@@ -1,11 +1,10 @@
 from yaml import load
-from random import shuffle
 from panda3d.core import TextNode, TextPropertiesManager, TextProperties
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from direct.gui.OnscreenText import OnscreenText
-from yyagl.engine.gui.page import Page, PageGui
-from yyagl.racing.season.season import SeasonProps, Season, SingleRaceSeason
+from yyagl.engine.gui.page import Page
+from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.gui.imgbtn import ImageButton
 from yyagl.gameobject import GameObjectMdt
 from .netmsgs import NetMsgs

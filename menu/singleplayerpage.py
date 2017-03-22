@@ -1,7 +1,6 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED
-from yyagl.engine.gui.page import Page, PageGui
-from yyagl.racing.season.season import Season, SeasonProps
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObjectMdt
 from .carpage import CarPageSeason
 from .trackpage import TrackPage

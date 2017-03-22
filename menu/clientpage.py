@@ -1,7 +1,7 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
-from yyagl.engine.gui.page import Page, PageGui, PageEvent
+from yyagl.engine.gui.page import Page, PageEvent
 from yyagl.engine.network.client import ClientError
 from .carpage import CarPageClient
 from .netmsgs import NetMsgs

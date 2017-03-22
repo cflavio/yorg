@@ -1,5 +1,5 @@
 from direct.gui.DirectButton import DirectButton
-from yyagl.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObjectMdt
 from .serverpage import ServerPage
 from .clientpage import ClientPage

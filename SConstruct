@@ -75,8 +75,8 @@ env['SUPERMIRROR'] = ''
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 pdf_conf = {
     'yorg_menu': [('python', './menu', '*.py', [])],
-    'yorg_yorg': [('python', './yorg', '*.py', [])],
     'yorg': [
+        ('python', './yorg', '*.py', []),
         ('python', '.', '*.py SConstruct *.md *.txt', [
             './yyagl/*', './menu/*', './yorg/*', './licenses/*',
             './assets/*'])],

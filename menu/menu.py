@@ -1,5 +1,5 @@
 from yyagl.gameobject import GameObjectMdt, Gui
-from yyagl.engine.gui.menu import MenuArgs, Menu
+from yyagl.engine.gui.menu import Menu
 from .mainpage import YorgMainPage
 
 

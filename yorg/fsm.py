@@ -46,7 +46,6 @@ class YorgFsm(Fsm):
             'assets/images/gui/menu_background.jpg',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
             'assets/images/icons/%s_png.png', (.75, .25, .25, 1))
-        sett = self.mdt.options['settings']
         self.__menu = YorgMenu(
             menu_args, self.mdt.options,
             ['kronos', 'themis', 'diones', 'iapeto'],
@@ -136,8 +135,8 @@ class YorgFsm(Fsm):
             (.75, .75, .75, 1))
         self.mdt.logic.season = Season(season_props)
         self.mdt.logic.season.logic.load(game.options['save']['ranking'],
-                                     game.options['save']['tuning'],
-                                     game.options['save']['drivers'])
+                                         game.options['save']['tuning'],
+                                         game.options['save']['drivers'])
         self.mdt.logic.season.logic.attach(self.mdt.event.on_season_end)
         self.mdt.logic.season.logic.attach(self.mdt.event.on_season_cont)
         track_path = self.mdt.options['save']['track']
@@ -204,7 +203,8 @@ class YorgFsm(Fsm):
                     str(driver[0]), d_s[0], d_s[1], d_s[2])
                 drv = Driver(driver_props)
                 drivers_dct[driver[3]] = drv
-            with open('assets/models/tracks/%s/track.yml' % track_path) as track_file:
+            tr_file_path = 'assets/models/tracks/%s/track.yml' % track_path
+            with open(tr_file_path) as track_file:
                 track_conf = load(track_file)
                 music_name = track_conf['music']
             music_path = 'assets/music/%s.ogg' % music_name
@@ -215,7 +215,7 @@ class YorgFsm(Fsm):
                 'themis': (1, 0, 0, 1),
                 'diones': (1, 1, 1, 1),
                 'iapeto': (1, 1, 0, 1)}
-            with open('assets/models/tracks/%s/track.yml' % track_path) as track_file:
+            with open(tr_file_path) as track_file:
                 track_cfg = load(track_file)
                 camera_vec = track_cfg['camera_vector']
                 shadow_src = track_cfg['shadow_source']
@@ -245,9 +245,10 @@ class YorgFsm(Fsm):
                  'assets/models/cars/%s/cardamage2'], wheel_gfx_names,
                 'assets/particles/sparks.ptf', drivers_dct,
                 game.options['development']['shaders'], music_path,
-                'assets/models/tracks/%s/collision' % track_path, ['Road', 'Offroad'],
-                ['Wall'], ['Goal', 'Slow', 'Respawn', 'PitStop'],
-                corner_names, ['Waypoints', 'Waypoint', 'prev'],
+                'assets/models/tracks/%s/collision' % track_path,
+                ['Road', 'Offroad'], ['Wall'],
+                ['Goal', 'Slow', 'Respawn', 'PitStop'], corner_names,
+                ['Waypoints', 'Waypoint', 'prev'],
                 game.options['development']['show_waypoints'],
                 game.options['development']['weapons'],
                 ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path,
