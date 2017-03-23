@@ -12,15 +12,14 @@ class YorgEvent(Event):
         base.accept('escape-up', self.mdt.fsm.demand, ['Exit'])
 
     def on_season_end(self):
-        self.mdt.fsm.race.destroy()
+        self.mdt.logic.season.race.destroy()
         del self.mdt.options['save']
         self.mdt.options.store()
         self.mdt.fsm.demand('Menu')
 
     def on_season_cont(self, next_track, curr_car, drivers):
-        self.mdt.fsm.race.destroy()
-        # tuning should go into drivers
-        tuning = self.mdt.logic.season.logic.tuning
-        self.mdt.options['save']['tuning'] = tuning.logic.to_dct()
+        self.mdt.logic.season.race.destroy()
+        tuning = self.mdt.logic.season.tuning
+        self.mdt.options['save']['tuning'] = tuning.to_dct()
         self.mdt.options.store()
         self.mdt.fsm.demand('Race', next_track, curr_car, drivers)

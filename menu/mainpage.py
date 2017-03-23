@@ -20,7 +20,7 @@ class YorgMainPageGui(MainPageGui):
     def __init__(self, mdt, menu, opt_file, cars, car_path, phys_path, tracks,
                  tracks_tr, track_img, player_name, drivers_img, cars_img,
                  multiplayer, title_img, feed_url, site_url, has_save, season,
-                 season_tracks, support_url):
+                 season_tracks, support_url, drivers):
         self.menu = menu
         self.cars = cars
         self.car_path = car_path
@@ -39,6 +39,7 @@ class YorgMainPageGui(MainPageGui):
         self.season = season
         self.season_tracks = season_tracks
         self.support_url = support_url
+        self.drivers = drivers
         self.opt_file = opt_file
         self.load_settings()
         MainPageGui.__init__(self, mdt, menu)
@@ -59,7 +60,7 @@ class YorgMainPageGui(MainPageGui):
                  self.menu, self.cars, self.car_path, self.phys_path,
                  self.tracks, self.tracks_tr, self.track_img, self.player_name,
                  self.drivers_img, self.cars_img, self.has_save, self.season,
-                 self.season_tracks))),
+                 self.season_tracks, self.drivers))),
             ('Multiplayer', _('Multiplayer'),
              lambda: self.menu.push_page(MultiplayerPage(
                  self.menu, self.cars, self.car_path, self.phys_path,
@@ -156,7 +157,7 @@ class YorgMainPage(MainPage):
     def __init__(self, menu, opt_file, cars, car_path, phys_path, tracks,
                  tracks_tr, track_img, player_name, drivers_img, cars_img,
                  multiplayer, title_img, feed_url, site_url, has_save, season,
-                 season_tracks, support_url):
+                 season_tracks, support_url, drivers):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
@@ -164,5 +165,5 @@ class YorgMainPage(MainPage):
                 self, self.menu, opt_file, cars, car_path, phys_path, tracks,
                 tracks_tr, track_img, player_name, drivers_img, cars_img,
                 multiplayer, title_img, feed_url, site_url, has_save, season,
-                season_tracks, support_url])]]
+                season_tracks, support_url, drivers])]]
         GameObjectMdt.__init__(self, init_lst)

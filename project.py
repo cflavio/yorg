@@ -7,7 +7,6 @@
 # #ai port ai lookahead to 3D
 # #ai obstacle avoidance
 # #ai weapons
-# #ai add pit stop to ai
 
 # 0.7
 # forward missile
@@ -15,6 +14,7 @@
 # turbo
 # drop a fixed bomb
 # rotate-all bomb
+# #ai add pit stop to ai
 
 # 0.8
 # #gaming season

@@ -11,7 +11,7 @@ class SingleplayerPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
                  track_img, player_name, drivers_img, cars_img, has_save,
-                 season, season_tracks):
+                 season, season_tracks, drivers):
         self.cars = cars
         self.car_path = car_path
         self.phys_path = phys_path
@@ -24,6 +24,7 @@ class SingleplayerPageGui(ThanksPageGui):
         self.has_save = has_save
         self.season = season
         self.season_tracks = season_tracks
+        self.drivers = drivers
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
@@ -58,13 +59,13 @@ class SingleplayerPageGui(ThanksPageGui):
         self.menu.push_page(TrackPage(
             self.menu, self.cars, self.car_path, self.phys_path, self.tracks,
             self.tracks_tr, self.track_img, self.player_name, self.drivers_img,
-            self.cars_img))
+            self.cars_img, self.drivers))
 
     def on_start(self):
         self.menu.track = self.season_tracks[0]
         self.menu.push_page(CarPageSeason(
             self.menu, self.cars, self.car_path, self.phys_path,
-            self.player_name, self.drivers_img, self.cars_img))
+            self.player_name, self.drivers_img, self.cars_img, self.drivers))
 
     def on_continue(self):
         self.mdt.menu.gui.notify('on_continue')
@@ -75,12 +76,12 @@ class SingleplayerPage(Page):
 
     def __init__(self, menu, cars, car_path, phys_path, tracks, tracks_tr,
                  track_img, player_name, drivers_img, cars_img, has_save,
-                 season, season_tracks):
+                 season, season_tracks, drivers):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [
                 self, self.menu, cars, car_path, phys_path, tracks, tracks_tr,
                 track_img, player_name, drivers_img, cars_img, has_save,
-                season, season_tracks])]]
+                season, season_tracks, drivers])]]
         GameObjectMdt.__init__(self, init_lst)

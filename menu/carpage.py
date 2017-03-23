@@ -15,7 +15,7 @@ from .thankspage import ThanksPageGui
 class CarPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, player_name,
-                 drivers_img, cars_img):
+                 drivers_img, cars_img, drivers):
         self.car = None
         self.current_cars = None
         self.track_path = None
@@ -25,6 +25,7 @@ class CarPageGui(ThanksPageGui):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
+        self.drivers = drivers
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
@@ -91,7 +92,7 @@ class CarPageGui(ThanksPageGui):
         self.mdt.menu.gui.notify('on_car_selected', car)
         self.menu.push_page(DriverPage(
             self.menu, self.track_path, car, self.player_name,
-            self.drivers_img, self.cars_img, self.cars))
+            self.drivers_img, self.cars_img, self.cars, self.drivers))
 
 
 class CarPageGuiSeason(CarPageGui):
@@ -100,7 +101,7 @@ class CarPageGuiSeason(CarPageGui):
         self.mdt.menu.gui.notify('on_car_selected_season', car)
         self.menu.push_page(DriverPage(
             self.menu, self.track_path, car, self.player_name,
-            self.drivers_img, self.cars_img, self.cars))
+            self.drivers_img, self.cars_img, self.cars, self.drivers))
 
 
 class CarPageGuiServer(CarPageGui):
@@ -214,13 +215,13 @@ class CarPage(Page):
     gui_cls = CarPageGui
 
     def __init__(self, menu, cars, car_path, phys_path, player_name,
-                 drivers_img, cars_img):
+                 drivers_img, cars_img, drivers):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, cars, car_path,
-                                    phys_path, player_name, drivers_img,
-                                    cars_img])]]
+            [('gui', self.gui_cls, [
+                self, self.menu, cars, car_path, phys_path, player_name,
+                drivers_img, cars_img, drivers])]]
         GameObjectMdt.__init__(self, init_lst)
 
 

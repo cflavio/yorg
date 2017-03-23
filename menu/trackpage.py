@@ -10,7 +10,7 @@ from .thankspage import ThanksPageGui
 class TrackPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
-                 track_img, player_name, drivers_img, cars_img):
+                 track_img, player_name, drivers_img, cars_img, drivers):
         self.cars = cars
         self.car_path = car_path
         self.phys_path = phys_path
@@ -20,6 +20,7 @@ class TrackPageGui(ThanksPageGui):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
+        self.drivers = drivers
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
@@ -47,7 +48,7 @@ class TrackPageGui(ThanksPageGui):
         self.menu.track = track
         self.menu.logic.push_page(CarPage(
             self.menu, self.cars, self.car_path, self.phys_path,
-            self.player_name, self.drivers_img, self.cars_img))
+            self.player_name, self.drivers_img, self.cars_img, self.drivers))
 
     def destroy(self):
         if hasattr(self.menu, 'track'):
@@ -67,13 +68,13 @@ class TrackPage(Page):
     gui_cls = TrackPageGui
 
     def __init__(self, menu, cars, car_path, phys_path, tracks, tracks_tr,
-                 track_img, player_name, drivers_img, cars_img):
+                 track_img, player_name, drivers_img, cars_img, drivers):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [
                 self, self.menu, cars, car_path, phys_path, tracks, tracks_tr,
-                track_img, player_name, drivers_img, cars_img])]]
+                track_img, player_name, drivers_img, cars_img, drivers])]]
         GameObjectMdt.__init__(self, init_lst)
 
 

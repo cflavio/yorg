@@ -33,15 +33,17 @@ void main() {
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, player_name, drivers_img, cars_img, cars):
+    def __init__(self, mdt, menu, player_name, drivers_img, cars_img, cars,
+                 drivers):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
         self.cars = cars
+        self.drivers = drivers
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
-        self.skills = [drv[2] for drv in game.logic.drivers]
+        self.skills = [drv[2] for drv in self.drivers]
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
 
@@ -180,12 +182,12 @@ class DriverPage(Page):
     gui_cls = DriverPageGui
 
     def __init__(self, menu, track, car, player_name, drivers_img, cars_img,
-                 cars):
+                 cars, drivers):
         self.track = track
         self.car = car
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, player_name, drivers_img,
-                                    cars_img, cars])]]
+                                    cars_img, cars, drivers])]]
         GameObjectMdt.__init__(self, init_lst)

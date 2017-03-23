@@ -42,17 +42,18 @@ class Yorg(GameWindow):
                 'win_orig': ''}}
         self.options = DictFile('options.yml', default_opt)
         conf = Configuration(
-            fps=self.options['development']['fps'],
-            win_title='Yorg', win_orig=self.options['development']['win_orig'],
+            win_title='Yorg',
+            win_orig=self.options['development']['win_orig'],
             win_size=self.options['settings']['resolution'],
             fullscreen=self.options['settings']['fullscreen'],
             antialiasing=self.options['settings']['aa'],
-            lang=self.options['settings']['lang'],
+            fps=self.options['development']['fps'],
             mt_render=self.options['development']['multithreaded_render'],
-            lang_domain='yorg',
             shaders=self.options['development']['shaders'],
             gamma=self.options['development']['gamma'],
             menu_joypad=self.options['development']['menu_joypad'],
+            lang=self.options['settings']['lang'],
+            lang_domain='yorg',
             cursor_path='assets/images/gui/cursor.png',
             cursor_scale=((256/352.0) * .08, 1, .08),
             cursor_hotspot=(.1, .06))

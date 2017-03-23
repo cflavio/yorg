@@ -1,6 +1,7 @@
 from random import shuffle
 from yyagl.singleton import Singleton
 from yyagl.engine.gui.menu import MenuArgs
+from yyagl.racing.season.season import SeasonProps
 
 
 @Singleton
@@ -24,3 +25,30 @@ class Utils(object):
             'assets/images/gui/menu_background.jpg',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
             'assets/images/icons/%s_png.png', (.75, .25, .25, 1))
+
+    @property
+    def drivers(self):
+        names = Utils().get_thanks(8)
+        drivers = [
+            (1, names[0], (4, -2, -2)),
+            (2, names[1], (-2, 4, -2)),
+            (3, names[2], (0, 4, -4)),
+            (4, names[3], (4, -4, 0)),
+            (5, names[4], (-2, -2, 4)),
+            (6, names[5], (-4, 0, 4)),
+            (7, names[6], (4, 0, -4)),
+            (8, names[7], (-4, 4, 0))]
+        cars = ['kronos', 'themis', 'diones', 'iapeto', '', '', '', '']
+        for i, _car in enumerate(cars):
+            drivers[i] = drivers[i] + (_car, )
+        return drivers
+
+    def season_props(self, car):
+        return SeasonProps(
+            ['kronos', 'themis', 'diones', 'iapeto'], car, self.drivers,
+            'assets/images/gui/menu_background.jpg',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
+            ['prototype', 'desert'],
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
