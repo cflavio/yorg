@@ -93,15 +93,15 @@ class YorgMainPageGui(MainPageGui):
         for i, wdg in enumerate(widgets):
             PageGui.transl_text(wdg, menu_data[i][0], menu_data[i][1])
         if not self.props.multiplayer:
-            widgets[-4]['state'] = DISABLED
+            widgets[-5]['state'] = DISABLED
             _fg = menu_gui.btn_args['text_fg']
-            _fc = widgets[-4]['frameColor']
+            _fc = widgets[-5]['frameColor']
             clc = lambda val: max(0, val)
             fgc = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
-            widgets[-4]['text_fg'] = fgc
+            widgets[-5]['text_fg'] = fgc
             fcc = (clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3),
                    _fc[3])
-            widgets[-4]['frameColor'] = fcc
+            widgets[-5]['frameColor'] = fcc
         widgets += [OnscreenImage(
             self.props.title_img, scale=(.8, 1, .8 * (380.0 / 772)),
             parent=base.a2dTopRight, pos=(-.8, 1, -.4))]

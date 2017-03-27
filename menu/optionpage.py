@@ -100,10 +100,10 @@ class OptionPageGui(ThanksPageGui):
         PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
 
         if eng.logic.is_runtime:
-            fullscreen_lab['text_fg'] = menu_args.text_bg,
-            self.__fullscreen_cb['state'] = DISABLED
-            self.__res_opt['text_fg'] = menu_args.text_bg,
-            self.__res_opt['state'] = DISABLED
+            fullscreen_lab['text_fg'] = menu_args.text_bg + (1,)
+            self._fullscreen_cb['state'] = DISABLED
+            self._res_opt['text_fg'] = menu_args.text_bg + (1,)
+            self._res_opt['state'] = DISABLED
 
         self.pagewidgets += [
             self._lang_opt, self._vol_slider, self._fullscreen_cb,
