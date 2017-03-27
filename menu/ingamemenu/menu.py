@@ -1,7 +1,7 @@
 from yyagl.gameobject import GameObjectMdt, Gui
 from yyagl.engine.gui.menu import Menu
-from .ingamepage import InGamePage
 from yorg.utils import Utils
+from .ingamepage import InGamePage
 
 
 class InGameMenuGui(Gui):
@@ -12,11 +12,11 @@ class InGameMenuGui(Gui):
         menu_args.background = ''
         menu_args.btn_size = (-8.6, 8.6, -.42, .98)
         self.menu = Menu(menu_args)
-        self.menu.logic.push_page(InGamePage(self.menu))
+        self.menu.push_page(InGamePage(self.menu))
 
     def destroy(self):
-        Gui.destroy(self)
         self.menu = self.menu.destroy()
+        Gui.destroy(self)
 
 
 class InGameMenu(GameObjectMdt):

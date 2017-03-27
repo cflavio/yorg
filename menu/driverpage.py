@@ -1,6 +1,6 @@
+from itertools import product
 from random import shuffle
-from panda3d.core import TextureStage, Shader, Texture, PNMImage, TextNode,\
-    TextPropertiesManager, TextProperties
+from panda3d.core import TextureStage, Shader, Texture, PNMImage, TextNode
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectEntry import DirectEntry
 from direct.gui.OnscreenImage import OnscreenImage
@@ -31,93 +31,75 @@ void main() {
 }'''
 
 
-class DriverPageGui(ThanksPageGui):
+class DriverPageProps(object):
 
-    def __init__(self, mdt, menu, player_name, drivers_img, cars_img, cars,
-                 drivers):
+    def __init__(self, player_name, drivers_img, cars_img, cars, drivers):
         self.player_name = player_name
         self.drivers_img = drivers_img
         self.cars_img = cars_img
         self.cars = cars
         self.drivers = drivers
+
+
+class DriverPageGui(ThanksPageGui):
+
+    def __init__(self, mdt, menu, driverpage_props):
+        self.props = driverpage_props
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
-        self.skills = [drv[2] for drv in self.drivers]
+        self.skills = [drv[2] for drv in self.props.drivers]
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
-
-        txt = OnscreenText(text=_('Select the driver'), pos=(0, .8),
-                           **menu_gui.text_args)
-        widgets = [txt]
-
+        widgets = [OnscreenText(text=_('Select the driver'), pos=(0, .8),
+                                **menu_gui.text_args)]
         self.track_path = self.menu.track
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
         name = OnscreenText(_('Write your name:'), pos=(-.1, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
-        player_name = self.player_name
         self.ent = DirectEntry(
             scale=.08, pos=(0, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText=player_name or _('your name'))
+            initialText=self.props.player_name or _('your name'))
         self.ent.onscreenText['fg'] = menu_args.text_fg
-        widgets += [name, self.ent]
         self.drivers = []
-        for row in range(2):
-            for col in range(4):
-                idx = (col + 1) + row * 4
-                img = ImageButton(
-                    scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
-                    frameColor=(0, 0, 0, 0),
-                    image=self.drivers_img[0] % idx,
-                    command=self.on_click, extraArgs=[idx],
-                    **self.menu.gui.imgbtn_args)
-                tp_mgr = TextPropertiesManager.getGlobalPtr()
-                colors = [(.75, .25, .25, 1), (.25, .75, .25, 1)]
-                for namecol, tpcol in zip(['red', 'green'], colors):
-                    _tp = TextProperties()
-                    _tp.setTextColor(tpcol)
-                    tp_mgr.setProperties(namecol, _tp)
-                sign = lambda x: '\1green\1+\2' if x > 0 else ''
-                psign = lambda x: '+' if x == 0 else sign(x)
+        for row, col in product(range(2), range(4)):
+            idx = (col + 1) + row * 4
+            widgets += [ImageButton(
+                scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
+                frameColor=(0, 0, 0, 0), image=self.props.drivers_img[0] % idx,
+                command=self.on_click, extraArgs=[idx],
+                **self.menu.gui.imgbtn_args)]
+            self.drivers += [widgets[-1]]
+            sign = lambda x: '\1green\1+\2' if x > 0 else ''
+            psign = lambda x: '+' if x == 0 else sign(x)
 
-                def ppcol(x):
-                    return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
-                pcol = lambda x: x if x == 0 else ppcol(x)
-                fric_lab = OnscreenText(
-                    _('adherence') + ':',
-                    pos=(-.95 + col * .5, .04 - row * .5), scale=.046,
+            def ppcol(x):
+                return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
+            pcol = lambda x: x if x == 0 else ppcol(x)
+
+            def add_lab(txt, z):
+                return OnscreenText(
+                    txt + ':', pos=(-.95 + col * .5, z - row * .5), scale=.046,
                     align=TextNode.A_left, **t_a)
-                speed_lab = OnscreenText(
-                    _('speed') + ':', pos=(-.95 + col * .5, .16 - row * .5),
-                    scale=.046, align=TextNode.A_left, **t_a)
-                roll_lab = OnscreenText(
-                    _('stability') + ':', pos=(-.95 + col * .5, .1 - row * .5),
-                    scale=.046, align=TextNode.A_left, **t_a)
-                fric_txt = OnscreenText(
-                    '%s%s%%' % (psign(self.skills[idx - 1][1]),
-                                pcol(self.skills[idx - 1][1])),
-                    pos=(-.55 + col * .5, .04 - row * .5), scale=.052,
+
+            def add_txt(val, z):
+                return OnscreenText(
+                    '%s%s%%' % (psign(val), pcol(val)),
+                    pos=(-.55 + col * .5, z - row * .5), scale=.052,
                     align=TextNode.A_right, **t_a)
-                speed_txt = OnscreenText(
-                    '%s%s%%' % (psign(self.skills[idx - 1][0]),
-                                pcol(self.skills[idx - 1][0])),
-                    pos=(-.55 + col * .5, .16 - row * .5), scale=.052,
-                    align=TextNode.A_right, **t_a)
-                roll_txt = OnscreenText(
-                    '%s%s%%' % (psign(self.skills[idx - 1][2]),
-                                pcol(self.skills[idx - 1][2])),
-                    pos=(-.55 + col * .5, .1 - row * .5), scale=.052,
-                    align=TextNode.A_right, **t_a)
-                widgets += [
-                    img, speed_lab, fric_lab, roll_lab, speed_txt, fric_txt,
-                    roll_txt]
-                self.drivers += [img]
+            lab_lst = [(_('adherence'), .04), (_('speed'), .16),
+                       (_('stability'), .1)]
+            widgets += map(lambda lab_def: add_lab(*lab_def), lab_lst)
+            txt_lst = [(self.skills[idx - 1][1], .04),
+                       (self.skills[idx - 1][0], .16),
+                       (self.skills[idx - 1][2], .1)]
+            widgets += map(lambda txt_def: add_txt(*txt_def), txt_lst)
         self.img = OnscreenImage(
-            self.cars_img % self.mdt.car,
-            parent=base.a2dBottomRight, pos=(-.38, 1, .38), scale=.32)
-        widgets += [self.img]
+            self.props.cars_img % self.mdt.car, parent=base.a2dBottomRight,
+            pos=(-.38, 1, .38), scale=.32)
+        widgets += [self.img, name, self.ent]
         map(self.add_widget, widgets)
         with open('yyagl/assets/shaders/filter.vert') as ffilter:
             vert = ffilter.read()
@@ -140,6 +122,7 @@ class DriverPageGui(ThanksPageGui):
         for drv in self.drivers:
             drv['state'] = NORMAL if enable else DISABLED
             drv.setShaderInput('enable', 1 if enable else .2)
+            # do wdg.enable, wdg.disable
 
     def update_text(self, task):
         has_name = self.ent.get() != _('your name')
@@ -151,16 +134,16 @@ class DriverPageGui(ThanksPageGui):
             self.enable_buttons(False)
         elif self.ent.get() not in [_('your name'), '']:
             self.enable_buttons(True)
-        return task.cont
+        return task.cont  # don't do a task, attach to modifications events
 
     def on_click(self, i):
-        txt_path = self.drivers_img[1]
+        txt_path = self.props.drivers_img[1]
         self.img.setTexture(self.ts, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
         names = Utils().get_thanks(4)
-        cars = self.cars[:]
+        cars = self.props.cars[:]
         cars.remove(self.mdt.car)
         shuffle(cars)
         drv_idx = range(1, 9)
@@ -181,13 +164,11 @@ class DriverPageGui(ThanksPageGui):
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, menu, track, car, player_name, drivers_img, cars_img,
-                 cars, drivers):
+    def __init__(self, menu, track, car, driverpage_props):
         self.track = track
         self.car = car
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, player_name, drivers_img,
-                                    cars_img, cars, drivers])]]
+            [('gui', self.gui_cls, [self, self.menu, driverpage_props])]]
         GameObjectMdt.__init__(self, init_lst)

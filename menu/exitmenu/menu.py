@@ -8,7 +8,7 @@ class ExitMenuGui(Gui):
     def __init__(self, mdt, menu_args):
         Gui.__init__(self, mdt)
         self.menu = Menu(menu_args)
-        self.menu.logic.push_page(ExitPage(self.menu))
+        self.menu.push_page(ExitPage(self.menu))
 
     def destroy(self):
         self.menu = self.menu.destroy()

@@ -5,8 +5,24 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageEvent
 from yyagl.gameobject import GameObjectMdt
-from .trackpage import TrackPageServer
+from .trackpage import TrackPageServer, TrackPageProps
 from .thankspage import ThanksPageGui
+
+
+class ServerPageProps(object):
+
+    def __init__(self, cars, car_path, phys_path, tracks, tracks_tr, track_img,
+                 player_name, drivers_img, cars_img, drivers):
+        self.cars = cars
+        self.car_path = car_path
+        self.phys_path = phys_path
+        self.tracks = tracks
+        self.tracks_tr = tracks_tr
+        self.track_img = track_img
+        self.player_name = player_name
+        self.drivers_img = drivers_img
+        self.cars_img = cars_img
+        self.drivers = drivers
 
 
 class ServerEvent(PageEvent):
@@ -26,18 +42,9 @@ class ServerEvent(PageEvent):
 
 class ServerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, cars, car_path, phys_path, tracks, tracks_tr,
-                 track_img, player_name, drivers_img, cars_img):
+    def __init__(self, mdt, menu, serverpage_props):
         self.conn_txt = None
-        self.cars = cars
-        self.car_path = car_path
-        self.phys_path = phys_path
-        self.tracks = tracks
-        self.tracks_tr = tracks_tr
-        self.track_img = track_img
-        self.player_name = player_name
-        self.drivers_img = drivers_img
-        self.cars_img = cars_img
+        self.props = serverpage_props
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
@@ -53,33 +60,32 @@ class ServerPageGui(ThanksPageGui):
                 text=addr, scale=.12, pos=(0, .4), font=menu_args.font,
                 fg=menu_args.text_fg))
         except gaierror:
-            eng.log_mgr.log('no connection')
+            eng.log('no connection')
         self.conn_txt = OnscreenText(
             scale=.12, pos=(0, .2), font=menu_args.font, fg=menu_args.text_fg)
         self.add_widget(self.conn_txt)
-        push = self.menu.logic.push_page
+        tp_props = TrackPageProps(
+            self.props.cars, self.props.car_path, self.props.phys_path,
+            self.props.tracks, self.props.tracks_tr, self.props.track_img,
+            self.props.player_name, self.props.drivers_img,
+            self.props.cars_img, self.props.drivers)
         self.add_widget(DirectButton(
             text=_('Start'), pos=(0, 1, -.5),
-            command=lambda: push(TrackPageServer(
-                self.menu, self.cars, self.car_path, self.phys_path,
-                self.tracks, self.tracks_tr, self.track_img, self.player_name,
-                self.drivers_img, self.cars_img)),
+            command=lambda: self.menu.push_page(TrackPageServer(self.menu,
+                                                                tp_props)),
             **menu_gui.btn_args))
         ThanksPageGui.build_page(self)
         evt = self.mdt.event
-        eng.server.start(evt.process_msg, evt.process_connection)
+        eng.start_server(evt.process_msg, evt.process_connection)
 
 
 class ServerPage(Page):
     gui_cls = ServerPageGui
     event_cls = ServerEvent
 
-    def __init__(self, menu, cars, car_path, phys_path, tracks, tracks_tr,
-                 track_img, player_name, drivers_img, cars_img):
+    def __init__(self, menu, serverpage_props):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [
-                self, self.menu, cars, car_path, phys_path, tracks, tracks_tr,
-                track_img, player_name, drivers_img, cars_img])]]
+            [('gui', self.gui_cls, [self, self.menu, serverpage_props])]]
         GameObjectMdt.__init__(self, init_lst)

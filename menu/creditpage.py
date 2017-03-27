@@ -15,12 +15,11 @@ class CreditPageGui(ThanksPageGui):
         dario = _('Testing')+': Dario Murgia'
         text = '\n\n'.join([flavio, luca, jay, dario])
         txt = OnscreenText(text=text, pos=(0, .64), **menu_gui.text_args)
-        self.add_widget(txt)
         btn = DirectButton(
             text=_('Supporters'), pos=(0, 1, -.4),
             command=lambda: self.menu.push_page(SupportersPage(self.menu)),
             **menu_gui.btn_args)
-        self.add_widget(btn)
+        map(self.add_widget, [txt, btn])
         ThanksPageGui.build_page(self)
 
 

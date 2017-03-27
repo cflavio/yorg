@@ -37,24 +37,24 @@ class ClientPageGui(ThanksPageGui):
             frameColor=menu_args.btn_color,
             initialText=_('insert the server address'))
         self.ent.onscreenText['fg'] = menu_args.text_fg
-        widgets += [self.ent]
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_gui.btn_args)
-        widgets += [btn]
+        widgets += [self.ent, btn]
         map(self.add_widget, widgets)
         ThanksPageGui.build_page(self)
 
     def connect(self):
+        menu_gui = self.menu.gui
         try:
             eng.log(self.ent.get())
             eng.client_start(self.mdt.event.process_msg, self.ent.get())
-            menu_gui = self.menu.gui
             menu_args = self.menu.gui.menu_args
             self.add_widget(OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
                 font=menu_gui.font, fg=menu_args.text_fg))
         except ClientError:
-            txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)
+            txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
+                               scale=.16, font=menu_gui.menu_args.font)
             eng.do_later(5, txt.destroy)
 
 

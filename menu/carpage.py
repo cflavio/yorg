@@ -1,5 +1,5 @@
 from yaml import load
-from panda3d.core import TextNode, TextPropertiesManager, TextProperties
+from panda3d.core import TextNode
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from direct.gui.OnscreenText import OnscreenText
@@ -8,17 +8,14 @@ from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.gui.imgbtn import ImageButton
 from yyagl.gameobject import GameObjectMdt
 from .netmsgs import NetMsgs
-from .driverpage import DriverPage
+from .driverpage import DriverPage, DriverPageProps
 from .thankspage import ThanksPageGui
 
 
-class CarPageGui(ThanksPageGui):
+class CarPageProps(object):
 
-    def __init__(self, mdt, menu, cars, car_path, phys_path, player_name,
-                 drivers_img, cars_img, drivers):
-        self.car = None
-        self.current_cars = None
-        self.track_path = None
+    def __init__(self, cars, car_path, phys_path, player_name, drivers_img,
+                 cars_img, drivers):
         self.cars = cars
         self.car_path = car_path
         self.phys_path = phys_path
@@ -26,29 +23,34 @@ class CarPageGui(ThanksPageGui):
         self.drivers_img = drivers_img
         self.cars_img = cars_img
         self.drivers = drivers
+
+
+class CarPageGui(ThanksPageGui):
+
+    def __init__(self, mdt, menu, carpage_props):
+        self.car = None
+        self.current_cars = None
+        self.track_path = None
+        self.props = carpage_props
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
-
-        txt = OnscreenText(text=_('Select the car'), pos=(0, .8),
-                           **menu_gui.text_args)
-        widgets = [txt]
-
-        self.track_path = self.menu.track
-        self.cars = ['kronos', 'themis', 'diones', 'iapeto']
+        self.pagewidgets = [OnscreenText(text=_('Select the car'),
+                                         pos=(0, .8), **menu_gui.text_args)]
+        self.track_path = self.menu.track  # we should pass it
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
-        for i in range(len(self.cars)):
-            img = ImageButton(
+        for i in range(len(self.props.cars)):
+            self.pagewidgets += [ImageButton(
                 scale=.38, pos=(-1.2 + i * .8, 1, .1), frameColor=(0, 0, 0, 0),
-                image=self.car_path % self.cars[i],
-                command=self.on_car, extraArgs=[self.cars[i]],
-                **self.menu.gui.imgbtn_args)
-            txt = OnscreenText(self.cars[i], pos=(-1.2 + i * .8, .38),
-                               scale=.072, **t_a)
-            ppath = self.phys_path % self.cars[i]
-            with open(ppath) as phys_file:
+                image=self.props.car_path % self.props.cars[i],
+                command=self.on_car, extraArgs=[self.props.cars[i]],
+                **self.menu.gui.imgbtn_args)]
+            self.pagewidgets += [OnscreenText(
+                self.props.cars[i], pos=(-1.2 + i * .8, .38), scale=.072,
+                **t_a)]
+            with open(self.props.phys_path % self.props.cars[i]) as phys_file:
                 cfg = load(phys_file)
             speed = cfg['max_speed'] / 140.0
             fric = cfg['friction_slip'] / 3.0
@@ -56,30 +58,20 @@ class CarPageGui(ThanksPageGui):
             speed = int(round((speed - 1) * 100))
             fric = int(round((fric - 1) * 100))
             roll = -int(round((roll - 1) * 100))
-            tp_mgr = TextPropertiesManager.getGlobalPtr()
-            colors = [(.75, .25, .25, 1), (.25, .75, .25, 1)]
-            for namecol, col in zip(['red', 'green'], colors):
-                _tp = TextProperties()
-                _tp.setTextColor(col)
-                tp_mgr.setProperties(namecol, _tp)
             sign = lambda x: '\1green\1+\2' if x > 0 else ''
             psign = lambda x: '+' if x == 0 else sign(x)
             col = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
             pcol = lambda x: x if x == 0 else col(x)
-            fric_txt = OnscreenText(
-                '%s: %s%s%%' % (_('adherence'), psign(fric), pcol(fric)),
-                pos=(-.87 + i * .8, -.24), scale=.052, align=TextNode.A_right,
-                **t_a)
-            speed_txt = OnscreenText(
-                '%s: %s%s%%' % (_('speed'), psign(speed), pcol(speed)),
-                pos=(-.87 + i * .8, -.08), scale=.052, align=TextNode.A_right,
-                **t_a)
-            roll_txt = OnscreenText(
-                '%s: %s%s%%' % (_('stability'), psign(roll), pcol(roll)),
-                pos=(-.87 + i * .8, -.16), scale=.052, align=TextNode.A_right,
-                **t_a)
-            widgets += [img, txt, speed_txt, fric_txt, roll_txt]
-        map(self.add_widget, widgets)
+
+            def add_txt(txt, val, z):
+                self.pagewidgets += [OnscreenText(
+                    '%s: %s%s%%' % (txt, psign(val), pcol(val)),
+                    pos=(-.87 + i * .8, z), scale=.052, align=TextNode.A_right,
+                    **t_a)]
+            txt_lst = [(_('adherence'), fric, -.24), (_('speed'), speed, -.08),
+                       (_('stability'), roll, -.16)]
+            map(lambda txt_def: add_txt(*txt_def), txt_lst)
+        map(self.add_widget, self.pagewidgets)
         self.current_cars = {}
         ThanksPageGui.build_page(self)
 
@@ -90,18 +82,24 @@ class CarPageGui(ThanksPageGui):
 
     def on_car(self, car):
         self.mdt.menu.gui.notify('on_car_selected', car)
-        self.menu.push_page(DriverPage(
-            self.menu, self.track_path, car, self.player_name,
-            self.drivers_img, self.cars_img, self.cars, self.drivers))
+        driverpage_props = DriverPageProps(
+            self.props.player_name, self.props.drivers_img,
+            self.props.cars_img, self.props.cars, self.props.drivers)
+        drv_page = DriverPage(self.menu, self.track_path, car,
+                              driverpage_props)
+        self.menu.push_page(drv_page)
 
 
 class CarPageGuiSeason(CarPageGui):
 
     def on_car(self, car):
         self.mdt.menu.gui.notify('on_car_selected_season', car)
-        self.menu.push_page(DriverPage(
-            self.menu, self.track_path, car, self.player_name,
-            self.drivers_img, self.cars_img, self.cars, self.drivers))
+        driverpage_props = DriverPageProps(
+            self.props.player_name, self.props.drivers_img,
+            self.props.cars_img, self.props.cars, self.props.drivers)
+        drv_page = DriverPage(self.menu, self.track_path, car,
+                              driverpage_props)
+        self.menu.push_page(drv_page)
 
 
 class CarPageGuiServer(CarPageGui):
@@ -131,8 +129,7 @@ class CarPageGuiServer(CarPageGui):
     def evaluate_starting(self):
         connections = eng.connections + [self]
         if all(conn in self.current_cars for conn in connections):
-            packet = [NetMsgs.start_race]
-            packet += [len(self.current_cars)]
+            packet = [NetMsgs.start_race, len(self.current_cars)]
 
             def process(k):
                 '''Processes a car.'''
@@ -214,14 +211,11 @@ class CarPageGuiClient(CarPageGui):
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, menu, cars, car_path, phys_path, player_name,
-                 drivers_img, cars_img, drivers):
+    def __init__(self, menu, carpage_props):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [
-                self, self.menu, cars, car_path, phys_path, player_name,
-                drivers_img, cars_img, drivers])]]
+            [('gui', self.gui_cls, [self, self.menu, carpage_props])]]
         GameObjectMdt.__init__(self, init_lst)
 
 

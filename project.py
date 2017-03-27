@@ -52,6 +52,8 @@
 # #engine multi-threading physics loading
 # refactoring DIP, mediator
 # refactoring engine -> several singletons (LogMgr, PhysMgr, ...)
+# refactoring do only RaceProps, SeasonProps, MenuProps, ... and project them
+#   when passing
 # #backlog #project make uml diagrams with pyreverse into devinfo
 # #backlog #project unit tests
 # #backlog #shaders particle effects
