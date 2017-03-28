@@ -1,5 +1,6 @@
 *.pyc
 *.mo
+*.bam
 built/
 .project
 .pydevproject

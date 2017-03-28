@@ -3,40 +3,58 @@
 
 # TODO LIST =====
 
+# 0.6
+# #ai port ai lookahead to 3D
+# #ai obstacle avoidance
+# #ai add pit stop to ai
+
+# 0.7
+# forward missile
+# backward missile
+# turbo
+# drop a fixed bomb
+# rotate-all bomb
+# #ai weapons
+
+# 0.8
+# #gaming season
+
+# 0.9
+# #network at end of a multiplayer race wait for other cars
+# #network wheels animations
+# #network physics (collisions to players' car)
+# #network drivers' names on their cars during multiplayer matches
+# #network print if the port is closed when creating the server
+# #network send game packets using udp in place of tcp
+# #network weapons
+
+# 1.0 (refinements)
+# preload assets (cars on application's start, track on menu selection)
+# there is a loud sound before the race
+# give loading feedback for physics parts
+
 
 # WAITING =====
 
-#TODO: (Bullet 2.83) driving model
-#TODO: (wx can show html) embed into a wx window
-#TODO: (Panda3D 1.10) #shaders shadows https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
-#TODO: (implemented forks) add pit stop to ai
+# (Panda3D 1.10) #shaders shadows
+#     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
+# (Panda3D 1.10) build only nointernet
+# (Panda3D 1.10) make 'testing' branch
 
 
 # MAYBE/SOMEDAY =====
 
-#TODO: bug shader transparency tuftsgrass1.egg
-#TODO: put a button for opening the site at loading and exit
-#TODO: #gameplay minimap should show all cars
-#TODO: #gameplay waypoints as a line
-#TODO: #gameplay forks
-#TODO: #gameplay regenerate weapons
-#TODO: remove skid marks after some time
-#TODO: #ai port ai lookahead to 3D
-#TODO: #ai weapons
-#TODO: #ai obstacle avoidance
-#TODO: #network at end of a multiplayer race wait for other cars
-#TODO: #network wheels animations
-#TODO: #network physics (collisions to players' car)
-#TODO: #network drivers' names on their cars during multiplayer matches
-#TODO: #network print if the port is closed when creating the server
-#TODO: #network send game packets using udp in place of tcp
-#TODO: #network weapons
-#TODO: #project make scons for racing and game
-#TODO: #project build only nointernet, linux64, win64, osx64, runtime-dev option
-#TODO: #shaders deferred shading, tone mapping
-#TODO: #engine hardware instancing or save flattened files on bam files (caching)
-#TODO: #engine multi-threading physics loading
-#TODO: #backlog #project make uml diagrams with pyreverse into devinfo
-#TODO: #backlog #project unit tests
-#TODO: #backlog #shaders particle effects
-#TODO: #backlog #mmog django webapp for scores
+# #project make scons for yyagl
+# #project embed into a wx / pyqt window
+# #project port to python 3
+# #shaders deferred shading, tone mapping; fxaa
+# #engine hardware instancing
+# #engine multi-threading physics loading
+# refactoring DIP, mediator
+# refactoring engine -> several singletons (LogMgr, PhysMgr, ...)
+# refactoring do only RaceProps, SeasonProps, MenuProps, ... and project them
+#   when passing
+# #backlog #project make uml diagrams with pyreverse into devinfo
+# #backlog #project unit tests
+# #backlog #shaders particle effects
+# #backlog #mmog django webapp for scores

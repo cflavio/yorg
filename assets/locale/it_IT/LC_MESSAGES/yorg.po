@@ -17,134 +17,351 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yorg.py:84
-msgid ""
-"LOADING...\n"
-"\n"
-"PLEASE WAIT, IT MAY REQUIRE SOME TIME"
-msgstr ""
-"CARICAMENTO...\n"
-"\n"
-"ATTENDERE PREGO, SERVE TEMPO... :)"
-
-#: menu.py:37
-msgid "Single Player"
-msgstr ""
-
-#: menu.py:38
-msgid "Multiplayer"
-msgstr ""
-
-#: menu.py:39
-msgid "Options"
-msgstr "Opzioni"
-
-#: menu.py:40
-msgid "Credits"
-msgstr "Riconoscimenti"
-
-#: menu.py:41
-msgid "Quit"
-msgstr "Esci"
-
-#: menu.py:146
-msgid "Start"
-msgstr ""
-
-#: menu.py:161
-msgid "connection from "
-msgstr ""
-
-#: menu.py:177
-msgid "Client"
-msgstr ""
-
-#: menu.py:186
-msgid "Connect"
-msgstr ""
-
-#: menu.py:199
-msgid "Waiting for the server"
-msgstr ""
-
-#: menu.py:202
-msgid "Error"
-msgstr ""
-
-#: menu.py:350
-msgid ""
-"Please, really consider enabling this option to see our news.\n"
-"We hope you will find interesting stuff there.\n"
-"Moreover, this is how we can keep Yorg free."
-msgstr ""
-"Per favore, considera seriamente di abilitare questa opzione per vedere le "
-"nostre notizie.\n"
-"Speriamo che ci troverai roba interessante.\n"
-"Inoltre, è così che possiamo mantenere Yorg gratis."
-
-#: menu.py:526
+#: menu/creditpage.py:12
 msgid "Code"
 msgstr "Codice"
 
-#: menu.py:527
+#: menu/creditpage.py:13
 msgid "Art"
 msgstr "Grafica"
 
-#: racing/track/gfx.py:22
-msgid "loading track model"
-msgstr "caricamento modello pista"
+#: menu/creditpage.py:14
+msgid "Audio"
+msgstr "Audio"
 
-#: racing/track/gfx.py:100
-msgid "loading model: "
-msgstr "caricamento modello: "
+#: menu/creditpage.py:15
+msgid "Testing"
+msgstr "Testing"
 
-#: racing/track/gfx.py:163
-msgid "flattening model: "
-msgstr "elaborazione modello: "
+#: menu/creditpage.py:19
+msgid "Supporters"
+msgstr "Supporters"
 
-#: racing/track/gui.py:20
-msgid "work in progress"
-msgstr "stiamo lavorando per voi"
+#: menu/inputpage.py:41 menu/inputpage.py:44
+msgid "Use the joypad when present"
+msgstr "Usa il joypad se presente"
 
-#: racing/track/gui.py:76
-msgid "GO!"
-msgstr "VIA!"
+#: menu/inputpage.py:65
+msgid "Accelerate"
+msgstr "Accelerazione"
 
-#: racing/track/gui.py:97
-msgid "LAP"
-msgstr "GIRO"
+#: menu/inputpage.py:66
+msgid "Brake/Reverse"
+msgstr "Frena/Indietro"
 
-#: racing/track/gui.py:105
-msgid "share:"
+#: menu/inputpage.py:67
+msgid "Left"
+msgstr "Sinistra"
+
+#: menu/inputpage.py:68
+msgid "Right"
+msgstr "Destra"
+
+#: menu/inputpage.py:69
+msgid "Weapon"
+msgstr "Arma"
+
+#: menu/inputpage.py:77
+msgid "Press the key to record it"
+msgstr "Premi il tasto per memorizzarlo"
+
+#: menu/optionpage.py:62
+msgid "Language"
+msgstr "Lingua"
+
+#: menu/optionpage.py:67
+msgid "Volume"
+msgstr "Volume"
+
+#: menu/optionpage.py:71
+msgid "Fullscreen"
+msgstr "Schermo intero"
+
+#: menu/optionpage.py:77
+msgid "Resolution"
+msgstr "Risoluzione"
+
+#: menu/optionpage.py:87
+msgid "Antialiasing"
+msgstr "Antialiasing"
+
+#: menu/optionpage.py:92
+msgid "(from the next execution)"
+msgstr "(dalla prossima esecuzione)"
+
+#: menu/optionpage.py:100
+msgid "Configure input"
+msgstr "Configura input"
+
+#: menu/carpage.py:39
+msgid "Select the car"
+msgstr "Seleziona la macchina"
+
+#: menu/carpage.py:71 menu/driverpage.py:92
+msgid "adherence"
+msgstr "aderenza"
+
+#: menu/carpage.py:71 menu/driverpage.py:92
+msgid "speed"
+msgstr "velocità:"
+
+#: menu/carpage.py:72 menu/driverpage.py:93
+msgid "stability"
+msgstr "stabilità"
+
+#: menu/thankspage.py:15
+msgid "Thanks to: "
+msgstr "Grazie a:"
+
+#: menu/trackpage.py:34
+msgid "Select the track"
+msgstr "Seleziona la pista"
+
+#: menu/driverpage.py:54
+msgid "Select the driver"
+msgstr "Seleziona il pilota"
+
+#: menu/driverpage.py:59
+msgid "Write your name:"
+msgstr "Scrivi il tuo nome:"
+
+#: menu/driverpage.py:64 menu/driverpage.py:128 menu/driverpage.py:129
+#: menu/driverpage.py:130 menu/driverpage.py:132 menu/driverpage.py:135
+msgid "your name"
+msgstr "tuo nome"
+
+#: menu/mainpage.py:82
+msgid "Single Player"
+msgstr "Giocatore singolo"
+
+#: menu/mainpage.py:83
+msgid "Multiplayer"
+msgstr "Multiplayer"
+
+#: menu/mainpage.py:84
+msgid "Options"
+msgstr "Opzioni"
+
+#: menu/mainpage.py:85
+msgid "Support us"
+msgstr "Supportaci"
+
+#: menu/mainpage.py:86
+msgid "Credits"
+msgstr "Riconoscimenti"
+
+#: menu/mainpage.py:87
+msgid "Quit"
+msgstr "Esci"
+
+#: menu/mainpage.py:147
+msgid "Last news:"
+msgstr "Ultime notizie:"
+
+#: menu/mainpage.py:158
+msgid "show"
+msgstr "vedi"
+
+#: menu/clientpage.py:33
+msgid "Client"
+msgstr "Client"
+
+#: menu/clientpage.py:38
+msgid "insert the server address"
+msgstr "inserisci l'indirizzo del server"
+
+#: menu/clientpage.py:40
+msgid "Connect"
+msgstr "Connetti"
+
+#: menu/clientpage.py:53
+msgid "Waiting for the server"
+msgstr "Aspettando il server"
+
+#: menu/clientpage.py:56
+msgid "Error"
+msgstr "Errore"
+
+#: menu/serverpage.py:40
+msgid "connection from "
+msgstr "connessione da"
+
+#: menu/serverpage.py:73
+msgid "Start"
+msgstr "Avvia"
+
+#: menu/singleplayerpage.py:39
+msgid "Single race"
+msgstr "Gara singola"
+
+#: menu/singleplayerpage.py:40
+msgid "New season"
+msgstr "Nuova stagione"
+
+#: menu/singleplayerpage.py:41
+msgid "Continue season"
+msgstr "Continua stagione"
+
+#: menu/exitmenu/exitpage.py:15
+msgid ""
+"Please, visit our site after exiting!\n"
+"\n"
+"It helps us! Thank you!"
 msgstr ""
+"Per favore, visita il nostro sito dopo l'uscita!\n"
+"\n"
+"Ci aiuta! Grazie!"
 
-#: racing/car/logic.py:166
+#: menu/exitmenu/exitpage.py:20
+msgid "visit our site after exiting"
+msgstr "visita il nostro sito dopo l'uscita"
+
+#: menu/exitmenu/exitpage.py:23
+msgid "don't visit our site after exiting"
+msgstr "non visitare il nostro sito dopo l'uscita"
+
+#: menu/ingamemenu/ingamepage.py:13
+msgid ""
+"What do you want to do?\n"
+"\n"
+"NB Use 'p' for pausing the game."
+msgstr ""
+"Cosa vuoi fare?\n"
+"\n"
+"NB Usa 'p' per mettere il gioco in pausa."
+
+#: menu/ingamemenu/ingamepage.py:21
+msgid "back to the game"
+msgstr "torna al gioco"
+
+#: menu/ingamemenu/ingamepage.py:22
+msgid "back to the main menu"
+msgstr "torna al menu principale"
+
+#: yorg/fsm.py:38 yorg/fsm.py:97
+msgid "desert"
+msgstr "deserto"
+
+#: yorg/fsm.py:38 yorg/fsm.py:97
+msgid "mountain"
+msgstr "montagna"
+
+#: yyagl/engine/gui/page.py:144
+msgid "Back"
+msgstr "Indietro"
+
+#: yyagl/engine/gui/mainpage.py:39
+msgid "version: "
+msgstr "versione: "
+
+#: yyagl/racing/car/logic.py:326
 msgid "wrong way"
 msgstr "direzione sbagliata"
 
-#~ msgid "Language"
-#~ msgstr "Lingua"
+#: yyagl/racing/car/gui.py:175
+msgid "speed:"
+msgstr "velocità:"
 
-#~ msgid "Volume"
-#~ msgstr "Volume"
+#: yyagl/racing/car/gui.py:177
+msgid "lap:"
+msgstr "giro:"
 
-#~ msgid "Fullscreen"
-#~ msgstr "Schermo intero"
+#: yyagl/racing/car/gui.py:178
+msgid "time:"
+msgstr "tempo:"
 
-#~ msgid "Resolution"
-#~ msgstr "Risoluzione"
+#: yyagl/racing/car/gui.py:179
+msgid "best lap:"
+msgstr "miglior giro:"
 
-#~ msgid "Antialiasing"
-#~ msgstr "Antialiasing"
+#: yyagl/racing/car/gui.py:180
+msgid "ranking:"
+msgstr "classifica:"
 
-#~ msgid "(from the next execution)"
-#~ msgstr "(dalla prossima esecuzione)"
+#: yyagl/racing/car/gui.py:181
+msgid "damages:"
+msgstr "danni:"
 
-#~ msgid "See Ya2's news at exit"
-#~ msgstr "Vedi le notizie di Ya2 all'uscita"
+#: yyagl/racing/car/gui.py:190 yyagl/racing/car/gui.py:193
+msgid "low"
+msgstr "basso"
 
-#~ msgid "Back"
-#~ msgstr "Indietro"
+#: yyagl/racing/car/gui.py:194
+msgid "hi"
+msgstr "alto"
 
-#~ msgid "Play"
-#~ msgstr "Gioca"
+#: yyagl/racing/race/gui/countdown.py:20
+msgid "GO!"
+msgstr "VIA!"
+
+#: yyagl/racing/race/gui/results.py:41
+msgid "LAP"
+msgstr "GIRO"
+
+#: yyagl/racing/race/gui/results.py:42
+msgid "TIME"
+msgstr "TEMPO"
+
+#: yyagl/racing/race/gui/results.py:43
+msgid "RANKING"
+msgstr "CLASSIFICA"
+
+#: yyagl/racing/race/gui/results.py:74
+msgid "share:"
+msgstr "condividi:"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:41
+msgid "LOADING..."
+msgstr "CARICAMENTO..."
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:48
+msgid "track: "
+msgstr "pista: "
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:59
+msgid "Starting grid"
+msgstr "Griglia di partenza"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:89
+msgid "Ranking"
+msgstr "Classifica"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:117
+msgid "Controls"
+msgstr "Controlli"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:121
+msgid "joypad"
+msgstr "joypad"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:126
+msgid "accelerate"
+msgstr "accelerazione"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:131
+msgid "brake/reverse"
+msgstr "frena/indietro"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:136
+msgid "left"
+msgstr "sinistra"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:141
+msgid "right"
+msgstr "destra"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:146
+msgid "fire"
+msgstr "fuoco"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:156
+msgid ""
+"We need to elaborate the track on your system (this process reduces the "
+"bandwith required to you for downloading the game), so you may notice some "
+"slowdonws while you play (at the beginning). Everything will be smoother "
+"once the track has been processed!"
+msgstr ""
+"Bisogna elabarare la pista sul tuo sistema (questo processo riduce la banda "
+"richiesta a te per scaricare il gioco), quindi potresti notare dei "
+"rallentamenti mentre giochi (all'inizio). Tutto sarà più liscio una volta "
+"che la pista è stata elaborata!"

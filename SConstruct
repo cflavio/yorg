@@ -10,12 +10,12 @@ from yyagl.build.src import build_src
 from yyagl.build.devinfo import build_devinfo
 from yyagl.build.test import build_ut
 from yyagl.build.docs import build_docs
-from yyagl.build.strings import build_strings, build_string_template
+from yyagl.build.strings import build_strings, build_templ_merge
 from yyagl.build.imgs import build_images
 from yyagl.build.pdf import build_pdf
 
 
-argument_info = [
+argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
     ('images', 0), ('nointernet', 0), ('pdf', 0), ('tests', 0)]
@@ -57,7 +57,7 @@ bld_docs = Builder(action=build_docs)
 bld_pdf = Builder(action=build_pdf)
 bld_images = Builder(action=build_images)
 bld_str = Builder(action=build_strings, suffix='.mo', src_suffix='.po')
-bld_str_tmpl = Builder(action=build_string_template, suffix='.pot',
+bld_str_tmpl = Builder(action=build_templ_merge, suffix='.pot',
                        src_suffix='.py')
 
 env = Environment(BUILDERS={
@@ -71,75 +71,64 @@ env['LANG'] = lang_path
 env['NOINTERNET'] = arguments['nointernet']
 env['ICO_FILE'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT']
-env['SUPERMIRROR'] = '/home/flavio/runtime_panda3d'
-filt_game = ['./racing/game/thirdparty/*', './racing/game/tests/*']
+env['SUPERMIRROR'] = ''
+filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
+
+yorg_fil = ['./yyagl/*', './menu/*', './yorg/*', './licenses/*', './assets/*']
+yorg_lst = [
+    ('python', './yorg', '*.py', []),
+    ('python', '.', '*.py SConstruct *.md *.txt', yorg_fil)]
+racing_fil = ['./yyagl/racing/game/*', './yyagl/racing/car/*',
+              './yyagl/racing/race/*', './yyagl/racing/track/*']
+racing_lst = [('python', './yyagl/racing', '*.py', racing_fil)]
+yyagl_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']
+yyagl_c_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']
+yyagl_lst = [
+    ('python', './yyagl', '*.py *.pdef', filt_game + yyagl_fil),
+    ('c', './yyagl', '*.vert *.frag', filt_game + yyagl_c_fil)]
+build_lst = [
+    ('python', './yyagl/build', '*.py *.pdef', filt_game),
+    ('lua', './yyagl/build', 'config.lua', filt_game),
+    ('', './yyagl/build', '*.rst *.css_t *.conf', filt_game),
+    ('html', './yyagl/build', '*.html', filt_game),
+    ('javascript', './yyagl/build', '*.js', filt_game)]
 pdf_conf = {
-    'sources': [
-        ('python', '.', '*.py SConstruct', ['./yyagl/*'])],
-    'sources_menu': [
-        ('python', './menu', '*.py', [])],
-    'sources_yorg': [
-        ('python', './yorg', '*.py', [])],
-    'sources_root': [
-        ('python', '.', '*.py SConstruct', ['./yyagl/*', './menu/*', './yorg/*'])],
-    'sources_racing': [
-        ('python', './yyagl/racing', '*.py', [])],
-    'sources_racing_car': [
-        ('python', './yyagl/racing/car', '*.py', [])],
-    'sources_racing_race': [
-        ('python', './yyagl/racing/race', '*.py', [])],
-    'sources_racing_ranking': [
-        ('python', './yyagl/racing/ranking', '*.py', [])],
-    'sources_racing_season': [
-        ('python', './yyagl/racing/season', '*.py', [])],
-    'sources_racing_track': [
-        ('python', './yyagl/racing/track', '*.py', [])],
-    'sources_racing_other': [
-        ('python', './yyagl/racing', '*.py', ['./yyagl/racing/game/*', './yyagl/racing/car/*', './yyagl/racing/race/*', './yyagl/racing/ranking/*', './yyagl/racing/season/*', './yyagl/racing/track/*'])],
-    'sources_game': [
-        ('python', './yyagl', '*.py *.pdef', filt_game),
-        ('lua', './yyagl', 'config.lua', filt_game),
-        ('c', './yyagl', '*.vert *.frag', filt_game),
-        ('', './yyagl', '*.rst *.css_t *.conf', filt_game),
-        ('html', './yyagl', '*.html', filt_game),
-        ('javascript', './yyagl', '*.js', filt_game)],
-    'sources_game_build': [
-        ('python', './yyagl/build', '*.py *.pdef', filt_game),
-        ('lua', './yyagl/build', 'config.lua', filt_game),
-        ('', './yyagl/build', '*.rst *.css_t *.conf', filt_game),
-        ('html', './yyagl/build', '*.html', filt_game),
-        ('javascript', './yyagl/build', '*.js', filt_game)],
-    'sources_game_engine': [
-        ('python', './yyagl/engine', '*.py *.pdef', filt_game)],
-    'sources_game_other': [
-        ('python', './yyagl', '*.py *.pdef', filt_game + ['./yyagl/build/*', './yyagl/engine/*'])],
-    'tests': [
-        ('python', './yyagl/tests', '*.py', [])]}
+    'yorg_menu': [('python', './menu', '*.py', [])],
+    'yorg': yorg_lst,
+    'racing': racing_lst,
+    'racing_car': [('python', './yyagl/racing/car', '*.py', [])],
+    'racing_race': [('python', './yyagl/racing/race', '*.py', [])],
+    'racing_track': [('python', './yyagl/racing/track', '*.py', [])],
+    'yyagl': yyagl_lst,
+    'build': build_lst,
+    'engine': [('python', './yyagl/engine', '*.py', filt_game)],
+    'tests': [('python', './yyagl/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
 
 def cond_racing(s):
-    return not str(s).startswith('racing') or str(s).startswith('racing/game/')
-def cond_game(src):
-    not_game = not str(src).startswith('racing/game/')
-    thirdparty = str(src).startswith('racing/game/thirdparty')
-    return not_game or thirdparty or str(src).startswith('racing/game/tests')
-dev_conf = {'devinfo': lambda s: str(s).startswith('racing'),
-            'devinfo_racing': cond_racing, 'devinfo_game': cond_game}
+    return not str(s).startswith('yyagl/racing/')
+def cond_yyagl(src):
+    not_yyagl = not str(src).startswith('yyagl/')
+    thirdparty = str(src).startswith('yyagl/thirdparty/')
+    racing = str(src).startswith('yyagl/racing/')
+    return not_yyagl or thirdparty or racing or \
+        str(src).startswith('yyagl/tests')
+dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/'),
+            'devinfo_racing': cond_racing, 'devinfo_yyagl': cond_yyagl}
 env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
 
 img_files = image_extensions(get_files(['psd']))
+lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
+general_src = get_files(extensions) + img_files + lang_src
+no_int = arguments['nointernet']
 if arguments['images']:
     env.images(img_files, get_files(['psd']))
 if arguments['p3d']:
-    src_p3d = get_files(extensions) + img_files + \
-        [lang_path+'it_IT/LC_MESSAGES/%s.mo' % app_name]
-    env.p3d([p3d_path], src_p3d)
+    env.p3d([p3d_path], general_src)
 if arguments['source']:
-    src_src = get_files(extensions) + img_files + \
-        [lang_path+'it_IT/LC_MESSAGES/%s.mo' % app_name]
-    env.source([src_path], src_src)
+    env.source([src_path], general_src)
 if arguments['devinfo']:
     env.devinfo([devinfo_path], get_files(['py']))
 if arguments['tests']:
@@ -151,12 +140,10 @@ if arguments['osx']:
     out_path = osx_path_noint if arguments['nointernet'] else osx_path
     env.osx([out_path], [p3d_path])
 if arguments['linux_32']:
-    out_path = linux_path_32_noint if arguments['nointernet'] \
-        else linux_path_32
+    out_path = linux_path_32_noint if no_int else linux_path_32
     env.linux([out_path], [p3d_path], PLATFORM='i386')
 if arguments['linux_64']:
-    out_path = linux_path_64_noint if arguments['nointernet'] \
-        else linux_path_64
+    out_path = linux_path_64_noint if no_int else linux_path_64
     env.linux([out_path], [p3d_path], PLATFORM='amd64')
 if arguments['docs']:
     env.docs([docs_path], get_files(['py']))
@@ -164,13 +151,12 @@ if arguments['pdf']:
     env.pdf([pdf_path], get_files(['py']))
 
 def process_lang(lang_code):
-    tmpl = env.str_tmpl(
-        lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name,
-        get_files(['py']))
+    lang_name = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
+    tmpl = env.str_tmpl(lang_name, get_files(['py']))
     env.Precious(tmpl)
-    env.str(lang_path+lang_code+'/LC_MESSAGES/%s.mo' % app_name,
-            lang_path+lang_code+'/LC_MESSAGES/%s.po' % app_name)
+    lang_mo = lang_path + lang_code + '/LC_MESSAGES/%s.mo' % app_name
+    lang_po = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
+    env.str(lang_mo, lang_po)
 
 if arguments['lang']:
-    for lang_code in ['it_IT']:
-        process_lang(lang_code)
+    map(process_lang, ['it_IT'])

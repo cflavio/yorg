@@ -1,0 +1,201 @@
+<CoordinateSystem> { Z-up } 
+<Material> MATPennant3Anim {
+  <Scalar> diffr { 0.800000 }
+  <Scalar> diffg { 0.800000 }
+  <Scalar> diffb { 0.800000 }
+  <Scalar> specr { 0.000000 }
+  <Scalar> specg { 0.000000 }
+  <Scalar> specb { 0.000000 }
+  <Scalar> shininess { 12.5 }
+  <Scalar> ambr { 1.000000 }
+  <Scalar> ambg { 1.000000 }
+  <Scalar> ambb { 1.000000 }
+  <Scalar> emitr { 0.000000 }
+  <Scalar> emitg { 0.000000 }
+  <Scalar> emitb { 0.000000 }
+}
+
+<Texture> TEXPennant3Anim {
+  "./tex/TEXPennant3Anim.jpg"
+  <Scalar> envtype { MODULATE }
+  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
+  <Scalar> wrap { REPEAT }
+}
+
+  <Group> Armature.002 {
+    <Dart> { 1 }
+    <Joint> Bone {
+      <Transform> {
+        <Matrix4> {
+          1.3640604201725637e-08 1.4858151375918283e-09 -0.16099506616592407 0.0 
+          0.16099506616592407 0.0 1.3640604201725637e-08 0.0 
+          1.121759216320066e-16 -0.16099506616592407 -1.4858151375918283e-09 0.0 
+          -0.21203316748142242 -9.5367431640625e-07 -1.0128982097512562e-08 1.0 
+        }
+      }
+      <VertexRef> {
+        5 10
+        <Scalar> membership { 0.361333 }  <Ref> { Pennant3Anim }
+      }
+      <VertexRef> {
+        2 9
+        <Scalar> membership { 0.158978 }  <Ref> { Pennant3Anim }
+      }
+      <VertexRef> {
+        3
+        <Scalar> membership { 0.436164 }  <Ref> { Pennant3Anim }
+      }
+      <VertexRef> {
+        6
+        <Scalar> membership { 0.403446 }  <Ref> { Pennant3Anim }
+      }
+      <VertexRef> {
+        4 7
+        <Scalar> membership { 0.373425 }  <Ref> { Pennant3Anim }
+      }
+      <VertexRef> {
+        0 8
+        <Scalar> membership { 0.184088 }  <Ref> { Pennant3Anim }
+      }
+      <Joint> Bone.001 {
+        <Transform> {
+          <Matrix4> {
+            1.0 -8.472670742776245e-08 8.472670742776245e-08 0.0 
+            8.472670742776245e-08 1.0 7.81938359378689e-16 0.0 
+            -8.472670742776245e-08 6.396676774150702e-15 1.0 0.0 
+            8.881784197001252e-16 0.8910713195800781 -3.308722450212111e-24 1.0 
+          }
+        }
+        <VertexRef> {
+          0 2 4 5 7 8 9 10
+          <Scalar> membership { 1.000000 }  <Ref> { Pennant3Anim }
+        }
+        <VertexRef> {
+          6
+          <Scalar> membership { 0.000000 }  <Ref> { Pennant3Anim }
+        }
+        <VertexRef> {
+          3
+          <Scalar> membership { 0.022397 }  <Ref> { Pennant3Anim }
+        }
+        <Joint> Bone.002 {
+          <Transform> {
+            <Matrix4> {
+              1.0 3.481659405224491e-13 -3.552713678800501e-13 0.0 
+              -3.481659405224491e-13 0.9999999403953552 2.6601467724567608e-20 0.0 
+              3.552713678800501e-13 -2.668153783851046e-20 1.0 0.0 
+              0.0 0.8636360168457031 -4.572051004398628e-23 1.0 
+            }
+          }
+          <VertexRef> {
+            0 1 2 8 9
+            <Scalar> membership { 1.000000 }  <Ref> { Pennant3Anim }
+          }
+          <VertexRef> {
+            3 4 5 6 7 10
+            <Scalar> membership { 0.000000 }  <Ref> { Pennant3Anim }
+          }
+        }
+      }
+    }
+    <Group> Pennant3Anim {
+      <Transform> {
+        <Matrix4> {
+          4.68945387410713e-07 0.0 6.211370468139648 0.0 
+          0.0 6.211371421813965 0.0 0.0 
+          -6.211370468139648 0.0 4.68945387410713e-07 0.0 
+          -2.2361061299044221e-13 5.923624485149048e-06 -2.961812242574524e-06 1.0 
+        }
+      }
+      
+      <VertexPool> Pennant3Anim {
+      
+        <Vertex> 0 {0.110136 -0.102226 0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.259486 0.333466 
+          }
+        }
+        <Vertex> 1 {0.251699 0.000000 0.000000
+        <Normal> { -0.000000 0.000000 1.000000 }
+          <UV>  {
+            0.500000 0.000400 
+          }
+        }
+        <Vertex> 2 {0.110136 0.102226 0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.740514 0.333466 
+          }
+        }
+        <Vertex> 3 {-0.204558 -0.212346 -0.000000
+        <Normal> { -0.000000 0.000000 1.000000 }
+          <UV>  {
+            0.000400 0.999599 
+          }
+        }
+        <Vertex> 4 {-0.031428 -0.166339 -0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.108644 0.666532 
+          }
+        }
+        <Vertex> 5 {-0.031428 0.166339 -0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.891356 0.666532 
+          }
+        }
+        <Vertex> 6 {-0.204558 0.212346 -0.000000
+        <Normal> { -0.000000 0.000000 1.000000 }
+          <UV>  {
+            0.999600 0.999599 
+          }
+        }
+        <Vertex> 7 {-0.031428 -0.166339 -0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.108644 0.666532 
+          }
+        }
+        <Vertex> 8 {0.110136 -0.102226 0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.259486 0.333466 
+          }
+        }
+        <Vertex> 9 {0.110136 0.102226 0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.740514 0.333466 
+          }
+        }
+        <Vertex> 10 {-0.031428 0.166339 -0.000000
+        <Normal> { -0.000000 0.000000 0.999969 }
+          <UV>  {
+            0.891356 0.666532 
+          }
+        }}
+      
+      
+      <Polygon> {
+        <TRef> { TEXPennant3Anim }
+        <MRef> { MATPennant3Anim }
+        <Normal> {-0.000000 0.000000 1.000000}
+        <VertexRef> { 0 1 2 <Ref> { Pennant3Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXPennant3Anim }
+        <MRef> { MATPennant3Anim }
+        <Normal> {-0.000000 0.000000 1.000000}
+        <VertexRef> { 3 4 5 6 <Ref> { Pennant3Anim }} 
+      }
+      <Polygon> {
+        <TRef> { TEXPennant3Anim }
+        <MRef> { MATPennant3Anim }
+        <Normal> {-0.000000 0.000000 1.000000}
+        <VertexRef> { 7 8 9 10 <Ref> { Pennant3Anim }} 
+      }
+    }
+  }

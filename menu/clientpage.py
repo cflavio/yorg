@@ -1,62 +1,61 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
-from yyagl.engine.gui.page import Page, PageGui, PageEvent
+from yyagl.engine.gui.page import Page, PageEvent
 from yyagl.engine.network.client import ClientError
 from .carpage import CarPageClient
 from .netmsgs import NetMsgs
+from .thankspage import ThanksPageGui
 
 
 class ClientEvent(PageEvent):
 
     def on_back(self):
-        if eng.client.is_active:
-            eng.client.stop()
+        if eng.is_client_active:
+            eng.client_stop()
 
     def process_msg(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:
-            eng.log_mgr.log('track selected: ' + data_lst[1])
+            eng.log('track selected: ' + data_lst[1])
             self.mdt.gui.menu.track = data_lst[1]
-            self.mdt.gui.menu.logic.push_page(CarPageClient(self.mdt.gui.menu))
+            self.mdt.gui.menu.push_page(CarPageClient(self.mdt.gui.menu))
 
 
-class ClientPageGui(PageGui):
+class ClientPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu):
         self.ent = None
-        PageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
-        txt = OnscreenText(text='', pos=(0, .4), **menu_gui.text_args)
-        self.widgets += [txt]
-        PageGui.transl_text(self.widgets[0], _('Client'))
+        txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.text_args)
+        widgets = [txt]
         self.ent = DirectEntry(
-            scale=.12, pos=(-.68, 1, .2), entryFont=menu_gui.font, width=12,
+            scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText='insert the server address')
-        self.ent.onscreenText['fg'] = (.75, .75, .75, 1)
-        self.widgets += [self.ent]
+            initialText=_('insert the server address'))
+        self.ent.onscreenText['fg'] = menu_args.text_fg
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_gui.btn_args)
-        self.widgets += [btn]
-        PageGui.build_page(self)
+        widgets += [self.ent, btn]
+        map(self.add_widget, widgets)
+        ThanksPageGui.build_page(self)
 
     def connect(self):
+        menu_gui = self.menu.gui
         try:
-            eng.log_mgr.log(self.ent.get())
-            eng.client.start(self.mdt.event.process_msg, self.ent.get())
-            menu_gui = self.menu.gui
+            eng.log(self.ent.get())
+            eng.client_start(self.mdt.event.process_msg, self.ent.get())
             menu_args = self.menu.gui.menu_args
-            txt = OnscreenText(
+            self.add_widget(OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
-                font=menu_gui.font, fg=menu_args.text_fg)
-            self.widgets += [txt]
+                font=menu_gui.font, fg=menu_args.text_fg))
         except ClientError:
-            txt = OnscreenText(_('Error'), fg=(1, 0, 0, 1), scale=.5)
-            args = (5.0, lambda tsk: txt.destroy(), 'destroy error text')
-            taskMgr.doMethodLater(*args)
+            txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
+                               scale=.16, font=menu_gui.menu_args.font)
+            eng.do_later(5, txt.destroy)
 
 
 class ClientPage(Page):
