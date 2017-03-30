@@ -32,6 +32,8 @@
 # preload assets (cars on application's start, track on menu selection)
 # there is a loud sound before the race
 # give loading feedback for physics parts
+# store the commit of the bam generation to regenerate it only if commits are
+#   different
 
 
 # WAITING =====

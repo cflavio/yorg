@@ -31,12 +31,6 @@ class YorgLogic(GameLogic):
 
     def menu_start(self):
         self.mdt.audio.menu_music.play()
-        for file_ in [f_ for f_ in listdir('.') if f_.endswith('.bam')]:
-            curr_version = eng.version
-            file_version = file_[:-4].split('_')[-1]
-            if curr_version != file_version:
-                eng.log('removing ' + file_)
-                remove(file_)
 
     def on_input_back(self, dct):
         self.mdt.options['settings'].update(dct)
