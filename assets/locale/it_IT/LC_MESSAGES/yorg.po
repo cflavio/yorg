@@ -73,23 +73,23 @@ msgstr "Lingua"
 msgid "Volume"
 msgstr "Volume"
 
-#: menu/optionpage.py:71
+#: menu/optionpage.py:72
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: menu/optionpage.py:77
+#: menu/optionpage.py:78
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu/optionpage.py:87
+#: menu/optionpage.py:88
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: menu/optionpage.py:92
+#: menu/optionpage.py:93
 msgid "(from the next execution)"
 msgstr "(dalla prossima esecuzione)"
 
-#: menu/optionpage.py:100
+#: menu/optionpage.py:101
 msgid "Configure input"
 msgstr "Configura input"
 
@@ -246,7 +246,7 @@ msgstr "deserto"
 msgid "mountain"
 msgstr "montagna"
 
-#: yyagl/engine/gui/page.py:144
+#: yyagl/engine/gui/page.py:149
 msgid "Back"
 msgstr "Indietro"
 
@@ -254,7 +254,7 @@ msgstr "Indietro"
 msgid "version: "
 msgstr "versione: "
 
-#: yyagl/racing/car/logic.py:326
+#: yyagl/racing/car/logic.py:327
 msgid "wrong way"
 msgstr "direzione sbagliata"
 
@@ -294,21 +294,25 @@ msgstr "alto"
 msgid "GO!"
 msgstr "VIA!"
 
-#: yyagl/racing/race/gui/results.py:41
+#: yyagl/racing/race/gui/results.py:42
 msgid "LAP"
 msgstr "GIRO"
 
-#: yyagl/racing/race/gui/results.py:42
+#: yyagl/racing/race/gui/results.py:43
 msgid "TIME"
 msgstr "TEMPO"
 
-#: yyagl/racing/race/gui/results.py:43
+#: yyagl/racing/race/gui/results.py:44
 msgid "RANKING"
 msgstr "CLASSIFICA"
 
-#: yyagl/racing/race/gui/results.py:74
+#: yyagl/racing/race/gui/results.py:75
 msgid "share:"
 msgstr "condividi:"
+
+#: yyagl/racing/race/gui/results.py:105
+msgid "Continue"
+msgstr "Continua"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:41
 msgid "LOADING..."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-30 16:02+0200\n"
+"POT-Creation-Date: 2017-03-31 23:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,23 +73,23 @@ msgstr "Lingua"
 msgid "Volume"
 msgstr "Volume"
 
-#: menu/optionpage.py:71
+#: menu/optionpage.py:72
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: menu/optionpage.py:77
+#: menu/optionpage.py:78
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: menu/optionpage.py:87
+#: menu/optionpage.py:88
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: menu/optionpage.py:92
+#: menu/optionpage.py:93
 msgid "(from the next execution)"
 msgstr "(dalla prossima esecuzione)"
 
-#: menu/optionpage.py:100
+#: menu/optionpage.py:101
 msgid "Configure input"
 msgstr "Configura input"
 
@@ -246,7 +246,7 @@ msgstr "deserto"
 msgid "mountain"
 msgstr "montagna"
 
-#: yyagl/engine/gui/page.py:144
+#: yyagl/engine/gui/page.py:149
 msgid "Back"
 msgstr "Indietro"
 
@@ -254,7 +254,7 @@ msgstr "Indietro"
 msgid "version: "
 msgstr "versione: "
 
-#: yyagl/racing/car/logic.py:326
+#: yyagl/racing/car/logic.py:327
 msgid "wrong way"
 msgstr "direzione sbagliata"
 
@@ -294,21 +294,26 @@ msgstr "alto"
 msgid "GO!"
 msgstr "VIA!"
 
-#: yyagl/racing/race/gui/results.py:41
+#: yyagl/racing/race/gui/results.py:42
 msgid "LAP"
 msgstr "GIRO"
 
-#: yyagl/racing/race/gui/results.py:42
+#: yyagl/racing/race/gui/results.py:43
 msgid "TIME"
 msgstr "TEMPO"
 
-#: yyagl/racing/race/gui/results.py:43
+#: yyagl/racing/race/gui/results.py:44
 msgid "RANKING"
 msgstr "CLASSIFICA"
 
-#: yyagl/racing/race/gui/results.py:74
+#: yyagl/racing/race/gui/results.py:75
 msgid "share:"
 msgstr "condividi:"
+
+#: yyagl/racing/race/gui/results.py:105
+#, fuzzy
+msgid "Continue"
+msgstr "Continua stagione"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:41
 msgid "LOADING..."
@@ -353,14 +358,3 @@ msgstr "destra"
 #: yyagl/racing/race/gui/loading/loadingpage.py:145
 msgid "fire"
 msgstr "fuoco"
-
-#~ msgid ""
-#~ "We need to elaborate the track on your system (this process reduces the "
-#~ "bandwith required to you for downloading the game), so you may notice "
-#~ "some slowdonws while you play (at the beginning). Everything will be "
-#~ "smoother once the track has been processed!"
-#~ msgstr ""
-#~ "Bisogna elabarare la pista sul tuo sistema (questo processo riduce la "
-#~ "banda richiesta a te per scaricare il gioco), quindi potresti notare dei "
-#~ "rallentamenti mentre giochi (all'inizio). Tutto sarà più liscio una volta "
-#~ "che la pista è stata elaborata!"

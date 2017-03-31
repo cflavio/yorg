@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-30 16:02+0200\n"
+"POT-Creation-Date: 2017-03-31 23:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,23 +73,23 @@ msgstr ""
 msgid "Volume"
 msgstr ""
 
-#: menu/optionpage.py:71
+#: menu/optionpage.py:72
 msgid "Fullscreen"
 msgstr ""
 
-#: menu/optionpage.py:77
+#: menu/optionpage.py:78
 msgid "Resolution"
 msgstr ""
 
-#: menu/optionpage.py:87
+#: menu/optionpage.py:88
 msgid "Antialiasing"
 msgstr ""
 
-#: menu/optionpage.py:92
+#: menu/optionpage.py:93
 msgid "(from the next execution)"
 msgstr ""
 
-#: menu/optionpage.py:100
+#: menu/optionpage.py:101
 msgid "Configure input"
 msgstr ""
 
@@ -240,7 +240,7 @@ msgstr ""
 msgid "mountain"
 msgstr ""
 
-#: yyagl/engine/gui/page.py:144
+#: yyagl/engine/gui/page.py:149
 msgid "Back"
 msgstr ""
 
@@ -248,7 +248,7 @@ msgstr ""
 msgid "version: "
 msgstr ""
 
-#: yyagl/racing/car/logic.py:326
+#: yyagl/racing/car/logic.py:327
 msgid "wrong way"
 msgstr ""
 
@@ -288,20 +288,24 @@ msgstr ""
 msgid "GO!"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:41
+#: yyagl/racing/race/gui/results.py:42
 msgid "LAP"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:42
+#: yyagl/racing/race/gui/results.py:43
 msgid "TIME"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:43
+#: yyagl/racing/race/gui/results.py:44
 msgid "RANKING"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:74
+#: yyagl/racing/race/gui/results.py:75
 msgid "share:"
+msgstr ""
+
+#: yyagl/racing/race/gui/results.py:105
+msgid "Continue"
 msgstr ""
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:41
