@@ -67,7 +67,8 @@ class OptionPageGui(ThanksPageGui):
         add_lab('Volume', _('Volume'), .3)
         self._vol_slider = DirectSlider(
             pos=(.52, 0, .33), scale=.49, value=self.props.volume,
-            frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg)
+            frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg,
+            command=self.__on_volume)
         fullscreen_lab = add_lab('Fullscreen', _('Fullscreen'), .1)
         self._fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='', indicatorValue=self.props.fullscreen,
@@ -117,6 +118,9 @@ class OptionPageGui(ThanksPageGui):
         PageGui.update_texts(self)
         curr_lang = eng.curr_lang
         self._lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
+
+    def __on_volume(self):
+        eng.set_volume(self._vol_slider['value'])
 
     def __change_lang(self, arg):
         lang_dict = {'English': 'en', 'Italiano': 'it'}

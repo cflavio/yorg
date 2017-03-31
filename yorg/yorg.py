@@ -56,7 +56,8 @@ class Yorg(GameWindow):
             lang_domain='yorg',
             cursor_path='assets/images/gui/cursor.png',
             cursor_scale=((256/352.0) * .08, 1, .08),
-            cursor_hotspot=(.1, .06))
+            cursor_hotspot=(.1, .06),
+            volume=self.options['settings']['volume'])
         init_lst = [
             [('fsm', YorgFsm, [self])],
             [('logic', YorgLogic, [self])],
