@@ -148,8 +148,8 @@ class DriverPageGui(ThanksPageGui):
         drv_idx = range(1, 9)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        drivers = [(i, self.ent.get(), self.skills[i], self.mdt.car)]
-        drivers += [(drv_idx[j], names[j], self.skills[j], cars[j])
+        drivers = [(i, self.ent.get(), self.skills[i - 1], self.mdt.car)]
+        drivers += [(drv_idx[j], names[j], self.skills[j - 1], cars[j])
                     for j in range(3)]
         self.mdt.menu.gui.notify('on_driver_selected', self.ent.get(), drivers,
                                  self.mdt.track, self.mdt.car)
