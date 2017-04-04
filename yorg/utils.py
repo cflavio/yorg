@@ -9,13 +9,13 @@ class Utils(object):
 
     @staticmethod
     def get_thanks(num):
-        names = open('assets/thanks.txt').readlines()
+        names = open(eng.curr_path + 'assets/thanks.txt').readlines()
         shuffle(names)
         return [name.strip() for name in names[:num]]
 
     @staticmethod
     def get_all_thanks():
-        return [name.strip() for name in open('assets/thanks.txt').readlines()]
+        return [name.strip() for name in open(eng.curr_path + 'assets/thanks.txt').readlines()]
 
     @property
     def menu_args(self):

@@ -1,5 +1,7 @@
 # BUGS =====
 
+# it doesn't log correctly (eventually use files)
+
 
 # TODO LIST =====
 
@@ -30,10 +32,11 @@
 
 # 1.0 (refinements)
 # preload assets (cars on application's start, track on menu selection)
-# there is a loud sound before the race
 # give loading feedback for physics parts
 # store the commit of the bam generation to regenerate it only if commits are
 #   different
+# 3D audio (from player's car)
+# deployed textures should have power-of-2 dimensions
 
 
 # WAITING =====

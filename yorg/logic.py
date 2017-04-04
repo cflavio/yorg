@@ -101,7 +101,7 @@ class YorgLogic(GameLogic):
                        ['EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
                         'EmptyWheel.003']]
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
-        wheel_gfx_names = ['assets/models/cars/%s/' + elm
+        wheel_gfx_names = [eng.curr_path + 'assets/models/cars/%s/' + elm
                            for elm in wheel_gfx_names]
         tuning = self.mdt.logic.season.tuning.tunings[car_path]
 
@@ -119,21 +119,21 @@ class YorgLogic(GameLogic):
             drv = Driver(driver_props)
             drivers_dct[driver[3]] = drv
         tr_file_path = 'assets/models/tracks/%s/track.yml' % track_path
-        with open(tr_file_path) as track_file:
+        with open(eng.curr_path + tr_file_path) as track_file:
             music_name = load(track_file)['music']
         music_path = 'assets/music/%s.ogg' % music_name
         corner_names = ['topleft', 'topright', 'bottomright', 'bottomleft']
         corner_names = ['Minimap' + crn for crn in corner_names]
         col_dct = {'kronos': (0, 0, 1, 1), 'themis': (1, 0, 0, 1),
                    'diones': (1, 1, 1, 1), 'iapeto': (1, 1, 0, 1)}
-        with open(tr_file_path) as track_file:
+        with open(eng.curr_path + tr_file_path) as track_file:
             track_cfg = load(track_file)
             camera_vec = track_cfg['camera_vector']
             shadow_src = track_cfg['shadow_source']
             laps = track_cfg['laps']
 
         def sign_cb(parent):
-            thanks = open('assets/thanks.txt').readlines()
+            thanks = open(eng.curr_path + 'assets/thanks.txt').readlines()
             shuffle(thanks)
             text = '\n\n'.join(thanks[:3])
             txt = OnscreenText(text, parent=parent, scale=.2, fg=(0, 0, 0, 1),
@@ -148,7 +148,8 @@ class YorgLogic(GameLogic):
         race_props = RaceProps(
             keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
             'assets/fonts/Hanken-Book.ttf', 'assets/models/cars/%s/capsule',
-            'Capsule', 'assets/models/cars', 'assets/models/cars/%s/phys.yml',
+            'Capsule', 'assets/models/cars',
+            eng.curr_path + 'assets/models/cars/%s/phys.yml',
             wheel_names, tuning.engine, tuning.tires, tuning.suspensions,
             'Road', 'assets/models/cars/%s/car',
             ['assets/models/cars/%s/cardamage1',

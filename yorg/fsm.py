@@ -34,7 +34,8 @@ class YorgFsm(Fsm):
         menu_props = MenuProps(
             Utils().menu_args, self.mdt.options,
             ['kronos', 'themis', 'diones', 'iapeto'],
-            'assets/images/cars/%s.png', 'assets/models/cars/%s/phys.yml',
+            'assets/images/cars/%s.png',
+            eng.curr_path + 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain'], [_('desert'), _('mountain')],
             'assets/images/tracks/%s.png',
             self.mdt.options['settings']['player_name'],
