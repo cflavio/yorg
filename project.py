@@ -1,7 +1,5 @@
 # BUGS =====
 
-# it doesn't log correctly (eventually use files)
-
 
 # TODO LIST =====
 
