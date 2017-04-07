@@ -37,7 +37,7 @@ class ExitPageGui(PageGui):
     def on_end(self, visit):
         if visit:
             eng.open_browser('http://www.ya2.it')
-        exit()
+        eng.do_later(.5, exit)
 
 
 class ExitPage(Page):
