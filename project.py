@@ -4,7 +4,8 @@
 # TODO LIST =====
 
 # 0.6
-# #ai obstacle avoidance
+# #ai obstacle avoidance with walls
+# #ai obstacle avoidance with vehicles
 # #ai add pit stop to ai
 
 # 0.7
