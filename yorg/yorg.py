@@ -1,5 +1,5 @@
 from sys import platform
-from os.path import join
+from os.path import join, exists
 from panda3d.core import Filename
 from yyagl.game import GameWindow
 from yyagl.dictfile import DictFile
@@ -44,7 +44,7 @@ class Yorg(GameWindow):
                 'weapons': 0,
                 'win_orig': ''}}
         opt_path = ''
-        if platform == 'win32':
+        if platform == 'win32' and not exists('main.py'):
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
         self.options = DictFile(join(opt_path, 'options.yml') if opt_path else 'options.yml', default_opt)
         conf = Configuration(

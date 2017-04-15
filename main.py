@@ -1,15 +1,14 @@
 # log ########################################################################
-from os import path
 from os.path import exists, join
 from panda3d.core import MultiplexStream, Notify, Filename
 from yorg.yorg import Yorg
 import sys
 
-if sys.platform != 'darwin' and not path.exists('main.py'):
+if sys.platform != 'darwin' and not exists('main.py'):
     # (on osx it shows an error window on exit)
     # is it the deployed version?
     log_path = ''
-    if sys.platform == 'win32':
+    if sys.platform == 'win32' and not exists('main.py'):
         log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
         if not exists(log_path):
             Filename.mkdir(Filename(log_path))
@@ -21,5 +20,5 @@ if sys.platform != 'darwin' and not path.exists('main.py'):
 
 
 # main #######################################################################
-if __name__ == '__main__' or path.exists('main.pyo'):
+if __name__ == '__main__' or exists('main.pyo'):
     Yorg()
