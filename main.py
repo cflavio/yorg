@@ -1,18 +1,23 @@
 # log ########################################################################
 from os import path
-from panda3d.core import MultiplexStream, Notify
+from os.path import exists, join
+from panda3d.core import MultiplexStream, Notify, Filename
 from yorg.yorg import Yorg
 import sys
-
 
 if sys.platform != 'darwin' and not path.exists('main.py'):
     # (on osx it shows an error window on exit)
     # is it the deployed version?
-    sys.stdout = open('yorg_output.txt', 'w')
-    sys.stderr = open('yorg_error.txt', 'w')
+    log_path = ''
+    if sys.platform == 'win32':
+        log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
+        if not exists(log_path):
+            Filename.mkdir(Filename(log_path))
+    sys.stdout = open(join(log_path, 'yorg_output.txt'), 'w')
+    sys.stderr = open(join(log_path, 'yorg_error.txt'), 'w')
     nout = MultiplexStream()
     Notify.ptr().setOstreamPtr(nout, 0)
-    nout.addFile('yorg_log.txt')
+    nout.addFile(join(log_path, 'yorg_log.txt'))
 
 
 # main #######################################################################
