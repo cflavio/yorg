@@ -46,7 +46,7 @@ class Yorg(GameWindow):
         opt_path = ''
         if platform == 'win32':
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
-        self.options = DictFile(join(opt_path, 'options.yml'), default_opt)
+        self.options = DictFile(join(opt_path, 'options.yml') if opt_path else 'options.yml', default_opt)
         conf = Configuration(
             win_title='Yorg',
             win_orig=self.options['development']['win_orig'],
