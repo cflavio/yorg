@@ -1,3 +1,4 @@
+from itertools import product
 from yaml import load
 from panda3d.core import TextNode
 from direct.gui.DirectButton import DirectButton
@@ -41,16 +42,16 @@ class CarPageGui(ThanksPageGui):
         self.track_path = self.menu.track  # we should pass it
         t_a = self.menu.gui.text_args.copy()
         del t_a['scale']
-        for i in range(len(self.props.cars)):
+        for row, col in product(range(2), range(3)):
             self.pagewidgets += [ImageButton(
-                scale=.38, pos=(-1.2 + i * .8, 1, .1), frameColor=(0, 0, 0, 0),
-                image=self.props.car_path % self.props.cars[i],
-                command=self.on_car, extraArgs=[self.props.cars[i]],
+                scale=.32, pos=(-.8 + col * .8, 1, .4 - row * .7), frameColor=(0, 0, 0, 0),
+                image=self.props.car_path % self.props.cars[col + row * 3],
+                command=self.on_car, extraArgs=[self.props.cars[col + row * 3]],
                 **self.menu.gui.imgbtn_args)]
             self.pagewidgets += [OnscreenText(
-                self.props.cars[i], pos=(-1.2 + i * .8, .38), scale=.072,
+                self.props.cars[col + row * 3], pos=(-.8 + col * .8, .64 - row * .7), scale=.072,
                 **t_a)]
-            with open(self.props.phys_path % self.props.cars[i]) as phys_file:
+            with open(self.props.phys_path % self.props.cars[col + row * 3]) as phys_file:
                 cfg = load(phys_file)
             speed = cfg['max_speed'] / 140.0
             fric = cfg['friction_slip'] / 3.0
@@ -60,16 +61,16 @@ class CarPageGui(ThanksPageGui):
             roll = -int(round((roll - 1) * 100))
             sign = lambda x: '\1green\1+\2' if x > 0 else ''
             psign = lambda x: '+' if x == 0 else sign(x)
-            col = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
-            pcol = lambda x: x if x == 0 else col(x)
+            _col = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
+            pcol = lambda x: x if x == 0 else _col(x)
 
             def add_txt(txt, val, z):
                 self.pagewidgets += [OnscreenText(
                     '%s: %s%s%%' % (txt, psign(val), pcol(val)),
-                    pos=(-.87 + i * .8, z), scale=.052, align=TextNode.A_right,
+                    pos=(-.5 + col * .8, z - row * .7), scale=.052, align=TextNode.A_right,
                     **t_a)]
-            txt_lst = [(_('adherence'), fric, -.24), (_('speed'), speed, -.08),
-                       (_('stability'), roll, -.16)]
+            txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
+                       (_('stability'), roll, .19)]
             map(lambda txt_def: add_txt(*txt_def), txt_lst)
         map(self.add_widget, self.pagewidgets)
         self.current_cars = {}

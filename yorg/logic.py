@@ -125,7 +125,8 @@ class YorgLogic(GameLogic):
         corner_names = ['topleft', 'topright', 'bottomright', 'bottomleft']
         corner_names = ['Minimap' + crn for crn in corner_names]
         col_dct = {'kronos': (0, 0, 1, 1), 'themis': (1, 0, 0, 1),
-                   'diones': (1, 1, 1, 1), 'iapeto': (1, 1, 0, 1)}
+                   'diones': (1, 1, 1, 1), 'iapeto': (1, 1, 0, 1),
+                   'phoibe': ( .6, .6, 1, 1), 'rea': (0, 0, .6, 1)}
         with open(eng.curr_path + tr_file_path) as track_file:
             track_cfg = load(track_file)
             camera_vec = track_cfg['camera_vector']
@@ -169,7 +170,7 @@ class YorgLogic(GameLogic):
             'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
             shadow_src, laps, 'assets/models/weapons/rocket/rocket',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
-            ['kronos', 'themis', 'diones', 'iapeto'],
+            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
             self.mdt.options['development']['ai'], InGameMenu,
             Utils().menu_args, 'assets/images/drivers/driver%s_sel.png',
             'assets/images/cars/%s_sel.png',
@@ -181,6 +182,6 @@ class YorgLogic(GameLogic):
              'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
             'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
             'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
-            ['kronos', 'themis', 'diones', 'iapeto'], car_path)
+            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'], car_path)
         #todo compute the grid
         return race_props

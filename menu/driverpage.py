@@ -141,7 +141,7 @@ class DriverPageGui(ThanksPageGui):
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
-        names = Utils().get_thanks(4)
+        names = Utils().get_thanks(6)
         cars = self.props.cars[:]
         cars.remove(self.mdt.car)
         shuffle(cars)
@@ -150,7 +150,7 @@ class DriverPageGui(ThanksPageGui):
         shuffle(drv_idx)
         drivers = [(i, self.ent.get(), self.skills[i - 1], self.mdt.car)]
         drivers += [(drv_idx[j], names[j], self.skills[j - 1], cars[j])
-                    for j in range(3)]
+                    for j in range(5)]
         self.mdt.menu.gui.notify('on_driver_selected', self.ent.get(), drivers,
                                  self.mdt.track, self.mdt.car)
 
