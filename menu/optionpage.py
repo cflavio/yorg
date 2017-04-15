@@ -13,13 +13,14 @@ from .thankspage import ThanksPageGui
 
 class OptionPageProps(object):
 
-    def __init__(self, joystick, keys, lang, volume, fullscreen, aa):
+    def __init__(self, joystick, keys, lang, volume, fullscreen, aa, opt_file):
         self.joystick = joystick
         self.keys = keys
         self.lang = lang
         self.volume = volume
         self.fullscreen = fullscreen
         self.aa = aa
+        self.opt_file = opt_file
 
 
 class OptionEvent(PageEvent):
@@ -94,8 +95,13 @@ class OptionPageGui(ThanksPageGui):
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', indicatorValue=self.props.aa,
             indicator_frameColor=menu_args.text_fg, **menu_gui.checkbtn_args)
+        #bld_in = lambda: self.menu.logic.push_page(
+        #    InputPage(self.menu, self.props.joystick, self.props.keys))
+        # it doesn't work if we go forward and back between options and input:
+        # we should update keys
         bld_in = lambda: self.menu.logic.push_page(
-            InputPage(self.menu, self.props.joystick, self.props.keys))
+            InputPage(self.menu, self.props.joystick,
+                      self.props.opt_file['settings']['keys']))
         input_btn = DirectButton(
             text='', pos=(0, 1, -.5), command=bld_in, **menu_gui.btn_args)
         PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))

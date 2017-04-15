@@ -112,8 +112,9 @@ class YorgMainPageGui(MainPageGui):
 
     def on_options(self):
         self.load_settings()
-        option_props = OptionPageProps(self.joystick, self.keys, self.lang,
-                                       self.volume, self.fullscreen, self.aa)
+        option_props = OptionPageProps(
+            self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
+            self.aa, self.props.opt_file)
         self.menu.push_page(OptionPage(self.menu, option_props))
 
     def set_news(self):
