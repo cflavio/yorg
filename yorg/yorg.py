@@ -1,3 +1,6 @@
+from sys import platform
+from os.path import join
+from panda3d.core import Filename
 from yyagl.game import GameWindow
 from yyagl.dictfile import DictFile
 from yyagl.engine.configuration import Configuration
@@ -40,7 +43,10 @@ class Yorg(GameWindow):
                 'season': 0,
                 'weapons': 0,
                 'win_orig': ''}}
-        self.options = DictFile('options.yml', default_opt)
+        opt_path = ''
+        if platform == 'win32':
+            opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
+        self.options = DictFile(join(opt_path, 'options.yml'), default_opt)
         conf = Configuration(
             win_title='Yorg',
             win_orig=self.options['development']['win_orig'],
