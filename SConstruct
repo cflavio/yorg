@@ -132,7 +132,8 @@ VariantDir(path, '.')
 
 img_files = image_extensions(get_files(['psd']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
-general_src = get_files(extensions) + img_files + lang_src + track_files()
+general_src = get_files(extensions, ['venv']) + img_files + lang_src + \
+    track_files()
 no_int = arguments['nointernet']
 if arguments['images']:
     env.images(img_files, get_files(['psd']))
