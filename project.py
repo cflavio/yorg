@@ -4,9 +4,8 @@
 # TODO LIST =====
 
 # 0.6
-# #ai obstacle avoidance with walls
-# #ai obstacle avoidance with vehicles
-# #ai add pit stop to ai
+# #ai obstacle avoidance with walls (random raycast)
+# #ai obstacle avoidance with vehicles (random raycast)
 
 # 0.7
 # forward missile
@@ -35,6 +34,7 @@
 #   different
 # 3D audio (from player's car)
 # deployed textures should have power-of-2 dimensions
+# ai poller: process one car's ai for each frame
 
 
 # WAITING =====
