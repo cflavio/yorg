@@ -47,7 +47,7 @@ class YorgFsm(Fsm):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
             self.mdt.options['development']['season'], ['prototype', 'desert'],
-            'http://patreon.com/ya2', Utils().drivers)
+            'http://www.ya2.it/support-us', Utils().drivers)
         self.__menu = YorgMenu(menu_props)
         self.__menu.gui.menu.attach_obs(self.mdt.logic.on_input_back)
         self.__menu.gui.menu.attach_obs(self.mdt.logic.on_options_back)
