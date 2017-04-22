@@ -10,3 +10,5 @@ It requires Python 2.x. You should clone it recursively since it uses [yyagl sub
 If you want to use deploy-ng you must specify the switch ng, as instance:
 
 * scons ng=1 linux_64=1
+
+[![Bountysource Raised](https://www.bountysource.com/badge/team?team_id=213581&style=raised)](https://www.bountysource.com/teams/ya2?utm_source=ya2&utm_medium=shield&utm_campaign=raised)

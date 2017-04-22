@@ -35,6 +35,7 @@
 # 3D audio (from player's car)
 # deployed textures should have power-of-2 dimensions
 # ai poller: process one car's ai for each frame
+# drifting
 
 
 # WAITING =====
