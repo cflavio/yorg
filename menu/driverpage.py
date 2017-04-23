@@ -7,7 +7,7 @@ from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.gui.imgbtn import ImageButton
-from yyagl.gameobject import GameObjectMdt
+from yyagl.gameobject import GameObject
 from yorg.utils import Utils
 from .thankspage import ThanksPageGui
 
@@ -170,4 +170,4 @@ class DriverPage(Page):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, driverpage_props])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)

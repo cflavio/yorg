@@ -6,7 +6,7 @@ from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
 from yyagl.engine.joystick import has_pygame
-from yyagl.gameobject import GameObjectMdt
+from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
 
@@ -106,4 +106,4 @@ class InputPage(Page):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, joystick, keys])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)

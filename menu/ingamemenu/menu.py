@@ -1,4 +1,4 @@
-from yyagl.gameobject import GameObjectMdt, Gui
+from yyagl.gameobject import GameObject, Gui
 from yyagl.engine.gui.menu import Menu
 from yorg.utils import Utils
 from .ingamepage import InGamePage
@@ -19,9 +19,9 @@ class InGameMenuGui(Gui):
         Gui.destroy(self)
 
 
-class InGameMenu(GameObjectMdt):
+class InGameMenu(GameObject):
     gui_cls = InGameMenuGui
 
     def __init__(self, init_lst=[]):
         init_lst = [[('gui', self.gui_cls, [self])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)

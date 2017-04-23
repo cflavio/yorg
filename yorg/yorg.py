@@ -1,8 +1,8 @@
 from sys import platform
 from os.path import join, exists
 from panda3d.core import Filename
-from yyagl.game import GameWindow
-from yyagl.dictfile import DictFile
+from yyagl.game import Game
+from yyagl.dictfile import DctFile
 from yyagl.engine.configuration import Configuration
 from .logic import YorgLogic
 from .event import YorgEvent
@@ -10,7 +10,7 @@ from .fsm import YorgFsm
 from .audio import YorgAudio
 
 
-class Yorg(GameWindow):
+class Yorg(Game):
 
     def __init__(self):
         default_opt = {
@@ -46,7 +46,7 @@ class Yorg(GameWindow):
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
-        self.options = DictFile(join(opt_path, 'options.yml') if opt_path else 'options.yml', default_opt)
+        self.options = DctFile(join(opt_path, 'options.yml') if opt_path else 'options.yml', default_opt)
         conf = Configuration(
             win_title='Yorg',
             win_orig=self.options['development']['win_orig'],
@@ -69,4 +69,4 @@ class Yorg(GameWindow):
             [('logic', YorgLogic, [self])],
             [('audio', YorgAudio, [self])],
             [('event', YorgEvent, [self])]]
-        GameWindow.__init__(self, init_lst, conf)
+        Game.__init__(self, init_lst, conf)

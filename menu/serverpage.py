@@ -4,7 +4,7 @@ from urllib2 import urlopen
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageEvent
-from yyagl.gameobject import GameObjectMdt
+from yyagl.gameobject import GameObject
 from .trackpage import TrackPageServer, TrackPageProps
 from .thankspage import ThanksPageGui
 
@@ -88,4 +88,4 @@ class ServerPage(Page):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, serverpage_props])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)

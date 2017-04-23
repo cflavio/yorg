@@ -1,7 +1,7 @@
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.gui.imgbtn import ImageButton
-from yyagl.gameobject import GameObjectMdt
+from yyagl.gameobject import GameObject
 from .carpage import CarPage, CarPageServer, CarPageProps
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
@@ -76,7 +76,7 @@ class TrackPage(Page):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, trackpage_props])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)
 
 
 class TrackPageServer(TrackPage):

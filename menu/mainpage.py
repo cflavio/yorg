@@ -8,7 +8,7 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import PageGui
-from yyagl.gameobject import GameObjectMdt
+from yyagl.gameobject import GameObject
 from .singleplayerpage import SingleplayerPage, SingleplayerPageProps
 from .multiplayerpage import MultiplayerPage, MultiplayerPageProps
 from .optionpage import OptionPage, OptionPageProps
@@ -170,4 +170,4 @@ class YorgMainPage(MainPage):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, mainpage_props])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)

@@ -1,4 +1,4 @@
-from yyagl.gameobject import GameObjectMdt, Gui
+from yyagl.gameobject import GameObject, Gui
 from yyagl.engine.gui.menu import Menu
 from .exitpage import ExitPage
 
@@ -15,8 +15,8 @@ class ExitMenuGui(Gui):
         Gui.destroy(self)
 
 
-class ExitMenu(GameObjectMdt):
+class ExitMenu(GameObject):
 
     def __init__(self, menu_args):
         init_lst = [[('gui', ExitMenuGui, [self, menu_args])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)

@@ -7,7 +7,7 @@ from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.gui.imgbtn import ImageButton
-from yyagl.gameobject import GameObjectMdt
+from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
 from .driverpage import DriverPage, DriverPageProps
 from .thankspage import ThanksPageGui
@@ -217,7 +217,7 @@ class CarPage(Page):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, carpage_props])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)
 
 
 class CarPageSeason(CarPage):

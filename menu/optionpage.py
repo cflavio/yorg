@@ -6,7 +6,7 @@ from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
-from yyagl.gameobject import GameObjectMdt
+from yyagl.gameobject import GameObject
 from .inputpage import InputPage
 from .thankspage import ThanksPageGui
 
@@ -142,4 +142,4 @@ class OptionPage(Page):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, option_props])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)

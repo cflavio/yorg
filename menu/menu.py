@@ -1,4 +1,4 @@
-from yyagl.gameobject import GameObjectMdt, Gui
+from yyagl.gameobject import GameObject, Gui
 from yyagl.engine.gui.menu import Menu
 from .mainpage import YorgMainPage, MainPageProps
 
@@ -53,8 +53,8 @@ class YorgMenuGui(Gui):
         Gui.destroy(self)
 
 
-class YorgMenu(GameObjectMdt):
+class YorgMenu(GameObject):
 
     def __init__(self, menu_props):
         init_lst = [[('gui', YorgMenuGui, [self, menu_props])]]
-        GameObjectMdt.__init__(self, init_lst)
+        GameObject.__init__(self, init_lst)
