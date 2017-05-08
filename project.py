@@ -3,9 +3,6 @@
 
 # TODO LIST =====
 
-# 0.6
-# #ai obstacle avoidance with vehicles (random raycast)
-
 # 0.7
 # forward missile
 # backward missile
