@@ -1,6 +1,7 @@
 *.pyc
 *.mo
 *.bam
+*.txo
 built/
 build/
 venv/
