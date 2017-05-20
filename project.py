@@ -1,5 +1,9 @@
 # BUGS =====
 
+# camera at mountain's start
+# meshes aren't smooth
+# gloss doesn't work
+
 
 # TODO LIST =====
 
@@ -32,6 +36,7 @@
 # deployed textures should have power-of-2 dimensions
 # ai poller: process one car's ai for each frame
 # drifting
+# animation when the car is repaired in pitstop
 
 
 # WAITING =====
