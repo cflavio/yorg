@@ -7,6 +7,9 @@
 
 # TODO LIST =====
 
+# 0.6
+# respawn
+
 # 0.7
 # forward missile
 # backward missile
