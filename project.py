@@ -1,14 +1,14 @@
 # BUGS =====
 
 # camera at mountain's start
-# meshes aren't smooth
-# gloss doesn't work
+# meshes aren't smooth - egg-trans -nv 30 -o mesh.egg mesh.egg
+# gloss doesn't work - python apply_gloss.py mesh.egg
 
 
 # TODO LIST =====
 
 # 0.6
-# respawn
+# respawn - if the car isn't moving and the user is pressing keys then print 'press _ for respawning'
 
 # 0.7
 # forward missile
