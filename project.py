@@ -1,10 +1,5 @@
 # BUGS =====
 
-# camera at mountain's start
-# meshes aren't smooth - egg-trans -nv 30 -o mesh.egg mesh.egg
-# gloss doesn't work - python apply_gloss.py mesh.egg
-
-
 # TODO LIST =====
 
 # 0.6

@@ -1,201 +1,173 @@
-<CoordinateSystem> { Z-up } 
-<Material> MATPennant3Anim {
-  <Scalar> diffr { 0.800000 }
-  <Scalar> diffg { 0.800000 }
-  <Scalar> diffb { 0.800000 }
-  <Scalar> specr { 0.000000 }
-  <Scalar> specg { 0.000000 }
-  <Scalar> specb { 0.000000 }
-  <Scalar> shininess { 12.5 }
-  <Scalar> ambr { 1.000000 }
-  <Scalar> ambg { 1.000000 }
-  <Scalar> ambb { 1.000000 }
-  <Scalar> emitr { 0.000000 }
-  <Scalar> emitg { 0.000000 }
-  <Scalar> emitb { 0.000000 }
-}
+<CoordinateSystem> { Z-Up }
 
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/mountain/Pennant3Anim.egg assets/models/tracks/mountain/Pennant3Anim.egg"
+}
 <Texture> TEXPennant3Anim {
-  "./tex/TEXPennant3Anim.jpg"
-  <Scalar> envtype { MODULATE }
-  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> wrap { REPEAT }
+  "tex/TEXPennant3Anim.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
 }
-
-  <Group> Armature.002 {
-    <Dart> { 1 }
-    <Joint> Bone {
+<Material> MATPennant3Anim {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Armature.002 {
+  <Dart> { 1 }
+  <Group> Pennant3Anim {
+    <Transform> {
+      <Matrix4> {
+        4.68945e-07 0 6.21137 0
+        0 6.21137 0 0
+        -6.21137 0 4.68945e-07 0
+        0 5.92362e-06 -2.96181e-06 1
+      }
+    }
+    <VertexPool> Pennant3Anim {
+      <Vertex> 0 {
+        0.251699 0 0
+        <UV> { 0.5 0.0004 }
+        <Normal> { 0 0 1 }
+        // Bone.002:1
+      }
+      <Vertex> 1 {
+        0.110136 0.102226 0
+        <UV> { 0.740514 0.333466 }
+        <Normal> { 0 0 0.999969 }
+        // Bone:0.158978 Bone.001:1 Bone.002:1
+      }
+      <Vertex> 2 {
+        -0.031428 0.166339 -0
+        <UV> { 0.891356 0.666532 }
+        <Normal> { 0 0 0.999969 }
+        // Bone:0.361333 Bone.001:1
+      }
+      <Vertex> 3 {
+        -0.204558 -0.212346 -0
+        <UV> { 0.0004 0.999599 }
+        <Normal> { 0 0 1 }
+        // Bone:0.436164 Bone.001:0.022397
+      }
+      <Vertex> 4 {
+        -0.204558 0.212346 -0
+        <UV> { 0.9996 0.999599 }
+        <Normal> { 0 0 1 }
+        // Bone:0.403446
+      }
+      <Vertex> 5 {
+        -0.031428 -0.166339 -0
+        <UV> { 0.108644 0.666532 }
+        <Normal> { 0 0 1 }
+        // Bone:0.373425 Bone.001:1
+      }
+      <Vertex> 6 {
+        0.110136 -0.102226 0
+        <UV> { 0.259486 0.333466 }
+        <Normal> { 0 0 1 }
+        // Bone:0.184088 Bone.001:1 Bone.002:1
+      }
+    }
+    <Polygon> {
+      <TRef> { TEXPennant3Anim }
+      <MRef> { MATPennant3Anim }
+      <VertexRef> { 6 0 1 <Ref> { Pennant3Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXPennant3Anim }
+      <MRef> { MATPennant3Anim }
+      <VertexRef> { 3 5 2 4 <Ref> { Pennant3Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXPennant3Anim }
+      <MRef> { MATPennant3Anim }
+      <VertexRef> { 5 6 1 2 <Ref> { Pennant3Anim } }
+    }
+  }
+  <Joint> Bone {
+    <Transform> {
+      <Matrix4> {
+        1.36406e-08 1.48582e-09 -0.160995 0
+        0.160995 0 1.36406e-08 0
+        0 -0.160995 -1.48582e-09 0
+        -0.212033 -9.53674e-07 -1.0129e-08 1
+      }
+    }
+    <Joint> Bone.001 {
       <Transform> {
         <Matrix4> {
-          1.3640604201725637e-08 1.4858151375918283e-09 -0.16099506616592407 0.0 
-          0.16099506616592407 0.0 1.3640604201725637e-08 0.0 
-          1.121759216320066e-16 -0.16099506616592407 -1.4858151375918283e-09 0.0 
-          -0.21203316748142242 -9.5367431640625e-07 -1.0128982097512562e-08 1.0 
+          1 -8.47267e-08 8.47267e-08 0
+          8.47267e-08 1 0 0
+          -8.47267e-08 0 1 0
+          0 0.891071 0 1
         }
       }
-      <VertexRef> {
-        5 10
-        <Scalar> membership { 0.361333 }  <Ref> { Pennant3Anim }
-      }
-      <VertexRef> {
-        2 9
-        <Scalar> membership { 0.158978 }  <Ref> { Pennant3Anim }
+      <Joint> Bone.002 {
+        <Transform> {
+          <Matrix4> {
+            1 0 0 0
+            0 1 0 0
+            0 0 1 0
+            0 0.863636 0 1
+          }
+        }
+        <VertexRef> {
+          0 1 6
+          <Ref> { Pennant3Anim }
+        }
       }
       <VertexRef> {
         3
-        <Scalar> membership { 0.436164 }  <Ref> { Pennant3Anim }
+        <Scalar> membership { 0.022397 }
+        <Ref> { Pennant3Anim }
       }
       <VertexRef> {
-        6
-        <Scalar> membership { 0.403446 }  <Ref> { Pennant3Anim }
-      }
-      <VertexRef> {
-        4 7
-        <Scalar> membership { 0.373425 }  <Ref> { Pennant3Anim }
-      }
-      <VertexRef> {
-        0 8
-        <Scalar> membership { 0.184088 }  <Ref> { Pennant3Anim }
-      }
-      <Joint> Bone.001 {
-        <Transform> {
-          <Matrix4> {
-            1.0 -8.472670742776245e-08 8.472670742776245e-08 0.0 
-            8.472670742776245e-08 1.0 7.81938359378689e-16 0.0 
-            -8.472670742776245e-08 6.396676774150702e-15 1.0 0.0 
-            8.881784197001252e-16 0.8910713195800781 -3.308722450212111e-24 1.0 
-          }
-        }
-        <VertexRef> {
-          0 2 4 5 7 8 9 10
-          <Scalar> membership { 1.000000 }  <Ref> { Pennant3Anim }
-        }
-        <VertexRef> {
-          6
-          <Scalar> membership { 0.000000 }  <Ref> { Pennant3Anim }
-        }
-        <VertexRef> {
-          3
-          <Scalar> membership { 0.022397 }  <Ref> { Pennant3Anim }
-        }
-        <Joint> Bone.002 {
-          <Transform> {
-            <Matrix4> {
-              1.0 3.481659405224491e-13 -3.552713678800501e-13 0.0 
-              -3.481659405224491e-13 0.9999999403953552 2.6601467724567608e-20 0.0 
-              3.552713678800501e-13 -2.668153783851046e-20 1.0 0.0 
-              0.0 0.8636360168457031 -4.572051004398628e-23 1.0 
-            }
-          }
-          <VertexRef> {
-            0 1 2 8 9
-            <Scalar> membership { 1.000000 }  <Ref> { Pennant3Anim }
-          }
-          <VertexRef> {
-            3 4 5 6 7 10
-            <Scalar> membership { 0.000000 }  <Ref> { Pennant3Anim }
-          }
-        }
+        1 2 5 6
+        <Scalar> membership { 1 }
+        <Ref> { Pennant3Anim }
       }
     }
-    <Group> Pennant3Anim {
-      <Transform> {
-        <Matrix4> {
-          4.68945387410713e-07 0.0 6.211370468139648 0.0 
-          0.0 6.211371421813965 0.0 0.0 
-          -6.211370468139648 0.0 4.68945387410713e-07 0.0 
-          -2.2361061299044221e-13 5.923624485149048e-06 -2.961812242574524e-06 1.0 
-        }
-      }
-      
-      <VertexPool> Pennant3Anim {
-      
-        <Vertex> 0 {0.110136 -0.102226 0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.259486 0.333466 
-          }
-        }
-        <Vertex> 1 {0.251699 0.000000 0.000000
-        <Normal> { -0.000000 0.000000 1.000000 }
-          <UV>  {
-            0.500000 0.000400 
-          }
-        }
-        <Vertex> 2 {0.110136 0.102226 0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.740514 0.333466 
-          }
-        }
-        <Vertex> 3 {-0.204558 -0.212346 -0.000000
-        <Normal> { -0.000000 0.000000 1.000000 }
-          <UV>  {
-            0.000400 0.999599 
-          }
-        }
-        <Vertex> 4 {-0.031428 -0.166339 -0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.108644 0.666532 
-          }
-        }
-        <Vertex> 5 {-0.031428 0.166339 -0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.891356 0.666532 
-          }
-        }
-        <Vertex> 6 {-0.204558 0.212346 -0.000000
-        <Normal> { -0.000000 0.000000 1.000000 }
-          <UV>  {
-            0.999600 0.999599 
-          }
-        }
-        <Vertex> 7 {-0.031428 -0.166339 -0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.108644 0.666532 
-          }
-        }
-        <Vertex> 8 {0.110136 -0.102226 0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.259486 0.333466 
-          }
-        }
-        <Vertex> 9 {0.110136 0.102226 0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.740514 0.333466 
-          }
-        }
-        <Vertex> 10 {-0.031428 0.166339 -0.000000
-        <Normal> { -0.000000 0.000000 0.999969 }
-          <UV>  {
-            0.891356 0.666532 
-          }
-        }}
-      
-      
-      <Polygon> {
-        <TRef> { TEXPennant3Anim }
-        <MRef> { MATPennant3Anim }
-        <Normal> {-0.000000 0.000000 1.000000}
-        <VertexRef> { 0 1 2 <Ref> { Pennant3Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXPennant3Anim }
-        <MRef> { MATPennant3Anim }
-        <Normal> {-0.000000 0.000000 1.000000}
-        <VertexRef> { 3 4 5 6 <Ref> { Pennant3Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXPennant3Anim }
-        <MRef> { MATPennant3Anim }
-        <Normal> {-0.000000 0.000000 1.000000}
-        <VertexRef> { 7 8 9 10 <Ref> { Pennant3Anim }} 
-      }
+    <VertexRef> {
+      1
+      <Scalar> membership { 0.158978 }
+      <Ref> { Pennant3Anim }
+    }
+    <VertexRef> {
+      6
+      <Scalar> membership { 0.184088 }
+      <Ref> { Pennant3Anim }
+    }
+    <VertexRef> {
+      2
+      <Scalar> membership { 0.361333 }
+      <Ref> { Pennant3Anim }
+    }
+    <VertexRef> {
+      5
+      <Scalar> membership { 0.373425 }
+      <Ref> { Pennant3Anim }
+    }
+    <VertexRef> {
+      4
+      <Scalar> membership { 0.403446 }
+      <Ref> { Pennant3Anim }
+    }
+    <VertexRef> {
+      3
+      <Scalar> membership { 0.436164 }
+      <Ref> { Pennant3Anim }
     }
   }
+}

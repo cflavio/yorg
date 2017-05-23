@@ -1,190 +1,164 @@
-<CoordinateSystem> { Z-up } 
-<Material> MATFencepole {
-  <Scalar> diffr { 0.800000 }
-  <Scalar> diffg { 0.800000 }
-  <Scalar> diffb { 0.800000 }
-  <Scalar> specr { 0.000000 }
-  <Scalar> specg { 0.000000 }
-  <Scalar> specb { 0.000000 }
-  <Scalar> shininess { 12.5 }
-  <Scalar> ambr { 1.000000 }
-  <Scalar> ambg { 1.000000 }
-  <Scalar> ambb { 1.000000 }
-  <Scalar> emitr { 0.000000 }
-  <Scalar> emitg { 0.000000 }
-  <Scalar> emitb { 0.000000 }
-}
+<CoordinateSystem> { Z-Up }
 
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/mountain/Fencepole.egg assets/models/tracks/mountain/Fencepole.egg"
+}
 <Texture> TEXFencepole {
-  "./tex/TEXFencepole.jpg"
-  <Scalar> envtype { MODULATE }
-  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> wrap { REPEAT }
+  "tex/TEXFencepole.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
 }
-
-  <Group> Fencepole {
-    <Transform> {
-      <Matrix4> {
-        1.0 0.0 0.0 0.0 
-        0.0 1.0 0.0 0.0 
-        0.0 0.0 1.0 0.0 
-        0.0 0.0 0.0 1.0 
-      }
-    }
-    
-    <VertexPool> Fencepole {
-    
-      <Vertex> 0 {0.128145 0.128135 -0.663285
-      <Normal> { 1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.396397 0.052064 
-        }
-      }
-      <Vertex> 1 {0.128145 0.128135 0.442190
-      <Normal> { 1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.396397 0.962748 
-        }
-      }
-      <Vertex> 2 {0.128143 -0.128139 0.442190
-      <Normal> { 1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.200059 0.962748 
-        }
-      }
-      <Vertex> 3 {0.128143 -0.128139 -0.663285
-      <Normal> { 1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.200059 0.052064 
-        }
-      }
-      <Vertex> 4 {0.128143 -0.128139 -0.663285
-      <Normal> { 0.000000 -1.000000 0.000000 }
-        <UV>  {
-          0.199533 0.052038 
-        }
-      }
-      <Vertex> 5 {0.128143 -0.128139 0.442190
-      <Normal> { 0.000000 -1.000000 0.000000 }
-        <UV>  {
-          0.199533 0.962722 
-        }
-      }
-      <Vertex> 6 {-0.128146 -0.128137 0.442190
-      <Normal> { 0.000000 -1.000000 0.000000 }
-        <UV>  {
-          0.003184 0.962722 
-        }
-      }
-      <Vertex> 7 {-0.128146 -0.128137 -0.663285
-      <Normal> { 0.000000 -1.000000 0.000000 }
-        <UV>  {
-          0.003184 0.052038 
-        }
-      }
-      <Vertex> 8 {-0.128146 -0.128137 -0.663285
-      <Normal> { -1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.790412 0.052177 
-        }
-      }
-      <Vertex> 9 {-0.128146 -0.128137 0.442190
-      <Normal> { -1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.790412 0.962861 
-        }
-      }
-      <Vertex> 10 {-0.128142 0.128142 0.442190
-      <Normal> { -1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.594071 0.962861 
-        }
-      }
-      <Vertex> 11 {-0.128142 0.128142 -0.663285
-      <Normal> { -1.000000 0.000000 0.000000 }
-        <UV>  {
-          0.594071 0.052177 
-        }
-      }
-      <Vertex> 12 {-0.128142 0.128142 -0.663285
-      <Normal> { 0.000000 1.000000 0.000000 }
-        <UV>  {
-          0.593615 0.052177 
-        }
-      }
-      <Vertex> 13 {-0.128142 0.128142 0.442190
-      <Normal> { 0.000000 1.000000 0.000000 }
-        <UV>  {
-          0.593615 0.962861 
-        }
-      }
-      <Vertex> 14 {0.128145 0.128135 0.442190
-      <Normal> { 0.000000 1.000000 0.000000 }
-        <UV>  {
-          0.397267 0.962861 
-        }
-      }
-      <Vertex> 15 {0.128145 0.128135 -0.663285
-      <Normal> { 0.000000 1.000000 0.000000 }
-        <UV>  {
-          0.397267 0.052177 
-        }
-      }
-      <Vertex> 16 {-0.128142 0.128142 0.442190
-      <Normal> { 0.000000 0.000000 1.000000 }
-        <UV>  {
-          0.797918 0.598119 
-        }
-      }
-      <Vertex> 17 {-0.128146 -0.128137 0.442190
-      <Normal> { 0.000000 0.000000 1.000000 }
-        <UV>  {
-          0.797917 0.401778 
-        }
-      }
-      <Vertex> 18 {0.128143 -0.128139 0.442190
-      <Normal> { 0.000000 0.000000 1.000000 }
-        <UV>  {
-          0.994266 0.401778 
-        }
-      }
-      <Vertex> 19 {0.128145 0.128135 0.442190
-      <Normal> { 0.000000 0.000000 1.000000 }
-        <UV>  {
-          0.994266 0.598116 
-        }
-      }}
-    
-    
-    <Polygon> {
-      <TRef> { TEXFencepole }
-      <MRef> { MATFencepole }
-      <Normal> {1.000000 -0.000007 0.000000}
-      <VertexRef> { 0 1 2 3 <Ref> { Fencepole }} 
-    }
-    <Polygon> {
-      <TRef> { TEXFencepole }
-      <MRef> { MATFencepole }
-      <Normal> {-0.000010 -1.000000 0.000000}
-      <VertexRef> { 4 5 6 7 <Ref> { Fencepole }} 
-    }
-    <Polygon> {
-      <TRef> { TEXFencepole }
-      <MRef> { MATFencepole }
-      <Normal> {-1.000000 0.000014 0.000000}
-      <VertexRef> { 8 9 10 11 <Ref> { Fencepole }} 
-    }
-    <Polygon> {
-      <TRef> { TEXFencepole }
-      <MRef> { MATFencepole }
-      <Normal> {0.000027 1.000000 0.000000}
-      <VertexRef> { 12 13 14 15 <Ref> { Fencepole }} 
-    }
-    <Polygon> {
-      <TRef> { TEXFencepole }
-      <MRef> { MATFencepole }
-      <Normal> {0.000000 0.000000 1.000000}
-      <VertexRef> { 16 17 18 19 <Ref> { Fencepole }} 
+<Material> MATFencepole {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Fencepole {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
     }
   }
+  <VertexPool> Fencepole {
+    <Vertex> 0 {
+      0.128145 0.128135 -0.663285
+      <UV> { 0.396397 0.052064 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 1 {
+      0.128145 0.128135 0.44219
+      <UV> { 0.396397 0.962748 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 2 {
+      0.128143 -0.128139 0.44219
+      <UV> { 0.200059 0.962748 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 3 {
+      0.128143 -0.128139 -0.663285
+      <UV> { 0.200059 0.052064 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 4 {
+      0.128143 -0.128139 -0.663285
+      <UV> { 0.199533 0.052038 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 5 {
+      0.128143 -0.128139 0.44219
+      <UV> { 0.199533 0.962722 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 6 {
+      -0.128146 -0.128137 0.44219
+      <UV> { 0.003184 0.962722 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 7 {
+      -0.128146 -0.128137 -0.663285
+      <UV> { 0.003184 0.052038 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 8 {
+      -0.128146 -0.128137 -0.663285
+      <UV> { 0.790412 0.052177 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 9 {
+      -0.128146 -0.128137 0.44219
+      <UV> { 0.790412 0.962861 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 10 {
+      -0.128142 0.128142 0.44219
+      <UV> { 0.594071 0.962861 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 11 {
+      -0.128142 0.128142 -0.663285
+      <UV> { 0.594071 0.052177 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 12 {
+      -0.128142 0.128142 -0.663285
+      <UV> { 0.593615 0.052177 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 13 {
+      -0.128142 0.128142 0.44219
+      <UV> { 0.593615 0.962861 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 14 {
+      0.128145 0.128135 0.44219
+      <UV> { 0.397267 0.962861 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 15 {
+      0.128145 0.128135 -0.663285
+      <UV> { 0.397267 0.052177 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 16 {
+      -0.128142 0.128142 0.44219
+      <UV> { 0.797918 0.598119 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 17 {
+      -0.128146 -0.128137 0.44219
+      <UV> { 0.797917 0.401778 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 18 {
+      0.128143 -0.128139 0.44219
+      <UV> { 0.994266 0.401778 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 19 {
+      0.128145 0.128135 0.44219
+      <UV> { 0.994266 0.598116 }
+      <Normal> { 0 0 1 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXFencepole }
+    <MRef> { MATFencepole }
+    <VertexRef> { 0 1 2 3 <Ref> { Fencepole } }
+  }
+  <Polygon> {
+    <TRef> { TEXFencepole }
+    <MRef> { MATFencepole }
+    <VertexRef> { 4 5 6 7 <Ref> { Fencepole } }
+  }
+  <Polygon> {
+    <TRef> { TEXFencepole }
+    <MRef> { MATFencepole }
+    <VertexRef> { 8 9 10 11 <Ref> { Fencepole } }
+  }
+  <Polygon> {
+    <TRef> { TEXFencepole }
+    <MRef> { MATFencepole }
+    <VertexRef> { 12 13 14 15 <Ref> { Fencepole } }
+  }
+  <Polygon> {
+    <TRef> { TEXFencepole }
+    <MRef> { MATFencepole }
+    <VertexRef> { 16 17 18 19 <Ref> { Fencepole } }
+  }
+}

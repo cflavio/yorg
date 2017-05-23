@@ -1,735 +1,544 @@
-<CoordinateSystem> { Z-up } 
-<Material> MATFlag1Anim {
-  <Scalar> diffr { 0.800000 }
-  <Scalar> diffg { 0.800000 }
-  <Scalar> diffb { 0.800000 }
-  <Scalar> specr { 0.000000 }
-  <Scalar> specg { 0.000000 }
-  <Scalar> specb { 0.000000 }
-  <Scalar> shininess { 12.5 }
-  <Scalar> ambr { 1.000000 }
-  <Scalar> ambg { 1.000000 }
-  <Scalar> ambb { 1.000000 }
-  <Scalar> emitr { 0.000000 }
-  <Scalar> emitg { 0.000000 }
-  <Scalar> emitb { 0.000000 }
-}
+<CoordinateSystem> { Z-Up }
 
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/mountain/Flag1Anim.egg assets/models/tracks/mountain/Flag1Anim.egg"
+}
 <Texture> TEXFlag1Anim {
-  "./tex/TEXFlag1Anim.jpg"
-  <Scalar> envtype { MODULATE }
-  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> wrap { REPEAT }
+  "tex/TEXFlag1Anim.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
 }
-
-  <Group> Armature.130 {
-    <Dart> { 1 }
-    <Joint> Bone {
+<Material> MATFlag1Anim {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Armature.130 {
+  <Dart> { 1 }
+  <Group> Flag1Anim {
+    <Transform> {
+      <Matrix4> {
+        5.11403e-07 -1.19209e-07 -5.25305 0
+        -5.96047e-08 5.25305 -1.19209e-07 0
+        5.25305 5.96047e-08 5.11403e-07 0
+        1.25243e-06 0 0 1
+      }
+    }
+    <VertexPool> Flag1Anim {
+      <Vertex> 0 {
+        -0.961817 -3e-06 -0.481772
+        <UV> { 0.000314 0.000314 }
+        <Normal> { 0 -1 0 }
+        // Bone.005:0.040764 Bone.006:0.189637 Bone.007:1
+      }
+      <Vertex> 1 {
+        -0.961817 -3e-06 -0.160657
+        <UV> { 0.000314 0.206161 }
+        <Normal> { 0 -1 0 }
+        // Bone.007:1
+      }
+      <Vertex> 2 {
+        -0.961817 -3e-06 0.160459
+        <UV> { 0.000314 0.412008 }
+        <Normal> { 0 -1 0 }
+        // Bone.003:0.999997
+      }
+      <Vertex> 3 {
+        -0.961817 -3e-06 0.481574
+        <UV> { 0.000314 0.617855 }
+        <Normal> { 0 -1 0 }
+        // Bone.001:0.041371 Bone.002:0.189938 Bone.003:1
+        // Bone.007:0.175186
+      }
+      <Vertex> 4 {
+        -0.572069 -3e-06 -0.481772
+        <UV> { 0.250157 0.000314 }
+        <Normal> { 0 -1 0 }
+        // Bone.005:0.129157 Bone.006:1
+      }
+      <Vertex> 5 {
+        -0.572069 -3e-06 -0.160657
+        <UV> { 0.250157 0.206161 }
+        <Normal> { 0 -1 0 }
+        // Bone.006:0.999923
+      }
+      <Vertex> 6 {
+        -0.572069 -3e-06 0.160459
+        <UV> { 0.250157 0.412008 }
+        <Normal> { 0 -1 0 }
+        // Bone.002:0.999998
+      }
+      <Vertex> 7 {
+        -0.572069 -3e-06 0.481574
+        <UV> { 0.250157 0.617854 }
+        <Normal> { 0 -1 0 }
+        // Bone.001:0.129815 Bone.002:1
+      }
+      <Vertex> 8 {
+        -0.182321 -3e-06 -0.481772
+        <UV> { 0.5 0.000314 }
+        <Normal> { 0 -1 0 }
+        // Bone.004:0.066705 Bone.005:1
+      }
+      <Vertex> 9 {
+        -0.182321 -3e-06 -0.160657
+        <UV> { 0.5 0.206161 }
+        <Normal> { 0 -1 0 }
+        // Bone.005:0.999943
+      }
+      <Vertex> 10 {
+        -0.182321 -3e-06 0.160459
+        <UV> { 0.5 0.412008 }
+        <Normal> { 0 -1 0 }
+        // Bone.001:0.999998
+      }
+      <Vertex> 11 {
+        -0.182321 -3e-06 0.481574
+        <UV> { 0.5 0.617854 }
+        <Normal> { 0 -1 0 }
+        // Bone:0.066808 Bone.001:1 Bone.002:0.105271 Bone.003:0.066808
+      }
+      <Vertex> 12 {
+        0.207428 -3e-06 -0.481772
+        <UV> { 0.749843 0.000315 }
+        <Normal> { 0 -1 0 }
+        // Bone.004:1 Bone.006:0.058687
+      }
+      <Vertex> 13 {
+        0.207428 -3e-06 -0.160657
+        <UV> { 0.749843 0.206161 }
+        <Normal> { 0 -1 0 }
+        // Bone.004:1
+      }
+      <Vertex> 14 {
+        0.207428 -3e-06 0.160459
+        <UV> { 0.749843 0.412008 }
+        <Normal> { 0 -1 0 }
+        // Bone:1
+      }
+      <Vertex> 15 {
+        0.207428 -3e-06 0.481574
+        <UV> { 0.749843 0.617854 }
+        <Normal> { 0 -1 0 }
+        // Bone:1 Bone.002:0.058746
+      }
+      <Vertex> 16 {
+        0.585095 -3e-06 -0.483948
+        <UV> { 0.037429 0.762561 }
+        <Normal> { -0.500012 0.866019 0 }
+      }
+      <Vertex> 17 {
+        0.585095 -3e-06 -0.483948
+        <UV> { 0.037429 0.874214 }
+        <Normal> { -0.499992 -0.86603 0 }
+      }
+      <Vertex> 18 {
+        0.585095 -3e-06 -0.483948
+        <UV> { 0.005198 0.818388 }
+        <Normal> { 0 0 -1 }
+      }
+      <Vertex> 19 {
+        0.585095 -3e-06 0.484608
+        <UV> { 0.95666 0.76256 }
+        <Normal> { -0.500012 0.866019 0 }
+      }
+      <Vertex> 20 {
+        0.585095 -3e-06 0.484608
+        <UV> { 0.988892 0.818388 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 21 {
+        0.585095 -3e-06 0.484608
+        <UV> { 0.95666 0.874215 }
+        <Normal> { -0.499992 -0.86603 0 }
+      }
+      <Vertex> 22 {
+        0.597176 -3e-06 -0.481772
+        <UV> { 0.999685 0.000315 }
+        <Normal> { 0 -1 0 }
+      }
+      <Vertex> 23 {
+        0.597176 -3e-06 -0.160657
+        <UV> { 0.999686 0.206161 }
+        <Normal> { 0 -1 0 }
+      }
+      <Vertex> 24 {
+        0.597176 -3e-06 0.160459
+        <UV> { 0.999686 0.412008 }
+        <Normal> { 0 -1 0 }
+      }
+      <Vertex> 25 {
+        0.597176 -3e-06 0.481574
+        <UV> { 0.999686 0.617854 }
+        <Normal> { 0 -1 0 }
+      }
+      <Vertex> 26 {
+        0.619056 -0.01961 -0.483948
+        <UV> { 0.037429 0.836996 }
+        <Normal> { 1 0 0 }
+      }
+      <Vertex> 27 {
+        0.619056 -0.01961 -0.483948
+        <UV> { 0.037429 0.836996 }
+        <Normal> { -0.499992 -0.86603 0 }
+      }
+      <Vertex> 28 {
+        0.619056 -0.01961 -0.483948
+        <UV> { 0.037429 0.836996 }
+        <Normal> { 0 0 -1 }
+      }
+      <Vertex> 29 {
+        0.619056 -0.01961 0.484608
+        <UV> { 0.95666 0.836997 }
+        <Normal> { 1 0 0 }
+      }
+      <Vertex> 30 {
+        0.619056 -0.01961 0.484608
+        <UV> { 0.95666 0.836997 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 31 {
+        0.619056 -0.01961 0.484608
+        <UV> { 0.95666 0.836997 }
+        <Normal> { -0.499992 -0.86603 0 }
+      }
+      <Vertex> 32 {
+        0.619056 0.019605 -0.483948
+        <UV> { 0.037429 0.799779 }
+        <Normal> { -0.500012 0.866019 0 }
+      }
+      <Vertex> 33 {
+        0.619056 0.019605 -0.483948
+        <UV> { 0.037429 0.799779 }
+        <Normal> { 1 0 0 }
+      }
+      <Vertex> 34 {
+        0.619056 0.019605 -0.483948
+        <UV> { 0.037429 0.799779 }
+        <Normal> { 0 0 -1 }
+      }
+      <Vertex> 35 {
+        0.619056 0.019605 0.484608
+        <UV> { 0.95666 0.799779 }
+        <Normal> { -0.500012 0.866019 0 }
+      }
+      <Vertex> 36 {
+        0.619056 0.019605 0.484608
+        <UV> { 0.95666 0.799779 }
+        <Normal> { 1 0 0 }
+      }
+      <Vertex> 37 {
+        0.619056 0.019605 0.484608
+        <UV> { 0.95666 0.799779 }
+        <Normal> { 0 0 1 }
+      }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 14 24 25 15 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 2 6 7 3 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 6 10 11 7 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 10 14 15 11 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 8 12 13 9 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 9 13 14 10 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 4 8 9 5 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 5 9 10 6 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 0 4 5 1 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 1 5 6 2 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 12 22 23 13 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 13 23 24 14 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 16 19 35 32 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 33 36 29 26 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 37 20 30 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 27 31 21 17 <Ref> { Flag1Anim } }
+    }
+    <Polygon> {
+      <TRef> { TEXFlag1Anim }
+      <MRef> { MATFlag1Anim }
+      <VertexRef> { 18 34 28 <Ref> { Flag1Anim } }
+    }
+  }
+  <Joint> Bone {
+    <Transform> {
+      <Matrix4> {
+        1.43722e-08 0 0.190366 0
+        -0.190366 0 1.43722e-08 0
+        0 -0.190366 0 0
+        0.79718 1.45237e-06 0.161258 1
+      }
+    }
+    <Joint> Bone.001 {
       <Transform> {
         <Matrix4> {
-          1.4372199430567889e-08 0.0 0.19036555290222168 0.0 
-          -0.19036555290222168 0.0 1.4372199430567889e-08 0.0 
-          0.0 -0.19036555290222168 0.0 0.0 
-          0.7971798777580261 1.4523739082505926e-06 0.1612580418586731 1.0 
+          1 0 0 0
+          0 1 0 0
+          0 0 1 0
+          0 2.14494 0 1
         }
       }
-      <VertexRef> {
-        1 2 41 42 45 46 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
-        <Scalar> membership { 0.000000 }  <Ref> { Flag1Anim }
-      }
-      <VertexRef> {
-        0 3 13 14 22 47
-        <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
-      }
-      <VertexRef> {
-        10 15
-        <Scalar> membership { 0.066808 }  <Ref> { Flag1Anim }
-      }
-      <Joint> Bone.001 {
+      <Joint> Bone.002 {
         <Transform> {
           <Matrix4> {
-            1.0 0.0 0.0 0.0 
-            0.0 1.0 0.0 0.0 
-            0.0 0.0 1.0 0.0 
-            0.0 2.144939422607422 0.0 1.0 
+            1 0 0 0
+            0 1 0 0
+            0 0 1 0
+            0 2.06563 0 1
+          }
+        }
+        <Joint> Bone.003 {
+          <Transform> {
+            <Matrix4> {
+              1 4.65962e-07 -4.65962e-07 0
+              -4.65962e-07 1 0 0
+              4.65962e-07 0 1 0
+              0 2.0372 0 1
+            }
+          }
+          <VertexRef> {
+            11
+            <Scalar> membership { 0.066808 }
+            <Ref> { Flag1Anim }
+          }
+          <VertexRef> {
+            2
+            <Scalar> membership { 0.999997 }
+            <Ref> { Flag1Anim }
+          }
+          <VertexRef> {
+            3
+            <Scalar> membership { 1 }
+            <Ref> { Flag1Anim }
           }
         }
         <VertexRef> {
-          0 2 3 13 14 22 47 49 50 53 56 57 61
-          <Scalar> membership { 0.000000 }  <Ref> { Flag1Anim }
+          15
+          <Scalar> membership { 0.058746 }
+          <Ref> { Flag1Anim }
         }
         <VertexRef> {
-          10 15
-          <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
+          11
+          <Scalar> membership { 0.105271 }
+          <Ref> { Flag1Anim }
+        }
+        <VertexRef> {
+          3
+          <Scalar> membership { 0.189938 }
+          <Ref> { Flag1Anim }
+        }
+        <VertexRef> {
+          6
+          <Scalar> membership { 0.999998 }
+          <Ref> { Flag1Anim }
         }
         <VertexRef> {
           7
-          <Scalar> membership { 0.041371 }  <Ref> { Flag1Anim }
+          <Scalar> membership { 1 }
+          <Ref> { Flag1Anim }
         }
-        <VertexRef> {
-          6 11
-          <Scalar> membership { 0.129815 }  <Ref> { Flag1Anim }
-        }
-        <VertexRef> {
-          9 12 23 30
-          <Scalar> membership { 0.999998 }  <Ref> { Flag1Anim }
-        }
-        <Joint> Bone.002 {
-          <Transform> {
-            <Matrix4> {
-              1.0 0.0 0.0 0.0 
-              0.0 1.0 0.0 0.0 
-              0.0 0.0 1.0 0.0 
-              0.0 2.0656299591064453 0.0 1.0 
-            }
-          }
-          <VertexRef> {
-            3 14
-            <Scalar> membership { 0.058746 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            6 11
-            <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            10 15
-            <Scalar> membership { 0.105271 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            7
-            <Scalar> membership { 0.189938 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            5 8 31 38
-            <Scalar> membership { 0.999998 }  <Ref> { Flag1Anim }
-          }
-          <Joint> Bone.003 {
-            <Transform> {
-              <Matrix4> {
-                1.0 4.6596193215009407e-07 -4.6596193215009407e-07 0.0 
-                -4.6596193215009407e-07 1.0 0.0 0.0 
-                4.6596193215009407e-07 2.1712052457583536e-13 1.0 0.0 
-                0.0 2.0372018814086914 0.0 1.0 
-              }
-            }
-            <VertexRef> {
-              6 11
-              <Scalar> membership { 0.000000 }  <Ref> { Flag1Anim }
-            }
-            <VertexRef> {
-              7
-              <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
-            }
-            <VertexRef> {
-              4 39
-              <Scalar> membership { 0.999997 }  <Ref> { Flag1Anim }
-            }
-            <VertexRef> {
-              10 15
-              <Scalar> membership { 0.066808 }  <Ref> { Flag1Anim }
-            }
-          }
-        }
+      }
+      <VertexRef> {
+        3
+        <Scalar> membership { 0.041371 }
+        <Ref> { Flag1Anim }
+      }
+      <VertexRef> {
+        7
+        <Scalar> membership { 0.129815 }
+        <Ref> { Flag1Anim }
+      }
+      <VertexRef> {
+        10
+        <Scalar> membership { 0.999998 }
+        <Ref> { Flag1Anim }
+      }
+      <VertexRef> {
+        11
+        <Scalar> membership { 1 }
+        <Ref> { Flag1Anim }
       }
     }
-    <Joint> Bone.004 {
-      <Transform> {
-        <Matrix4> {
-          1.4372199430567889e-08 0.0 0.19036555290222168 0.0 
-          -0.19036555290222168 0.0 1.4372199430567889e-08 0.0 
-          0.0 -0.19036555290222168 0.0 0.0 
-          0.7971799969673157 1.4523739082505926e-06 -0.16125845909118652 1.0 
-        }
-      }
-      <VertexRef> {
-        1 2 41 42 45 46 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
-        <Scalar> membership { 0.000000 }  <Ref> { Flag1Anim }
-      }
-      <VertexRef> {
-        17 18 21 40 43 44
-        <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
-      }
-      <VertexRef> {
-        16 25
-        <Scalar> membership { 0.066705 }  <Ref> { Flag1Anim }
-      }
-      <Joint> Bone.005 {
-        <Transform> {
-          <Matrix4> {
-            1.0 0.0 0.0 0.0 
-            0.0 1.0 0.0 0.0 
-            0.0 0.0 1.0 0.0 
-            0.0 2.14493989944458 0.0 1.0 
-          }
-        }
-        <VertexRef> {
-          17 18 21 40 41 43 44 48 62 63
-          <Scalar> membership { 0.000000 }  <Ref> { Flag1Anim }
-        }
-        <VertexRef> {
-          16 25
-          <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
-        }
-        <VertexRef> {
-          19 20 26 29
-          <Scalar> membership { 0.999943 }  <Ref> { Flag1Anim }
-        }
-        <VertexRef> {
-          24 33
-          <Scalar> membership { 0.129157 }  <Ref> { Flag1Anim }
-        }
-        <VertexRef> {
-          32
-          <Scalar> membership { 0.040764 }  <Ref> { Flag1Anim }
-        }
-        <Joint> Bone.006 {
-          <Transform> {
-            <Matrix4> {
-              1.0 0.0 0.0 0.0 
-              0.0 1.0 0.0 0.0 
-              0.0 0.0 1.0 0.0 
-              0.0 2.0656299591064453 0.0 1.0 
-            }
-          }
-          <VertexRef> {
-            32
-            <Scalar> membership { 0.189637 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            16 25
-            <Scalar> membership { 0.000000 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            24 33
-            <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            27 28 34 37
-            <Scalar> membership { 0.999923 }  <Ref> { Flag1Anim }
-          }
-          <VertexRef> {
-            17 40
-            <Scalar> membership { 0.058687 }  <Ref> { Flag1Anim }
-          }
-          <Joint> Bone.007 {
-            <Transform> {
-              <Matrix4> {
-                1.0 0.0 0.0 0.0 
-                0.0 1.0 0.0 0.0 
-                0.0 0.0 1.0 0.0 
-                0.0 2.0372018814086914 0.0 1.0 
-              }
-            }
-            <VertexRef> {
-              2 4 5 8 16 24 25 27 28 31 33 34 37 38 39 49 50 53 54 56 57 58 60 61
-              <Scalar> membership { 0.000000 }  <Ref> { Flag1Anim }
-            }
-            <VertexRef> {
-              32 35 36
-              <Scalar> membership { 1.000000 }  <Ref> { Flag1Anim }
-            }
-            <VertexRef> {
-              7
-              <Scalar> membership { 0.175186 }  <Ref> { Flag1Anim }
-            }
-          }
-        }
-      }
+    <VertexRef> {
+      11
+      <Scalar> membership { 0.066808 }
+      <Ref> { Flag1Anim }
     }
-    <Group> Flag1Anim {
-      <Transform> {
-        <Matrix4> {
-          5.114034138387069e-07 -1.1920930376163597e-07 -5.253050804138184 0.0 
-          -5.960465898624534e-08 5.253050804138184 -1.1920930376163597e-07 0.0 
-          5.253051280975342 5.960467319710006e-08 5.114034138387069e-07 0.0 
-          1.2524250223577837e-06 0.0 9.455546019559655e-14 1.0 
-        }
-      }
-      
-      <VertexPool> Flag1Anim {
-      
-        <Vertex> 0 {0.207428 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.412008 
-          }
-        }
-        <Vertex> 1 {0.597176 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.999686 0.412008 
-          }
-        }
-        <Vertex> 2 {0.597176 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.999686 0.617854 
-          }
-        }
-        <Vertex> 3 {0.207428 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.617854 
-          }
-        }
-        <Vertex> 4 {-0.961817 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.000314 0.412008 
-          }
-        }
-        <Vertex> 5 {-0.572069 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.412008 
-          }
-        }
-        <Vertex> 6 {-0.572069 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.617854 
-          }
-        }
-        <Vertex> 7 {-0.961817 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.000314 0.617855 
-          }
-        }
-        <Vertex> 8 {-0.572069 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.412008 
-          }
-        }
-        <Vertex> 9 {-0.182321 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.412008 
-          }
-        }
-        <Vertex> 10 {-0.182321 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.617854 
-          }
-        }
-        <Vertex> 11 {-0.572069 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.617854 
-          }
-        }
-        <Vertex> 12 {-0.182321 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.412008 
-          }
-        }
-        <Vertex> 13 {0.207428 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.412008 
-          }
-        }
-        <Vertex> 14 {0.207428 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.617854 
-          }
-        }
-        <Vertex> 15 {-0.182321 -0.000003 0.481574
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.617854 
-          }
-        }
-        <Vertex> 16 {-0.182321 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.000314 
-          }
-        }
-        <Vertex> 17 {0.207428 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.000315 
-          }
-        }
-        <Vertex> 18 {0.207428 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.206161 
-          }
-        }
-        <Vertex> 19 {-0.182321 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.206161 
-          }
-        }
-        <Vertex> 20 {-0.182321 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.206161 
-          }
-        }
-        <Vertex> 21 {0.207428 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.206161 
-          }
-        }
-        <Vertex> 22 {0.207428 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.412008 
-          }
-        }
-        <Vertex> 23 {-0.182321 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.412008 
-          }
-        }
-        <Vertex> 24 {-0.572069 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.000314 
-          }
-        }
-        <Vertex> 25 {-0.182321 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.000314 
-          }
-        }
-        <Vertex> 26 {-0.182321 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.206161 
-          }
-        }
-        <Vertex> 27 {-0.572069 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.206161 
-          }
-        }
-        <Vertex> 28 {-0.572069 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.206161 
-          }
-        }
-        <Vertex> 29 {-0.182321 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.206161 
-          }
-        }
-        <Vertex> 30 {-0.182321 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.500000 0.412008 
-          }
-        }
-        <Vertex> 31 {-0.572069 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.412008 
-          }
-        }
-        <Vertex> 32 {-0.961817 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.000314 0.000314 
-          }
-        }
-        <Vertex> 33 {-0.572069 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.000314 
-          }
-        }
-        <Vertex> 34 {-0.572069 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.206161 
-          }
-        }
-        <Vertex> 35 {-0.961817 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.000314 0.206161 
-          }
-        }
-        <Vertex> 36 {-0.961817 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.000314 0.206161 
-          }
-        }
-        <Vertex> 37 {-0.572069 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.206161 
-          }
-        }
-        <Vertex> 38 {-0.572069 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.250157 0.412008 
-          }
-        }
-        <Vertex> 39 {-0.961817 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.000314 0.412008 
-          }
-        }
-        <Vertex> 40 {0.207428 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.000315 
-          }
-        }
-        <Vertex> 41 {0.597176 -0.000003 -0.481772
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.999685 0.000315 
-          }
-        }
-        <Vertex> 42 {0.597176 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.999686 0.206161 
-          }
-        }
-        <Vertex> 43 {0.207428 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.206161 
-          }
-        }
-        <Vertex> 44 {0.207428 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.206161 
-          }
-        }
-        <Vertex> 45 {0.597176 -0.000003 -0.160657
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.999686 0.206161 
-          }
-        }
-        <Vertex> 46 {0.597176 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.999686 0.412008 
-          }
-        }
-        <Vertex> 47 {0.207428 -0.000003 0.160459
-        <Normal> { -0.000000 -1.000000 0.000000 }
-          <UV>  {
-            0.749843 0.412008 
-          }
-        }
-        <Vertex> 48 {0.585095 -0.000003 -0.483948
-          <UV>  {
-            0.037429 0.762561 
-          }
-        }
-        <Vertex> 49 {0.585095 -0.000003 0.484608
-          <UV>  {
-            0.956660 0.762560 
-          }
-        }
-        <Vertex> 50 {0.619056 0.019605 0.484608
-          <UV>  {
-            0.956660 0.799779 
-          }
-        }
-        <Vertex> 51 {0.619056 0.019605 -0.483948
-          <UV>  {
-            0.037429 0.799779 
-          }
-        }
-        <Vertex> 52 {0.619056 0.019605 -0.483948
-          <UV>  {
-            0.037429 0.799779 
-          }
-        }
-        <Vertex> 53 {0.619056 0.019605 0.484608
-          <UV>  {
-            0.956660 0.799779 
-          }
-        }
-        <Vertex> 54 {0.619056 -0.019610 0.484608
-          <UV>  {
-            0.956660 0.836997 
-          }
-        }
-        <Vertex> 55 {0.619056 -0.019610 -0.483948
-          <UV>  {
-            0.037429 0.836996 
-          }
-        }
-        <Vertex> 56 {0.619056 0.019605 0.484608
-          <UV>  {
-            0.956660 0.799779 
-          }
-        }
-        <Vertex> 57 {0.585095 -0.000003 0.484608
-          <UV>  {
-            0.988892 0.818388 
-          }
-        }
-        <Vertex> 58 {0.619056 -0.019610 0.484608
-          <UV>  {
-            0.956660 0.836997 
-          }
-        }
-        <Vertex> 59 {0.619056 -0.019610 -0.483948
-          <UV>  {
-            0.037429 0.836996 
-          }
-        }
-        <Vertex> 60 {0.619056 -0.019610 0.484608
-          <UV>  {
-            0.956660 0.836997 
-          }
-        }
-        <Vertex> 61 {0.585095 -0.000003 0.484608
-          <UV>  {
-            0.956660 0.874215 
-          }
-        }
-        <Vertex> 62 {0.585095 -0.000003 -0.483948
-          <UV>  {
-            0.037429 0.874214 
-          }
-        }
-        <Vertex> 63 {0.585095 -0.000003 -0.483948
-          <UV>  {
-            0.005198 0.818388 
-          }
-        }
-        <Vertex> 64 {0.619056 0.019605 -0.483948
-          <UV>  {
-            0.037429 0.799779 
-          }
-        }
-        <Vertex> 65 {0.619056 -0.019610 -0.483948
-          <UV>  {
-            0.037429 0.836996 
-          }
-        }}
-      
-      
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 0 1 2 3 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 4 5 6 7 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 8 9 10 11 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 12 13 14 15 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 16 17 18 19 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 20 21 22 23 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 24 25 26 27 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 28 29 30 31 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 32 33 34 35 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 36 37 38 39 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 40 41 42 43 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 -1.000000 0.000000}
-        <VertexRef> { 44 45 46 47 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.500005 0.866023 -0.000000}
-        <VertexRef> { 48 49 50 51 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {1.000000 -0.000000 0.000000}
-        <VertexRef> { 52 53 54 55 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.000000 0.000000 1.000000}
-        <VertexRef> { 56 57 58 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {-0.500005 -0.866023 -0.000000}
-        <VertexRef> { 59 60 61 62 <Ref> { Flag1Anim }} 
-      }
-      <Polygon> {
-        <TRef> { TEXFlag1Anim }
-        <MRef> { MATFlag1Anim }
-        <Normal> {0.000000 -0.000000 -1.000000}
-        <VertexRef> { 63 64 65 <Ref> { Flag1Anim }} 
-      }
+    <VertexRef> {
+      14 15
+      <Scalar> membership { 1 }
+      <Ref> { Flag1Anim }
     }
   }
+  <Joint> Bone.004 {
+    <Transform> {
+      <Matrix4> {
+        1.43722e-08 0 0.190366 0
+        -0.190366 0 1.43722e-08 0
+        0 -0.190366 0 0
+        0.79718 1.45237e-06 -0.161258 1
+      }
+    }
+    <Joint> Bone.005 {
+      <Transform> {
+        <Matrix4> {
+          1 0 0 0
+          0 1 0 0
+          0 0 1 0
+          0 2.14494 0 1
+        }
+      }
+      <Joint> Bone.006 {
+        <Transform> {
+          <Matrix4> {
+            1 0 0 0
+            0 1 0 0
+            0 0 1 0
+            0 2.06563 0 1
+          }
+        }
+        <Joint> Bone.007 {
+          <Transform> {
+            <Matrix4> {
+              1 0 0 0
+              0 1 0 0
+              0 0 1 0
+              0 2.0372 0 1
+            }
+          }
+          <VertexRef> {
+            3
+            <Scalar> membership { 0.175186 }
+            <Ref> { Flag1Anim }
+          }
+          <VertexRef> {
+            0 1
+            <Scalar> membership { 1 }
+            <Ref> { Flag1Anim }
+          }
+        }
+        <VertexRef> {
+          12
+          <Scalar> membership { 0.058687 }
+          <Ref> { Flag1Anim }
+        }
+        <VertexRef> {
+          0
+          <Scalar> membership { 0.189637 }
+          <Ref> { Flag1Anim }
+        }
+        <VertexRef> {
+          5
+          <Scalar> membership { 0.999923 }
+          <Ref> { Flag1Anim }
+        }
+        <VertexRef> {
+          4
+          <Scalar> membership { 1 }
+          <Ref> { Flag1Anim }
+        }
+      }
+      <VertexRef> {
+        0
+        <Scalar> membership { 0.040764 }
+        <Ref> { Flag1Anim }
+      }
+      <VertexRef> {
+        4
+        <Scalar> membership { 0.129157 }
+        <Ref> { Flag1Anim }
+      }
+      <VertexRef> {
+        9
+        <Scalar> membership { 0.999943 }
+        <Ref> { Flag1Anim }
+      }
+      <VertexRef> {
+        8
+        <Scalar> membership { 1 }
+        <Ref> { Flag1Anim }
+      }
+    }
+    <VertexRef> {
+      8
+      <Scalar> membership { 0.066705 }
+      <Ref> { Flag1Anim }
+    }
+    <VertexRef> {
+      12 13
+      <Scalar> membership { 1 }
+      <Ref> { Flag1Anim }
+    }
+  }
+}
