@@ -2,9 +2,6 @@
 
 # TODO LIST =====
 
-# 0.6
-# respawn - if the car isn't moving and the user is pressing keys then print 'press _ for respawning'
-
 # 0.7
 # forward missile
 # backward missile

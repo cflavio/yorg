@@ -19,7 +19,8 @@ class InputEvent(PageEvent):
             'rear': self.mdt.gui.buttons[1]['text'],
             'left': self.mdt.gui.buttons[2]['text'],
             'right': self.mdt.gui.buttons[3]['text'],
-            'button': self.mdt.gui.buttons[4]['text']}
+            'button': self.mdt.gui.buttons[4]['text'],
+            'respawn': self.mdt.gui.buttons[5]['text']}
         dct['joystick'] = self.mdt.gui._joypad_cb['indicatorValue']
         self.mdt.menu.gui.notify('on_input_back', dct)
 
@@ -38,12 +39,12 @@ class InputPageGui(ThanksPageGui):
         self.buttons = []
 
         joypad_lab = DirectLabel(
-            text=_('Use the joypad when present'), pos=(-.1, 1, .7),
+            text=_('Use the joypad when present'), pos=(-.1, 1, .8),
             text_align=TextNode.ARight, **menu_gui.label_args)
         PageGui.transl_text(joypad_lab, 'Use the joypad when present',
                             _('Use the joypad when present'))
         self._joypad_cb = DirectCheckButton(
-            pos=(.09, 1, .72), text='',
+            pos=(.09, 1, .82), text='',
             indicatorValue=self.joystick,
             indicator_frameColor=menu_gui.menu_args.text_fg,
             **menu_gui.checkbtn_args)
@@ -62,11 +63,12 @@ class InputPageGui(ThanksPageGui):
             self.pagewidgets += [btn]
             self.buttons += [btn]
         buttons_data = [
-            (_('Accelerate'), 'forward', .5),
-            (_('Brake/Reverse'), 'rear', .3),
-            (_('Left'), 'left', .1),
-            (_('Right'), 'right', -.1),
-            (_('Weapon'), 'button', -.3)]
+            (_('Accelerate'), 'forward', .6),
+            (_('Brake/Reverse'), 'rear', .4),
+            (_('Left'), 'left', .2),
+            (_('Right'), 'right', 0),
+            (_('Weapon'), 'button', -.2),
+            (_('Respawn'), 'button', -.4)]
         for btn_data in buttons_data:
             add_lab(btn_data[0], btn_data[2])
             add_btn(self.keys[btn_data[1]], btn_data[2])
@@ -74,7 +76,7 @@ class InputPageGui(ThanksPageGui):
         la = menu_gui.label_args.copy()
         la['scale'] = .065
         self.hint_lab = DirectLabel(
-            text=_('Press the key to record it'), pos=(0, 1, -.5), **la)
+            text=_('Press the key to record it'), pos=(0, 1, -.6), **la)
         self.hint_lab.hide()
         self.pagewidgets += [joypad_lab, self._joypad_cb, self.hint_lab]
         map(self.add_widget, self.pagewidgets)

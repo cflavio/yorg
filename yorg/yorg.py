@@ -25,7 +25,8 @@ class Yorg(Game):
                     'rear': 'z',
                     'left': 'arrow_left',
                     'right': 'arrow_right',
-                    'button': 'x'},
+                    'button': 'x',
+                    'respawn': 'r'},
                 'joystick': 0,
                 'player_name': ''},
             'development': {
