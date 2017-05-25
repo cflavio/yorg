@@ -1,17 +1,17 @@
 from yyagl.build.build import extensions, get_files, image_extensions, \
-    set_path, p3d_file, win_file, osx_file, linux_file, \
-    src_file, devinfo_file, docs_file, win_noint_file,\
-    osx_noint_file, linux_noint_file, pdf_file, test_file, \
+    set_path, p3d_fpath, win_fpath, osx_fpath, linux_fpath, \
+    src_fpath, devinfo_fpath, docs_fpath, win_noint_fpath,\
+    osx_noint_fpath, linux_noint_fpath, pdf_fpath, test_fpath, \
     track_files
 from yyagl.build.p3d import build_p3d
 from yyagl.build.windows import build_windows
 from yyagl.build.osx import build_osx
 from yyagl.build.linux import build_linux
-from yyagl.build.src import build_src
+from yyagl.build.src import bld_src
 from yyagl.build.devinfo import build_devinfo
 from yyagl.build.test import build_ut
-from yyagl.build.docs import build_docs
-from yyagl.build.strings import build_strings, build_templ_merge
+from yyagl.build.docs import bld_docs
+from yyagl.build.strings import bld_strings, bld_tmpl_merge
 from yyagl.build.imgs import build_images
 from yyagl.build.pdf import build_pdf
 from yyagl.build.tracks import build_tracks
@@ -39,35 +39,35 @@ path = set_path(arguments['path'])
 app_name = 'yorg'
 lang_path = 'assets/locale/'
 
-args = {'path': path, 'name': app_name}
-p3d_path = p3d_file.format(**args)
-win_path = win_file.format(**args)
-osx_path = osx_file.format(**args)
-linux_path_32 = linux_file.format(platform='i386', **args)
-linux_path_64 = linux_file.format(platform='amd64', **args)
-win_path_noint = win_noint_file.format(**args)
-osx_path_noint = osx_noint_file.format(**args)
-linux_path_32_noint = linux_noint_file.format(platform='i386', **args)
-linux_path_64_noint = linux_noint_file.format(platform='amd64', **args)
-src_path = src_file.format(**args)
-devinfo_path = devinfo_file.format(**args)
-tests_path = test_file.format(**args)
-docs_path = docs_file.format(**args)
-pdf_path = pdf_file.format(**args)
+args = {'path': path, 'appname': app_name}
+p3d_path = p3d_fpath.format(**args)
+win_path = win_fpath.format(**args)
+osx_path = osx_fpath.format(**args)
+linux_path_32 = linux_fpath.format(platform='i386', **args)
+linux_path_64 = linux_fpath.format(platform='amd64', **args)
+win_path_noint = win_noint_fpath.format(**args)
+osx_path_noint = osx_noint_fpath.format(**args)
+linux_path_32_noint = linux_noint_fpath.format(platform='i386', **args)
+linux_path_64_noint = linux_noint_fpath.format(platform='amd64', **args)
+src_path = src_fpath.format(**args)
+devinfo_path = devinfo_fpath.format(**args)
+tests_path = test_fpath.format(**args)
+docs_path = docs_fpath.format(**args)
+pdf_path = pdf_fpath.format(**args)
 
 bld_p3d = Builder(action=build_p3d)
 bld_windows = Builder(action=build_windows)
 bld_osx = Builder(action=build_osx)
 bld_linux = Builder(action=build_linux)
-bld_src = Builder(action=build_src)
+bld_src = Builder(action=bld_src)
 bld_devinfo = Builder(action=build_devinfo)
 bld_tests = Builder(action=build_ut)
-bld_docs = Builder(action=build_docs)
+bld_docs = Builder(action=bld_docs)
 bld_pdf = Builder(action=build_pdf)
 bld_images = Builder(action=build_images)
 bld_tracks = Builder(action=build_tracks)
-bld_str = Builder(action=build_strings, suffix='.mo', src_suffix='.po')
-bld_str_tmpl = Builder(action=build_templ_merge, suffix='.pot',
+bld_str = Builder(action=bld_strings, suffix='.mo', src_suffix='.po')
+bld_str_tmpl = Builder(action=bld_tmpl_merge, suffix='.pot',
                        src_suffix='.py')
 
 env = Environment(BUILDERS={
@@ -77,7 +77,7 @@ env = Environment(BUILDERS={
     'str_tmpl': bld_str_tmpl, 'pdf': bld_pdf, 'tracks': bld_tracks})
 env['P3D_PATH'] = p3d_path
 env['APPNAME'] = app_name
-env['LANG'] = lang_path
+env['LNG'] = lang_path
 env['NOINTERNET'] = arguments['nointernet']
 env['NG'] = arguments['ng']
 env['ICO_FILE'] = 'assets/images/icon/icon%s_png.png'
