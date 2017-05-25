@@ -85,7 +85,7 @@ env['LANGUAGES'] = ['it_IT']
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 
 yorg_fil = ['./yyagl/*', './menu/*', './yorg/*', './licenses/*', './assets/*',
-            './venv/*']
+            './venv/*', './build/*', './built/*']
 yorg_lst = [
     ('python', './yorg', '*.py', []),
     ('python', '.', '*.py SConstruct *.md *.txt', yorg_fil)]
