@@ -8,7 +8,7 @@ from yyagl.build.windows import build_windows
 from yyagl.build.osx import build_osx
 from yyagl.build.linux import build_linux
 from yyagl.build.src import bld_src
-from yyagl.build.devinfo import build_devinfo
+from yyagl.build.devinfo import bld_devinfo
 from yyagl.build.test import build_ut
 from yyagl.build.docs import bld_docs
 from yyagl.build.strings import bld_strings, bld_tmpl_merge
@@ -60,7 +60,7 @@ bld_windows = Builder(action=build_windows)
 bld_osx = Builder(action=build_osx)
 bld_linux = Builder(action=build_linux)
 bld_src = Builder(action=bld_src)
-bld_devinfo = Builder(action=build_devinfo)
+bld_devinfo = Builder(action=bld_devinfo)
 bld_tests = Builder(action=build_ut)
 bld_docs = Builder(action=bld_docs)
 bld_pdf = Builder(action=build_pdf)
