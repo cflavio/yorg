@@ -9,10 +9,10 @@ from yyagl.build.osx import build_osx
 from yyagl.build.linux import build_linux
 from yyagl.build.src import bld_src
 from yyagl.build.devinfo import bld_devinfo
-from yyagl.build.test import build_ut
+from yyagl.build.test import bld_ut
 from yyagl.build.docs import bld_docs
 from yyagl.build.strings import bld_strings, bld_tmpl_merge
-from yyagl.build.imgs import build_images
+from yyagl.build.imgs import bld_images
 from yyagl.build.pdf import build_pdf
 from yyagl.build.tracks import build_tracks
 
@@ -61,10 +61,10 @@ bld_osx = Builder(action=build_osx)
 bld_linux = Builder(action=build_linux)
 bld_src = Builder(action=bld_src)
 bld_devinfo = Builder(action=bld_devinfo)
-bld_tests = Builder(action=build_ut)
+bld_tests = Builder(action=bld_ut)
 bld_docs = Builder(action=bld_docs)
 bld_pdf = Builder(action=build_pdf)
-bld_images = Builder(action=build_images)
+bld_images = Builder(action=bld_images)
 bld_tracks = Builder(action=build_tracks)
 bld_str = Builder(action=bld_strings, suffix='.mo', src_suffix='.po')
 bld_str_tmpl = Builder(action=bld_tmpl_merge, suffix='.pot',
