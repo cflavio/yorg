@@ -13,8 +13,8 @@ from yyagl.build.test import bld_ut
 from yyagl.build.docs import bld_docs
 from yyagl.build.strings import bld_strings, bld_tmpl_merge
 from yyagl.build.imgs import bld_images
-from yyagl.build.pdf import build_pdf
-from yyagl.build.tracks import build_tracks
+from yyagl.build.pdf import bld_pdf
+from yyagl.build.tracks import bld_tracks
 
 
 argument_info = [  # (argname, default value)
@@ -63,9 +63,9 @@ bld_src = Builder(action=bld_src)
 bld_devinfo = Builder(action=bld_devinfo)
 bld_tests = Builder(action=bld_ut)
 bld_docs = Builder(action=bld_docs)
-bld_pdf = Builder(action=build_pdf)
+bld_pdf = Builder(action=bld_pdf)
 bld_images = Builder(action=bld_images)
-bld_tracks = Builder(action=build_tracks)
+bld_tracks = Builder(action=bld_tracks)
 bld_str = Builder(action=bld_strings, suffix='.mo', src_suffix='.po')
 bld_str_tmpl = Builder(action=bld_tmpl_merge, suffix='.pot',
                        src_suffix='.py')
@@ -82,6 +82,8 @@ env['NOINTERNET'] = arguments['nointernet']
 env['NG'] = arguments['ng']
 env['ICO_FILE'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT']
+env['MODELS_DIR'] = 'assets/models'
+env['TRACKS_DIR'] = 'assets/models/tracks'
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 
 yorg_fil = ['./yyagl/*', './menu/*', './yorg/*', './licenses/*', './assets/*',
