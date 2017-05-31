@@ -1,9 +1,9 @@
-from yyagl.build.build import extensions, get_files, image_extensions, \
+from yyagl.build.build import extensions, files, img_extensions, \
     set_path, p3d_fpath, win_fpath, osx_fpath, linux_fpath, \
     src_fpath, devinfo_fpath, docs_fpath, win_noint_fpath,\
     osx_noint_fpath, linux_noint_fpath, pdf_fpath, test_fpath, \
     track_files
-from yyagl.build.p3d import build_p3d
+from yyagl.build.p3d import bld_p3d
 from yyagl.build.windows import build_windows
 from yyagl.build.osx import build_osx
 from yyagl.build.linux import build_linux
@@ -39,7 +39,7 @@ path = set_path(arguments['path'])
 app_name = 'yorg'
 lang_path = 'assets/locale/'
 
-args = {'path': path, 'appname': app_name}
+args = {'dst_dir': path, 'appname': app_name}
 p3d_path = p3d_fpath.format(**args)
 win_path = win_fpath.format(**args)
 osx_path = osx_fpath.format(**args)
@@ -55,7 +55,7 @@ tests_path = test_fpath.format(**args)
 docs_path = docs_fpath.format(**args)
 pdf_path = pdf_fpath.format(**args)
 
-bld_p3d = Builder(action=build_p3d)
+bld_p3d = Builder(action=bld_p3d)
 bld_windows = Builder(action=build_windows)
 bld_osx = Builder(action=build_osx)
 bld_linux = Builder(action=build_linux)
@@ -133,23 +133,23 @@ env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
 
-img_files = image_extensions(get_files(['psd']))
+img_files = img_extensions(files(['psd']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
-general_src = get_files(extensions, ['venv', 'thirdparty']) + img_files + \
+general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + track_files()
 no_int = arguments['nointernet']
 if arguments['images']:
-    env.images(img_files, get_files(['psd']))
+    env.images(img_files, files(['psd']))
 if arguments['tracks']:
-    env.tracks(track_files(), get_files(['egg']))
+    env.tracks(track_files(), files(['egg']))
 if arguments['p3d']:
     env.p3d([p3d_path], general_src)
 if arguments['source']:
     env.source([src_path], general_src)
 if arguments['devinfo']:
-    env.devinfo([devinfo_path], get_files(['py'], ['venv', 'thirdparty']))
+    env.devinfo([devinfo_path], files(['py'], ['venv', 'thirdparty']))
 if arguments['tests']:
-    env.tests([tests_path], get_files(['py'], ['venv', 'thirdparty']))
+    env.tests([tests_path], files(['py'], ['venv', 'thirdparty']))
 if arguments['windows']:
     out_path = win_path_noint if arguments['nointernet'] else win_path
     env.windows([out_path], general_src if arguments['ng'] else [p3d_path])
@@ -165,13 +165,13 @@ if arguments['linux_64']:
     env.linux([out_path], general_src if arguments['ng'] else [p3d_path],
               PLATFORM='amd64')
 if arguments['docs']:
-    env.docs([docs_path], get_files(['py'], ['venv', 'thirdparty']))
+    env.docs([docs_path], files(['py'], ['venv', 'thirdparty']))
 if arguments['pdf']:
-    env.pdf([pdf_path], get_files(['py'], ['venv', 'thirdparty']))
+    env.pdf([pdf_path], files(['py'], ['venv', 'thirdparty']))
 
 def process_lang(lang_code):
     lang_name = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
-    tmpl = env.str_tmpl(lang_name, get_files(['py'], ['venv', 'thirdparty']))
+    tmpl = env.str_tmpl(lang_name, files(['py'], ['venv', 'thirdparty']))
     env.Precious(tmpl)
     lang_mo = lang_path + lang_code + '/LC_MESSAGES/%s.mo' % app_name
     lang_po = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
