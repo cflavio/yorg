@@ -4,9 +4,9 @@ from yyagl.build.build import extensions, files, img_extensions, \
     osx_noint_fpath, linux_noint_fpath, pdf_fpath, test_fpath, \
     track_files
 from yyagl.build.p3d import bld_p3d
-from yyagl.build.windows import build_windows
-from yyagl.build.osx import build_osx
-from yyagl.build.linux import build_linux
+from yyagl.build.windows import bld_windows
+from yyagl.build.osx import bld_osx
+from yyagl.build.linux import bld_linux
 from yyagl.build.src import bld_src
 from yyagl.build.devinfo import bld_devinfo
 from yyagl.build.test import bld_ut
@@ -56,9 +56,9 @@ docs_path = docs_fpath.format(**args)
 pdf_path = pdf_fpath.format(**args)
 
 bld_p3d = Builder(action=bld_p3d)
-bld_windows = Builder(action=build_windows)
-bld_osx = Builder(action=build_osx)
-bld_linux = Builder(action=build_linux)
+bld_windows = Builder(action=bld_windows)
+bld_osx = Builder(action=bld_osx)
+bld_linux = Builder(action=bld_linux)
 bld_src = Builder(action=bld_src)
 bld_devinfo = Builder(action=bld_devinfo)
 bld_tests = Builder(action=bld_ut)
@@ -80,7 +80,7 @@ env['APPNAME'] = app_name
 env['LNG'] = lang_path
 env['NOINTERNET'] = arguments['nointernet']
 env['NG'] = arguments['ng']
-env['ICO_FILE'] = 'assets/images/icon/icon%s_png.png'
+env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT']
 env['MODELS_DIR'] = 'assets/models'
 env['TRACKS_DIR'] = 'assets/models/tracks'

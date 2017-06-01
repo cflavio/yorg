@@ -3,7 +3,6 @@ from os.path import exists, join
 from panda3d.core import MultiplexStream, Notify, Filename
 from yorg.yorg import Yorg
 import sys
-import encodings.ascii  # for deploy-ng
 import direct.particles.ParticleManagerGlobal  # for deploy-ng
 
 
