@@ -3,7 +3,7 @@ from os.path import join, exists
 from panda3d.core import Filename
 from yyagl.game import Game
 from yyagl.dictfile import DctFile
-from yyagl.engine.configuration import Configuration
+from yyagl.engine.configuration import Cfg
 from .logic import YorgLogic
 from .event import YorgEvent
 from .fsm import YorgFsm
@@ -48,7 +48,7 @@ class Yorg(Game):
         if platform == 'win32' and not exists('main.py'):
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
         self.options = DctFile(join(opt_path, 'options.yml') if opt_path else 'options.yml', default_opt)
-        conf = Configuration(
+        conf = Cfg(
             win_title='Yorg',
             win_orig=self.options['development']['win_orig'],
             win_size=self.options['settings']['resolution'],
