@@ -6,6 +6,7 @@ from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageEvent, PageGui
+from yyagl.engine.lang import LangMgr
 from yyagl.gameobject import GameObject
 from .inputpage import InputPage
 from .thankspage import ThanksPageGui
@@ -110,13 +111,13 @@ class OptionPageGui(ThanksPageGui):
             self._lang_opt, self._vol_slider, self._fullscreen_cb,
             self._res_opt, self._aa_cb, aa_next_lab, input_btn]
         map(self.add_widget, self.pagewidgets)
-        idx = eng.lang_codes.index(self.props.lang)
+        idx = LangMgr().lang_codes.index(self.props.lang)
         self.__change_lang(eng.languages[idx])
         ThanksPageGui.build_page(self)
 
     def update_texts(self):
         PageGui.update_texts(self)
-        curr_lang = eng.curr_lang
+        curr_lang = LangMgr().curr_lang
         self._lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
     def __on_volume(self):
@@ -124,7 +125,7 @@ class OptionPageGui(ThanksPageGui):
 
     def __change_lang(self, arg):
         lang_dict = {'English': 'en', 'Italiano': 'it'}
-        eng.set_lang(lang_dict[arg])
+        LangMgr().set_lang(lang_dict[arg])
         self.update_texts()
 
 
