@@ -4,8 +4,8 @@ from yyagl.engine.gui.menu import MenuArgs
 from yyagl.racing.season.season import SeasonProps
 
 
-@Singleton
 class Utils(object):
+    __metaclass__ = Singleton
 
     @staticmethod
     def get_thanks(num):
