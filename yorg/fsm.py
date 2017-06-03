@@ -1,6 +1,7 @@
 from sys import exit
 from yyagl.gameobject import Fsm
 from yyagl.racing.season.season import SingleRaceSeason
+from yyagl.engine.network.server import Server
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 from .utils import Utils
@@ -84,7 +85,7 @@ class YorgFsm(Fsm):
             'crash_hs': 'assets/sfx/crash_high_speed.ogg',
             'lap': 'assets/sfx/lap.ogg',
             'landing': 'assets/sfx/landing.ogg'}
-        if eng.is_server_active:
+        if Server().is_active:
             self.season.create_race_server(keys, joystick, sounds)
         elif eng.is_client_active:
             self.season.create_race_client(keys, joystick, sounds)

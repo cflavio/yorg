@@ -4,6 +4,7 @@ from urllib2 import urlopen
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageEvent
+from yyagl.engine.network.server import Server
 from yyagl.gameobject import GameObject
 from .trackpage import TrackPageServer, TrackPageProps
 from .thankspage import ThanksPageGui
@@ -76,7 +77,7 @@ class ServerPageGui(ThanksPageGui):
             **menu_gui.btn_args))
         ThanksPageGui.build_page(self)
         evt = self.mdt.event
-        eng.start_server(evt.process_msg, evt.process_connection)
+        Server().start(evt.process_msg, evt.process_connection)
 
 
 class ServerPage(Page):

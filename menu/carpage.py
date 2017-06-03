@@ -5,8 +5,9 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page
-from yyagl.racing.season.season import SingleRaceSeason
+from yyagl.engine.network.server import Server
 from yyagl.engine.gui.imgbtn import ImageButton
+from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
 from .driverpage import DriverPage, DriverPageProps
@@ -112,14 +113,14 @@ class CarPageGuiServer(CarPageGui):
 
     def on_car(self, car):
         eng.log('car selected: ' + car)
-        eng.server_send([NetMsgs.car_selection, car])
+        Server().send([NetMsgs.car_selection, car])
         for btn in self._buttons(car):
             btn['state'] = DISABLED
             btn.setAlphaScale(.25)
         if self in self.current_cars:
             curr_car = self.current_cars[self]
             eng.log('car deselected: ' + curr_car)
-            eng.server_send([NetMsgs.car_deselection, curr_car])
+            Server().send([NetMsgs.car_deselection, curr_car])
             for btn in self._buttons(curr_car):
                 btn['state'] = NORMAL
                 btn.setAlphaScale(1)
@@ -137,7 +138,7 @@ class CarPageGuiServer(CarPageGui):
                 return 'server' if k == self else k.getAddress().getIpString()
             for k, val in self.current_cars.items():
                 packet += [process(k), val]
-            eng.server_send(packet)
+            Server().send(packet)
             eng.log('start race: ' + str(packet))
             curr_car = self.current_cars[self]
             # manage as event
@@ -150,7 +151,7 @@ class CarPageGuiServer(CarPageGui):
             eng.log('car requested: ' + car)
             btn = self._buttons(car)[0]
             if btn['state'] == DISABLED:
-                eng.server_send([NetMsgs.car_deny], sender)
+                Server().send([NetMsgs.car_deny], sender)
                 eng.log('car already selected: ' + car)
             elif btn['state'] == NORMAL:
                 eng.log('car selected: ' + car)
@@ -161,8 +162,8 @@ class CarPageGuiServer(CarPageGui):
                 self.current_cars[sender] = car
                 btn['state'] = DISABLED
                 btn.setAlphaScale(.25)
-                eng.server_send([NetMsgs.car_confirm, car], sender)
-                eng.server_send([NetMsgs.car_selection, car])
+                Server().send([NetMsgs.car_confirm, car], sender)
+                Server().send([NetMsgs.car_selection, car])
                 eng.car_mapping[sender] = car
                 self.evaluate_starting()
 
