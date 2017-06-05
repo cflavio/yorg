@@ -2,6 +2,8 @@ from sys import exit
 from yyagl.gameobject import Fsm
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.network.server import Server
+from yyagl.engine.network.client import Client
+from yyagl.engine.log import LogMgr
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 from .utils import Utils
@@ -31,7 +33,7 @@ class YorgFsm(Fsm):
         self.__exit_menu = None
 
     def enterMenu(self):
-        eng.log('entering Menu state')
+        LogMgr().log('entering Menu state')
         menu_props = MenuProps(
             Utils().menu_args, self.mdt.options,
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
@@ -63,12 +65,12 @@ class YorgFsm(Fsm):
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_cont)
 
     def exitMenu(self):
-        eng.log('exiting Menu state')
+        LogMgr().log('exiting Menu state')
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
     def enterRace(self, track_path='', car_path='', drivers=''):
-        eng.log('entering Race state')
+        LogMgr().log('entering Race state')
         base.ignore('escape-up')
         if 'save' not in self.mdt.options.dct:
             self.mdt.options['save'] = {}
@@ -87,13 +89,13 @@ class YorgFsm(Fsm):
             'landing': 'assets/sfx/landing.ogg'}
         if Server().is_active:
             self.season.create_race_server(keys, joystick, sounds)
-        elif eng.is_client_active:
+        elif Client().is_active:
             self.season.create_race_client(keys, joystick, sounds)
         else:
             race_props = self.mdt.logic.build_race_props(
                 car_path, drivers, track_path, keys, joystick, sounds)
             self.mdt.logic.season.create_race(race_props)
-        eng.log('selected drivers: ' + str(drivers))
+        LogMgr().log('selected drivers: ' + str(drivers))
         self.mdt.logic.season.race.logic.drivers = drivers
         track_name_transl = track_path
         track_dct = {'desert': _('desert'), 'mountain': _('mountain')}
@@ -114,7 +116,7 @@ class YorgFsm(Fsm):
         self.mdt.logic.season.race.attach_obs(exit_meth)
 
     def exitRace(self):
-        eng.log('exiting Race state')
+        LogMgr().log('exiting Race state')
         self.mdt.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
 

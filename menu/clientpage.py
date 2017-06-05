@@ -2,7 +2,7 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
 from yyagl.engine.gui.page import Page, PageEvent
-from yyagl.engine.network.client import ClientError
+from yyagl.engine.network.client import ClientError, Client
 from .carpage import CarPageClient
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
@@ -11,8 +11,8 @@ from .thankspage import ThanksPageGui
 class ClientEvent(PageEvent):
 
     def on_back(self):
-        if eng.is_client_active:
-            eng.client_stop()
+        if Client().is_active:
+            Client().destroy()
 
     def process_msg(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:
@@ -47,7 +47,7 @@ class ClientPageGui(ThanksPageGui):
         menu_gui = self.menu.gui
         try:
             eng.log(self.ent.get())
-            eng.client_start(self.mdt.event.process_msg, self.ent.get())
+            Client().start(self.mdt.event.process_msg, self.ent.get())
             menu_args = self.menu.gui.menu_args
             self.add_widget(OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),

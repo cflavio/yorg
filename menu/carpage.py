@@ -176,7 +176,7 @@ class CarPageGuiClient(CarPageGui):
 
     def on_car(self, car):
         eng.log('car request: ' + car)
-        eng.client_send([NetMsgs.car_request, car])
+        Client().send([NetMsgs.car_request, car])
 
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.car_confirm:
