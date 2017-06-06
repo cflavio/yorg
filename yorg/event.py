@@ -1,12 +1,13 @@
 from time import strftime
 from yyagl.gameobject import Event
+from yyagl.engine.phys import PhysMgr
 
 
 class YorgEvent(Event):
 
     def __init__(self, mdt):
         Event.__init__(self, mdt)
-        self.accept('f12', eng.toggle_debug)
+        self.accept('f12', PhysMgr().toggle_debug)
         fname = 'yorg_' + strftime('%y_%m_%d_%H_%M_%S') + '.png'
         self.accept('f10', eng.base.win.saveScreenshot, [fname])
         base.accept('escape-up', self.mdt.fsm.demand, ['Exit'])
