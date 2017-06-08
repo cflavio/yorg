@@ -72,12 +72,12 @@ class YorgMainPageGui(MainPageGui):
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.has_save, self.props.season,
             self.props.season_tracks, self.props.drivers)
-        sp_cb = lambda: self.menu.push_page(SingleplayerPage(self.menu,
-                                                             sp_props))
-        mp_cb = lambda: self.menu.push_page(MultiplayerPage(self.menu,
-                                                            mp_props))
+        sp_cb = lambda: self.menu.push_page(SingleplayerPage(self.menu.gui.menu_args,
+                                                             sp_props, self.menu))
+        mp_cb = lambda: self.menu.push_page(MultiplayerPage(self.menu.gui.menu_args,
+                                                            mp_props, self.menu))
         supp_cb = lambda: eng.open_browser(self.props.support_url)
-        cred_cb = lambda: self.menu.push_page(CreditPage(self.menu))
+        cred_cb = lambda: self.menu.push_page(CreditPage(self.menu.gui.menu_args, self.menu))
         menu_data = [
             ('Single Player', _('Single Player'), sp_cb),
             ('Multiplayer', _('Multiplayer'), mp_cb),
@@ -88,7 +88,7 @@ class YorgMainPageGui(MainPageGui):
         menu_gui = self.menu.gui
         widgets = [
             DirectButton(text='', pos=(0, 1, .45-i*.23), command=menu[2],
-                         **menu_gui.btn_args)
+                         **menu_gui.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(widgets):
             PageGui.transl_text(wdg, menu_data[i][0], menu_data[i][1])
@@ -115,7 +115,8 @@ class YorgMainPageGui(MainPageGui):
         option_props = OptionPageProps(
             self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
             self.aa, self.props.opt_file)
-        self.menu.push_page(OptionPage(self.menu, option_props))
+        self.menu.push_page(OptionPage(self.menu.gui.menu_args, option_props,
+                                       self.menu))
 
     def set_news(self):
         menu_gui = self.menu.gui
@@ -153,7 +154,7 @@ class YorgMainPageGui(MainPageGui):
             wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
             fg=menu_args.text_bg, font=menu_args.font)
             for i in range(5)]
-        btn_args = menu_gui.btn_args.copy()
+        btn_args = menu_gui.menu_args.btn_args.copy()
         btn_args['scale'] = .055
         btn = DirectButton(
             text=_('show'), pos=(.55, 1, .15), command=eng.open_browser,

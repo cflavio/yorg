@@ -31,33 +31,33 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
-        menu_gui = self.menu.gui
+        menu_gui = self.mdt.menu.gui
         widgets = [OnscreenText(text=_('Select the track'), pos=(0, .8),
-                                **menu_gui.text_args)]
-        t_a = self.menu.gui.text_args.copy()
+                                **menu_gui.menu_args.text_args)]
+        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         t_a['scale'] = .08
         for i in range(len(self.props.tracks)):
             widgets += [ImageButton(
                 scale=.5, pos=(-.5 + i * 1.0, 1, .1), frameColor=(0, 0, 0, 0),
                 image=self.props.track_img % self.props.tracks[i],
                 command=self.on_track, extraArgs=[self.props.tracks[i]],
-                **self.menu.gui.imgbtn_args)]
+                **self.mdt.menu.gui.menu_args.imgbtn_args)]
             widgets += [OnscreenText(self.props.tracks_tr[i],
                                      pos=(-.5 + i * 1.0, -.32), **t_a)]
         map(self.add_widget, widgets)
         ThanksPageGui.build_page(self)
 
     def on_track(self, track):
-        self.menu.track = track
+        self.mdt.menu.track = track
         carpage_props = CarPageProps(
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.menu.push_page(CarPage(self.menu, carpage_props))
+        self.mdt.menu.push_page(CarPage(self.mdt.menu.gui.menu_args, carpage_props, self.mdt.menu))
 
     def destroy(self):
-        if hasattr(self.menu, 'track'):
-            del self.menu.track
+        if hasattr(self.mdt.menu, 'track'):
+            del self.mdt.menu.track
         PageGui.destroy(self)
 
 
@@ -72,11 +72,12 @@ class TrackPageGuiServer(TrackPageGui):
 class TrackPage(Page):
     gui_cls = TrackPageGui
 
-    def __init__(self, menu, trackpage_props):
+    def __init__(self, menu_args, trackpage_props, menu):
+        self.menu_args = menu_args
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, trackpage_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, trackpage_props])]]
         GameObject.__init__(self, init_lst)
 
 

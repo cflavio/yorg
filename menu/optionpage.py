@@ -39,7 +39,7 @@ class OptionEvent(PageEvent):
 
 class OptionPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, option_props):
+    def __init__(self, mdt, menu_args, option_props):
         self._vol_slider = None
         self._fullscreen_cb = None
         self._lang_opt = None
@@ -47,17 +47,16 @@ class OptionPageGui(ThanksPageGui):
         self._res_opt = None
         self._browser_cb = None
         self.props = option_props
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu_args)
 
     def build_page(self):
-        menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
+        menu_args = self.menu_args
         self.pagewidgets = []
 
         def add_lab(txt, txt_tr, z):
             lab = DirectLabel(
                 text='', pos=(-.1, 1, z), text_align=TextNode.ARight,
-                **menu_gui.label_args)
+                **menu_args.label_args)
             PageGui.transl_text(lab, txt, txt_tr)
             self.pagewidgets += [lab]
             return lab
@@ -65,7 +64,7 @@ class OptionPageGui(ThanksPageGui):
         self._lang_opt = DirectOptionMenu(
             text='', items=eng.languages, pos=(.49, 1, .5),
             initialitem=self.props.lang, command=self.__change_lang,
-            **menu_gui.option_args)
+            **menu_args.option_args)
         add_lab('Volume', _('Volume'), .3)
         self._vol_slider = DirectSlider(
             pos=(.52, 0, .33), scale=.49, value=self.props.volume,
@@ -76,7 +75,7 @@ class OptionPageGui(ThanksPageGui):
             pos=(.12, 1, .12), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_fg,
             command=lambda val: eng.toggle_fullscreen(),
-            **menu_gui.checkbtn_args)
+            **menu_args.checkbtn_args)
         add_lab('Resolution', _('Resolution'), -.1)
         res2vec = lambda res: LVector2i(*[int(val) for val in res.split('x')])
         self._res_opt = DirectOptionMenu(
@@ -86,25 +85,22 @@ class OptionPageGui(ThanksPageGui):
             pos=(.49, 1, -.1),
             initialitem='x'.join(str(res) for res in eng.closest_res),
             command=lambda res: eng.set_resolution(res2vec(res)),
-            **menu_gui.option_args)
+            **menu_args.option_args)
         add_lab('Antialiasing', _('Antialiasing'), -.3)
         aa_next_lab = DirectLabel(
             text='', pos=(.2, 1, -.3), text_align=TextNode.ALeft,
-            **menu_gui.label_args)
+            **menu_args.label_args)
         PageGui.transl_text(aa_next_lab, '(from the next execution)',
                             _('(from the next execution)'))
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', indicatorValue=self.props.aa,
-            indicator_frameColor=menu_args.text_fg, **menu_gui.checkbtn_args)
+            indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
         #bld_in = lambda: self.menu.logic.push_page(
         #    InputPage(self.menu, self.props.joystick, self.props.keys))
         # it doesn't work if we go forward and back between options and input:
         # we should update keys
-        bld_in = lambda: self.menu.logic.push_page(
-            InputPage(self.menu, self.props.joystick,
-                      self.props.opt_file['settings']['keys']))
         input_btn = DirectButton(
-            text='', pos=(0, 1, -.5), command=bld_in, **menu_gui.btn_args)
+            text='', pos=(0, 1, -.5), command=self.on_input_btn, **menu_args.btn_args)
         PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
 
         self.pagewidgets += [
@@ -114,6 +110,12 @@ class OptionPageGui(ThanksPageGui):
         idx = LangMgr().lang_codes.index(self.props.lang)
         self.__change_lang(eng.languages[idx])
         ThanksPageGui.build_page(self)
+
+    def on_input_btn(self):
+        input_page = InputPage(
+            self.menu_args, self.props.joystick,
+            self.props.opt_file['settings']['keys'], self.mdt.menu)
+        self.notify('on_push_page', input_page)
 
     def update_texts(self):
         PageGui.update_texts(self)
@@ -133,9 +135,10 @@ class OptionPage(Page):
     gui_cls = OptionPageGui
     event_cls = OptionEvent
 
-    def __init__(self, menu, option_props):
+    def __init__(self, menu_args, option_props, menu):
+        self.menu_args = menu_args
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, option_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, option_props])]]
         GameObject.__init__(self, init_lst)

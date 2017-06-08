@@ -29,12 +29,12 @@ class SingleplayerPageProps(object):
 
 class SingleplayerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, singleplayer_props):
+    def __init__(self, mdt, menu_args, singleplayer_props):
         self.props = singleplayer_props
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu_args)
 
     def build_page(self):
-        menu_gui = self.menu.gui
+        menu_gui = self.mdt.menu.gui
         menu_data = [
             (_('Single race'), self.on_single_race),
             (_('New season'), self.on_start),
@@ -42,7 +42,7 @@ class SingleplayerPageGui(ThanksPageGui):
         widgets = [
             DirectButton(
                 text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                **menu_gui.btn_args)
+                **menu_gui.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         if not self.props.has_save:
             widgets[-1]['state'] = DISABLED  # do wdg.disable()
@@ -50,7 +50,7 @@ class SingleplayerPageGui(ThanksPageGui):
         if not self.props.season:
             for idx in [-2, -1]:
                 widgets[idx]['state'] = DISABLED
-                _fg = menu_gui.btn_args['text_fg']
+                _fg = menu_gui.menu_args.btn_args['text_fg']
                 _fc = widgets[idx]['frameColor']
                 clc = lambda val: max(0, val)
                 fgc = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
@@ -67,7 +67,7 @@ class SingleplayerPageGui(ThanksPageGui):
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.menu.push_page(TrackPage(self.menu, trackpage_props))
+        self.mdt.menu.push_page(TrackPage(self.mdt.menu_args, trackpage_props, self.mdt.menu))
 
     def on_start(self):
         self.menu.track = self.props.season_tracks[0]
@@ -85,9 +85,10 @@ class SingleplayerPageGui(ThanksPageGui):
 class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui
 
-    def __init__(self, menu, singleplayerpage_props):
+    def __init__(self, menu_args, singleplayerpage_props, menu):
+        self.menu_args = menu_args
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, singleplayerpage_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, singleplayerpage_props])]]
         GameObject.__init__(self, init_lst)

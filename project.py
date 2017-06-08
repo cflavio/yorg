@@ -1,6 +1,12 @@
 # BUGS =====
 
+# fix for the prototype track
+
+
 # TODO LIST =====
+
+# 0.6
+# remove some XProps (there should be only SeasonProps, RaceProps, ...)
 
 # 0.7
 # forward missile
@@ -9,6 +15,10 @@
 # drop a fixed bomb
 # rotate-all bomb
 # #ai weapons
+# refactoring of racing.race
+# refactoring of racing.track
+# refactoring of racing.car
+# refactoring of racing
 
 # 0.8
 # #gaming season
@@ -38,7 +48,6 @@
 
 # (Panda3D 1.10) #shaders shadows
 #     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
-# (Panda3D 1.10) build only nointernet
 # (Panda3D 1.10) make 'testing' branch
 
 

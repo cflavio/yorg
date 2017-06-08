@@ -22,7 +22,7 @@ class ExitPageGui(PageGui):
             ("don't visit our site after exiting",
              _("don't visit our site after exiting"),
              lambda: self.on_end(False))]
-        btn_args = self.menu.gui.btn_args
+        btn_args = self.menu.gui.menu_args.btn_args
         btn_args['frameSize'] = (-12, 12, -.8, 1.2)
         btn_visit = DirectButton(
             text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2],

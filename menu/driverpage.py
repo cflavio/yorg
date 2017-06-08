@@ -42,18 +42,18 @@ class DriverPageProps(object):
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, driverpage_props):
+    def __init__(self, mdt, menu_args, driverpage_props):
         self.props = driverpage_props
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu_args)
 
     def build_page(self):
         self.skills = [drv[2] for drv in self.props.drivers]
-        menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
+        menu_gui = self.mdt.menu.gui
+        menu_args = self.mdt.menu.gui.menu_args
         widgets = [OnscreenText(text=_('Select the driver'), pos=(0, .8),
-                                **menu_gui.text_args)]
-        self.track_path = self.menu.track
-        t_a = self.menu.gui.text_args.copy()
+                                **menu_gui.menu_args.text_args)]
+        self.track_path = self.mdt.menu.track
+        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         del t_a['scale']
         name = OnscreenText(_('Write your name:'), pos=(-.1, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
@@ -69,7 +69,7 @@ class DriverPageGui(ThanksPageGui):
                 scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
                 frameColor=(0, 0, 0, 0), image=self.props.drivers_img[0] % idx,
                 command=self.on_click, extraArgs=[idx],
-                **self.menu.gui.imgbtn_args)]
+                **self.mdt.menu.gui.menu_args.imgbtn_args)]
             self.drivers += [widgets[-1]]
             sign = lambda x: '\1green\1+\2' if x > 0 else ''
             psign = lambda x: '+' if x == 0 else sign(x)
@@ -163,11 +163,12 @@ class DriverPageGui(ThanksPageGui):
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, menu, track, car, driverpage_props):
+    def __init__(self, menu_args, track, car, driverpage_props, menu):
         self.track = track
         self.car = car
+        self.menu_args = menu_args
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, driverpage_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, driverpage_props])]]
         GameObject.__init__(self, init_lst)

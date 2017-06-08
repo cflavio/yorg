@@ -29,8 +29,8 @@ class ServerPageProps(object):
 class ServerEvent(PageEvent):
 
     def on_back(self):
-        if eng.is_server_active:
-            eng.destroy_server()
+        if Server().is_active:
+            Server().destroy()
 
     @staticmethod
     def process_msg(data_lst):
@@ -43,10 +43,11 @@ class ServerEvent(PageEvent):
 
 class ServerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, serverpage_props):
+    def __init__(self, mdt, menu_args, serverpage_props, menu):
         self.conn_txt = None
+        self.menu = menu
         self.props = serverpage_props
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu_args)
 
     def build_page(self):
         menu_gui = self.menu.gui
@@ -74,7 +75,7 @@ class ServerPageGui(ThanksPageGui):
             text=_('Start'), pos=(0, 1, -.5),
             command=lambda: self.menu.push_page(TrackPageServer(self.menu,
                                                                 tp_props)),
-            **menu_gui.btn_args))
+            **menu_gui.menu_args.btn_args))
         ThanksPageGui.build_page(self)
         evt = self.mdt.event
         Server().start(evt.process_msg, evt.process_connection)
@@ -84,9 +85,10 @@ class ServerPage(Page):
     gui_cls = ServerPageGui
     event_cls = ServerEvent
 
-    def __init__(self, menu, serverpage_props):
+    def __init__(self, menu_args, serverpage_props, menu):
+        self.menu_args = menu_args
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, serverpage_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, serverpage_props, self.menu])]]
         GameObject.__init__(self, init_lst)

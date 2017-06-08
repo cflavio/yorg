@@ -25,25 +25,26 @@ class MultiplayerPageProps(object):
 
 class MultiplayerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, mp_props):
+    def __init__(self, mdt, menu_args, mp_props):
         self.props = mp_props
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu_args)
 
     def build_page(self):
-        menu_gui = self.menu.gui
+        menu_gui = self.mdt.menu.gui
         serverpage_props = ServerPageProps(
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        scb = lambda: self.menu.push_page(ServerPage(self.menu,
-                                                     serverpage_props))
+        scb = lambda: self.mdt.menu.push_page(ServerPage(self.mdt.menu.gui.menu_args,
+                                                     serverpage_props,
+                                                     self.mdt.menu))
         menu_data = [
             ('Server', scb),
-            ('Client', lambda: self.menu.push_page(ClientPage(self.menu)))]
+            ('Client', lambda: self.mdt.menu.push_page(ClientPage(self.mdt.menu.gui.menu_args, self.mdt.menu)))]
         widgets = [
             DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                         **menu_gui.btn_args)
+                         **menu_gui.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         map(self.add_widget, widgets)
         ThanksPageGui.build_page(self)
@@ -52,9 +53,10 @@ class MultiplayerPageGui(ThanksPageGui):
 class MultiplayerPage(Page):
     gui_cls = MultiplayerPageGui
 
-    def __init__(self, menu, mp_props):
+    def __init__(self, menu_args, mp_props, menu):
+        self.menu_args = menu_args
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, mp_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, mp_props])]]
         GameObject.__init__(self, init_lst)

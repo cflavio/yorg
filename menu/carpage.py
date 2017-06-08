@@ -37,18 +37,18 @@ class CarPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
-        menu_gui = self.menu.gui
+        menu_gui = self.mdt.menu.gui
         self.pagewidgets = [OnscreenText(text=_('Select the car'),
-                                         pos=(0, .8), **menu_gui.text_args)]
-        self.track_path = self.menu.track  # we should pass it
-        t_a = self.menu.gui.text_args.copy()
+                                         pos=(0, .8), **menu_gui.menu_args.text_args)]
+        self.track_path = self.mdt.menu.track  # we should pass it
+        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         del t_a['scale']
         for row, col in product(range(2), range(3)):
             self.pagewidgets += [ImageButton(
                 scale=.32, pos=(-.8 + col * .8, 1, .4 - row * .7), frameColor=(0, 0, 0, 0),
                 image=self.props.car_path % self.props.cars[col + row * 3],
                 command=self.on_car, extraArgs=[self.props.cars[col + row * 3]],
-                **self.menu.gui.imgbtn_args)]
+                **self.mdt.menu.gui.menu_args.imgbtn_args)]
             self.pagewidgets += [OnscreenText(
                 self.props.cars[col + row * 3], pos=(-.8 + col * .8, .64 - row * .7), scale=.072,
                 **t_a)]
@@ -87,9 +87,9 @@ class CarPageGui(ThanksPageGui):
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
-        drv_page = DriverPage(self.menu, self.track_path, car,
-                              driverpage_props)
-        self.menu.push_page(drv_page)
+        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path, car,
+                              driverpage_props, self.mdt.menu)
+        self.mdt.menu.push_page(drv_page)
 
 
 class CarPageGuiSeason(CarPageGui):
@@ -213,11 +213,12 @@ class CarPageGuiClient(CarPageGui):
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, menu, carpage_props):
+    def __init__(self, menu_args, carpage_props, menu):
+        self.menu_args = menu_args
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, carpage_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, carpage_props])]]
         GameObject.__init__(self, init_lst)
 
 

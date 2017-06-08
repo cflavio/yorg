@@ -28,9 +28,9 @@ class ClientPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, menu)
 
     def build_page(self):
-        menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
-        txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.text_args)
+        menu_gui = self.mdt.menu.gui
+        menu_args = self.mdt.menu.gui.menu_args
+        txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.menu_args.text_args)
         widgets = [txt]
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
@@ -38,17 +38,17 @@ class ClientPageGui(ThanksPageGui):
             initialText=_('insert the server address'))
         self.ent.onscreenText['fg'] = menu_args.text_fg
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
-                           command=self.connect, **menu_gui.btn_args)
+                           command=self.connect, **menu_gui.menu_args.btn_args)
         widgets += [self.ent, btn]
         map(self.add_widget, widgets)
         ThanksPageGui.build_page(self)
 
     def connect(self):
-        menu_gui = self.menu.gui
+        menu_gui = self.mdt.menu.gui
         try:
             eng.log(self.ent.get())
             Client().start(self.mdt.event.process_msg, self.ent.get())
-            menu_args = self.menu.gui.menu_args
+            menu_args = self.mdt.menu.gui.menu_args
             self.add_widget(OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
                 font=menu_gui.font, fg=menu_args.text_fg))
@@ -61,3 +61,8 @@ class ClientPageGui(ThanksPageGui):
 class ClientPage(Page):
     gui_cls = ClientPageGui
     event_cls = ClientEvent
+
+    def __init__(self, menu_args, menu):
+        self.menu_args = menu_args
+        self.menu = menu
+        Page.__init__(self, self.menu_args, self.menu)
