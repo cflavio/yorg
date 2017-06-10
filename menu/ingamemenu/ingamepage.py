@@ -6,7 +6,7 @@ from yyagl.engine.gui.page import Page, PageGui
 
 class InGamePageGui(PageGui):
 
-    def build_page(self):
+    def bld_page(self):
         self.frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         txt = _(
@@ -28,7 +28,7 @@ class InGamePageGui(PageGui):
             text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
             text_scale=.8, **btn_args)
         map(self.add_widget, [self.frm, self.txt, btn_visit, btn_dont_visit])
-        PageGui.build_page(self, False)
+        PageGui.bld_page(self, False)
         eng.hide_cursor()
         eng.show_standard_cursor()
         eng.do_later(.01, eng.toggle_pause, [False])

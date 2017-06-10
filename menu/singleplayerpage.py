@@ -33,7 +33,7 @@ class SingleplayerPageGui(ThanksPageGui):
         self.props = singleplayer_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
-    def build_page(self):
+    def bld_page(self):
         menu_gui = self.mdt.menu.gui
         menu_data = [
             (_('Single race'), self.on_single_race),
@@ -59,7 +59,7 @@ class SingleplayerPageGui(ThanksPageGui):
                        _fc[3])
                 widgets[idx]['frameColor'] = fcc
         map(self.add_widget, widgets)
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
     def on_single_race(self):
         trackpage_props = TrackPageProps(

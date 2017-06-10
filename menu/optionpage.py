@@ -49,7 +49,7 @@ class OptionPageGui(ThanksPageGui):
         self.props = option_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
-    def build_page(self):
+    def bld_page(self):
         menu_args = self.menu_args
         self.pagewidgets = []
 
@@ -109,7 +109,7 @@ class OptionPageGui(ThanksPageGui):
         map(self.add_widget, self.pagewidgets)
         idx = LangMgr().lang_codes.index(self.props.lang)
         self.__change_lang(eng.languages[idx])
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
     def on_input_btn(self):
         input_page = InputPage(

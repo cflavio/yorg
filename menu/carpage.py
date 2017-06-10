@@ -36,7 +36,7 @@ class CarPageGui(ThanksPageGui):
         self.props = carpage_props
         ThanksPageGui.__init__(self, mdt, menu)
 
-    def build_page(self):
+    def bld_page(self):
         menu_gui = self.mdt.menu.gui
         self.pagewidgets = [OnscreenText(text=_('Select the car'),
                                          pos=(0, .8), **menu_gui.menu_args.text_args)]
@@ -75,7 +75,7 @@ class CarPageGui(ThanksPageGui):
             map(lambda txt_def: add_txt(*txt_def), txt_lst)
         map(self.add_widget, self.pagewidgets)
         self.current_cars = {}
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
     def _buttons(self, car):
         is_btn = lambda wdg: wdg.__class__ == DirectButton
@@ -106,8 +106,8 @@ class CarPageGuiSeason(CarPageGui):
 
 class CarPageGuiServer(CarPageGui):
 
-    def build_page(self):
-        CarPageGui.build_page(self)
+    def bld_page(self):
+        CarPageGui.bld_page(self)
         eng.register_server_cb(self.process_srv)
         eng.car_mapping = {}
 
@@ -170,8 +170,8 @@ class CarPageGuiServer(CarPageGui):
 
 class CarPageGuiClient(CarPageGui):
 
-    def build_page(self):
-        CarPageGui.build_page(self)
+    def bld_page(self):
+        CarPageGui.bld_page(self)
         eng.register_client_cb(self.process_client)
 
     def on_car(self, car):

@@ -33,7 +33,7 @@ class InputPageGui(ThanksPageGui):
         self.keys = keys
         ThanksPageGui.__init__(self, mdt, menu_args)
 
-    def build_page(self):
+    def bld_page(self):
         menu_args = self.menu_args
         self.pagewidgets = []
         self.buttons = []
@@ -80,7 +80,7 @@ class InputPageGui(ThanksPageGui):
         self.hint_lab.hide()
         self.pagewidgets += [joypad_lab, self._joypad_cb, self.hint_lab]
         map(self.add_widget, self.pagewidgets)
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
     def start_rec(self, btn):
         numbers = [str(n) for n in range(10)]

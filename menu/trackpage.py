@@ -30,7 +30,7 @@ class TrackPageGui(ThanksPageGui):
         self.props = trackpage_props
         ThanksPageGui.__init__(self, mdt, menu)
 
-    def build_page(self):
+    def bld_page(self):
         menu_gui = self.mdt.menu.gui
         widgets = [OnscreenText(text=_('Select the track'), pos=(0, .8),
                                 **menu_gui.menu_args.text_args)]
@@ -45,7 +45,7 @@ class TrackPageGui(ThanksPageGui):
             widgets += [OnscreenText(self.props.tracks_tr[i],
                                      pos=(-.5 + i * 1.0, -.32), **t_a)]
         map(self.add_widget, widgets)
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
     def on_track(self, track):
         self.mdt.menu.track = track

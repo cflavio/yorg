@@ -27,7 +27,7 @@ class ClientPageGui(ThanksPageGui):
         self.ent = None
         ThanksPageGui.__init__(self, mdt, menu)
 
-    def build_page(self):
+    def bld_page(self):
         menu_gui = self.mdt.menu.gui
         menu_args = self.mdt.menu.gui.menu_args
         txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.menu_args.text_args)
@@ -41,7 +41,7 @@ class ClientPageGui(ThanksPageGui):
                            command=self.connect, **menu_gui.menu_args.btn_args)
         widgets += [self.ent, btn]
         map(self.add_widget, widgets)
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
     def connect(self):
         menu_gui = self.mdt.menu.gui

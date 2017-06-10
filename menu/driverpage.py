@@ -46,7 +46,7 @@ class DriverPageGui(ThanksPageGui):
         self.props = driverpage_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
-    def build_page(self):
+    def bld_page(self):
         self.skills = [drv[2] for drv in self.props.drivers]
         menu_gui = self.mdt.menu.gui
         menu_args = self.mdt.menu.gui.menu_args
@@ -113,7 +113,7 @@ class DriverPageGui(ThanksPageGui):
         tex = Texture()
         tex.load(empty_img)
         self.img.setTexture(self.ts, tex)
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)
 

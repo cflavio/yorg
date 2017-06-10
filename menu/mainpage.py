@@ -60,7 +60,7 @@ class YorgMainPageGui(MainPageGui):
         self.fullscreen = sett['fullscreen']
         self.aa = sett['aa']
 
-    def build_page(self):
+    def bld_page(self):
         mp_props = MultiplayerPageProps(
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
@@ -108,7 +108,7 @@ class YorgMainPageGui(MainPageGui):
         widgets[-1].setTransparency(True)
         map(self.add_widget, widgets)
         self.set_news()
-        MainPageGui.build_page(self)
+        MainPageGui.bld_page(self)
 
     def on_options(self):
         self.load_settings()

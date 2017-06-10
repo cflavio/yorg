@@ -49,7 +49,7 @@ class ServerPageGui(ThanksPageGui):
         self.props = serverpage_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
-    def build_page(self):
+    def bld_page(self):
         menu_gui = self.menu.gui
         menu_args = self.menu.gui.menu_args
         sock = socket(AF_INET, SOCK_DGRAM)
@@ -76,7 +76,7 @@ class ServerPageGui(ThanksPageGui):
             command=lambda: self.menu.push_page(TrackPageServer(self.menu,
                                                                 tp_props)),
             **menu_gui.menu_args.btn_args))
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
         evt = self.mdt.event
         Server().start(evt.process_msg, evt.process_connection)
 

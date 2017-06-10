@@ -7,7 +7,7 @@ from .thankspage import ThanksPageGui
 
 class CreditPageGui(ThanksPageGui):
 
-    def build_page(self):
+    def bld_page(self):
         menu_args = self.menu_args
         flavio = _('Code')+': Flavio Calva'
         luca = _('Art')+': Luca Quartero'
@@ -21,7 +21,7 @@ class CreditPageGui(ThanksPageGui):
             command=lambda: self.notify('on_push_page', SupportersPage(self.menu_args, self.mdt.menu)),
             **menu_args.btn_args)
         map(self.add_widget, [txt, btn])
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
 
 class CreditPage(Page):

@@ -29,7 +29,7 @@ class MultiplayerPageGui(ThanksPageGui):
         self.props = mp_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
-    def build_page(self):
+    def bld_page(self):
         menu_gui = self.mdt.menu.gui
         serverpage_props = ServerPageProps(
             self.props.cars, self.props.car_path, self.props.phys_path,
@@ -47,7 +47,7 @@ class MultiplayerPageGui(ThanksPageGui):
                          **menu_gui.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         map(self.add_widget, widgets)
-        ThanksPageGui.build_page(self)
+        ThanksPageGui.bld_page(self)
 
 
 class MultiplayerPage(Page):
