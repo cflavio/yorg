@@ -1,0 +1,139 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/amusement/Fenceplank.egg assets/models/tracks/amusement/Fenceplank.egg"
+}
+<Texture> TEXFenceplank {
+  "tex/TEXFenceplank.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Material> MATFenceplank {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Fenceplank {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Fenceplank {
+    <Vertex> 0 {
+      -1.28083 0.029144 0.130536
+      <UV> { 0.000898 0.008964 }
+      <Normal> { -0.000946 0.999969 0 }
+    }
+    <Vertex> 1 {
+      1.31219 0.031602 0.104723
+      <UV> { 0.987154 0.008966 }
+      <Normal> { -0.000946 0.999969 0 }
+    }
+    <Vertex> 2 {
+      1.31219 0.031602 -0.130537
+      <UV> { 0.988045 0.385796 }
+      <Normal> { -0.000946 0.999969 0 }
+    }
+    <Vertex> 3 {
+      -1.28083 0.029144 -0.104723
+      <UV> { 0.001789 0.385796 }
+      <Normal> { -0.000946 0.999969 0 }
+    }
+    <Vertex> 4 {
+      1.28083 -0.029146 0.104723
+      <UV> { 0.987153 0.770192 }
+      <Normal> { 0.000946 -0.999969 0 }
+    }
+    <Vertex> 5 {
+      -1.31219 -0.031604 0.130536
+      <UV> { 0.000898 0.770192 }
+      <Normal> { 0.000946 -0.999969 0 }
+    }
+    <Vertex> 6 {
+      -1.31219 -0.031604 -0.104723
+      <UV> { 0.001789 0.39336 }
+      <Normal> { 0.000946 -0.999969 0 }
+    }
+    <Vertex> 7 {
+      1.28083 -0.029146 -0.130537
+      <UV> { 0.988043 0.39336 }
+      <Normal> { 0.000946 -0.999969 0 }
+    }
+    <Vertex> 8 {
+      -1.31219 -0.031604 -0.104723
+      <UV> { 0.000898 0.97985 }
+      <Normal> { -0.00995944 0.00514129 -0.999937 }
+    }
+    <Vertex> 9 {
+      -1.31219 -0.031604 0.130536
+      <UV> { 0.000898 0.777758 }
+      <Normal> { 0.00995905 -0.00514109 0.999937 }
+    }
+    <Vertex> 10 {
+      -1.28083 0.029144 -0.104723
+      <UV> { 0.012846 0.882586 }
+      <Normal> { -0.00995944 0.00514129 -0.999937 }
+    }
+    <Vertex> 11 {
+      -1.28083 0.029144 0.130536
+      <UV> { 0.012846 0.87502 }
+      <Normal> { 0.00995905 -0.00514109 0.999937 }
+    }
+    <Vertex> 12 {
+      1.28083 -0.029146 -0.130537
+      <UV> { 0.987149 0.97985 }
+      <Normal> { -0.00995944 0.00514129 -0.999937 }
+    }
+    <Vertex> 13 {
+      1.28083 -0.029146 0.104723
+      <UV> { 0.987153 0.777756 }
+      <Normal> { 0.00995905 -0.00514109 0.999937 }
+    }
+    <Vertex> 14 {
+      1.31219 0.031602 -0.130537
+      <UV> { 0.999097 0.882586 }
+      <Normal> { -0.00995944 0.00514129 -0.999937 }
+    }
+    <Vertex> 15 {
+      1.31219 0.031602 0.104723
+      <UV> { 0.999102 0.875021 }
+      <Normal> { 0.00995905 -0.00514109 0.999937 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXFenceplank }
+    <MRef> { MATFenceplank }
+    <VertexRef> { 0 1 2 3 <Ref> { Fenceplank } }
+  }
+  <Polygon> {
+    <TRef> { TEXFenceplank }
+    <MRef> { MATFenceplank }
+    <VertexRef> { 4 5 6 7 <Ref> { Fenceplank } }
+  }
+  <Polygon> {
+    <TRef> { TEXFenceplank }
+    <MRef> { MATFenceplank }
+    <VertexRef> { 12 8 10 14 <Ref> { Fenceplank } }
+  }
+  <Polygon> {
+    <TRef> { TEXFenceplank }
+    <MRef> { MATFenceplank }
+    <VertexRef> { 15 11 9 13 <Ref> { Fenceplank } }
+  }
+}

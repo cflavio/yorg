@@ -1,0 +1,2531 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/amusement/LakeLunaParkAnim.egg assets/models/tracks/amusement/LakeLunaParkAnim.egg"
+}
+<Texture> TEXLakeLunaPark {
+  "tex/TEXLakeLunaPark.png"
+  <Scalar> alpha-file { "tex/TEXLakeLunaPark.png" }
+  <Scalar> alpha-file-channel { 4 }
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+  <Transform> {
+    <Translate> { -0.5 -0.5 -0.5 }
+    <Scale> { 2 2 1 }
+    <Translate> { 0.5 0.5 0.5 }
+  }
+}
+<Material> MATLakeLunaPark {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> diffa { 0.2 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0.7 }
+  <Scalar> specg { 0.7 }
+  <Scalar> specb { 0.7 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> ArmatureLakeLunaParkAnim {
+  <Dart> { 1 }
+  <Group> LakeLunaParkAnim {
+    <Transform> {
+      <Matrix4> {
+        1 0 0 0
+        0 1 0 0
+        0 0 1 0
+        0 0 0 1
+      }
+    }
+    <VertexPool> LakeLunaParkAnim {
+      <Vertex> 0 {
+        7.6946 7.6946 0
+        <UV> { 0.928229 0.928229 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 1 {
+        6.41217 8.97703 0
+        <UV> { 0.856857 0.9996 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 2 {
+        6.41217 6.41217 0
+        <UV> { 0.856857 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 3 {
+        -7.6946 7.6946 0
+        <UV> { 0.071771 0.928228 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 4 {
+        -8.97703 8.97703 0
+        <UV> { 0.0004 0.999599 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 5 {
+        -8.97703 6.41217 0
+        <UV> { 0.0004 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 6 {
+        -5.12973 7.6946 0
+        <UV> { 0.214514 0.928228 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 7 {
+        -6.41217 8.97703 0
+        <UV> { 0.143143 0.9996 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 8 {
+        -6.41217 6.41217 0
+        <UV> { 0.143143 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 9 {
+        5.12973 7.6946 0
+        <UV> { 0.785486 0.928229 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 10 {
+        -7.6946 -7.6946 0
+        <UV> { 0.071772 0.071771 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 11 {
+        -8.97703 -6.41217 0
+        <UV> { 0.0004 0.143142 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 12 {
+        -8.97703 -8.97703 0
+        <UV> { 0.0004 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 13 {
+        -7.6946 -5.12973 0
+        <UV> { 0.071772 0.214514 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 14 {
+        -8.97703 -3.8473 0
+        <UV> { 0.0004 0.285885 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 15 {
+        -7.6946 -2.56487 0
+        <UV> { 0.071772 0.357257 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 16 {
+        -8.97703 -1.28243 0
+        <UV> { 0.0004 0.428628 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 17 {
+        -7.6946 -0 0
+        <UV> { 0.071772 0.5 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 18 {
+        -8.97703 1.28243 0
+        <UV> { 0.0004 0.571371 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 19 {
+        -7.6946 2.56487 0
+        <UV> { 0.071771 0.642742 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 20 {
+        -8.97703 3.8473 0
+        <UV> { 0.0004 0.714114 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 21 {
+        -7.6946 5.12973 0
+        <UV> { 0.071771 0.785485 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 22 {
+        -5.12973 -7.6946 0
+        <UV> { 0.214515 0.071771 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 23 {
+        -6.41217 -6.41217 0
+        <UV> { 0.143143 0.143143 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 24 {
+        -6.41217 -8.97703 0
+        <UV> { 0.143143 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 25 {
+        -6.41217 -3.8473 0
+        <UV> { 0.143143 0.285885 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 26 {
+        -6.41217 -1.28243 0
+        <UV> { 0.143143 0.428628 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 27 {
+        -6.41217 1.28243 0
+        <UV> { 0.143143 0.571371 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 28 {
+        -6.41217 3.8473 0
+        <UV> { 0.143143 0.714114 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 29 {
+        -3.8473 -6.41217 0
+        <UV> { 0.285886 0.143143 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 30 {
+        -3.8473 -8.97703 0
+        <UV> { 0.285886 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 31 {
+        2.56487 -2.56487 0
+        <UV> { 0.642743 0.357257 }
+        <Normal> { 0 0 1 }
+        // Bone:0.097208 Bone.001:0.170171 Bone.002:0.19293
+        // Bone.003:0.539691
+      }
+      <Vertex> 32 {
+        5.12973 -5.12973 0
+        <UV> { 0.785486 0.214514 }
+        <Normal> { 0 0 1 }
+        // Bone:0.01162 Bone.001:0.085084 Bone.002:0.112301
+        // Bone.003:0.771804
+      }
+      <Vertex> 33 {
+        3.8473 -3.8473 0
+        <UV> { 0.714115 0.285885 }
+        <Normal> { 0 0 1 }
+        // Bone:0.048054 Bone.001:0.112502 Bone.002:0.129488
+        // Bone.003:0.708983
+      }
+      <Vertex> 34 {
+        3.8473 1.28243 0
+        <UV> { 0.714114 0.571371 }
+        <Normal> { 0 0 1 }
+        // Bone:0.11342 Bone.001:0.065903 Bone.002:0.604435
+        // Bone.003:0.216242
+      }
+      <Vertex> 35 {
+        5.12973 5.12973 0
+        <UV> { 0.785486 0.785486 }
+        <Normal> { 0 0 1 }
+        // Bone:0.103501 Bone.001:0.001408 Bone.002:0.79539
+        // Bone.003:0.075405
+      }
+      <Vertex> 36 {
+        7.6946 -7.6946 0
+        <UV> { 0.928229 0.071771 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 37 {
+        6.41217 -6.41217 0
+        <UV> { 0.856857 0.143143 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 38 {
+        6.41217 -8.97703 0
+        <UV> { 0.856857 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 39 {
+        7.6946 -5.12973 0
+        <UV> { 0.928229 0.214514 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 40 {
+        6.41217 -3.8473 0
+        <UV> { 0.856857 0.285885 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 41 {
+        7.6946 -2.56487 0
+        <UV> { 0.928229 0.357257 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 42 {
+        6.41217 -1.28243 0
+        <UV> { 0.856857 0.428628 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 43 {
+        7.6946 0 0
+        <UV> { 0.928229 0.5 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 44 {
+        6.41217 1.28243 0
+        <UV> { 0.856857 0.571371 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 45 {
+        7.6946 2.56487 0
+        <UV> { 0.928229 0.642743 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 46 {
+        6.41217 3.8473 0
+        <UV> { 0.856857 0.714114 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 47 {
+        7.6946 5.12973 0
+        <UV> { 0.928229 0.785486 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 48 {
+        8.97703 8.97703 0
+        <UV> { 0.9996 0.9996 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 49 {
+        8.97703 -6.41217 0
+        <UV> { 0.9996 0.143143 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 50 {
+        8.97703 -3.8473 0
+        <UV> { 0.9996 0.285885 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 51 {
+        8.97703 -1.28243 0
+        <UV> { 0.9996 0.428628 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 52 {
+        8.97703 1.28243 0
+        <UV> { 0.9996 0.571371 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 53 {
+        8.97703 3.8473 0
+        <UV> { 0.9996 0.714114 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 54 {
+        8.97703 6.41217 0
+        <UV> { 0.9996 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 55 {
+        2.56487 7.6946 0
+        <UV> { 0.642743 0.928228 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 56 {
+        -1.28243 6.41217 0
+        <UV> { 0.428629 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 57 {
+        -2.56487 7.6946 0
+        <UV> { 0.357257 0.928228 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 58 {
+        -3.8473 6.41217 0
+        <UV> { 0.285886 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 59 {
+        -3.8473 8.97703 0
+        <UV> { 0.285885 0.9996 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 60 {
+        -1.28243 8.97703 0
+        <UV> { 0.428628 0.9996 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 61 {
+        -1.28243 -6.41217 0
+        <UV> { 0.428629 0.143143 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 62 {
+        1.28243 -6.41217 0
+        <UV> { 0.571372 0.143143 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 63 {
+        -1.28243 -8.97703 0
+        <UV> { 0.428629 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 64 {
+        -2.56487 -7.6946 0
+        <UV> { 0.357257 0.071771 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 65 {
+        3.8473 -6.41217 0
+        <UV> { 0.714115 0.143143 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 66 {
+        1.28243 -8.97703 0
+        <UV> { 0.571372 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 67 {
+        -0 -7.6946 0
+        <UV> { 0.5 0.071771 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 68 {
+        3.8473 -8.97703 0
+        <UV> { 0.714114 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 69 {
+        2.56487 -7.6946 0
+        <UV> { 0.642743 0.071771 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 70 {
+        5.12973 -7.6946 0
+        <UV> { 0.785486 0.071771 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 71 {
+        8.97703 -8.97703 0
+        <UV> { 0.9996 0.0004 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 72 {
+        -5.12973 -5.12973 0
+        <UV> { 0.214515 0.214514 }
+        <Normal> { 0 0 1 }
+        // Bone:0.117736 Bone.001:0.787514 Bone.002:0.001599
+        // Bone.003:0.068951
+      }
+      <Vertex> 73 {
+        -5.12973 -2.56487 0
+        <UV> { 0.214515 0.357257 }
+        <Normal> { 0 0 1 }
+        // Bone:0.215887 Bone.001:0.690783 Bone.002:0.024742
+        // Bone.003:0.055959
+      }
+      <Vertex> 74 {
+        -5.12973 -0 0
+        <UV> { 0.214514 0.5 }
+        <Normal> { 0 0 1 }
+        // Bone:0.535632 Bone.001:0.358541 Bone.002:0.056981
+        // Bone.003:0.047691
+      }
+      <Vertex> 75 {
+        -5.12973 2.56487 0
+        <UV> { 0.214514 0.642742 }
+        <Normal> { 0 0 1 }
+        // Bone:0.709394 Bone.001:0.183779 Bone.002:0.072227
+        // Bone.003:0.019201
+      }
+      <Vertex> 76 {
+        -5.12973 5.12973 0
+        <UV> { 0.214514 0.785485 }
+        <Normal> { 0 0 1 }
+        // Bone:0.813984 Bone.001:0.079325 Bone.002:0.083911
+      }
+      <Vertex> 77 {
+        -3.8473 -3.8473 0
+        <UV> { 0.285886 0.285885 }
+        <Normal> { 0 0 1 }
+        // Bone:0.134257 Bone.001:0.735631 Bone.002:0.030134
+        // Bone.003:0.090045
+      }
+      <Vertex> 78 {
+        -3.8473 -1.28243 0
+        <UV> { 0.285886 0.428628 }
+        <Normal> { 0 0 1 }
+        // Bone:0.334018 Bone.001:0.512996 Bone.002:0.070397
+        // Bone.003:0.082589
+      }
+      <Vertex> 79 {
+        -3.8473 1.28243 0
+        <UV> { 0.285886 0.571371 }
+        <Normal> { 0 0 1 }
+        // Bone:0.631358 Bone.001:0.222619 Bone.002:0.090108
+        // Bone.003:0.055916
+      }
+      <Vertex> 80 {
+        -3.8473 3.8473 0
+        <UV> { 0.285886 0.714114 }
+        <Normal> { 0 0 1 }
+        // Bone:0.763505 Bone.001:0.100403 Bone.002:0.102749
+        // Bone.003:0.016686
+      }
+      <Vertex> 81 {
+        -2.56487 -5.12973 0
+        <UV> { 0.357257 0.214514 }
+        <Normal> { 0 0 1 }
+        // Bone:0.093667 Bone.001:0.699674 Bone.002:0.041914
+        // Bone.003:0.160702
+      }
+      <Vertex> 82 {
+        -2.56487 2.56487 0
+        <UV> { 0.357257 0.642743 }
+        <Normal> { 0 0 1 }
+        // Bone:0.643916 Bone.001:0.141498 Bone.002:0.152018
+        // Bone.003:0.062568
+      }
+      <Vertex> 83 {
+        -2.56487 -2.56487 0
+        <UV> { 0.357257 0.357257 }
+        <Normal> { 0 0 1 }
+        // Bone:0.206651 Bone.001:0.57372 Bone.002:0.080063
+        // Bone.003:0.139566
+      }
+      <Vertex> 84 {
+        -2.56487 -0 0
+        <UV> { 0.357257 0.5 }
+        <Normal> { 0 0 1 }
+        // Bone:0.455318 Bone.001:0.316063 Bone.002:0.123491
+        // Bone.003:0.105128
+      }
+      <Vertex> 85 {
+        -2.56487 5.12973 0
+        <UV> { 0.357257 0.785485 }
+        <Normal> { 0 0 1 }
+        // Bone:0.711625 Bone.001:0.071349 Bone.002:0.178916
+        // Bone.003:0.02622
+      }
+      <Vertex> 86 {
+        -1.28243 -3.8473 0
+        <UV> { 0.428629 0.285885 }
+        <Normal> { 0 0 1 }
+        // Bone:0.133048 Bone.001:0.546493 Bone.002:0.083975
+        // Bone.003:0.236484
+      }
+      <Vertex> 87 {
+        -1.28243 -1.28243 0
+        <UV> { 0.428629 0.428628 }
+        <Normal> { 0 0 1 }
+        // Bone:0.277757 Bone.001:0.391513 Bone.002:0.146142
+        // Bone.003:0.184588
+      }
+      <Vertex> 88 {
+        -1.28243 1.28243 0
+        <UV> { 0.428629 0.571371 }
+        <Normal> { 0 0 1 }
+        // Bone:0.479667 Bone.001:0.194264 Bone.002:0.209642
+        // Bone.003:0.116427
+      }
+      <Vertex> 89 {
+        -1.28243 3.8473 0
+        <UV> { 0.428629 0.714114 }
+        <Normal> { 0 0 1 }
+        // Bone:0.583245 Bone.001:0.095554 Bone.002:0.2559
+        // Bone.003:0.065301
+      }
+      <Vertex> 90 {
+        -0 -5.12973 0
+        <UV> { 0.5 0.214514 }
+        <Normal> { 0 0 1 }
+        // Bone:0.087038 Bone.001:0.458304 Bone.002:0.0781
+        // Bone.003:0.376558
+      }
+      <Vertex> 91 {
+        -0 -2.56487 0
+        <UV> { 0.5 0.357257 }
+        <Normal> { 0 0 1 }
+        // Bone:0.167637 Bone.001:0.37655 Bone.002:0.146174
+        // Bone.003:0.309639
+      }
+      <Vertex> 92 {
+        -0 0 0
+        <UV> { 0.5 0.5 }
+        <Normal> { 0 0 1 }
+        // Bone:0.313581 Bone.001:0.229266 Bone.002:0.251763
+        // Bone.003:0.205391
+      }
+      <Vertex> 93 {
+        0 2.56487 0
+        <UV> { 0.5 0.642743 }
+        <Normal> { 0 0 1 }
+        // Bone:0.425422 Bone.001:0.120259 Bone.002:0.343702
+        // Bone.003:0.110617
+      }
+      <Vertex> 94 {
+        0 5.12973 0
+        <UV> { 0.5 0.785486 }
+        <Normal> { 0 0 1 }
+        // Bone:0.480116 Bone.001:0.065594 Bone.002:0.393115
+        // Bone.003:0.061175
+      }
+      <Vertex> 95 {
+        0 7.6946 0
+        <UV> { 0.5 0.928228 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 96 {
+        1.28243 -3.8473 0
+        <UV> { 0.571372 0.285885 }
+        <Normal> { 0 0 1 }
+        // Bone:0.097684 Bone.001:0.289716 Bone.002:0.121725
+        // Bone.003:0.490874
+      }
+      <Vertex> 97 {
+        1.28243 -1.28243 0
+        <UV> { 0.571372 0.428628 }
+        <Normal> { 0 0 1 }
+        // Bone:0.178078 Bone.001:0.218907 Bone.002:0.246819
+        // Bone.003:0.356197
+      }
+      <Vertex> 98 {
+        1.28243 1.28243 0
+        <UV> { 0.571372 0.571371 }
+        <Normal> { 0 0 1 }
+        // Bone:0.261562 Bone.001:0.131504 Bone.002:0.425449
+        // Bone.003:0.181484
+      }
+      <Vertex> 99 {
+        1.28243 3.8473 0
+        <UV> { 0.571371 0.714114 }
+        <Normal> { 0 0 1 }
+        // Bone:0.317366 Bone.001:0.072239 Bone.002:0.519617
+        // Bone.003:0.090778
+      }
+      <Vertex> 100 {
+        1.28243 6.41217 0
+        <UV> { 0.571371 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 101 {
+        1.28243 8.97703 0
+        <UV> { 0.571371 0.9996 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 102 {
+        2.56487 -5.12973 0
+        <UV> { 0.642743 0.214514 }
+        <Normal> { 0 0 1 }
+        // Bone:0.054298 Bone.001:0.199642 Bone.002:0.088942
+        // Bone.003:0.657119
+      }
+      <Vertex> 103 {
+        2.56487 0 0
+        <UV> { 0.642743 0.5 }
+        <Normal> { 0 0 1 }
+        // Bone:0.153417 Bone.001:0.123649 Bone.002:0.423481
+        // Bone.003:0.299453
+      }
+      <Vertex> 104 {
+        2.56487 2.56487 0
+        <UV> { 0.642743 0.642743 }
+        <Normal> { 0 0 1 }
+        // Bone:0.191424 Bone.001:0.071746 Bone.002:0.600267
+        // Bone.003:0.136562
+      }
+      <Vertex> 105 {
+        2.56487 5.12973 0
+        <UV> { 0.642743 0.785486 }
+        <Normal> { 0 0 1 }
+        // Bone:0.222984 Bone.001:0.035696 Bone.002:0.664973
+        // Bone.003:0.069196
+      }
+      <Vertex> 106 {
+        3.8473 -1.28243 0
+        <UV> { 0.714115 0.428628 }
+        <Normal> { 0 0 1 }
+        // Bone:0.086791 Bone.001:0.099381 Bone.002:0.318835
+        // Bone.003:0.494992
+      }
+      <Vertex> 107 {
+        3.8473 3.8473 0
+        <UV> { 0.714114 0.714114 }
+        <Normal> { 0 0 1 }
+        // Bone:0.130305 Bone.001:0.027369 Bone.002:0.732635
+        // Bone.003:0.098376
+      }
+      <Vertex> 108 {
+        3.8473 6.41217 0
+        <UV> { 0.714114 0.856857 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 109 {
+        3.8473 8.97703 0
+        <UV> { 0.714114 0.9996 }
+        <Normal> { 0 0 1 }
+      }
+      <Vertex> 110 {
+        5.12973 -2.56487 0
+        <UV> { 0.785486 0.357257 }
+        <Normal> { 0 0 1 }
+        // Bone:0.04106 Bone.001:0.067942 Bone.002:0.207604
+        // Bone.003:0.678923
+      }
+      <Vertex> 111 {
+        5.12973 0 0
+        <UV> { 0.785486 0.5 }
+        <Normal> { 0 0 1 }
+        // Bone:0.070375 Bone.001:0.057938 Bone.002:0.522462
+        // Bone.003:0.349225
+      }
+      <Vertex> 112 {
+        5.12973 2.56487 0
+        <UV> { 0.785486 0.642743 }
+        <Normal> { 0 0 1 }
+        // Bone:0.089823 Bone.001:0.030248 Bone.002:0.692398
+        // Bone.003:0.177655
+      }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 0 1 2 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 3 4 5 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 6 7 8 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 57 59 58 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 95 60 56 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 55 101 100 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 9 109 108 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 10 11 12 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 13 14 11 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 15 16 14 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 17 18 16 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 19 20 18 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 21 5 20 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 22 23 24 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 72 25 23 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 73 26 25 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 74 27 26 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 75 28 27 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 76 8 28 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 64 29 30 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 81 77 29 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 83 78 77 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 84 79 78 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 82 80 79 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 85 58 80 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 67 61 63 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 90 86 61 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 91 87 86 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 92 88 87 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 93 89 88 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 94 56 89 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 69 62 66 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 102 96 62 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 31 97 96 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 103 98 97 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 104 99 98 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 105 100 99 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 70 65 68 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 32 33 65 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 110 106 33 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 111 34 106 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 112 107 34 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 35 108 107 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 36 37 38 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 39 40 37 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 41 42 40 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 43 44 42 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 45 46 44 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 47 2 46 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 48 1 0 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 7 4 3 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 59 7 6 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 60 59 57 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 101 60 95 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 109 101 55 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 1 109 9 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 23 11 10 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 25 14 13 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 26 16 15 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 27 18 17 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 28 20 19 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 8 5 21 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 29 23 22 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 77 25 72 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 78 26 73 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 79 27 74 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 80 28 75 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 58 8 76 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 61 29 64 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 86 77 81 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 87 78 83 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 88 79 84 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 89 80 82 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 56 58 85 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 62 61 67 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 96 86 90 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 97 87 91 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 98 88 92 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 99 89 93 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 100 56 94 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 65 62 69 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 33 96 102 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 106 97 31 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 34 98 103 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 107 99 104 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 108 100 105 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 37 65 70 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 40 33 32 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 42 106 110 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 44 34 111 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 46 107 112 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 2 108 35 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 49 37 36 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 50 40 39 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 51 42 41 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 52 44 43 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 53 46 45 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 54 2 47 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 54 0 2 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 46 35 107 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 34 107 104 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 97 98 92 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 97 92 87 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 86 83 77 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 29 77 72 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 24 23 10 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 54 48 0 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 24 10 12 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 2 9 108 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 107 108 105 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 107 105 99 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 98 99 93 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 98 93 88 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 87 88 84 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 87 84 78 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 77 78 73 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 77 73 25 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 23 25 13 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 99 100 94 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 99 94 89 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 88 89 82 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 88 82 79 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 78 74 26 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 108 109 55 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 25 15 14 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 100 95 56 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 89 56 85 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 89 85 80 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 79 80 75 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 79 75 27 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 26 27 17 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 100 101 95 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 26 17 16 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 56 57 58 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 80 58 76 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 80 76 28 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 27 28 19 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 58 6 8 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 28 8 21 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 58 59 6 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 28 21 20 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 8 7 3 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 8 3 5 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 78 79 74 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 27 19 18 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 25 26 15 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 86 87 83 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 34 104 98 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 46 2 35 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 2 1 9 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 108 55 100 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 56 60 57 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 23 13 11 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 29 72 23 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 53 47 46 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 44 46 112 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 44 112 34 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 106 34 103 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 106 103 97 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 96 97 91 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 96 91 86 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 61 86 81 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 61 81 29 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 30 29 22 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 53 54 47 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 30 22 24 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 42 44 111 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 33 106 31 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 33 31 96 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 62 96 90 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 62 90 61 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 52 53 45 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 63 64 30 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 52 45 44 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 42 111 106 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 63 61 64 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 51 43 42 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 40 42 110 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 65 33 102 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 65 102 62 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 66 62 67 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 51 52 43 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 66 67 63 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 40 110 33 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 50 41 40 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 37 40 32 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 37 32 65 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 68 65 69 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 50 51 41 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 68 69 66 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 49 39 37 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 38 37 70 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 49 50 39 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 38 70 68 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 71 49 36 <Ref> { LakeLunaParkAnim } }
+    }
+    <Polygon> {
+      <TRef> { TEXLakeLunaPark }
+      <MRef> { MATLakeLunaPark }
+      <VertexRef> { 71 36 38 <Ref> { LakeLunaParkAnim } }
+    }
+  }
+  <Joint> Bone {
+    <Transform> {
+      <Matrix4> {
+        1 0 -8.66252e-07 0
+        0 -1 0 0
+        -8.66252e-07 0 -1 0
+        -5.04491 4.84733 0.5 1
+      }
+    }
+    <VertexRef> {
+      32
+      <Scalar> membership { 0.01162 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      110
+      <Scalar> membership { 0.04106 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      33
+      <Scalar> membership { 0.048054 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      102
+      <Scalar> membership { 0.054298 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      111
+      <Scalar> membership { 0.070375 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      106
+      <Scalar> membership { 0.086791 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      90
+      <Scalar> membership { 0.087038 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      112
+      <Scalar> membership { 0.089823 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      81
+      <Scalar> membership { 0.093667 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      31
+      <Scalar> membership { 0.097208 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      96
+      <Scalar> membership { 0.097684 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      35
+      <Scalar> membership { 0.103501 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      34
+      <Scalar> membership { 0.11342 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      72
+      <Scalar> membership { 0.117736 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      107
+      <Scalar> membership { 0.130305 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      86
+      <Scalar> membership { 0.133048 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      77
+      <Scalar> membership { 0.134257 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      103
+      <Scalar> membership { 0.153417 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      91
+      <Scalar> membership { 0.167637 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      97
+      <Scalar> membership { 0.178078 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      104
+      <Scalar> membership { 0.191424 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      83
+      <Scalar> membership { 0.206651 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      73
+      <Scalar> membership { 0.215887 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      105
+      <Scalar> membership { 0.222984 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      98
+      <Scalar> membership { 0.261562 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      87
+      <Scalar> membership { 0.277757 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      92
+      <Scalar> membership { 0.313581 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      99
+      <Scalar> membership { 0.317366 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      78
+      <Scalar> membership { 0.334018 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      93
+      <Scalar> membership { 0.425422 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      84
+      <Scalar> membership { 0.455318 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      88
+      <Scalar> membership { 0.479667 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      94
+      <Scalar> membership { 0.480116 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      74
+      <Scalar> membership { 0.535632 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      89
+      <Scalar> membership { 0.583245 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      79
+      <Scalar> membership { 0.631358 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      82
+      <Scalar> membership { 0.643916 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      75
+      <Scalar> membership { 0.709394 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      85
+      <Scalar> membership { 0.711625 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      80
+      <Scalar> membership { 0.763505 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      76
+      <Scalar> membership { 0.813984 }
+      <Ref> { LakeLunaParkAnim }
+    }
+  }
+  <Joint> Bone.001 {
+    <Transform> {
+      <Matrix4> {
+        1 0 -1.10467e-06 0
+        0 -1 0 0
+        -1.10467e-06 0 -1 0
+        -5.04491 -4.18368 0.5 1
+      }
+    }
+    <VertexRef> {
+      35
+      <Scalar> membership { 0.001408 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      107
+      <Scalar> membership { 0.027369 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      112
+      <Scalar> membership { 0.030248 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      105
+      <Scalar> membership { 0.035696 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      111
+      <Scalar> membership { 0.057938 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      94
+      <Scalar> membership { 0.065594 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      34
+      <Scalar> membership { 0.065903 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      110
+      <Scalar> membership { 0.067942 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      85
+      <Scalar> membership { 0.071349 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      104
+      <Scalar> membership { 0.071746 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      99
+      <Scalar> membership { 0.072239 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      76
+      <Scalar> membership { 0.079325 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      32
+      <Scalar> membership { 0.085084 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      89
+      <Scalar> membership { 0.095554 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      106
+      <Scalar> membership { 0.099381 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      80
+      <Scalar> membership { 0.100403 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      33
+      <Scalar> membership { 0.112502 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      93
+      <Scalar> membership { 0.120259 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      103
+      <Scalar> membership { 0.123649 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      98
+      <Scalar> membership { 0.131504 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      82
+      <Scalar> membership { 0.141498 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      31
+      <Scalar> membership { 0.170171 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      75
+      <Scalar> membership { 0.183779 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      88
+      <Scalar> membership { 0.194264 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      102
+      <Scalar> membership { 0.199642 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      97
+      <Scalar> membership { 0.218907 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      79
+      <Scalar> membership { 0.222619 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      92
+      <Scalar> membership { 0.229266 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      96
+      <Scalar> membership { 0.289716 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      84
+      <Scalar> membership { 0.316063 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      74
+      <Scalar> membership { 0.358541 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      91
+      <Scalar> membership { 0.37655 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      87
+      <Scalar> membership { 0.391513 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      90
+      <Scalar> membership { 0.458304 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      78
+      <Scalar> membership { 0.512996 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      86
+      <Scalar> membership { 0.546493 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      83
+      <Scalar> membership { 0.57372 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      73
+      <Scalar> membership { 0.690783 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      81
+      <Scalar> membership { 0.699674 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      77
+      <Scalar> membership { 0.735631 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      72
+      <Scalar> membership { 0.787514 }
+      <Ref> { LakeLunaParkAnim }
+    }
+  }
+  <Joint> Bone.002 {
+    <Transform> {
+      <Matrix4> {
+        1 0 -1.10467e-06 0
+        0 -1 0 0
+        -1.10467e-06 0 -1 0
+        5.23176 4.84733 0.5 1
+      }
+    }
+    <VertexRef> {
+      72
+      <Scalar> membership { 0.001599 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      73
+      <Scalar> membership { 0.024742 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      77
+      <Scalar> membership { 0.030134 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      81
+      <Scalar> membership { 0.041914 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      74
+      <Scalar> membership { 0.056981 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      78
+      <Scalar> membership { 0.070397 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      75
+      <Scalar> membership { 0.072227 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      90
+      <Scalar> membership { 0.0781 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      83
+      <Scalar> membership { 0.080063 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      76
+      <Scalar> membership { 0.083911 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      86
+      <Scalar> membership { 0.083975 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      102
+      <Scalar> membership { 0.088942 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      79
+      <Scalar> membership { 0.090108 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      80
+      <Scalar> membership { 0.102749 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      32
+      <Scalar> membership { 0.112301 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      96
+      <Scalar> membership { 0.121725 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      84
+      <Scalar> membership { 0.123491 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      33
+      <Scalar> membership { 0.129488 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      87
+      <Scalar> membership { 0.146142 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      91
+      <Scalar> membership { 0.146174 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      82
+      <Scalar> membership { 0.152018 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      85
+      <Scalar> membership { 0.178916 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      31
+      <Scalar> membership { 0.19293 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      110
+      <Scalar> membership { 0.207604 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      88
+      <Scalar> membership { 0.209642 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      97
+      <Scalar> membership { 0.246819 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      92
+      <Scalar> membership { 0.251763 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      89
+      <Scalar> membership { 0.2559 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      106
+      <Scalar> membership { 0.318835 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      93
+      <Scalar> membership { 0.343702 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      94
+      <Scalar> membership { 0.393115 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      103
+      <Scalar> membership { 0.423481 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      98
+      <Scalar> membership { 0.425449 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      99
+      <Scalar> membership { 0.519617 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      111
+      <Scalar> membership { 0.522462 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      104
+      <Scalar> membership { 0.600267 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      34
+      <Scalar> membership { 0.604435 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      105
+      <Scalar> membership { 0.664973 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      112
+      <Scalar> membership { 0.692398 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      107
+      <Scalar> membership { 0.732635 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      35
+      <Scalar> membership { 0.79539 }
+      <Ref> { LakeLunaParkAnim }
+    }
+  }
+  <Joint> Bone.003 {
+    <Transform> {
+      <Matrix4> {
+        1 0 -1.34309e-06 0
+        0 -1 0 0
+        -1.34309e-06 0 -1 0
+        5.23176 -4.18368 0.5 1
+      }
+    }
+    <VertexRef> {
+      80
+      <Scalar> membership { 0.016686 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      75
+      <Scalar> membership { 0.019201 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      85
+      <Scalar> membership { 0.02622 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      74
+      <Scalar> membership { 0.047691 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      79
+      <Scalar> membership { 0.055916 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      73
+      <Scalar> membership { 0.055959 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      94
+      <Scalar> membership { 0.061175 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      82
+      <Scalar> membership { 0.062568 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      89
+      <Scalar> membership { 0.065301 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      72
+      <Scalar> membership { 0.068951 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      105
+      <Scalar> membership { 0.069196 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      35
+      <Scalar> membership { 0.075405 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      78
+      <Scalar> membership { 0.082589 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      77
+      <Scalar> membership { 0.090045 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      99
+      <Scalar> membership { 0.090778 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      107
+      <Scalar> membership { 0.098376 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      84
+      <Scalar> membership { 0.105128 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      93
+      <Scalar> membership { 0.110617 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      88
+      <Scalar> membership { 0.116427 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      104
+      <Scalar> membership { 0.136562 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      83
+      <Scalar> membership { 0.139566 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      81
+      <Scalar> membership { 0.160702 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      112
+      <Scalar> membership { 0.177655 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      98
+      <Scalar> membership { 0.181484 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      87
+      <Scalar> membership { 0.184588 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      92
+      <Scalar> membership { 0.205391 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      34
+      <Scalar> membership { 0.216242 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      86
+      <Scalar> membership { 0.236484 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      103
+      <Scalar> membership { 0.299453 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      91
+      <Scalar> membership { 0.309639 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      111
+      <Scalar> membership { 0.349225 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      97
+      <Scalar> membership { 0.356197 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      90
+      <Scalar> membership { 0.376558 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      96
+      <Scalar> membership { 0.490874 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      106
+      <Scalar> membership { 0.494992 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      31
+      <Scalar> membership { 0.539691 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      102
+      <Scalar> membership { 0.657119 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      110
+      <Scalar> membership { 0.678923 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      33
+      <Scalar> membership { 0.708983 }
+      <Ref> { LakeLunaParkAnim }
+    }
+    <VertexRef> {
+      32
+      <Scalar> membership { 0.771804 }
+      <Ref> { LakeLunaParkAnim }
+    }
+  }
+}

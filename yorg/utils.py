@@ -50,5 +50,5 @@ class Utils(object):
             ['assets/images/tuning/engine.png',
              'assets/images/tuning/tires.png',
              'assets/images/tuning/suspensions.png'],
-            ['prototype', 'desert'],
+            ['prototype', 'desert', 'mountain', 'amusement'],
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
