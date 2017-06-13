@@ -6,7 +6,7 @@ from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page
 from yyagl.engine.network.server import Server
-from yyagl.engine.gui.imgbtn import ImageButton
+from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
@@ -44,7 +44,7 @@ class CarPageGui(ThanksPageGui):
         t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         del t_a['scale']
         for row, col in product(range(2), range(3)):
-            self.pagewidgets += [ImageButton(
+            self.pagewidgets += [ImgBtn(
                 scale=.32, pos=(-.8 + col * .8, 1, .4 - row * .7), frameColor=(0, 0, 0, 0),
                 image=self.props.car_path % self.props.cars[col + row * 3],
                 command=self.on_car, extraArgs=[self.props.cars[col + row * 3]],

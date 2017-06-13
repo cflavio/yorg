@@ -8,7 +8,7 @@ from yyagl.engine.gui.page import Page, PageGui
 class ExitPageGui(PageGui):
 
     def bld_page(self):
-        menu_args = self.menu.gui.menu_args
+        menu_args = self.mdt.menu.gui.menu_args
         self.frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         txt = _(
@@ -22,7 +22,7 @@ class ExitPageGui(PageGui):
             ("don't visit our site after exiting",
              _("don't visit our site after exiting"),
              lambda: self.on_end(False))]
-        btn_args = self.menu.gui.menu_args.btn_args
+        btn_args = self.mdt.menu.gui.menu_args.btn_args
         btn_args['frameSize'] = (-12, 12, -.8, 1.2)
         btn_visit = DirectButton(
             text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2],

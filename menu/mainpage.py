@@ -94,7 +94,7 @@ class YorgMainPageGui(MainPageGui):
             PageGui.transl_text(wdg, menu_data[i][0], menu_data[i][1])
         if not self.props.multiplayer:
             widgets[-5]['state'] = DISABLED
-            _fg = menu_gui.btn_args['text_fg']
+            _fg = menu_gui.menu_args.btn_args['text_fg']
             _fc = widgets[-5]['frameColor']
             clc = lambda val: max(0, val)
             fgc = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])

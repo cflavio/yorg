@@ -1,6 +1,6 @@
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageGui
-from yyagl.engine.gui.imgbtn import ImageButton
+from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.engine.network.server import Server
 from yyagl.gameobject import GameObject
 from .carpage import CarPage, CarPageServer, CarPageProps
@@ -37,13 +37,13 @@ class TrackPageGui(ThanksPageGui):
         t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         t_a['scale'] = .08
         for i in range(len(self.props.tracks)):
-            widgets += [ImageButton(
-                scale=.5, pos=(-.5 + i * 1.0, 1, .1), frameColor=(0, 0, 0, 0),
+            widgets += [ImgBtn(
+                scale=.5, pos=(-1.05 + i * 1.05, 1, .1), frameColor=(0, 0, 0, 0),
                 image=self.props.track_img % self.props.tracks[i],
                 command=self.on_track, extraArgs=[self.props.tracks[i]],
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
             widgets += [OnscreenText(self.props.tracks_tr[i],
-                                     pos=(-.5 + i * 1.0, -.32), **t_a)]
+                                     pos=(-1.05 + i * 1.05, -.32), **t_a)]
         map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
 

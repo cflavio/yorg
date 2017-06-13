@@ -6,7 +6,7 @@ from direct.gui.DirectEntry import DirectEntry
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.engine.gui.page import Page, PageGui
-from yyagl.engine.gui.imgbtn import ImageButton
+from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
 from yorg.utils import Utils
 from .thankspage import ThanksPageGui
@@ -65,7 +65,7 @@ class DriverPageGui(ThanksPageGui):
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = (col + 1) + row * 4
-            widgets += [ImageButton(
+            widgets += [ImgBtn(
                 scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
                 frameColor=(0, 0, 0, 0), image=self.props.drivers_img[0] % idx,
                 command=self.on_click, extraArgs=[idx],
