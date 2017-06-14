@@ -12,7 +12,7 @@ class InGameMenuGui(Gui):
         menu_args.background = ''
         menu_args.btn_size = (-8.6, 8.6, -.42, .98)
         self.menu = Menu(menu_args)
-        self.menu.push_page(InGamePage(self.menu))
+        self.menu.push_page(InGamePage(menu_args, self.menu))
 
     def destroy(self):
         self.menu = self.menu.destroy()
