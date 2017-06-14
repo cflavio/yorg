@@ -1,7 +1,5 @@
 # BUGS =====
 
-# fix for the prototype track
-
 
 # TODO LIST =====
 

@@ -43,7 +43,8 @@ class Yorg(Game):
                 'multiplayer': 0,
                 'season': 0,
                 'weapons': 0,
-                'win_orig': ''}}
+                'win_orig': '',
+                'profiling': 0}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
@@ -64,7 +65,8 @@ class Yorg(Game):
             cursor_path='assets/images/gui/cursor.png',
             cursor_scale=((256/352.0) * .08, 1, .08),
             cursor_hotspot=(.1, .06),
-            volume=self.options['settings']['volume'])
+            volume=self.options['settings']['volume'],
+            profiling=self.options['development']['profiling'])
         init_lst = [
             [('fsm', YorgFsm, [self])],
             [('logic', YorgLogic, [self])],
