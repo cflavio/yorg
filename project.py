@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.6
-# remove some XProps (there should be only SeasonProps, RaceProps, ...)
 # remove on_frame spikes in profiling
 # remove Draw/Clear spikes in profiling
 
