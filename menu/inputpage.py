@@ -68,7 +68,7 @@ class InputPageGui(ThanksPageGui):
             (_('Left'), 'left', .2),
             (_('Right'), 'right', 0),
             (_('Weapon'), 'button', -.2),
-            (_('Respawn'), 'button', -.4)]
+            (_('Respawn'), 'respawn', -.4)]
         for btn_data in buttons_data:
             add_lab(btn_data[0], btn_data[2])
             add_btn(self.keys[btn_data[1]], btn_data[2])

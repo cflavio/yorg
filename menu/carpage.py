@@ -99,9 +99,9 @@ class CarPageGuiSeason(CarPageGui):
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
-        drv_page = DriverPage(self.menu, self.track_path, car,
-                              driverpage_props)
-        self.menu.push_page(drv_page)
+        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path, car,
+                              driverpage_props, self.mdt.menu)
+        self.mdt.menu.push_page(drv_page)
 
 
 class CarPageGuiServer(CarPageGui):

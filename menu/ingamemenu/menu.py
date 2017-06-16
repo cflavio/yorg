@@ -9,7 +9,7 @@ class InGameMenuGui(Gui):
     def __init__(self, mdt):
         Gui.__init__(self, mdt)
         menu_args = Utils().menu_args
-        menu_args.background = ''
+        menu_args.background_img = ''
         menu_args.btn_size = (-8.6, 8.6, -.42, .98)
         self.menu = Menu(menu_args)
         self.menu.push_page(InGamePage(menu_args, self.menu))

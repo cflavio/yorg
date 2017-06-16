@@ -70,13 +70,13 @@ class SingleplayerPageGui(ThanksPageGui):
         self.mdt.menu.push_page(TrackPage(self.mdt.menu_args, trackpage_props, self.mdt.menu))
 
     def on_start(self):
-        self.menu.track = self.props.season_tracks[0]
+        self.mdt.menu.track = self.props.season_tracks[0]
         trackpage_props = TrackPageProps(
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.menu.push_page(CarPageSeason(self.menu, trackpage_props))
+        self.mdt.menu.push_page(CarPageSeason(self.mdt.menu_args, trackpage_props, self.mdt.menu))
 
     def on_continue(self):
         self.mdt.menu.gui.notify('on_continue')

@@ -104,7 +104,8 @@ class YorgFsm(Fsm):
         singlerace = game.logic.season.__class__ == SingleRaceSeason
         self.mdt.logic.season.race.fsm.demand(
             'Loading', track_path, car_path, [], drivers,
-            ['prototype', 'desert', 'mountain', 'amusement'], track_name_transl, singlerace,
+            ['prototype', 'desert', 'mountain', 'amusement'],
+            track_name_transl, singlerace,
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
             'assets/images/cars/%s_sel.png',
             'assets/images/drivers/driver%s_sel.png',
