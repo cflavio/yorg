@@ -3,10 +3,6 @@
 
 # TODO LIST =====
 
-# 0.6
-# remove on_frame spikes in profiling
-# remove Draw/Clear spikes in profiling
-
 # 0.7
 # forward missile
 # backward missile
