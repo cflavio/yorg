@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-31 23:10+0200\n"
+"POT-Creation-Date: 2017-06-16 23:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,75 +37,79 @@ msgstr ""
 msgid "Supporters"
 msgstr ""
 
-#: menu/inputpage.py:41 menu/inputpage.py:44
+#: menu/inputpage.py:42 menu/inputpage.py:45
 msgid "Use the joypad when present"
 msgstr ""
 
-#: menu/inputpage.py:65
+#: menu/inputpage.py:66
 msgid "Accelerate"
 msgstr ""
 
-#: menu/inputpage.py:66
+#: menu/inputpage.py:67
 msgid "Brake/Reverse"
 msgstr ""
 
-#: menu/inputpage.py:67
+#: menu/inputpage.py:68
 msgid "Left"
 msgstr ""
 
-#: menu/inputpage.py:68
+#: menu/inputpage.py:69
 msgid "Right"
 msgstr ""
 
-#: menu/inputpage.py:69
+#: menu/inputpage.py:70
 msgid "Weapon"
 msgstr ""
 
-#: menu/inputpage.py:77
+#: menu/inputpage.py:71
+msgid "Respawn"
+msgstr ""
+
+#: menu/inputpage.py:79
 msgid "Press the key to record it"
 msgstr ""
 
-#: menu/optionpage.py:62
+#: menu/optionpage.py:63
 msgid "Language"
 msgstr ""
 
-#: menu/optionpage.py:67
+#: menu/optionpage.py:68
 msgid "Volume"
 msgstr ""
 
-#: menu/optionpage.py:72
+#: menu/optionpage.py:73
 msgid "Fullscreen"
 msgstr ""
 
-#: menu/optionpage.py:78
+#: menu/optionpage.py:79
 msgid "Resolution"
 msgstr ""
 
-#: menu/optionpage.py:88
+#: menu/optionpage.py:89
 msgid "Antialiasing"
 msgstr ""
 
-#: menu/optionpage.py:93
+#: menu/optionpage.py:94
 msgid "(from the next execution)"
 msgstr ""
 
-#: menu/optionpage.py:101
+#: menu/optionpage.py:104
 msgid "Configure input"
 msgstr ""
 
-#: menu/carpage.py:39
+#: menu/carpage.py:41
 msgid "Select the car"
 msgstr ""
 
-#: menu/carpage.py:71 menu/driverpage.py:91
+#: menu/carpage.py:73 menu/driverpage.py:91
 msgid "adherence"
 msgstr ""
 
-#: menu/carpage.py:71 menu/driverpage.py:91
+#: menu/carpage.py:73 menu/driverpage.py:91
 msgid "speed"
 msgstr ""
 
-#: menu/carpage.py:72 menu/driverpage.py:92
+#: menu/carpage.py:74 menu/driverpage.py:92
 msgid "stability"
 msgstr ""
 
@@ -113,7 +117,7 @@ msgstr ""
 msgid "Thanks to: "
 msgstr ""
 
-#: menu/trackpage.py:34
+#: menu/trackpage.py:35
 msgid "Select the track"
 msgstr ""
 
@@ -154,11 +158,11 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: menu/mainpage.py:147
+#: menu/mainpage.py:149
 msgid "Last news:"
 msgstr ""
 
-#: menu/mainpage.py:158
+#: menu/mainpage.py:160
 msgid "show"
 msgstr ""
 
@@ -182,11 +186,11 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: menu/serverpage.py:40
+#: menu/serverpage.py:41
 msgid "connection from "
 msgstr ""
 
-#: menu/serverpage.py:73
+#: menu/serverpage.py:75
 msgid "Start"
 msgstr ""
 
@@ -232,15 +236,19 @@ msgstr ""
 msgid "back to the main menu"
 msgstr ""
 
-#: yorg/fsm.py:38 yorg/fsm.py:97
+#: yorg/fsm.py:42 yorg/fsm.py:101
 msgid "desert"
 msgstr ""
 
-#: yorg/fsm.py:38 yorg/fsm.py:97
+#: yorg/fsm.py:42 yorg/fsm.py:101
 msgid "mountain"
 msgstr ""
 
-#: yyagl/engine/gui/page.py:149
+#: yorg/fsm.py:42 yorg/fsm.py:101
+msgid "amusement park"
+msgstr ""
+
+#: yyagl/engine/gui/page.py:145
 msgid "Back"
 msgstr ""
 
@@ -248,40 +256,45 @@ msgstr ""
 msgid "version: "
 msgstr ""
 
-#: yyagl/racing/car/logic.py:327
+#: yyagl/racing/car/logic.py:535
 msgid "wrong way"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:175
+#: yyagl/racing/car/gui.py:192
 msgid "speed:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:177
+#: yyagl/racing/car/gui.py:194
 msgid "lap:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:178
+#: yyagl/racing/car/gui.py:195
 msgid "time:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:179
+#: yyagl/racing/car/gui.py:196
 msgid "best lap:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:180
+#: yyagl/racing/car/gui.py:197
 msgid "ranking:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:181
+#: yyagl/racing/car/gui.py:198
 msgid "damages:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:190 yyagl/racing/car/gui.py:193
+#: yyagl/racing/car/gui.py:207 yyagl/racing/car/gui.py:210
 msgid "low"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:194
+#: yyagl/racing/car/gui.py:211
 msgid "hi"
+msgstr ""
+
+#: yyagl/racing/race/event.py:55
+#, python-format
+msgid "press %s to respawn"
 msgstr ""
 
 #: yyagl/racing/race/gui/countdown.py:20
@@ -350,4 +363,8 @@ msgstr ""
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:145
 msgid "fire"
+msgstr ""
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:150
+msgid "respawn"
 msgstr ""
