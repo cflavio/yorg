@@ -72,12 +72,13 @@ class YorgMainPageGui(MainPageGui):
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.has_save, self.props.season,
             self.props.season_tracks, self.props.drivers)
-        sp_cb = lambda: self.menu.push_page(SingleplayerPage(self.menu.gui.menu_args,
-                                                             sp_props, self.menu))
-        mp_cb = lambda: self.menu.push_page(MultiplayerPage(self.menu.gui.menu_args,
-                                                            mp_props, self.menu))
+        sp_cb = lambda: self.menu.push_page(SingleplayerPage(
+            self.menu.gui.menu_args, sp_props, self.menu))
+        mp_cb = lambda: self.menu.push_page(MultiplayerPage(
+            self.menu.gui.menu_args, mp_props, self.menu))
         supp_cb = lambda: eng.open_browser(self.props.support_url)
-        cred_cb = lambda: self.menu.push_page(CreditPage(self.menu.gui.menu_args, self.menu))
+        cred_cb = lambda: self.menu.push_page(CreditPage(
+            self.menu.gui.menu_args, self.menu))
         menu_data = [
             ('Single Player', _('Single Player'), sp_cb),
             ('Multiplayer', _('Multiplayer'), mp_cb),
@@ -153,7 +154,7 @@ class YorgMainPageGui(MainPageGui):
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
             fg=menu_args.text_bg, font=menu_args.font)
-            for i in range(5)]
+                  for i in range(5)]
         btn_args = menu_gui.menu_args.btn_args.copy()
         btn_args['scale'] = .055
         btn = DirectButton(

@@ -38,7 +38,8 @@ class TrackPageGui(ThanksPageGui):
         t_a['scale'] = .08
         for i in range(len(self.props.tracks)):
             widgets += [ImgBtn(
-                scale=.5, pos=(-1.05 + i * 1.05, 1, .1), frameColor=(0, 0, 0, 0),
+                scale=.5, pos=(-1.05 + i * 1.05, 1, .1),
+                frameColor=(0, 0, 0, 0),
                 image=self.props.track_img % self.props.tracks[i],
                 command=self.on_track, extraArgs=[self.props.tracks[i]],
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
@@ -53,7 +54,8 @@ class TrackPageGui(ThanksPageGui):
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.mdt.menu.push_page(CarPage(self.mdt.menu.gui.menu_args, carpage_props, self.mdt.menu))
+        self.mdt.menu.push_page(CarPage(
+            self.mdt.menu.gui.menu_args, carpage_props, self.mdt.menu))
 
     def destroy(self):
         if hasattr(self.mdt.menu, 'track'):

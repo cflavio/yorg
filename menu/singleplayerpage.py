@@ -67,7 +67,8 @@ class SingleplayerPageGui(ThanksPageGui):
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.mdt.menu.push_page(TrackPage(self.mdt.menu_args, trackpage_props, self.mdt.menu))
+        self.mdt.menu.push_page(TrackPage(
+            self.mdt.menu_args, trackpage_props, self.mdt.menu))
 
     def on_start(self):
         self.mdt.menu.track = self.props.season_tracks[0]
@@ -76,7 +77,8 @@ class SingleplayerPageGui(ThanksPageGui):
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.mdt.menu.push_page(CarPageSeason(self.mdt.menu_args, trackpage_props, self.mdt.menu))
+        self.mdt.menu.push_page(CarPageSeason(
+            self.mdt.menu_args, trackpage_props, self.mdt.menu))
 
     def on_continue(self):
         self.mdt.menu.gui.notify('on_continue')
@@ -90,5 +92,6 @@ class SingleplayerPage(Page):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, singleplayerpage_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args,
+                                    singleplayerpage_props])]]
         GameObject.__init__(self, init_lst)

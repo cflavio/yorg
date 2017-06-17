@@ -90,5 +90,6 @@ class ServerPage(Page):
         self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, serverpage_props, self.menu])]]
+            [('gui', self.gui_cls, [self, self.menu_args, serverpage_props,
+                                    self.menu])]]
         GameObject.__init__(self, init_lst)

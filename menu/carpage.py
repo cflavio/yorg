@@ -7,6 +7,7 @@ from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page
 from yyagl.engine.network.server import Server
 from yyagl.engine.gui.imgbtn import ImgBtn
+from yyagl.engine.network.client import Client
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
@@ -38,21 +39,25 @@ class CarPageGui(ThanksPageGui):
 
     def bld_page(self):
         menu_gui = self.mdt.menu.gui
-        self.pagewidgets = [OnscreenText(text=_('Select the car'),
-                                         pos=(0, .8), **menu_gui.menu_args.text_args)]
+        self.pagewidgets = [OnscreenText(
+            text=_('Select the car'), pos=(0, .8),
+            **menu_gui.menu_args.text_args)]
         self.track_path = self.mdt.menu.track  # we should pass it
         t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         del t_a['scale']
         for row, col in product(range(2), range(3)):
             self.pagewidgets += [ImgBtn(
-                scale=.32, pos=(-.8 + col * .8, 1, .4 - row * .7), frameColor=(0, 0, 0, 0),
+                scale=.32, pos=(-.8 + col * .8, 1, .4 - row * .7),
+                frameColor=(0, 0, 0, 0),
                 image=self.props.car_path % self.props.cars[col + row * 3],
-                command=self.on_car, extraArgs=[self.props.cars[col + row * 3]],
+                command=self.on_car,
+                extraArgs=[self.props.cars[col + row * 3]],
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
             self.pagewidgets += [OnscreenText(
-                self.props.cars[col + row * 3], pos=(-.8 + col * .8, .64 - row * .7), scale=.072,
-                **t_a)]
-            with open(self.props.phys_path % self.props.cars[col + row * 3]) as phys_file:
+                self.props.cars[col + row * 3],
+                pos=(-.8 + col * .8, .64 - row * .7), scale=.072, **t_a)]
+            cpath = self.props.phys_path % self.props.cars[col + row * 3]
+            with open(cpath) as phys_file:
                 cfg = load(phys_file)
             speed = cfg['max_speed'] / 140.0
             fric = cfg['friction_slip'] / 3.0
@@ -62,14 +67,15 @@ class CarPageGui(ThanksPageGui):
             roll = -int(round((roll - 1) * 100))
             sign = lambda x: '\1green\1+\2' if x > 0 else ''
             psign = lambda x: '+' if x == 0 else sign(x)
-            _col = lambda x: '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
+            __col = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'
+            _col = lambda x: __col(x) % x
             pcol = lambda x: x if x == 0 else _col(x)
 
-            def add_txt(txt, val, z):
+            def add_txt(txt, val, pos_z):
                 self.pagewidgets += [OnscreenText(
                     '%s: %s%s%%' % (txt, psign(val), pcol(val)),
-                    pos=(-.5 + col * .8, z - row * .7), scale=.052, align=TextNode.A_right,
-                    **t_a)]
+                    pos=(-.5 + col * .8, pos_z - row * .7), scale=.052,
+                    align=TextNode.A_right, **t_a)]
             txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
                        (_('stability'), roll, .19)]
             map(lambda txt_def: add_txt(*txt_def), txt_lst)
@@ -87,8 +93,8 @@ class CarPageGui(ThanksPageGui):
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
-        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path, car,
-                              driverpage_props, self.mdt.menu)
+        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path,
+                              car, driverpage_props, self.mdt.menu)
         self.mdt.menu.push_page(drv_page)
 
 
@@ -99,8 +105,8 @@ class CarPageGuiSeason(CarPageGui):
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
-        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path, car,
-                              driverpage_props, self.mdt.menu)
+        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path,
+                              car, driverpage_props, self.mdt.menu)
         self.mdt.menu.push_page(drv_page)
 
 

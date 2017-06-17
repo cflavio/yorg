@@ -39,7 +39,8 @@ class YorgFsm(Fsm):
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
-            ['desert', 'mountain', 'amusement'], [_('desert'), _('mountain'), _('amusement park')],
+            ['desert', 'mountain', 'amusement'],
+            [_('desert'), _('mountain'), _('amusement park')],
             'assets/images/tracks/%s.png',
             self.mdt.options['settings']['player_name'],
             ['assets/images/drivers/driver%s.png',
@@ -49,7 +50,8 @@ class YorgFsm(Fsm):
             'assets/images/gui/yorg_title.png',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
-            self.mdt.options['development']['season'], ['prototype', 'desert', 'mountain', 'amusement'],
+            self.mdt.options['development']['season'],
+            ['prototype', 'desert', 'mountain', 'amusement'],
             'http://www.ya2.it/support-us', Utils().drivers)
         self.__menu = YorgMenu(menu_props)
         self.__menu.gui.menu.attach_obs(self.mdt.logic.on_input_back)
@@ -98,7 +100,8 @@ class YorgFsm(Fsm):
         LogMgr().log('selected drivers: ' + str(drivers))
         self.mdt.logic.season.race.logic.drivers = drivers
         track_name_transl = track_path
-        track_dct = {'desert': _('desert'), 'mountain': _('mountain'), 'amusement': _('amusement park')}
+        track_dct = {'desert': _('desert'), 'mountain': _('mountain'),
+                     'amusement': _('amusement park')}
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         singlerace = game.logic.season.__class__ == SingleRaceSeason

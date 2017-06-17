@@ -37,6 +37,7 @@
 # ai poller: process one car's ai for each frame
 # drifting
 # animation when the car is repaired in pitstop
+# use txo files in place of png and jpg
 
 
 # WAITING =====

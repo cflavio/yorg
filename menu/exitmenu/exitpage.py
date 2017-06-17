@@ -34,7 +34,8 @@ class ExitPageGui(PageGui):
         map(self.add_widget, widgets)
         PageGui.bld_page(self, False)
 
-    def on_end(self, visit):
+    @staticmethod
+    def on_end(visit):
         if visit:
             eng.open_browser('http://www.ya2.it')
         eng.do_later(.5, exit)

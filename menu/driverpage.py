@@ -78,15 +78,15 @@ class DriverPageGui(ThanksPageGui):
                 return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
             pcol = lambda x: x if x == 0 else ppcol(x)
 
-            def add_lab(txt, z):
+            def add_lab(txt, pos_z):
                 return OnscreenText(
-                    txt + ':', pos=(-.95 + col * .5, z - row * .5), scale=.046,
-                    align=TextNode.A_left, **t_a)
+                    txt + ':', pos=(-.95 + col * .5, pos_z - row * .5),
+                    scale=.046, align=TextNode.A_left, **t_a)
 
-            def add_txt(val, z):
+            def add_txt(val, pos_z):
                 return OnscreenText(
                     '%s%s%%' % (psign(val), pcol(val)),
-                    pos=(-.55 + col * .5, z - row * .5), scale=.052,
+                    pos=(-.55 + col * .5, pos_z - row * .5), scale=.052,
                     align=TextNode.A_right, **t_a)
             lab_lst = [(_('adherence'), .04), (_('speed'), .16),
                        (_('stability'), .1)]
@@ -100,19 +100,20 @@ class DriverPageGui(ThanksPageGui):
             pos=(-.38, 1, .38), scale=.32)
         widgets += [self.img, name, self.ent]
         map(self.add_widget, widgets)
-        with open(eng.curr_path + 'yyagl/assets/shaders/filter.vert') as ffilter:
+        fpath = eng.curr_path + 'yyagl/assets/shaders/filter.vert'
+        with open(fpath) as ffilter:
             vert = ffilter.read()
         shader = Shader.make(Shader.SL_GLSL, vert, frag)
         self.img.setShader(shader)
         self.img.setTransparency(True)
-        self.ts = TextureStage('ts')
-        self.ts.setMode(TextureStage.MDecal)
+        self.t_s = TextureStage('ts')
+        self.t_s.setMode(TextureStage.MDecal)
         empty_img = PNMImage(1, 1)
         empty_img.add_alpha()
         empty_img.alpha_fill(0)
         tex = Texture()
         tex.load(empty_img)
-        self.img.setTexture(self.ts, tex)
+        self.img.setTexture(self.t_s, tex)
         ThanksPageGui.bld_page(self)
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)
@@ -137,7 +138,7 @@ class DriverPageGui(ThanksPageGui):
 
     def on_click(self, i):
         txt_path = self.props.drivers_img[1]
-        self.img.setTexture(self.ts, loader.loadTexture(txt_path % i))
+        self.img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)

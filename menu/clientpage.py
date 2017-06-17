@@ -30,7 +30,8 @@ class ClientPageGui(ThanksPageGui):
     def bld_page(self):
         menu_gui = self.mdt.menu.gui
         menu_args = self.mdt.menu.gui.menu_args
-        txt = OnscreenText(text=_('Client'), pos=(0, .4), **menu_gui.menu_args.text_args)
+        txt = OnscreenText(text=_('Client'), pos=(0, .4),
+                           **menu_gui.menu_args.text_args)
         widgets = [txt]
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,

@@ -51,13 +51,13 @@ class InputPageGui(ThanksPageGui):
         if not has_pygame():
             self._joypad_cb['state'] = DISABLED
 
-        def add_lab(text, z):
+        def add_lab(text, pos_z):
             self.pagewidgets += [DirectLabel(
-                text=text, pos=(-.1, 1, z), text_align=TextNode.ARight,
+                text=text, pos=(-.1, 1, pos_z), text_align=TextNode.ARight,
                 **menu_args.label_args)]
 
-        def add_btn(text, z):
-            btn = DirectButton(pos=(.46, 1, z), text=text,
+        def add_btn(text, pos_z):
+            btn = DirectButton(pos=(.46, 1, pos_z), text=text,
                                command=self.start_rec, **menu_args.btn_args)
             btn['extraArgs'] = [btn]
             self.pagewidgets += [btn]
@@ -73,10 +73,10 @@ class InputPageGui(ThanksPageGui):
             add_lab(btn_data[0], btn_data[2])
             add_btn(self.keys[btn_data[1]], btn_data[2])
 
-        la = menu_args.label_args.copy()
-        la['scale'] = .065
+        l_a = menu_args.label_args.copy()
+        l_a['scale'] = .065
         self.hint_lab = DirectLabel(
-            text=_('Press the key to record it'), pos=(0, 1, -.6), **la)
+            text=_('Press the key to record it'), pos=(0, 1, -.6), **l_a)
         self.hint_lab.hide()
         self.pagewidgets += [joypad_lab, self._joypad_cb, self.hint_lab]
         map(self.add_widget, self.pagewidgets)

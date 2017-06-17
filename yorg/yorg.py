@@ -49,7 +49,9 @@ class Yorg(Game):
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
-        self.options = DctFile(join(opt_path, 'options.yml') if opt_path else 'options.yml', default_opt)
+        self.options = DctFile(
+            join(opt_path, 'options.yml') if opt_path else 'options.yml',
+            default_opt)
         conf = Cfg(
             win_title='Yorg',
             win_orig=self.options['development']['win_orig'],

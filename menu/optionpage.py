@@ -1,6 +1,5 @@
 from panda3d.core import TextNode, LVector2i
 from direct.gui.DirectCheckButton import DirectCheckButton
-from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
@@ -53,9 +52,9 @@ class OptionPageGui(ThanksPageGui):
         menu_args = self.menu_args
         self.pagewidgets = []
 
-        def add_lab(txt, txt_tr, z):
+        def add_lab(txt, txt_tr, pos_z):
             lab = DirectLabel(
-                text='', pos=(-.1, 1, z), text_align=TextNode.ARight,
+                text='', pos=(-.1, 1, pos_z), text_align=TextNode.ARight,
                 **menu_args.label_args)
             PageGui.transl_text(lab, txt, txt_tr)
             self.pagewidgets += [lab]
@@ -70,7 +69,7 @@ class OptionPageGui(ThanksPageGui):
             pos=(.52, 0, .33), scale=.49, value=self.props.volume,
             frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg,
             command=self.__on_volume)
-        fullscreen_lab = add_lab('Fullscreen', _('Fullscreen'), .1)
+        add_lab('Fullscreen', _('Fullscreen'), .1)
         self._fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .12), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_fg,
@@ -95,12 +94,13 @@ class OptionPageGui(ThanksPageGui):
         self._aa_cb = DirectCheckButton(
             pos=(.12, 1, -.27), text='', indicatorValue=self.props.aa,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
-        #bld_in = lambda: self.menu.logic.push_page(
-        #    InputPage(self.menu, self.props.joystick, self.props.keys))
+        # bld_in = lambda: self.menu.logic.push_page(
+        #     InputPage(self.menu, self.props.joystick, self.props.keys))
         # it doesn't work if we go forward and back between options and input:
         # we should update keys
         input_btn = DirectButton(
-            text='', pos=(0, 1, -.5), command=self.on_input_btn, **menu_args.btn_args)
+            text='', pos=(0, 1, -.5), command=self.on_input_btn,
+            **menu_args.btn_args)
         PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
 
         self.pagewidgets += [

@@ -38,7 +38,8 @@ class InGamePageGui(PageGui):
 
     def on_end(self, back_to_game):
         eng.hide_standard_cursor()
-        self.mdt.menu.gui.notify('on_ingame_' + ('back' if back_to_game else 'exit'))
+        self.mdt.menu.gui.notify(
+            'on_ingame_' + ('back' if back_to_game else 'exit'))
         eng.do_later(.01, eng.toggle_pause)
 
 

@@ -1,6 +1,5 @@
-from yaml import load
-from os import listdir, remove
 from random import shuffle
+from yaml import load
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
 from yyagl.racing.season.season import SingleRaceSeason, Season
@@ -83,7 +82,6 @@ class YorgLogic(GameLogic):
         self.season.race.results.detach(self.on_race_step)
         ranking = self.season.ranking
         tuning = self.season.tuning
-        from yyagl.racing.season.season import SingleRaceSeason
         if self.season.__class__ != SingleRaceSeason:
             for car in ranking.ranking:
                 ranking.ranking[car] += race_ranking[car]
@@ -110,7 +108,6 @@ class YorgLogic(GameLogic):
                 if driver[3] == car:
                     return driver
         driver = get_driver(car_path)
-        driver_engine, driver_tires, driver_suspensions = driver[2]
         drivers_dct = {}
         for driver in drivers:
             d_s = driver[2]
@@ -126,7 +123,7 @@ class YorgLogic(GameLogic):
         corner_names = ['Minimap' + crn for crn in corner_names]
         col_dct = {'kronos': (0, 0, 1, 1), 'themis': (1, 0, 0, 1),
                    'diones': (1, 1, 1, 1), 'iapeto': (1, 1, 0, 1),
-                   'phoibe': ( .6, .6, 1, 1), 'rea': (0, 0, .6, 1)}
+                   'phoibe': (.6, .6, 1, 1), 'rea': (0, 0, .6, 1)}
         with open(eng.curr_path + tr_file_path) as track_file:
             track_cfg = load(track_file)
             camera_vec = track_cfg['camera_vector']
@@ -182,6 +179,7 @@ class YorgLogic(GameLogic):
              'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
             'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
             'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'], car_path)
-        #todo compute the grid
+            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
+            car_path)
+        # todo compute the grid
         return race_props
