@@ -40,7 +40,7 @@ class YorgFsm(Fsm):
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain', 'amusement'],
-            [_('desert'), _('mountain'), _('amusement park')],
+            lambda: [_('desert'), _('mountain'), _('amusement park')],
             'assets/images/tracks/%s.png',
             self.mdt.options['settings']['player_name'],
             ['assets/images/drivers/driver%s.png',

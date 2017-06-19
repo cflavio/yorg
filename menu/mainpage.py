@@ -150,6 +150,7 @@ class YorgMainPageGui(MainPageGui):
             _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
             parent=base.a2dBottomLeft, fg=menu_args.text_bg,
             font=menu_args.font)]
+        self.transl_text(texts[-1], 'Last news:', _('Last news:'))
         texts += [OnscreenText(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
@@ -161,6 +162,7 @@ class YorgMainPageGui(MainPageGui):
             text=_('show'), pos=(.55, 1, .15), command=eng.open_browser,
             extraArgs=[self.props.site_url], parent=base.a2dBottomLeft,
             **btn_args)
+        self.transl_text(btn, 'show', _('show'))
         map(self.add_widget, [frm] + texts + [btn])
 
 

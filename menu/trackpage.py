@@ -43,7 +43,7 @@ class TrackPageGui(ThanksPageGui):
                 image=self.props.track_img % self.props.tracks[i],
                 command=self.on_track, extraArgs=[self.props.tracks[i]],
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
-            widgets += [OnscreenText(self.props.tracks_tr[i],
+            widgets += [OnscreenText(self.props.tracks_tr()[i],
                                      pos=(-1.05 + i * 1.05, -.32), **t_a)]
         map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
