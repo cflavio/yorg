@@ -165,7 +165,7 @@ class YorgLogic(GameLogic):
             sign_cb, 'EmptyNameBillboard4Anim',
             'assets/images/minimaps/%s.png' % track_path,
             'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
-            shadow_src, laps, 'assets/models/weapons/rocket/rocket',
+            shadow_src, laps, 'assets/models/weapons/rocket/RocketAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
             self.mdt.options['development']['ai'], InGameMenu,
