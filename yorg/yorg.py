@@ -42,7 +42,6 @@ class Yorg(Game):
                 'menu_joypad': 1,
                 'multiplayer': 0,
                 'season': 0,
-                'weapons': 0,
                 'win_orig': '',
                 'profiling': 0,
                 'python_profiling': 0}}

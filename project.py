@@ -4,9 +4,6 @@
 # TODO LIST =====
 
 # 0.7
-# forward missile
-# backward missile
-# turbo
 # drop a fixed bomb
 # rotate-all bomb
 # #ai weapons
