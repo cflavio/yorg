@@ -1,5 +1,7 @@
 # BUGS =====
 
+# framerate gets slower
+
 
 # TODO LIST =====
 

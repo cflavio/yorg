@@ -36,7 +36,7 @@ class YorgFsm(Fsm):
         LogMgr().log('entering Menu state')
         menu_props = MenuProps(
             Utils().menu_args, self.mdt.options,
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
+            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain', 'amusement'],
@@ -109,7 +109,7 @@ class YorgFsm(Fsm):
             'Loading', track_path, car_path, [], drivers,
             ['prototype', 'desert', 'mountain', 'amusement'],
             track_name_transl, singlerace,
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea'],
+            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
             'assets/images/cars/%s_sel.png',
             'assets/images/drivers/driver%s_sel.png',
             game.options['settings']['joystick'],
