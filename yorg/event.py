@@ -1,6 +1,7 @@
 from time import strftime
 from yyagl.gameobject import Event
 from yyagl.engine.phys import PhysMgr
+from yyagl.engine.profiler import Profiler
 
 
 class YorgEvent(Event):
@@ -11,6 +12,7 @@ class YorgEvent(Event):
         fname = 'yorg_' + strftime('%y_%m_%d_%H_%M_%S') + '.png'
         self.accept('f10', eng.base.win.saveScreenshot, [fname])
         base.accept('escape-up', self.mdt.fsm.demand, ['Exit'])
+        self.accept('f9', Profiler().toggle)
 
     def on_season_end(self):
         self.mdt.logic.season.race.destroy()

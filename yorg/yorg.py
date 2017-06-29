@@ -44,7 +44,8 @@ class Yorg(Game):
                 'season': 0,
                 'win_orig': '',
                 'profiling': 0,
-                'python_profiling': 0}}
+                'python_profiling': 0,
+                'python_profiling_percall': 0}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
@@ -69,7 +70,8 @@ class Yorg(Game):
             cursor_hotspot=(.1, .06),
             volume=self.options['settings']['volume'],
             profiling=self.options['development']['profiling'],
-            python_profiling=self.options['development']['python_profiling'])
+            python_profiling=self.options['development']['python_profiling'],
+            python_profiling_percall=self.options['development']['python_profiling_percall'])
         init_lst = [
             [('fsm', YorgFsm, [self])],
             [('logic', YorgLogic, [self])],
