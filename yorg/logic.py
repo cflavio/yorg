@@ -167,6 +167,7 @@ class YorgLogic(GameLogic):
             'assets/images/minimaps/car_handle.png', col_dct, camera_vec,
             shadow_src, laps, 'assets/models/weapons/rocket/RocketAnim',
             'assets/models/weapons/turbo/TurboAnim',
+            'assets/models/weapons/turn/TurnAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
             self.mdt.options['development']['ai'], InGameMenu,
