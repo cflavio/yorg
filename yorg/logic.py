@@ -168,6 +168,7 @@ class YorgLogic(GameLogic):
             shadow_src, laps, 'assets/models/weapons/rocket/RocketAnim',
             'assets/models/weapons/turbo/TurboAnim',
             'assets/models/weapons/turn/TurnAnim',
+            'assets/models/weapons/mine/MineAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
             self.mdt.options['development']['ai'], InGameMenu,
