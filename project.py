@@ -5,8 +5,9 @@
 
 # 0.7
 # drop a fixed bomb
-# rotate-all bomb
 # #ai weapons
+# apply other keyboard-driven forces while the car is drifting to workaround
+#   the lack of drifting support
 # refactoring of racing.race
 # refactoring of racing.track
 # refactoring of racing.car
@@ -35,6 +36,7 @@
 # drifting
 # animation when the car is repaired in pitstop
 # use txo files in place of png and jpg
+# change/improve linux installer
 
 
 # WAITING =====

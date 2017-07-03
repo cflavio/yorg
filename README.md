@@ -11,4 +11,11 @@ If you want to use deploy-ng you must specify the switch ng, as instance:
 
 * scons ng=1 linux_64=1
 
+In order to create a build you should specify the target OS (windows, osx, linux_32, linux_64) e.g.:
+* scons linux_64=1
+
+NB Only building from Linux is supported.
+
+Prerequisites for building: Panda3D, SConstruct, ImageMagick.
+
 [![Bountysource Raised](https://www.bountysource.com/badge/team?team_id=213581&style=raised)](https://salt.bountysource.com/teams/ya2)
