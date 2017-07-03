@@ -151,6 +151,13 @@ class YorgMainPageGui(MainPageGui):
             parent=base.a2dBottomLeft, fg=menu_args.text_bg,
             font=menu_args.font)]
         self.transl_text(texts[-1], 'Last news:', _('Last news:'))
+
+        def to_unicode(_str):  # for managing different encodings
+            try:
+                return unicode(_str)
+            except UnicodeDecodeError:
+                return ''
+        rss = [map(to_unicode, rss_str) for rss_str in rss]
         texts += [OnscreenText(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
