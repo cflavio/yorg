@@ -4,8 +4,8 @@
 # TODO LIST =====
 
 # 0.7
-# drop a fixed bomb
 # #ai weapons
+# option for disabling shaders
 # apply other keyboard-driven forces while the car is drifting to workaround
 #   the lack of drifting support
 # refactoring of racing.race
@@ -31,8 +31,6 @@
 # store the commit of the bam generation to regenerate it only if commits are
 #   different
 # 3D audio (from player's car)
-# deployed textures should have power-of-2 dimensions
-# ai poller: process one car's ai for each frame
 # drifting
 # animation when the car is repaired in pitstop
 # use txo files in place of png and jpg
