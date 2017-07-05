@@ -4,8 +4,13 @@
 # TODO LIST =====
 
 # 0.7
-# #ai weapons
-# option for disabling shaders
+# improve missile forward
+# improve missile backward
+# #ai weapons missile forward
+# #ai weapons missile backward
+# #ai weapons turbo
+# #ai weapons turn_all
+# #ai weapons mine
 # apply other keyboard-driven forces while the car is drifting to workaround
 #   the lack of drifting support
 # refactoring of racing.race
@@ -16,7 +21,19 @@
 # 0.8
 # #gaming season
 
-# 0.9
+# 0.9 (refinements)
+# preload assets (cars on application's start, track on menu selection)
+# give loading feedback for physics parts
+# 3D audio (from player's car)
+# particles when a car is being hit by a weapon
+# particles on skidmarks
+# animation when the car is repaired in pitstop
+# use txo files in place of png and jpg
+
+# 0.10 graphics improvements
+# shaders
+
+# 0.11 (network)
 # #network at end of a multiplayer race wait for other cars
 # #network wheels animations
 # #network physics (collisions to players' car)
@@ -25,16 +42,10 @@
 # #network send game packets using udp in place of tcp
 # #network weapons
 
-# 1.0 (refinements)
-# preload assets (cars on application's start, track on menu selection)
-# give loading feedback for physics parts
+# 1.0 (polishment)
+# change/improve linux installer
 # store the commit of the bam generation to regenerate it only if commits are
 #   different
-# 3D audio (from player's car)
-# drifting
-# animation when the car is repaired in pitstop
-# use txo files in place of png and jpg
-# change/improve linux installer
 
 
 # WAITING =====
