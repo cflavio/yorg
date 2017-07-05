@@ -59,6 +59,7 @@ class YorgMainPageGui(MainPageGui):
         self.volume = sett['volume']
         self.fullscreen = sett['fullscreen']
         self.aa = sett['aa']
+        self.shaders = sett['shaders']
 
     def bld_page(self):
         mp_props = MultiplayerPageProps(
@@ -115,7 +116,7 @@ class YorgMainPageGui(MainPageGui):
         self.load_settings()
         option_props = OptionPageProps(
             self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
-            self.aa, self.props.opt_file)
+            self.aa, self.shaders, self.props.opt_file)
         self.menu.push_page(OptionPage(self.menu.gui.menu_args, option_props,
                                        self.menu))
 
