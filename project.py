@@ -4,13 +4,13 @@
 # TODO LIST =====
 
 # 0.7
-# improve missile forward
-# improve missile backward
+# #ai collect weapon box (move the closest wp when a box appear if it is not
+#   on a box already)
+# #ai weapons turn_all
+# #ai weapons turbo
+# #ai weapons mine
 # #ai weapons missile forward
 # #ai weapons missile backward
-# #ai weapons turbo
-# #ai weapons turn_all
-# #ai weapons mine
 # apply other keyboard-driven forces while the car is drifting to workaround
 #   the lack of drifting support
 # refactoring of racing.race

@@ -22,7 +22,7 @@ class Yorg(Game):
                 'aa': 0,
                 'keys': {
                     'forward': 'arrow_up',
-                    'rear': 'z',
+                    'rear': 'arrow_down',
                     'left': 'arrow_left',
                     'right': 'arrow_right',
                     'button': 'x',
