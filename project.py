@@ -4,11 +4,9 @@
 # TODO LIST =====
 
 # 0.7
-# #ai collect weapon box (move the closest wp when a box appear if it is not
-#   on a box already)
 # #ai weapons turn_all
-# #ai weapons turbo
 # #ai weapons mine
+# #ai weapons turbo
 # #ai weapons missile forward
 # #ai weapons missile backward
 # apply other keyboard-driven forces while the car is drifting to workaround
@@ -25,7 +23,6 @@
 # preload assets (cars on application's start, track on menu selection)
 # give loading feedback for physics parts
 # 3D audio (from player's car)
-# particles when a car is being hit by a weapon
 # particles on skidmarks
 # animation when the car is repaired in pitstop
 # use txo files in place of png and jpg
@@ -60,13 +57,10 @@
 # #project make scons for yyagl
 # #project embed into a wx / pyqt window
 # #project port to python 3
-# #shaders deferred shading, tone mapping; fxaa
+# #shaders deferred shading, tone mapping
 # #engine hardware instancing
 # #engine multi-threading physics loading
 # refactoring DIP, mediator
-# refactoring engine -> several singletons (LogMgr, PhysMgr, ...)
-# refactoring do only RaceProps, SeasonProps, MenuProps, ... and project them
-#   when passing
 # #backlog #project make uml diagrams with pyreverse into devinfo
 # #backlog #project unit tests
 # #backlog #shaders particle effects

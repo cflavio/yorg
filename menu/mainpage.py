@@ -2,6 +2,7 @@ from datetime import datetime
 from feedparser import parse
 from panda3d.core import TextNode
 from direct.gui.DirectButton import DirectButton
+from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.OnscreenText import OnscreenText
@@ -108,6 +109,12 @@ class YorgMainPageGui(MainPageGui):
             self.props.title_img, scale=(.8, 1, .8 * (380.0 / 772)),
             parent=base.a2dTopRight, pos=(-.8, 1, -.4))]
         widgets[-1].setTransparency(True)
+        lab_args = self.menu.gui.menu_args.label_args
+        lab_args['scale'] = .12
+        lab_args['text_fg'] = self.menu.gui.menu_args.text_err
+        lab = DirectLabel(text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft, text_align=TextNode.A_left, **lab_args)
+        PageGui.transl_text(lab, 'NB the game is work-in-progress', _('NB the game is work-in-progress'))
+        self.widgets += [lab]
         map(self.add_widget, widgets)
         self.set_news()
         MainPageGui.bld_page(self)
