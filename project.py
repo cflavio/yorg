@@ -4,11 +4,11 @@
 # TODO LIST =====
 
 # 0.7
-# #ai weapons turn_all
 # #ai weapons mine
 # #ai weapons turbo
 # #ai weapons missile forward
 # #ai weapons missile backward
+# #ai don't look at look_at when rotate_all is applied to player's car
 # apply other keyboard-driven forces while the car is drifting to workaround
 #   the lack of drifting support
 # refactoring of racing.race
