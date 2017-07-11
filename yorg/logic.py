@@ -132,9 +132,7 @@ class YorgLogic(GameLogic):
             laps = track_cfg['laps']
 
         def sign_cb(parent):
-            thanks = open(eng.curr_path + 'assets/thanks.txt').readlines()
-            shuffle(thanks)
-            text = '\n\n'.join(thanks[:3])
+            text = '\n\n'.join(Utils().get_thanks(3, 4))
             txt = OnscreenText(text, parent=parent, scale=.2, fg=(0, 0, 0, 1),
                                pos=(.245, 0))
             bounds = lambda: txt.getTightBounds()

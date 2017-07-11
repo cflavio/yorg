@@ -8,15 +8,27 @@ class Utils(object):
     __metaclass__ = Singleton
 
     @staticmethod
-    def get_thanks(num):
-        names = open(eng.curr_path + 'assets/thanks.txt').readlines()
+    def get_thanks(num, level):
+        names = []
+        curr_level = 5
+        while len(names) < num or curr_level >= level:
+            curr_names = open(eng.curr_path + 'assets/thanks%s.txt' % curr_level).readlines()
+            if curr_level >= level:
+                names += curr_names
+            else:
+                shuffle(curr_names)
+                names += curr_names[:num - len(names)]
+            curr_level -= 1
         shuffle(names)
         return [name.strip() for name in names[:num]]
 
     @staticmethod
     def get_all_thanks():
-        tfile = eng.curr_path + 'assets/thanks.txt'
-        return [name.strip() for name in open(tfile).readlines()]
+        names = []
+        for i in range(5, 1, -1):
+            tfile = eng.curr_path + 'assets/thanks%s.txt' % i
+            names += [name.strip() for name in open(tfile).readlines()]
+        return names
 
     @property
     def menu_args(self):
@@ -29,7 +41,7 @@ class Utils(object):
 
     @property
     def drivers(self):
-        names = Utils().get_thanks(8)
+        names = Utils().get_thanks(8, 5)
         drivers = [
             (1, names[0], (4, -2, -2)),
             (2, names[1], (-2, 4, -2)),
