@@ -1,7 +1,5 @@
 # BUGS =====
 
-# sometimes particles appear at wrong positions
-
 
 # TODO LIST =====
 
