@@ -6,7 +6,6 @@
 # TODO LIST =====
 
 # 0.7
-# #ai don't look at look_at when rotate_all is applied to player's car
 # apply other keyboard-driven forces while the car is drifting to workaround
 #   the lack of drifting support
 # refactoring of racing.race
