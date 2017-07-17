@@ -1,5 +1,6 @@
 from random import shuffle
 from yaml import load
+from collections import namedtuple
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
 from yyagl.racing.season.season import SingleRaceSeason, Season
@@ -142,6 +143,8 @@ class YorgLogic(GameLogic):
             bounds = txt.getTightBounds()
             height = bounds[1][2] - bounds[0][2]
             txt.setZ(.06 + height / 2)
+        WPInfo = namedtuple('WPInfo', 'root_name wp_name prev_name')
+        WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
         race_props = RaceProps(
             keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
             'assets/fonts/Hanken-Book.ttf', 'assets/models/cars/%s/capsule',
@@ -157,9 +160,10 @@ class YorgLogic(GameLogic):
             'assets/models/tracks/%s/collision' % track_path,
             ['Road', 'Offroad'], ['Wall'],
             ['Goal', 'Slow', 'Respawn', 'PitStop'], corner_names,
-            ['Waypoints', 'Waypoint', 'prev'],
+            WPInfo(root_name='Waypoints', wp_name='Waypoint', prev_name='prev'),
             self.mdt.options['development']['show_waypoints'],
-            ['Weaponboxs', 'EmptyWeaponboxAnim'], 'Start', track_path,
+            WeaponInfo(root_name='Weaponboxs', weap_name='EmptyWeaponboxAnim'),
+            'Start', track_path,
             'tracks/' + track_path, 'track', 'Empty', 'Anim', 'omni',
             sign_cb, 'EmptyNameBillboard4Anim',
             'assets/images/minimaps/%s.png' % track_path,

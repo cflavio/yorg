@@ -7,7 +7,6 @@
 # apply other keyboard-driven forces while the car is drifting to workaround
 #   the lack of drifting support
 # refactoring of racing.race
-# refactoring of racing.track
 # refactoring of racing.car
 # refactoring of racing
 # profiling
