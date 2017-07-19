@@ -102,7 +102,7 @@ class YorgLogic(GameLogic):
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
         wheel_gfx_names = [eng.curr_path + 'assets/models/cars/%s/' + elm
                            for elm in wheel_gfx_names]
-        tuning = self.mdt.logic.season.tuning.tunings[car_path]
+        tuning = self.mdt.logic.season.tuning.car2tuning[car_path]
 
         def get_driver(car):
             for driver in drivers:
