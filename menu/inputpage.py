@@ -20,7 +20,8 @@ class InputEvent(PageEvent):
             'left': self.mdt.gui.buttons[2]['text'],
             'right': self.mdt.gui.buttons[3]['text'],
             'button': self.mdt.gui.buttons[4]['text'],
-            'respawn': self.mdt.gui.buttons[5]['text']}
+            'respawn': self.mdt.gui.buttons[5]['text'],
+            'pause': self.mdt.gui.buttons[6]['text']}
         dct['joystick'] = self.mdt.gui._joypad_cb['indicatorValue']
         self.mdt.menu.gui.notify('on_input_back', dct)
 
@@ -64,11 +65,12 @@ class InputPageGui(ThanksPageGui):
             self.buttons += [btn]
         buttons_data = [
             (_('Accelerate'), 'forward', .6),
-            (_('Brake/Reverse'), 'rear', .4),
-            (_('Left'), 'left', .2),
-            (_('Right'), 'right', 0),
-            (_('Weapon'), 'button', -.2),
-            (_('Respawn'), 'respawn', -.4)]
+            (_('Brake/Reverse'), 'rear', .42),
+            (_('Left'), 'left', .24),
+            (_('Right'), 'right', .06),
+            (_('Weapon'), 'button', -.12),
+            (_('Respawn'), 'respawn', -.28),
+            (_('Pause'), 'pause', -.46)]
         for btn_data in buttons_data:
             add_lab(btn_data[0], btn_data[2])
             add_btn(self.keys[btn_data[1]], btn_data[2])

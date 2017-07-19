@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.7
-# implement raw keyboard codes
 # apply other keyboard-driven forces while the car is drifting to workaround
 #   the lack of drifting support
 # refactoring of racing.race
