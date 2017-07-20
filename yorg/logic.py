@@ -84,10 +84,10 @@ class YorgLogic(GameLogic):
         ranking = self.season.ranking
         tuning = self.season.tuning
         if self.season.__class__ != SingleRaceSeason:
-            for car in ranking.ranking:
-                ranking.ranking[car] += race_ranking[car]
-            self.mdt.options['save']['ranking'] = ranking.ranking
-            self.mdt.options['save']['tuning'] = tuning.tunings
+            for car in ranking.carname2points:
+                ranking.carname2points[car] += race_ranking[car]
+            self.mdt.options['save']['ranking'] = ranking.carname2points
+            self.mdt.options['save']['tuning'] = tuning.car2tuning
             self.mdt.options.store()
             self.mdt.fsm.demand('Ranking')
         else:
@@ -112,8 +112,7 @@ class YorgLogic(GameLogic):
         drivers_dct = {}
         for driver in drivers:
             d_s = driver[2]
-            driver_props = DriverProps(
-                str(driver[0]), d_s[0], d_s[1], d_s[2])
+            driver_props = DriverProps(str(driver[0]), d_s[0], d_s[1], d_s[2])
             drv = Driver(driver_props)
             drivers_dct[driver[3]] = drv
         tr_file_path = 'assets/models/tracks/%s/track.yml' % track_path
@@ -150,7 +149,7 @@ class YorgLogic(GameLogic):
             'assets/fonts/Hanken-Book.ttf', 'assets/models/cars/%s/capsule',
             'Capsule', 'assets/models/cars',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
-            wheel_names, tuning.engine, tuning.tires, tuning.suspensions,
+            wheel_names, tuning.f_engine, tuning.f_tires, tuning.f_suspensions,
             'Road', 'assets/models/cars/%s/car',
             ['assets/models/cars/%s/cardamage1',
              'assets/models/cars/%s/cardamage2'], wheel_gfx_names,

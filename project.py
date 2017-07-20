@@ -8,7 +8,6 @@
 #   the lack of drifting support
 # refactoring of racing.race
 # refactoring of racing.car
-# refactoring of racing
 # profiling
 
 # 0.8

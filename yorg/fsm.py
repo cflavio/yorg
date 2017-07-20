@@ -51,7 +51,7 @@ class YorgFsm(Fsm):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
             self.mdt.options['development']['season'],
-            ['prototype', 'desert', 'mountain', 'amusement'],
+            ['desert', 'mountain', 'amusement'],
             'http://www.ya2.it/support-us', Utils().drivers)
         self.__menu = YorgMenu(menu_props)
         self.__menu.gui.menu.attach_obs(self.mdt.logic.on_input_back)
@@ -107,7 +107,7 @@ class YorgFsm(Fsm):
         singlerace = game.logic.season.__class__ == SingleRaceSeason
         self.mdt.logic.season.race.fsm.demand(
             'Loading', track_path, car_path, [], drivers,
-            ['prototype', 'desert', 'mountain', 'amusement'],
+            ['desert', 'mountain', 'amusement'],
             track_name_transl, singlerace,
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
             'assets/images/cars/%s_sel.png',
