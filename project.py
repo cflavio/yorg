@@ -17,14 +17,16 @@
 # preload assets (cars on application's start, track on menu selection)
 # give loading feedback for physics parts
 # 3D audio (from player's car)
-# particles on skidmarks
 # animation when the car is repaired in pitstop
 # use txo files in place of png and jpg
 
 # 0.10 graphics improvements
 # shaders
 
-# 0.11 (network)
+# 0.11 (local multiplayer)
+# split screen
+
+# 0.12 (network)
 # #network at end of a multiplayer race wait for other cars
 # #network wheels animations
 # #network physics (collisions to players' car)
