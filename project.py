@@ -4,13 +4,13 @@
 # TODO LIST =====
 
 # 0.7
-# apply other keyboard-driven forces while the car is drifting to workaround
-#   the lack of drifting support
 # refactoring of racing.race
 # refactoring of racing.car
 # profiling
 
 # 0.8
+# option for selecting the number of the car for the race/season (for slow
+#   computers)
 # #gaming season
 
 # 0.9 (refinements)

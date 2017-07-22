@@ -173,6 +173,7 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/mine/MineAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
+            #['themis'],
             self.mdt.options['development']['ai'], InGameMenu,
             Utils().menu_args, 'assets/images/drivers/driver%s_sel.png',
             'assets/images/cars/%s_sel.png',
