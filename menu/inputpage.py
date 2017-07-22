@@ -4,7 +4,7 @@ from direct.gui.DirectCheckButton import DirectCheckButton
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectButton import DirectButton
-from yyagl.engine.gui.page import Page, PageEvent, PageGui
+from yyagl.engine.gui.page import Page, PageEvent, PageGui, PageFacade
 from yyagl.engine.joystick import has_pygame
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -112,3 +112,4 @@ class InputPage(Page):
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, joystick, keys])]]
         GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)

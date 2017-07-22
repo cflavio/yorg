@@ -1,5 +1,5 @@
 from direct.gui.DirectButton import DirectButton
-from yyagl.engine.gui.page import Page
+from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .serverpage import ServerPage, ServerPageProps
 from .clientpage import ClientPage
@@ -60,3 +60,4 @@ class MultiplayerPage(Page):
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, mp_props])]]
         GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)

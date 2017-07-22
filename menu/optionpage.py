@@ -4,7 +4,7 @@ from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectButton import DirectButton
-from yyagl.engine.gui.page import Page, PageEvent, PageGui
+from yyagl.engine.gui.page import Page, PageEvent, PageGui, PageFacade
 from yyagl.engine.lang import LangMgr
 from yyagl.gameobject import GameObject
 from .inputpage import InputPage
@@ -151,3 +151,4 @@ class OptionPage(Page):
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, option_props])]]
         GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)

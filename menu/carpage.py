@@ -4,7 +4,7 @@ from panda3d.core import TextNode
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from direct.gui.OnscreenText import OnscreenText
-from yyagl.engine.gui.page import Page
+from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.network.server import Server
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.engine.network.client import Client
@@ -229,6 +229,7 @@ class CarPage(Page):
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, carpage_props])]]
         GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)
 
 
 class CarPageSeason(CarPage):

@@ -190,3 +190,4 @@ class YorgMainPage(MainPage):
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu, mainpage_props])]]
         GameObject.__init__(self, init_lst)
+        MainPage.__init__(self)

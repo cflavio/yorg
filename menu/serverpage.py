@@ -3,7 +3,7 @@ from json import load
 from urllib2 import urlopen
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
-from yyagl.engine.gui.page import Page, PageEvent
+from yyagl.engine.gui.page import Page, PageEvent, PageFacade
 from yyagl.engine.network.server import Server
 from yyagl.gameobject import GameObject
 from .trackpage import TrackPageServer, TrackPageProps
@@ -93,3 +93,4 @@ class ServerPage(Page):
             [('gui', self.gui_cls, [self, self.menu_args, serverpage_props,
                                     self.menu])]]
         GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)

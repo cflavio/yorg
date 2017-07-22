@@ -1,6 +1,6 @@
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED
-from yyagl.engine.gui.page import Page
+from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .carpage import CarPageSeason
 from .trackpage import TrackPage, TrackPageProps
@@ -95,3 +95,4 @@ class SingleplayerPage(Page):
             [('gui', self.gui_cls, [self, self.menu_args,
                                     singleplayerpage_props])]]
         GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)
