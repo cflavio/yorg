@@ -4,6 +4,10 @@
 # TODO LIST =====
 
 # 0.7
+# more power for the drifting
+# on drifting, no acceleration, if turning on the same direction of the curve
+#   then add forward component to the inertia force
+# add a centripetal force on drifting
 # refactoring of racing.race
 # refactoring of racing.car
 # profiling
