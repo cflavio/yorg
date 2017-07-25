@@ -65,4 +65,5 @@ class Utils(object):
              'assets/images/tuning/tires.png',
              'assets/images/tuning/suspensions.png'],
             ['desert', 'mountain', 'amusement'],
-            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1))
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1),
+            'assets/sfx/countdown.ogg')

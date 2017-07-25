@@ -106,15 +106,7 @@ class YorgFsm(Fsm):
             track_name_transl = track_dct[track_path]
         singlerace = game.logic.season.__class__ == SingleRaceSeason
         self.mdt.logic.season.race.fsm.demand(
-            'Loading', track_path, car_path, [], drivers,
-            ['desert', 'mountain', 'amusement'],
-            track_name_transl, singlerace,
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
-            'assets/images/cars/%s_sel.png',
-            'assets/images/drivers/driver%s_sel.png',
-            game.options['settings']['joystick'],
-            game.options['settings']['keys'], Utils().menu_args,
-            'assets/sfx/countdown.ogg')
+            'Loading', race_props, self.mdt.logic.season.props, track_name_transl, singlerace, drivers)
         self.mdt.logic.season.race.attach_obs(self.mdt.logic.on_race_loaded)
         exit_meth = self.mdt.logic.on_ingame_exit_confirm
         self.mdt.logic.season.race.attach_obs(exit_meth)
