@@ -6,13 +6,15 @@
 # 0.7
 # more power for the drifting; the length of the inertia+engine should not
 #  be bigger than the max engine's force
+# apply drifting force during the drifting
 # refactoring of racing.race
 # refactoring of racing.car
 # profiling
 
 # 0.8
-# option for selecting the number of the car for the race/season (for slow
-#   computers)
+# store last_version; if last_version != current_version then postprocess
+#   option file and change the default e.g.
+#   if curr_ver != last_ver & car_num == 7: car_num = 8
 # #gaming season
 
 # 0.9 (refinements)
@@ -21,9 +23,9 @@
 # 3D audio (from player's car)
 # animation when the car is repaired in pitstop
 # use txo files in place of png and jpg
+# contour detection
 
 # 0.10 graphics improvements
-# shaders
 
 # 0.11 (local multiplayer)
 # split screen
@@ -52,6 +54,7 @@
 
 # MAYBE/SOMEDAY =====
 
+# shaders
 # #project make scons for yyagl
 # #project embed into a wx / pyqt window
 # #project port to python 3

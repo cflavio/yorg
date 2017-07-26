@@ -39,6 +39,8 @@ class CarPageGui(ThanksPageGui):
 
     def bld_page(self):
         menu_gui = self.mdt.menu.gui
+        if hasattr(game.logic, 'curr_cars'):
+            self.props.cars = game.logic.curr_cars
         self.pagewidgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
             **menu_gui.menu_args.text_args)]
@@ -46,10 +48,13 @@ class CarPageGui(ThanksPageGui):
         t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         del t_a['scale']
         for row, col in product(range(2), range(4)):
-            if row == 1 and col == 3:
+            if row * 4 + col >= len(self.props.cars):
                 break
+            z_offset = 0 if len(self.props.cars) > 4 else .35
+            num_car = len(self.props.cars) % 4 if row == 1 else min(4, len(self.props.cars))
+            x_offset = .4 * (4 - num_car)
             self.pagewidgets += [ImgBtn(
-                scale=.32, pos=(-1.2 + .4 * row + col * .8, 1, .4 - row * .7),
+                scale=.32, pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
                 image=self.props.car_path % self.props.cars[col + row * 4],
                 command=self.on_car,
@@ -57,7 +62,7 @@ class CarPageGui(ThanksPageGui):
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
             self.pagewidgets += [OnscreenText(
                 self.props.cars[col + row * 4],
-                pos=(-1.2 + .4 * row + col * .8, .64 - row * .7), scale=.072,
+                pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7), scale=.072,
                 **t_a)]
             cpath = self.props.phys_path % self.props.cars[col + row * 4]
             with open(cpath) as phys_file:
@@ -77,7 +82,7 @@ class CarPageGui(ThanksPageGui):
             def add_txt(txt, val, pos_z):
                 self.pagewidgets += [OnscreenText(
                     '%s: %s%s%%' % (txt, psign(val), pcol(val)),
-                    pos=(-.9 + .4 * row  + col * .8, pos_z - row * .7), scale=.052,
+                    pos=(-.9 + col * .8 + x_offset, pos_z - z_offset - row * .7), scale=.052,
                     align=TextNode.A_right, **t_a)]
             txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
                        (_('stability'), roll, .19)]

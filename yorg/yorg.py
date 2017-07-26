@@ -20,6 +20,7 @@ class Yorg(Game):
                 'fullscreen': 0,
                 'resolution': '1280 720',
                 'aa': 0,
+                'cars_number': 7,
                 'keys': {
                     'forward': 'arrow_up',
                     'rear': 'arrow_down',

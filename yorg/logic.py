@@ -22,7 +22,7 @@ class YorgLogic(GameLogic):
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         if car and track:
-            self.season = SingleRaceSeason(Utils().season_props(car))
+            self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number']))
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.mdt.fsm.demand('Race', track, car, self.season.drivers)
@@ -39,14 +39,17 @@ class YorgLogic(GameLogic):
     def on_options_back(self, dct):
         self.mdt.options['settings'].update(dct)
         self.mdt.options.store()
+        self.curr_cars = ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(dct['cars_number'])]  # put it there
+        # refactor: now the page props are static, but they should change
+        # when we change the options in the option page
 
     def on_car_selected(self, car):
-        self.season = SingleRaceSeason(Utils().season_props(car))
+        self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number']))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
 
     def on_car_selected_season(self, car):
-        self.season = Season(Utils().season_props(car))
+        self.season = Season(Utils().season_props(car, self.mdt.options['settings']['cars_number']))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
@@ -58,7 +61,7 @@ class YorgLogic(GameLogic):
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
-        self.season = Season(Utils().season_props(saved_car))
+        self.season = Season(Utils().season_props(saved_car, self.mdt.options['settings']['cars_number']))
         self.season.load(self.mdt.options['save']['ranking'],
                          self.mdt.options['save']['tuning'],
                          self.mdt.options['save']['drivers'])
@@ -172,8 +175,7 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/turn/TurnAnim',
             'assets/models/weapons/mine/MineAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
-            #['themis'],
+            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(self.mdt.options['settings']['cars_number'])],
             self.mdt.options['development']['ai'], InGameMenu,
             Utils().menu_args, 'assets/images/drivers/driver%s_sel.png',
             'assets/images/cars/%s_sel.png',
@@ -185,7 +187,7 @@ class YorgLogic(GameLogic):
              'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
             'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
             'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'],
+            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(self.mdt.options['settings']['cars_number'])],
             car_path)
         # todo compute the grid
         return race_props

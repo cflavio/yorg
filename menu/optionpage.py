@@ -14,7 +14,7 @@ from .thankspage import ThanksPageGui
 class OptionPageProps(object):
 
     def __init__(self, joystick, keys, lang, volume, fullscreen, aa, shaders,
-                 opt_file):
+                 cars_num, opt_file):
         self.joystick = joystick
         self.keys = keys
         self.lang = lang
@@ -22,6 +22,7 @@ class OptionPageProps(object):
         self.fullscreen = fullscreen
         self.aa = aa
         self.shaders = shaders
+        self.cars_num = cars_num
         self.opt_file = opt_file
 
 
@@ -35,7 +36,8 @@ class OptionEvent(PageEvent):
             'fullscreen': self.mdt.gui._fullscreen_cb['indicatorValue'],
             'resolution': self.mdt.gui._res_opt.get().replace('x', ' '),
             'aa': self.mdt.gui._aa_cb['indicatorValue'],
-            'shaders': self.mdt.gui._shaders_cb['indicatorValue']}
+            'shaders': self.mdt.gui._shaders_cb['indicatorValue'],
+            'cars_number': self.mdt.gui._cars_opt.get()}
         self.mdt.menu.gui.notify('on_options_back', dct)
 
 
@@ -49,6 +51,7 @@ class OptionPageGui(ThanksPageGui):
         self._shaders_cb = None
         self._res_opt = None
         self._browser_cb = None
+        self._cars_opt = None
         self.props = option_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
@@ -63,58 +66,65 @@ class OptionPageGui(ThanksPageGui):
             PageGui.transl_text(lab, txt, txt_tr)
             self.pagewidgets += [lab]
             return lab
-        add_lab('Language', _('Language'), .7)
+        add_lab('Language', _('Language'), .85)
         self._lang_opt = DirectOptionMenu(
-            text='', items=eng.languages, pos=(.49, 1, .7),
+            text='', items=eng.languages, pos=(.49, 1, .85),
             initialitem=self.props.lang, command=self.__change_lang,
             **menu_args.option_args)
-        add_lab('Volume', _('Volume'), .5)
+        add_lab('Volume', _('Volume'), .65)
         self._vol_slider = DirectSlider(
-            pos=(.52, 0, .53), scale=.49, value=self.props.volume,
+            pos=(.52, 0, .68), scale=.49, value=self.props.volume,
             frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg,
             command=self.__on_volume)
-        add_lab('Fullscreen', _('Fullscreen'), .3)
+        add_lab('Fullscreen', _('Fullscreen'), .45)
         self._fullscreen_cb = DirectCheckButton(
-            pos=(.12, 1, .32), text='', indicatorValue=self.props.fullscreen,
+            pos=(.12, 1, .47), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_fg,
             command=lambda val: eng.toggle_fullscreen(),
             **menu_args.checkbtn_args)
-        add_lab('Resolution', _('Resolution'), .1)
+        add_lab('Resolution', _('Resolution'), .25)
         res2vec = lambda res: LVector2i(*[int(val) for val in res.split('x')])
         self._res_opt = DirectOptionMenu(
             text='',
             items=['x'.join([str(el_res) for el_res in res])
                    for res in eng.resolutions],
-            pos=(.49, 1, .1),
+            pos=(.49, 1, .25),
             initialitem='x'.join(str(res) for res in eng.closest_res),
             command=lambda res: eng.set_resolution(res2vec(res)),
             **menu_args.option_args)
-        add_lab('Antialiasing', _('Antialiasing'), -.1)
+        add_lab('Antialiasing', _('Antialiasing'), .05)
         aa_next_lab = DirectLabel(
-            text='', pos=(.2, 1, -.1), text_align=TextNode.ALeft,
+            text='', pos=(.2, 1, .05), text_align=TextNode.ALeft,
             **menu_args.label_args)
         PageGui.transl_text(aa_next_lab, '(from the next execution)',
                             _('(from the next execution)'))
         self._aa_cb = DirectCheckButton(
-            pos=(.12, 1, -.07), text='', indicatorValue=self.props.aa,
+            pos=(.12, 1, .08), text='', indicatorValue=self.props.aa,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
-        add_lab('Shaders', _('Shaders'), -.3)
+        add_lab('Shaders', _('Shaders'), -.15)
         self._shaders_cb = DirectCheckButton(
-            pos=(.12, 1, -.27), text='', indicatorValue=self.props.shaders,
+            pos=(.12, 1, -.12), text='', indicatorValue=self.props.shaders,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
+        add_lab('Cars number', _('Cars number'), -.35)
+        self._cars_opt = DirectOptionMenu(
+            text='',
+            items=[str(i) for i in range(1, 8)],
+            pos=(.49, 1, -.35),
+            initialitem=self.props.cars_num,
+            **menu_args.option_args)
         # bld_in = lambda: self.menu.logic.push_page(
         #     InputPage(self.menu, self.props.joystick, self.props.keys))
         # it doesn't work if we go forward and back between options and input:
         # we should update keys
         input_btn = DirectButton(
-            text='', pos=(0, 1, -.5), command=self.on_input_btn,
+            text='', pos=(0, 1, -.55), command=self.on_input_btn,
             **menu_args.btn_args)
         PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
 
         self.pagewidgets += [
             self._lang_opt, self._vol_slider, self._fullscreen_cb,
             self._res_opt, self._aa_cb, aa_next_lab, input_btn,
-            self._shaders_cb]
+            self._shaders_cb, self._cars_opt]
         map(self.add_widget, self.pagewidgets)
         idx = LangMgr().lang_codes.index(self.props.lang)
         self.__change_lang(eng.languages[idx])
