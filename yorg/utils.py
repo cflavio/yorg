@@ -57,7 +57,7 @@ class Utils(object):
             drivers[i] = drivers[i] + (_car, )
         return drivers
 
-    def season_props(self, car, cars_number):
+    def season_props(self, car, cars_number, single_race):
         return SeasonProps(
             ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(cars_number)],
             car, self.drivers, 'assets/images/gui/menu_background.jpg',
@@ -66,4 +66,4 @@ class Utils(object):
              'assets/images/tuning/suspensions.png'],
             ['desert', 'mountain', 'amusement'],
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1),
-            'assets/sfx/countdown.ogg')
+            'assets/sfx/countdown.ogg', single_race)

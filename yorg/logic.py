@@ -22,7 +22,7 @@ class YorgLogic(GameLogic):
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         if car and track:
-            self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number']))
+            self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number'], True))
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.mdt.fsm.demand('Race', track, car, self.season.drivers)
@@ -44,12 +44,12 @@ class YorgLogic(GameLogic):
         # when we change the options in the option page
 
     def on_car_selected(self, car):
-        self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number']))
+        self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number'], True))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
 
     def on_car_selected_season(self, car):
-        self.season = Season(Utils().season_props(car, self.mdt.options['settings']['cars_number']))
+        self.season = Season(Utils().season_props(car, self.mdt.options['settings']['cars_number'], False))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
@@ -61,7 +61,7 @@ class YorgLogic(GameLogic):
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
-        self.season = Season(Utils().season_props(saved_car, self.mdt.options['settings']['cars_number']))
+        self.season = Season(Utils().season_props(saved_car, self.mdt.options['settings']['cars_number'], False))
         self.season.load(self.mdt.options['save']['ranking'],
                          self.mdt.options['save']['tuning'],
                          self.mdt.options['save']['drivers'])

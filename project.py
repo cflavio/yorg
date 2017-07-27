@@ -7,7 +7,6 @@
 # more power for the drifting; the length of the inertia+engine should not
 #  be bigger than the max engine's force
 # apply drifting force during the drifting
-# refactoring of racing.race
 # refactoring of racing.car
 # profiling
 
