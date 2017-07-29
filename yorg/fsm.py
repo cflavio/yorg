@@ -37,7 +37,7 @@ class YorgFsm(Fsm):
         LogMgr().log('entering Menu state')
         menu_props = MenuProps(
             Utils().menu_args, self.mdt.options,
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(self.mdt.options['settings']['cars_number'])],
+            ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(self.mdt.options['settings']['cars_number'])],
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain', 'amusement'],

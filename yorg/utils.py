@@ -51,7 +51,7 @@ class Utils(object):
             (6, names[5], (-4, 0, 4)),
             (7, names[6], (4, 0, -4)),
             (8, names[7], (-4, 4, 0))]
-        cars = ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea',
+        cars = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                 'iperion', '']
         for i, _car in enumerate(cars):
             drivers[i] = drivers[i] + (_car, )
@@ -59,7 +59,7 @@ class Utils(object):
 
     def season_props(self, car, cars_number, single_race):
         return SeasonProps(
-            ['kronos', 'themis', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(cars_number)],
+            ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(cars_number)],
             car, self.drivers, 'assets/images/gui/menu_background.jpg',
             ['assets/images/tuning/engine.png',
              'assets/images/tuning/tires.png',
