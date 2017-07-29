@@ -4,6 +4,7 @@ from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.network.server import Server
 from yyagl.engine.network.client import Client
 from yyagl.engine.log import LogMgr
+from yyagl.racing.car.audio import CarSounds
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 from .utils import Utils
@@ -82,13 +83,10 @@ class YorgFsm(Fsm):
         self.mdt.options.store()
         keys = self.mdt.options['settings']['keys']
         joystick = self.mdt.options['settings']['joystick']
-        sounds = {
-            'engine': 'assets/sfx/engine.ogg',
-            'brake': 'assets/sfx/brake.ogg',
-            'crash': 'assets/sfx/crash.ogg',
-            'crash_hs': 'assets/sfx/crash_high_speed.ogg',
-            'lap': 'assets/sfx/lap.ogg',
-            'landing': 'assets/sfx/landing.ogg'}
+        sounds = CarSounds(
+            'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',
+            'assets/sfx/crash.ogg', 'assets/sfx/crash_high_speed.ogg',
+            'assets/sfx/lap.ogg', 'assets/sfx/landing.ogg')
         if Server().is_active:
             self.season.create_race_server(keys, joystick, sounds)
         elif Client().is_active:
