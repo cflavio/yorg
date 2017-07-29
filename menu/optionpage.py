@@ -37,7 +37,7 @@ class OptionEvent(PageEvent):
             'resolution': self.mdt.gui._res_opt.get().replace('x', ' '),
             'aa': self.mdt.gui._aa_cb['indicatorValue'],
             'shaders': self.mdt.gui._shaders_cb['indicatorValue'],
-            'cars_number': self.mdt.gui._cars_opt.get()}
+            'cars_number': int(self.mdt.gui._cars_opt.get())}
         self.mdt.menu.gui.notify('on_options_back', dct)
 
 
@@ -110,7 +110,7 @@ class OptionPageGui(ThanksPageGui):
             text='',
             items=[str(i) for i in range(1, 8)],
             pos=(.49, 1, -.35),
-            initialitem=self.props.cars_num,
+            initialitem=self.props.cars_num - 1,
             **menu_args.option_args)
         # bld_in = lambda: self.menu.logic.push_page(
         #     InputPage(self.menu, self.props.joystick, self.props.keys))
