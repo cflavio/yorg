@@ -19,7 +19,7 @@ class YorgFsm(Fsm):
             'Race': ['Ranking', 'Menu', 'Exit'],
             'Ranking': ['Tuning', 'Exit'],
             'Tuning': ['Menu', 'Race', 'Exit'],
-            'Exit': ['Exit']}
+            'Exit': ['Menu']}
         self.load_txt = None
         self.preview = None
         self.cam_tsk = None
@@ -130,6 +130,8 @@ class YorgFsm(Fsm):
         if not self.mdt.options['development']['show_exit']:
             exit()
         self.__exit_menu = ExitMenu(Utils().menu_args)
+        base.accept('escape-up', self.demand, ['Menu'])
 
     def exitExit(self):
         self.__exit_menu.destroy()
+        base.accept('escape-up', self.demand, ['Exit'])
