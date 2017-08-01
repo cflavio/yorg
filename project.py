@@ -17,6 +17,7 @@
 # #gaming season
 
 # 0.9 (refinements)
+# particles (using shaders)
 # preload assets (cars on application's start, track on menu selection)
 # give loading feedback for physics parts
 # 3D audio (from player's car)
