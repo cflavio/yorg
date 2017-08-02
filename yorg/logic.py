@@ -1,6 +1,5 @@
-from random import shuffle
-from yaml import load
 from collections import namedtuple
+from yaml import load
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
 from yyagl.racing.season.season import SingleRaceSeason, Season
@@ -14,7 +13,7 @@ class YorgLogic(GameLogic):
 
     def __init__(self, mdt):
         GameLogic.__init__(self, mdt)
-        self.season = None
+        self.season = self.curr_cars = None
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -22,7 +21,8 @@ class YorgLogic(GameLogic):
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         if car and track:
-            self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number'], True))
+            self.season = SingleRaceSeason(Utils().season_props(
+                car, self.mdt.options['settings']['cars_number'], True))
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.mdt.fsm.demand('Race', track, car, self.season.drivers)
@@ -39,17 +39,21 @@ class YorgLogic(GameLogic):
     def on_options_back(self, dct):
         self.mdt.options['settings'].update(dct)
         self.mdt.options.store()
-        self.curr_cars = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(dct['cars_number'])]  # put it there
+        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                      'iperion']
+        self.curr_cars = cars_names[:int(dct['cars_number'])]  # put it there
         # refactor: now the page props are static, but they should change
         # when we change the options in the option page
 
     def on_car_selected(self, car):
-        self.season = SingleRaceSeason(Utils().season_props(car, self.mdt.options['settings']['cars_number'], True))
+        self.season = SingleRaceSeason(Utils().season_props(
+            car, self.mdt.options['settings']['cars_number'], True))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
 
     def on_car_selected_season(self, car):
-        self.season = Season(Utils().season_props(car, self.mdt.options['settings']['cars_number'], False))
+        self.season = Season(Utils().season_props(
+            car, self.mdt.options['settings']['cars_number'], False))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
@@ -61,7 +65,8 @@ class YorgLogic(GameLogic):
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
-        self.season = Season(Utils().season_props(saved_car, self.mdt.options['settings']['cars_number'], False))
+        self.season = Season(Utils().season_props(
+            saved_car, self.mdt.options['settings']['cars_number'], False))
         self.season.load(self.mdt.options['save']['ranking'],
                          self.mdt.options['save']['tuning'],
                          self.mdt.options['save']['drivers'])
@@ -98,13 +103,18 @@ class YorgLogic(GameLogic):
 
     def build_race_props(self, car_path, drivers, track_path, keys, joystick,
                          sounds):
-        wheel_names = [['EmptyWheelFront', 'EmptyWheelFront.001',
-                        'EmptyWheelRear', 'EmptyWheelRear.001'],
-                       ['EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
-                        'EmptyWheel.003']]
+        Wheels = namedtuple('Wheels', 'fr fl rr rl')
+        frwheels = Wheels('EmptyWheelFront', 'EmptyWheelFront.001',
+                          'EmptyWheelRear', 'EmptyWheelRear.001')
+        bwheels = Wheels('EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
+                         'EmptyWheel.003')
+        WheelNames = namedtuple('WheelNames', 'frontrear both')
+        wheel_names = WheelNames(frwheels, bwheels)
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
         wheel_gfx_names = [eng.curr_path + 'assets/models/cars/%s/' + elm
                            for elm in wheel_gfx_names]
+        WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
+        wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
         tuning = self.mdt.logic.season.tuning.car2tuning[car_path]
 
         def get_driver(car):
@@ -147,6 +157,8 @@ class YorgLogic(GameLogic):
             txt.setZ(.06 + height / 2)
         WPInfo = namedtuple('WPInfo', 'root_name wp_name prev_name')
         WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
+        DamageInfo = namedtuple('DamageInfo', 'low hi')
+        car_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion']
         race_props = RaceProps(
             keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
             'assets/fonts/Hanken-Book.ttf', 'assets/models/cars/%s/capsule',
@@ -154,15 +166,15 @@ class YorgLogic(GameLogic):
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
             wheel_names, tuning.f_engine, tuning.f_tires, tuning.f_suspensions,
             'Road', 'assets/models/cars/%s/car',
-            ['assets/models/cars/%s/cardamage1',
-             'assets/models/cars/%s/cardamage2'], wheel_gfx_names,
+            DamageInfo('assets/models/cars/%s/cardamage1',
+                       'assets/models/cars/%s/cardamage2'), wheel_gfx_names,
             'assets/particles/sparks.ptf', drivers_dct,
             self.mdt.options['development']['shaders_dev'],
             self.mdt.options['settings']['shaders'], music_path,
             'assets/models/tracks/%s/collision' % track_path,
             ['Road', 'Offroad'], ['Wall'],
             ['Goal', 'Slow', 'Respawn', 'PitStop'], corner_names,
-            WPInfo(root_name='Waypoints', wp_name='Waypoint', prev_name='prev'),
+            WPInfo('Waypoints', 'Waypoint', 'prev'),
             self.mdt.options['development']['show_waypoints'],
             WeaponInfo(root_name='Weaponboxs', weap_name='EmptyWeaponboxAnim'),
             'Start', track_path,
@@ -175,7 +187,7 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/turn/TurnAnim',
             'assets/models/weapons/mine/MineAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
-            ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(self.mdt.options['settings']['cars_number'])],
+            car_names[:int(self.mdt.options['settings']['cars_number'])],
             self.mdt.options['development']['ai'], InGameMenu,
             Utils().menu_args, 'assets/images/drivers/driver%s_sel.png',
             'assets/images/cars/%s_sel.png',
@@ -187,7 +199,7 @@ class YorgLogic(GameLogic):
              'https://www.tumblr.com/widgets/share/tool?url=ya2.it'],
             'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
             'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
-            ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(self.mdt.options['settings']['cars_number'])],
+            car_names[:int(self.mdt.options['settings']['cars_number'])],
             car_path)
         # todo compute the grid
         return race_props

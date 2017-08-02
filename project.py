@@ -24,6 +24,7 @@
 # animation when the car is repaired in pitstop
 # use txo files in place of png and jpg
 # contour detection
+# preloading shaders by creating cards, applying shaders and call render_frame
 
 # 0.10 graphics improvements
 
