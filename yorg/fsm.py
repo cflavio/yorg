@@ -1,6 +1,5 @@
-from sys import exit
+from sys import exit as sys_exit
 from yyagl.gameobject import Fsm
-from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.engine.network.server import Server
 from yyagl.engine.network.client import Client
 from yyagl.engine.log import LogMgr
@@ -35,9 +34,11 @@ class YorgFsm(Fsm):
 
     def enterMenu(self):
         LogMgr().log('entering Menu state')
+        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                      'iperion']
         menu_props = MenuProps(
             Utils().menu_args, self.mdt.options,
-            ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(self.mdt.options['settings']['cars_number'])],
+            cars_names[:int(self.mdt.options['settings']['cars_number'])],
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain', 'amusement'],
@@ -87,13 +88,13 @@ class YorgFsm(Fsm):
             'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',
             'assets/sfx/crash.ogg', 'assets/sfx/crash_high_speed.ogg',
             'assets/sfx/lap.ogg', 'assets/sfx/landing.ogg')
+        race_props = self.mdt.logic.build_race_props(
+            car_path, drivers, track_path, keys, joystick, sounds)
         if Server().is_active:
-            self.season.create_race_server(keys, joystick, sounds)
+            self.season.create_race_server(race_props)
         elif Client().is_active:
-            self.season.create_race_client(keys, joystick, sounds)
+            self.season.create_race_client(race_props)
         else:
-            race_props = self.mdt.logic.build_race_props(
-                car_path, drivers, track_path, keys, joystick, sounds)
             self.mdt.logic.season.create_race(race_props)
         LogMgr().log('selected drivers: ' + str(drivers))
         self.mdt.logic.season.race.logic.drivers = drivers
@@ -103,7 +104,8 @@ class YorgFsm(Fsm):
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         self.mdt.logic.season.race.fsm.demand(
-            'Loading', race_props, self.mdt.logic.season.props, track_name_transl, drivers)
+            'Loading', race_props, self.mdt.logic.season.props,
+            track_name_transl, drivers)
         self.mdt.logic.season.race.attach_obs(self.mdt.logic.on_race_loaded)
         exit_meth = self.mdt.logic.on_ingame_exit_confirm
         self.mdt.logic.season.race.attach_obs(exit_meth)
@@ -128,7 +130,7 @@ class YorgFsm(Fsm):
 
     def enterExit(self):
         if not self.mdt.options['development']['show_exit']:
-            exit()
+            sys_exit()
         self.__exit_menu = ExitMenu(Utils().menu_args)
         base.accept('escape-up', self.demand, ['Menu'])
 

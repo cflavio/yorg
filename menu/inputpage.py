@@ -22,14 +22,14 @@ class InputEvent(PageEvent):
             'button': self.mdt.gui.buttons[4]['text'],
             'respawn': self.mdt.gui.buttons[5]['text'],
             'pause': self.mdt.gui.buttons[6]['text']}
-        dct['joystick'] = self.mdt.gui._joypad_cb['indicatorValue']
+        dct['joystick'] = self.mdt.gui.joypad_cb['indicatorValue']
         self.mdt.menu.gui.notify('on_input_back', dct)
 
 
 class InputPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu_args, joystick, keys):
-        self._joypad_cb = None
+        self.joypad_cb = None
         self.joystick = joystick
         self.keys = keys
         ThanksPageGui.__init__(self, mdt, menu_args)
@@ -44,13 +44,13 @@ class InputPageGui(ThanksPageGui):
             text_align=TextNode.ARight, **menu_args.label_args)
         PageGui.transl_text(joypad_lab, 'Use the joypad when present',
                             _('Use the joypad when present'))
-        self._joypad_cb = DirectCheckButton(
+        self.joypad_cb = DirectCheckButton(
             pos=(.09, 1, .82), text='',
             indicatorValue=self.joystick,
             indicator_frameColor=menu_args.text_fg,
             **menu_args.checkbtn_args)
         if not has_pygame():
-            self._joypad_cb['state'] = DISABLED
+            self.joypad_cb['state'] = DISABLED
 
         def add_lab(text, pos_z):
             self.pagewidgets += [DirectLabel(
@@ -80,7 +80,7 @@ class InputPageGui(ThanksPageGui):
         self.hint_lab = DirectLabel(
             text=_('Press the key to record it'), pos=(0, 1, -.6), **l_a)
         self.hint_lab.hide()
-        self.pagewidgets += [joypad_lab, self._joypad_cb, self.hint_lab]
+        self.pagewidgets += [joypad_lab, self.joypad_cb, self.hint_lab]
         map(self.add_widget, self.pagewidgets)
         ThanksPageGui.bld_page(self)
 

@@ -73,8 +73,8 @@ class ServerPageGui(ThanksPageGui):
             self.props.cars_img, self.props.drivers)
         self.add_widget(DirectButton(
             text=_('Start'), pos=(0, 1, -.5),
-            command=lambda: self.menu.push_page(TrackPageServer(self.menu,
-                                                                tp_props)),
+            command=lambda: self.menu.push_page(
+                TrackPageServer(menu_args, tp_props, self.menu)),
             **menu_gui.menu_args.btn_args))
         ThanksPageGui.bld_page(self)
         evt = self.mdt.event

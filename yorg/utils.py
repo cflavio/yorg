@@ -12,7 +12,8 @@ class Utils(object):
         names = []
         curr_level = 5
         while len(names) < num or curr_level >= level:
-            curr_names = open(eng.curr_path + 'assets/thanks%s.txt' % curr_level).readlines()
+            fname = eng.curr_path + 'assets/thanks%s.txt' % curr_level
+            curr_names = open(fname).readlines()
             if curr_level >= level:
                 names += curr_names
             else:
@@ -58,8 +59,10 @@ class Utils(object):
         return drivers
 
     def season_props(self, car, cars_number, single_race):
+        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                      'iperion']
         return SeasonProps(
-            ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion'][:int(cars_number)],
+            cars_names[:int(cars_number)],
             car, self.drivers, 'assets/images/gui/menu_background.jpg',
             ['assets/images/tuning/engine.png',
              'assets/images/tuning/tires.png',

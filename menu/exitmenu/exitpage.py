@@ -1,4 +1,4 @@
-from sys import exit
+from sys import exit as sys_exit
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectButton import DirectButton
@@ -38,7 +38,7 @@ class ExitPageGui(PageGui):
     def on_end(visit):
         if visit:
             eng.open_browser('http://www.ya2.it')
-        eng.do_later(.5, exit)
+        eng.do_later(.5, sys_exit)
 
 
 class ExitPage(Page):

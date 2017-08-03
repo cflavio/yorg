@@ -19,7 +19,7 @@ class Yorg(Game):
                 'volume': 1,
                 'fullscreen': 0,
                 'resolution': '1280 720',
-                'aa': 0,
+                'antialiasing': 0,
                 'cars_number': 7,
                 'keys': {
                     'forward': 'arrow_up',
@@ -55,26 +55,22 @@ class Yorg(Game):
         self.options = DctFile(
             join(opt_path, 'options.yml') if opt_path else 'options.yml',
             default_opt)
+        opt_dev = self.options['development']
         conf = Cfg(
-            win_title='Yorg',
-            win_orig=self.options['development']['win_orig'],
+            win_title='Yorg', win_orig=opt_dev['win_orig'],
             win_size=self.options['settings']['resolution'],
             fullscreen=self.options['settings']['fullscreen'],
-            antialiasing=self.options['settings']['aa'],
-            fps=self.options['development']['fps'],
-            mt_render=self.options['development']['multithreaded_render'],
-            shaders_dev=self.options['development']['shaders_dev'],
-            gamma=self.options['development']['gamma'],
-            menu_joypad=self.options['development']['menu_joypad'],
-            lang=self.options['settings']['lang'],
-            lang_domain='yorg',
+            antialiasing=self.options['settings']['antialiasing'],
+            fps=opt_dev['fps'], mt_render=opt_dev['multithreaded_render'],
+            shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
+            menu_joypad=opt_dev['menu_joypad'],
+            lang=self.options['settings']['lang'], lang_domain='yorg',
             cursor_path='assets/images/gui/cursor.png',
-            cursor_scale=((256/352.0) * .08, 1, .08),
-            cursor_hotspot=(.1, .06),
+            cursor_scale=((256/352.0) * .08, 1, .08), cursor_hotspot=(.1, .06),
             volume=self.options['settings']['volume'],
-            profiling=self.options['development']['profiling'],
-            python_profiling=self.options['development']['python_profiling'],
-            python_profiling_percall=self.options['development']['python_profiling_percall'])
+            profiling=opt_dev['profiling'],
+            python_profiling=opt_dev['python_profiling'],
+            python_profiling_percall=opt_dev['python_profiling_percall'])
         init_lst = [
             [('fsm', YorgFsm, [self])],
             [('logic', YorgLogic, [self])],

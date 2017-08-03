@@ -13,14 +13,14 @@ from .thankspage import ThanksPageGui
 
 class OptionPageProps(object):
 
-    def __init__(self, joystick, keys, lang, volume, fullscreen, aa, shaders,
-                 cars_num, opt_file):
+    def __init__(self, joystick, keys, lang, volume, fullscreen, antialiasing,
+                 shaders, cars_num, opt_file):
         self.joystick = joystick
         self.keys = keys
         self.lang = lang
         self.volume = volume
         self.fullscreen = fullscreen
-        self.aa = aa
+        self.antialiasing = antialiasing
         self.shaders = shaders
         self.cars_num = cars_num
         self.opt_file = opt_file
@@ -29,29 +29,28 @@ class OptionPageProps(object):
 class OptionEvent(PageEvent):
 
     def on_back(self):
-        lang_idx = self.mdt.gui._lang_opt.selectedIndex
+        lang_idx = self.mdt.gui.lang_opt.selectedIndex
         dct = {
             'lang': eng.languages[lang_idx][:2].lower(),
-            'volume': self.mdt.gui._vol_slider.getValue(),
-            'fullscreen': self.mdt.gui._fullscreen_cb['indicatorValue'],
-            'resolution': self.mdt.gui._res_opt.get().replace('x', ' '),
-            'aa': self.mdt.gui._aa_cb['indicatorValue'],
-            'shaders': self.mdt.gui._shaders_cb['indicatorValue'],
-            'cars_number': int(self.mdt.gui._cars_opt.get())}
+            'volume': self.mdt.gui.vol_slider.getValue(),
+            'fullscreen': self.mdt.gui.fullscreen_cb['indicatorValue'],
+            'resolution': self.mdt.gui.res_opt.get().replace('x', ' '),
+            'antialiasing': self.mdt.gui.aa_cb['indicatorValue'],
+            'shaders': self.mdt.gui.shaders_cb['indicatorValue'],
+            'cars_number': int(self.mdt.gui.cars_opt.get())}
         self.mdt.menu.gui.notify('on_options_back', dct)
 
 
 class OptionPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu_args, option_props):
-        self._vol_slider = None
-        self._fullscreen_cb = None
-        self._lang_opt = None
-        self._aa_cb = None
-        self._shaders_cb = None
-        self._res_opt = None
-        self._browser_cb = None
-        self._cars_opt = None
+        self.vol_slider = None
+        self.fullscreen_cb = None
+        self.lang_opt = None
+        self.aa_cb = None
+        self.shaders_cb = None
+        self.res_opt = None
+        self.cars_opt = None
         self.props = option_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
@@ -67,24 +66,24 @@ class OptionPageGui(ThanksPageGui):
             self.pagewidgets += [lab]
             return lab
         add_lab('Language', _('Language'), .85)
-        self._lang_opt = DirectOptionMenu(
+        self.lang_opt = DirectOptionMenu(
             text='', items=eng.languages, pos=(.49, 1, .85),
             initialitem=self.props.lang, command=self.__change_lang,
             **menu_args.option_args)
         add_lab('Volume', _('Volume'), .65)
-        self._vol_slider = DirectSlider(
+        self.vol_slider = DirectSlider(
             pos=(.52, 0, .68), scale=.49, value=self.props.volume,
             frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg,
             command=self.__on_volume)
         add_lab('Fullscreen', _('Fullscreen'), .45)
-        self._fullscreen_cb = DirectCheckButton(
+        self.fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .47), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_fg,
             command=lambda val: eng.toggle_fullscreen(),
             **menu_args.checkbtn_args)
         add_lab('Resolution', _('Resolution'), .25)
         res2vec = lambda res: LVector2i(*[int(val) for val in res.split('x')])
-        self._res_opt = DirectOptionMenu(
+        self.res_opt = DirectOptionMenu(
             text='',
             items=['x'.join([str(el_res) for el_res in res])
                    for res in eng.resolutions],
@@ -98,15 +97,15 @@ class OptionPageGui(ThanksPageGui):
             **menu_args.label_args)
         PageGui.transl_text(aa_next_lab, '(from the next execution)',
                             _('(from the next execution)'))
-        self._aa_cb = DirectCheckButton(
-            pos=(.12, 1, .08), text='', indicatorValue=self.props.aa,
+        self.aa_cb = DirectCheckButton(
+            pos=(.12, 1, .08), text='', indicatorValue=self.props.antialiasing,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
         add_lab('Shaders', _('Shaders'), -.15)
-        self._shaders_cb = DirectCheckButton(
+        self.shaders_cb = DirectCheckButton(
             pos=(.12, 1, -.12), text='', indicatorValue=self.props.shaders,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
         add_lab('Cars number', _('Cars number'), -.35)
-        self._cars_opt = DirectOptionMenu(
+        self.cars_opt = DirectOptionMenu(
             text='',
             items=[str(i) for i in range(1, 8)],
             pos=(.49, 1, -.35),
@@ -122,9 +121,9 @@ class OptionPageGui(ThanksPageGui):
         PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
 
         self.pagewidgets += [
-            self._lang_opt, self._vol_slider, self._fullscreen_cb,
-            self._res_opt, self._aa_cb, aa_next_lab, input_btn,
-            self._shaders_cb, self._cars_opt]
+            self.lang_opt, self.vol_slider, self.fullscreen_cb,
+            self.res_opt, self.aa_cb, aa_next_lab, input_btn,
+            self.shaders_cb, self.cars_opt]
         map(self.add_widget, self.pagewidgets)
         idx = LangMgr().lang_codes.index(self.props.lang)
         self.__change_lang(eng.languages[idx])
@@ -139,10 +138,10 @@ class OptionPageGui(ThanksPageGui):
     def update_texts(self):
         PageGui.update_texts(self)
         curr_lang = LangMgr().curr_lang
-        self._lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
+        self.lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
     def __on_volume(self):
-        eng.set_volume(self._vol_slider['value'])
+        eng.set_volume(self.vol_slider['value'])
 
     def __change_lang(self, arg):
         lang_dict = {'English': 'en', 'Italiano': 'it'}

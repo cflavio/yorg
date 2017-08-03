@@ -59,7 +59,7 @@ class YorgMainPageGui(MainPageGui):
         self.lang = sett['lang']
         self.volume = sett['volume']
         self.fullscreen = sett['fullscreen']
-        self.aa = sett['aa']
+        self.antialiasing = sett['antialiasing']
         self.cars_num = sett['cars_number']
         self.shaders = sett['shaders']
 
@@ -113,8 +113,10 @@ class YorgMainPageGui(MainPageGui):
         lab_args = self.menu.gui.menu_args.label_args
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.menu.gui.menu_args.text_err
-        lab = DirectLabel(text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft, text_align=TextNode.A_left, **lab_args)
-        PageGui.transl_text(lab, 'NB the game is work-in-progress', _('NB the game is work-in-progress'))
+        lab = DirectLabel(text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft,
+                          text_align=TextNode.A_left, **lab_args)
+        PageGui.transl_text(lab, 'NB the game is work-in-progress',
+                            _('NB the game is work-in-progress'))
         self.widgets += [lab]
         map(self.add_widget, widgets)
         self.set_news()
@@ -124,7 +126,8 @@ class YorgMainPageGui(MainPageGui):
         self.load_settings()
         option_props = OptionPageProps(
             self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
-            self.aa, self.shaders, self.cars_num, self.props.opt_file)
+            self.antialiasing, self.shaders, self.cars_num,
+            self.props.opt_file)
         self.menu.push_page(OptionPage(self.menu.gui.menu_args, option_props,
                                        self.menu))
 

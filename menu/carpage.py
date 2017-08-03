@@ -39,7 +39,7 @@ class CarPageGui(ThanksPageGui):
 
     def bld_page(self):
         menu_gui = self.mdt.menu.gui
-        if hasattr(game.logic, 'curr_cars'):
+        if game.logic.curr_cars:
             self.props.cars = game.logic.curr_cars
         self.pagewidgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
@@ -51,10 +51,12 @@ class CarPageGui(ThanksPageGui):
             if row * 4 + col >= len(self.props.cars):
                 break
             z_offset = 0 if len(self.props.cars) > 4 else .35
-            num_car = len(self.props.cars) % 4 if row == 1 else min(4, len(self.props.cars))
+            num_car = len(self.props.cars) % 4 if row == 1 else \
+                min(4, len(self.props.cars))
             x_offset = .4 * (4 - num_car)
             self.pagewidgets += [ImgBtn(
-                scale=.32, pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
+                scale=.32,
+                pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
                 image=self.props.car_path % self.props.cars[col + row * 4],
                 command=self.on_car,
@@ -62,8 +64,8 @@ class CarPageGui(ThanksPageGui):
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
             self.pagewidgets += [OnscreenText(
                 self.props.cars[col + row * 4],
-                pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7), scale=.072,
-                **t_a)]
+                pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7),
+                scale=.072, **t_a)]
             cpath = self.props.phys_path % self.props.cars[col + row * 4]
             with open(cpath) as phys_file:
                 cfg = load(phys_file)
@@ -75,15 +77,25 @@ class CarPageGui(ThanksPageGui):
             roll = -int(round((roll - 1) * 100))
             sign = lambda x: '\1green\1+\2' if x > 0 else ''
             psign = lambda x: '+' if x == 0 else sign(x)
+            # Cell variable sign defined in loop
             __col = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'
             _col = lambda x: __col(x) % x
+            # Cell variable __col defined in loop
             pcol = lambda x: x if x == 0 else _col(x)
+            # Cell variable _col defined in loop
 
             def add_txt(txt, val, pos_z):
                 self.pagewidgets += [OnscreenText(
                     '%s: %s%s%%' % (txt, psign(val), pcol(val)),
-                    pos=(-.9 + col * .8 + x_offset, pos_z - z_offset - row * .7), scale=.052,
-                    align=TextNode.A_right, **t_a)]
+                    pos=(-.9 + col * .8 + x_offset,
+                         pos_z - z_offset - row * .7),
+                    scale=.052, align=TextNode.A_right, **t_a)]
+                # Cell variable psign defined in loop
+                # Cell variable pcol defined in loop
+                # Cell variable col defined in loop
+                # Cell variable x_offset defined in loop
+                # Cell variable z_offset defined in loop
+                # Cell variable row defined in loop
             txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
                        (_('stability'), roll, .19)]
             map(lambda txt_def: add_txt(*txt_def), txt_lst)
@@ -241,9 +253,9 @@ class CarPageSeason(CarPage):
     gui_cls = CarPageGuiSeason
 
 
-class CarPageServer(Page):
+class CarPageServer(CarPage):
     gui_cls = CarPageGuiServer
 
 
-class CarPageClient(Page):
+class CarPageClient(CarPage):
     gui_cls = CarPageGuiClient

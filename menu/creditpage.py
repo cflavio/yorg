@@ -17,7 +17,6 @@ class CreditPageGui(ThanksPageGui):
         txt = OnscreenText(text=text, pos=(0, .64), **menu_args.text_args)
         btn = DirectButton(
             text=_('Supporters'), pos=(0, 1, -.4),
-            # command=lambda: self.menu.push_page(SupportersPage(self.menu_args)),
             command=lambda: self.notify('on_push_page', SupportersPage(
                 self.menu_args, self.mdt.menu)),
             **menu_args.btn_args)
