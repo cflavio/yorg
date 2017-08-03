@@ -76,26 +76,18 @@ class CarPageGui(ThanksPageGui):
             fric = int(round((fric - 1) * 100))
             roll = -int(round((roll - 1) * 100))
             sign = lambda x: '\1green\1+\2' if x > 0 else ''
-            psign = lambda x: '+' if x == 0 else sign(x)
-            # Cell variable sign defined in loop
-            __col = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'
-            _col = lambda x: __col(x) % x
-            # Cell variable __col defined in loop
-            pcol = lambda x: x if x == 0 else _col(x)
-            # Cell variable _col defined in loop
+            psign = lambda x, sgn=sign: '+' if x == 0 else sgn(x)
+            __col_ = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'
+            _col_ = lambda x, __col=__col_: __col(x) % x
+            pcol = lambda x, _col=_col_: x if x == 0 else _col(x)
 
-            def add_txt(txt, val, pos_z):
+            def add_txt(txt, val, pos_z, psign=psign, pcol=pcol, col=col,
+                        x_offset=x_offset, z_offset=z_offset, row=row):
                 self.pagewidgets += [OnscreenText(
                     '%s: %s%s%%' % (txt, psign(val), pcol(val)),
                     pos=(-.9 + col * .8 + x_offset,
                          pos_z - z_offset - row * .7),
                     scale=.052, align=TextNode.A_right, **t_a)]
-                # Cell variable psign defined in loop
-                # Cell variable pcol defined in loop
-                # Cell variable col defined in loop
-                # Cell variable x_offset defined in loop
-                # Cell variable z_offset defined in loop
-                # Cell variable row defined in loop
             txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
                        (_('stability'), roll, .19)]
             map(lambda txt_def: add_txt(*txt_def), txt_lst)

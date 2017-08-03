@@ -25,6 +25,7 @@ class YorgLogic(GameLogic):
                 car, self.mdt.options['settings']['cars_number'], True))
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
+            self.season.start()
             self.mdt.fsm.demand('Race', track, car, self.season.drivers)
         else:
             self.mdt.fsm.demand('Menu')
@@ -50,6 +51,7 @@ class YorgLogic(GameLogic):
             car, self.mdt.options['settings']['cars_number'], True))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.start()
 
     def on_car_selected_season(self, car):
         self.season = Season(Utils().season_props(
@@ -99,7 +101,7 @@ class YorgLogic(GameLogic):
             self.mdt.options.store()
             self.mdt.fsm.demand('Ranking')
         else:
-            self.mdt.fsm.demand('Menu')
+            self.season.logic.notify('on_season_end')
 
     def build_race_props(self, car_path, drivers, track_path, keys, joystick,
                          sounds):

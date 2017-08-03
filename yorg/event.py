@@ -17,10 +17,11 @@ class YorgEvent(Event):
             self.accept('f9', Profiler().toggle)
 
     def on_season_end(self):
-        self.mdt.logic.season.race.destroy()
         del self.mdt.options['save']
         self.mdt.options.store()
         self.mdt.fsm.demand('Menu')
+        self.mdt.logic.season.race.destroy()
+        self.mdt.logic.season = self.mdt.logic.season.destroy()
 
     def on_season_cont(self, next_track, curr_car, drivers):
         self.mdt.logic.season.race.destroy()

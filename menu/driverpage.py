@@ -73,29 +73,22 @@ class DriverPageGui(ThanksPageGui):
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
             self.drivers += [widgets[-1]]
             sign = lambda pos_x: '\1green\1+\2' if pos_x > 0 else ''
-            # Cell variable sign defined in loop
-            psign = lambda pos_x: '+' if pos_x == 0 else sign(pos_x)
+            psign = lambda pos_x, sgn=sign: '+' if pos_x == 0 else sgn(pos_x)
 
             def ppcol(x):
                 return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
             pcol = lambda x: x if x == 0 else ppcol(x)
 
-            def add_lab(txt, pos_z):
+            def add_lab(txt, pos_z, row=row, col=col):
                 return OnscreenText(
                     txt + ':', pos=(-.95 + col * .5, pos_z - row * .5),
                     scale=.046, align=TextNode.A_left, **t_a)
-                # Cell variable col defined in loop
-                # Cell variable row defined in loop
 
-            def add_txt(val, pos_z):
+            def add_txt(val, pos_z, psign=psign, pcol=pcol, col=col, row=row):
                 return OnscreenText(
                     '%s%s%%' % (psign(val), pcol(val)),
                     pos=(-.55 + col * .5, pos_z - row * .5), scale=.052,
                     align=TextNode.A_right, **t_a)
-                # Cell variable psign defined in loop
-                # Cell variable pcol defined in loop
-                # Cell variable col defined in loop
-                # Cell variable row defined in loop
             lab_lst = [(_('adherence'), .04), (_('speed'), .16),
                        (_('stability'), .1)]
             widgets += map(lambda lab_def: add_lab(*lab_def), lab_lst)
