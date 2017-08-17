@@ -1,0 +1,311 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/countryside/Stone1.egg assets/models/tracks/countryside/Stone1.egg"
+}
+<Texture> TEXStone1 {
+  "tex/TEXStone1.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Texture> TEXREPstone1 {
+  "tex/stone.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+  <Transform> {
+    <Translate> { -0.5 -0.5 -0.5 }
+    <Scale> { 5 5 1 }
+    <Translate> { 0.5 0.5 0.5 }
+  }
+}
+<Material> MATStone1 {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Stone1 {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Stone1 {
+    <Vertex> 0 {
+      -1.20099 -0.218558 -0.507781
+      <UV> { 0.000339 0.50504 }
+      <Normal> { -0.544169 -0.773528 0.32486 }
+    }
+    <Vertex> 1 {
+      -1.20099 -0.218558 -0.507781
+      <UV> { 0.000339 0.50504 }
+      <Normal> { -0.780346 0.576564 0.242145 }
+    }
+    <Vertex> 2 {
+      -1.20099 -0.218558 -0.507781
+      <UV> { 0.000339 0.50504 }
+      <Normal> { -0.805241 0 0.592947 }
+    }
+    <Vertex> 3 {
+      -0.542364 -0.306257 0.386649
+      <UV> { 0.389515 0.448899 }
+      <Normal> { -0.365867 -0.842068 0.396312 }
+    }
+    <Vertex> 4 {
+      -0.542364 -0.306257 0.386649
+      <UV> { 0.389515 0.448899 }
+      <Normal> { -0.641751 0 0.766913 }
+    }
+    <Vertex> 5 {
+      -0.542364 -0.306257 0.386649
+      <UV> { 0.389515 0.448899 }
+      <Normal> { -0.0867392 -0.440665 0.893471 }
+    }
+    <Vertex> 6 {
+      -0.542364 0.297207 0.386649
+      <UV> { 0.426444 0.548745 }
+      <Normal> { -0.600048 0.710923 0.366785 }
+    }
+    <Vertex> 7 {
+      -0.542364 0.297207 0.386649
+      <UV> { 0.426444 0.548745 }
+      <Normal> { -0.641751 0 0.766913 }
+    }
+    <Vertex> 8 {
+      -0.542364 0.297207 0.386649
+      <UV> { 0.426444 0.548745 }
+      <Normal> { -0.20093 0.422009 0.884045 }
+    }
+    <Vertex> 9 {
+      -0.37389 -0.800412 -0.507781
+      <UV> { 0.280974 0.155368 }
+      <Normal> { -0.00940692 -0.933047 0.359631 }
+    }
+    <Vertex> 10 {
+      -0.37389 -0.800412 -0.507781
+      <UV> { 0.280974 0.155368 }
+      <Normal> { -0.544169 -0.773528 0.32486 }
+    }
+    <Vertex> 11 {
+      -0.37389 0.900868 -0.507781
+      <UV> { 0.467372 0.873161 }
+      <Normal> { -0.600048 0.710923 0.366785 }
+    }
+    <Vertex> 12 {
+      -0.37389 0.900868 -0.507781
+      <UV> { 0.467372 0.873161 }
+      <Normal> { 0.274011 0.949105 0.1553 }
+    }
+    <Vertex> 13 {
+      -0.097505 0.050228 0.605657
+      <UV> { 0.498901 0.487534 }
+      <Normal> { 0.0731661 -0.349914 0.93392 }
+    }
+    <Vertex> 14 {
+      -0.097505 0.050228 0.605657
+      <UV> { 0.498901 0.487534 }
+      <Normal> { -0.331237 0.217525 0.918131 }
+    }
+    <Vertex> 15 {
+      -0.097505 0.050228 0.605657
+      <UV> { 0.498901 0.487534 }
+      <Normal> { 0.228613 0.275734 0.933652 }
+    }
+    <Vertex> 16 {
+      0.11915 0.612172 0.386649
+      <UV> { 0.563817 0.578567 }
+      <Normal> { 0.274011 0.949105 0.1553 }
+    }
+    <Vertex> 17 {
+      0.11915 0.612172 0.386649
+      <UV> { 0.563817 0.578567 }
+      <Normal> { -0.380089 0.798293 0.467184 }
+    }
+    <Vertex> 18 {
+      0.11915 0.612172 0.386649
+      <UV> { 0.563817 0.578567 }
+      <Normal> { 0.552001 0.665777 0.502031 }
+    }
+    <Vertex> 19 {
+      0.11915 0.612172 0.386649
+      <UV> { 0.563817 0.578567 }
+      <Normal> { 0.0142168 0.358329 0.933487 }
+    }
+    <Vertex> 20 {
+      0.248565 -0.461941 0.386649
+      <UV> { 0.543176 0.381797 }
+      <Normal> { -0.00940692 -0.933047 0.359631 }
+    }
+    <Vertex> 21 {
+      0.248565 -0.461941 0.386649
+      <UV> { 0.543176 0.381797 }
+      <Normal> { 0.588662 -0.630252 0.506221 }
+    }
+    <Vertex> 22 {
+      0.248565 -0.461941 0.386649
+      <UV> { 0.543176 0.381797 }
+      <Normal> { 0.0731661 -0.349914 0.93392 }
+    }
+    <Vertex> 23 {
+      0.79692 0.050228 0.386649
+      <UV> { 0.675647 0.45841 }
+      <Normal> { 0.953781 -0.200605 0.223741 }
+    }
+    <Vertex> 24 {
+      0.79692 0.050228 0.386649
+      <UV> { 0.675647 0.45841 }
+      <Normal> { 0.588662 -0.630252 0.506221 }
+    }
+    <Vertex> 25 {
+      0.79692 0.050228 0.386649
+      <UV> { 0.675647 0.45841 }
+      <Normal> { 0.552001 0.665777 0.502031 }
+    }
+    <Vertex> 26 {
+      0.79692 0.050228 0.386649
+      <UV> { 0.675647 0.45841 }
+      <Normal> { 0.230478 -0.246762 0.941269 }
+    }
+    <Vertex> 27 {
+      0.79692 0.050228 0.386649
+      <UV> { 0.675647 0.45841 }
+      <Normal> { 0.228613 0.275734 0.933652 }
+    }
+    <Vertex> 28 {
+      0.869993 -0.59993 -0.507781
+      <UV> { 0.774163 0.155368 }
+      <Normal> { 0.953781 -0.200605 0.223741 }
+    }
+    <Vertex> 29 {
+      0.869993 -0.59993 -0.507781
+      <UV> { 0.774163 0.155368 }
+      <Normal> { 0.153893 -0.954822 0.254227 }
+    }
+    <Vertex> 30 {
+      0.869993 -0.59993 -0.507781
+      <UV> { 0.774163 0.155368 }
+      <Normal> { 0.588662 -0.630252 0.506221 }
+    }
+    <Vertex> 31 {
+      1.09637 0.476397 -0.507781
+      <UV> { 0.999661 0.543123 }
+      <Normal> { 0.953781 -0.200605 0.223741 }
+    }
+    <Vertex> 32 {
+      1.09637 0.476397 -0.507781
+      <UV> { 0.999661 0.543123 }
+      <Normal> { 0.274011 0.949105 0.1553 }
+    }
+    <Vertex> 33 {
+      1.09637 0.476397 -0.507781
+      <UV> { 0.999661 0.543123 }
+      <Normal> { 0.552001 0.665777 0.502031 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 28 31 23 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 9 29 20 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 0 10 3 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 11 1 6 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 32 12 16 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 30 24 21 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 9 20 3 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 2 4 7 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 11 6 17 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 33 18 25 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 22 26 13 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 5 22 13 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 7 4 14 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 19 8 14 <Ref> { Stone1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXStone1 }
+    <TRef> { TEXREPstone1 }
+    <MRef> { MATStone1 }
+    <VertexRef> { 27 19 15 <Ref> { Stone1 } }
+  }
+}

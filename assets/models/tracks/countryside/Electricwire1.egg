@@ -1,0 +1,189 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/countryside/Electricwire1.egg assets/models/tracks/countryside/Electricwire1.egg"
+}
+<Texture> TEXElectricwire1 {
+  "tex/TEXElectricwire1.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Material> MATElectricwire1 {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 1 }
+  <Scalar> specg { 1 }
+  <Scalar> specb { 1 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Electricwire1 {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Electricwire1 {
+    <Vertex> 0 {
+      -6.00207 -0.009944 0.089039
+      <UV> { 0.000702 0.662925 }
+      <Normal> { -0.0139038 -0.865942 -0.499952 }
+    }
+    <Vertex> 1 {
+      -6.00207 -0.009944 0.089039
+      <UV> { 0.000702 0.662925 }
+      <Normal> { 0.0277995 0 0.999614 }
+    }
+    <Vertex> 2 {
+      -6.00207 0 0.071816
+      <UV> { 0.000929 0.503192 }
+      <Normal> { -0.0139038 -0.865942 -0.499952 }
+    }
+    <Vertex> 3 {
+      -6.00207 0 0.071816
+      <UV> { 0.000876 0.982373 }
+      <Normal> { -0.0139038 0.865942 -0.499952 }
+    }
+    <Vertex> 4 {
+      -6.00207 0.009944 0.089039
+      <UV> { 0.000457 0.82264 }
+      <Normal> { 0.0277995 0 0.999614 }
+    }
+    <Vertex> 5 {
+      -6.00207 0.009944 0.089039
+      <UV> { 0.000457 0.82264 }
+      <Normal> { -0.0139038 0.865942 -0.499952 }
+    }
+    <Vertex> 6 {
+      -0.011588 -0.009944 -0.077558
+      <UV> { 0.00093 0.17474 }
+      <Normal> { -2.6794e-05 -0.866025 -0.5 }
+    }
+    <Vertex> 7 {
+      -0.011588 -0.009944 -0.077558
+      <UV> { 0.997391 0.662943 }
+      <Normal> { -2.6794e-05 -0.866025 -0.5 }
+    }
+    <Vertex> 8 {
+      -0.011588 -0.009944 -0.077558
+      <UV> { 0.00093 0.17474 }
+      <Normal> { 5.35568e-05 0 1 }
+    }
+    <Vertex> 9 {
+      -0.011588 -0.009944 -0.077558
+      <UV> { 0.997391 0.662943 }
+      <Normal> { 5.35568e-05 0 1 }
+    }
+    <Vertex> 10 {
+      -0.011588 0 -0.094782
+      <UV> { 0.000511 0.014698 }
+      <Normal> { -2.6794e-05 -0.866025 -0.5 }
+    }
+    <Vertex> 11 {
+      -0.011588 0 -0.094782
+      <UV> { 0.997616 0.50321 }
+      <Normal> { -2.6794e-05 -0.866025 -0.5 }
+    }
+    <Vertex> 12 {
+      -0.011588 0 -0.094782
+      <UV> { 0.000457 0.494805 }
+      <Normal> { -2.6794e-05 0.866025 -0.5 }
+    }
+    <Vertex> 13 {
+      -0.011588 0 -0.094782
+      <UV> { 0.997564 0.982391 }
+      <Normal> { -2.6794e-05 0.866025 -0.5 }
+    }
+    <Vertex> 14 {
+      -0.011588 0.009944 -0.077558
+      <UV> { 0.000683 0.334763 }
+      <Normal> { 5.35568e-05 0 1 }
+    }
+    <Vertex> 15 {
+      -0.011588 0.009944 -0.077558
+      <UV> { 0.997145 0.822657 }
+      <Normal> { 5.35568e-05 0 1 }
+    }
+    <Vertex> 16 {
+      -0.011588 0.009944 -0.077558
+      <UV> { 0.000683 0.334763 }
+      <Normal> { -2.6794e-05 0.866025 -0.5 }
+    }
+    <Vertex> 17 {
+      -0.011588 0.009944 -0.077558
+      <UV> { 0.997145 0.822657 }
+      <Normal> { -2.6794e-05 0.866025 -0.5 }
+    }
+    <Vertex> 18 {
+      6.00208 -0.009944 0.089039
+      <UV> { 0.999543 0.17474 }
+      <Normal> { 0.0138503 -0.865942 -0.499952 }
+    }
+    <Vertex> 19 {
+      6.00208 -0.009944 0.089039
+      <UV> { 0.999543 0.17474 }
+      <Normal> { -0.0276924 0 0.999616 }
+    }
+    <Vertex> 20 {
+      6.00208 0 0.071816
+      <UV> { 0.999125 0.014698 }
+      <Normal> { 0.0138503 -0.865942 -0.499952 }
+    }
+    <Vertex> 21 {
+      6.00208 0 0.071816
+      <UV> { 0.999071 0.494805 }
+      <Normal> { 0.0138503 0.865942 -0.499952 }
+    }
+    <Vertex> 22 {
+      6.00208 0.009944 0.089039
+      <UV> { 0.999297 0.334763 }
+      <Normal> { -0.0276924 0 0.999616 }
+    }
+    <Vertex> 23 {
+      6.00208 0.009944 0.089039
+      <UV> { 0.999297 0.334763 }
+      <Normal> { 0.0138503 0.865942 -0.499952 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXElectricwire1 }
+    <MRef> { MATElectricwire1 }
+    <VertexRef> { 20 18 6 10 <Ref> { Electricwire1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXElectricwire1 }
+    <MRef> { MATElectricwire1 }
+    <VertexRef> { 19 22 14 8 <Ref> { Electricwire1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXElectricwire1 }
+    <MRef> { MATElectricwire1 }
+    <VertexRef> { 23 21 12 16 <Ref> { Electricwire1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXElectricwire1 }
+    <MRef> { MATElectricwire1 }
+    <VertexRef> { 11 7 0 2 <Ref> { Electricwire1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXElectricwire1 }
+    <MRef> { MATElectricwire1 }
+    <VertexRef> { 9 15 4 1 <Ref> { Electricwire1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXElectricwire1 }
+    <MRef> { MATElectricwire1 }
+    <VertexRef> { 17 13 3 5 <Ref> { Electricwire1 } }
+  }
+}

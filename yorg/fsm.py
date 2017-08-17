@@ -41,8 +41,9 @@ class YorgFsm(Fsm):
             cars_names[:int(self.mdt.options['settings']['cars_number'])],
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
-            ['desert', 'mountain', 'amusement'],
-            lambda: [_('desert'), _('mountain'), _('amusement park')],
+            ['desert', 'mountain', 'amusement', 'countryside'],
+            lambda: [_('desert'), _('mountain'), _('amusement park'),
+                     _('countryside')],
             'assets/images/tracks/%s.png',
             self.mdt.options['settings']['player_name'],
             ['assets/images/drivers/driver%s.png',
@@ -53,7 +54,7 @@ class YorgFsm(Fsm):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
             self.mdt.options['development']['season'],
-            ['desert', 'mountain', 'amusement'],
+            ['desert', 'mountain', 'amusement', 'countryside'],
             'http://www.ya2.it/support-us', Utils().drivers)
         self.__menu = YorgMenu(menu_props)
         self.__menu.gui.menu.attach_obs(self.mdt.logic.on_input_back)
@@ -100,7 +101,8 @@ class YorgFsm(Fsm):
         self.mdt.logic.season.race.logic.drivers = drivers
         track_name_transl = track_path
         track_dct = {'desert': _('desert'), 'mountain': _('mountain'),
-                     'amusement': _('amusement park')}
+                     'amusement': _('amusement park'),
+                     'countryside': _('countryside')}
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         self.mdt.logic.season.race.fsm.demand(

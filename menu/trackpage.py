@@ -1,3 +1,4 @@
+from itertools import product
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
@@ -35,16 +36,24 @@ class TrackPageGui(ThanksPageGui):
         widgets = [OnscreenText(text=_('Select the track'), pos=(0, .8),
                                 **menu_gui.menu_args.text_args)]
         t_a = self.mdt.menu.gui.menu_args.text_args.copy()
-        t_a['scale'] = .08
-        for i in range(len(self.props.tracks)):
+        t_a['scale'] = .06
+        tracks_per_row = 2
+        for row, col in product(range(2), range(tracks_per_row)):
+            if row * tracks_per_row + col >= len(self.props.tracks):
+                break
+            z_offset = 0 if len(self.props.tracks) > tracks_per_row else .35
+            num_tracks = len(self.props.tracks) - tracks_per_row if row == 1 \
+                else min(tracks_per_row, len(self.props.tracks))
+            x_offset = .5 * (tracks_per_row - num_tracks)
             widgets += [ImgBtn(
-                scale=.5, pos=(-1.05 + i * 1.05, 1, .1),
+                scale=.3, pos=(-.5 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
-                image=self.props.track_img % self.props.tracks[i],
-                command=self.on_track, extraArgs=[self.props.tracks[i]],
+                image=self.props.track_img % self.props.tracks[col + row * tracks_per_row],
+                command=self.on_track, extraArgs=[self.props.tracks[col + row * tracks_per_row]],
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
-            widgets += [OnscreenText(self.props.tracks_tr()[i],
-                                     pos=(-1.05 + i * 1.05, -.32), **t_a)]
+            widgets += [OnscreenText(self.props.tracks_tr()[col + row * tracks_per_row],
+                                     pos=(-.5 + col * 1.0 + x_offset,
+                                          .14 - z_offset - row * .7), **t_a)]
         map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
 

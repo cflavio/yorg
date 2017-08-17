@@ -1,0 +1,192 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/countryside/Pinelow1.egg assets/models/tracks/countryside/Pinelow1.egg"
+}
+<Texture> TEXPinelow1 {
+  "tex/TEXPinelow1.png"
+  <Scalar> alpha-file { "tex/TEXPinelow1.png" }
+  <Scalar> alpha-file-channel { 4 }
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Material> MATPinelow1 {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> diffa { 0 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Pinelow1 {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Pinelow1 {
+    <Vertex> 0 {
+      1.2938 -7.4e-05 3.79192
+      <UV> { 0.432287 0.992716 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 1 {
+      1.2938 -7.4e-05 -1.02209
+      <UV> { 0.432287 0.217207 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 2 {
+      -1.29979 -7.4e-05 -1.02209
+      <UV> { 0.850097 0.217207 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 3 {
+      -1.29979 -7.4e-05 3.79192
+      <UV> { 0.850098 0.992716 }
+      <Normal> { 0 0.999969 0 }
+    }
+    <Vertex> 4 {
+      -0.002995 1.29672 3.79192
+      <UV> { 0.013349 0.992715 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 5 {
+      -0.002995 1.29672 -1.02209
+      <UV> { 0.01335 0.217207 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 6 {
+      -0.002995 -1.29686 -1.02209
+      <UV> { 0.43116 0.217207 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 7 {
+      -0.002995 -1.29686 3.79192
+      <UV> { 0.431159 0.992715 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 8 {
+      -0.180115 -0.183031 -1.87756
+      <UV> { 0.386752 0.204468 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 9 {
+      -0.180115 -0.183031 -1.87756
+      <UV> { 0.386752 0.204468 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 10 {
+      -0.180115 -0.183031 -0.892274
+      <UV> { 0.386752 0.006146 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 11 {
+      -0.180115 -0.183031 -0.892274
+      <UV> { 0.386752 0.006146 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 12 {
+      -0.180115 0.183179 -1.87756
+      <UV> { 0.460464 0.204467 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 13 {
+      -0.180115 0.183179 -1.87756
+      <UV> { 0.460464 0.204467 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 14 {
+      -0.180115 0.183179 -0.892274
+      <UV> { 0.460464 0.006146 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 15 {
+      -0.180115 0.183179 -0.892274
+      <UV> { 0.460464 0.006146 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 16 {
+      0.186096 -0.183031 -1.87756
+      <UV> { 0.607888 0.204467 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 17 {
+      0.186096 -0.183031 -1.87756
+      <UV> { 0.31304 0.204468 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 18 {
+      0.186096 -0.183031 -0.892274
+      <UV> { 0.607888 0.006147 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 19 {
+      0.186096 -0.183031 -0.892274
+      <UV> { 0.31304 0.006146 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 20 {
+      0.186096 0.183179 -1.87756
+      <UV> { 0.534177 0.204468 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 21 {
+      0.186096 0.183179 -1.87756
+      <UV> { 0.534177 0.204468 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 22 {
+      0.186096 0.183179 -0.892274
+      <UV> { 0.534176 0.006146 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 23 {
+      0.186096 0.183179 -0.892274
+      <UV> { 0.534176 0.006146 }
+      <Normal> { 1 0 0 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXPinelow1 }
+    <MRef> { MATPinelow1 }
+    <VertexRef> { 0 1 2 3 <Ref> { Pinelow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXPinelow1 }
+    <MRef> { MATPinelow1 }
+    <VertexRef> { 4 5 6 7 <Ref> { Pinelow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXPinelow1 }
+    <MRef> { MATPinelow1 }
+    <VertexRef> { 10 14 12 8 <Ref> { Pinelow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXPinelow1 }
+    <MRef> { MATPinelow1 }
+    <VertexRef> { 15 22 20 13 <Ref> { Pinelow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXPinelow1 }
+    <MRef> { MATPinelow1 }
+    <VertexRef> { 23 18 16 21 <Ref> { Pinelow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXPinelow1 }
+    <MRef> { MATPinelow1 }
+    <VertexRef> { 19 11 9 17 <Ref> { Pinelow1 } }
+  }
+}
