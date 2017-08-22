@@ -160,7 +160,8 @@ class YorgLogic(GameLogic):
         WPInfo = namedtuple('WPInfo', 'root_name wp_name prev_name')
         WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
         DamageInfo = namedtuple('DamageInfo', 'low hi')
-        car_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea', 'iperion']
+        car_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                     'iperion']
         race_props = RaceProps(
             keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
             'assets/fonts/Hanken-Book.ttf', 'assets/models/cars/%s/capsule',

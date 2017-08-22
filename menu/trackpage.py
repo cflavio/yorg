@@ -46,14 +46,19 @@ class TrackPageGui(ThanksPageGui):
                 else min(tracks_per_row, len(self.props.tracks))
             x_offset = .5 * (tracks_per_row - num_tracks)
             widgets += [ImgBtn(
-                scale=.3, pos=(-.5 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
+                scale=.3,
+                pos=(-.5 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
-                image=self.props.track_img % self.props.tracks[col + row * tracks_per_row],
-                command=self.on_track, extraArgs=[self.props.tracks[col + row * tracks_per_row]],
+                image=self.props.track_img % self.props.tracks[
+                    col + row * tracks_per_row],
+                command=self.on_track, extraArgs=[self.props.tracks[
+                    col + row * tracks_per_row]],
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
-            widgets += [OnscreenText(self.props.tracks_tr()[col + row * tracks_per_row],
-                                     pos=(-.5 + col * 1.0 + x_offset,
-                                          .14 - z_offset - row * .7), **t_a)]
+            txt = OnscreenText(
+                self.props.tracks_tr()[col + row * tracks_per_row],
+                pos=(-.5 + col * 1.0 + x_offset, .14 - z_offset - row * .7),
+                **t_a)
+            widgets += [txt]
         map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
 

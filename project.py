@@ -4,19 +4,17 @@
 # TODO LIST =====
 
 # 0.7
-# more power for the drifting; the length of the inertia+engine should not
-#  be bigger than the max engine's force
-# apply drifting force during the drifting
-# refactoring of racing.car
 # testing
 # profiling
-# fix pep8
 
 # 0.8
 # store last_version; if last_version != current_version then postprocess
 #   option file and change the default e.g.
 #   if curr_ver != last_ver & car_num == 7: car_num = 8
 # #gaming season
+# more power for the drifting; the length of the inertia+engine should not
+#  be bigger than the max engine's force
+# apply drifting force during the drifting
 
 # 0.9 (refinements)
 # particles (using shaders)
