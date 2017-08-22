@@ -26,7 +26,7 @@ class Yorg(Game):
                     'rear': 'arrow_down',
                     'left': 'arrow_left',
                     'right': 'arrow_right',
-                    'button': 'space',
+                    'fire': 'space',
                     'respawn': 'r',
                     'pause': 'p'},
                 'joystick': 0,

@@ -61,6 +61,12 @@ class Utils(object):
     def season_props(self, car, cars_number, single_race):
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion']
+        wpn2img = {
+            'Rocket': 'rocketfront',
+            'RearRocket': 'rocketrear',
+            'Turbo': 'turbo',
+            'RotateAll': 'turn',
+            'Mine': 'mine'}
         return SeasonProps(
             cars_names[:int(cars_number)],
             car, self.drivers, 'assets/images/gui/menu_background.jpg',
@@ -69,4 +75,4 @@ class Utils(object):
              'assets/images/tuning/suspensions.png'],
             ['desert', 'mountain', 'amusement', 'countryside'],
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1),
-            'assets/sfx/countdown.ogg', single_race)
+            'assets/sfx/countdown.ogg', single_race, wpn2img)

@@ -4,6 +4,7 @@ from yyagl.engine.network.server import Server
 from yyagl.engine.network.client import Client
 from yyagl.engine.log import LogMgr
 from yyagl.racing.car.audio import CarSounds
+from yyagl.racing.car.event import Keys
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 from .utils import Utils
@@ -84,6 +85,7 @@ class YorgFsm(Fsm):
         self.mdt.options['save']['drivers'] = drivers
         self.mdt.options.store()
         keys = self.mdt.options['settings']['keys']
+        keys = Keys(keys['forward'], keys['rear'], keys['left'], keys['right'], keys['fire'], keys['respawn'], keys['pause'])
         joystick = self.mdt.options['settings']['joystick']
         sounds = CarSounds(
             'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',
@@ -96,7 +98,7 @@ class YorgFsm(Fsm):
         elif Client().is_active:
             self.season.create_race_client(race_props)
         else:
-            self.mdt.logic.season.create_race(race_props)
+            self.mdt.logic.season.create_race(race_props, self.mdt.logic.season.props)
         LogMgr().log('selected drivers: ' + str(drivers))
         self.mdt.logic.season.race.logic.drivers = drivers
         track_name_transl = track_path

@@ -8,7 +8,9 @@
 #  be bigger than the max engine's force
 # apply drifting force during the drifting
 # refactoring of racing.car
+# testing
 # profiling
+# fix pep8
 
 # 0.8
 # store last_version; if last_version != current_version then postprocess
