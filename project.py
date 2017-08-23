@@ -4,8 +4,6 @@
 # TODO LIST =====
 
 # 0.7
-# testing
-# profiling
 
 # 0.8
 # store last_version; if last_version != current_version then postprocess
