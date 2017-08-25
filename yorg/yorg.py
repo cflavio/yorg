@@ -30,6 +30,7 @@ class Yorg(Game):
                     'respawn': 'r',
                     'pause': 'p'},
                 'joystick': 0,
+                'last_version': '0.7.0-x',
                 'player_name': '',
                 'shaders': 1},
             'development': {
@@ -44,7 +45,6 @@ class Yorg(Game):
                 'show_exit': 1,
                 'menu_joypad': 1,
                 'multiplayer': 0,
-                'season': 0,
                 'win_orig': '',
                 'profiling': 0,
                 'python_profiling': 0,

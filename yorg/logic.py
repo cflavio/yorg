@@ -17,6 +17,7 @@ class YorgLogic(GameLogic):
 
     def on_start(self):
         GameLogic.on_start(self)
+        self.__process_default()
         dev = self.mdt.options['development']
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
@@ -30,6 +31,15 @@ class YorgLogic(GameLogic):
         else:
             self.mdt.fsm.demand('Menu')
 
+    def __process_default(self):
+        opt_ver = self.mdt.options['settings']['last_version'].split('-')[0]
+        curr_ver = eng.version.split('-')[0]
+        if curr_ver == '0.8.0' and opt_ver == '0.7.0':
+            if self.mdt.options['settings']['cars_number'] == 7:
+                self.mdt.options['settings']['cars_number'] = 8
+        self.mdt.options['settings']['last_version'] = eng.version
+        self.mdt.options.store()
+
     def menu_start(self):
         self.mdt.audio.menu_music.play()
 
@@ -41,7 +51,7 @@ class YorgLogic(GameLogic):
         self.mdt.options['settings'].update(dct)
         self.mdt.options.store()
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                      'iperion']
+                      'iperion', 'teia']
         self.curr_cars = cars_names[:int(dct['cars_number'])]  # put it there
         # refactor: now the page props are static, but they should change
         # when we change the options in the option page
@@ -139,7 +149,7 @@ class YorgLogic(GameLogic):
         col_dct = {'kronos': (0, 0, 1, 1), 'themis': (1, 0, 0, 1),
                    'diones': (1, 1, 1, 1), 'iapeto': (1, 1, 0, 1),
                    'phoibe': (.6, .6, 1, 1), 'rea': (0, 0, .6, 1),
-                   'iperion': (.8, .8, .8, 1)}
+                   'iperion': (.8, .8, .8, 1), 'teia': (0, 0, 0, 1)}
         with open(eng.curr_path + tr_file_path) as track_file:
             track_cfg = load(track_file)
             camera_vec = track_cfg['camera_vector']
@@ -161,7 +171,7 @@ class YorgLogic(GameLogic):
         WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
         DamageInfo = namedtuple('DamageInfo', 'low hi')
         car_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                     'iperion']
+                     'iperion', 'teia']
         race_props = RaceProps(
             keys, joystick, sounds, (.75, .75, .25, 1), (.75, .75, .75, 1),
             'assets/fonts/Hanken-Book.ttf', 'assets/models/cars/%s/capsule',

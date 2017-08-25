@@ -107,7 +107,7 @@ class OptionPageGui(ThanksPageGui):
         add_lab('Cars number', _('Cars number'), -.35)
         self.cars_opt = DirectOptionMenu(
             text='',
-            items=[str(i) for i in range(1, 8)],
+            items=[str(i) for i in range(1, 9)],
             pos=(.49, 1, -.35),
             initialitem=self.props.cars_num - 1,
             **menu_args.option_args)

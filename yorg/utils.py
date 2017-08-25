@@ -53,14 +53,14 @@ class Utils(object):
             (7, names[6], (4, 0, -4)),
             (8, names[7], (-4, 4, 0))]
         cars = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                'iperion', '']
+                'iperion', 'teia']
         for i, _car in enumerate(cars):
             drivers[i] = drivers[i] + (_car, )
         return drivers
 
     def season_props(self, car, cars_number, single_race):
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                      'iperion']
+                      'iperion', 'teia']
         wpn2img = {
             'Rocket': 'rocketfront',
             'RearRocket': 'rocketrear',

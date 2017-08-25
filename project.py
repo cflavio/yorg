@@ -6,9 +6,6 @@
 # 0.7
 
 # 0.8
-# store last_version; if last_version != current_version then postprocess
-#   option file and change the default e.g.
-#   if curr_ver != last_ver & car_num == 7: car_num = 8
 # #gaming season
 # more power for the drifting; the length of the inertia+engine should not
 #  be bigger than the max engine's force
@@ -23,6 +20,8 @@
 # use txo files in place of png and jpg
 # contour detection
 # preloading shaders by creating cards, applying shaders and call render_frame
+# prelad weapons
+# ai polling
 
 # 0.10 graphics improvements
 

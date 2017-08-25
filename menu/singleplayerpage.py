@@ -10,8 +10,8 @@ from .thankspage import ThanksPageGui
 class SingleplayerPageProps(object):
 
     def __init__(self, cars, car_path, phys_path, tracks, tracks_tr, track_img,
-                 player_name, drivers_img, cars_img, has_save, season,
-                 season_tracks, drivers):
+                 player_name, drivers_img, cars_img, has_save, season_tracks,
+                 drivers):
         self.cars = cars
         self.car_path = car_path
         self.phys_path = phys_path
@@ -22,7 +22,6 @@ class SingleplayerPageProps(object):
         self.drivers_img = drivers_img
         self.cars_img = cars_img
         self.has_save = has_save
-        self.season = season
         self.season_tracks = season_tracks
         self.drivers = drivers
 
@@ -47,17 +46,6 @@ class SingleplayerPageGui(ThanksPageGui):
         if not self.props.has_save:
             widgets[-1]['state'] = DISABLED  # do wdg.disable()
             widgets[-1].setAlphaScale(.25)
-        if not self.props.season:
-            for idx in [-2, -1]:
-                widgets[idx]['state'] = DISABLED
-                _fg = menu_gui.menu_args.btn_args['text_fg']
-                _fc = widgets[idx]['frameColor']
-                clc = lambda val: max(0, val)
-                fgc = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
-                widgets[idx]['text_fg'] = fgc
-                fcc = (clc(_fc[0] - .3), clc(_fc[1] - .3), clc(_fc[2] - .3),
-                       _fc[3])
-                widgets[idx]['frameColor'] = fcc
         map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
 

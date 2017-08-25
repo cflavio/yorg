@@ -36,7 +36,7 @@ class YorgFsm(Fsm):
     def enterMenu(self):
         LogMgr().log('entering Menu state')
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                      'iperion']
+                      'iperion', 'teia']
         menu_props = MenuProps(
             Utils().menu_args, self.mdt.options,
             cars_names[:int(self.mdt.options['settings']['cars_number'])],
@@ -54,7 +54,6 @@ class YorgFsm(Fsm):
             'assets/images/gui/yorg_title.png',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
-            self.mdt.options['development']['season'],
             ['desert', 'mountain', 'amusement', 'countryside'],
             'http://www.ya2.it/support-us', Utils().drivers)
         self.__menu = YorgMenu(menu_props)

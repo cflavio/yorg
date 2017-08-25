@@ -47,26 +47,27 @@ class CarPageGui(ThanksPageGui):
         self.track_path = self.mdt.menu.track  # we should pass it
         t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         del t_a['scale']
-        for row, col in product(range(2), range(4)):
-            if row * 4 + col >= len(self.props.cars):
+        cars_per_row = 4
+        for row, col in product(range(2), range(cars_per_row)):
+            if row * cars_per_row + col >= len(self.props.cars):
                 break
-            z_offset = 0 if len(self.props.cars) > 4 else .35
-            num_car = len(self.props.cars) % 4 if row == 1 else \
-                min(4, len(self.props.cars))
-            x_offset = .4 * (4 - num_car)
+            z_offset = 0 if len(self.props.cars) > cars_per_row else .35
+            num_car = len(self.props.cars) - cars_per_row if row == 1 else \
+                min(cars_per_row, len(self.props.cars))
+            x_offset = .4 * (cars_per_row - num_car)
             self.pagewidgets += [ImgBtn(
                 scale=.32,
                 pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
-                image=self.props.car_path % self.props.cars[col + row * 4],
+                image=self.props.car_path % self.props.cars[col + row * cars_per_row],
                 command=self.on_car,
-                extraArgs=[self.props.cars[col + row * 4]],
+                extraArgs=[self.props.cars[col + row * cars_per_row]],
                 **self.mdt.menu.gui.menu_args.imgbtn_args)]
             self.pagewidgets += [OnscreenText(
-                self.props.cars[col + row * 4],
+                self.props.cars[col + row * cars_per_row],
                 pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7),
                 scale=.072, **t_a)]
-            cpath = self.props.phys_path % self.props.cars[col + row * 4]
+            cpath = self.props.phys_path % self.props.cars[col + row * cars_per_row]
             with open(cpath) as phys_file:
                 cfg = load(phys_file)
             speed = cfg['max_speed'] / 140.0

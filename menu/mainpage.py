@@ -21,7 +21,7 @@ class MainPageProps(object):
     def __init__(
             self, opt_file, cars, car_path, phys_path, tracks, tracks_tr,
             track_img, player_name, drivers_img, cars_img, multiplayer,
-            title_img, feed_url, site_url, has_save, season, season_tracks,
+            title_img, feed_url, site_url, has_save, season_tracks,
             support_url, drivers):
         self.opt_file = opt_file
         self.cars = cars
@@ -38,7 +38,6 @@ class MainPageProps(object):
         self.feed_url = feed_url
         self.site_url = site_url
         self.has_save = has_save
-        self.season = season
         self.season_tracks = season_tracks
         self.support_url = support_url
         self.drivers = drivers
@@ -73,8 +72,8 @@ class YorgMainPageGui(MainPageGui):
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
-            self.props.cars_img, self.props.has_save, self.props.season,
-            self.props.season_tracks, self.props.drivers)
+            self.props.cars_img, self.props.has_save, self.props.season_tracks,
+            self.props.drivers)
         sp_cb = lambda: self.menu.push_page(SingleplayerPage(
             self.menu.gui.menu_args, sp_props, self.menu))
         mp_cb = lambda: self.menu.push_page(MultiplayerPage(
