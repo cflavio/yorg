@@ -20,8 +20,9 @@
 # use txo files in place of png and jpg
 # contour detection
 # preloading shaders by creating cards, applying shaders and call render_frame
-# prelad weapons
-# ai polling
+# preload weapons
+# ai polling (for cars and directions); only one (rotated) ray for obstacles
+#   and ground
 
 # 0.10 graphics improvements
 

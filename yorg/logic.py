@@ -23,7 +23,8 @@ class YorgLogic(GameLogic):
         track = dev['track'] if 'track' in dev else ''
         if car and track:
             self.season = SingleRaceSeason(Utils().season_props(
-                car, self.mdt.options['settings']['cars_number'], True))
+                car, self.mdt.options['settings']['cars_number'], True,
+                0, 0, 0))
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.season.start()
@@ -58,14 +59,14 @@ class YorgLogic(GameLogic):
 
     def on_car_selected(self, car):
         self.season = SingleRaceSeason(Utils().season_props(
-            car, self.mdt.options['settings']['cars_number'], True))
+            car, self.mdt.options['settings']['cars_number'], True, 0, 0, 0))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
 
     def on_car_selected_season(self, car):
         self.season = Season(Utils().season_props(
-            car, self.mdt.options['settings']['cars_number'], False))
+            car, self.mdt.options['settings']['cars_number'], False, 0, 0, 0))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
@@ -77,13 +78,17 @@ class YorgLogic(GameLogic):
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
+        tuning = self.mdt.options['save']['tuning']
+        car_tun = tuning[saved_car]
         self.season = Season(Utils().season_props(
-            saved_car, self.mdt.options['settings']['cars_number'], False))
+            saved_car, self.mdt.options['settings']['cars_number'], False,
+            car_tun['engine'], car_tun['tires'], car_tun['suspensions']))
         self.season.load(self.mdt.options['save']['ranking'],
-                         self.mdt.options['save']['tuning'],
+                         tuning,
                          self.mdt.options['save']['drivers'])
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.start(False)
         track_path = self.mdt.options['save']['track']
         car_path = self.mdt.options['save']['car']
         drivers = self.mdt.options['save']['drivers']
@@ -127,7 +132,6 @@ class YorgLogic(GameLogic):
                            for elm in wheel_gfx_names]
         WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
-        tuning = self.mdt.logic.season.tuning.car2tuning[car_path]
 
         def get_driver(car):
             for driver in drivers:
@@ -177,8 +181,7 @@ class YorgLogic(GameLogic):
             'assets/fonts/Hanken-Book.ttf', 'assets/models/cars/%s/capsule',
             'Capsule', 'assets/models/cars',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
-            wheel_names, tuning.f_engine, tuning.f_tires, tuning.f_suspensions,
-            'Road', 'assets/models/cars/%s/car',
+            wheel_names, 'Road', 'assets/models/cars/%s/car',
             DamageInfo('assets/models/cars/%s/cardamage1',
                        'assets/models/cars/%s/cardamage2'), wheel_gfx_names,
             'assets/particles/sparks.ptf', drivers_dct,

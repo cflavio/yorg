@@ -121,10 +121,15 @@ class YorgFsm(Fsm):
         base.accept('escape-up', self.demand, ['Exit'])
 
     def enterRanking(self):
-        self.mdt.logic.season.ranking.show()
-        eng.do_later(10, self.demand, ['Tuning'])
+        self.mdt.logic.season.ranking.show(
+            self.mdt.logic.season.race.logic.props, self.mdt.logic.season.props)
+        eng.do_later(.1, self.mdt.logic.season.ranking.attach_obs, [self.on_ranking_end])
+
+    def on_ranking_end(self):
+        self.demand('Tuning')
 
     def exitRanking(self):
+        self.mdt.logic.season.ranking.detach_obs(self.on_ranking_end)
         self.mdt.logic.season.ranking.hide()
 
     def enterTuning(self):
