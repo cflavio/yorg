@@ -16,9 +16,10 @@ class YorgEvent(Event):
         if not eng.is_runtime:
             self.accept('f9', Profiler().toggle)
 
-    def on_season_end(self):
-        del self.mdt.options['save']
-        self.mdt.options.store()
+    def on_season_end(self, singlerace=False):
+        if not singlerace:
+            del self.mdt.options['save']
+            self.mdt.options.store()
         self.mdt.fsm.demand('Menu')
         self.mdt.logic.season.race.destroy()
         self.mdt.logic.season = self.mdt.logic.season.destroy()

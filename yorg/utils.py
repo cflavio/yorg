@@ -59,7 +59,8 @@ class Utils(object):
         return drivers
 
     def season_props(self, car, cars_number, single_race, tun_engine,
-                     tun_tires, tun_suspensions):
+                     tun_tires, tun_suspensions, race_start_time,
+                     countdown_seconds):
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
         wpn2img = {
@@ -77,4 +78,4 @@ class Utils(object):
             ['desert', 'mountain', 'amusement', 'countryside'],
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1),
             'assets/sfx/countdown.ogg', single_race, wpn2img, tun_engine,
-                     tun_tires, tun_suspensions)
+            tun_tires, tun_suspensions, race_start_time, countdown_seconds)

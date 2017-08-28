@@ -17,7 +17,7 @@ class YorgFsm(Fsm):
         self.defaultTransitions = {
             'Menu': ['Race', 'Exit'],
             'Race': ['Ranking', 'Menu', 'Exit'],
-            'Ranking': ['Tuning', 'Exit'],
+            'Ranking': ['Tuning', 'Menu', 'Exit'],
             'Tuning': ['Menu', 'Race', 'Exit'],
             'Exit': ['Menu']}
         self.load_txt = None
@@ -79,10 +79,13 @@ class YorgFsm(Fsm):
         base.ignore('escape-up')
         if 'save' not in self.mdt.options.dct:
             self.mdt.options['save'] = {}
-        self.mdt.options['save']['track'] = track_path
-        self.mdt.options['save']['car'] = car_path
-        self.mdt.options['save']['drivers'] = drivers
-        self.mdt.options.store()
+        if not self.mdt.logic.season.props.single_race:
+            self.mdt.options['save']['track'] = track_path
+            self.mdt.options['save']['car'] = car_path
+            self.mdt.options['save']['drivers'] = drivers
+            self.mdt.options['save']['tuning'] = self.mdt.logic.season.tuning.car2tuning
+            self.mdt.options['save']['ranking'] = self.mdt.logic.season.ranking.carname2points
+            self.mdt.options.store()
         keys = self.mdt.options['settings']['keys']
         keys = Keys(keys['forward'], keys['rear'], keys['left'], keys['right'],
                     keys['fire'], keys['respawn'], keys['pause'])

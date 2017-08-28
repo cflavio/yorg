@@ -1,15 +1,6 @@
 # BUGS =====
 
-
 # TODO LIST =====
-
-# 0.7
-
-# 0.8
-# #gaming season
-# more power for the drifting; the length of the inertia+engine should not
-#  be bigger than the max engine's force
-# apply drifting force during the drifting
 
 # 0.9 (refinements)
 # particles (using shaders)
@@ -23,6 +14,10 @@
 # preload weapons
 # ai polling (for cars and directions); only one (rotated) ray for obstacles
 #   and ground
+# try the driving models with lighter cars
+# more power for the drifting; the length of the inertia+engine should not
+#  be bigger than the max engine's force
+# apply drifting force during the drifting
 
 # 0.10 graphics improvements
 

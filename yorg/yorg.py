@@ -48,7 +48,9 @@ class Yorg(Game):
                 'win_orig': '',
                 'profiling': 0,
                 'python_profiling': 0,
-                'python_profiling_percall': 0}}
+                'python_profiling_percall': 0,
+                'race_start_time': 3.5,
+                'countdown_seconds': 3}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
