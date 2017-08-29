@@ -5,7 +5,6 @@
 # 0.9 (refinements)
 # particles (using shaders)
 # preload assets (cars on application's start, track on menu selection)
-# give loading feedback for physics parts
 # 3D audio (from player's car)
 # animation when the car is repaired in pitstop
 # use txo files in place of png and jpg
@@ -16,27 +15,20 @@
 #   and ground
 # try the driving models with lighter cars
 # more power for the drifting; the length of the inertia+engine should not
-#  be bigger than the max engine's force
+#  be bigger than max engine's force
 # apply drifting force during the drifting
 
-# 0.10 graphics improvements
-
-# 0.11 (local multiplayer)
+# 0.10 (local multiplayer)
 # split screen
 
-# 0.12 (network)
+# 0.11 (network)
 # #network at end of a multiplayer race wait for other cars
-# #network wheels animations
+# #network wheels' animations
 # #network physics (collisions to players' car)
 # #network drivers' names on their cars during multiplayer matches
 # #network print if the port is closed when creating the server
 # #network send game packets using udp in place of tcp
 # #network weapons
-
-# 1.0 (polishment)
-# change/improve linux installer
-# store the commit of the bam generation to regenerate it only if commits are
-#   different
 
 
 # WAITING =====
@@ -48,15 +40,13 @@
 
 # MAYBE/SOMEDAY =====
 
-# shaders
-# #project make scons for yyagl
-# #project embed into a wx / pyqt window
-# #project port to python 3
-# #shaders deferred shading, tone mapping
-# #engine hardware instancing
-# #engine multi-threading physics loading
-# refactoring DIP, mediator
-# #backlog #project make uml diagrams with pyreverse into devinfo
-# #backlog #project unit tests
-# #backlog #shaders particle effects
-# #backlog #mmog django webapp for scores
+# change/improve linux installer
+# make scons for yyagl
+# embed into a wx / pyqt window
+# port to python 3
+# deferred shading, tone mapping
+# hardware instancing
+# multi-threading physics loading
+# make uml diagrams with pyreverse into devinfo
+# unit tests
+# django webapp for scores

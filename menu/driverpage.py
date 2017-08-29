@@ -8,7 +8,7 @@ from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
-from yorg.utils import Utils
+from yorg.thanksnames import ThanksNames
 from .thankspage import ThanksPageGui
 
 
@@ -143,7 +143,7 @@ class DriverPageGui(ThanksPageGui):
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
-        names = Utils().get_thanks(7, 5)
+        names = ThanksNames.get_thanks(7, 5)
         cars = self.props.cars[:]
         cars.remove(self.mdt.car)
         shuffle(cars)

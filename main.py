@@ -8,14 +8,14 @@ import direct.particles.ParticleManagerGlobal  # for deploy-ng
 
 if sys.platform != 'darwin' and not exists('main.py'):
     # (on osx it shows an error window on exit)
-    # is it the deployed version?
     log_path = ''
+    # is it the deployed windows version?
     if sys.platform == 'win32' and not exists('main.py'):
         log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
         if not exists(log_path):
             Filename.mkdir(Filename(log_path))
-    opth = join(log_path, 'yorg_output.txt') if log_path else 'yorg_output.txt'
-    sys.stdout = open(opth, 'w')
+    opath = join(log_path, 'yorg_output.txt') if log_path else 'yorg_output.txt'
+    sys.stdout = open(opath, 'w')
     epath = join(log_path, 'yorg_error.txt') if log_path else 'yorg_error.txt'
     sys.stderr = open(epath, 'w')
     nout = MultiplexStream()

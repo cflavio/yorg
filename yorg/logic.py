@@ -2,11 +2,11 @@ from collections import namedtuple
 from yaml import load
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
-from yyagl.racing.season.season import SingleRaceSeason, Season
+from yyagl.racing.season.season import SingleRaceSeason, Season, SeasonProps
 from yyagl.racing.driver.driver import Driver, DriverProps
 from yyagl.racing.race.raceprops import RaceProps
 from menu.ingamemenu.menu import InGameMenu
-from .utils import Utils
+from .thanksnames import ThanksNames
 
 
 class YorgLogic(GameLogic):
@@ -22,15 +22,55 @@ class YorgLogic(GameLogic):
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         if car and track:
-            self.season = SingleRaceSeason(Utils().season_props(
-                car, self.mdt.options['settings']['cars_number'], True,
-                0, 0, 0, dev['race_start_time'], dev['countdown_seconds']))
+            self.season = SingleRaceSeason(self.__season_props(
+                self.mdt.gameprops, car,
+                self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+                dev['race_start_time'], dev['countdown_seconds']))
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.season.start()
             self.mdt.fsm.demand('Race', track, car, self.season.drivers)
         else:
             self.mdt.fsm.demand('Menu')
+
+    def __drivers(self):
+        names = ThanksNames.get_thanks(8, 5)
+        drivers = [
+            (1, names[0], (4, -2, -2)),
+            (2, names[1], (-2, 4, -2)),
+            (3, names[2], (0, 4, -4)),
+            (4, names[3], (4, -4, 0)),
+            (5, names[4], (-2, -2, 4)),
+            (6, names[5], (-4, 0, 4)),
+            (7, names[6], (4, 0, -4)),
+            (8, names[7], (-4, 4, 0))]
+        cars = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                'iperion', 'teia']
+        for i, _car in enumerate(cars):
+            drivers[i] = drivers[i] + (_car, )
+        return drivers
+
+    def __season_props(
+            self, gameprops, car, cars_number, single_race, tun_engine,
+            tun_tires, tun_suspensions, race_start_time, countdown_seconds):
+        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                      'iperion', 'teia']
+        wpn2img = {
+            'Rocket': 'rocketfront',
+            'RearRocket': 'rocketrear',
+            'Turbo': 'turbo',
+            'RotateAll': 'turn',
+            'Mine': 'mine'}
+        return SeasonProps(
+            gameprops, cars_names[:int(cars_number)],
+            car, self.__drivers(), 'assets/images/gui/menu_background.jpg',
+            ['assets/images/tuning/engine.png',
+             'assets/images/tuning/tires.png',
+             'assets/images/tuning/suspensions.png'],
+            ['desert', 'mountain', 'amusement', 'countryside'],
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1),
+            'assets/sfx/countdown.ogg', single_race, wpn2img, tun_engine,
+            tun_tires, tun_suspensions, race_start_time, countdown_seconds)
 
     def __process_default(self):
         opt_ver = self.mdt.options['settings']['last_version'].split('-')[0]
@@ -59,8 +99,9 @@ class YorgLogic(GameLogic):
 
     def on_car_selected(self, car):
         dev = self.mdt.options['development']
-        self.season = SingleRaceSeason(Utils().season_props(
-            car, self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+        self.season = SingleRaceSeason(self.__season_props(
+            self.mdt.gameprops, car,
+            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds']))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
@@ -68,8 +109,9 @@ class YorgLogic(GameLogic):
 
     def on_car_selected_season(self, car):
         dev = self.mdt.options['development']
-        self.season = Season(Utils().season_props(
-            car, self.mdt.options['settings']['cars_number'], False, 0, 0, 0,
+        self.season = Season(self.__season_props(
+            self.mdt.gameprops, car,
+            self.mdt.options['settings']['cars_number'], False, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds']))
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
@@ -86,8 +128,9 @@ class YorgLogic(GameLogic):
         dev = self.mdt.options['development']
         tuning = self.mdt.options['save']['tuning']
         car_tun = tuning[saved_car]
-        self.season = Season(Utils().season_props(
-            saved_car, self.mdt.options['settings']['cars_number'], False,
+        self.season = Season(self.__season_props(
+            self.mdt.gameprops, saved_car,
+            self.mdt.options['settings']['cars_number'], False,
             car_tun.f_engine, car_tun.f_tires, car_tun.f_suspensions,
             dev['race_start_time'], dev['countdown_seconds']))
         self.season.load(self.mdt.options['save']['ranking'],
@@ -167,7 +210,7 @@ class YorgLogic(GameLogic):
             laps = track_cfg['laps']
 
         def sign_cb(parent):
-            text = '\n\n'.join(Utils().get_thanks(3, 4))
+            text = '\n\n'.join(ThanksNames.get_thanks(3, 4))
             txt = OnscreenText(text, parent=parent, scale=.2, fg=(0, 0, 0, 1),
                                pos=(.245, 0))
             bounds = lambda: txt.getTightBounds()
@@ -211,7 +254,7 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             car_names[:int(self.mdt.options['settings']['cars_number'])],
             self.mdt.options['development']['ai'], InGameMenu,
-            Utils().menu_args, 'assets/images/drivers/driver%s_sel.png',
+            self.mdt.gameprops.menu_args, 'assets/images/drivers/driver%s_sel.png',
             'assets/images/cars/%s_sel.png',
             ['https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg',
              'https://twitter.com/share?text=I%27ve%20achieved%20{time}'

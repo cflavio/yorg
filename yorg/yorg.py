@@ -4,6 +4,8 @@ from panda3d.core import Filename
 from yyagl.game import Game
 from yyagl.dictfile import DctFile
 from yyagl.engine.configuration import Cfg
+from yyagl.engine.gui.menu import MenuArgs
+from yyagl.racing.gameprops import GameProps
 from .logic import YorgLogic
 from .event import YorgEvent
 from .fsm import YorgFsm
@@ -78,4 +80,11 @@ class Yorg(Game):
             [('logic', YorgLogic, [self])],
             [('audio', YorgAudio, [self])],
             [('event', YorgEvent, [self])]]
+        menu_args = MenuArgs(
+            'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
+            (.75, .75, .75, 1), (.75, .25, .25, 1), .1, (-4.6, 4.6, -.32, .88),
+            (0, 0, 0, .2), 'assets/images/gui/menu_background.jpg',
+            'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
+            'assets/images/icons/%s_png.png')
+        self.gameprops = GameProps(menu_args)
         Game.__init__(self, init_lst, conf)

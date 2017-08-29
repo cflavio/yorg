@@ -7,7 +7,7 @@ from yyagl.racing.car.audio import CarSounds
 from yyagl.racing.car.event import Keys
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
-from .utils import Utils
+from .thanksnames import ThanksNames
 
 
 class YorgFsm(Fsm):
@@ -38,7 +38,7 @@ class YorgFsm(Fsm):
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
         menu_props = MenuProps(
-            Utils().menu_args, self.mdt.options,
+            self.mdt.gameprops.menu_args, self.mdt.options,
             cars_names[:int(self.mdt.options['settings']['cars_number'])],
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
@@ -55,7 +55,7 @@ class YorgFsm(Fsm):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
             ['desert', 'mountain', 'amusement', 'countryside'],
-            'http://www.ya2.it/support-us', Utils().drivers)
+            'http://www.ya2.it/support-us', self.__drivers())
         self.__menu = YorgMenu(menu_props)
         self.__menu.gui.menu.attach_obs(self.mdt.logic.on_input_back)
         self.__menu.gui.menu.attach_obs(self.mdt.logic.on_options_back)
@@ -68,6 +68,23 @@ class YorgFsm(Fsm):
         if self.mdt.logic.season:
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_end)
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_cont)
+
+    def __drivers(self):  # NB duplicate of the one in season_props()
+        names = ThanksNames.get_thanks(8, 5)
+        drivers = [
+            (1, names[0], (4, -2, -2)),
+            (2, names[1], (-2, 4, -2)),
+            (3, names[2], (0, 4, -4)),
+            (4, names[3], (4, -4, 0)),
+            (5, names[4], (-2, -2, 4)),
+            (6, names[5], (-4, 0, 4)),
+            (7, names[6], (4, 0, -4)),
+            (8, names[7], (-4, 4, 0))]
+        cars = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                'iperion', 'teia']
+        for i, _car in enumerate(cars):
+            drivers[i] = drivers[i] + (_car, )
+        return drivers
 
     def exitMenu(self):
         LogMgr().log('exiting Menu state')
@@ -144,7 +161,7 @@ class YorgFsm(Fsm):
     def enterExit(self):
         if not self.mdt.options['development']['show_exit']:
             sys_exit()
-        self.__exit_menu = ExitMenu(Utils().menu_args)
+        self.__exit_menu = ExitMenu(self.mdt.gameprops.menu_args)
         base.accept('escape-up', self.demand, ['Menu'])
 
     def exitExit(self):

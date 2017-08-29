@@ -20,40 +20,36 @@ from yyagl.build.tracks import bld_tracks
 argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
-    ('images', 0), ('tracks', 0), ('ng', 0), ('nointernet', 0), ('pdf', 0),
-    ('tests', 0)]
-arguments = dict((arg, ARGUMENTS.get(arg, default))
-                  for arg, default in argument_info)
-if any(arguments[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64']):
-    if arguments['ng']:
-        arguments['images'] = 1
-        arguments['lang'] = 1
-        arguments['tracks'] = 1
-    else:
-        arguments['p3d'] = 1
-if arguments['p3d'] or arguments['source']:
-    arguments['images'] = 1
-    arguments['lang'] = 1
-    arguments['tracks'] = 1
-path = set_path(arguments['path'])
+    ('images', 0), ('tracks', 0), ('deployng', 0), ('nointernet', 0),
+    ('pdf', 0), ('tests', 0)]
+args = {arg: ARGUMENTS.get(arg, default) for (arg, default) in argument_info}
+full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64'])
+args['images'] = args['images'] or args['deployng'] or args['p3d'] \
+    or full_bld or args['source']
+args['lang'] = args['lang'] or args['deployng'] or args['p3d'] or full_bld or \
+    args['source']
+args['tracks'] = args['tracks'] or args['deployng'] or args['p3d'] or \
+    full_bld or args['source']
+args['p3d'] = args['p3d'] or (full_bld and not args['deployng'])
+path = set_path(args['path'])
 app_name = 'yorg'
 lang_path = 'assets/locale/'
 
-args = {'dst_dir': path, 'appname': app_name}
-p3d_path = p3d_fpath.format(**args)
-win_path = win_fpath.format(**args)
-osx_path = osx_fpath.format(**args)
-linux_path_32 = linux_fpath.format(platform='i386', **args)
-linux_path_64 = linux_fpath.format(platform='amd64', **args)
-win_path_noint = win_noint_fpath.format(**args)
-osx_path_noint = osx_noint_fpath.format(**args)
-linux_path_32_noint = linux_noint_fpath.format(platform='i386', **args)
-linux_path_64_noint = linux_noint_fpath.format(platform='amd64', **args)
-src_path = src_fpath.format(**args)
-devinfo_path = devinfo_fpath.format(**args)
-tests_path = test_fpath.format(**args)
-docs_path = docs_fpath.format(**args)
-pdf_path = pdf_fpath.format(**args)
+pargs = {'dst_dir': path, 'appname': app_name}
+p3d_path = p3d_fpath.format(**pargs)
+win_path = win_fpath.format(**pargs)
+osx_path = osx_fpath.format(**pargs)
+linux_path_32 = linux_fpath.format(platform='i386', **pargs)
+linux_path_64 = linux_fpath.format(platform='amd64', **pargs)
+win_path_noint = win_noint_fpath.format(**pargs)
+osx_path_noint = osx_noint_fpath.format(**pargs)
+linux_path_32_noint = linux_noint_fpath.format(platform='i386', **pargs)
+linux_path_64_noint = linux_noint_fpath.format(platform='amd64', **pargs)
+src_path = src_fpath.format(**pargs)
+devinfo_path = devinfo_fpath.format(**pargs)
+tests_path = test_fpath.format(**pargs)
+docs_path = docs_fpath.format(**pargs)
+pdf_path = pdf_fpath.format(**pargs)
 
 bld_p3d = Builder(action=bld_p3d)
 bld_windows = Builder(action=bld_windows)
@@ -78,16 +74,16 @@ env = Environment(BUILDERS={
 env['P3D_PATH'] = p3d_path
 env['APPNAME'] = app_name
 env['LNG'] = lang_path
-env['NOINTERNET'] = arguments['nointernet']
-env['NG'] = arguments['ng']
+env['NOINTERNET'] = args['nointernet']
+env['DEPLOYNG'] = args['deployng']
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT']
-env['MODELS_DIR'] = 'assets/models'
-env['TRACKS_DIR'] = 'assets/models/tracks'
+env['MODELS_DIR_PATH'] = 'assets/models'
+env['TRACKS_DIR_PATH'] = 'assets/models/tracks'
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
-
-yorg_fil = ['./yyagl/*', './menu/*', './yorg/*', './licenses/*', './assets/*',
-            './venv/*', './build/*', './built/*']
+yorg_fil_dirs = ['yyagl', 'menu', 'yorg', 'licenses', 'assets', 'venv',
+                 'build', 'built']
+yorg_fil = ['./%s/*' % dname for dname in yorg_fil_dirs]
 yorg_lst = [
     ('python', './yorg', '*.py', []),
     ('python', '.', '*.py SConstruct *.md *.txt', yorg_fil)]
@@ -95,16 +91,14 @@ racing_fil = ['./yyagl/racing/game/*', './yyagl/racing/car/*',
               './yyagl/racing/race/*', './yyagl/racing/track/*']
 racing_lst = [('python', './yyagl/racing', '*.py', racing_fil)]
 yyagl_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']
-yyagl_c_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']
 yyagl_lst = [
     ('python', './yyagl', '*.py *.pdef', filt_game + yyagl_fil),
-    ('c', './yyagl', '*.vert *.frag', filt_game + yyagl_c_fil)]
-build_lst = [
-    ('python', './yyagl/build', '*.py *.pdef', filt_game),
-    ('lua', './yyagl/build', 'config.lua', filt_game),
-    ('', './yyagl/build', '*.rst *.css_t *.conf', filt_game),
-    ('html', './yyagl/build', '*.html', filt_game),
-    ('javascript', './yyagl/build', '*.js', filt_game)]
+    ('c', './yyagl', '*.vert *.frag', filt_game + yyagl_fil)]
+binfo_lst = [
+    ('python', '*.py *.pdef'), ('lua', 'config.lua'),
+    ('', '*.rst *.css_t *.conf'), ('html', '*.html'), ('javascript', '*.js')]
+build_lst = [(binfo[0], './yyagl/build', binfo[1], filt_game)
+             for binfo in binfo_lst]
 pdf_conf = {
     'yorg_menu': [('python', './menu', '*.py', [])],
     'yorg': yorg_lst,
@@ -118,8 +112,7 @@ pdf_conf = {
     'tests': [('python', './yyagl/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
 
-def cond_racing(s):
-    return not str(s).startswith('yyagl/racing/')
+cond_racing = lambda s: not str(s).startswith('yyagl/racing/')
 def cond_yyagl(src):
     not_yyagl = not str(src).startswith('yyagl/')
     thirdparty = str(src).startswith('yyagl/thirdparty/')
@@ -137,36 +130,36 @@ img_files = img_extensions(files(['psd']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + track_files()
-no_int = arguments['nointernet']
-if arguments['images']:
+no_int = args['nointernet']
+if args['images']:
     env.images(img_files, files(['psd']))
-if arguments['tracks']:
+if args['tracks']:
     env.tracks(track_files(), files(['egg']))
-if arguments['p3d']:
+if args['p3d']:
     env.p3d([p3d_path], general_src)
-if arguments['source']:
+if args['source']:
     env.source([src_path], general_src)
-if arguments['devinfo']:
+if args['devinfo']:
     env.devinfo([devinfo_path], files(['py'], ['venv', 'thirdparty']))
-if arguments['tests']:
+if args['tests']:
     env.tests([tests_path], files(['py'], ['venv', 'thirdparty']))
-if arguments['windows']:
-    out_path = win_path_noint if arguments['nointernet'] else win_path
-    env.windows([out_path], general_src if arguments['ng'] else [p3d_path])
-if arguments['osx']:
-    out_path = osx_path_noint if arguments['nointernet'] else osx_path
-    env.osx([out_path], general_src if arguments['ng'] else [p3d_path])
-if arguments['linux_32']:
-    out_path = linux_path_32_noint if no_int else linux_path_32
-    env.linux([out_path], general_src if arguments['ng'] else [p3d_path],
+if args['windows']:
+    out_wpath = win_path_noint if args['nointernet'] else win_path
+    env.windows([out_wpath], general_src if args['deployng'] else [p3d_path])
+if args['osx']:
+    out_opath = osx_path_noint if args['nointernet'] else osx_path
+    env.osx([out_opath], general_src if args['deployng'] else [p3d_path])
+if args['linux_32']:
+    out_lpath32 = linux_path_32_noint if no_int else linux_path_32
+    env.linux([out_lpath32], general_src if args['deployng'] else [p3d_path],
               PLATFORM='i386')
-if arguments['linux_64']:
-    out_path = linux_path_64_noint if no_int else linux_path_64
-    env.linux([out_path], general_src if arguments['ng'] else [p3d_path],
+if args['linux_64']:
+    out_lpath64 = linux_path_64_noint if no_int else linux_path_64
+    env.linux([out_lpath64], general_src if args['deployng'] else [p3d_path],
               PLATFORM='amd64')
-if arguments['docs']:
+if args['docs']:
     env.docs([docs_path], files(['py'], ['venv', 'thirdparty']))
-if arguments['pdf']:
+if args['pdf']:
     env.pdf([pdf_path], files(['py'], ['venv', 'thirdparty']))
 
 def process_lang(lang_code):
@@ -177,5 +170,5 @@ def process_lang(lang_code):
     lang_po = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
     env.str(lang_mo, lang_po)
 
-if arguments['lang']:
+if args['lang']:
     map(process_lang, ['it_IT'])
