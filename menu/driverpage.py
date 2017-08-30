@@ -1,3 +1,4 @@
+from collections import namedtuple
 from itertools import product
 from random import shuffle
 from panda3d.core import TextureStage, Shader, Texture, PNMImage, TextNode
@@ -10,6 +11,10 @@ from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
 from yorg.thanksnames import ThanksNames
 from .thankspage import ThanksPageGui
+
+
+DriverInfo = namedtuple('DriverInfo', 'car_id name skill car_name')
+DriverSkill = namedtuple('DriverSkill', 'speed adherence stability')
 
 
 frag = '''#version 120
@@ -150,8 +155,8 @@ class DriverPageGui(ThanksPageGui):
         drv_idx = range(1, 9)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        drivers = [(i, self.ent.get(), self.skills[i - 1], self.mdt.car)]
-        drivers += [(drv_idx[j], names[j], self.skills[j - 1], cars[j])
+        drivers = [DriverInfo(i, self.ent.get(), self.skills[i - 1], self.mdt.car)]
+        drivers += [DriverInfo(drv_idx[j], names[j], self.skills[j - 1], cars[j])
                     for j in range(len(cars))]
         self.mdt.menu.gui.notify('on_driver_selected', self.ent.get(), drivers,
                                  self.mdt.track, self.mdt.car)

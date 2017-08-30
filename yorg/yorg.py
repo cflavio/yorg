@@ -55,6 +55,7 @@ class Yorg(Game):
                 'countdown_seconds': 3}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
+            # it is the deployed version for windows
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
         self.options = DctFile(
             join(opt_path, 'options.yml') if opt_path else 'options.yml',
@@ -86,5 +87,7 @@ class Yorg(Game):
             (0, 0, 0, .2), 'assets/images/gui/menu_background.jpg',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
             'assets/images/icons/%s_png.png')
-        self.gameprops = GameProps(menu_args)
+        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                      'iperion', 'teia']
+        self.gameprops = GameProps(menu_args, cars_names)
         Game.__init__(self, init_lst, conf)

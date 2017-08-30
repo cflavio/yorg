@@ -2,6 +2,8 @@
 
 # TODO LIST =====
 
+# refactor: race.logic, weapons
+
 # 0.9 (refinements)
 # particles (using shaders)
 # preload assets (cars on application's start, track on menu selection)

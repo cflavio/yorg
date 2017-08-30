@@ -20,26 +20,16 @@ class YorgFsm(Fsm):
             'Ranking': ['Tuning', 'Menu', 'Exit'],
             'Tuning': ['Menu', 'Race', 'Exit'],
             'Exit': ['Menu']}
-        self.load_txt = None
-        self.preview = None
-        self.cam_tsk = None
-        self.cam_node = None
-        self.ranking_texts = None
-        self.send_tsk = None
-        self.cam_pivot = None
-        self.ready_clients = None
-        self.curr_load_txt = None
-        self.__menu = None
-        self.race = None
-        self.__exit_menu = None
+        self.load_txt = self.preview = self.cam_tsk = self.cam_node = \
+            self.ranking_texts = self.send_tsk = self.cam_pivot = \
+            self.ready_clients = self.curr_load_txt = self.__menu = \
+            self.race = self.__exit_menu = None
 
     def enterMenu(self):
         LogMgr().log('entering Menu state')
-        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                      'iperion', 'teia']
         menu_props = MenuProps(
             self.mdt.gameprops.menu_args, self.mdt.options,
-            cars_names[:int(self.mdt.options['settings']['cars_number'])],
+            self.mdt.gameprops.cars_names[:int(self.mdt.options['settings']['cars_number'])],
             'assets/images/cars/%s.png',
             eng.curr_path + 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain', 'amusement', 'countryside'],
@@ -55,36 +45,20 @@ class YorgFsm(Fsm):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
             ['desert', 'mountain', 'amusement', 'countryside'],
-            'http://www.ya2.it/support-us', self.__drivers())
+            'http://www.ya2.it/support-us', self.mdt.logic.drivers())
         self.__menu = YorgMenu(menu_props)
-        self.__menu.gui.menu.attach_obs(self.mdt.logic.on_input_back)
-        self.__menu.gui.menu.attach_obs(self.mdt.logic.on_options_back)
-        self.__menu.gui.menu.attach_obs(self.mdt.logic.on_car_selected)
-        self.__menu.gui.menu.attach_obs(self.mdt.logic.on_car_selected_season)
-        self.__menu.gui.menu.attach_obs(self.mdt.logic.on_driver_selected)
-        self.__menu.gui.menu.attach_obs(self.mdt.logic.on_exit)
-        self.__menu.gui.menu.attach_obs(self.mdt.logic.on_continue)
-        self.mdt.logic.menu_start()
+        methods = [self.mdt.logic.on_input_back,
+                   self.mdt.logic.on_options_back,
+                   self.mdt.logic.on_car_selected,
+                   self.mdt.logic.on_car_selected_season,
+                   self.mdt.logic.on_driver_selected,
+                   self.mdt.logic.on_continue]
+        map(lambda mth: self.__menu.gui.menu.attach_obs(mth), methods)
+        self.__menu.gui.menu.attach_obs('on_exit', redirect=self.demand, args=['Exit'])
+        self.mdt.audio.menu_music.play()
         if self.mdt.logic.season:
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_end)
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_cont)
-
-    def __drivers(self):  # NB duplicate of the one in season_props()
-        names = ThanksNames.get_thanks(8, 5)
-        drivers = [
-            (1, names[0], (4, -2, -2)),
-            (2, names[1], (-2, 4, -2)),
-            (3, names[2], (0, 4, -4)),
-            (4, names[3], (4, -4, 0)),
-            (5, names[4], (-2, -2, 4)),
-            (6, names[5], (-4, 0, 4)),
-            (7, names[6], (4, 0, -4)),
-            (8, names[7], (-4, 4, 0))]
-        cars = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                'iperion', 'teia']
-        for i, _car in enumerate(cars):
-            drivers[i] = drivers[i] + (_car, )
-        return drivers
 
     def exitMenu(self):
         LogMgr().log('exiting Menu state')
@@ -132,8 +106,8 @@ class YorgFsm(Fsm):
             'Loading', race_props, self.mdt.logic.season.props,
             track_name_transl, drivers)
         self.mdt.logic.season.race.attach_obs(self.mdt.logic.on_race_loaded)
-        exit_meth = self.mdt.logic.on_ingame_exit_confirm
-        self.mdt.logic.season.race.attach_obs(exit_meth)
+        exit_mth = 'on_ingame_exit_confirm'
+        self.mdt.logic.season.race.attach_obs(exit_mth, redirect=self.mdt.fsm.demand, args=['Menu'])
 
     def exitRace(self):
         LogMgr().log('exiting Race state')

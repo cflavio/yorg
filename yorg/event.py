@@ -27,6 +27,6 @@ class YorgEvent(Event):
     def on_season_cont(self, next_track, curr_car, drivers):
         self.mdt.logic.season.race.destroy()
         tuning = self.mdt.logic.season.tuning
-        self.mdt.options['save']['tuning'] = tuning.to_dct()
+        self.mdt.options['save']['tuning'] = tuning.to_dct
         self.mdt.options.store()
         self.mdt.fsm.demand('Race', next_track, curr_car, drivers)
