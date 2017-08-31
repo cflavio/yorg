@@ -4,7 +4,7 @@ from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.engine.network.server import Server
 from yyagl.gameobject import GameObject
-from .carpage import CarPage, CarPageServer, CarPageProps
+from .carpage import CarPageServer, CarPageProps
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
@@ -33,8 +33,9 @@ class TrackPageGui(ThanksPageGui):
 
     def bld_page(self):
         menu_gui = self.mdt.menu.gui
-        widgets = [OnscreenText(text=_('Select the track'), pos=(0, .8),
-                                **menu_gui.menu_args.text_args)]
+        txt = OnscreenText(text=_('Select the track'), pos=(0, .8),
+                           **menu_gui.menu_args.text_args)
+        self.add_widget(txt)
         t_a = self.mdt.menu.gui.menu_args.text_args.copy()
         t_a['scale'] = .06
         tracks_per_row = 2
@@ -45,7 +46,7 @@ class TrackPageGui(ThanksPageGui):
             num_tracks = len(self.props.tracks) - tracks_per_row if row == 1 \
                 else min(tracks_per_row, len(self.props.tracks))
             x_offset = .5 * (tracks_per_row - num_tracks)
-            widgets += [ImgBtn(
+            btn = ImgBtn(
                 scale=.3,
                 pos=(-.5 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
@@ -53,13 +54,12 @@ class TrackPageGui(ThanksPageGui):
                     col + row * tracks_per_row],
                 command=self.on_track, extraArgs=[self.props.tracks[
                     col + row * tracks_per_row]],
-                **self.mdt.menu.gui.menu_args.imgbtn_args)]
+                **self.mdt.menu.gui.menu_args.imgbtn_args)
             txt = OnscreenText(
                 self.props.tracks_tr()[col + row * tracks_per_row],
                 pos=(-.5 + col * 1.0 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
-            widgets += [txt]
-        map(self.add_widget, widgets)
+            map(self.add_widget, [btn, txt])
         ThanksPageGui.bld_page(self)
 
     def on_track(self, track):
@@ -68,8 +68,7 @@ class TrackPageGui(ThanksPageGui):
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.mdt.menu.push_page(CarPage(
-            self.mdt.menu.gui.menu_args, carpage_props, self.mdt.menu))
+        self.notify('on_push_page', 'car_page', [carpage_props])
 
     def destroy(self):
         if hasattr(self.mdt.menu, 'track'):

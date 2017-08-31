@@ -11,7 +11,7 @@ from yyagl.engine.network.client import Client
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
-from .driverpage import DriverPage, DriverPageProps
+from .driverpage import DriverPageProps
 from .thankspage import ThanksPageGui
 
 
@@ -41,74 +41,76 @@ class CarPageGui(ThanksPageGui):
         menu_gui = self.mdt.menu.gui
         if game.logic.curr_cars:
             self.props.cars = game.logic.curr_cars
-        self.pagewidgets = [OnscreenText(
+        widgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
             **menu_gui.menu_args.text_args)]
         self.track_path = self.mdt.menu.track  # we should pass it
-        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
-        del t_a['scale']
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
             if row * cars_per_row + col >= len(self.props.cars):
                 break
-            z_offset = 0 if len(self.props.cars) > cars_per_row else .35
-            num_car = len(self.props.cars) - cars_per_row if row == 1 else \
-                min(cars_per_row, len(self.props.cars))
-            x_offset = .4 * (cars_per_row - num_car)
-            self.pagewidgets += [ImgBtn(
-                scale=.32,
-                pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
-                frameColor=(0, 0, 0, 0),
-                image=self.props.car_path % self.props.cars[col + row * cars_per_row],
-                command=self.on_car,
-                extraArgs=[self.props.cars[col + row * cars_per_row]],
-                **self.mdt.menu.gui.menu_args.imgbtn_args)]
-            self.pagewidgets += [OnscreenText(
-                self.props.cars[col + row * cars_per_row],
-                pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7),
-                scale=.072, **t_a)]
-            cpath = self.props.phys_path % self.props.cars[col + row * cars_per_row]
-            with open(cpath) as phys_file:
-                cfg = load(phys_file)
-            speed = cfg['max_speed'] / 140.0
-            fric = cfg['friction_slip'] / 3.0
-            roll = cfg['roll_influence'] / .2
-            speed = int(round((speed - 1) * 100))
-            fric = int(round((fric - 1) * 100))
-            roll = -int(round((roll - 1) * 100))
-            sign = lambda x: '\1green\1+\2' if x > 0 else ''
-            psign = lambda x, sgn=sign: '+' if x == 0 else sgn(x)
-            __col_ = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'
-            _col_ = lambda x, __col=__col_: __col(x) % x
-            pcol = lambda x, _col=_col_: x if x == 0 else _col(x)
-
-            def add_txt(txt, val, pos_z, psign=psign, pcol=pcol, col=col,
-                        x_offset=x_offset, z_offset=z_offset, row=row):
-                self.pagewidgets += [OnscreenText(
-                    '%s: %s%s%%' % (txt, psign(val), pcol(val)),
-                    pos=(-.9 + col * .8 + x_offset,
-                         pos_z - z_offset - row * .7),
-                    scale=.052, align=TextNode.A_right, **t_a)]
-            txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
-                       (_('stability'), roll, .19)]
-            map(lambda txt_def: add_txt(*txt_def), txt_lst)
-        map(self.add_widget, self.pagewidgets)
+            widgets += self.__bld_car(cars_per_row, row, col)
+        map(self.add_widget, widgets)
         self.current_cars = {}
         ThanksPageGui.bld_page(self)
 
+    def __bld_car(self, cars_per_row, row, col):
+        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        del t_a['scale']
+        z_offset = 0 if len(self.props.cars) > cars_per_row else .35
+        num_car_row = len(self.props.cars) - cars_per_row if row == 1 else \
+            min(cars_per_row, len(self.props.cars))
+        x_offset = .4 * (cars_per_row - num_car_row)
+        btn = ImgBtn(
+            scale=.32,
+            pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
+            frameColor=(0, 0, 0, 0),
+            image=self.props.car_path % self.props.cars[col + row * cars_per_row],
+            command=self.on_car,
+            extraArgs=[self.props.cars[col + row * cars_per_row]],
+            **self.mdt.menu.gui.menu_args.imgbtn_args)
+        widgets = [btn]
+        txt = OnscreenText(
+            self.props.cars[col + row * cars_per_row],
+            pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7),
+            scale=.072, **t_a)
+        widgets += [txt]
+        car_name = self.props.cars[col + row * cars_per_row]
+        cfg_fpath = self.props.phys_path % car_name
+        with open(cfg_fpath) as phys_file:
+            cfg = load(phys_file)
+        speed = int(round((cfg['max_speed'] / 140.0 - 1) * 100))
+        fric = int(round((cfg['friction_slip'] / 3.0 - 1) * 100))
+        roll = -int(round((cfg['roll_influence'] / .2 - 1) * 100))
+        sign = lambda x: '\1green\1+\2' if x > 0 else ''
+        psign = lambda x, sgn=sign: '+' if x == 0 else sgn(x)
+        __col_ = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'
+        _col_ = lambda x, __col=__col_: __col(x) % x
+        pcol = lambda x, _col=_col_: x if x == 0 else _col(x)
+        txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
+                   (_('stability'), roll, .19)]
+        widgets += map(lambda txt_def: self.__add_txt(*txt_def + (psign, pcol, col, x_offset, z_offset, row)), txt_lst)
+        return widgets
+
+    def __add_txt(self, txt, val, pos_z, psign, pcol, col, x_offset, z_offset,
+                  row):
+        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        del t_a['scale']
+        return OnscreenText(
+            '%s: %s%s%%' % (txt, psign(val), pcol(val)),
+            pos=(-.9 + col * .8 + x_offset, pos_z - z_offset - row * .7),
+            scale=.052, align=TextNode.A_right, **t_a)
+
     def _buttons(self, car):
-        is_btn = lambda wdg: wdg.__class__ == DirectButton
-        buttons = [wdg for wdg in self.widgets if is_btn(wdg)]
-        return [btn for btn in buttons if btn['extraArgs'] == [car]]
+        return [btn for btn in self.buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
         self.mdt.menu.gui.notify('on_car_selected', car)
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
-        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path,
-                              car, driverpage_props, self.mdt.menu)
-        self.mdt.menu.push_page(drv_page)
+        page_args = [self.track_path, car, driverpage_props]
+        self.notify('on_push_page', 'driver_page', page_args)
 
 
 class CarPageGuiSeason(CarPageGui):
@@ -118,9 +120,8 @@ class CarPageGuiSeason(CarPageGui):
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
-        drv_page = DriverPage(self.mdt.menu.gui.menu_args, self.track_path,
-                              car, driverpage_props, self.mdt.menu)
-        self.mdt.menu.push_page(drv_page)
+        page_args = [self.track_path, car, driverpage_props]
+        self.notify('on_push_page', 'driver_page', page_args)
 
 
 class CarPageGuiServer(CarPageGui):
@@ -134,57 +135,53 @@ class CarPageGuiServer(CarPageGui):
         eng.log('car selected: ' + car)
         Server().send([NetMsgs.car_selection, car])
         for btn in self._buttons(car):
-            btn['state'] = DISABLED
-            btn.setAlphaScale(.25)
+            btn.disable()
         if self in self.current_cars:
             curr_car = self.current_cars[self]
             eng.log('car deselected: ' + curr_car)
             Server().send([NetMsgs.car_deselection, curr_car])
             for btn in self._buttons(curr_car):
-                btn['state'] = NORMAL
-                btn.setAlphaScale(1)
+                btn.enable()
         self.current_cars[self] = car
         eng.car_mapping['self'] = car
         self.evaluate_starting()
 
     def evaluate_starting(self):
         connections = eng.connections + [self]
-        if all(conn in self.current_cars for conn in connections):
-            packet = [NetMsgs.start_race, len(self.current_cars)]
+        if not all(conn in self.current_cars for conn in connections): return
+        packet = [NetMsgs.start_race, len(self.current_cars)]
 
-            def process(k):
-                '''Processes a car.'''
-                return 'server' if k == self else k.getAddress().getIpString()
-            for k, val in self.current_cars.items():
-                packet += [process(k), val]
-            Server().send(packet)
-            eng.log('start race: ' + str(packet))
-            curr_car = self.current_cars[self]
-            # manage as event
-            game.logic.season = SingleRaceSeason()
-            game.fsm.demand('Race', self.track_path, curr_car, packet[2:])
+        def process(k):
+            '''Processes a car.'''
+            return 'server' if k == self else k.get_address().get_ip_string()
+        for k, val in self.current_cars.items():
+            packet += [process(k), val]
+        Server().send(packet)
+        eng.log('start race: ' + str(packet))
+        curr_car = self.current_cars[self]
+        # manage as event
+        game.logic.season = SingleRaceSeason()
+        game.fsm.demand('Race', self.track_path, curr_car, packet[2:])
 
     def process_srv(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.car_request:
-            car = data_lst[1]
-            eng.log('car requested: ' + car)
-            btn = self._buttons(car)[0]
-            if btn['state'] == DISABLED:
-                Server().send([NetMsgs.car_deny], sender)
-                eng.log('car already selected: ' + car)
-            elif btn['state'] == NORMAL:
-                eng.log('car selected: ' + car)
-                if sender in self.current_cars:
-                    _btn = self._buttons(self.current_cars[sender])[0]
-                    _btn['state'] = NORMAL
-                    _btn.setAlphaScale(1)
-                self.current_cars[sender] = car
-                btn['state'] = DISABLED
-                btn.setAlphaScale(.25)
-                Server().send([NetMsgs.car_confirm, car], sender)
-                Server().send([NetMsgs.car_selection, car])
-                eng.car_mapping[sender] = car
-                self.evaluate_starting()
+        if data_lst[0] != NetMsgs.car_request: return
+        car = data_lst[1]
+        eng.log('car requested: ' + car)
+        btn = self._buttons(car)[0]
+        if btn['state'] == DISABLED:
+            Server().send([NetMsgs.car_deny], sender)
+            eng.log('car already selected: ' + car)
+        elif btn['state'] == NORMAL:
+            eng.log('car selected: ' + car)
+            if sender in self.current_cars:
+                _btn = self._buttons(self.current_cars[sender])[0]
+                _btn.enable()
+            self.current_cars[sender] = car
+            btn.disable()
+            Server().send([NetMsgs.car_confirm, car], sender)
+            Server().send([NetMsgs.car_selection, car])
+            eng.car_mapping[sender] = car
+            self.evaluate_starting()
 
 
 class CarPageGuiClient(CarPageGui):
@@ -201,27 +198,23 @@ class CarPageGuiClient(CarPageGui):
         if data_lst[0] == NetMsgs.car_confirm:
             if self.car:
                 _btn = self._buttons(self.car)[0]
-                _btn['state'] = NORMAL
-                _btn.setAlphaScale(1)
+                _btn.enable()
             self.car = car = data_lst[1]
             eng.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
-            btn['state'] = DISABLED
-            btn.setAlphaScale(.25)
+            btn.disable()
         if data_lst[0] == NetMsgs.car_deny:
             eng.log('car denied')
         if data_lst[0] == NetMsgs.car_selection:
             car = data_lst[1]
             eng.log('car selection: ' + car)
             btn = self._buttons(car)[0]
-            btn['state'] = DISABLED
-            btn.setAlphaScale(.25)
+            btn.disable()
         if data_lst[0] == NetMsgs.car_deselection:
             car = data_lst[1]
             eng.log('car deselection: ' + car)
             btn = self._buttons(car)[0]
-            btn['state'] = NORMAL
-            btn.setAlphaScale(1)
+            btn.enable()
         if data_lst[0] == NetMsgs.start_race:
             eng.log('start_race: ' + str(data_lst))
             # manage as event

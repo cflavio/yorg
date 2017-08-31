@@ -3,6 +3,8 @@
 # TODO LIST =====
 
 # refactor: race.logic, weapons
+# refactor: don't pass the menu to pages
+# refactor: refactor the props for the menu pages
 
 # 0.9 (refinements)
 # particles (using shaders)

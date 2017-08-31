@@ -1,3 +1,4 @@
+from collections import namedtuple
 from sys import exit as sys_exit
 from yyagl.gameobject import Fsm
 from yyagl.engine.network.server import Server
@@ -8,6 +9,9 @@ from yyagl.racing.car.event import Keys
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 from .thanksnames import ThanksNames
+
+
+DriverPaths = namedtuple('DriverPaths', 'path path_sel')
 
 
 class YorgFsm(Fsm):
@@ -37,8 +41,8 @@ class YorgFsm(Fsm):
                      _('countryside')],
             'assets/images/tracks/%s.png',
             self.mdt.options['settings']['player_name'],
-            ['assets/images/drivers/driver%s.png',
-             'assets/images/drivers/driver%s_sel.png'],
+            DriverPaths('assets/images/drivers/driver%s.png',
+                        'assets/images/drivers/driver%s_sel.png'),
             'assets/images/cars/%s_sel.png',
             self.mdt.options['development']['multiplayer'],
             'assets/images/gui/yorg_title.png',
@@ -53,8 +57,8 @@ class YorgFsm(Fsm):
                    self.mdt.logic.on_car_selected_season,
                    self.mdt.logic.on_driver_selected,
                    self.mdt.logic.on_continue]
-        map(lambda mth: self.__menu.gui.menu.attach_obs(mth), methods)
-        self.__menu.gui.menu.attach_obs('on_exit', redirect=self.demand, args=['Exit'])
+        map(lambda mth: self.__menu.attach_obs(mth), methods)
+        self.__menu.attach_obs('on_exit', redirect=self.demand, args=['Exit'])
         self.mdt.audio.menu_music.play()
         if self.mdt.logic.season:
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_end)

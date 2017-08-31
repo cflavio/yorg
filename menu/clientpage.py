@@ -32,7 +32,6 @@ class ClientPageGui(ThanksPageGui):
         menu_args = self.mdt.menu.gui.menu_args
         txt = OnscreenText(text=_('Client'), pos=(0, .4),
                            **menu_gui.menu_args.text_args)
-        widgets = [txt]
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
@@ -40,8 +39,7 @@ class ClientPageGui(ThanksPageGui):
         self.ent.onscreenText['fg'] = menu_args.text_fg
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_gui.menu_args.btn_args)
-        widgets += [self.ent, btn]
-        map(self.add_widget, widgets)
+        map(self.add_widget, [txt, self.ent, btn])
         ThanksPageGui.bld_page(self)
 
     def connect(self):
@@ -50,9 +48,10 @@ class ClientPageGui(ThanksPageGui):
             eng.log(self.ent.get())
             Client().start(self.mdt.event.process_msg, self.ent.get())
             menu_args = self.mdt.menu.gui.menu_args
-            self.add_widget(OnscreenText(
+            wait_txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
-                font=menu_gui.font, fg=menu_args.text_fg))
+                font=menu_gui.font, fg=menu_args.text_fg)
+            self.add_widget(wait_txt)
         except ClientError:
             txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
                                scale=.16, font=menu_gui.menu_args.font)

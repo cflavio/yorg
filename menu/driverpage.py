@@ -49,11 +49,11 @@ class DriverPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu_args, driverpage_props):
         self.props = driverpage_props
-        self.img = None
+        self.sel_drv_img = None
         ThanksPageGui.__init__(self, mdt, menu_args)
 
     def bld_page(self):
-        self.skills = [drv[2] for drv in self.props.drivers]
+        self.skills = [drv.skill for drv in self.props.drivers]
         menu_gui = self.mdt.menu.gui
         menu_args = self.mdt.menu.gui.menu_args
         widgets = [OnscreenText(text=_('Select the driver'), pos=(0, .8),
@@ -71,11 +71,12 @@ class DriverPageGui(ThanksPageGui):
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = (col + 1) + row * 4
-            widgets += [ImgBtn(
+            drv_btn = ImgBtn(
                 scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
                 frameColor=(0, 0, 0, 0), image=self.props.drivers_img[0] % idx,
                 command=self.on_click, extraArgs=[idx],
-                **self.mdt.menu.gui.menu_args.imgbtn_args)]
+                **self.mdt.menu.gui.menu_args.imgbtn_args)
+            widgets += [drv_btn]
             self.drivers += [widgets[-1]]
             sign = lambda pos_x: '\1green\1+\2' if pos_x > 0 else ''
             psign = lambda pos_x, sgn=sign: '+' if pos_x == 0 else sgn(pos_x)
@@ -83,52 +84,53 @@ class DriverPageGui(ThanksPageGui):
             def ppcol(x):
                 return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
             pcol = lambda x: x if x == 0 else ppcol(x)
-
-            def add_lab(txt, pos_z, row=row, col=col):
-                return OnscreenText(
-                    txt + ':', pos=(-.95 + col * .5, pos_z - row * .5),
-                    scale=.046, align=TextNode.A_left, **t_a)
-
-            def add_txt(val, pos_z, psign=psign, pcol=pcol, col=col, row=row):
-                return OnscreenText(
-                    '%s%s%%' % (psign(val), pcol(val)),
-                    pos=(-.55 + col * .5, pos_z - row * .5), scale=.052,
-                    align=TextNode.A_right, **t_a)
             lab_lst = [(_('adherence'), .04), (_('speed'), .16),
                        (_('stability'), .1)]
-            widgets += map(lambda lab_def: add_lab(*lab_def), lab_lst)
-            txt_lst = [(self.skills[idx - 1][1], .04),
-                       (self.skills[idx - 1][0], .16),
-                       (self.skills[idx - 1][2], .1)]
-            widgets += map(lambda txt_def: add_txt(*txt_def), txt_lst)
-        self.img = OnscreenImage(
+            widgets += map(lambda lab_def: self.__add_lab(*(lab_def + (row, col))), lab_lst)
+            txt_lst = [(self.skills[idx - 1].adherence, .04),
+                       (self.skills[idx - 1].speed, .16),
+                       (self.skills[idx - 1].stability, .1)]
+            widgets += map(lambda txt_def: self.__add_txt(*txt_def + (psign, pcol, col, row)), txt_lst)
+        self.sel_drv_img = OnscreenImage(
             self.props.cars_img % self.mdt.car, parent=base.a2dBottomRight,
             pos=(-.38, 1, .38), scale=.32)
-        widgets += [self.img, name, self.ent]
+        widgets += [self.sel_drv_img, name, self.ent]
         map(self.add_widget, widgets)
-        fpath = eng.curr_path + 'yyagl/assets/shaders/filter.vert'
-        with open(fpath) as ffilter:
+        ffilterpath = eng.curr_path + 'yyagl/assets/shaders/filter.vert'
+        with open(ffilterpath) as ffilter:
             vert = ffilter.read()
         shader = Shader.make(Shader.SL_GLSL, vert, frag)
-        self.img.setShader(shader)
-        self.img.setTransparency(True)
+        self.sel_drv_img.set_shader(shader)
+        self.sel_drv_img.set_transparency(True)
         self.t_s = TextureStage('ts')
-        self.t_s.setMode(TextureStage.MDecal)
+        self.t_s.set_mode(TextureStage.MDecal)
         empty_img = PNMImage(1, 1)
         empty_img.add_alpha()
         empty_img.alpha_fill(0)
         tex = Texture()
         tex.load(empty_img)
-        self.img.setTexture(self.t_s, tex)
+        self.sel_drv_img.set_texture(self.t_s, tex)
         ThanksPageGui.bld_page(self)
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)
 
+    def __add_lab(self, txt, pos_z, row, col):
+        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        del t_a['scale']
+        return OnscreenText(
+            txt + ':', pos=(-.95 + col * .5, pos_z - row * .5),
+            scale=.046, align=TextNode.A_left, **t_a)
+
+    def __add_txt(self, val, pos_z, psign, pcol, col, row):
+        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        del t_a['scale']
+        return OnscreenText(
+            '%s%s%%' % (psign(val), pcol(val)),
+            pos=(-.55 + col * .5, pos_z - row * .5), scale=.052,
+            align=TextNode.A_right, **t_a)
+
     def enable_buttons(self, enable):
-        for drv in self.drivers:
-            drv['state'] = NORMAL if enable else DISABLED
-            drv.setShaderInput('enable', 1 if enable else .2)
-            # do wdg.enable, wdg.disable
+        [(drv.enable if enable else drv.disable)() for drv in self.drivers]
 
     def update_text(self, task):
         has_name = self.ent.get() != _('your name')
@@ -143,8 +145,8 @@ class DriverPageGui(ThanksPageGui):
         return task.cont  # don't do a task, attach to modifications events
 
     def on_click(self, i):
-        txt_path = self.props.drivers_img[1]
-        self.img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
+        txt_path = self.props.drivers_img.path_sel
+        self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
@@ -162,7 +164,7 @@ class DriverPageGui(ThanksPageGui):
                                  self.mdt.track, self.mdt.car)
 
     def destroy(self):
-        self.img = None
+        self.sel_drv_img = None
         taskMgr.remove(self.update_tsk)
         PageGui.destroy(self)
 

@@ -10,18 +10,18 @@ from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
 
-class InputEvent(PageEvent):
+class InputPageEvent(PageEvent):
 
     def on_back(self):
         dct = {}
         dct['keys'] = {
-            'forward': self.mdt.gui.buttons[0]['text'],
-            'rear': self.mdt.gui.buttons[1]['text'],
-            'left': self.mdt.gui.buttons[2]['text'],
-            'right': self.mdt.gui.buttons[3]['text'],
-            'fire': self.mdt.gui.buttons[4]['text'],
-            'respawn': self.mdt.gui.buttons[5]['text'],
-            'pause': self.mdt.gui.buttons[6]['text']}
+            'forward': self.mdt.gui.ibuttons[0]['text'],
+            'rear': self.mdt.gui.ibuttons[1]['text'],
+            'left': self.mdt.gui.ibuttons[2]['text'],
+            'right': self.mdt.gui.ibuttons[3]['text'],
+            'fire': self.mdt.gui.ibuttons[4]['text'],
+            'respawn': self.mdt.gui.ibuttons[5]['text'],
+            'pause': self.mdt.gui.ibuttons[6]['text']}
         dct['joystick'] = self.mdt.gui.joypad_cb['indicatorValue']
         self.mdt.menu.gui.notify('on_input_back', dct)
 
@@ -36,8 +36,8 @@ class InputPageGui(ThanksPageGui):
 
     def bld_page(self):
         menu_args = self.menu_args
-        self.pagewidgets = []
-        self.buttons = []
+        widgets = []
+        self.ibuttons = []
 
         joypad_lab = DirectLabel(
             text=_('Use the joypad when present'), pos=(-.1, 1, .8),
@@ -51,18 +51,6 @@ class InputPageGui(ThanksPageGui):
             **menu_args.checkbtn_args)
         if not has_pygame():
             self.joypad_cb['state'] = DISABLED
-
-        def add_lab(text, pos_z):
-            self.pagewidgets += [DirectLabel(
-                text=text, pos=(-.1, 1, pos_z), text_align=TextNode.ARight,
-                **menu_args.label_args)]
-
-        def add_btn(text, pos_z):
-            btn = DirectButton(pos=(.46, 1, pos_z), text=text,
-                               command=self.start_rec, **menu_args.btn_args)
-            btn['extraArgs'] = [btn]
-            self.pagewidgets += [btn]
-            self.buttons += [btn]
         buttons_data = [
             (_('Accelerate'), 'forward', .6),
             (_('Brake/Reverse'), 'rear', .42),
@@ -72,17 +60,29 @@ class InputPageGui(ThanksPageGui):
             (_('Respawn'), 'respawn', -.28),
             (_('Pause'), 'pause', -.46)]
         for btn_data in buttons_data:
-            add_lab(btn_data[0], btn_data[2])
-            add_btn(self.keys[btn_data[1]], btn_data[2])
+            widgets += [self.__add_lab(btn_data[0], btn_data[2])]
+            widgets += [self.__add_btn(self.keys[btn_data[1]], btn_data[2])]
 
         l_a = menu_args.label_args.copy()
         l_a['scale'] = .065
         self.hint_lab = DirectLabel(
             text=_('Press the key to record it'), pos=(0, 1, -.6), **l_a)
         self.hint_lab.hide()
-        self.pagewidgets += [joypad_lab, self.joypad_cb, self.hint_lab]
-        map(self.add_widget, self.pagewidgets)
+        widgets += [joypad_lab, self.joypad_cb, self.hint_lab]
+        map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
+
+    def __add_lab(self, text, pos_z):
+        return DirectLabel(
+            text=text, pos=(-.1, 1, pos_z), text_align=TextNode.ARight,
+            **self.menu_args.label_args)
+
+    def __add_btn(self, text, pos_z):
+        btn = DirectButton(pos=(.46, 1, pos_z), text=text,
+                           command=self.start_rec, **self.menu_args.btn_args)
+        btn['extraArgs'] = [btn]
+        self.ibuttons += [btn]
+        return btn
 
     def start_rec(self, btn):
         numbers = [str(n) for n in range(10)]
@@ -103,7 +103,7 @@ class InputPageGui(ThanksPageGui):
 
 class InputPage(Page):
     gui_cls = InputPageGui
-    event_cls = InputEvent
+    event_cls = InputPageEvent
 
     def __init__(self, menu_args, joystick, keys, menu):
         self.menu_args = menu_args

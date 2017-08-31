@@ -11,8 +11,9 @@ class ThanksPageGui(PageGui):
         t_a = menu_args.text_args
         t_a['fg'] = menu_args.text_bg
         t_a['scale'] = .06
-        self.add_widget(OnscreenText(
+        thanks_txt = OnscreenText(
             text=_('Thanks to: ') + ThanksNames.get_thanks(1, 3)[0],
             pos=(.05, .05), align=TextNode.A_left, parent=base.a2dBottomLeft,
-            **t_a))
+            **t_a)
+        self.add_widget(thanks_txt)
         PageGui.bld_page(self)

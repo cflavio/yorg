@@ -9,11 +9,11 @@ class ExitPageGui(PageGui):
 
     def bld_page(self):
         menu_args = self.mdt.menu.gui.menu_args
-        self.frm = DirectFrame(
+        frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         txt = _(
             'Please, visit our site after exiting!\n\nIt helps us! Thank you!')
-        self.txt = OnscreenText(
+        txt = OnscreenText(
             text=txt, pos=(0, .64), scale=.08, wordwrap=32,
             fg=menu_args.text_fg, font=menu_args.font)
         menu_data = [
@@ -30,7 +30,7 @@ class ExitPageGui(PageGui):
         btn_dont_visit = DirectButton(
             text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
             text_scale=.7, **btn_args)
-        widgets = [self.frm, self.txt, btn_visit, btn_dont_visit]
+        widgets = [frm, txt, btn_visit, btn_dont_visit]
         map(self.add_widget, widgets)
         PageGui.bld_page(self, False)
 

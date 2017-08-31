@@ -2,8 +2,7 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
-from .carpage import CarPageSeason
-from .trackpage import TrackPage, TrackPageProps
+from .trackpage import TrackPageProps
 from .thankspage import ThanksPageGui
 
 
@@ -28,8 +27,8 @@ class SingleplayerPageProps(object):
 
 class SingleplayerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, singleplayer_props):
-        self.props = singleplayer_props
+    def __init__(self, mdt, menu_args, props):
+        self.props = props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
     def bld_page(self):
@@ -37,16 +36,16 @@ class SingleplayerPageGui(ThanksPageGui):
         menu_data = [
             (_('Single race'), self.on_single_race),
             (_('New season'), self.on_start),
-            (_('Continue season'), self.on_continue)]
+            (_('Continue season'), lambda: self.mdt.menu.gui.notify('on_continue'))]
         widgets = [
             DirectButton(
                 text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
                 **menu_gui.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
-        if not self.props.has_save:
-            widgets[-1]['state'] = DISABLED  # do wdg.disable()
-            widgets[-1].setAlphaScale(.25)
         map(self.add_widget, widgets)
+        self._set_buttons()
+        if not self.props.has_save:
+            widgets[-1].disable()
         ThanksPageGui.bld_page(self)
 
     def on_single_race(self):
@@ -55,8 +54,7 @@ class SingleplayerPageGui(ThanksPageGui):
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.mdt.menu.push_page(TrackPage(
-            self.mdt.menu_args, trackpage_props, self.mdt.menu))
+        self.notify('on_push_page', 'single_race', [trackpage_props])
 
     def on_start(self):
         self.mdt.menu.track = self.props.season_tracks[0]
@@ -65,11 +63,7 @@ class SingleplayerPageGui(ThanksPageGui):
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
-        self.mdt.menu.push_page(CarPageSeason(
-            self.mdt.menu_args, trackpage_props, self.mdt.menu))
-
-    def on_continue(self):
-        self.mdt.menu.gui.notify('on_continue')
+        self.notify('on_push_page', 'new_season', [trackpage_props])
 
 
 class SingleplayerPage(Page):
