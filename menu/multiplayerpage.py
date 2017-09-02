@@ -53,9 +53,8 @@ class MultiplayerPageGui(ThanksPageGui):
 class MultiplayerPage(Page):
     gui_cls = MultiplayerPageGui
 
-    def __init__(self, menu_args, mp_props, menu):
+    def __init__(self, menu_args, mp_props):
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, mp_props])]]

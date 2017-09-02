@@ -10,22 +10,6 @@ from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
 
-class InputPageEvent(PageEvent):
-
-    def on_back(self):
-        dct = {}
-        dct['keys'] = {
-            'forward': self.mdt.gui.ibuttons[0]['text'],
-            'rear': self.mdt.gui.ibuttons[1]['text'],
-            'left': self.mdt.gui.ibuttons[2]['text'],
-            'right': self.mdt.gui.ibuttons[3]['text'],
-            'fire': self.mdt.gui.ibuttons[4]['text'],
-            'respawn': self.mdt.gui.ibuttons[5]['text'],
-            'pause': self.mdt.gui.ibuttons[6]['text']}
-        dct['joystick'] = self.mdt.gui.joypad_cb['indicatorValue']
-        self.mdt.menu.gui.notify('on_input_back', dct)
-
-
 class InputPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu_args, joystick, keys):
@@ -95,6 +79,20 @@ class InputPageGui(ThanksPageGui):
         acc = lambda key: self.mdt.event.accept(key, self.rec, [btn, key])
         map(acc, self.keys)
 
+    def _on_back(self):
+        self.mdt.event.on_back()
+        dct = {}
+        dct['keys'] = {
+            'forward': self.mdt.gui.ibuttons[0]['text'],
+            'rear': self.mdt.gui.ibuttons[1]['text'],
+            'left': self.mdt.gui.ibuttons[2]['text'],
+            'right': self.mdt.gui.ibuttons[3]['text'],
+            'fire': self.mdt.gui.ibuttons[4]['text'],
+            'respawn': self.mdt.gui.ibuttons[5]['text'],
+            'pause': self.mdt.gui.ibuttons[6]['text']}
+        dct['joystick'] = self.mdt.gui.joypad_cb['indicatorValue']
+        self.notify('on_back', 'input_page', [dct])
+
     def rec(self, btn, val):
         btn['text'] = val
         self.hint_lab.hide()
@@ -103,11 +101,9 @@ class InputPageGui(ThanksPageGui):
 
 class InputPage(Page):
     gui_cls = InputPageGui
-    event_cls = InputPageEvent
 
-    def __init__(self, menu_args, joystick, keys, menu):
+    def __init__(self, menu_args, joystick, keys):
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, joystick, keys])]]

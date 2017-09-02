@@ -43,9 +43,8 @@ class ServerEvent(PageEvent):
 
 class ServerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, serverpage_props, menu):
+    def __init__(self, mdt, menu_args, serverpage_props):
         self.conn_txt = None
-        self.menu = menu
         self.props = serverpage_props
         ThanksPageGui.__init__(self, mdt, menu_args)
 
@@ -85,12 +84,10 @@ class ServerPage(Page):
     gui_cls = ServerPageGui
     event_cls = ServerEvent
 
-    def __init__(self, menu_args, serverpage_props, menu):
+    def __init__(self, menu_args, serverpage_props):
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, serverpage_props,
-                                    self.menu])]]
+            [('gui', self.gui_cls, [self, self.menu_args, serverpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)

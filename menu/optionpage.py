@@ -25,21 +25,6 @@ class OptionPageProps(object):
         self.opt_file = opt_file
 
 
-class OptionEvent(PageEvent):
-
-    def on_back(self):
-        lang_idx = self.mdt.gui.lang_opt.selectedIndex
-        dct = {
-            'lang': eng.languages[lang_idx][:2].lower(),
-            'volume': self.mdt.gui.vol_slider.getValue(),
-            'fullscreen': self.mdt.gui.fullscreen_cb['indicatorValue'],
-            'resolution': self.mdt.gui.res_opt.get().replace('x', ' '),
-            'antialiasing': self.mdt.gui.aa_cb['indicatorValue'],
-            'shaders': self.mdt.gui.shaders_cb['indicatorValue'],
-            'cars_number': int(self.mdt.gui.cars_opt.get())}
-        self.mdt.menu.gui.notify('on_options_back', dct)
-
-
 class OptionPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu_args, option_props):
@@ -126,14 +111,25 @@ class OptionPageGui(ThanksPageGui):
         LangMgr().set_lang(lang_dict[arg])
         self.update_texts()
 
+    def _on_back(self):
+        self.mdt.event.on_back()
+        lang_idx = self.lang_opt.selectedIndex
+        dct = {
+            'lang': eng.languages[lang_idx][:2].lower(),
+            'volume': self.mdt.gui.vol_slider.getValue(),
+            'fullscreen': self.mdt.gui.fullscreen_cb['indicatorValue'],
+            'resolution': self.mdt.gui.res_opt.get().replace('x', ' '),
+            'antialiasing': self.mdt.gui.aa_cb['indicatorValue'],
+            'shaders': self.mdt.gui.shaders_cb['indicatorValue'],
+            'cars_number': int(self.mdt.gui.cars_opt.get())}
+        self.notify('on_back', 'options_page', [dct])
+
 
 class OptionPage(Page):
     gui_cls = OptionPageGui
-    event_cls = OptionEvent
 
-    def __init__(self, menu_args, option_props, menu):
+    def __init__(self, menu_args, option_props):
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, option_props])]]

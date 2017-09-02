@@ -12,7 +12,16 @@ class InGameMenuGui(Gui):
         menu_args_c.background_img = ''
         menu_args_c.btn_size = (-8.6, 8.6, -.42, .98)
         self.menu = Menu(menu_args_c)
-        self.menu.push_page(InGamePage(menu_args_c, self.menu))
+        page = InGamePage(menu_args_c)
+        page.gui.attach(self.on_ingame_back)
+        page.gui.attach(self.on_ingame_exit)
+        self.menu.push_page(page)
+
+    def on_ingame_back(self):
+        self.notify('on_ingame_back')
+
+    def on_ingame_exit(self):
+        self.notify('on_ingame_exit')
 
     def destroy(self):
         self.menu = self.menu.destroy()

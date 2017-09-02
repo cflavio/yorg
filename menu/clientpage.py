@@ -23,9 +23,9 @@ class ClientEvent(PageEvent):
 
 class ClientPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu):
+    def __init__(self, mdt):
         self.ent = None
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt)
 
     def bld_page(self):
         menu_gui = self.mdt.menu.gui
@@ -62,7 +62,6 @@ class ClientPage(Page):
     gui_cls = ClientPageGui
     event_cls = ClientEvent
 
-    def __init__(self, menu_args, menu):
+    def __init__(self, menu_args):
         self.menu_args = menu_args
-        self.menu = menu
-        Page.__init__(self, self.menu_args, self.menu)
+        Page.__init__(self, self.menu_args)

@@ -11,7 +11,7 @@ class InGamePageGui(PageGui):
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         question_txt = _(
             "What do you want to do?\n\nNB Use 'p' for pausing the game.")
-        menu_args = self.mdt.menu.gui.menu_args
+        menu_args = self.menu_args
         txt = OnscreenText(
             text=question_txt, pos=(0, .64), scale=.08, wordwrap=32,
             fg=menu_args.text_fg, font=menu_args.font)
@@ -39,7 +39,7 @@ class InGamePageGui(PageGui):
     def on_end(self, back_to_game):
         eng.hide_standard_cursor()
         evt_name = 'back' if back_to_game else 'exit'
-        self.mdt.menu.gui.notify('on_ingame_' + evt_name)
+        self.notify('on_ingame_' + evt_name)
         eng.do_later(.01, eng.toggle_pause)
 
 

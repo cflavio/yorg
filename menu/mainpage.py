@@ -21,7 +21,7 @@ class MainPageProps(object):
             self, opt_file, cars, car_path, phys_path, tracks, tracks_tr,
             track_img, player_name, drivers_img, cars_img, multiplayer,
             title_img, feed_url, site_url, has_save, season_tracks,
-            support_url, drivers):
+            support_url, drivers, menu_args):
         self.opt_file = opt_file
         self.cars = cars
         self.car_path = car_path
@@ -40,15 +40,15 @@ class MainPageProps(object):
         self.season_tracks = season_tracks
         self.support_url = support_url
         self.drivers = drivers
+        self.menu_args = menu_args
 
 
 class YorgMainPageGui(MainPageGui):
 
-    def __init__(self, mdt, menu, mainpage_props):
-        self.menu = menu
+    def __init__(self, mdt, mainpage_props):
         self.props = mainpage_props
         self.load_settings()
-        MainPageGui.__init__(self, mdt, menu)
+        MainPageGui.__init__(self, mdt, self.props.menu_args)
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
@@ -72,7 +72,7 @@ class YorgMainPageGui(MainPageGui):
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.has_save, self.props.season_tracks,
-            self.props.drivers)
+            self.props.drivers, self.props.menu_args)
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer', [sp_props])
         mp_cb = lambda: self.menu.push_page(MultiplayerPage(
             self.menu.gui.menu_args, mp_props, self.menu))
@@ -84,17 +84,16 @@ class YorgMainPageGui(MainPageGui):
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
-            ('Quit', _('Quit'), lambda: self.mdt.menu.gui.notify('on_exit'))]
-        menu_gui = self.menu.gui
+            ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
             DirectButton(text='', pos=(0, 1, .45-i*.23), command=menu[2],
-                         **menu_gui.menu_args.btn_args)
+                         **self.props.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(widgets):
             PageGui.transl_text(wdg, menu_data[i][0], menu_data[i][1])
         if not self.props.multiplayer:
             widgets[-5]['state'] = DISABLED
-            _fg = menu_gui.menu_args.btn_args['text_fg']
+            _fg = self.props.menu_args.btn_args['text_fg']
             _fc = widgets[-5]['frameColor']
             clc = lambda val: max(0, val)
             fgc = (_fg[0] - .3, _fg[1] - .3, _fg[2] - .3, _fg[3])
@@ -107,9 +106,9 @@ class YorgMainPageGui(MainPageGui):
             parent=base.a2dTopRight, pos=(-.8, 1, -.4))
         widgets += [logo_img]
         widgets[-1].set_transparency(True)
-        lab_args = self.menu.gui.menu_args.label_args
+        lab_args = self.props.menu_args.label_args
         lab_args['scale'] = .12
-        lab_args['text_fg'] = self.menu.gui.menu_args.text_err
+        lab_args['text_fg'] = self.props.menu_args.text_err
         wip_lab = DirectLabel(text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft,
                              text_align=TextNode.A_left, **lab_args)
         PageGui.transl_text(wip_lab, 'NB the game is work-in-progress',
@@ -128,8 +127,7 @@ class YorgMainPageGui(MainPageGui):
         self.notify('on_push_page', 'options', [option_props])
 
     def set_news(self):
-        menu_gui = self.menu.gui
-        menu_args = self.menu.gui.menu_args
+        menu_args = self.props.menu_args
         feeds = parse(self.props.feed_url)
         if not feeds['entries']:
             return
@@ -154,7 +152,7 @@ class YorgMainPageGui(MainPageGui):
             wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
             fg=menu_args.text_bg, font=menu_args.font)
                   for i in range(5)]
-        btn_args = menu_gui.menu_args.btn_args.copy()
+        btn_args = self.props.menu_args.btn_args.copy()
         btn_args['scale'] = .055
         show_btn = DirectButton(
             text=_('show'), pos=(.55, 1, .15), command=eng.open_browser,
@@ -187,10 +185,9 @@ class YorgMainPageGui(MainPageGui):
 class YorgMainPage(MainPage):
     gui_cls = YorgMainPageGui
 
-    def __init__(self, menu, mainpage_props):
-        self.menu = menu
+    def __init__(self, mainpage_props):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu, mainpage_props])]]
+            [('gui', self.gui_cls, [self, mainpage_props])]]
         GameObject.__init__(self, init_lst)
         MainPage.__init__(self)

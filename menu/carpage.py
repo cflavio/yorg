@@ -30,21 +30,19 @@ class CarPageProps(object):
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, carpage_props):
+    def __init__(self, mdt, menu_args, carpage_props, track_path):
         self.car = None
         self.current_cars = None
-        self.track_path = None
+        self.track_path = track_path
         self.props = carpage_props
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu_args)
 
     def bld_page(self):
-        menu_gui = self.mdt.menu.gui
         if game.logic.curr_cars:
             self.props.cars = game.logic.curr_cars
         widgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
-            **menu_gui.menu_args.text_args)]
-        self.track_path = self.mdt.menu.track  # we should pass it
+            **self.menu_args.text_args)]
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
             if row * cars_per_row + col >= len(self.props.cars):
@@ -55,7 +53,7 @@ class CarPageGui(ThanksPageGui):
         ThanksPageGui.bld_page(self)
 
     def __bld_car(self, cars_per_row, row, col):
-        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         z_offset = 0 if len(self.props.cars) > cars_per_row else .35
         num_car_row = len(self.props.cars) - cars_per_row if row == 1 else \
@@ -68,7 +66,7 @@ class CarPageGui(ThanksPageGui):
             image=self.props.car_path % self.props.cars[col + row * cars_per_row],
             command=self.on_car,
             extraArgs=[self.props.cars[col + row * cars_per_row]],
-            **self.mdt.menu.gui.menu_args.imgbtn_args)
+            **self.menu_args.imgbtn_args)
         widgets = [btn]
         txt = OnscreenText(
             self.props.cars[col + row * cars_per_row],
@@ -94,7 +92,7 @@ class CarPageGui(ThanksPageGui):
 
     def __add_txt(self, txt, val, pos_z, psign, pcol, col, x_offset, z_offset,
                   row):
-        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         return OnscreenText(
             '%s: %s%s%%' % (txt, psign(val), pcol(val)),
@@ -105,7 +103,7 @@ class CarPageGui(ThanksPageGui):
         return [btn for btn in self.buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
-        self.mdt.menu.gui.notify('on_car_selected', car)
+        self.notify('on_car_selected', car)
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
@@ -116,7 +114,7 @@ class CarPageGui(ThanksPageGui):
 class CarPageGuiSeason(CarPageGui):
 
     def on_car(self, car):
-        self.mdt.menu.gui.notify('on_car_selected_season', car)
+        self.notify('on_car_selected_season', car)
         driverpage_props = DriverPageProps(
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.cars, self.props.drivers)
@@ -225,12 +223,12 @@ class CarPageGuiClient(CarPageGui):
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, menu_args, carpage_props, menu):
+    def __init__(self, menu_args, carpage_props, track_path):
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, carpage_props])]]
+            [('gui', self.gui_cls, [self, self.menu_args, carpage_props,
+                                    track_path])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
 

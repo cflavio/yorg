@@ -10,7 +10,7 @@ class SingleplayerPageProps(object):
 
     def __init__(self, cars, car_path, phys_path, tracks, tracks_tr, track_img,
                  player_name, drivers_img, cars_img, has_save, season_tracks,
-                 drivers):
+                 drivers, menu_args):
         self.cars = cars
         self.car_path = car_path
         self.phys_path = phys_path
@@ -23,6 +23,7 @@ class SingleplayerPageProps(object):
         self.has_save = has_save
         self.season_tracks = season_tracks
         self.drivers = drivers
+        self.menu_args = menu_args
 
 
 class SingleplayerPageGui(ThanksPageGui):
@@ -32,15 +33,14 @@ class SingleplayerPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, menu_args)
 
     def bld_page(self):
-        menu_gui = self.mdt.menu.gui
         menu_data = [
             (_('Single race'), self.on_single_race),
             (_('New season'), self.on_start),
-            (_('Continue season'), lambda: self.mdt.menu.gui.notify('on_continue'))]
+            (_('Continue season'), lambda: self.notify('on_continue'))]
         widgets = [
             DirectButton(
                 text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                **menu_gui.menu_args.btn_args)
+                **self.props.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         map(self.add_widget, widgets)
         self._set_buttons()
@@ -57,7 +57,7 @@ class SingleplayerPageGui(ThanksPageGui):
         self.notify('on_push_page', 'single_race', [trackpage_props])
 
     def on_start(self):
-        self.mdt.menu.track = self.props.season_tracks[0]
+        self.notify('on_track_selected', self.props.season_tracks[0])
         trackpage_props = TrackPageProps(
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.tracks, self.props.tracks_tr, self.props.track_img,
@@ -69,9 +69,8 @@ class SingleplayerPageGui(ThanksPageGui):
 class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui
 
-    def __init__(self, menu_args, singleplayerpage_props, menu):
+    def __init__(self, menu_args, singleplayerpage_props):
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args,

@@ -54,12 +54,10 @@ class DriverPageGui(ThanksPageGui):
 
     def bld_page(self):
         self.skills = [drv.skill for drv in self.props.drivers]
-        menu_gui = self.mdt.menu.gui
-        menu_args = self.mdt.menu.gui.menu_args
+        menu_args = self.menu_args
         widgets = [OnscreenText(text=_('Select the driver'), pos=(0, .8),
-                                **menu_gui.menu_args.text_args)]
-        self.track_path = self.mdt.menu.track
-        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+                                **menu_args.text_args)]
+        t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         name = OnscreenText(_('Write your name:'), pos=(-.1, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
@@ -75,7 +73,7 @@ class DriverPageGui(ThanksPageGui):
                 scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
                 frameColor=(0, 0, 0, 0), image=self.props.drivers_img[0] % idx,
                 command=self.on_click, extraArgs=[idx],
-                **self.mdt.menu.gui.menu_args.imgbtn_args)
+                **self.menu_args.imgbtn_args)
             widgets += [drv_btn]
             self.drivers += [widgets[-1]]
             sign = lambda pos_x: '\1green\1+\2' if pos_x > 0 else ''
@@ -115,14 +113,14 @@ class DriverPageGui(ThanksPageGui):
         self.enable_buttons(False)
 
     def __add_lab(self, txt, pos_z, row, col):
-        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         return OnscreenText(
             txt + ':', pos=(-.95 + col * .5, pos_z - row * .5),
             scale=.046, align=TextNode.A_left, **t_a)
 
     def __add_txt(self, val, pos_z, psign, pcol, col, row):
-        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         return OnscreenText(
             '%s%s%%' % (psign(val), pcol(val)),
@@ -160,8 +158,8 @@ class DriverPageGui(ThanksPageGui):
         drivers = [DriverInfo(i, self.ent.get(), self.skills[i - 1], self.mdt.car)]
         drivers += [DriverInfo(drv_idx[j], names[j], self.skills[j - 1], cars[j])
                     for j in range(len(cars))]
-        self.mdt.menu.gui.notify('on_driver_selected', self.ent.get(), drivers,
-                                 self.mdt.track, self.mdt.car)
+        self.notify('on_driver_selected', self.ent.get(), drivers,
+                    self.mdt.track, self.mdt.car)
 
     def destroy(self):
         self.sel_drv_img = None
@@ -172,11 +170,10 @@ class DriverPageGui(ThanksPageGui):
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, menu_args, track, car, driverpage_props, menu):
+    def __init__(self, menu_args, track, car, driverpage_props):
         self.track = track
         self.car = car
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, driverpage_props])]]

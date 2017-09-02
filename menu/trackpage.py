@@ -27,16 +27,15 @@ class TrackPageProps(object):
 
 class TrackPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu, trackpage_props):
+    def __init__(self, mdt, menu_args, trackpage_props):
         self.props = trackpage_props
-        ThanksPageGui.__init__(self, mdt, menu)
+        ThanksPageGui.__init__(self, mdt, menu_args)
 
     def bld_page(self):
-        menu_gui = self.mdt.menu.gui
         txt = OnscreenText(text=_('Select the track'), pos=(0, .8),
-                           **menu_gui.menu_args.text_args)
+                           **self.menu_args.text_args)
         self.add_widget(txt)
-        t_a = self.mdt.menu.gui.menu_args.text_args.copy()
+        t_a = self.menu_args.text_args.copy()
         t_a['scale'] = .06
         tracks_per_row = 2
         for row, col in product(range(2), range(tracks_per_row)):
@@ -54,7 +53,7 @@ class TrackPageGui(ThanksPageGui):
                     col + row * tracks_per_row],
                 command=self.on_track, extraArgs=[self.props.tracks[
                     col + row * tracks_per_row]],
-                **self.mdt.menu.gui.menu_args.imgbtn_args)
+                **self.menu_args.imgbtn_args)
             txt = OnscreenText(
                 self.props.tracks_tr()[col + row * tracks_per_row],
                 pos=(-.5 + col * 1.0 + x_offset, .14 - z_offset - row * .7),
@@ -63,33 +62,27 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.bld_page(self)
 
     def on_track(self, track):
-        self.mdt.menu.track = track
+        self.notify('on_track_selected', track)
         carpage_props = CarPageProps(
             self.props.cars, self.props.car_path, self.props.phys_path,
             self.props.player_name, self.props.drivers_img,
             self.props.cars_img, self.props.drivers)
         self.notify('on_push_page', 'car_page', [carpage_props])
 
-    def destroy(self):
-        if hasattr(self.mdt.menu, 'track'):
-            del self.mdt.menu.track
-        PageGui.destroy(self)
-
 
 class TrackPageGuiServer(TrackPageGui):
 
     def on_track(self, track):
         self.menu.track = track
-        self.menu.push_page(CarPageServer(self.menu))
+        self.menu.push_page(CarPageServer())
         Server().send([NetMsgs.track_selected, track])
 
 
 class TrackPage(Page):
     gui_cls = TrackPageGui
 
-    def __init__(self, menu_args, trackpage_props, menu):
+    def __init__(self, menu_args, trackpage_props):
         self.menu_args = menu_args
-        self.menu = menu
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, trackpage_props])]]
