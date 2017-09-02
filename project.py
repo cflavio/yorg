@@ -2,7 +2,6 @@
 
 # TODO LIST =====
 
-# refactor: weapons
 # refactor: refactor the props for the menu pages
 
 # 0.9 (refinements)
