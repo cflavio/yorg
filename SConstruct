@@ -1,8 +1,9 @@
-from yyagl.build.build import extensions, files, img_extensions, \
+from collections import namedtuple
+from yyagl.build.build import extensions, files, img_tgt_names, \
     set_path, p3d_fpath, win_fpath, osx_fpath, linux_fpath, \
     src_fpath, devinfo_fpath, docs_fpath, win_noint_fpath,\
     osx_noint_fpath, linux_noint_fpath, pdf_fpath, test_fpath, \
-    track_files
+    tracks_tgt_fnames
 from yyagl.build.p3d import bld_p3d
 from yyagl.build.windows import bld_windows
 from yyagl.build.osx import bld_osx
@@ -13,8 +14,8 @@ from yyagl.build.test import bld_ut
 from yyagl.build.docs import bld_docs
 from yyagl.build.strings import bld_strings, bld_tmpl_merge
 from yyagl.build.imgs import bld_images
-from yyagl.build.pdf import bld_pdf
-from yyagl.build.tracks import bld_tracks
+from yyagl.build.pdf import bld_pdfs
+from yyagl.build.tracks import bld_models
 
 
 argument_info = [  # (argname, default value)
@@ -59,9 +60,9 @@ bld_src = Builder(action=bld_src)
 bld_devinfo = Builder(action=bld_devinfo)
 bld_tests = Builder(action=bld_ut)
 bld_docs = Builder(action=bld_docs)
-bld_pdf = Builder(action=bld_pdf)
+bld_pdfs = Builder(action=bld_pdfs)
 bld_images = Builder(action=bld_images)
-bld_tracks = Builder(action=bld_tracks)
+bld_models = Builder(action=bld_models)
 bld_str = Builder(action=bld_strings, suffix='.mo', src_suffix='.po')
 bld_str_tmpl = Builder(action=bld_tmpl_merge, suffix='.pot',
                        src_suffix='.py')
@@ -70,7 +71,7 @@ env = Environment(BUILDERS={
     'p3d': bld_p3d, 'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
     'source': bld_src, 'devinfo': bld_devinfo, 'tests': bld_tests,
     'docs': bld_docs, 'images': bld_images, 'str': bld_str,
-    'str_tmpl': bld_str_tmpl, 'pdf': bld_pdf, 'tracks': bld_tracks})
+    'str_tmpl': bld_str_tmpl, 'pdf': bld_pdfs, 'tracks': bld_models})
 env['P3D_PATH'] = p3d_path
 env['APPNAME'] = app_name
 env['LNG'] = lang_path
@@ -80,36 +81,37 @@ env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT']
 env['MODELS_DIR_PATH'] = 'assets/models'
 env['TRACKS_DIR_PATH'] = 'assets/models/tracks'
+PDFInfo = namedtuple('PDFInfo', 'lng root fil excl')
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 yorg_fil_dirs = ['yyagl', 'menu', 'yorg', 'licenses', 'assets', 'venv',
                  'build', 'built']
 yorg_fil = ['./%s/*' % dname for dname in yorg_fil_dirs]
 yorg_lst = [
-    ('python', './yorg', '*.py', []),
-    ('python', '.', '*.py SConstruct *.md *.txt', yorg_fil)]
+    PDFInfo('python', './yorg', '*.py', []),
+    PDFInfo('python', '.', '*.py SConstruct *.md *.txt', yorg_fil)]
 racing_fil = ['./yyagl/racing/game/*', './yyagl/racing/car/*',
               './yyagl/racing/race/*', './yyagl/racing/track/*']
-racing_lst = [('python', './yyagl/racing', '*.py', racing_fil)]
+racing_lst = [PDFInfo('python', './yyagl/racing', '*.py', racing_fil)]
 yyagl_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/tests/*']
 yyagl_lst = [
-    ('python', './yyagl', '*.py *.pdef', filt_game + yyagl_fil),
-    ('c', './yyagl', '*.vert *.frag', filt_game + yyagl_fil)]
+    PDFInfo('python', './yyagl', '*.py *.pdef', filt_game + yyagl_fil),
+    PDFInfo('c', './yyagl', '*.vert *.frag', filt_game + yyagl_fil)]
 binfo_lst = [
     ('python', '*.py *.pdef'), ('lua', 'config.lua'),
     ('', '*.rst *.css_t *.conf'), ('html', '*.html'), ('javascript', '*.js')]
-build_lst = [(binfo[0], './yyagl/build', binfo[1], filt_game)
+build_lst = [PDFInfo(binfo[0], './yyagl/build', binfo[1], filt_game)
              for binfo in binfo_lst]
 pdf_conf = {
-    'yorg_menu': [('python', './menu', '*.py', [])],
+    'yorg_menu': [PDFInfo('python', './menu', '*.py', [])],
     'yorg': yorg_lst,
     'racing': racing_lst,
-    'racing_car': [('python', './yyagl/racing/car', '*.py', [])],
-    'racing_race': [('python', './yyagl/racing/race', '*.py', [])],
-    'racing_track': [('python', './yyagl/racing/track', '*.py', [])],
+    'racing_car': [PDFInfo('python', './yyagl/racing/car', '*.py', [])],
+    'racing_race': [PDFInfo('python', './yyagl/racing/race', '*.py', [])],
+    'racing_track': [PDFInfo('python', './yyagl/racing/track', '*.py', [])],
     'yyagl': yyagl_lst,
     'build': build_lst,
-    'engine': [('python', './yyagl/engine', '*.py', filt_game)],
-    'tests': [('python', './yyagl/tests', '*.py', [])]}
+    'engine': [PDFInfo('python', './yyagl/engine', '*.py', filt_game)],
+    'tests': [PDFInfo('python', './yyagl/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
 
 cond_racing = lambda s: not str(s).startswith('yyagl/racing/')
@@ -126,15 +128,15 @@ env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
 
-img_files = img_extensions(files(['psd']))
+img_files = img_tgt_names(files(['psd']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
-    lang_src + track_files()
+    lang_src + tracks_tgt_fnames()
 no_int = args['nointernet']
 if args['images']:
     env.images(img_files, files(['psd']))
 if args['tracks']:
-    env.tracks(track_files(), files(['egg']))
+    env.tracks(tracks_tgt_fnames(), files(['egg']))
 if args['p3d']:
     env.p3d([p3d_path], general_src)
 if args['source']:
