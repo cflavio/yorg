@@ -37,8 +37,8 @@ class ExitPageGui(PageGui):
     @staticmethod
     def on_end(visit):
         if visit:
-            eng.open_browser('http://www.ya2.it')
-        eng.do_later(.5, sys_exit)
+            ExitPageGui.eng.open_browser('http://www.ya2.it')
+        ExitPageGui.eng.do_later(.5, sys_exit)
 
 
 class ExitPage(Page):

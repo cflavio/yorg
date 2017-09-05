@@ -3,9 +3,15 @@
 # TODO LIST =====
 
 # refactor: refactor the props for the menu pages
+# refactor: notify done by evt (from mdt externally);
+#   Colleague.notify invokes that; GO's attach redirected to evt;
+#   only evt is a Subject
+# refactor: driver.car
+# refactor: raceprops.seasonprops.gameprops
 
 # 0.9 (refinements)
 # particles (using shaders)
+# camera at car's back
 # preload assets (cars on application's start, track on menu selection)
 # 3D audio (from player's car)
 # animation when the car is repaired in pitstop
@@ -42,6 +48,7 @@
 
 # MAYBE/SOMEDAY =====
 
+# remove mdt from colleague
 # change/improve linux installer
 # make scons for yyagl
 # embed into a wx / pyqt window

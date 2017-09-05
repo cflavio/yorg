@@ -109,7 +109,7 @@ class YorgMenuGui(MenuGui):
             m_p.drivers, m_p.menu_args)
         page = YorgMainPage(mainpage_props)
         page.gui.attach(self.on_exit)
-        eng.do_later(.01, lambda: self.mdt.logic.push_page(page))
+        self.eng.do_later(.01, lambda: self.mdt.logic.push_page(page))
 
     def on_exit(self):
         self.notify('on_exit')

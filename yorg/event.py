@@ -1,20 +1,19 @@
 from time import strftime
 from yyagl.gameobject import Event
 from yyagl.engine.phys import PhysMgr
-from yyagl.engine.profiler import Profiler
 
 
 class YorgEvent(Event):
 
     def __init__(self, mdt):
         Event.__init__(self, mdt)
-        if not eng.is_runtime:
-            self.accept('f12', PhysMgr().toggle_debug)
+        if not self.eng.is_runtime:
+            self.accept('f12', self.eng.phys_mgr.toggle_debug)
         fname = 'yorg_' + strftime('%y_%m_%d_%H_%M_%S') + '.png'
-        self.accept('f10', eng.base.win.saveScreenshot, [fname])
+        self.accept('f10', self.eng.base.win.saveScreenshot, [fname])
         base.accept('escape-up', self.mdt.fsm.demand, ['Exit'])
-        if not eng.is_runtime:
-            self.accept('f9', Profiler().toggle)
+        if not self.eng.is_runtime:
+            self.accept('f9', self.eng.profiler.toggle)
 
     def on_season_end(self, singlerace=False):
         if not singlerace:

@@ -11,12 +11,12 @@ from .thankspage import ThanksPageGui
 class ClientEvent(PageEvent):
 
     def on_back(self):
-        if Client().is_active:
-            Client().destroy()
+        if self.eng.client.is_active:
+            self.eng.client.destroy()
 
     def process_msg(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:
-            eng.log('track selected: ' + data_lst[1])
+            self.eng.log('track selected: ' + data_lst[1])
             self.mdt.gui.menu.track = data_lst[1]
             self.mdt.gui.menu.push_page(CarPageClient(self.mdt.gui.menu))
 
@@ -45,8 +45,8 @@ class ClientPageGui(ThanksPageGui):
     def connect(self):
         menu_gui = self.mdt.menu.gui
         try:
-            eng.log(self.ent.get())
-            Client().start(self.mdt.event.process_msg, self.ent.get())
+            self.eng.log(self.ent.get())
+            self.eng.client.start(self.mdt.event.process_msg, self.ent.get())
             menu_args = self.mdt.menu.gui.menu_args
             wait_txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
@@ -55,7 +55,7 @@ class ClientPageGui(ThanksPageGui):
         except ClientError:
             txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
                                scale=.16, font=menu_gui.menu_args.font)
-            eng.do_later(5, txt.destroy)
+            self.eng.do_later(5, txt.destroy)
 
 
 class ClientPage(Page):

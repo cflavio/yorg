@@ -30,12 +30,12 @@ class YorgFsm(Fsm):
             self.race = self.__exit_menu = None
 
     def enterMenu(self):
-        LogMgr().log('entering Menu state')
+        self.eng.log_mgr.log('entering Menu state')
         menu_props = MenuProps(
             self.mdt.gameprops.menu_args, self.mdt.options,
             self.mdt.gameprops.cars_names[:int(self.mdt.options['settings']['cars_number'])],
             'assets/images/cars/%s.png',
-            eng.curr_path + 'assets/models/cars/%s/phys.yml',
+            self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
             ['desert', 'mountain', 'amusement', 'countryside'],
             lambda: [_('desert'), _('mountain'), _('amusement park'),
                      _('countryside')],
@@ -65,12 +65,12 @@ class YorgFsm(Fsm):
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_cont)
 
     def exitMenu(self):
-        LogMgr().log('exiting Menu state')
+        self.eng.log_mgr.log('exiting Menu state')
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
     def enterRace(self, track_path='', car_path='', drivers=''):
-        LogMgr().log('entering Race state')
+        self.eng.log_mgr.log('entering Race state')
         base.ignore('escape-up')
         if 'save' not in self.mdt.options.dct:
             self.mdt.options['save'] = {}
@@ -91,14 +91,14 @@ class YorgFsm(Fsm):
             'assets/sfx/lap.ogg', 'assets/sfx/landing.ogg')
         race_props = self.mdt.logic.build_race_props(
             car_path, drivers, track_path, keys, joystick, sounds)
-        if Server().is_active:
+        if self.eng.server.is_active:
             self.season.create_race_server(race_props)
-        elif Client().is_active:
+        elif self.eng.client.is_active:
             self.season.create_race_client(race_props)
         else:
             self.mdt.logic.season.create_race(race_props,
                                               self.mdt.logic.season.props)
-        LogMgr().log('selected drivers: ' + str(drivers))
+        self.eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.mdt.logic.season.race.logic.drivers = drivers
         track_name_transl = track_path
         track_dct = {'desert': _('desert'), 'mountain': _('mountain'),
@@ -114,14 +114,14 @@ class YorgFsm(Fsm):
         self.mdt.logic.season.race.attach_obs(exit_mth, redirect=self.mdt.fsm.demand, args=['Menu'])
 
     def exitRace(self):
-        LogMgr().log('exiting Race state')
+        self.eng.log_mgr.log('exiting Race state')
         self.mdt.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
 
     def enterRanking(self):
         self.mdt.logic.season.ranking.show(
             self.mdt.logic.season.race.logic.props, self.mdt.logic.season.props)
-        eng.do_later(.1, self.mdt.logic.season.ranking.attach_obs, [self.on_ranking_end])
+        self.eng.do_later(.1, self.mdt.logic.season.ranking.attach_obs, [self.on_ranking_end])
 
     def on_ranking_end(self):
         self.demand('Tuning')

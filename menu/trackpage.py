@@ -75,7 +75,7 @@ class TrackPageGuiServer(TrackPageGui):
     def on_track(self, track):
         self.menu.track = track
         self.menu.push_page(CarPageServer())
-        Server().send([NetMsgs.track_selected, track])
+        self.eng.server.send([NetMsgs.track_selected, track])
 
 
 class TrackPage(Page):

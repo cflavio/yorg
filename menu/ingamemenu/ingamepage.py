@@ -29,18 +29,18 @@ class InGamePageGui(PageGui):
             text_scale=.8, **btn_args)
         map(self.add_widget, [frm, txt, btn_visit, btn_dont_visit])
         PageGui.bld_page(self, False)
-        eng.hide_cursor()
-        eng.show_standard_cursor()
-        eng.do_later(.01, eng.toggle_pause, [False])
+        self.eng.hide_cursor()
+        self.eng.show_standard_cursor()
+        self.eng.do_later(.01, self.eng.toggle_pause, [False])
         # in the next frame since otherwise InGameMenu will be paused while
         # waiting page's creation, and when it is restored it is destroyed,
         # then the creation callback finds a None menu
 
     def on_end(self, back_to_game):
-        eng.hide_standard_cursor()
+        self.eng.hide_standard_cursor()
         evt_name = 'back' if back_to_game else 'exit'
         self.notify('on_ingame_' + evt_name)
-        eng.do_later(.01, eng.toggle_pause)
+        self.eng.do_later(.01, self.eng.toggle_pause)
 
 
 class InGamePage(Page):

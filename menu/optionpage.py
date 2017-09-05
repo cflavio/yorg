@@ -37,29 +37,29 @@ class OptionPageGui(ThanksPageGui):
         menu_args = self.menu_args
         widgets = [self.__add_lab('Language', _('Language'), .85)]
         self.lang_opt = DirectOptionMenu(
-            text='', items=eng.languages, pos=(.49, 1, .85),
+            text='', items=self.eng.languages, pos=(.49, 1, .85),
             initialitem=self.props.lang, command=self.__change_lang,
             **menu_args.option_args)
         widgets += [self.__add_lab('Volume', _('Volume'), .65)]
         self.vol_slider = DirectSlider(
             pos=(.52, 0, .68), scale=.49, value=self.props.volume,
             frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg,
-            command=lambda: eng.set_volume(self.vol_slider['value']))
+            command=lambda: self.eng.set_volume(self.vol_slider['value']))
         widgets += [self.__add_lab('Fullscreen', _('Fullscreen'), .45)]
         self.fullscreen_cb = DirectCheckButton(
             pos=(.12, 1, .47), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_fg,
-            command=lambda val: eng.toggle_fullscreen(),
+            command=lambda val: self.eng.toggle_fullscreen(),
             **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Resolution', _('Resolution'), .25)]
         res2vec = lambda res: LVector2i(*[int(val) for val in res.split('x')])
         self.res_opt = DirectOptionMenu(
             text='',
             items=['x'.join([str(el_res) for el_res in res])
-                   for res in eng.resolutions],
+                   for res in self.eng.resolutions],
             pos=(.49, 1, .25),
-            initialitem='x'.join(str(res) for res in eng.closest_res),
-            command=lambda res: eng.set_resolution(res2vec(res)),
+            initialitem='x'.join(str(res) for res in self.eng.closest_res),
+            command=lambda res: self.eng.set_resolution(res2vec(res)),
             **menu_args.option_args)
         widgets += [self.__add_lab('Antialiasing', _('Antialiasing'), .05)]
         widgets += [
@@ -86,8 +86,8 @@ class OptionPageGui(ThanksPageGui):
             self.lang_opt, self.vol_slider, self.fullscreen_cb, self.res_opt,
             self.aa_cb, input_btn, self.shaders_cb, self.cars_opt]
         map(self.add_widget, widgets)
-        idx = LangMgr().lang_codes.index(self.props.lang)
-        self.__change_lang(eng.languages[idx])
+        idx = self.eng.lang_mgr.lang_codes.index(self.props.lang)
+        self.__change_lang(self.eng.languages[idx])
         ThanksPageGui.bld_page(self)
 
     def __add_lab(self, txt, txt_tr, pos_z, x=-.1, align=TextNode.ARight):
@@ -103,19 +103,19 @@ class OptionPageGui(ThanksPageGui):
 
     def update_texts(self):
         PageGui.update_texts(self)
-        curr_lang = LangMgr().curr_lang
+        curr_lang = self.eng.lang_mgr.curr_lang
         self.lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
     def __change_lang(self, arg):
         lang_dict = {'English': 'en', 'Italiano': 'it'}
-        LangMgr().set_lang(lang_dict[arg])
+        self.eng.lang_mgr.set_lang(lang_dict[arg])
         self.update_texts()
 
     def _on_back(self):
         self.mdt.event.on_back()
         lang_idx = self.lang_opt.selectedIndex
         dct = {
-            'lang': eng.languages[lang_idx][:2].lower(),
+            'lang': self.eng.languages[lang_idx][:2].lower(),
             'volume': self.mdt.gui.vol_slider.getValue(),
             'fullscreen': self.mdt.gui.fullscreen_cb['indicatorValue'],
             'resolution': self.mdt.gui.res_opt.get().replace('x', ' '),

@@ -73,11 +73,11 @@ class YorgLogic(GameLogic):
 
     def __process_default(self):
         opt_ver = self.mdt.options['settings']['last_version'].split('-')[0]
-        curr_ver = eng.version.split('-')[0]
+        curr_ver = self.eng.version.split('-')[0]
         if curr_ver == '0.8.0' and opt_ver == '0.7.0':
             if self.mdt.options['settings']['cars_number'] == 7:
                 self.mdt.options['settings']['cars_number'] = 8
-        self.mdt.options['settings']['last_version'] = eng.version
+        self.mdt.options['settings']['last_version'] = self.eng.version
         self.mdt.options.store()
 
     def on_input_back(self, new_opt_dct):
@@ -117,7 +117,7 @@ class YorgLogic(GameLogic):
         self.mdt.options['settings']['player_name'] = player_name
         self.mdt.options.store()
         self.season.logic.props = self.season.props._replace(drivers=drivers)
-        eng.do_later(2.0, self.mdt.fsm.demand, ['Race', track, car, drivers])
+        self.eng.do_later(2.0, self.mdt.fsm.demand, ['Race', track, car, drivers])
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
@@ -183,7 +183,7 @@ class YorgLogic(GameLogic):
         WheelNames = namedtuple('WheelNames', 'frontrear both')
         wheel_names = WheelNames(frwheels, bwheels)
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
-        wheel_gfx_names = [eng.curr_path + 'assets/models/cars/%s/' + wname
+        wheel_gfx_names = [self.eng.curr_path + 'assets/models/cars/%s/' + wname
                            for wname in wheel_gfx_names]
         WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
@@ -199,7 +199,7 @@ class YorgLogic(GameLogic):
             driver_props = DriverProps(str(driver.car_id), d_s.speed, d_s.adherence, d_s.stability)
             carname2driver[driver.car_name] = Driver(driver_props)
         track_fpath = 'assets/models/tracks/%s/track.yml' % track_name
-        with open(eng.curr_path + track_fpath) as ftrack:
+        with open(self.eng.curr_path + track_fpath) as ftrack:
             music_name = load(ftrack)['music']
         music_fpath = 'assets/music/%s.ogg' % music_name
         corner_names = ['topleft', 'topright', 'bottomright', 'bottomleft']
@@ -208,7 +208,7 @@ class YorgLogic(GameLogic):
                          'diones': (1, 1, 1, 1), 'iapeto': (1, 1, 0, 1),
                          'phoibe': (.6, .6, 1, 1), 'rea': (0, 0, .6, 1),
                          'iperion': (.8, .8, .8, 1), 'teia': (0, 0, 0, 1)}
-        with open(eng.curr_path + track_fpath) as ftrack:
+        with open(self.eng.curr_path + track_fpath) as ftrack:
             track_cfg = load(ftrack)
             camera_vec = track_cfg['camera_vector']
             shadow_src = track_cfg['shadow_source']
@@ -233,7 +233,7 @@ class YorgLogic(GameLogic):
         race_props = RaceProps(
             keys, joystick, sounds, 'assets/fonts/Hanken-Book.ttf',
             'assets/models/cars/%s/capsule', 'Capsule', 'assets/models/cars',
-            eng.curr_path + 'assets/models/cars/%s/phys.yml',
+            self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
             wheel_names, 'Road', 'assets/models/cars/%s/car',
             damage_info, wheel_gfx_names,
             'assets/particles/sparks.ptf', carname2driver,

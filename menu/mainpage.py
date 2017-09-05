@@ -76,7 +76,7 @@ class YorgMainPageGui(MainPageGui):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer', [sp_props])
         mp_cb = lambda: self.menu.push_page(MultiplayerPage(
             self.menu.gui.menu_args, mp_props, self.menu))
-        supp_cb = lambda: eng.open_browser(self.props.support_url)
+        supp_cb = lambda: self.eng.open_browser(self.props.support_url)
         cred_cb = lambda: self.notify('on_push_page', 'credits')
         menu_data = [
             ('Single Player', _('Single Player'), sp_cb),
@@ -155,7 +155,7 @@ class YorgMainPageGui(MainPageGui):
         btn_args = self.props.menu_args.btn_args.copy()
         btn_args['scale'] = .055
         show_btn = DirectButton(
-            text=_('show'), pos=(.55, 1, .15), command=eng.open_browser,
+            text=_('show'), pos=(.55, 1, .15), command=self.eng.open_browser,
             extraArgs=[self.props.site_url], parent=base.a2dBottomLeft,
             **btn_args)
         self.transl_text(show_btn, 'show', _('show'))

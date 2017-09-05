@@ -94,7 +94,7 @@ class DriverPageGui(ThanksPageGui):
             pos=(-.38, 1, .38), scale=.32)
         widgets += [self.sel_drv_img, name, self.ent]
         map(self.add_widget, widgets)
-        ffilterpath = eng.curr_path + 'yyagl/assets/shaders/filter.vert'
+        ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
         with open(ffilterpath) as ffilter:
             vert = ffilter.read()
         shader = Shader.make(Shader.SL_GLSL, vert, frag)

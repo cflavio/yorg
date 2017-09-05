@@ -29,15 +29,15 @@ class ServerPageProps(object):
 class ServerEvent(PageEvent):
 
     def on_back(self):
-        if Server().is_active:
-            Server().destroy()
+        if self.eng.server.is_active:
+            self.eng.server.destroy()
 
     @staticmethod
     def process_msg(data_lst):
         print data_lst
 
     def process_connection(self, client_address):
-        eng.log('connection from ' + client_address)
+        self.eng.log('connection from ' + client_address)
         self.mdt.gui.conn_txt.setText(_('connection from ') + client_address)
 
 
@@ -61,7 +61,7 @@ class ServerPageGui(ThanksPageGui):
                 text=addr, scale=.12, pos=(0, .4), font=menu_args.font,
                 fg=menu_args.text_fg))
         except gaierror:
-            eng.log('no connection')
+            self.eng.log('no connection')
         self.conn_txt = OnscreenText(
             scale=.12, pos=(0, .2), font=menu_args.font, fg=menu_args.text_fg)
         self.add_widget(self.conn_txt)
@@ -77,7 +77,7 @@ class ServerPageGui(ThanksPageGui):
             **menu_gui.menu_args.btn_args))
         ThanksPageGui.bld_page(self)
         evt = self.mdt.event
-        Server().start(evt.process_msg, evt.process_connection)
+        self.eng.server.start(evt.process_msg, evt.process_connection)
 
 
 class ServerPage(Page):
