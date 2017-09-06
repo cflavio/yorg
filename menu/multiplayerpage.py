@@ -1,26 +1,9 @@
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
-from .serverpage import ServerPage, ServerPageProps
+from .serverpage import ServerPage
 from .clientpage import ClientPage
 from .thankspage import ThanksPageGui
-
-
-class MultiplayerPageProps(object):
-
-    def __init__(
-            self, cars, car_path, phys_path, tracks, tracks_tr, track_img,
-            player_name, drivers_img, cars_img, drivers):
-        self.cars = cars
-        self.car_path = car_path
-        self.phys_path = phys_path
-        self.tracks = tracks
-        self.tracks_tr = tracks_tr
-        self.track_img = track_img
-        self.player_name = player_name
-        self.drivers_img = drivers_img
-        self.cars_img = cars_img
-        self.drivers = drivers
 
 
 class MultiplayerPageGui(ThanksPageGui):

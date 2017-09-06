@@ -11,9 +11,6 @@ from menu.exitmenu.menu import ExitMenu
 from .thanksnames import ThanksNames
 
 
-DriverPaths = namedtuple('DriverPaths', 'path path_sel')
-
-
 class YorgFsm(Fsm):
 
     def __init__(self, mdt):
@@ -32,24 +29,12 @@ class YorgFsm(Fsm):
     def enterMenu(self):
         self.eng.log_mgr.log('entering Menu state')
         menu_props = MenuProps(
-            self.mdt.gameprops.menu_args, self.mdt.options,
-            self.mdt.gameprops.cars_names[:int(self.mdt.options['settings']['cars_number'])],
-            'assets/images/cars/%s.png',
-            self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
-            ['desert', 'mountain', 'amusement', 'countryside'],
-            lambda: [_('desert'), _('mountain'), _('amusement park'),
-                     _('countryside')],
-            'assets/images/tracks/%s.png',
-            self.mdt.options['settings']['player_name'],
-            DriverPaths('assets/images/drivers/driver%s.png',
-                        'assets/images/drivers/driver%s_sel.png'),
-            'assets/images/cars/%s_sel.png',
+            self.mdt.gameprops, self.mdt.options,
             self.mdt.options['development']['multiplayer'],
             'assets/images/gui/yorg_title.png',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
-            ['desert', 'mountain', 'amusement', 'countryside'],
-            'http://www.ya2.it/support-us', self.mdt.logic.drivers())
+            'http://www.ya2.it/support-us')
         self.__menu = YorgMenu(menu_props)
         methods = [self.mdt.logic.on_input_back,
                    self.mdt.logic.on_options_back,

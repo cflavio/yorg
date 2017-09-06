@@ -9,9 +9,6 @@ from menu.ingamemenu.menu import InGameMenu
 from .thanksnames import ThanksNames
 
 
-DriverInfo = namedtuple('DriverInfo', 'car_id name skill car_name')
-DriverSkill = namedtuple('DriverSkill', 'speed adherence stability')
-
 class YorgLogic(GameLogic):
 
     def __init__(self, mdt):
@@ -36,19 +33,6 @@ class YorgLogic(GameLogic):
         else:
             self.mdt.fsm.demand('Menu')
 
-    def drivers(self):
-        names = ThanksNames.get_thanks(8, 5)
-        drivers = [
-            DriverInfo(1, names[0], DriverSkill(4, -2, -2), 'themis'),
-            DriverInfo(2, names[1], DriverSkill(-2, 4, -2), 'kronos'),
-            DriverInfo(3, names[2], DriverSkill(0, 4, -4), 'diones'),
-            DriverInfo(4, names[3], DriverSkill(4, -4, 0), 'iapeto'),
-            DriverInfo(5, names[4], DriverSkill(-2, -2, 4), 'phoibe'),
-            DriverInfo(6, names[5], DriverSkill(-4, 0, 4), 'rea'),
-            DriverInfo(7, names[6], DriverSkill(4, 0, -4), 'iperion'),
-            DriverInfo(8, names[7], DriverSkill(-4, 4, 0), 'teia')]
-        return drivers
-
     def __season_props(
             self, gameprops, car, cars_number, single_race, tun_engine,
             tun_tires, tun_suspensions, race_start_time, countdown_seconds):
@@ -62,7 +46,7 @@ class YorgLogic(GameLogic):
             'Mine': 'mine'}
         return SeasonProps(
             gameprops, cars_names[:int(cars_number)],
-            car, self.drivers(), 'assets/images/gui/menu_background.jpg',
+            car, self.mdt.drivers(), 'assets/images/gui/menu_background.jpg',
             ['assets/images/tuning/engine.png',
              'assets/images/tuning/tires.png',
              'assets/images/tuning/suspensions.png'],

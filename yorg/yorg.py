@@ -1,3 +1,4 @@
+from collections import namedtuple
 from sys import platform
 from os.path import join, exists
 from panda3d.core import Filename
@@ -10,6 +11,11 @@ from .logic import YorgLogic
 from .event import YorgEvent
 from .fsm import YorgFsm
 from .audio import YorgAudio
+from .thanksnames import ThanksNames
+
+
+DriverInfo = namedtuple('DriverInfo', 'car_id name skill car_name')
+DriverSkill = namedtuple('DriverSkill', 'speed adherence stability')
 
 
 class Yorg(Game):
@@ -89,5 +95,32 @@ class Yorg(Game):
             'assets/images/icons/%s_png.png')
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
-        self.gameprops = GameProps(menu_args, cars_names)
+        DriverPaths = namedtuple('DriverPaths', 'path path_sel')
         Game.__init__(self, init_lst, conf)
+        self.gameprops = GameProps(
+            menu_args, cars_names, self.drivers(),
+            ['desert', 'mountain', 'amusement', 'countryside'],
+            ['desert', 'mountain', 'amusement', 'countryside'],
+            lambda: [_('desert'), _('mountain'), _('amusement park'),
+                     _('countryside')],
+            'assets/images/tracks/%s.png',
+            self.options['settings']['player_name'],
+            DriverPaths('assets/images/drivers/driver%s.png',
+                        'assets/images/drivers/driver%s_sel.png'),
+            'assets/images/cars/%s_sel.png',
+            'assets/images/cars/%s.png',
+            self.eng.curr_path + 'assets/models/cars/%s/phys.yml')
+        self.run()
+
+    def drivers(self):
+        names = ThanksNames.get_thanks(8, 5)
+        drivers = [
+            DriverInfo(1, names[0], DriverSkill(4, -2, -2), 'themis'),
+            DriverInfo(2, names[1], DriverSkill(-2, 4, -2), 'kronos'),
+            DriverInfo(3, names[2], DriverSkill(0, 4, -4), 'diones'),
+            DriverInfo(4, names[3], DriverSkill(4, -4, 0), 'iapeto'),
+            DriverInfo(5, names[4], DriverSkill(-2, -2, 4), 'phoibe'),
+            DriverInfo(6, names[5], DriverSkill(-4, 0, 4), 'rea'),
+            DriverInfo(7, names[6], DriverSkill(4, 0, -4), 'iperion'),
+            DriverInfo(8, names[7], DriverSkill(-4, 4, 0), 'teia')]
+        return drivers

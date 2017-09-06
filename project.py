@@ -2,7 +2,6 @@
 
 # TODO LIST =====
 
-# refactor: refactor the props for the menu pages
 # refactor: notify done by evt (from mdt externally);
 #   Colleague.notify invokes that; GO's attach redirected to evt;
 #   only evt is a Subject

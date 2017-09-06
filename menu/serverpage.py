@@ -6,24 +6,8 @@ from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageEvent, PageFacade
 from yyagl.engine.network.server import Server
 from yyagl.gameobject import GameObject
-from .trackpage import TrackPageServer, TrackPageProps
+from .trackpage import TrackPageServer
 from .thankspage import ThanksPageGui
-
-
-class ServerPageProps(object):
-
-    def __init__(self, cars, car_path, phys_path, tracks, tracks_tr, track_img,
-                 player_name, drivers_img, cars_img, drivers):
-        self.cars = cars
-        self.car_path = car_path
-        self.phys_path = phys_path
-        self.tracks = tracks
-        self.tracks_tr = tracks_tr
-        self.track_img = track_img
-        self.player_name = player_name
-        self.drivers_img = drivers_img
-        self.cars_img = cars_img
-        self.drivers = drivers
 
 
 class ServerEvent(PageEvent):

@@ -35,16 +35,6 @@ void main() {
 }'''
 
 
-class DriverPageProps(object):
-
-    def __init__(self, player_name, drivers_img, cars_img, cars, drivers):
-        self.player_name = player_name
-        self.drivers_img = drivers_img
-        self.cars_img = cars_img
-        self.cars = cars
-        self.drivers = drivers
-
-
 class DriverPageGui(ThanksPageGui):
 
     def __init__(self, mdt, menu_args, driverpage_props):
@@ -53,7 +43,7 @@ class DriverPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, menu_args)
 
     def bld_page(self):
-        self.skills = [drv.skill for drv in self.props.drivers]
+        self.skills = [drv.skill for drv in self.props.gameprops.drivers]
         menu_args = self.menu_args
         widgets = [OnscreenText(text=_('Select the driver'), pos=(0, .8),
                                 **menu_args.text_args)]
@@ -64,14 +54,14 @@ class DriverPageGui(ThanksPageGui):
         self.ent = DirectEntry(
             scale=.08, pos=(0, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText=self.props.player_name or _('your name'))
+            initialText=self.props.gameprops.player_name or _('your name'))
         self.ent.onscreenText['fg'] = menu_args.text_fg
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = (col + 1) + row * 4
             drv_btn = ImgBtn(
                 scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
-                frameColor=(0, 0, 0, 0), image=self.props.drivers_img[0] % idx,
+                frameColor=(0, 0, 0, 0), image=self.props.gameprops.drivers_img[0] % idx,
                 command=self.on_click, extraArgs=[idx],
                 **self.menu_args.imgbtn_args)
             widgets += [drv_btn]
@@ -90,7 +80,7 @@ class DriverPageGui(ThanksPageGui):
                        (self.skills[idx - 1].stability, .1)]
             widgets += map(lambda txt_def: self.__add_txt(*txt_def + (psign, pcol, col, row)), txt_lst)
         self.sel_drv_img = OnscreenImage(
-            self.props.cars_img % self.mdt.car, parent=base.a2dBottomRight,
+            self.props.gameprops.cars_img % self.mdt.car, parent=base.a2dBottomRight,
             pos=(-.38, 1, .38), scale=.32)
         widgets += [self.sel_drv_img, name, self.ent]
         map(self.add_widget, widgets)
@@ -143,13 +133,13 @@ class DriverPageGui(ThanksPageGui):
         return task.cont  # don't do a task, attach to modifications events
 
     def on_click(self, i):
-        txt_path = self.props.drivers_img.path_sel
+        txt_path = self.props.gameprops.drivers_img.path_sel
         self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
         names = ThanksNames.get_thanks(7, 5)
-        cars = self.props.cars[:]
+        cars = self.props.gameprops.cars_names[:]
         cars.remove(self.mdt.car)
         shuffle(cars)
         drv_idx = range(1, 9)

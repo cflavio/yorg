@@ -11,21 +11,7 @@ from yyagl.engine.network.client import Client
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
-from .driverpage import DriverPageProps
 from .thankspage import ThanksPageGui
-
-
-class CarPageProps(object):
-
-    def __init__(self, cars, car_path, phys_path, player_name, drivers_img,
-                 cars_img, drivers):
-        self.cars = cars
-        self.car_path = car_path
-        self.phys_path = phys_path
-        self.player_name = player_name
-        self.drivers_img = drivers_img
-        self.cars_img = cars_img
-        self.drivers = drivers
 
 
 class CarPageGui(ThanksPageGui):
@@ -39,13 +25,13 @@ class CarPageGui(ThanksPageGui):
 
     def bld_page(self):
         if game.logic.curr_cars:
-            self.props.cars = game.logic.curr_cars
+            self.props.gameprops.cars_names = game.logic.curr_cars
         widgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
             **self.menu_args.text_args)]
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
-            if row * cars_per_row + col >= len(self.props.cars):
+            if row * cars_per_row + col >= len(self.props.gameprops.cars_names):
                 break
             widgets += self.__bld_car(cars_per_row, row, col)
         map(self.add_widget, widgets)
@@ -55,26 +41,26 @@ class CarPageGui(ThanksPageGui):
     def __bld_car(self, cars_per_row, row, col):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        z_offset = 0 if len(self.props.cars) > cars_per_row else .35
-        num_car_row = len(self.props.cars) - cars_per_row if row == 1 else \
-            min(cars_per_row, len(self.props.cars))
+        z_offset = 0 if len(self.props.gameprops.cars_names) > cars_per_row else .35
+        num_car_row = len(self.props.gameprops.cars_names) - cars_per_row if row == 1 else \
+            min(cars_per_row, len(self.props.gameprops.cars_names))
         x_offset = .4 * (cars_per_row - num_car_row)
         btn = ImgBtn(
             scale=.32,
             pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
             frameColor=(0, 0, 0, 0),
-            image=self.props.car_path % self.props.cars[col + row * cars_per_row],
+            image=self.props.gameprops.car_path % self.props.gameprops.cars_names[col + row * cars_per_row],
             command=self.on_car,
-            extraArgs=[self.props.cars[col + row * cars_per_row]],
+            extraArgs=[self.props.gameprops.cars_names[col + row * cars_per_row]],
             **self.menu_args.imgbtn_args)
         widgets = [btn]
         txt = OnscreenText(
-            self.props.cars[col + row * cars_per_row],
+            self.props.gameprops.cars_names[col + row * cars_per_row],
             pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7),
             scale=.072, **t_a)
         widgets += [txt]
-        car_name = self.props.cars[col + row * cars_per_row]
-        cfg_fpath = self.props.phys_path % car_name
+        car_name = self.props.gameprops.cars_names[col + row * cars_per_row]
+        cfg_fpath = self.props.gameprops.phys_path % car_name
         with open(cfg_fpath) as phys_file:
             cfg = load(phys_file)
         speed = int(round((cfg['max_speed'] / 140.0 - 1) * 100))
@@ -104,10 +90,7 @@ class CarPageGui(ThanksPageGui):
 
     def on_car(self, car):
         self.notify('on_car_selected', car)
-        driverpage_props = DriverPageProps(
-            self.props.player_name, self.props.drivers_img,
-            self.props.cars_img, self.props.cars, self.props.drivers)
-        page_args = [self.track_path, car, driverpage_props]
+        page_args = [self.track_path, car, self.props]
         self.notify('on_push_page', 'driver_page', page_args)
 
 
@@ -115,10 +98,7 @@ class CarPageGuiSeason(CarPageGui):
 
     def on_car(self, car):
         self.notify('on_car_selected_season', car)
-        driverpage_props = DriverPageProps(
-            self.props.player_name, self.props.drivers_img,
-            self.props.cars_img, self.props.cars, self.props.drivers)
-        page_args = [self.track_path, car, driverpage_props]
+        page_args = [self.track_path, car, self.props]
         self.notify('on_push_page', 'driver_page', page_args)
 
 
