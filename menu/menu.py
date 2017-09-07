@@ -22,21 +22,20 @@ class YorgMenuLogic(MenuLogic):
 
     def on_push_page(self, page_code, args=[]):
         if page_code == 'singleplayer':
-            page = SingleplayerPage(self.mdt.gui.menu_args, args[0])
+            page = SingleplayerPage(args[0])
             page.gui.attach(self.on_track_selected)
             page.gui.attach(self.on_continue)
         if page_code == 'single_race':
-            page = TrackPage(self.mdt.gui.menu_args, args[0])
+            page = TrackPage(args[0])
             page.gui.attach(self.on_track_selected)
         if page_code == 'new_season':
-            page = CarPageSeason(self.mdt.gui.menu_args, args[0], self.mdt.track)
+            page = CarPageSeason(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected_season)
         if page_code == 'car_page':
-            page = CarPage(self.mdt.gui.menu_args, args[0], self.mdt.track)
+            page = CarPage(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
-            page = DriverPage(self.mdt.gui.menu_args, args[0], args[1],
-                              args[2])
+            page = DriverPage(args[0], args[1], args[2])
             page.gui.attach(self.on_driver_selected)
         if page_code == 'options':
             page = OptionPage(self.mdt.gui.menu_args, args[0])

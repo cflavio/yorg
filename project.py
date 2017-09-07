@@ -6,7 +6,6 @@
 #   Colleague.notify invokes that; GO's attach redirected to evt;
 #   only evt is a Subject
 # refactor: driver.car
-# refactor: raceprops.seasonprops.gameprops
 
 # 0.9 (refinements)
 # particles (using shaders)

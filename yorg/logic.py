@@ -36,8 +36,6 @@ class YorgLogic(GameLogic):
     def __season_props(
             self, gameprops, car, cars_number, single_race, tun_engine,
             tun_tires, tun_suspensions, race_start_time, countdown_seconds):
-        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                      'iperion', 'teia']
         wpn2img = {
             'Rocket': 'rocketfront',
             'RearRocket': 'rocketrear',
@@ -45,13 +43,11 @@ class YorgLogic(GameLogic):
             'RotateAll': 'turn',
             'Mine': 'mine'}
         return SeasonProps(
-            gameprops, cars_names[:int(cars_number)],
-            car, self.mdt.drivers(), 'assets/images/gui/menu_background.jpg',
+            gameprops, gameprops.cars_names[:int(cars_number)], car,
             ['assets/images/tuning/engine.png',
              'assets/images/tuning/tires.png',
              'assets/images/tuning/suspensions.png'],
-            ['desert', 'mountain', 'amusement', 'countryside'],
-            'assets/fonts/Hanken-Book.ttf', (.75, .75, .75, 1),
+            'assets/fonts/Hanken-Book.ttf',
             'assets/sfx/countdown.ogg', single_race, wpn2img, tun_engine,
             tun_tires, tun_suspensions, race_start_time, countdown_seconds)
 
@@ -100,7 +96,8 @@ class YorgLogic(GameLogic):
     def on_driver_selected(self, player_name, drivers, track, car):
         self.mdt.options['settings']['player_name'] = player_name
         self.mdt.options.store()
-        self.season.logic.props = self.season.props._replace(drivers=drivers)
+        new_gp = self.season.props.gameprops._replace(drivers=drivers)
+        self.season.logic.props = self.season.logic.props._replace(gameprops=new_gp)
         self.eng.do_later(2.0, self.mdt.fsm.demand, ['Race', track, car, drivers])
 
     def on_continue(self):
@@ -215,9 +212,8 @@ class YorgLogic(GameLogic):
         grid_rev_ranking = sorted(items, key=lambda el: el[1])
         grid = [pair[0] for pair in grid_rev_ranking]
         race_props = RaceProps(
-            keys, joystick, sounds, 'assets/fonts/Hanken-Book.ttf',
+            self.season.props, keys, joystick, sounds,
             'assets/models/cars/%s/capsule', 'Capsule', 'assets/models/cars',
-            self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
             wheel_names, 'Road', 'assets/models/cars/%s/car',
             damage_info, wheel_gfx_names,
             'assets/particles/sparks.ptf', carname2driver,
@@ -238,10 +234,6 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/turn/TurnAnim',
             'assets/models/weapons/mine/MineAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
-            car_names[:int(self.mdt.options['settings']['cars_number'])],
-            self.mdt.options['development']['ai'], InGameMenu,
-            self.mdt.gameprops.menu_args, 'assets/images/drivers/driver%s_sel.png',
-            'assets/images/cars/%s_sel.png', share_urls,
-            'assets/images/icons/%s_png.png', 'Respawn', 'PitStop',
-            'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'], grid, car_path)
+            self.mdt.options['development']['ai'], InGameMenu, share_urls,
+            'Respawn', 'PitStop', 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'], grid)
         return race_props

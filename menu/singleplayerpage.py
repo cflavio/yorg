@@ -7,9 +7,9 @@ from .thankspage import ThanksPageGui
 
 class SingleplayerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, props):
+    def __init__(self, mdt, props):
         self.props = props
-        ThanksPageGui.__init__(self, mdt, menu_args)
+        ThanksPageGui.__init__(self, mdt, props.gameprops.menu_args)
 
     def bld_page(self):
         menu_data = [
@@ -38,11 +38,9 @@ class SingleplayerPageGui(ThanksPageGui):
 class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui
 
-    def __init__(self, menu_args, singleplayerpage_props):
-        self.menu_args = menu_args
+    def __init__(self, singleplayerpage_props):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args,
-                                    singleplayerpage_props])]]
+            [('gui', self.gui_cls, [self, singleplayerpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)

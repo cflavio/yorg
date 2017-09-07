@@ -37,10 +37,10 @@ void main() {
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, driverpage_props):
+    def __init__(self, mdt, driverpage_props):
         self.props = driverpage_props
         self.sel_drv_img = None
-        ThanksPageGui.__init__(self, mdt, menu_args)
+        ThanksPageGui.__init__(self, mdt, driverpage_props.gameprops.menu_args)
 
     def bld_page(self):
         self.skills = [drv.skill for drv in self.props.gameprops.drivers]
@@ -160,12 +160,11 @@ class DriverPageGui(ThanksPageGui):
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, menu_args, track, car, driverpage_props):
+    def __init__(self, track, car, driverpage_props):
         self.track = track
         self.car = car
-        self.menu_args = menu_args
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, driverpage_props])]]
+            [('gui', self.gui_cls, [self, driverpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)

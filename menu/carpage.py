@@ -16,12 +16,12 @@ from .thankspage import ThanksPageGui
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, carpage_props, track_path):
+    def __init__(self, mdt, carpage_props, track_path):
         self.car = None
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
-        ThanksPageGui.__init__(self, mdt, menu_args)
+        ThanksPageGui.__init__(self, mdt, carpage_props.gameprops.menu_args)
 
     def bld_page(self):
         if game.logic.curr_cars:
@@ -203,12 +203,10 @@ class CarPageGuiClient(CarPageGui):
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, menu_args, carpage_props, track_path):
-        self.menu_args = menu_args
+    def __init__(self, carpage_props, track_path):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, carpage_props,
-                                    track_path])]]
+            [('gui', self.gui_cls, [self, carpage_props, track_path])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
 

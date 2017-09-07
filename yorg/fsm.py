@@ -81,8 +81,7 @@ class YorgFsm(Fsm):
         elif self.eng.client.is_active:
             self.season.create_race_client(race_props)
         else:
-            self.mdt.logic.season.create_race(race_props,
-                                              self.mdt.logic.season.props)
+            self.mdt.logic.season.create_race(race_props)
         self.eng.log_mgr.log('selected drivers: ' + str(drivers))
         self.mdt.logic.season.race.logic.drivers = drivers
         track_name_transl = track_path
@@ -92,8 +91,7 @@ class YorgFsm(Fsm):
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         self.mdt.logic.season.race.fsm.demand(
-            'Loading', race_props, self.mdt.logic.season.props,
-            track_name_transl, drivers)
+            'Loading', race_props, track_name_transl, drivers)
         self.mdt.logic.season.race.attach_obs(self.mdt.logic.on_race_loaded)
         exit_mth = 'on_ingame_exit_confirm'
         self.mdt.logic.season.race.attach_obs(exit_mth, redirect=self.mdt.fsm.demand, args=['Menu'])

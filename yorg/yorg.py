@@ -100,7 +100,6 @@ class Yorg(Game):
         self.gameprops = GameProps(
             menu_args, cars_names, self.drivers(),
             ['desert', 'mountain', 'amusement', 'countryside'],
-            ['desert', 'mountain', 'amusement', 'countryside'],
             lambda: [_('desert'), _('mountain'), _('amusement park'),
                      _('countryside')],
             'assets/images/tracks/%s.png',

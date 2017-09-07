@@ -11,9 +11,9 @@ from .thankspage import ThanksPageGui
 
 class TrackPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, trackpage_props):
+    def __init__(self, mdt, trackpage_props):
         self.props = trackpage_props
-        ThanksPageGui.__init__(self, mdt, menu_args)
+        ThanksPageGui.__init__(self, mdt, trackpage_props.gameprops.menu_args)
 
     def bld_page(self):
         txt = OnscreenText(text=_('Select the track'), pos=(0, .8),
@@ -23,19 +23,19 @@ class TrackPageGui(ThanksPageGui):
         t_a['scale'] = .06
         tracks_per_row = 2
         for row, col in product(range(2), range(tracks_per_row)):
-            if row * tracks_per_row + col >= len(self.props.gameprops.tracks):
+            if row * tracks_per_row + col >= len(self.props.gameprops.season_tracks):
                 break
-            z_offset = 0 if len(self.props.gameprops.tracks) > tracks_per_row else .35
-            num_tracks = len(self.props.gameprops.tracks) - tracks_per_row if row == 1 \
-                else min(tracks_per_row, len(self.props.gameprops.tracks))
+            z_offset = 0 if len(self.props.gameprops.season_tracks) > tracks_per_row else .35
+            num_tracks = len(self.props.gameprops.season_tracks) - tracks_per_row if row == 1 \
+                else min(tracks_per_row, len(self.props.gameprops.season_tracks))
             x_offset = .5 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
                 scale=.3,
                 pos=(-.5 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
-                image=self.props.gameprops.track_img % self.props.gameprops.tracks[
+                image=self.props.gameprops.track_img % self.props.gameprops.season_tracks[
                     col + row * tracks_per_row],
-                command=self.on_track, extraArgs=[self.props.gameprops.tracks[
+                command=self.on_track, extraArgs=[self.props.gameprops.season_tracks[
                     col + row * tracks_per_row]],
                 **self.menu_args.imgbtn_args)
             txt = OnscreenText(
@@ -61,11 +61,10 @@ class TrackPageGuiServer(TrackPageGui):
 class TrackPage(Page):
     gui_cls = TrackPageGui
 
-    def __init__(self, menu_args, trackpage_props):
-        self.menu_args = menu_args
+    def __init__(self, trackpage_props):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, trackpage_props])]]
+            [('gui', self.gui_cls, [self, trackpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
 
