@@ -13,10 +13,6 @@ from yorg.thanksnames import ThanksNames
 from .thankspage import ThanksPageGui
 
 
-DriverInfo = namedtuple('DriverInfo', 'car_id name skill car_name')
-DriverSkill = namedtuple('DriverSkill', 'speed adherence stability')
-
-
 frag = '''#version 120
 varying vec2 texcoord;
 uniform sampler2D p3d_Texture0;
@@ -43,7 +39,7 @@ class DriverPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, driverpage_props.gameprops.menu_args)
 
     def bld_page(self):
-        self.skills = [drv.skill for drv in self.props.gameprops.drivers]
+        self.drv_info = self.props.gameprops.drivers_info
         menu_args = self.menu_args
         widgets = [OnscreenText(text=_('Select the driver'), pos=(0, .8),
                                 **menu_args.text_args)]
@@ -75,9 +71,9 @@ class DriverPageGui(ThanksPageGui):
             lab_lst = [(_('adherence'), .04), (_('speed'), .16),
                        (_('stability'), .1)]
             widgets += map(lambda lab_def: self.__add_lab(*(lab_def + (row, col))), lab_lst)
-            txt_lst = [(self.skills[idx - 1].adherence, .04),
-                       (self.skills[idx - 1].speed, .16),
-                       (self.skills[idx - 1].stability, .1)]
+            txt_lst = [(self.drv_info[idx - 1].adherence, .04),
+                       (self.drv_info[idx - 1].speed, .16),
+                       (self.drv_info[idx - 1].stability, .1)]
             widgets += map(lambda txt_def: self.__add_txt(*txt_def + (psign, pcol, col, row)), txt_lst)
         self.sel_drv_img = OnscreenImage(
             self.props.gameprops.cars_img % self.mdt.car, parent=base.a2dBottomRight,
@@ -145,11 +141,12 @@ class DriverPageGui(ThanksPageGui):
         drv_idx = range(1, 9)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        drivers = [DriverInfo(i, self.ent.get(), self.skills[i - 1], self.mdt.car)]
-        drivers += [DriverInfo(drv_idx[j], names[j], self.skills[j - 1], cars[j])
-                    for j in range(len(cars))]
-        self.notify('on_driver_selected', self.ent.get(), drivers,
-                    self.mdt.track, self.mdt.car)
+        #drivers = [DriverInfo(i, self.ent.get(), self.drv_info[i - 1], self.mdt.car)]
+        #drivers += [DriverInfo(drv_idx[j], names[j], self.drv_info[j - 1], cars[j])
+        #            for j in range(len(cars))]
+        self.props.gameprops.drivers_info[i] = self.props.gameprops.drivers_info[i]._replace(img_idx=i)
+        self.props.gameprops.drivers_info[i] = self.props.gameprops.drivers_info[i]._replace(name=self.ent.get())
+        self.notify('on_driver_selected', self.ent.get(), self.mdt.track, self.mdt.car)
 
     def destroy(self):
         self.sel_drv_img = None

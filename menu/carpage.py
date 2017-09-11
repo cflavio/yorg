@@ -25,7 +25,7 @@ class CarPageGui(ThanksPageGui):
 
     def bld_page(self):
         if game.logic.curr_cars:
-            self.props.gameprops.cars_names = game.logic.curr_cars
+            self.props.gameprops = self.props.gameprops._replace(cars_names=game.logic.curr_cars)
         widgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
             **self.menu_args.text_args)]

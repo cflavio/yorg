@@ -29,7 +29,9 @@ class YorgLogic(GameLogic):
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.season.start()
-            self.mdt.fsm.demand('Race', track, car, self.season.drivers)
+            #for drv, car_name in zip(self.season.logic.drivers, self.mdt.gameprops.cars_names):
+            #    drv.dprops = drv.dprops._replace(car_name=car_name)
+            self.mdt.fsm.demand('Race', track, car, self.season.logic.drivers)
         else:
             self.mdt.fsm.demand('Menu')
 
@@ -42,8 +44,11 @@ class YorgLogic(GameLogic):
             'Turbo': 'turbo',
             'RotateAll': 'turn',
             'Mine': 'mine'}
+        drivers = []
+        for drv_info, car_name in zip(gameprops.drivers_info, gameprops.cars_names):
+            drivers += [Driver(DriverProps(drv_info, car_name, 0, 0, 0))]
         return SeasonProps(
-            gameprops, gameprops.cars_names[:int(cars_number)], car,
+            gameprops, gameprops.cars_names[:int(cars_number)], car, drivers,
             ['assets/images/tuning/engine.png',
              'assets/images/tuning/tires.png',
              'assets/images/tuning/suspensions.png'],
@@ -93,12 +98,17 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
 
-    def on_driver_selected(self, player_name, drivers, track, car):
+    def on_driver_selected(self, player_name, track, car):
         self.mdt.options['settings']['player_name'] = player_name
         self.mdt.options.store()
-        new_gp = self.season.props.gameprops._replace(drivers=drivers)
-        self.season.logic.props = self.season.logic.props._replace(gameprops=new_gp)
-        self.eng.do_later(2.0, self.mdt.fsm.demand, ['Race', track, car, drivers])
+        #new_gp = self.season.props.gameprops._replace(drivers_skills=drivers_skills)
+        #self.season.logic.props = self.season.logic.props._replace(gameprops=new_gp)
+        for drv, car_name in zip(self.season.logic.drivers, self.mdt.gameprops.cars_names):
+            drv.logic.dprops = drv.dprops._replace(car_name=car_name)
+            if car_name == car:
+                info = drv.logic.dprops.info._replace(name=player_name)
+                drv.logic.dprops = drv.logic.dprops._replace(info=info)
+        self.eng.do_later(2.0, self.mdt.fsm.demand, ['Race', track, car, self.season.logic.drivers])
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
@@ -169,16 +179,6 @@ class YorgLogic(GameLogic):
         WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
 
-        def get_driver(carname):
-            for driver in drivers:
-                if driver.car_name == carname:
-                    return driver
-        driver = get_driver(car_path)
-        carname2driver = {}
-        for driver in drivers:
-            d_s = driver.skill
-            driver_props = DriverProps(str(driver.car_id), d_s.speed, d_s.adherence, d_s.stability)
-            carname2driver[driver.car_name] = Driver(driver_props)
         track_fpath = 'assets/models/tracks/%s/track.yml' % track_name
         with open(self.eng.curr_path + track_fpath) as ftrack:
             music_name = load(ftrack)['music']
@@ -216,7 +216,7 @@ class YorgLogic(GameLogic):
             'assets/models/cars/%s/capsule', 'Capsule', 'assets/models/cars',
             wheel_names, 'Road', 'assets/models/cars/%s/car',
             damage_info, wheel_gfx_names,
-            'assets/particles/sparks.ptf', carname2driver,
+            'assets/particles/sparks.ptf', drivers,
             self.mdt.options['development']['shaders_dev'],
             self.mdt.options['settings']['shaders'], music_fpath,
             'assets/models/tracks/%s/collision' % track_name,

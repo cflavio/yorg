@@ -64,8 +64,8 @@ class YorgMenuLogic(MenuLogic):
     def on_car_selected_season(self, car):
         self.mdt.gui.notify('on_car_selected_season', car)
 
-    def on_driver_selected(self, name, drivers, track, car):
-        self.mdt.gui.notify('on_driver_selected', name, drivers, track, car)
+    def on_driver_selected(self, name, track, car):
+        self.mdt.gui.notify('on_driver_selected', name, track, car)
 
     def on_continue(self):
         self.mdt.gui.notify('on_continue')

@@ -7,15 +7,12 @@ from yyagl.dictfile import DctFile
 from yyagl.engine.configuration import Cfg
 from yyagl.engine.gui.menu import MenuArgs
 from yyagl.racing.gameprops import GameProps
+from yyagl.racing.driver.driver import DriverInfo
 from .logic import YorgLogic
 from .event import YorgEvent
 from .fsm import YorgFsm
 from .audio import YorgAudio
 from .thanksnames import ThanksNames
-
-
-DriverInfo = namedtuple('DriverInfo', 'car_id name skill car_name')
-DriverSkill = namedtuple('DriverSkill', 'speed adherence stability')
 
 
 class Yorg(Game):
@@ -113,13 +110,13 @@ class Yorg(Game):
 
     def drivers(self):
         names = ThanksNames.get_thanks(8, 5)
-        drivers = [
-            DriverInfo(1, names[0], DriverSkill(4, -2, -2), 'themis'),
-            DriverInfo(2, names[1], DriverSkill(-2, 4, -2), 'kronos'),
-            DriverInfo(3, names[2], DriverSkill(0, 4, -4), 'diones'),
-            DriverInfo(4, names[3], DriverSkill(4, -4, 0), 'iapeto'),
-            DriverInfo(5, names[4], DriverSkill(-2, -2, 4), 'phoibe'),
-            DriverInfo(6, names[5], DriverSkill(-4, 0, 4), 'rea'),
-            DriverInfo(7, names[6], DriverSkill(4, 0, -4), 'iperion'),
-            DriverInfo(8, names[7], DriverSkill(-4, 4, 0), 'teia')]
-        return drivers
+        _drivers = [
+            DriverInfo(1, names[0], 4, -2, -2),
+            DriverInfo(2, names[1], -2, 4, -2),
+            DriverInfo(3, names[2], 0, 4, -4),
+            DriverInfo(4, names[3], 4, -4, 0),
+            DriverInfo(5, names[4], -2, -2, 4),
+            DriverInfo(6, names[5], -4, 0, 4),
+            DriverInfo(7, names[6], 4, 0, -4),
+            DriverInfo(8, names[7], -4, 4, 0)]
+        return _drivers

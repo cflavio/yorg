@@ -2,32 +2,29 @@
 
 # TODO LIST =====
 
-# refactor: notify done by evt (from mdt externally);
-#   Colleague.notify invokes that; GO's attach redirected to evt;
-#   only evt is a Subject
-# refactor: driver.car
-
-# 0.9 (refinements)
+# 0.8
+# engine's audio when the user accelerates at start
+# engine's audio for gears
 # particles (using shaders)
+# particles for crashes
+# particles for skidmarks/trail
+# particles for weapons
 # camera at car's back
 # preload assets (cars on application's start, track on menu selection)
-# 3D audio (from player's car)
 # animation when the car is repaired in pitstop
+# animation when the car is hit by rotate_all
 # use txo files in place of png and jpg
 # contour detection
-# preloading shaders by creating cards, applying shaders and call render_frame
 # preload weapons
 # ai polling (for cars and directions); only one (rotated) ray for obstacles
 #   and ground
 # try the driving models with lighter cars
+# driving model - see https://forum.freegamedev.net/viewtopic.php?p=74451#p74451
 # more power for the drifting; the length of the inertia+engine should not
 #  be bigger than max engine's force
 # apply drifting force during the drifting
 
-# 0.10 (local multiplayer)
-# split screen
-
-# 0.11 (network)
+# 0.9 (network)
 # #network at end of a multiplayer race wait for other cars
 # #network wheels' animations
 # #network physics (collisions to players' car)
@@ -46,6 +43,11 @@
 
 # MAYBE/SOMEDAY =====
 
+# preloading shaders by creating cards, applying shaders and call render_frame
+# 3D audio (from player's car)
+# refactor: notify done by evt (from mdt externally);
+#   Colleague.notify invokes that; GO's attach redirected to evt;
+#   only evt is a Subject
 # remove mdt from colleague
 # change/improve linux installer
 # make scons for yyagl
