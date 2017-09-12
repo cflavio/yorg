@@ -1,13 +1,10 @@
 from itertools import product
 from yaml import load
 from panda3d.core import TextNode
-from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageFacade
-from yyagl.engine.network.server import Server
 from yyagl.engine.gui.imgbtn import ImgBtn
-from yyagl.engine.network.client import Client
 from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
@@ -24,14 +21,16 @@ class CarPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, carpage_props.gameprops.menu_args)
 
     def bld_page(self):
+        gprops = self.props.gameprops
         if game.logic.curr_cars:
-            self.props.gameprops = self.props.gameprops._replace(cars_names=game.logic.curr_cars)
+            self.props.gameprops = gprops._replace(
+                cars_names=game.logic.curr_cars)
         widgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
             **self.menu_args.text_args)]
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
-            if row * cars_per_row + col >= len(self.props.gameprops.cars_names):
+            if row * cars_per_row + col >= len(gprops.cars_names):
                 break
             widgets += self.__bld_car(cars_per_row, row, col)
         map(self.add_widget, widgets)
@@ -41,26 +40,28 @@ class CarPageGui(ThanksPageGui):
     def __bld_car(self, cars_per_row, row, col):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        z_offset = 0 if len(self.props.gameprops.cars_names) > cars_per_row else .35
-        num_car_row = len(self.props.gameprops.cars_names) - cars_per_row if row == 1 else \
-            min(cars_per_row, len(self.props.gameprops.cars_names))
+        gprops = self.props.gameprops
+        z_offset = 0 if len(gprops.cars_names) > cars_per_row else .35
+        num_car_row = len(gprops.cars_names) - cars_per_row if row == 1 else \
+            min(cars_per_row, len(gprops.cars_names))
         x_offset = .4 * (cars_per_row - num_car_row)
         btn = ImgBtn(
             scale=.32,
             pos=(-1.2 + col * .8 + x_offset, 1, .4 - z_offset - row * .7),
             frameColor=(0, 0, 0, 0),
-            image=self.props.gameprops.car_path % self.props.gameprops.cars_names[col + row * cars_per_row],
+            image=gprops.car_path % gprops.cars_names[col + row*cars_per_row],
             command=self.on_car,
-            extraArgs=[self.props.gameprops.cars_names[col + row * cars_per_row]],
+            extraArgs=[
+                gprops.cars_names[col + row * cars_per_row]],
             **self.menu_args.imgbtn_args)
         widgets = [btn]
         txt = OnscreenText(
-            self.props.gameprops.cars_names[col + row * cars_per_row],
+            gprops.cars_names[col + row * cars_per_row],
             pos=(-1.2 + col * .8 + x_offset, .64 - z_offset - row * .7),
             scale=.072, **t_a)
         widgets += [txt]
-        car_name = self.props.gameprops.cars_names[col + row * cars_per_row]
-        cfg_fpath = self.props.gameprops.phys_path % car_name
+        car_name = gprops.cars_names[col + row * cars_per_row]
+        cfg_fpath = gprops.phys_path % car_name
         with open(cfg_fpath) as phys_file:
             cfg = load(phys_file)
         speed = int(round((cfg['max_speed'] / 140.0 - 1) * 100))
@@ -73,7 +74,8 @@ class CarPageGui(ThanksPageGui):
         pcol = lambda x, _col=_col_: x if x == 0 else _col(x)
         txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
                    (_('stability'), roll, .19)]
-        widgets += map(lambda txt_def: self.__add_txt(*txt_def + (psign, pcol, col, x_offset, z_offset, row)), txt_lst)
+        widgets += map(lambda txt_def: self.__add_txt(
+            *txt_def + (psign, pcol, col, x_offset, z_offset, row)), txt_lst)
         return widgets
 
     def __add_txt(self, txt, val, pos_z, psign, pcol, col, x_offset, z_offset,
@@ -209,6 +211,11 @@ class CarPage(Page):
             [('gui', self.gui_cls, [self, carpage_props, track_path])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
+        # invoke Page's __init__
+
+    def destroy(self):
+        GameObject.destroy(self)
+        PageFacade.destroy(self)
 
 
 class CarPageSeason(CarPage):

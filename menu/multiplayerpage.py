@@ -43,3 +43,8 @@ class MultiplayerPage(Page):
             [('gui', self.gui_cls, [self, self.menu_args, mp_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
+        # invoke Page's __init__
+
+    def destroy(self):
+        GameObject.destroy(self)
+        PageFacade.destroy(self)

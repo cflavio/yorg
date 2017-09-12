@@ -33,7 +33,8 @@ class YorgMainPageGui(MainPageGui):
         self.shaders = sett['shaders']
 
     def bld_page(self):
-        sp_cb = lambda: self.notify('on_push_page', 'singleplayer', [self.props])
+        sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
+                                    [self.props])
         mp_cb = lambda: self.menu.push_page(MultiplayerPage(
             self.menu.gui.menu_args, self.props, self.menu))
         supp_cb = lambda: self.eng.open_browser(self.props.support_url)
@@ -69,8 +70,9 @@ class YorgMainPageGui(MainPageGui):
         lab_args = self.props.gameprops.menu_args.label_args
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
-        wip_lab = DirectLabel(text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft,
-                             text_align=TextNode.A_left, **lab_args)
+        wip_lab = DirectLabel(
+            text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft,
+            text_align=TextNode.A_left, **lab_args)
         PageGui.transl_text(wip_lab, 'NB the game is work-in-progress',
                             _('NB the game is work-in-progress'))
         self.widgets += [wip_lab]
@@ -150,4 +152,9 @@ class YorgMainPage(MainPage):
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, mainpage_props])]]
         GameObject.__init__(self, init_lst)
+        # don't construct it using GameObject
         MainPage.__init__(self)
+
+    def destroy(self):
+        GameObject.destroy(self)
+        MainPage.destroy(self)

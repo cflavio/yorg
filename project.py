@@ -19,7 +19,9 @@
 # ai polling (for cars and directions); only one (rotated) ray for obstacles
 #   and ground
 # try the driving models with lighter cars
-# driving model - see https://forum.freegamedev.net/viewtopic.php?p=74451#p74451
+# driving model - see
+#   https://forum.freegamedev.net/viewtopic.php?p=74451#p74451
+#   https://www.reddit.com/r/opensourcegames/comments/6z1ldb/yorg_07_has_been_released_a_new_track_a_new_car
 # more power for the drifting; the length of the inertia+engine should not
 #  be bigger than max engine's force
 # apply drifting force during the drifting

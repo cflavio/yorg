@@ -1,5 +1,4 @@
 from collections import namedtuple
-from yyagl.gameobject import GameObject, Gui
 from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
@@ -15,7 +14,7 @@ from .supporterspage import SupportersPage
 
 __fields = 'gameprops opt_file multiplayer title_img feed_url site_url ' + \
     'has_save support_url'
-MenuProps = namedtuple('MenuProps',  __fields)
+MenuProps = namedtuple('MenuProps', __fields)
 
 
 class YorgMenuLogic(MenuLogic):
@@ -77,7 +76,6 @@ class YorgMenuGui(MenuGui):
         # every page should not manage following pages by forwarding params:
         # each page should callback the menu and it should spawn the next one
         MenuGui.__init__(self, mdt, menu_props.gameprops.menu_args)
-        m_p = menu_props
         page = YorgMainPage(menu_props)
         page.gui.attach(self.on_exit)
         self.eng.do_later(.01, lambda: self.mdt.logic.push_page(page))

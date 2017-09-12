@@ -1,6 +1,5 @@
 from time import strftime
 from yyagl.gameobject import Event
-from yyagl.engine.phys import PhysMgr
 
 
 class YorgEvent(Event):

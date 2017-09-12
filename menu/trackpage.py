@@ -1,8 +1,7 @@
 from itertools import product
 from direct.gui.OnscreenText import OnscreenText
-from yyagl.engine.gui.page import Page, PageGui, PageFacade
+from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
-from yyagl.engine.network.server import Server
 from yyagl.gameobject import GameObject
 from .carpage import CarPageServer
 from .netmsgs import NetMsgs
@@ -22,24 +21,25 @@ class TrackPageGui(ThanksPageGui):
         t_a = self.menu_args.text_args.copy()
         t_a['scale'] = .06
         tracks_per_row = 2
+        gprops = self.props.gameprops
         for row, col in product(range(2), range(tracks_per_row)):
-            if row * tracks_per_row + col >= len(self.props.gameprops.season_tracks):
+            if row * tracks_per_row + col >= len(gprops.season_tracks):
                 break
-            z_offset = 0 if len(self.props.gameprops.season_tracks) > tracks_per_row else .35
-            num_tracks = len(self.props.gameprops.season_tracks) - tracks_per_row if row == 1 \
-                else min(tracks_per_row, len(self.props.gameprops.season_tracks))
+            z_offset = 0 if len(gprops.season_tracks) > tracks_per_row else .35
+            num_tracks = len(gprops.season_tracks) - tracks_per_row \
+                if row == 1 else min(tracks_per_row, len(gprops.season_tracks))
             x_offset = .5 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
                 scale=.3,
                 pos=(-.5 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
-                image=self.props.gameprops.track_img % self.props.gameprops.season_tracks[
+                image=gprops.track_img % gprops.season_tracks[
                     col + row * tracks_per_row],
-                command=self.on_track, extraArgs=[self.props.gameprops.season_tracks[
+                command=self.on_track, extraArgs=[gprops.season_tracks[
                     col + row * tracks_per_row]],
                 **self.menu_args.imgbtn_args)
             txt = OnscreenText(
-                self.props.gameprops.tracks_tr()[col + row * tracks_per_row],
+                gprops.tracks_tr()[col + row * tracks_per_row],
                 pos=(-.5 + col * 1.0 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
             map(self.add_widget, [btn, txt])
@@ -67,6 +67,11 @@ class TrackPage(Page):
             [('gui', self.gui_cls, [self, trackpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
+        # invoke Page's __init__
+
+    def destroy(self):
+        GameObject.destroy(self)
+        PageFacade.destroy(self)
 
 
 class TrackPageServer(TrackPage):

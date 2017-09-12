@@ -1,5 +1,4 @@
 from direct.gui.DirectButton import DirectButton
-from direct.gui.DirectGuiGlobals import DISABLED
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -44,3 +43,8 @@ class SingleplayerPage(Page):
             [('gui', self.gui_cls, [self, singleplayerpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
+        # invoke Page's __init__
+
+    def destroy(self):
+        GameObject.destroy(self)
+        PageFacade.destroy(self)

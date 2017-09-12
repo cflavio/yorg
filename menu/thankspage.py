@@ -6,7 +6,7 @@ from yyagl.engine.gui.page import PageGui
 
 class ThanksPageGui(PageGui):
 
-    def bld_page(self):
+    def bld_page(self, back_btn=True):
         menu_args = self.menu_args
         t_a = menu_args.text_args
         t_a['fg'] = menu_args.text_bg

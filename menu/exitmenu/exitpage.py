@@ -7,7 +7,7 @@ from yyagl.engine.gui.page import Page, PageGui
 
 class ExitPageGui(PageGui):
 
-    def bld_page(self):
+    def bld_page(self, back_btn=True):
         menu_args = self.menu_args
         frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))

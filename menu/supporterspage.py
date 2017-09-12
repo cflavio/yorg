@@ -5,7 +5,7 @@ from yorg.thanksnames import ThanksNames
 
 class SupportersPageGui(PageGui):
 
-    def bld_page(self):
+    def bld_page(self, back_btn=True):
         menu_args = self.menu_args
         text = ', '.join(ThanksNames.get_all_thanks())
         txt = OnscreenText(text=text, pos=(0, .6), wordwrap=32,

@@ -29,14 +29,13 @@ class YorgLogic(GameLogic):
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.season.start()
-            #for drv, car_name in zip(self.season.logic.drivers, self.mdt.gameprops.cars_names):
-            #    drv.dprops = drv.dprops._replace(car_name=car_name)
             self.mdt.fsm.demand('Race', track, car, self.season.logic.drivers)
         else:
             self.mdt.fsm.demand('Menu')
 
+    @staticmethod
     def __season_props(
-            self, gameprops, car, cars_number, single_race, tun_engine,
+            gameprops, car, cars_number, single_race, tun_engine,
             tun_tires, tun_suspensions, race_start_time, countdown_seconds):
         wpn2img = {
             'Rocket': 'rocketfront',
@@ -45,7 +44,8 @@ class YorgLogic(GameLogic):
             'RotateAll': 'turn',
             'Mine': 'mine'}
         drivers = []
-        for drv_info, car_name in zip(gameprops.drivers_info, gameprops.cars_names):
+        for drv_info, car_name in zip(gameprops.drivers_info,
+                                      gameprops.cars_names):
             drivers += [Driver(DriverProps(drv_info, car_name, 0, 0, 0))]
         return SeasonProps(
             gameprops, gameprops.cars_names[:int(cars_number)], car, drivers,
@@ -74,7 +74,7 @@ class YorgLogic(GameLogic):
         self.mdt.options.store()
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
-        self.curr_cars = cars_names[:int(new_opt_dct['cars_number'])]  # put it there
+        self.curr_cars = cars_names[:int(new_opt_dct['cars_number'])]
         # refactor: now the page props are static, but they should change
         # when we change the options in the option page
 
@@ -101,14 +101,14 @@ class YorgLogic(GameLogic):
     def on_driver_selected(self, player_name, track, car):
         self.mdt.options['settings']['player_name'] = player_name
         self.mdt.options.store()
-        #new_gp = self.season.props.gameprops._replace(drivers_skills=drivers_skills)
-        #self.season.logic.props = self.season.logic.props._replace(gameprops=new_gp)
-        for drv, car_name in zip(self.season.logic.drivers, self.mdt.gameprops.cars_names):
+        for drv, car_name in zip(self.season.logic.drivers,
+                                 self.mdt.gameprops.cars_names):
             drv.logic.dprops = drv.dprops._replace(car_name=car_name)
             if car_name == car:
                 info = drv.logic.dprops.info._replace(name=player_name)
                 drv.logic.dprops = drv.logic.dprops._replace(info=info)
-        self.eng.do_later(2.0, self.mdt.fsm.demand, ['Race', track, car, self.season.logic.drivers])
+        self.eng.do_later(2.0, self.mdt.fsm.demand,
+                          ['Race', track, car, self.season.logic.drivers])
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
@@ -162,7 +162,7 @@ class YorgLogic(GameLogic):
         height = bounds[1].z - bounds[0].z
         txt.set_z(.06 + height / 2)
 
-    def build_race_props(self, car_path, drivers, track_name, keys, joystick,
+    def build_race_props(self, drivers, track_name, keys, joystick,
                          sounds):
         Wheels = namedtuple('Wheels', 'fr fl rr rl')
         frwheels = Wheels('EmptyWheelFront', 'EmptyWheelFront.001',
@@ -174,8 +174,9 @@ class YorgLogic(GameLogic):
         WheelNames = namedtuple('WheelNames', 'frontrear both')
         wheel_names = WheelNames(frwheels, bwheels)
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
-        wheel_gfx_names = [self.eng.curr_path + 'assets/models/cars/%s/' + wname
-                           for wname in wheel_gfx_names]
+        wheel_gfx_names = [
+            self.eng.curr_path + 'assets/models/cars/%s/' + wname
+            for wname in wheel_gfx_names]
         WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
 
@@ -199,8 +200,6 @@ class YorgLogic(GameLogic):
         DamageInfo = namedtuple('DamageInfo', 'low hi')
         damage_info = DamageInfo('assets/models/cars/%s/cardamage1',
                                  'assets/models/cars/%s/cardamage2')
-        car_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                     'iperion', 'teia']
         share_urls = [
             'https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg',
             'https://twitter.com/share?text=I%27ve%20achieved%20{time}'
@@ -235,5 +234,6 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/mine/MineAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             self.mdt.options['development']['ai'], InGameMenu, share_urls,
-            'Respawn', 'PitStop', 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'], grid)
+            'Respawn', 'PitStop', 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
+            grid)
         return race_props

@@ -4,7 +4,6 @@ from urllib2 import urlopen
 from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageEvent, PageFacade
-from yyagl.engine.network.server import Server
 from yyagl.gameobject import GameObject
 from .trackpage import TrackPageServer
 from .thankspage import ThanksPageGui
@@ -75,3 +74,8 @@ class ServerPage(Page):
             [('gui', self.gui_cls, [self, self.menu_args, serverpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
+        # invoke Page's __init__
+
+    def destroy(self):
+        GameObject.destroy(self)
+        PageFacade.destroy(self)

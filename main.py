@@ -14,7 +14,8 @@ if sys.platform != 'darwin' and not exists('main.py'):
         log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
         if not exists(log_path):
             Filename.mkdir(Filename(log_path))
-    opath = join(log_path, 'yorg_output.txt') if log_path else 'yorg_output.txt'
+    ofile = 'yorg_output.txt'
+    opath = join(log_path, ofile) if log_path else ofile
     sys.stdout = open(opath, 'w')
     epath = join(log_path, 'yorg_error.txt') if log_path else 'yorg_error.txt'
     sys.stderr = open(epath, 'w')

@@ -3,13 +3,12 @@ from yyagl.gameobject import GameObject
 
 
 class ThanksNames(GameObject):
-    
+
     @staticmethod
     def get_thanks(num, level):
-        names = []
-        curr_level = 5
+        names, curr_level, curr_path = [], 5, ThanksNames.eng.curr_path
         while len(names) < num or curr_level >= level:
-            fname = ThanksNames.eng.curr_path + 'assets/thanks%s.txt' % curr_level
+            fname = curr_path + 'assets/thanks%s.txt' % curr_level
             curr_names = open(fname).readlines()
             if curr_level >= level:
                 names += curr_names

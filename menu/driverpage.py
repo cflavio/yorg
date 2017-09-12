@@ -1,11 +1,10 @@
-from collections import namedtuple
 from itertools import product
 from random import shuffle
 from panda3d.core import TextureStage, Shader, Texture, PNMImage, TextNode
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectEntry import DirectEntry
 from direct.gui.OnscreenImage import OnscreenImage
-from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
+from direct.gui.DirectGuiGlobals import DISABLED
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -57,7 +56,8 @@ class DriverPageGui(ThanksPageGui):
             idx = (col + 1) + row * 4
             drv_btn = ImgBtn(
                 scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
-                frameColor=(0, 0, 0, 0), image=self.props.gameprops.drivers_img[0] % idx,
+                frameColor=(0, 0, 0, 0),
+                image=self.props.gameprops.drivers_img[0] % idx,
                 command=self.on_click, extraArgs=[idx],
                 **self.menu_args.imgbtn_args)
             widgets += [drv_btn]
@@ -70,14 +70,19 @@ class DriverPageGui(ThanksPageGui):
             pcol = lambda x: x if x == 0 else ppcol(x)
             lab_lst = [(_('adherence'), .04), (_('speed'), .16),
                        (_('stability'), .1)]
-            widgets += map(lambda lab_def: self.__add_lab(*(lab_def + (row, col))), lab_lst)
+            widgets += map(
+                lambda lab_def: self.__add_lab(*(lab_def + (row, col))),
+                lab_lst)
             txt_lst = [(self.drv_info[idx - 1].adherence, .04),
                        (self.drv_info[idx - 1].speed, .16),
                        (self.drv_info[idx - 1].stability, .1)]
-            widgets += map(lambda txt_def: self.__add_txt(*txt_def + (psign, pcol, col, row)), txt_lst)
+            widgets += map(
+                lambda txt_def: self.__add_txt(
+                    *txt_def + (psign, pcol, col, row)),
+                           txt_lst)
         self.sel_drv_img = OnscreenImage(
-            self.props.gameprops.cars_img % self.mdt.car, parent=base.a2dBottomRight,
-            pos=(-.38, 1, .38), scale=.32)
+            self.props.gameprops.cars_img % self.mdt.car,
+            parent=base.a2dBottomRight, pos=(-.38, 1, .38), scale=.32)
         widgets += [self.sel_drv_img, name, self.ent]
         map(self.add_widget, widgets)
         ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
@@ -129,24 +134,23 @@ class DriverPageGui(ThanksPageGui):
         return task.cont  # don't do a task, attach to modifications events
 
     def on_click(self, i):
-        txt_path = self.props.gameprops.drivers_img.path_sel
+        gprops = self.props.gameprops
+        txt_path = gprops.drivers_img.path_sel
         self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
-        names = ThanksNames.get_thanks(7, 5)
-        cars = self.props.gameprops.cars_names[:]
+        cars = gprops.cars_names[:]
         cars.remove(self.mdt.car)
         shuffle(cars)
         drv_idx = range(1, 9)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        #drivers = [DriverInfo(i, self.ent.get(), self.drv_info[i - 1], self.mdt.car)]
-        #drivers += [DriverInfo(drv_idx[j], names[j], self.drv_info[j - 1], cars[j])
-        #            for j in range(len(cars))]
-        self.props.gameprops.drivers_info[i] = self.props.gameprops.drivers_info[i]._replace(img_idx=i)
-        self.props.gameprops.drivers_info[i] = self.props.gameprops.drivers_info[i]._replace(name=self.ent.get())
-        self.notify('on_driver_selected', self.ent.get(), self.mdt.track, self.mdt.car)
+        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(img_idx=i)
+        nname = self.ent.get()
+        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(name=nname)
+        self.notify('on_driver_selected', self.ent.get(), self.mdt.track,
+                    self.mdt.car)
 
     def destroy(self):
         self.sel_drv_img = None
@@ -165,3 +169,8 @@ class DriverPage(Page):
             [('gui', self.gui_cls, [self, driverpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
+        # invoke Page's __init__
+
+    def destroy(self):
+        GameObject.destroy(self)
+        PageFacade.destroy(self)

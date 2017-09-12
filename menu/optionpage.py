@@ -4,8 +4,7 @@ from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
 from direct.gui.DirectButton import DirectButton
-from yyagl.engine.gui.page import Page, PageEvent, PageGui, PageFacade
-from yyagl.engine.lang import LangMgr
+from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -90,9 +89,9 @@ class OptionPageGui(ThanksPageGui):
         self.__change_lang(self.eng.languages[idx])
         ThanksPageGui.bld_page(self)
 
-    def __add_lab(self, txt, txt_tr, pos_z, x=-.1, align=TextNode.ARight):
+    def __add_lab(self, txt, txt_tr, pos_z, pos_x=-.1, align=TextNode.ARight):
         lab = DirectLabel(
-            text='', pos=(x, 1, pos_z), text_align=align,
+            text='', pos=(pos_x, 1, pos_z), text_align=align,
             **self.menu_args.label_args)
         PageGui.transl_text(lab, txt, txt_tr)
         return lab
@@ -135,3 +134,8 @@ class OptionPage(Page):
             [('gui', self.gui_cls, [self, self.menu_args, option_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
+        # invoke Page's __init__
+
+    def destroy(self):
+        GameObject.destroy(self)
+        PageFacade.destroy(self)
