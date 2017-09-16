@@ -52,7 +52,7 @@ class YorgMenuLogic(MenuLogic):
             self.mdt.gui.notify('on_input_back', args[0])
         if page_code == 'options_page':
             self.mdt.gui.notify('on_options_back', args[0])
-        MenuLogic.on_back(self, page_code, args)
+        MenuLogic.on_back(self)
 
     def on_track_selected(self, track):
         self.mdt.track = track
