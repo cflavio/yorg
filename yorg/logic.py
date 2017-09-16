@@ -3,7 +3,7 @@ from yaml import load
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
 from yyagl.racing.season.season import SingleRaceSeason, Season, SeasonProps
-from yyagl.racing.driver.driver import Driver, DriverProps
+from yyagl.racing.driver.driver import Driver, DriverProps, DriverInfo
 from yyagl.racing.race.raceprops import RaceProps
 from menu.ingamemenu.menu import InGameMenu
 from .thanksnames import ThanksNames
@@ -13,7 +13,7 @@ class YorgLogic(GameLogic):
 
     def __init__(self, mdt):
         GameLogic.__init__(self, mdt)
-        self.season = self.curr_cars = None
+        self.season = None
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -29,7 +29,8 @@ class YorgLogic(GameLogic):
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.season.start()
-            self.mdt.fsm.demand('Race', track, car, self.season.logic.drivers)
+            self.mdt.fsm.demand('Race', track, car, self.season.logic.drivers,
+                                self.season.ranking)
         else:
             self.mdt.fsm.demand('Menu')
 
@@ -72,9 +73,6 @@ class YorgLogic(GameLogic):
     def on_options_back(self, new_opt_dct):
         self.mdt.options['settings'].update(new_opt_dct)
         self.mdt.options.store()
-        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                      'iperion', 'teia']
-        self.curr_cars = cars_names[:int(new_opt_dct['cars_number'])]
         # refactor: now the page props are static, but they should change
         # when we change the options in the option page
 
@@ -127,8 +125,15 @@ class YorgLogic(GameLogic):
         self.season.start(False)
         track_path = self.mdt.options['save']['track']
         car_path = self.mdt.options['save']['car']
-        drivers = self.mdt.options['save']['drivers']
+        drivers = [self.__bld_drv(dct) for dct in self.mdt.options['save']['drivers']]
         self.mdt.fsm.demand('Race', track_path, car_path, drivers)
+
+    def __bld_drv(self, dct):
+        drv = Driver(
+            DriverProps(
+                DriverInfo(dct['img_idx'], dct['name'], dct['speed'], dct['adherence'], dct['stability']),
+                dct['car_name'], dct['f_engine'], dct['f_tires'], dct['f_suspensions']))
+        return drv
 
     def on_race_loaded(self):
         self.season.race.event.detach(self.on_race_loaded)
@@ -207,7 +212,7 @@ class YorgLogic(GameLogic):
             '%21&hashtags=yorg',
             'https://plus.google.com/share?url=ya2.it/yorg',
             'https://www.tumblr.com/widgets/share/tool?url=ya2.it']
-        items = game.logic.season.ranking.carname2points.items()
+        items = self.season.ranking.carname2points.items()
         grid_rev_ranking = sorted(items, key=lambda el: el[1])
         grid = [pair[0] for pair in grid_rev_ranking]
         race_props = RaceProps(

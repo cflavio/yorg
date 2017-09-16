@@ -22,9 +22,6 @@ class CarPageGui(ThanksPageGui):
 
     def bld_page(self):
         gprops = self.props.gameprops
-        if game.logic.curr_cars:
-            self.props.gameprops = gprops._replace(
-                cars_names=game.logic.curr_cars)
         widgets = [OnscreenText(
             text=_('Select the car'), pos=(0, .8),
             **self.menu_args.text_args)]
@@ -140,8 +137,8 @@ class CarPageGuiServer(CarPageGui):
         self.eng.log('start race: ' + str(packet))
         curr_car = self.current_cars[self]
         # manage as event
-        game.logic.season = SingleRaceSeason()
-        game.fsm.demand('Race', self.track_path, curr_car, packet[2:])
+        #game.logic.season = SingleRaceSeason()
+        #game.fsm.demand('Race', self.track_path, curr_car, packet[2:])
 
     def process_srv(self, data_lst, sender):
         if data_lst[0] != NetMsgs.car_request: return
@@ -198,8 +195,8 @@ class CarPageGuiClient(CarPageGui):
         if data_lst[0] == NetMsgs.start_race:
             self.eng.log('start_race: ' + str(data_lst))
             # manage as event
-            game.logic.season = SingleRaceSeason()
-            game.fsm.demand('Race', self.track_path, self.car, data_lst[2:])
+            #game.logic.season = SingleRaceSeason()
+            #game.fsm.demand('Race', self.track_path, self.car, data_lst[2:])
 
 
 class CarPage(Page):

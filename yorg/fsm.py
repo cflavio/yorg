@@ -49,7 +49,7 @@ class YorgFsm(Fsm):
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
 
-    def enterRace(self, track_path='', car_path='', drivers=''):
+    def enterRace(self, track_path='', car_path='', drivers='', ranking=None):
         self.eng.log_mgr.log('entering Race state')
         base.ignore('escape-up')
         if 'save' not in self.mdt.options.dct:
@@ -58,7 +58,7 @@ class YorgFsm(Fsm):
         if not seas.props.single_race:
             self.mdt.options['save']['track'] = track_path
             self.mdt.options['save']['car'] = car_path
-            self.mdt.options['save']['drivers'] = drivers
+            self.mdt.options['save']['drivers'] = [drv.to_dct() for drv in drivers]
             self.mdt.options['save']['tuning'] = seas.tuning.car2tuning
             self.mdt.options['save']['ranking'] = seas.ranking.carname2points
             self.mdt.options.store()
@@ -87,7 +87,7 @@ class YorgFsm(Fsm):
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         seas.race.fsm.demand(
-            'Loading', race_props, track_name_transl, drivers)
+            'Loading', race_props, track_name_transl, drivers, seas.ranking, seas.tuning)
         seas.race.attach_obs(self.mdt.logic.on_race_loaded)
         exit_mth = 'on_ingame_exit_confirm'
         seas.race.attach_obs(exit_mth, redirect=self.mdt.fsm.demand,
@@ -101,15 +101,21 @@ class YorgFsm(Fsm):
     def enterRanking(self):
         self.mdt.logic.season.ranking.show(
             self.mdt.logic.season.race.logic.props,
-            self.mdt.logic.season.props)
+            self.mdt.logic.season.props, self.mdt.logic.season.logic.ranking)
         self.eng.do_later(.1, self.mdt.logic.season.ranking.attach_obs,
                           [self.on_ranking_end])
+        self.eng.do_later(.1, self.mdt.logic.season.ranking.attach_obs,
+                          [self.on_ranking_next_race])
 
     def on_ranking_end(self):
         self.demand('Tuning')
 
+    def on_ranking_next_race(self):
+        self.mdt.logic.season.logic.next_race()
+
     def exitRanking(self):
         self.mdt.logic.season.ranking.detach_obs(self.on_ranking_end)
+        self.mdt.logic.season.ranking.detach_obs(self.on_ranking_next_race)
         self.mdt.logic.season.ranking.hide()
 
     def enterTuning(self):

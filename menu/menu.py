@@ -51,6 +51,10 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'input_page':
             self.mdt.gui.notify('on_input_back', args[0])
         if page_code == 'options_page':
+            cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
+                          'iperion', 'teia']
+            gprops = self.pages[-2].gui.props.gameprops._replace(cars_names=cars_names[:int(args[0]['cars_number'])])
+            self.pages[-2].gui.props = self.pages[-2].gui.props._replace(gameprops=gprops)
             self.mdt.gui.notify('on_options_back', args[0])
         MenuLogic.on_back(self)
 
