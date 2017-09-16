@@ -5,14 +5,12 @@
 # 0.8
 # engine's audio when the user accelerates at start
 # engine's audio for gears
-# particles (using shaders)
+# particles (using shaders, or try async loading, shader-off, ...)
 # particles for crashes
 # particles for skidmarks/trail
 # particles for weapons
 # camera at car's back
 # preload assets (cars on application's start, track on menu selection)
-# animation when the car is repaired in pitstop
-# animation when the car is hit by rotate_all
 # use txo files in place of png and jpg
 # contour detection
 # preload weapons
