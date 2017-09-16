@@ -110,7 +110,9 @@ pdf_conf = {
     'racing_track': [PDFInfo('python', './yyagl/racing/track', '*.py', [])],
     'yyagl': yyagl_lst,
     'build': build_lst,
-    'engine': [PDFInfo('python', './yyagl/engine', '*.py', filt_game)],
+    'engine': [PDFInfo('python', './yyagl/engine', '*.py', ['./yyagl/engine/gui/*', './yyagl/engine/network/*'])],
+    'engine_gui': [PDFInfo('python', './yyagl/engine/gui', '*.py', [])],
+    'engine_network': [PDFInfo('python', './yyagl/engine/network', '*.py', [])],
     'tests': [PDFInfo('python', './yyagl/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
 
