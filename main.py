@@ -27,4 +27,4 @@ if sys.platform != 'darwin' and not exists('main.py'):
 
 # main #######################################################################
 if __name__ == '__main__' or exists('main.pyo'):
-    Yorg()
+    Yorg().run()

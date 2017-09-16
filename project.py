@@ -5,13 +5,8 @@
 # 0.8
 # engine's audio when the user accelerates at start
 # engine's audio for gears
-# preload assets (cars on application's start, track on menu selection)
 # preload weapons
-# use txo files in place of png and jpg
-# ai polling (for cars and directions); only one (rotated) ray for obstacles
-#   and ground
 # camera at car's back
-# contour detection
 # particles (using shaders, or try async loading, shader-off, ...)
 # particles for crashes
 # particles for skidmarks/trail
@@ -40,6 +35,11 @@
 
 # MAYBE/SOMEDAY =====
 
+# preload assets (cars on application's start, track on menu selection)
+# use txo files in place of png and jpg
+# contour detection
+# ai polling (for cars and directions); only one (rotated) ray for obstacles
+#   and ground
 # more power for the drifting; the length of the inertia+engine should not
 #  be bigger than max engine's force
 # apply drifting force during the drifting

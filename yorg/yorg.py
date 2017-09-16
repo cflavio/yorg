@@ -106,7 +106,6 @@ class Yorg(Game):
             'assets/images/cars/%s_sel.png',
             'assets/images/cars/%s.png',
             self.eng.curr_path + 'assets/models/cars/%s/phys.yml')
-        self.run()
 
     @staticmethod
     def drivers():
