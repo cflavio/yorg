@@ -38,7 +38,7 @@ class YorgFsm(Fsm):
                    self.mdt.logic.on_driver_selected,
                    self.mdt.logic.on_continue]
         map(self.__menu.attach_obs, methods)
-        self.__menu.attach_obs('on_exit', redirect=self.demand, args=['Exit'])
+        self.__menu.attach_obs(self.demand, rename='on_exit', args=['Exit'])
         self.mdt.audio.menu_music.play()
         if self.mdt.logic.season:
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_end)
@@ -90,7 +90,7 @@ class YorgFsm(Fsm):
             'Loading', race_props, track_name_transl, drivers, seas.ranking, seas.tuning)
         seas.race.attach_obs(self.mdt.logic.on_race_loaded)
         exit_mth = 'on_ingame_exit_confirm'
-        seas.race.attach_obs(exit_mth, redirect=self.mdt.fsm.demand,
+        seas.race.attach_obs(self.mdt.fsm.demand, rename=exit_mth,
                              args=['Menu'])
 
     def exitRace(self):
