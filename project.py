@@ -3,15 +3,13 @@
 # TODO LIST =====
 
 # 0.8
-# engine's audio when the user accelerates at start
-# engine's audio for gears
-# preload weapons
 # camera at car's back
 # particles (using shaders, or try async loading, shader-off, ...)
 # particles for crashes
 # particles for skidmarks/trail
 # particles for weapons
 # try the driving models with lighter cars
+# don't reach the max speed suddenly (see audio)
 # driving model - see
 #   https://forum.freegamedev.net/viewtopic.php?p=74451#p74451
 #   https://www.reddit.com/r/opensourcegames/comments/6z1ldb/yorg_07_has_been_released_a_new_track_a_new_car
@@ -28,6 +26,7 @@
 
 # WAITING =====
 
+# (Panda3D 1.10) preload weapons
 # (Panda3D 1.10) #shaders shadows
 #     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 # (Panda3D 1.10) make 'testing' branch
