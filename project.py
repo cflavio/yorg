@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.8
-# camera at car's back
 # particles (using shaders, or try async loading, shader-off, ...)
 # particles for crashes
 # particles for skidmarks/trail
