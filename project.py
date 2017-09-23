@@ -3,10 +3,6 @@
 # TODO LIST =====
 
 # 0.8
-# particles (using shaders, or try async loading, shader-off, ...)
-# particles for crashes
-# particles for skidmarks/trail
-# particles for weapons
 # try the driving models with lighter cars
 # don't reach the max speed suddenly (see audio)
 # driving model - see
@@ -36,6 +32,8 @@
 # preload assets (cars on application's start, track on menu selection)
 # use txo files in place of png and jpg
 # contour detection
+# particles: presize and use the Python buffer protocol
+# particles: use images in place of points
 # ai polling (for cars and directions); only one (rotated) ray for obstacles
 #   and ground
 # more power for the drifting; the length of the inertia+engine should not
