@@ -61,9 +61,9 @@ class CarPageGui(ThanksPageGui):
         cfg_fpath = gprops.phys_path % car_name
         with open(cfg_fpath) as phys_file:
             cfg = load(phys_file)
-        speed = int(round((cfg['max_speed'] / 140.0 - 1) * 100))
-        fric = int(round((cfg['friction_slip'] / 3.0 - 1) * 100))
-        roll = -int(round((cfg['roll_influence'] / .2 - 1) * 100))
+        speed = int(round((cfg['max_speed'] / 120.0 - 1) * 100))
+        fric = int(round((cfg['friction_slip'] / 2.6 - 1) * 100))
+        roll = -int(round((cfg['roll_influence'] / .21 - 1) * 100))
         sign = lambda x: '\1green\1+\2' if x > 0 else ''
         psign = lambda x, sgn=sign: '+' if x == 0 else sgn(x)
         __col_ = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'

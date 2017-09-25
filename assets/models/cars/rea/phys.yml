@@ -1,22 +1,22 @@
-max_speed: 138.0  # Km/h
-mass: 1400  # kilograms
+max_speed: 116.0  # Km/h
+mass: 255  # kilograms
 steering_min_speed: 40  # degrees
 steering_max_speed: 10  # degrees
 steering_clamp: 40  # degrees
 steering_inc: 120  # degrees per second
 steering_dec: 120  # degrees per second
-engine_acc_frc: 6000
-engine_dec_frc: -4250
-brake_frc: 75
-eng_brk_frc: 20
+engine_acc_frc: 1200
+engine_dec_frc: -1000
+brake_frc: 8
+eng_brk_frc: 6
 pitch_control: 0  # default 0
 suspension_compression: 1  # default .83; should be lower than damping
 suspension_damping: .5  # default .88; should be greater than compression
 max_suspension_force: 12000  # default 6000
 max_suspension_travel_cm: 1700  # default 500
 skid_info: 1  # default 1
-suspension_stiffness: 20  # default 5.88; f1 car == 200
+suspension_stiffness: 12  # default 5.88; f1 car == 200
 wheels_damping_relaxation: 2  # overwrites suspension_damping
 wheels_damping_compression: 4  # overwrites suspension_compression
-friction_slip: 2.9  # default 10.5
+friction_slip: 2.7  # default 10.5
 roll_influence: .2  # default .1

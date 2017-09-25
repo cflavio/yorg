@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.8
-# try the driving models with lighter cars
 # don't reach the max speed suddenly (see audio)
 # driving model - see
 #   https://forum.freegamedev.net/viewtopic.php?p=74451#p74451
