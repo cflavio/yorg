@@ -5,9 +5,9 @@ steering_max_speed: 10  # degrees
 steering_clamp: 40  # degrees
 steering_inc: 120  # degrees per second
 steering_dec: 120  # degrees per second
-engine_acc_frc: 1200
+engine_acc_frc: 1600
 engine_dec_frc: -1000
-brake_frc: 8
+brake_frc: 12
 eng_brk_frc: 6
 pitch_control: 0  # default 0
 suspension_compression: 1  # default .83; should be lower than damping

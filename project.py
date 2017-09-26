@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.8
-# don't reach the max speed suddenly (see audio)
 # driving model - see
 #   https://forum.freegamedev.net/viewtopic.php?p=74451#p74451
 #   https://www.reddit.com/r/opensourcegames/comments/6z1ldb/yorg_07_has_been_released_a_new_track_a_new_car
@@ -28,6 +27,7 @@
 
 # MAYBE/SOMEDAY =====
 
+# camera's ease
 # preload assets (cars on application's start, track on menu selection)
 # use txo files in place of png and jpg
 # contour detection
