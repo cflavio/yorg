@@ -48,8 +48,12 @@ class YorgLogic(GameLogic):
         for drv_info, car_name in zip(gameprops.drivers_info,
                                       gameprops.cars_names):
             drivers += [Driver(DriverProps(drv_info, car_name, 0, 0, 0))]
+        if car not in gameprops.cars_names[:int(cars_number)]:
+            cars = gameprops.cars_names[:int(cars_number) - 1] + [car]
+        else:
+            cars = gameprops.cars_names[:int(cars_number)]
         return SeasonProps(
-            gameprops, gameprops.cars_names[:int(cars_number)], car, drivers,
+            gameprops, cars, car, drivers,
             ['assets/images/tuning/engine.png',
              'assets/images/tuning/tires.png',
              'assets/images/tuning/suspensions.png'],
