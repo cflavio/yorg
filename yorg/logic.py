@@ -182,13 +182,6 @@ class YorgLogic(GameLogic):
         # names for both wheels
         WheelNames = namedtuple('WheelNames', 'frontrear both')
         wheel_names = WheelNames(frwheels, bwheels)
-        wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
-        wheel_gfx_names = [
-            self.eng.curr_path + 'assets/models/cars/%s/' + wname
-            for wname in wheel_gfx_names]
-        WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
-        wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
-
         track_fpath = 'assets/models/tracks/%s/track.yml' % track_name
         with open(self.eng.curr_path + track_fpath) as ftrack:
             music_name = load(ftrack)['music']
@@ -206,9 +199,6 @@ class YorgLogic(GameLogic):
             laps_num = track_cfg['laps']
         WPInfo = namedtuple('WPInfo', 'root_name wp_name prev_name')
         WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
-        DamageInfo = namedtuple('DamageInfo', 'low hi')
-        damage_info = DamageInfo('assets/models/cars/%s/cardamage1',
-                                 'assets/models/cars/%s/cardamage2')
         share_urls = [
             'https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg',
             'https://twitter.com/share?text=I%27ve%20achieved%20{time}'
@@ -222,8 +212,7 @@ class YorgLogic(GameLogic):
         race_props = RaceProps(
             self.season.props, keys, joystick, sounds,
             'assets/models/cars/%s/capsule', 'Capsule', 'assets/models/cars',
-            wheel_names, 'Road', 'assets/models/cars/%s/car',
-            damage_info, wheel_gfx_names,
+            wheel_names, 'Road',
             'assets/particles/sparks.ptf', drivers,
             self.mdt.options['development']['shaders_dev'],
             self.mdt.options['settings']['shaders'], music_fpath,

@@ -93,7 +93,16 @@ class Yorg(Game):
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
         DriverPaths = namedtuple('DriverPaths', 'path path_sel')
+        DamageInfo = namedtuple('DamageInfo', 'low hi')
+        damage_info = DamageInfo('assets/models/cars/%s/cardamage1',
+                                 'assets/models/cars/%s/cardamage2')
         Game.__init__(self, init_lst, conf)
+        wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
+        wheel_gfx_names = [
+            self.eng.curr_path + 'assets/models/cars/%s/' + wname
+            for wname in wheel_gfx_names]
+        WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
+        wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
         self.gameprops = GameProps(
             menu_args, cars_names, self.drivers(),
             ['desert', 'mountain', 'amusement', 'countryside'],
@@ -105,7 +114,9 @@ class Yorg(Game):
                         'assets/images/drivers/driver%s_sel.png'),
             'assets/images/cars/%s_sel.png',
             'assets/images/cars/%s.png',
-            self.eng.curr_path + 'assets/models/cars/%s/phys.yml')
+            self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
+            'assets/models/cars/%s/car',
+            damage_info, wheel_gfx_names,)
 
     @staticmethod
     def drivers():

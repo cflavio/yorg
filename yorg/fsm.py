@@ -1,4 +1,5 @@
 from sys import exit as sys_exit
+from os.path import exists
 from yyagl.gameobject import Fsm
 from yyagl.racing.car.audio import CarSounds
 from yyagl.racing.car.event import Keys
@@ -43,11 +44,32 @@ class YorgFsm(Fsm):
         if self.mdt.logic.season:
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_end)
             self.mdt.logic.season.detach_obs(self.mdt.event.on_season_cont)
+        self.models = []
+        for car in self.mdt.gameprops.cars_names:
+            self.models += [self.mdt.gameprops.damage_paths.low % car]
+            self.models += [self.mdt.gameprops.damage_paths.hi % car]
+            self.models += [self.mdt.gameprops.model_name % car]
+
+            fpath = self.mdt.gameprops.wheel_gfx_names.front % car
+            rpath = self.mdt.gameprops.wheel_gfx_names.rear % car
+            m_exists = lambda path: exists(path + '.egg') or exists(path + '.bam')
+            b_path = self.mdt.gameprops.wheel_gfx_names.both % car
+            front_path = fpath if m_exists(fpath) else b_path
+            rear_path = rpath if m_exists(rpath) else b_path
+            self.models += [front_path]
+            self.models += [rear_path]
+        self.load_models(None)
+
+    def load_models(self, model):
+        if not self.models: return
+        model = self.models.pop(0)
+        self.loader_tsk = loader.loadModel(model, callback=self.load_models)
 
     def exitMenu(self):
         self.eng.log_mgr.log('exiting Menu state')
         self.__menu.destroy()
         self.mdt.audio.menu_music.stop()
+        loader.cancelRequest(self.loader_tsk)
 
     def enterRace(self, track_path='', car_path='', drivers='', ranking=None):
         self.eng.log_mgr.log('entering Race state')
