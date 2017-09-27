@@ -2,11 +2,6 @@
 
 # TODO LIST =====
 
-# 0.8
-# driving model - see
-#   https://forum.freegamedev.net/viewtopic.php?p=74451#p74451
-#   https://www.reddit.com/r/opensourcegames/comments/6z1ldb/yorg_07_has_been_released_a_new_track_a_new_car
-
 # 0.9 (network)
 # #network at end of a multiplayer race wait for other cars
 # #network wheels' animations
@@ -22,19 +17,13 @@
 # (Panda3D 1.10) preload weapons
 # (Panda3D 1.10) #shaders shadows
 #     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
-# (Panda3D 1.10) make 'testing' branch
 
 
 # MAYBE/SOMEDAY =====
 
-# camera's ease
-# preload assets (cars on application's start, track on menu selection)
 # use txo files in place of png and jpg
+# ai: only one (rotated) ray for obstacles and ground
 # contour detection
-# particles: presize and use the Python buffer protocol
-# particles: use images in place of points
-# ai polling (for cars and directions); only one (rotated) ray for obstacles
-#   and ground
 # more power for the drifting; the length of the inertia+engine should not
 #  be bigger than max engine's force
 # apply drifting force during the drifting
@@ -57,3 +46,5 @@
 # make uml diagrams with pyreverse into devinfo
 # unit tests
 # django webapp for scores
+# particles: presize and use the Python buffer protocol
+# particles: use images in place of points
