@@ -136,7 +136,7 @@ general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + tracks_tgt_fnames()
 no_int = args['nointernet']
 if args['images']:
-    env.images(img_files, files(['psd']))
+    env.images(img_files, files(['psd', 'jpg', 'png'], ['models'], ['_png.png']))
 if args['tracks']:
     env.tracks(tracks_tgt_fnames(), files(['egg']))
 if args['p3d']:

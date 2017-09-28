@@ -17,34 +17,24 @@
 # (Panda3D 1.10) preload weapons
 # (Panda3D 1.10) #shaders shadows
 #     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
+# hardware instancing (gl_InstanceID requires 1.40)
 
 
 # MAYBE/SOMEDAY =====
 
-# use txo files in place of png and jpg
 # ai: only one (rotated) ray for obstacles and ground
 # contour detection
-# more power for the drifting; the length of the inertia+engine should not
-#  be bigger than max engine's force
-# apply drifting force during the drifting
-# preloading shaders by creating cards, applying shaders and call render_frame
-# 3D audio (from player's car)
+# change/improve linux installer
+# the length of the inertia+engine shouldn't be bigger than max engine's force
+# make scons for yyagl
+# embed into a wx / pyqt window
+# port to python 3
+# unit tests
+# django webapp for scores
 # refactor: notify done by evt (from mdt externally);
 #   Colleague.notify invokes that; GO's attach redirected to evt;
 #   only evt is a Subject
 # refactor: don't share eng with every colleague, instead share only the
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr
-# remove mdt from colleague
-# change/improve linux installer
-# make scons for yyagl
-# embed into a wx / pyqt window
-# port to python 3
-# deferred shading, tone mapping
-# hardware instancing
-# multi-threading physics loading
-# make uml diagrams with pyreverse into devinfo
-# unit tests
-# django webapp for scores
-# particles: presize and use the Python buffer protocol
-# particles: use images in place of points
+# refactor: remove mdt from colleague

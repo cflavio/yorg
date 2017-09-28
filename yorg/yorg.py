@@ -73,7 +73,7 @@ class Yorg(Game):
             shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
             menu_joypad=opt_dev['menu_joypad'],
             lang=self.options['settings']['lang'], lang_domain='yorg',
-            cursor_path='assets/images/gui/cursor.png',
+            cursor_path='assets/images/gui/cursor.dds',
             cursor_scale=((256/352.0) * .08, 1, .08), cursor_hotspot=(.1, .06),
             volume=self.options['settings']['volume'],
             profiling=opt_dev['profiling'],
@@ -87,9 +87,9 @@ class Yorg(Game):
         menu_args = MenuArgs(
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
             (.75, .75, .75, 1), (.75, .25, .25, 1), .1, (-4.6, 4.6, -.32, .88),
-            (0, 0, 0, .2), 'assets/images/gui/menu_background.jpg',
+            (0, 0, 0, .2), 'assets/images/gui/menu_background.dds',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s_png.png')
+            'assets/images/icons/%s.dds')
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
         DriverPaths = namedtuple('DriverPaths', 'path path_sel')
@@ -108,12 +108,12 @@ class Yorg(Game):
             ['desert', 'mountain', 'amusement', 'countryside'],
             lambda: [_('desert'), _('mountain'), _('amusement park'),
                      _('countryside')],
-            'assets/images/tracks/%s.png',
+            'assets/images/tracks/%s.dds',
             self.options['settings']['player_name'],
-            DriverPaths('assets/images/drivers/driver%s.png',
-                        'assets/images/drivers/driver%s_sel.png'),
-            'assets/images/cars/%s_sel.png',
-            'assets/images/cars/%s.png',
+            DriverPaths('assets/images/drivers/driver%s.dds',
+                        'assets/images/drivers/driver%s_sel.dds'),
+            'assets/images/cars/%s_sel.dds',
+            'assets/images/cars/%s.dds',
             self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
             'assets/models/cars/%s/car',
             damage_info, wheel_gfx_names,)

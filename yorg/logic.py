@@ -54,9 +54,9 @@ class YorgLogic(GameLogic):
             cars = gameprops.cars_names[:int(cars_number)]
         return SeasonProps(
             gameprops, cars, car, drivers,
-            ['assets/images/tuning/engine.png',
-             'assets/images/tuning/tires.png',
-             'assets/images/tuning/suspensions.png'],
+            ['assets/images/tuning/engine.dds',
+             'assets/images/tuning/tires.dds',
+             'assets/images/tuning/suspensions.dds'],
             'assets/fonts/Hanken-Book.ttf',
             'assets/sfx/countdown.ogg', single_race, wpn2img, tun_engine,
             tun_tires, tun_suspensions, race_start_time, countdown_seconds)
@@ -224,8 +224,8 @@ class YorgLogic(GameLogic):
             WeaponInfo('Weaponboxs', 'EmptyWeaponboxAnim'), 'Start',
             track_name, 'tracks/' + track_name, 'track', 'Empty', 'Anim',
             'omni', self.sign_cb, 'EmptyNameBillboard4Anim',
-            'assets/images/minimaps/%s.png' % track_name,
-            'assets/images/minimaps/car_handle.png', carname2color, camera_vec,
+            'assets/images/minimaps/%s.dds' % track_name,
+            'assets/images/minimaps/car_handle.dds', carname2color, camera_vec,
             shadow_src, laps_num, 'assets/models/weapons/rocket/RocketAnim',
             'assets/models/weapons/turbo/TurboAnim',
             'assets/models/weapons/turn/TurnAnim',

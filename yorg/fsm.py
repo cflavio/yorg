@@ -27,7 +27,7 @@ class YorgFsm(Fsm):
         menu_props = MenuProps(
             self.mdt.gameprops, self.mdt.options,
             self.mdt.options['development']['multiplayer'],
-            'assets/images/gui/yorg_title.png',
+            'assets/images/gui/yorg_title.dds',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
             'http://www.ya2.it/support-us')
