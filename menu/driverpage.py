@@ -146,9 +146,9 @@ class DriverPageGui(ThanksPageGui):
         drv_idx = range(1, 9)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(img_idx=i)
+        gprops.drivers_info[i-1] = gprops.drivers_info[i-1]._replace(img_idx=i-1)
         nname = self.ent.get()
-        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(name=nname)
+        gprops.drivers_info[i-1] = gprops.drivers_info[i-1]._replace(name=nname)
         self.notify('on_driver_selected', self.ent.get(), self.mdt.track,
                     self.mdt.car)
 
