@@ -23,16 +23,14 @@
 
 # MAYBE/SOMEDAY =====
 
-# shaders
-# contour detection
+# refactor: notify done by evt (from mdt externally);
+#   Colleague.notify invokes that; GO's attach redirected to evt;
+#   only evt is a Subject
 # the length of the inertia+engine shouldn't be bigger than max engine's force
 # make scons for yyagl
 # port to python 3
 # unit tests
 # django webapp for scores
-# refactor: notify done by evt (from mdt externally);
-#   Colleague.notify invokes that; GO's attach redirected to evt;
-#   only evt is a Subject
 # refactor: don't share eng with every colleague, instead share only the
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr
