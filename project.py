@@ -23,7 +23,6 @@
 
 # MAYBE/SOMEDAY =====
 
-# ai: only one (rotated) ray for obstacles and ground
 # shaders
 # contour detection
 # the length of the inertia+engine shouldn't be bigger than max engine's force
