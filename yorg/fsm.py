@@ -91,7 +91,10 @@ class YorgFsm(Fsm):
         sounds = CarSounds(
             'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',
             'assets/sfx/crash.ogg', 'assets/sfx/crash_high_speed.ogg',
-            'assets/sfx/lap.ogg', 'assets/sfx/landing.ogg')
+            'assets/sfx/lap.ogg', 'assets/sfx/landing.ogg',
+            'assets/sfx/pitstop.ogg', 'assets/sfx/fire.ogg',
+            'assets/sfx/hit.ogg', 'assets/sfx/turbo.ogg',
+            'assets/sfx/rotate_all_fire.ogg', 'assets/sfx/rotate_all_hit.ogg')
         race_props = self.mdt.logic.build_race_props(
             seas.logic.drivers, track_path, keys, joystick, sounds)
         if self.eng.server.is_active:
