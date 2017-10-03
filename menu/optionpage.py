@@ -102,7 +102,7 @@ class OptionPageGui(ThanksPageGui):
 
     def update_texts(self):
         PageGui.update_texts(self)
-        curr_lang = self.eng.lang_mgr.curr_lang
+        curr_lang = self.eng.lang_mgr.lang
         self.lang_opt.set({'en': 0, 'it': 1}[curr_lang], fCommand=0)
 
     def __change_lang(self, arg):

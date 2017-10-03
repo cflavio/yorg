@@ -52,7 +52,7 @@ class Yorg(Game):
                 'multiplayer': 0,
                 'win_orig': '',
                 'profiling': 0,
-                'py_profiling_percall': 0,
+                'pyprof_percall': 0,
                 'race_start_time': 3.5,
                 'countdown_seconds': 3}}
         opt_path = ''
@@ -76,7 +76,7 @@ class Yorg(Game):
             cursor_scale=((256/352.0) * .08, 1, .08), cursor_hotspot=(.1, .06),
             volume=self.options['settings']['volume'],
             profiling=opt_dev['profiling'],
-            py_profiling_percall=opt_dev['py_profiling_percall'])
+            pyprof_percall=opt_dev['pyprof_percall'])
         init_lst = [
             [('fsm', YorgFsm, [self])],
             [('logic', YorgLogic, [self])],

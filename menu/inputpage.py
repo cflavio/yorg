@@ -5,7 +5,7 @@ from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
-from yyagl.engine.joystick import has_pygame
+from yyagl.engine.joystick import JoystickMgr
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -33,7 +33,7 @@ class InputPageGui(ThanksPageGui):
             indicatorValue=self.joystick,
             indicator_frameColor=menu_args.text_fg,
             **menu_args.checkbtn_args)
-        if not has_pygame():
+        if not JoystickMgr.has_support():
             self.joypad_cb['state'] = DISABLED
         buttons_data = [
             (_('Accelerate'), 'forward', .6),

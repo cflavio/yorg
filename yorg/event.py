@@ -9,7 +9,7 @@ class YorgEvent(Event):
         if not self.eng.is_runtime:
             self.accept('f12', self.eng.phys_mgr.toggle_debug)
         fname = 'yorg_' + strftime('%y_%m_%d_%H_%M_%S') + '.png'
-        self.accept('f10', self.eng.base.win.saveScreenshot, [fname])
+        self.accept('f10', base.win.saveScreenshot, [fname])
         base.accept('escape-up', self.mdt.fsm.demand, ['Exit'])
         if not self.eng.is_runtime:
             self.accept('f9', self.eng.profiler.toggle)
