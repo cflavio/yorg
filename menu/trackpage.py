@@ -3,7 +3,6 @@ from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
-from .carpage import CarPageServer
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
@@ -53,8 +52,8 @@ class TrackPageGui(ThanksPageGui):
 class TrackPageGuiServer(TrackPageGui):
 
     def on_track(self, track):
-        self.menu.track = track
-        self.menu.push_page(CarPageServer())
+        self.notify('on_track_selected', track)
+        self.notify('on_push_page', 'carpageserver', [self.props])
         self.eng.server.send([NetMsgs.track_selected, track])
 
 

@@ -3,7 +3,6 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
 from yyagl.engine.gui.page import Page, PageEvent
 from yyagl.engine.network.client import ClientError
-from .carpage import CarPageClient
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
@@ -16,45 +15,44 @@ class ClientEvent(PageEvent):
 
     def process_msg(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:
-            self.eng.log('track selected: ' + data_lst[1])
-            self.mdt.gui.menu.track = data_lst[1]
-            self.mdt.gui.menu.push_page(CarPageClient(self.mdt.gui.menu))
+            self.eng.log_mgr.log('track selected: ' + data_lst[1])
+            self.notify('on_track_selected', data_lst[1])
+            self.mdt.gui.notify('on_push_page', 'carpageclient', [self.mdt.gui.props])
 
 
 class ClientPageGui(ThanksPageGui):
 
-    def __init__(self, mdt):
+    def __init__(self, mdt, props):
         self.ent = None
-        ThanksPageGui.__init__(self, mdt)
+        self.props = props
+        ThanksPageGui.__init__(self, mdt, props.gameprops.menu_args)
 
     def bld_page(self):
-        menu_gui = self.mdt.menu.gui
-        menu_args = self.mdt.menu.gui.menu_args
+        menu_args = self.props.gameprops.menu_args
         txt = OnscreenText(text=_('Client'), pos=(0, .4),
-                           **menu_gui.menu_args.text_args)
+                           **menu_args.text_args)
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=_('insert the server address'))
         self.ent.onscreenText['fg'] = menu_args.text_fg
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
-                           command=self.connect, **menu_gui.menu_args.btn_args)
+                           command=self.connect, **menu_args.btn_args)
         map(self.add_widget, [txt, self.ent, btn])
         ThanksPageGui.bld_page(self)
 
     def connect(self):
-        menu_gui = self.mdt.menu.gui
+        menu_args = self.props.gameprops.menu_args
         try:
-            self.eng.log(self.ent.get())
+            self.eng.log_mgr.log(self.ent.get())
             self.eng.client.start(self.mdt.event.process_msg, self.ent.get())
-            menu_args = self.mdt.menu.gui.menu_args
             wait_txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
-                font=menu_gui.font, fg=menu_args.text_fg)
+                font=menu_args.font, fg=menu_args.text_fg)
             self.add_widget(wait_txt)
         except ClientError:
             txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
-                               scale=.16, font=menu_gui.menu_args.font)
+                               scale=.16, font=menu_args.font)
             self.eng.do_later(5, txt.destroy)
 
 

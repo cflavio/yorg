@@ -35,8 +35,8 @@ class YorgMainPageGui(MainPageGui):
     def bld_page(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
                                     [self.props])
-        mp_cb = lambda: self.menu.push_page(MultiplayerPage(
-            self.menu.gui.menu_args, self.props, self.menu))
+        mp_cb = lambda: self.notify('on_push_page', 'multiplayer',
+                                    [self.props])
         supp_cb = lambda: self.eng.open_browser(self.props.support_url)
         cred_cb = lambda: self.notify('on_push_page', 'credits')
         menu_data = [

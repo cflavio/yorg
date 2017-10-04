@@ -105,17 +105,17 @@ class CarPageGuiServer(CarPageGui):
 
     def bld_page(self):
         CarPageGui.bld_page(self)
-        self.eng.register_server_cb(self.process_srv)
+        self.eng.server.register_cb(self.process_srv)
         self.eng.car_mapping = {}
 
     def on_car(self, car):
-        self.eng.log('car selected: ' + car)
+        self.eng.log_mgr.log('car selected: ' + car)
         self.eng.server.send([NetMsgs.car_selection, car])
         for btn in self._buttons(car):
             btn.disable()
         if self in self.current_cars:
             curr_car = self.current_cars[self]
-            self.eng.log('car deselected: ' + curr_car)
+            self.eng.log_mgr.log('car deselected: ' + curr_car)
             self.eng.server.send([NetMsgs.car_deselection, curr_car])
             for btn in self._buttons(curr_car):
                 btn.enable()
@@ -124,7 +124,7 @@ class CarPageGuiServer(CarPageGui):
         self.evaluate_starting()
 
     def evaluate_starting(self):
-        connections = self.eng.connections + [self]
+        connections = self.eng.server.connections + [self]
         if not all(conn in self.current_cars for conn in connections): return
         packet = [NetMsgs.start_race, len(self.current_cars)]
 
@@ -134,7 +134,7 @@ class CarPageGuiServer(CarPageGui):
         for k, val in self.current_cars.items():
             packet += [process(k), val]
         self.eng.server.send(packet)
-        self.eng.log('start race: ' + str(packet))
+        self.eng.log_mgr.log('start race: ' + str(packet))
         curr_car = self.current_cars[self]
         # manage as event
         #game.logic.season = SingleRaceSeason()
@@ -143,13 +143,13 @@ class CarPageGuiServer(CarPageGui):
     def process_srv(self, data_lst, sender):
         if data_lst[0] != NetMsgs.car_request: return
         car = data_lst[1]
-        self.eng.log('car requested: ' + car)
+        self.eng.log_mgr.log('car requested: ' + car)
         btn = self._buttons(car)[0]
         if btn['state'] == DISABLED:
             self.eng.server.send([NetMsgs.car_deny], sender)
-            self.eng.log('car already selected: ' + car)
+            self.eng.log_mgr.log('car already selected: ' + car)
         elif btn['state'] == NORMAL:
-            self.eng.log('car selected: ' + car)
+            self.eng.log_mgr.log('car selected: ' + car)
             if sender in self.current_cars:
                 _btn = self._buttons(self.current_cars[sender])[0]
                 _btn.enable()
@@ -165,10 +165,10 @@ class CarPageGuiClient(CarPageGui):
 
     def bld_page(self):
         CarPageGui.bld_page(self)
-        self.eng.register_client_cb(self.process_client)
+        self.eng.client.register_cb(self.process_client)
 
     def on_car(self, car):
-        self.eng.log('car request: ' + car)
+        self.eng.log_mgr.log('car request: ' + car)
         self.eng.client.send([NetMsgs.car_request, car])
 
     def process_client(self, data_lst, sender):
@@ -177,23 +177,23 @@ class CarPageGuiClient(CarPageGui):
                 _btn = self._buttons(self.car)[0]
                 _btn.enable()
             self.car = car = data_lst[1]
-            self.eng.log('car confirmed: ' + car)
+            self.eng.log_mgr.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
         if data_lst[0] == NetMsgs.car_deny:
-            self.eng.log('car denied')
+            self.eng.log_mgr.log('car denied')
         if data_lst[0] == NetMsgs.car_selection:
             car = data_lst[1]
-            self.eng.log('car selection: ' + car)
+            self.eng.log_mgr.log('car selection: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
         if data_lst[0] == NetMsgs.car_deselection:
             car = data_lst[1]
-            self.eng.log('car deselection: ' + car)
+            self.eng.log_mgr.log('car deselection: ' + car)
             btn = self._buttons(car)[0]
             btn.enable()
         if data_lst[0] == NetMsgs.start_race:
-            self.eng.log('start_race: ' + str(data_lst))
+            self.eng.log_mgr.log('start_race: ' + str(data_lst))
             # manage as event
             #game.logic.season = SingleRaceSeason()
             #game.fsm.demand('Race', self.track_path, self.car, data_lst[2:])

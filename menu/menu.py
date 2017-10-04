@@ -2,9 +2,11 @@ from collections import namedtuple
 from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
-from .trackpage import TrackPage
-from .carpage import CarPage
-from .carpage import CarPageSeason
+from .multiplayerpage import MultiplayerPage
+from .serverpage import ServerPage
+from .clientpage import ClientPage
+from .trackpage import TrackPage, TrackPageServer
+from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
 from .driverpage import DriverPage
 from .optionpage import OptionPage
 from .inputpage import InputPage
@@ -24,14 +26,30 @@ class YorgMenuLogic(MenuLogic):
             page = SingleplayerPage(args[0])
             page.gui.attach(self.on_track_selected)
             page.gui.attach(self.on_continue)
+        if page_code == 'multiplayer':
+            page = MultiplayerPage(args[0])
+        if page_code == 'server':
+            page = ServerPage(args[0])
+        if page_code == 'client':
+            page = ClientPage(args[0])
+            page.event.attach(self.on_track_selected)
         if page_code == 'single_race':
             page = TrackPage(args[0])
+            page.gui.attach(self.on_track_selected)
+        if page_code == 'trackpageserver':
+            page = TrackPageServer(args[0])
             page.gui.attach(self.on_track_selected)
         if page_code == 'new_season':
             page = CarPageSeason(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected_season)
         if page_code == 'car_page':
             page = CarPage(args[0], self.mdt.track)
+            page.gui.attach(self.on_car_selected)
+        if page_code == 'carpageserver':
+            page = CarPageServer(args[0], self.mdt.track)
+            page.gui.attach(self.on_car_selected)
+        if page_code == 'carpageclient':
+            page = CarPageClient(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
             page = DriverPage(args[0], args[1], args[2])
