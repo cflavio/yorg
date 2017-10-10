@@ -90,6 +90,28 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
 
+    def on_car_start_server(self, track, car, packet):
+        dev = self.mdt.options['development']
+        self.season = SingleRaceSeason(self.__season_props(
+            self.mdt.gameprops, car,
+            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+            dev['race_start_time'], dev['countdown_seconds']))
+        self.season.attach_obs(self.mdt.event.on_season_end)
+        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.start()
+        self.mdt.fsm.demand('Race', track, car, self.season.logic.drivers)
+
+    def on_car_start_client(self, track, car, packet):
+        dev = self.mdt.options['development']
+        self.season = SingleRaceSeason(self.__season_props(
+            self.mdt.gameprops, car,
+            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+            dev['race_start_time'], dev['countdown_seconds']))
+        self.season.attach_obs(self.mdt.event.on_season_end)
+        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.start()
+        self.mdt.fsm.demand('Race', track, car, self.season.logic.drivers)
+
     def on_car_selected_season(self, car):
         dev = self.mdt.options['development']
         self.season = Season(self.__season_props(

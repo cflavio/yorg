@@ -136,9 +136,7 @@ class CarPageGuiServer(CarPageGui):
         self.eng.server.send(packet)
         self.eng.log_mgr.log('start race: ' + str(packet))
         curr_car = self.current_cars[self]
-        # manage as event
-        #game.logic.season = SingleRaceSeason()
-        #game.fsm.demand('Race', self.track_path, curr_car, packet[2:])
+        self.notify('on_car_start_server', self.track_path, curr_car, packet)
 
     def process_srv(self, data_lst, sender):
         if data_lst[0] != NetMsgs.car_request: return
@@ -194,9 +192,7 @@ class CarPageGuiClient(CarPageGui):
             btn.enable()
         if data_lst[0] == NetMsgs.start_race:
             self.eng.log_mgr.log('start_race: ' + str(data_lst))
-            # manage as event
-            #game.logic.season = SingleRaceSeason()
-            #game.fsm.demand('Race', self.track_path, self.car, data_lst[2:])
+            self.notify('on_car_start_client', self.track_path, self.car, data_lst)
 
 
 class CarPage(Page):

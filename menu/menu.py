@@ -47,10 +47,12 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageserver':
             page = CarPageServer(args[0], self.mdt.track)
+            page.gui.attach(self.on_car_start_server)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             page = CarPageClient(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected)
+            page.gui.attach(self.on_car_start_client)
         if page_code == 'driver_page':
             page = DriverPage(args[0], args[1], args[2])
             page.gui.attach(self.on_driver_selected)
@@ -81,6 +83,12 @@ class YorgMenuLogic(MenuLogic):
 
     def on_car_selected(self, car):
         self.mdt.gui.notify('on_car_selected', car)
+
+    def on_car_start_server(self, track, car, packet):
+        self.mdt.gui.notify('on_car_start_server', track, car, packet)
+
+    def on_car_start_client(self, track, car, packet):
+        self.mdt.gui.notify('on_car_start_client', track, car, packet)
 
     def on_car_selected_season(self, car):
         self.mdt.gui.notify('on_car_selected_season', car)
