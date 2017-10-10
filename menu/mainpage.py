@@ -91,12 +91,13 @@ class YorgMainPageGui(MainPageGui):
     def set_news(self):
         menu_args = self.props.gameprops.menu_args
         feeds = parse(self.props.feed_url)
-        if not feeds['entries']:
-            return
-        publ = lambda entry: self.__conv(entry['published'])
+        if not feeds['entries']: return
+        self.__feed_type = 'rss' if 'published' in feeds['entries'][0] else 'atom'
+        self.__date_field = 'published' if self.__feed_type == 'rss' else 'updated'
+        publ = lambda entry: self.__conv(entry[self.__date_field])
         rss = sorted(feeds['entries'], key=publ)
         conv_time = lambda ent: datetime.strftime(self.__conv(ent), '%b %d')
-        rss = [(conv_time(ent['published']), ent['title']) for ent in rss]
+        rss = [(conv_time(ent[self.__date_field]), ent['title']) for ent in rss]
         rss.reverse()
         rss = rss[:5]
         rss = [(_rss[0], self.__ellipsis_str(_rss[1])) for _rss in rss]
@@ -113,7 +114,7 @@ class YorgMainPageGui(MainPageGui):
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
             fg=menu_args.text_bg, font=menu_args.font)
-                  for i in range(5)]
+                  for i in range(min(5, len(rss)))]
         btn_args = self.props.gameprops.menu_args.btn_args.copy()
         btn_args['scale'] = .055
         show_btn = DirectButton(
@@ -123,14 +124,19 @@ class YorgMainPageGui(MainPageGui):
         self.transl_text(show_btn, 'show', _('show'))
         map(self.add_widget, [frm] + texts + [show_btn])
 
-    @staticmethod
-    def __conv(datestr):
-        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
-                  'Sep', 'Oct', 'Nov', 'Dec']
-        date_el = datestr.split()[1:-2]
-        month = months.index(date_el[1]) + 1
-        day, year = date_el[0], date_el[2]
-        return datetime(int(year), month, int(day))
+    def __conv(self, datestr):
+        if self.__feed_type == 'rss':
+            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
+                      'Sep', 'Oct', 'Nov', 'Dec']
+            date_el = datestr.split()[1:-2]
+            month = months.index(date_el[1]) + 1
+            day, year = date_el[0], date_el[2]
+            return datetime(int(year), month, int(day))
+        else:
+            year = int(datestr[:4])
+            month = int(datestr[5:7])
+            day = int(datestr[8:10])
+            return datetime(year, month, day)
 
     @staticmethod
     def __ellipsis_str(_str):
