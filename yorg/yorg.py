@@ -4,7 +4,8 @@ from os.path import join, exists
 from panda3d.core import Filename
 from yyagl.game import Game
 from yyagl.dictfile import DctFile
-from yyagl.engine.configuration import Cfg
+from yyagl.engine.configuration import Cfg, GuiCfg, ProfilingCfg, LangCfg, \
+    CursorCfg, DevCfg
 from yyagl.engine.gui.menu import MenuArgs
 from yyagl.racing.gameprops import GameProps
 from yyagl.racing.driver.driver import DriverInfo
@@ -63,20 +64,22 @@ class Yorg(Game):
             join(opt_path, 'options.yml') if opt_path else 'options.yml',
             default_opt)
         opt_dev = self.options['development']
-        conf = Cfg(
-            win_title='Yorg', win_orig=opt_dev['win_orig'],
+        gui_cfg = GuiCfg(win_title='Yorg', win_orig=opt_dev['win_orig'],
             win_size=self.options['settings']['resolution'],
             fullscreen=self.options['settings']['fullscreen'],
             antialiasing=self.options['settings']['antialiasing'],
-            fps=opt_dev['fps'], mt_render=opt_dev['multithreaded_render'],
-            shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
-            menu_joypad=opt_dev['menu_joypad'],
-            lang=self.options['settings']['lang'], lang_domain='yorg',
-            cursor_path='assets/images/gui/cursor.dds',
-            cursor_scale=((256/352.0) * .08, 1, .08), cursor_hotspot=(.1, .06),
-            volume=self.options['settings']['volume'],
-            profiling=opt_dev['profiling'],
+            fps=opt_dev['fps'], volume=self.options['settings']['volume'])
+        profiling_cfg = ProfilingCfg(profiling=opt_dev['profiling'],
             pyprof_percall=opt_dev['pyprof_percall'])
+        lang_cfg = LangCfg(lang=self.options['settings']['lang'],
+                           lang_domain='yorg', languages=['English', 'Italiano'])
+        cursor_cfg = CursorCfg(cursor_path='assets/images/gui/cursor.dds',
+            cursor_scale=((256/352.0) * .08, 1, .08),
+            cursor_hotspot=(.1, .06))
+        dev_cfg = DevCfg(mt_render=opt_dev['multithreaded_render'],
+            shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
+            menu_joypad=opt_dev['menu_joypad'])
+        conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         init_lst = [
             [('fsm', YorgFsm, [self])],
             [('logic', YorgLogic, [self])],
