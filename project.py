@@ -24,7 +24,6 @@
 
 # MAYBE/SOMEDAY =====
 
-# the length of the inertia+engine shouldn't be bigger than max engine's force
 # make scons for yyagl
 # unit tests
 # django webapp for scores
