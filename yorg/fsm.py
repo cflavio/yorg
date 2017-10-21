@@ -110,7 +110,7 @@ class YorgFsm(Fsm):
         track_name_transl = track_path
         track_dct = {'desert': _('desert'), 'mountain': _('mountain'),
                      'amusement': _('amusement park'),
-                     'countryside': _('countryside')}
+                     'countryside': _('countryside'), 'city': _('city')}
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         seas.race.fsm.demand(

@@ -19,7 +19,7 @@ class TrackPageGui(ThanksPageGui):
         self.add_widget(txt)
         t_a = self.menu_args.text_args.copy()
         t_a['scale'] = .06
-        tracks_per_row = 2
+        tracks_per_row = 3
         gprops = self.props.gameprops
         for row, col in product(range(2), range(tracks_per_row)):
             if row * tracks_per_row + col >= len(gprops.season_tracks):
@@ -30,7 +30,7 @@ class TrackPageGui(ThanksPageGui):
             x_offset = .5 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
                 scale=.3,
-                pos=(-.5 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
+                pos=(-1.0 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
                 image=gprops.track_img % gprops.season_tracks[
                     col + row * tracks_per_row],
@@ -39,7 +39,7 @@ class TrackPageGui(ThanksPageGui):
                 **self.menu_args.imgbtn_args)
             txt = OnscreenText(
                 gprops.tracks_tr()[col + row * tracks_per_row],
-                pos=(-.5 + col * 1.0 + x_offset, .14 - z_offset - row * .7),
+                pos=(-1.0 + col * 1.0 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
             map(self.add_widget, [btn, txt])
         ThanksPageGui.bld_page(self)
