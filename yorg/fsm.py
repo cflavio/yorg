@@ -100,9 +100,9 @@ class YorgFsm(Fsm):
         race_props = self.mdt.logic.build_race_props(
             seas.logic.drivers, track_path, keys, joystick, sounds)
         if self.eng.server.is_active:
-            self.season.create_race_server(race_props)
+            seas.create_race_server(race_props)
         elif self.eng.client.is_active:
-            self.season.create_race_client(race_props)
+            seas.create_race_client(race_props)
         else:
             seas.create_race(race_props)
         self.eng.log_mgr.log('selected drivers: ' + str(drivers))
