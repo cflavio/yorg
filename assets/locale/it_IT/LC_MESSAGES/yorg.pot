@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 14:56+0200\n"
+"POT-Creation-Date: 2017-10-22 12:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,209 +17,209 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: menu/mainpage.py:86
-msgid "Single Player"
-msgstr ""
-
-#: menu/mainpage.py:87
-msgid "Multiplayer"
-msgstr ""
-
-#: menu/mainpage.py:88
-msgid "Options"
-msgstr ""
-
-#: menu/mainpage.py:89
-msgid "Support us"
-msgstr ""
-
-#: menu/mainpage.py:90
-msgid "Credits"
-msgstr ""
-
-#: menu/mainpage.py:91
-msgid "Quit"
-msgstr ""
-
-#: menu/mainpage.py:119
-msgid "NB the game is work-in-progress"
-msgstr ""
-
-#: menu/mainpage.py:162 menu/mainpage.py:165
-msgid "Last news:"
-msgstr ""
-
-#: menu/mainpage.py:181 menu/mainpage.py:184
-msgid "show"
-msgstr ""
-
-#: menu/inputpage.py:43 menu/inputpage.py:46
-msgid "Use the joypad when present"
-msgstr ""
-
-#: menu/inputpage.py:67
-msgid "Accelerate"
-msgstr ""
-
-#: menu/inputpage.py:68
-msgid "Brake/Reverse"
-msgstr ""
-
-#: menu/inputpage.py:69
-msgid "Left"
-msgstr ""
-
-#: menu/inputpage.py:70
-msgid "Right"
-msgstr ""
-
-#: menu/inputpage.py:71
-msgid "Weapon"
-msgstr ""
-
-#: menu/inputpage.py:72
-msgid "Respawn"
-msgstr ""
-
-#: menu/inputpage.py:73
-msgid "Pause"
-msgstr ""
-
-#: menu/inputpage.py:81
-msgid "Press the key to record it"
-msgstr ""
-
-#: menu/optionpage.py:68
-msgid "Language"
-msgstr ""
-
-#: menu/optionpage.py:73
-msgid "Volume"
-msgstr ""
-
-#: menu/optionpage.py:78
-msgid "Fullscreen"
-msgstr ""
-
-#: menu/optionpage.py:84
-msgid "Resolution"
-msgstr ""
-
-#: menu/optionpage.py:94
-msgid "Antialiasing"
-msgstr ""
-
-#: menu/optionpage.py:99
-msgid "(from the next execution)"
-msgstr ""
-
-#: menu/optionpage.py:103
-msgid "Shaders"
-msgstr ""
-
-#: menu/optionpage.py:107
-msgid "Cars number"
-msgstr ""
-
-#: menu/optionpage.py:121
-msgid "Configure input"
-msgstr ""
-
-#: menu/singleplayerpage.py:39
-msgid "Single race"
-msgstr ""
-
-#: menu/singleplayerpage.py:40
-msgid "New season"
-msgstr ""
-
-#: menu/singleplayerpage.py:41
-msgid "Continue season"
-msgstr ""
-
-#: menu/clientpage.py:33
-msgid "Client"
-msgstr ""
-
-#: menu/clientpage.py:39
-msgid "insert the server address"
-msgstr ""
-
-#: menu/clientpage.py:41
-msgid "Connect"
-msgstr ""
-
-#: menu/clientpage.py:54
-msgid "Waiting for the server"
-msgstr ""
-
-#: menu/clientpage.py:57
-msgid "Error"
-msgstr ""
-
-#: menu/creditpage.py:12
+#: menu/creditpage.py:11
 msgid "Code"
 msgstr ""
 
-#: menu/creditpage.py:13
+#: menu/creditpage.py:12
 msgid "Art"
 msgstr ""
 
-#: menu/creditpage.py:14
+#: menu/creditpage.py:13
 msgid "Audio"
 msgstr ""
 
-#: menu/creditpage.py:15
+#: menu/creditpage.py:14
 msgid "Testing"
 msgstr ""
 
-#: menu/creditpage.py:19
+#: menu/creditpage.py:18
 msgid "Supporters"
 msgstr ""
 
-#: menu/trackpage.py:36
-msgid "Select the track"
+#: menu/inputpage.py:27 menu/inputpage.py:30
+msgid "Use the joypad when present"
+msgstr ""
+
+#: menu/inputpage.py:39
+msgid "Accelerate"
+msgstr ""
+
+#: menu/inputpage.py:40
+msgid "Brake/Reverse"
+msgstr ""
+
+#: menu/inputpage.py:41
+msgid "Left"
+msgstr ""
+
+#: menu/inputpage.py:42
+msgid "Right"
+msgstr ""
+
+#: menu/inputpage.py:43
+msgid "Weapon"
+msgstr ""
+
+#: menu/inputpage.py:44
+msgid "Respawn"
+msgstr ""
+
+#: menu/inputpage.py:45
+msgid "Pause"
+msgstr ""
+
+#: menu/inputpage.py:53
+msgid "Press the key to record it"
+msgstr ""
+
+#: menu/optionpage.py:37
+msgid "Language"
+msgstr ""
+
+#: menu/optionpage.py:42
+msgid "Volume"
+msgstr ""
+
+#: menu/optionpage.py:47
+msgid "Fullscreen"
+msgstr ""
+
+#: menu/optionpage.py:53
+msgid "Resolution"
+msgstr ""
+
+#: menu/optionpage.py:63
+msgid "Antialiasing"
+msgstr ""
+
+#: menu/optionpage.py:66
+msgid "(from the next execution)"
+msgstr ""
+
+#: menu/optionpage.py:71
+msgid "Shaders"
+msgstr ""
+
+#: menu/optionpage.py:75
+msgid "Cars number"
+msgstr ""
+
+#: menu/optionpage.py:82
+msgid "Configure input"
+msgstr ""
+
+#: menu/carpage.py:26
+msgid "Select the car"
+msgstr ""
+
+#: menu/carpage.py:72 menu/driverpage.py:71
+msgid "adherence"
+msgstr ""
+
+#: menu/carpage.py:72 menu/driverpage.py:71
+msgid "speed"
+msgstr ""
+
+#: menu/carpage.py:73 menu/driverpage.py:72
+msgid "stability"
 msgstr ""
 
 #: menu/thankspage.py:15
 msgid "Thanks to: "
 msgstr ""
 
-#: menu/driverpage.py:54
+#: menu/trackpage.py:17
+msgid "Select the track"
+msgstr ""
+
+#: menu/driverpage.py:43
 msgid "Select the driver"
 msgstr ""
 
-#: menu/driverpage.py:59
+#: menu/driverpage.py:47
 msgid "Write your name:"
 msgstr ""
 
-#: menu/driverpage.py:64 menu/driverpage.py:129 menu/driverpage.py:130
-#: menu/driverpage.py:131 menu/driverpage.py:133 menu/driverpage.py:136
+#: menu/driverpage.py:52 menu/driverpage.py:125 menu/driverpage.py:126
+#: menu/driverpage.py:127 menu/driverpage.py:129 menu/driverpage.py:132
 msgid "your name"
 msgstr ""
 
-#: menu/driverpage.py:92 menu/carpage.py:91
-msgid "adherence"
+#: menu/mainpage.py:43
+msgid "Single Player"
 msgstr ""
 
-#: menu/driverpage.py:92 menu/carpage.py:91
-msgid "speed"
+#: menu/mainpage.py:44
+msgid "Multiplayer"
 msgstr ""
 
-#: menu/driverpage.py:93 menu/carpage.py:92
-msgid "stability"
+#: menu/mainpage.py:45
+msgid "Options"
 msgstr ""
 
-#: menu/carpage.py:45
-msgid "Select the car"
+#: menu/mainpage.py:46
+msgid "Support us"
 msgstr ""
 
-#: menu/serverpage.py:41
+#: menu/mainpage.py:47
+msgid "Credits"
+msgstr ""
+
+#: menu/mainpage.py:48
+msgid "Quit"
+msgstr ""
+
+#: menu/mainpage.py:77
+msgid "NB the game is work-in-progress"
+msgstr ""
+
+#: menu/mainpage.py:108 menu/mainpage.py:111
+msgid "Last news:"
+msgstr ""
+
+#: menu/mainpage.py:121 menu/mainpage.py:124
+msgid "show"
+msgstr ""
+
+#: menu/clientpage.py:32
+msgid "Client"
+msgstr ""
+
+#: menu/clientpage.py:37
+msgid "insert the server address"
+msgstr ""
+
+#: menu/clientpage.py:39
+msgid "Connect"
+msgstr ""
+
+#: menu/clientpage.py:50
+msgid "Waiting for the server"
+msgstr ""
+
+#: menu/clientpage.py:54
+msgid "Error"
+msgstr ""
+
+#: menu/serverpage.py:23
 msgid "connection from "
 msgstr ""
 
-#: menu/serverpage.py:75
+#: menu/serverpage.py:51
 msgid "Start"
+msgstr ""
+
+#: menu/singleplayerpage.py:15
+msgid "Single race"
+msgstr ""
+
+#: menu/singleplayerpage.py:16
+msgid "New season"
+msgstr ""
+
+#: menu/singleplayerpage.py:17
+msgid "Continue season"
 msgstr ""
 
 #: menu/exitmenu/exitpage.py:15
@@ -252,60 +252,102 @@ msgstr ""
 msgid "back to the main menu"
 msgstr ""
 
-#: yorg/fsm.py:46 yorg/fsm.py:107
-msgid "desert"
+#: yorg/yorg.py:110 yorg/fsm.py:111
+msgid "Rome"
 msgstr ""
 
-#: yorg/fsm.py:46 yorg/fsm.py:107
-msgid "mountain"
+#: yorg/yorg.py:110 yorg/fsm.py:111
+msgid "Sheffield"
 msgstr ""
 
-#: yorg/fsm.py:46 yorg/fsm.py:108
-msgid "amusement park"
+#: yorg/yorg.py:110 yorg/fsm.py:112
+msgid "Orlando"
 msgstr ""
 
-#: yorg/fsm.py:47 yorg/fsm.py:109
-msgid "countryside"
+#: yorg/yorg.py:111 yorg/fsm.py:113
+msgid "Nagano"
 msgstr ""
 
-#: yyagl/racing/car/logic.py:665
+#: yorg/yorg.py:111 yorg/fsm.py:113
+msgid "Dubai"
+msgstr ""
+
+#: yyagl/engine/gui/page.py:154
+msgid "Back"
+msgstr ""
+
+#: yyagl/engine/gui/mainpage.py:40
+msgid "version: "
+msgstr ""
+
+#: yyagl/racing/tuning/gui.py:24
+msgid "What do you want to upgrade?"
+msgstr ""
+
+#: yyagl/racing/tuning/gui.py:38 yyagl/racing/tuning/gui.py:44
+#: yyagl/racing/tuning/gui.py:50
+msgid "current upgrades: +"
+msgstr ""
+
+#: yyagl/racing/tuning/gui.py:56
+msgid "engine: it increases car's maximum speed"
+msgstr ""
+
+#: yyagl/racing/tuning/gui.py:62
+msgid "tires: they increase car's adherence"
+msgstr ""
+
+#: yyagl/racing/tuning/gui.py:68
+msgid "supensions: they increase car's stability"
+msgstr ""
+
+#: yyagl/racing/car/logic.py:688
 msgid "wrong way"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:133
+#: yyagl/racing/car/gui.py:140
 msgid "speed:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:135
+#: yyagl/racing/car/gui.py:142
 msgid "lap:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:136
+#: yyagl/racing/car/gui.py:143
 msgid "time:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:137
+#: yyagl/racing/car/gui.py:144
 msgid "best lap:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:138
+#: yyagl/racing/car/gui.py:145
 msgid "ranking:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:139
+#: yyagl/racing/car/gui.py:146
 msgid "damages:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:140
+#: yyagl/racing/car/gui.py:147
 msgid "weapon:"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:159 yyagl/racing/car/gui.py:162
+#: yyagl/racing/car/gui.py:166 yyagl/racing/car/gui.py:169
 msgid "low"
 msgstr ""
 
-#: yyagl/racing/car/gui.py:163
+#: yyagl/racing/car/gui.py:170
 msgid "hi"
+msgstr ""
+
+#: yyagl/racing/ranking/gui.py:28
+#: yyagl/racing/race/gui/loading/loadingpage.py:55
+msgid "Ranking"
+msgstr ""
+
+#: yyagl/racing/ranking/gui.py:44 yyagl/racing/race/gui/results.py:78
+msgid "Continue"
 msgstr ""
 
 #: yyagl/racing/race/event.py:57
@@ -317,78 +359,78 @@ msgstr ""
 msgid "GO!"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:34
+#: yyagl/racing/race/gui/results.py:35
 msgid "LAP"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:35
+#: yyagl/racing/race/gui/results.py:36
 msgid "TIME"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:36
+#: yyagl/racing/race/gui/results.py:37
 msgid "RANKING"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:49
+#: yyagl/racing/race/gui/results.py:50
 msgid "share:"
 msgstr ""
 
-#: yyagl/racing/race/gui/results.py:76
-msgid "Continue"
-msgstr ""
-
-#: yyagl/racing/race/gui/loading/loadingpage.py:24
+#: yyagl/racing/race/gui/loading/loadingpage.py:25
 msgid "LOADING..."
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:32
+#: yyagl/racing/race/gui/loading/loadingpage.py:33
 msgid "track: "
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:42
+#: yyagl/racing/race/gui/loading/loadingpage.py:44
 msgid "Starting grid"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:80
-msgid "Ranking"
-msgstr ""
-
-#: yyagl/racing/race/gui/loading/loadingpage.py:89
+#: yyagl/racing/race/gui/loading/loadingpage.py:64
 msgid "Controls"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:93
+#: yyagl/racing/race/gui/loading/loadingpage.py:68
 msgid "joypad"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:97
+#: yyagl/racing/race/gui/loading/loadingpage.py:72
 msgid "accelerate"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:98
+#: yyagl/racing/race/gui/loading/loadingpage.py:73
 msgid "brake/reverse"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:99
+#: yyagl/racing/race/gui/loading/loadingpage.py:74
 msgid "left"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:100
+#: yyagl/racing/race/gui/loading/loadingpage.py:75
 msgid "right"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:101
+#: yyagl/racing/race/gui/loading/loadingpage.py:76
 msgid "fire"
 msgstr ""
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:102
+#: yyagl/racing/race/gui/loading/loadingpage.py:77
 msgid "respawn"
 msgstr ""
 
-#: yyagl/engine/gui/mainpage.py:40
-msgid "version: "
+#: yyagl/racing/race/gui/loading/loadingpage.py:80
+msgid "Upgrades"
 msgstr ""
 
-#: yyagl/engine/gui/page.py:147
-msgid "Back"
+#: yyagl/racing/race/gui/loading/loadingpage.py:86
+msgid "engine: +"
+msgstr ""
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:91
+msgid "tires: +"
+msgstr ""
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:96
+msgid "suspensions: +"
 msgstr ""

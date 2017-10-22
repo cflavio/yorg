@@ -108,9 +108,9 @@ class YorgFsm(Fsm):
         self.eng.log_mgr.log('selected drivers: ' + str(drivers))
         seas.race.logic.drivers = drivers
         track_name_transl = track_path
-        track_dct = {'desert': _('desert'), 'mountain': _('mountain'),
-                     'amusement': _('amusement park'),
-                     'countryside': _('countryside'), 'city': _('city')}
+        track_dct = {'rome': _('Rome'), 'sheffield': _('Sheffield'),
+                     'orlando': _('Orlando'),
+                     'nagano': _('Nagano'), 'dubai': _('Dubai')}
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         seas.race.fsm.demand(
