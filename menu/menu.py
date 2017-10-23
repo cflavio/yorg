@@ -84,11 +84,11 @@ class YorgMenuLogic(MenuLogic):
     def on_car_selected(self, car):
         self.mdt.gui.notify('on_car_selected', car)
 
-    def on_car_start_server(self, track, car, packet):
-        self.mdt.gui.notify('on_car_start_server', track, car, packet)
+    def on_car_start_server(self, track, car, cars, packet):
+        self.mdt.gui.notify('on_car_start_server', track, car, cars, packet)
 
-    def on_car_start_client(self, track, car, packet):
-        self.mdt.gui.notify('on_car_start_client', track, car, packet)
+    def on_car_start_client(self, track, car, cars, packet):
+        self.mdt.gui.notify('on_car_start_client', track, car, cars, packet)
 
     def on_car_selected_season(self, car):
         self.mdt.gui.notify('on_car_selected_season', car)

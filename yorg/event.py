@@ -27,4 +27,4 @@ class YorgEvent(Event):
         tuning = self.mdt.logic.season.tuning
         self.mdt.options['save']['tuning'] = tuning.to_dct
         self.mdt.options.store()
-        self.mdt.fsm.demand('Race', next_track, curr_car, drivers)
+        self.mdt.fsm.demand('Race', next_track, curr_car, [curr_car], drivers)

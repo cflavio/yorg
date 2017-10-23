@@ -73,7 +73,7 @@ class YorgFsm(Fsm):
         self.mdt.audio.menu_music.stop()
         loader.cancelRequest(self.loader_tsk)
 
-    def enterRace(self, track_path='', car_path='', drivers='', ranking=None):
+    def enterRace(self, track_path='', car_path='', cars=[], drivers='', ranking=None):
         self.eng.log_mgr.log('entering Race state')
         base.ignore('escape-up')
         if 'save' not in self.mdt.options.dct:

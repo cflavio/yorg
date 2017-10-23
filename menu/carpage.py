@@ -136,7 +136,7 @@ class CarPageGuiServer(CarPageGui):
         self.eng.server.send(packet)
         self.eng.log_mgr.log('start race: ' + str(packet))
         curr_car = self.current_cars[self]
-        self.notify('on_car_start_server', self.track_path, curr_car, packet)
+        self.notify('on_car_start_server', self.track_path, curr_car, self.current_cars.values(), packet)
 
     def process_srv(self, data_lst, sender):
         if data_lst[0] != NetMsgs.car_request: return
@@ -192,7 +192,7 @@ class CarPageGuiClient(CarPageGui):
             btn.enable()
         if data_lst[0] == NetMsgs.start_race:
             self.eng.log_mgr.log('start_race: ' + str(data_lst))
-            self.notify('on_car_start_client', self.track_path, self.car, data_lst)
+            self.notify('on_car_start_client', self.track_path, self.car, [self.car], data_lst)
 
 
 class CarPage(Page):
