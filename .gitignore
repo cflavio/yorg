@@ -2,7 +2,6 @@
 *.mo
 *.bam
 *.txo
-*.dds
 built/
 build/
 venv/

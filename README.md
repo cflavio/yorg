@@ -20,7 +20,6 @@ In order to create a build you should specify the target OS (`windows`, `osx`, `
 Prerequisites for building:
 * Panda3D;
 * SConstruct;
-* ImageMagick;
-* nvidia texture tools (specifically, `nvcompress` is used for creating DDS files).
+* ImageMagick.
 
 [![Bountysource Raised](https://www.bountysource.com/badge/team?team_id=213581&style=raised)](https://salt.bountysource.com/teams/ya2)

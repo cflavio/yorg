@@ -73,7 +73,7 @@ class Yorg(Game):
             pyprof_percall=opt_dev['pyprof_percall'])
         lang_cfg = LangCfg(lang=self.options['settings']['lang'],
                            lang_domain='yorg', languages=['English', 'Italiano'])
-        cursor_cfg = CursorCfg(cursor_path='assets/images/gui/cursor.dds',
+        cursor_cfg = CursorCfg(cursor_path='assets/images/gui/cursor.txo',
             cursor_scale=((256/352.0) * .08, 1, .08),
             cursor_hotspot=(.1, .06))
         dev_cfg = DevCfg(mt_render=opt_dev['multithreaded_render'],
@@ -88,9 +88,9 @@ class Yorg(Game):
         menu_args = MenuArgs(
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
             (.75, .75, .75, 1), (.75, .25, .25, 1), .1, (-4.6, 4.6, -.32, .88),
-            (0, 0, 0, .2), 'assets/images/gui/menu_background.dds',
+            (0, 0, 0, .2), 'assets/images/gui/menu_background.txo',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s.dds')
+            'assets/images/icons/%s.txo')
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
         DriverPaths = namedtuple('DriverPaths', 'path path_sel')
@@ -109,12 +109,12 @@ class Yorg(Game):
             ['rome', 'sheffield', 'orlando', 'nagano', 'dubai'],
             lambda: [_('Rome'), _('Sheffield'), _('Orlando'),
                      _('Nagano'), _('Dubai')],
-            'assets/images/tracks/%s.dds',
+            'assets/images/tracks/%s.txo',
             self.options['settings']['player_name'],
-            DriverPaths('assets/images/drivers/driver%s.dds',
-                        'assets/images/drivers/driver%s_sel.dds'),
-            'assets/images/cars/%s_sel.dds',
-            'assets/images/cars/%s.dds',
+            DriverPaths('assets/images/drivers/driver%s.txo',
+                        'assets/images/drivers/driver%s_sel.txo'),
+            'assets/images/cars/%s_sel.txo',
+            'assets/images/cars/%s.txo',
             self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
             'assets/models/cars/%s/car',
             damage_info, wheel_gfx_names,)
