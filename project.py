@@ -24,6 +24,7 @@
 
 # MAYBE/SOMEDAY =====
 
+# replace scons with setuptools
 # make scons for yyagl
 # unit tests
 # django webapp for scores

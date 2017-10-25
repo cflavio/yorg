@@ -130,13 +130,13 @@ env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
 
-img_files = img_tgt_names(files(['psd']))
+img_files = img_tgt_names(files(['png']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + tracks_tgt_fnames()
 no_int = args['nointernet']
 if args['images']:
-    env.images(img_files, files(['psd', 'jpg', 'png'], ['models'], ['_png.png']))
+    env.images(img_files, files(['jpg', 'png'], ['models'], ['_png.png']))
 if args['tracks']:
     env.tracks(tracks_tgt_fnames(), files(['egg']))
 if args['p3d']:
