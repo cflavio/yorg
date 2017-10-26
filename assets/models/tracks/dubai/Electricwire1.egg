@@ -1,6 +1,9 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/dubai/Electricwire1.egg assets/models/tracks/dubai/Electricwire1.egg"
+}
+<Comment> {
   "egg-trans -nv 30 -o assets/models/tracks/desert/Electricwire1.egg assets/models/tracks/desert/Electricwire1.egg"
 }
 <Texture> TEXElectricwire1 {

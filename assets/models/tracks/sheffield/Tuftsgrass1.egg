@@ -1,6 +1,9 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/sheffield/Tuftsgrass1.egg assets/models/tracks/sheffield/Tuftsgrass1.egg"
+}
+<Comment> {
   "egg-trans -nv 30 -o assets/models/tracks/countryside/Tuftsgrass1.egg assets/models/tracks/countryside/Tuftsgrass1.egg"
 }
 <Texture> TEXTuftsgrass1 {
@@ -624,144 +627,144 @@
       <Normal> { 0.921077 -0.389381 0 }
     }
     <Vertex> 116 {
-      0.217871 3.6641 -1
-      <UV> { 0 0 }
-      <Normal> { -0.400251 -0.916405 0 }
-    }
-    <Vertex> 117 {
-      0.217871 3.6641 0.348996
-      <UV> { 0 1 }
-      <Normal> { -0.400251 -0.916405 0 }
-    }
-    <Vertex> 118 {
       0.244962 -0.105353 -1
       <UV> { 0 0 }
       <Normal> { -0.093657 -0.995605 0 }
     }
-    <Vertex> 119 {
+    <Vertex> 117 {
       0.244962 -0.105353 0.348995
       <UV> { 0 1 }
       <Normal> { -0.093657 -0.995605 0 }
     }
-    <Vertex> 120 {
+    <Vertex> 118 {
       0.589797 3.06942 -1
       <UV> { 1 0 }
       <Normal> { 0.921077 -0.389381 0 }
     }
-    <Vertex> 121 {
+    <Vertex> 119 {
       0.589797 3.06942 0.348995
       <UV> { 1 1 }
       <Normal> { 0.921077 -0.389381 0 }
     }
-    <Vertex> 122 {
+    <Vertex> 120 {
       0.764336 1.63589 -1
       <UV> { 0 0 }
       <Normal> { -0.040938 0.999162 0 }
     }
-    <Vertex> 123 {
+    <Vertex> 121 {
       0.764336 1.63589 1
       <UV> { 0 1 }
       <Normal> { -0.040938 0.999162 0 }
     }
-    <Vertex> 124 {
+    <Vertex> 122 {
       1.31145 -2.53176 -1.00001
       <UV> { 1 0 }
       <Normal> { -0.368662 0.929564 1.74049e-07 }
     }
-    <Vertex> 125 {
+    <Vertex> 123 {
       1.31145 -2.53176 0.059067
       <UV> { 1 1 }
       <Normal> { -0.368662 0.929564 1.74049e-07 }
     }
-    <Vertex> 126 {
-      1.4541 3.12417 -1
-      <UV> { 1 0 }
-      <Normal> { -0.400251 -0.916405 0 }
-    }
-    <Vertex> 127 {
-      1.4541 3.12417 0.348995
-      <UV> { 1 1 }
-      <Normal> { -0.400251 -0.916405 0 }
-    }
-    <Vertex> 128 {
+    <Vertex> 124 {
       1.48765 2.48492 -1.00001
       <UV> { 0 0 }
       <Normal> { -0.238865 -0.971053 4.58445e-07 }
     }
-    <Vertex> 129 {
+    <Vertex> 125 {
       1.48765 2.48492 0.059067
       <UV> { 0 1 }
       <Normal> { -0.238865 -0.971053 4.58445e-07 }
     }
-    <Vertex> 130 {
+    <Vertex> 126 {
       1.58803 -0.231696 -1
       <UV> { 1 0 }
       <Normal> { -0.093657 -0.995605 0 }
     }
-    <Vertex> 131 {
+    <Vertex> 127 {
       1.58803 -0.231696 0.348995
       <UV> { 1 1 }
       <Normal> { -0.093657 -0.995605 0 }
     }
-    <Vertex> 132 {
+    <Vertex> 128 {
       1.97014 2.69564 -1.00001
       <UV> { 1 0 }
       <Normal> { -0.96046 0.278417 0 }
     }
-    <Vertex> 133 {
+    <Vertex> 129 {
       1.97014 2.69564 0.059067
       <UV> { 1 1 }
       <Normal> { -0.96046 0.278417 0 }
     }
-    <Vertex> 134 {
+    <Vertex> 130 {
       2.265 3.71284 -1.00001
       <UV> { 0 0 }
       <Normal> { -0.96046 0.278417 0 }
     }
-    <Vertex> 135 {
+    <Vertex> 131 {
       2.265 3.71284 0.059067
       <UV> { 0 1 }
       <Normal> { -0.96046 0.278417 0 }
     }
-    <Vertex> 136 {
+    <Vertex> 132 {
       2.29593 -2.14132 -1.00001
       <UV> { 0 0 }
       <Normal> { -0.368662 0.929564 1.74049e-07 }
     }
-    <Vertex> 137 {
+    <Vertex> 133 {
       2.29593 -2.14132 0.059067
       <UV> { 0 1 }
       <Normal> { -0.368662 0.929564 1.74049e-07 }
     }
-    <Vertex> 138 {
+    <Vertex> 134 {
       2.51607 2.23194 -1.00001
       <UV> { 1 0 }
       <Normal> { -0.238865 -0.971053 4.58445e-07 }
     }
-    <Vertex> 139 {
+    <Vertex> 135 {
       2.51607 2.23194 0.059067
       <UV> { 1 1 }
       <Normal> { -0.238865 -0.971053 4.58445e-07 }
     }
-    <Vertex> 140 {
+    <Vertex> 136 {
       2.66578 1.56872 -1.00001
       <UV> { 1 0 }
       <Normal> { -0.968159 0.250336 0 }
     }
-    <Vertex> 141 {
+    <Vertex> 137 {
       2.66578 1.56872 0.059067
       <UV> { 1 1 }
       <Normal> { -0.968159 0.250336 0 }
     }
-    <Vertex> 142 {
+    <Vertex> 138 {
       2.93091 2.59407 -1.00001
       <UV> { 0 0 }
       <Normal> { -0.968159 0.250336 0 }
     }
-    <Vertex> 143 {
+    <Vertex> 139 {
       2.93091 2.59407 0.059067
       <UV> { 0 1 }
       <Normal> { -0.968159 0.250336 0 }
+    }
+    <Vertex> 140 {
+      0.217871 3.6641 -1
+      <UV> { 0 0 }
+      <Normal> { -0.400246 -0.916408 0 }
+    }
+    <Vertex> 141 {
+      0.217871 3.6641 0.348996
+      <UV> { 0 1 }
+      <Normal> { -0.400246 -0.916408 0 }
+    }
+    <Vertex> 142 {
+      1.4541 3.12417 -1
+      <UV> { 1 0 }
+      <Normal> { -0.400246 -0.916408 0 }
+    }
+    <Vertex> 143 {
+      1.4541 3.12417 0.348995
+      <UV> { 1 1 }
+      <Normal> { -0.400246 -0.916408 0 }
     }
   }
   <Polygon> {
@@ -772,7 +775,7 @@
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 123 122 106 107 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 121 120 106 107 <Ref> { Tuftsgrass1 } }
   }
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
@@ -792,7 +795,7 @@
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 115 114 120 121 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 115 114 118 119 <Ref> { Tuftsgrass1 } }
   }
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
@@ -802,7 +805,7 @@
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 117 116 126 127 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 141 140 142 143 <Ref> { Tuftsgrass1 } }
   }
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
@@ -852,7 +855,7 @@
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 119 118 130 131 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 117 116 126 127 <Ref> { Tuftsgrass1 } }
   }
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
@@ -922,17 +925,17 @@
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 137 136 124 125 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 133 132 122 123 <Ref> { Tuftsgrass1 } }
   }
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 135 134 132 133 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 131 130 128 129 <Ref> { Tuftsgrass1 } }
   }
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 129 128 138 139 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 125 124 134 135 <Ref> { Tuftsgrass1 } }
   }
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
@@ -942,6 +945,6 @@
   <Polygon> {
     <TRef> { TEXTuftsgrass1 }
     <MRef> { MATTuftsgrass1 }
-    <VertexRef> { 143 142 140 141 <Ref> { Tuftsgrass1 } }
+    <VertexRef> { 139 138 136 137 <Ref> { Tuftsgrass1 } }
   }
 }

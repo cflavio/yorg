@@ -1,6 +1,9 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/dubai/Stone.egg assets/models/tracks/dubai/Stone.egg"
+}
+<Comment> {
   "egg-trans -nv 30 -o assets/models/tracks/desert/Stone.egg assets/models/tracks/desert/Stone.egg"
 }
 <Texture> TEXStone {
@@ -45,972 +48,972 @@
     <Vertex> 2 {
       -2.7399 0.203282 -0.025688
       <UV> { 0.115638 0.596391 }
-      <Normal> { -0.916915 -0.241973 0.317358 }
+      <Normal> { -0.687935 0.724219 -0.0474658 }
     }
     <Vertex> 3 {
       -2.7399 0.203282 -0.025688
       <UV> { 0.115638 0.596391 }
-      <Normal> { -0.687935 0.724219 -0.0474658 }
-    }
-    <Vertex> 4 {
-      -2.7399 0.203282 -0.025688
-      <UV> { 0.115638 0.596391 }
       <Normal> { -0.791507 0.300663 -0.532089 }
     }
-    <Vertex> 5 {
+    <Vertex> 4 {
       -2.5768 -0.414743 -0.025688
       <UV> { 0.141609 0.51906 }
       <Normal> { -0.524355 -0.765424 -0.373067 }
     }
-    <Vertex> 6 {
+    <Vertex> 5 {
       -2.5768 -0.414743 -0.025688
       <UV> { 0.141609 0.51906 }
       <Normal> { -0.944335 -0.249209 -0.214769 }
     }
-    <Vertex> 7 {
-      -2.5768 -0.414743 -0.025688
-      <UV> { 0.141609 0.51906 }
-      <Normal> { -0.916915 -0.241973 0.317358 }
-    }
-    <Vertex> 8 {
+    <Vertex> 6 {
       -2.5768 -0.414743 -0.025688
       <UV> { 0.141609 0.51906 }
       <Normal> { -0.493989 -0.769451 0.40487 }
     }
-    <Vertex> 9 {
+    <Vertex> 7 {
       -2.55664 -0.105731 -0.472904
       <UV> { 0.02646 0.520813 }
       <Normal> { -0.511007 -0.541812 -0.667317 }
     }
-    <Vertex> 10 {
+    <Vertex> 8 {
       -2.55664 -0.105731 -0.472904
       <UV> { 0.106971 0.143727 }
       <Normal> { -0.511007 -0.541812 -0.667317 }
     }
-    <Vertex> 11 {
+    <Vertex> 9 {
       -2.55664 -0.105731 -0.472904
       <UV> { 0.02646 0.520813 }
       <Normal> { -0.944335 -0.249209 -0.214769 }
     }
-    <Vertex> 12 {
+    <Vertex> 10 {
       -2.55664 -0.105731 -0.472904
       <UV> { 0.02646 0.520813 }
       <Normal> { -0.791507 0.300663 -0.532089 }
     }
-    <Vertex> 13 {
+    <Vertex> 11 {
       -2.55664 -0.105731 -0.472904
       <UV> { 0.106971 0.143727 }
       <Normal> { -0.451042 0.0793444 -0.888969 }
     }
-    <Vertex> 14 {
+    <Vertex> 12 {
       -2.47639 -0.105731 0.500048
       <UV> { 0.184772 0.576345 }
       <Normal> { -0.553118 0.114345 0.825219 }
     }
-    <Vertex> 15 {
+    <Vertex> 13 {
       -2.47639 -0.105731 0.500048
       <UV> { 0.184772 0.576345 }
       <Normal> { -0.473181 -0.634603 0.611047 }
     }
-    <Vertex> 16 {
-      -2.47639 -0.105731 0.500048
-      <UV> { 0.184772 0.576345 }
-      <Normal> { -0.916915 -0.241973 0.317358 }
-    }
-    <Vertex> 17 {
+    <Vertex> 14 {
       -2.38582 0.419995 0.421531
       <UV> { 0.174404 0.630787 }
       <Normal> { -0.52764 0.355802 0.771363 }
     }
-    <Vertex> 18 {
+    <Vertex> 15 {
       -2.38582 0.419995 0.421531
       <UV> { 0.174404 0.630787 }
       <Normal> { -0.506109 0.803325 0.313883 }
     }
-    <Vertex> 19 {
+    <Vertex> 16 {
       -2.31393 0.394266 -0.551425
       <UV> { 0.000991153 0.680073 }
       <Normal> { -0.40293 0.770653 -0.493702 }
     }
-    <Vertex> 20 {
+    <Vertex> 17 {
       -2.31393 0.394266 -0.551425
       <UV> { 0.16512 0.05927 }
       <Normal> { -0.40293 0.770653 -0.493702 }
     }
-    <Vertex> 21 {
+    <Vertex> 18 {
       -2.31393 0.394266 -0.551425
       <UV> { 0.000991153 0.680073 }
       <Normal> { -0.791507 0.300663 -0.532089 }
     }
-    <Vertex> 22 {
+    <Vertex> 19 {
       -2.31393 0.394266 -0.551425
       <UV> { 0.16512 0.05927 }
       <Normal> { -0.3646 0.189595 -0.911658 }
     }
-    <Vertex> 23 {
+    <Vertex> 20 {
       -2.21353 0.703286 -0.025688
       <UV> { 0.135079 0.689587 }
       <Normal> { -0.385106 0.867134 -0.315868 }
     }
-    <Vertex> 24 {
+    <Vertex> 21 {
       -2.21353 0.703286 -0.025688
       <UV> { 0.135079 0.689587 }
       <Normal> { -0.236302 0.917012 0.321326 }
     }
-    <Vertex> 25 {
+    <Vertex> 22 {
       -2.21353 0.703286 -0.025688
       <UV> { 0.135079 0.689587 }
       <Normal> { -0.676113 0.711774 0.190393 }
     }
-    <Vertex> 26 {
+    <Vertex> 23 {
       -1.92396 -0.605728 -0.551425
       <UV> { 0.155693 0.361299 }
       <Normal> { -0.371987 -0.733443 -0.568934 }
     }
-    <Vertex> 27 {
+    <Vertex> 24 {
       -1.92396 -0.605728 -0.551425
       <UV> { 0.204828 0.252921 }
       <Normal> { -0.371987 -0.733443 -0.568934 }
     }
-    <Vertex> 28 {
+    <Vertex> 25 {
       -1.92396 -0.605728 -0.551425
       <UV> { 0.204828 0.252921 }
       <Normal> { -0.145733 -0.505345 -0.850523 }
     }
-    <Vertex> 29 {
+    <Vertex> 26 {
       -1.87271 -0.631456 0.421531
       <UV> { 0.248889 0.516519 }
       <Normal> { -0.350674 -0.774706 0.526174 }
     }
-    <Vertex> 30 {
+    <Vertex> 27 {
       -1.7615 -0.105731 -0.876339
       <UV> { 0.259201 0.16183 }
       <Normal> { -0.193337 -0.28853 -0.937748 }
     }
-    <Vertex> 31 {
+    <Vertex> 28 {
       -1.7615 -0.105731 -0.876339
       <UV> { 0.259201 0.16183 }
       <Normal> { -0.3646 0.189595 -0.911658 }
     }
-    <Vertex> 32 {
+    <Vertex> 29 {
       -1.66109 0.203281 0.824966
       <UV> { 0.264284 0.630451 }
       <Normal> { -0.355546 0.240635 0.903151 }
     }
-    <Vertex> 33 {
+    <Vertex> 30 {
       -1.66109 0.203281 0.824966
       <UV> { 0.264284 0.630451 }
       <Normal> { 0.169589 -0.10349 0.980066 }
     }
-    <Vertex> 34 {
+    <Vertex> 31 {
       -1.66109 0.203281 0.824966
       <UV> { 0.264284 0.630451 }
       <Normal> { 0.0410402 0.535021 0.843841 }
     }
-    <Vertex> 35 {
+    <Vertex> 32 {
       -1.6403 -0.914747 -0.025688
       <UV> { 0.263849 0.437553 }
       <Normal> { -0.208184 -0.966707 -0.148783 }
     }
-    <Vertex> 36 {
+    <Vertex> 33 {
       -1.6403 -0.914747 -0.025688
       <UV> { 0.263849 0.437553 }
       <Normal> { -0.310103 -0.867704 0.388492 }
     }
-    <Vertex> 37 {
+    <Vertex> 34 {
       -1.49864 0.703281 0.50005
       <UV> { 0.254786 0.704075 }
       <Normal> { -0.0718427 0.494523 0.86619 }
     }
-    <Vertex> 38 {
+    <Vertex> 35 {
       -1.49864 0.703281 0.50005
       <UV> { 0.254786 0.704075 }
       <Normal> { -0.195534 0.933982 0.299073 }
     }
-    <Vertex> 39 {
+    <Vertex> 36 {
       -1.47783 -0.414742 0.824966
       <UV> { 0.296886 0.567337 }
       <Normal> { -0.286909 -0.69821 0.655885 }
     }
-    <Vertex> 40 {
+    <Vertex> 37 {
       -1.47783 -0.414742 0.824966
       <UV> { 0.296886 0.567337 }
       <Normal> { 0.210008 -0.000376087 0.9777 }
     }
-    <Vertex> 41 {
+    <Vertex> 38 {
       -1.47783 -0.414742 0.824966
       <UV> { 0.296886 0.567337 }
       <Normal> { -0.335597 -0.0995143 0.936735 }
     }
-    <Vertex> 42 {
+    <Vertex> 39 {
       -1.42547 0.744919 -0.472908
       <UV> { 0.163094 0.849005 }
       <Normal> { -0.20397 0.86554 -0.457424 }
     }
-    <Vertex> 43 {
+    <Vertex> 40 {
       -1.42547 0.744919 -0.472908
       <UV> { 0.32268 0.000994597 }
       <Normal> { -0.20397 0.86554 -0.457424 }
     }
-    <Vertex> 44 {
+    <Vertex> 41 {
       -1.21495 0.394265 -0.876342
       <UV> { 0.35674 0.0906202 }
       <Normal> { -0.112378 0.301206 -0.946914 }
     }
-    <Vertex> 45 {
+    <Vertex> 42 {
       -1.21495 0.394265 -0.876342
       <UV> { 0.35674 0.0906202 }
       <Normal> { -0.178486 0.694619 -0.696884 }
     }
-    <Vertex> 46 {
+    <Vertex> 43 {
       -1.0525 0.894269 -0.025688
       <UV> { 0.274238 0.809295 }
       <Normal> { -0.120376 0.990973 0.0590111 }
     }
-    <Vertex> 47 {
+    <Vertex> 44 {
       -0.452353 -0.95638 -0.472908
       <UV> { 0.440931 0.359468 }
       <Normal> { -0.0816349 -0.880869 -0.466268 }
     }
-    <Vertex> 48 {
+    <Vertex> 45 {
       -0.18333 -0.515755 0.539219
       <UV> { 0.464269 0.57146 }
       <Normal> { -0.36844 -0.0632488 0.927497 }
     }
-    <Vertex> 49 {
+    <Vertex> 46 {
       -0.18333 -0.515755 0.539219
       <UV> { 0.464269 0.57146 }
       <Normal> { 0.213164 -0.0306982 0.976534 }
     }
-    <Vertex> 50 {
+    <Vertex> 47 {
       -0.175978 -0.105731 -1.02569
       <UV> { 0.513642 0.196513 }
       <Normal> { -0.0170399 -0.113857 -0.993351 }
     }
-    <Vertex> 51 {
+    <Vertex> 48 {
       -0.175978 -0.105731 -1.02569
       <UV> { 0.513642 0.196513 }
       <Normal> { -0.0235878 0.240807 -0.970286 }
     }
-    <Vertex> 52 {
+    <Vertex> 49 {
       -0.175974 -0.105731 0.535354
       <UV> { 0.456262 0.628463 }
       <Normal> { -0.327935 0.106339 0.938696 }
     }
-    <Vertex> 53 {
+    <Vertex> 50 {
       -0.175974 -0.105731 0.535354
       <UV> { 0.456262 0.628463 }
       <Normal> { 0.185476 -0.0669805 0.980363 }
     }
-    <Vertex> 54 {
+    <Vertex> 51 {
       -0.128126 -0.914742 0.50005
       <UV> { 0.480237 0.514719 }
       <Normal> { -0.0808962 -0.899313 0.429757 }
     }
-    <Vertex> 55 {
+    <Vertex> 52 {
       -0.128126 -0.914742 0.50005
       <UV> { 0.480237 0.514719 }
       <Normal> { -0.370775 -0.141411 0.917894 }
     }
-    <Vertex> 56 {
+    <Vertex> 53 {
       -0.128126 -0.914742 0.50005
       <UV> { 0.480237 0.514719 }
       <Normal> { 0.210106 -0.0666859 0.975402 }
     }
-    <Vertex> 57 {
+    <Vertex> 54 {
       -0.027697 -0.605726 -0.876342
       <UV> { 0.524809 0.284824 }
       <Normal> { -0.0543997 -0.475248 -0.878169 }
     }
-    <Vertex> 58 {
+    <Vertex> 55 {
       -0.027697 -0.605726 -0.876342
       <UV> { 0.524809 0.284824 }
       <Normal> { -0.0103953 -0.749268 -0.662186 }
     }
-    <Vertex> 59 {
+    <Vertex> 56 {
       0.100424 0.912629 0.421532
       <UV> { 0.476054 0.791664 }
       <Normal> { -0.109937 0.30026 0.947501 }
     }
-    <Vertex> 60 {
+    <Vertex> 57 {
       0.100424 0.912629 0.421532
       <UV> { 0.476054 0.791664 }
       <Normal> { -0.167994 0.873192 0.457509 }
     }
-    <Vertex> 61 {
+    <Vertex> 58 {
       0.100424 0.912629 0.421532
       <UV> { 0.476054 0.791664 }
       <Normal> { -0.297857 0.954476 0.016038 }
     }
-    <Vertex> 62 {
+    <Vertex> 59 {
       0.240403 0.963826 -0.025688
       <UV> { 0.488482 0.872347 }
       <Normal> { -0.298154 0.953459 0.0449475 }
     }
-    <Vertex> 63 {
+    <Vertex> 60 {
       0.297221 0.394265 0.608634
       <UV> { 0.508646 0.70929 }
       <Normal> { -0.148939 0.327289 0.933112 }
     }
-    <Vertex> 64 {
+    <Vertex> 61 {
       0.297221 0.394265 0.608634
       <UV> { 0.508646 0.70929 }
       <Normal> { 0.131325 -0.264318 0.955453 }
     }
-    <Vertex> 65 {
+    <Vertex> 62 {
       0.397689 1.05389 -0.551425
       <UV> { 0.508226 0.985326 }
       <Normal> { -0.0841773 0.634489 -0.768334 }
     }
-    <Vertex> 66 {
+    <Vertex> 63 {
       0.397689 1.05389 -0.551425
       <UV> { 0.633629 0.000991153 }
       <Normal> { -0.0841773 0.634489 -0.768334 }
     }
-    <Vertex> 67 {
+    <Vertex> 64 {
       0.397689 1.05389 -0.551425
       <UV> { 0.508226 0.985326 }
       <Normal> { -0.257473 0.9662 -0.012886 }
     }
-    <Vertex> 68 {
+    <Vertex> 65 {
       0.807211 -1.10573 -0.025688
       <UV> { 0.627439 0.442596 }
       <Normal> { 0.0435379 -0.992106 -0.117599 }
     }
-    <Vertex> 69 {
+    <Vertex> 66 {
       0.807211 -1.10573 -0.025688
       <UV> { 0.627439 0.442596 }
       <Normal> { -0.0425577 -0.960963 0.273383 }
     }
-    <Vertex> 70 {
+    <Vertex> 67 {
       0.969666 -0.605726 0.991101
       <UV> { 0.622751 0.593793 }
       <Normal> { 0.0872222 -0.756311 0.648372 }
     }
-    <Vertex> 71 {
+    <Vertex> 68 {
       0.969666 -0.605726 0.991101
       <UV> { 0.622751 0.593793 }
       <Normal> { -0.350466 0.00748053 0.936546 }
     }
-    <Vertex> 72 {
+    <Vertex> 69 {
       1.23253 0.634004 -0.876342
       <UV> { 0.755853 0.107978 }
       <Normal> { 0.103103 0.30184 -0.947767 }
     }
-    <Vertex> 73 {
+    <Vertex> 70 {
       1.3861 -0.95638 0.421532
       <UV> { 0.685789 0.530399 }
       <Normal> { 0.0859596 -0.913979 0.396552 }
     }
-    <Vertex> 74 {
+    <Vertex> 71 {
       1.395 1.67264 -0.025688
       <UV> { 0.680343 0.877599 }
       <Normal> { -0.0841827 0.720523 -0.688302 }
     }
-    <Vertex> 75 {
+    <Vertex> 72 {
       1.395 1.67264 -0.025688
       <UV> { 0.680343 0.877599 }
       <Normal> { 0.604953 0.796155 0.0130199 }
     }
-    <Vertex> 76 {
-      1.395 1.67264 -0.025688
-      <UV> { 0.680343 0.877599 }
-      <Normal> { -0.213781 0.73965 0.638134 }
-    }
-    <Vertex> 77 {
+    <Vertex> 73 {
       1.395 1.67264 -0.025688
       <UV> { 0.680343 0.877599 }
       <Normal> { -0.5228 0.851595 -0.0383021 }
     }
-    <Vertex> 78 {
+    <Vertex> 74 {
       1.54806 -0.914742 -0.551425
       <UV> { 0.773909 0.387683 }
       <Normal> { 0.10257 -0.904421 -0.414128 }
     }
-    <Vertex> 79 {
+    <Vertex> 75 {
       1.54806 -0.914742 -0.551425
       <UV> { 0.773909 0.387683 }
       <Normal> { 0.146904 -0.572096 -0.806924 }
     }
-    <Vertex> 80 {
+    <Vertex> 76 {
       1.71051 -0.414742 -0.876342
       <UV> { 0.805831 0.289343 }
       <Normal> { 0.191688 -0.253588 -0.948129 }
     }
-    <Vertex> 81 {
+    <Vertex> 77 {
       1.81093 -0.105731 1.1888
       <UV> { 0.696236 0.662486 }
       <Normal> { 0.558316 0.0632319 0.827215 }
     }
-    <Vertex> 82 {
+    <Vertex> 78 {
       1.81093 -0.105731 1.1888
       <UV> { 0.696236 0.662486 }
       <Normal> { -0.28859 0.208503 0.934474 }
     }
-    <Vertex> 83 {
+    <Vertex> 79 {
       1.81093 -0.105731 1.1888
       <UV> { 0.696236 0.662486 }
       <Normal> { 0.147915 -0.568783 0.809078 }
     }
-    <Vertex> 84 {
+    <Vertex> 80 {
       1.83336 1.29663 -0.472908
       <UV> { 0.771332 0.915621 }
       <Normal> { -0.0662671 0.639637 -0.765816 }
     }
-    <Vertex> 85 {
+    <Vertex> 81 {
       1.83336 1.29663 -0.472908
       <UV> { 0.879892 0.00209659 }
       <Normal> { -0.0662671 0.639637 -0.765816 }
     }
-    <Vertex> 86 {
+    <Vertex> 82 {
       1.83336 1.29663 -0.472908
       <UV> { 0.771332 0.915621 }
       <Normal> { 0.603246 0.793908 -0.0761858 }
     }
-    <Vertex> 87 {
+    <Vertex> 83 {
       1.83336 1.29663 -0.472908
       <UV> { 0.771332 0.915621 }
       <Normal> { 0.490305 0.319042 -0.811057 }
     }
-    <Vertex> 88 {
+    <Vertex> 84 {
       1.83336 1.29663 -0.472908
       <UV> { 0.879892 0.00209659 }
       <Normal> { 0.490305 0.319042 -0.811057 }
     }
-    <Vertex> 89 {
+    <Vertex> 85 {
       1.97339 1.12656 0.801029
       <UV> { 0.708245 0.765031 }
       <Normal> { 0.683137 0.286313 0.671824 }
     }
-    <Vertex> 90 {
+    <Vertex> 86 {
       1.97339 1.12656 0.801029
       <UV> { 0.708245 0.765031 }
       <Normal> { -0.233966 0.453694 0.859896 }
     }
-    <Vertex> 91 {
+    <Vertex> 87 {
       1.97339 1.12656 0.801029
       <UV> { 0.708245 0.765031 }
       <Normal> { 0.601841 0.792059 0.102122 }
     }
-    <Vertex> 92 {
-      2.35314 -0.914747 -0.025688
-      <UV> { 0.830865 0.536716 }
-      <Normal> { 0.58005 -0.80107 -0.147747 }
-    }
-    <Vertex> 93 {
+    <Vertex> 88 {
       2.35314 -0.914747 -0.025688
       <UV> { 0.830865 0.536716 }
       <Normal> { 0.162293 -0.951219 0.262381 }
     }
-    <Vertex> 94 {
+    <Vertex> 89 {
       2.35314 -0.914747 -0.025688
       <UV> { 0.830865 0.536716 }
       <Normal> { 0.120502 -0.97541 -0.184539 }
     }
-    <Vertex> 95 {
+    <Vertex> 90 {
       2.45354 -0.605728 0.719819
       <UV> { 0.770522 0.618248 }
       <Normal> { 0.156289 -0.787406 0.596293 }
     }
-    <Vertex> 96 {
+    <Vertex> 91 {
       2.45354 -0.605728 0.719819
       <UV> { 0.770522 0.618248 }
       <Normal> { 0.558482 -0.0583518 0.827462 }
     }
-    <Vertex> 97 {
+    <Vertex> 92 {
       2.45354 -0.605728 0.719819
       <UV> { 0.770522 0.618248 }
       <Normal> { 0.792362 -0.524745 0.311135 }
     }
-    <Vertex> 98 {
+    <Vertex> 93 {
       2.52514 -0.631456 -0.472908
       <UV> { 0.948258 0.355712 }
       <Normal> { 0.318619 -0.401107 -0.858834 }
     }
-    <Vertex> 99 {
+    <Vertex> 94 {
       2.52514 -0.631456 -0.472908
       <UV> { 0.956889 0.537867 }
       <Normal> { 0.819 -0.220654 -0.529671 }
     }
-    <Vertex> 100 {
+    <Vertex> 95 {
       2.52514 -0.631456 -0.472908
       <UV> { 0.956889 0.537867 }
       <Normal> { 0.497305 -0.806546 -0.319641 }
     }
-    <Vertex> 101 {
+    <Vertex> 96 {
       2.616 -0.105731 -0.551425
       <UV> { 0.974599 0.26361 }
       <Normal> { 0.349164 0.0592171 -0.935188 }
     }
-    <Vertex> 102 {
+    <Vertex> 97 {
       2.616 -0.105731 -0.551425
       <UV> { 0.999009 0.698031 }
       <Normal> { 0.886998 -0.0449107 -0.459584 }
     }
-    <Vertex> 103 {
+    <Vertex> 98 {
       2.616 -0.105731 -0.551425
       <UV> { 0.999009 0.698031 }
       <Normal> { 0.619813 0.384219 -0.684257 }
     }
-    <Vertex> 104 {
+    <Vertex> 99 {
       2.69596 -0.105731 0.59146
       <UV> { 0.791898 0.670424 }
       <Normal> { 0.652596 0.172624 0.737781 }
     }
-    <Vertex> 105 {
+    <Vertex> 100 {
       2.69596 -0.105731 0.59146
       <UV> { 0.791898 0.670424 }
       <Normal> { 0.94466 -0.0897225 0.315544 }
     }
-    <Vertex> 106 {
+    <Vertex> 101 {
       2.71642 0.668567 -0.025688
       <UV> { 0.8312 0.767716 }
       <Normal> { 0.604953 0.796155 0.0130199 }
     }
-    <Vertex> 107 {
+    <Vertex> 102 {
       2.71642 0.668567 -0.025688
       <UV> { 0.8312 0.767716 }
       <Normal> { 0.895243 0.263019 0.359668 }
     }
-    <Vertex> 108 {
+    <Vertex> 103 {
       2.71642 0.668567 -0.025688
       <UV> { 0.8312 0.767716 }
       <Normal> { 0.794826 0.266947 -0.544968 }
     }
-    <Vertex> 109 {
+    <Vertex> 104 {
       2.87276 -0.414743 -0.025688
       <UV> { 0.869949 0.636143 }
       <Normal> { 0.886998 -0.0449107 -0.459584 }
     }
-    <Vertex> 110 {
+    <Vertex> 105 {
       2.87276 -0.414743 -0.025688
       <UV> { 0.869949 0.636143 }
       <Normal> { 0.693356 -0.720556 0.00747303 }
     }
-    <Vertex> 111 {
+    <Vertex> 106 {
       2.87276 -0.414743 -0.025688
       <UV> { 0.869949 0.636143 }
       <Normal> { 0.94466 -0.0897225 0.315544 }
+    }
+    <Vertex> 107 {
+      -2.7399 0.203282 -0.025688
+      <UV> { 0.115638 0.596391 }
+      <Normal> { -0.916916 -0.241979 0.317349 }
+    }
+    <Vertex> 108 {
+      -2.5768 -0.414743 -0.025688
+      <UV> { 0.141609 0.51906 }
+      <Normal> { -0.916916 -0.241979 0.317349 }
+    }
+    <Vertex> 109 {
+      -2.47639 -0.105731 0.500048
+      <UV> { 0.184772 0.576345 }
+      <Normal> { -0.916916 -0.241979 0.317349 }
+    }
+    <Vertex> 110 {
+      1.395 1.67264 -0.025688
+      <UV> { 0.680343 0.877599 }
+      <Normal> { -0.213781 0.73965 0.638135 }
+    }
+    <Vertex> 111 {
+      2.35314 -0.914747 -0.025688
+      <UV> { 0.830865 0.536716 }
+      <Normal> { 0.580049 -0.80107 -0.147748 }
     }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 50 80 57 <Ref> { Stone } }
+    <VertexRef> { 47 76 54 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 98 80 101 <Ref> { Stone } }
+    <VertexRef> { 93 76 96 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 50 57 30 <Ref> { Stone } }
+    <VertexRef> { 47 54 27 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 50 30 44 <Ref> { Stone } }
+    <VertexRef> { 47 27 41 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 51 44 72 <Ref> { Stone } }
+    <VertexRef> { 48 41 69 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 99 102 109 <Ref> { Stone } }
+    <VertexRef> { 94 97 104 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 47 78 68 <Ref> { Stone } }
+    <VertexRef> { 44 74 65 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 9 26 5 <Ref> { Stone } }
+    <VertexRef> { 7 23 4 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 42 19 23 <Ref> { Stone } }
+    <VertexRef> { 39 16 20 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 84 65 74 <Ref> { Stone } }
+    <VertexRef> { 80 62 71 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 100 110 92 <Ref> { Stone } }
+    <VertexRef> { 95 105 111 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 47 68 35 <Ref> { Stone } }
+    <VertexRef> { 44 65 32 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 11 6 0 <Ref> { Stone } }
+    <VertexRef> { 9 5 0 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 42 23 46 <Ref> { Stone } }
+    <VertexRef> { 39 20 43 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 86 75 106 <Ref> { Stone } }
+    <VertexRef> { 82 72 101 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 73 95 70 <Ref> { Stone } }
+    <VertexRef> { 70 90 67 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 29 54 39 <Ref> { Stone } }
+    <VertexRef> { 26 51 36 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 17 14 32 <Ref> { Stone } }
+    <VertexRef> { 14 12 29 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 59 37 63 <Ref> { Stone } }
+    <VertexRef> { 56 34 60 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 104 89 81 <Ref> { Stone } }
+    <VertexRef> { 99 85 77 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 82 63 52 <Ref> { Stone } }
+    <VertexRef> { 78 60 49 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 82 90 63 <Ref> { Stone } }
+    <VertexRef> { 78 86 60 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 90 59 63 <Ref> { Stone } }
+    <VertexRef> { 86 56 60 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 64 33 53 <Ref> { Stone } }
+    <VertexRef> { 61 30 50 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 63 37 34 <Ref> { Stone } }
+    <VertexRef> { 60 34 31 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 37 17 32 <Ref> { Stone } }
+    <VertexRef> { 34 14 29 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 33 40 53 <Ref> { Stone } }
+    <VertexRef> { 30 37 50 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 32 14 41 <Ref> { Stone } }
+    <VertexRef> { 29 12 38 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 15 29 39 <Ref> { Stone } }
+    <VertexRef> { 13 26 36 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 48 71 52 <Ref> { Stone } }
+    <VertexRef> { 45 68 49 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 55 71 48 <Ref> { Stone } }
+    <VertexRef> { 52 68 45 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 54 73 70 <Ref> { Stone } }
+    <VertexRef> { 51 70 67 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 71 82 52 <Ref> { Stone } }
+    <VertexRef> { 68 78 49 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 70 95 83 <Ref> { Stone } }
+    <VertexRef> { 67 90 79 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 96 104 81 <Ref> { Stone } }
+    <VertexRef> { 91 99 77 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 107 89 104 <Ref> { Stone } }
+    <VertexRef> { 102 85 99 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 106 75 91 <Ref> { Stone } }
+    <VertexRef> { 101 72 87 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 76 60 90 <Ref> { Stone } }
+    <VertexRef> { 110 57 86 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 46 38 60 <Ref> { Stone } }
+    <VertexRef> { 43 35 57 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 46 24 38 <Ref> { Stone } }
+    <VertexRef> { 43 21 35 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 24 18 38 <Ref> { Stone } }
+    <VertexRef> { 21 15 35 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 1 14 17 <Ref> { Stone } }
+    <VertexRef> { 1 12 14 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 2 7 16 <Ref> { Stone } }
+    <VertexRef> { 107 108 109 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 8 29 15 <Ref> { Stone } }
+    <VertexRef> { 6 26 13 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 36 54 29 <Ref> { Stone } }
+    <VertexRef> { 33 51 26 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 35 69 54 <Ref> { Stone } }
+    <VertexRef> { 32 66 51 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 69 73 54 <Ref> { Stone } }
+    <VertexRef> { 66 70 51 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 93 95 73 <Ref> { Stone } }
+    <VertexRef> { 88 90 70 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 92 110 97 <Ref> { Stone } }
+    <VertexRef> { 111 105 92 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 111 105 97 <Ref> { Stone } }
+    <VertexRef> { 106 100 92 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 62 46 61 <Ref> { Stone } }
+    <VertexRef> { 59 43 58 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 67 46 62 <Ref> { Stone } }
+    <VertexRef> { 64 43 59 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 67 42 46 <Ref> { Stone } }
+    <VertexRef> { 64 39 43 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 25 3 18 <Ref> { Stone } }
+    <VertexRef> { 22 2 15 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 23 19 3 <Ref> { Stone } }
+    <VertexRef> { 20 16 2 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 21 12 4 <Ref> { Stone } }
+    <VertexRef> { 18 10 3 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 8 36 29 <Ref> { Stone } }
+    <VertexRef> { 6 33 26 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 5 26 35 <Ref> { Stone } }
+    <VertexRef> { 4 23 32 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 26 47 35 <Ref> { Stone } }
+    <VertexRef> { 23 44 32 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 68 93 73 <Ref> { Stone } }
+    <VertexRef> { 65 88 70 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 68 78 94 <Ref> { Stone } }
+    <VertexRef> { 65 74 89 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 78 100 92 <Ref> { Stone } }
+    <VertexRef> { 74 95 111 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 111 107 105 <Ref> { Stone } }
+    <VertexRef> { 106 102 100 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 109 102 108 <Ref> { Stone } }
+    <VertexRef> { 104 97 103 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 103 87 108 <Ref> { Stone } }
+    <VertexRef> { 98 83 103 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 72 66 85 <Ref> { Stone } }
+    <VertexRef> { 69 63 81 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 72 44 66 <Ref> { Stone } }
+    <VertexRef> { 69 41 63 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 45 43 66 <Ref> { Stone } }
+    <VertexRef> { 42 40 63 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 45 20 43 <Ref> { Stone } }
+    <VertexRef> { 42 17 40 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 44 31 22 <Ref> { Stone } }
+    <VertexRef> { 41 28 19 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 31 13 22 <Ref> { Stone } }
+    <VertexRef> { 28 11 19 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 30 27 10 <Ref> { Stone } }
+    <VertexRef> { 27 24 8 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 30 57 28 <Ref> { Stone } }
+    <VertexRef> { 27 54 25 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 57 47 27 <Ref> { Stone } }
+    <VertexRef> { 54 44 24 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 101 72 88 <Ref> { Stone } }
+    <VertexRef> { 96 69 84 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 101 80 72 <Ref> { Stone } }
+    <VertexRef> { 96 76 69 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 80 50 72 <Ref> { Stone } }
+    <VertexRef> { 76 47 69 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 58 78 47 <Ref> { Stone } }
+    <VertexRef> { 55 74 44 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 57 80 79 <Ref> { Stone } }
+    <VertexRef> { 54 76 75 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 80 98 79 <Ref> { Stone } }
+    <VertexRef> { 76 93 75 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 40 56 49 <Ref> { Stone } }
+    <VertexRef> { 37 53 46 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 40 49 53 <Ref> { Stone } }
+    <VertexRef> { 37 46 50 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 77 67 62 <Ref> { Stone } }
+    <VertexRef> { 73 64 59 <Ref> { Stone } }
   }
   <Polygon> {
     <TRef> { TEXStone }
     <MRef> { MATStone }
-    <VertexRef> { 77 62 61 <Ref> { Stone } }
+    <VertexRef> { 73 59 58 <Ref> { Stone } }
   }
 }

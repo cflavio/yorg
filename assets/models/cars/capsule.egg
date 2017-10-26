@@ -3,6 +3,9 @@
 <Comment> {
   "egg-trans -nv 30 -o assets/models/cars/capsule.egg assets/models/cars/capsule.egg"
 }
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/cars/capsule.egg assets/models/cars/capsule.egg"
+}
 <Material> Material {
   <Scalar> diffr { 0.64 }
   <Scalar> diffg { 0.64 }

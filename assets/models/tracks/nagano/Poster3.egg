@@ -1,6 +1,9 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/nagano/Poster3.egg assets/models/tracks/nagano/Poster3.egg"
+}
+<Comment> {
   "egg-trans -nv 30 -o assets/models/tracks/mountain/Poster3.egg assets/models/tracks/mountain/Poster3.egg"
 }
 <Texture> TEXPoster3 {
@@ -316,44 +319,44 @@
       <Normal> { 0 0 -1 }
     }
     <Vertex> 56 {
-      -2.65165 -0.052076 2.01539
-      <UV> { 0.991475 0.088248 }
-      <Normal> { -0.999969 -0.001953 0 }
-    }
-    <Vertex> 57 {
-      -2.65165 -0.052076 0.015395
-      <UV> { 0.727243 0.088249 }
-      <Normal> { -0.999969 -0.001953 0 }
-    }
-    <Vertex> 58 {
-      -2.65118 -0.293464 0.015395
-      <UV> { 0.727243 0.05224 }
-      <Normal> { -0.999969 -0.001953 0 }
-    }
-    <Vertex> 59 {
-      -2.65118 -0.293464 2.01539
-      <UV> { 0.991475 0.05224 }
-      <Normal> { -0.999969 -0.001953 0 }
-    }
-    <Vertex> 60 {
       2.68405 -0.041499 2.01539
       <UV> { 0.717108 0.04483 }
       <Normal> { 0 0 1 }
     }
-    <Vertex> 61 {
+    <Vertex> 57 {
       -2.65165 -0.052076 2.01539
       <UV> { 0.012168 0.044832 }
       <Normal> { 0 0 1 }
     }
-    <Vertex> 62 {
+    <Vertex> 58 {
       -2.65118 -0.293464 2.01539
       <UV> { 0.012168 0.008823 }
       <Normal> { 0 0 1 }
     }
-    <Vertex> 63 {
+    <Vertex> 59 {
       2.68454 -0.282874 2.01539
       <UV> { 0.717109 0.008823 }
       <Normal> { 0 0 1 }
+    }
+    <Vertex> 60 {
+      -2.65165 -0.052076 0.015395
+      <UV> { 0.727243 0.088249 }
+      <Normal> { -0.999998 -0.00194707 0 }
+    }
+    <Vertex> 61 {
+      -2.65165 -0.052076 2.01539
+      <UV> { 0.991475 0.088248 }
+      <Normal> { -0.999998 -0.00194707 0 }
+    }
+    <Vertex> 62 {
+      -2.65118 -0.293464 0.015395
+      <UV> { 0.727243 0.05224 }
+      <Normal> { -0.999998 -0.00194707 0 }
+    }
+    <Vertex> 63 {
+      -2.65118 -0.293464 2.01539
+      <UV> { 0.991475 0.05224 }
+      <Normal> { -0.999998 -0.00194707 0 }
     }
   }
   <Polygon> {
@@ -429,11 +432,11 @@
   <Polygon> {
     <TRef> { TEXPoster3 }
     <MRef> { MATPoster3 }
-    <VertexRef> { 56 57 58 59 <Ref> { Poster3 } }
+    <VertexRef> { 61 60 62 63 <Ref> { Poster3 } }
   }
   <Polygon> {
     <TRef> { TEXPoster3 }
     <MRef> { MATPoster3 }
-    <VertexRef> { 60 61 62 63 <Ref> { Poster3 } }
+    <VertexRef> { 56 57 58 59 <Ref> { Poster3 } }
   }
 }

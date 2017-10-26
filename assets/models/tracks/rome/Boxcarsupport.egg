@@ -1,208 +1,121 @@
-<CoordinateSystem> { Z-up } 
-<Material> MATBoxcarsupport {
-  <Scalar> diffr { 0.800000 }
-  <Scalar> diffg { 0.800000 }
-  <Scalar> diffb { 0.800000 }
-  <Scalar> specr { 0.000000 }
-  <Scalar> specg { 0.000000 }
-  <Scalar> specb { 0.000000 }
-  <Scalar> shininess { 12.5 }
-  <Scalar> ambr { 1.000000 }
-  <Scalar> ambg { 1.000000 }
-  <Scalar> ambb { 1.000000 }
-  <Scalar> emitr { 0.000000 }
-  <Scalar> emitg { 0.000000 }
-  <Scalar> emitb { 0.000000 }
-}
+<CoordinateSystem> { Z-Up }
 
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/rome/Boxcarsupport.egg assets/models/tracks/rome/Boxcarsupport.egg"
+}
 <Texture> TEXREPBoxcarsupport {
-  "./tex/Tiled1.jpg"
-  <Scalar> envtype { MODULATE }
-  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> wrap { REPEAT }
+  "tex/Tiled1.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
   <Transform> {
     <Translate> { -0.5 -0.5 -0.5 }
-    <Scale> { 5.0 5.0 1.0 }
+    <Scale> { 5 5 1 }
     <Translate> { 0.5 0.5 0.5 }
   }
 }
-
 <Texture> TEXBoxcarsupport {
-  "./tex/TEXBoxcarsupport.jpg"
-  <Scalar> envtype { MODULATE }
-  <Scalar> minfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> magfilter { LINEAR_MIPMAP_LINEAR }
-  <Scalar> wrap { REPEAT }
+  "tex/TEXBoxcarsupport.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
 }
-
-  <Group> Boxcarsupport {
-    <Transform> {
-      <Matrix4> {
-        1.0 0.0 0.0 0.0 
-        0.0 1.0 0.0 0.0 
-        0.0 0.0 1.0 0.0 
-        0.0 0.0 0.0 1.0 
-      }
-    }
-    
-    <VertexPool> Boxcarsupport {
-    
-      <Vertex> 0 {-15.306791 -15.306791 -0.278929
-      <Normal> { -0.109226 -0.109226 0.987976 }
-        <UV>  {
-          0.000400 0.000400 
-        }
-      }
-      <Vertex> 1 {-12.784212 -12.784212 0.278929
-      <Normal> { -0.081759 -0.081759 0.993286 }
-        <UV>  {
-          0.084454 0.084744 
-        }
-      }
-      <Vertex> 2 {-12.784212 12.784212 0.278929
-      <Normal> { -0.081759 0.081759 0.993286 }
-        <UV>  {
-          0.085086 0.915191 
-        }
-      }
-      <Vertex> 3 {-15.306791 15.306791 -0.278929
-      <Normal> { -0.109226 0.109226 0.987976 }
-        <UV>  {
-          0.000797 0.999205 
-        }
-      }
-      <Vertex> 4 {-15.306791 15.306791 -0.278929
-      <Normal> { -0.109226 0.109226 0.987976 }
-        <UV>  {
-          0.000797 0.999205 
-        }
-      }
-      <Vertex> 5 {-12.784212 12.784212 0.278929
-      <Normal> { -0.081759 0.081759 0.993286 }
-        <UV>  {
-          0.085086 0.915191 
-        }
-      }
-      <Vertex> 6 {12.784212 12.784212 0.278929
-      <Normal> { 0.081759 0.081759 0.993286 }
-        <UV>  {
-          0.915546 0.915206 
-        }
-      }
-      <Vertex> 7 {15.306791 15.306791 -0.278929
-      <Normal> { 0.109226 0.109226 0.987976 }
-        <UV>  {
-          0.999600 0.999550 
-        }
-      }
-      <Vertex> 8 {15.306791 15.306791 -0.278929
-      <Normal> { 0.109226 0.109226 0.987976 }
-        <UV>  {
-          0.999600 0.999550 
-        }
-      }
-      <Vertex> 9 {12.784212 12.784212 0.278929
-      <Normal> { 0.081759 0.081759 0.993286 }
-        <UV>  {
-          0.915546 0.915206 
-        }
-      }
-      <Vertex> 10 {12.784212 -12.784212 0.278929
-      <Normal> { 0.081759 -0.081759 0.993286 }
-        <UV>  {
-          0.914914 0.084758 
-        }
-      }
-      <Vertex> 11 {15.306791 -15.306791 -0.278929
-      <Normal> { 0.109226 -0.109226 0.987976 }
-        <UV>  {
-          0.999203 0.000745 
-        }
-      }
-      <Vertex> 12 {15.306791 -15.306791 -0.278929
-      <Normal> { 0.109226 -0.109226 0.987976 }
-        <UV>  {
-          0.999203 0.000745 
-        }
-      }
-      <Vertex> 13 {12.784212 -12.784212 0.278929
-      <Normal> { 0.081759 -0.081759 0.993286 }
-        <UV>  {
-          0.914914 0.084758 
-        }
-      }
-      <Vertex> 14 {-12.784212 -12.784212 0.278929
-      <Normal> { -0.081759 -0.081759 0.993286 }
-        <UV>  {
-          0.084454 0.084744 
-        }
-      }
-      <Vertex> 15 {-15.306791 -15.306791 -0.278929
-      <Normal> { -0.109226 -0.109226 0.987976 }
-        <UV>  {
-          0.000400 0.000400 
-        }
-      }
-      <Vertex> 16 {12.784212 12.784212 0.278929
-      <Normal> { 0.081759 0.081759 0.993286 }
-        <UV>  {
-          0.915546 0.915206 
-        }
-      }
-      <Vertex> 17 {-12.784212 12.784212 0.278929
-      <Normal> { -0.081759 0.081759 0.993286 }
-        <UV>  {
-          0.085086 0.915191 
-        }
-      }
-      <Vertex> 18 {-12.784212 -12.784212 0.278929
-      <Normal> { -0.081759 -0.081759 0.993286 }
-        <UV>  {
-          0.084454 0.084744 
-        }
-      }
-      <Vertex> 19 {12.784212 -12.784212 0.278929
-      <Normal> { 0.081759 -0.081759 0.993286 }
-        <UV>  {
-          0.914914 0.084758 
-        }
-      }}
-    
-    
-    <Polygon> {
-      <TRef> { TEXBoxcarsupport }
-      <TRef> { TEXREPBoxcarsupport }
-      <MRef> { MATBoxcarsupport }
-      <Normal> {-0.215929 0.000000 0.976409}
-      <VertexRef> { 0 1 2 3 <Ref> { Boxcarsupport }} 
-    }
-    <Polygon> {
-      <TRef> { TEXBoxcarsupport }
-      <TRef> { TEXREPBoxcarsupport }
-      <MRef> { MATBoxcarsupport }
-      <Normal> {0.000000 0.215929 0.976409}
-      <VertexRef> { 4 5 6 7 <Ref> { Boxcarsupport }} 
-    }
-    <Polygon> {
-      <TRef> { TEXBoxcarsupport }
-      <TRef> { TEXREPBoxcarsupport }
-      <MRef> { MATBoxcarsupport }
-      <Normal> {0.215929 0.000000 0.976409}
-      <VertexRef> { 8 9 10 11 <Ref> { Boxcarsupport }} 
-    }
-    <Polygon> {
-      <TRef> { TEXBoxcarsupport }
-      <TRef> { TEXREPBoxcarsupport }
-      <MRef> { MATBoxcarsupport }
-      <Normal> {0.000000 -0.215929 0.976409}
-      <VertexRef> { 12 13 14 15 <Ref> { Boxcarsupport }} 
-    }
-    <Polygon> {
-      <TRef> { TEXBoxcarsupport }
-      <TRef> { TEXREPBoxcarsupport }
-      <MRef> { MATBoxcarsupport }
-      <Normal> {0.000000 0.000000 1.000000}
-      <VertexRef> { 16 17 18 19 <Ref> { Boxcarsupport }} 
+<Material> MATBoxcarsupport {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Boxcarsupport {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
     }
   }
+  <VertexPool> Boxcarsupport {
+    <Vertex> 0 {
+      -15.3068 -15.3068 -0.278929
+      <UV> { 0.0004 0.0004 }
+      <Normal> { -0.109226 -0.109226 0.987976 }
+    }
+    <Vertex> 1 {
+      -15.3068 15.3068 -0.278929
+      <UV> { 0.000797 0.999205 }
+      <Normal> { -0.109226 0.109226 0.987976 }
+    }
+    <Vertex> 2 {
+      15.3068 15.3068 -0.278929
+      <UV> { 0.9996 0.99955 }
+      <Normal> { 0.109226 0.109226 0.987976 }
+    }
+    <Vertex> 3 {
+      15.3068 -15.3068 -0.278929
+      <UV> { 0.999203 0.000745 }
+      <Normal> { 0.109226 -0.109226 0.987976 }
+    }
+    <Vertex> 4 {
+      -12.7842 -12.7842 0.278929
+      <UV> { 0.084454 0.084744 }
+      <Normal> { -0.0727384 -0.0727384 0.994695 }
+    }
+    <Vertex> 5 {
+      -12.7842 12.7842 0.278929
+      <UV> { 0.085086 0.915191 }
+      <Normal> { -0.0727384 0.0727384 0.994695 }
+    }
+    <Vertex> 6 {
+      12.7842 -12.7842 0.278929
+      <UV> { 0.914914 0.084758 }
+      <Normal> { 0.0727384 -0.0727384 0.994695 }
+    }
+    <Vertex> 7 {
+      12.7842 12.7842 0.278929
+      <UV> { 0.915546 0.915206 }
+      <Normal> { 0.0727384 0.0727384 0.994695 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXBoxcarsupport }
+    <TRef> { TEXREPBoxcarsupport }
+    <MRef> { MATBoxcarsupport }
+    <VertexRef> { 0 4 5 1 <Ref> { Boxcarsupport } }
+  }
+  <Polygon> {
+    <TRef> { TEXBoxcarsupport }
+    <TRef> { TEXREPBoxcarsupport }
+    <MRef> { MATBoxcarsupport }
+    <VertexRef> { 1 5 7 2 <Ref> { Boxcarsupport } }
+  }
+  <Polygon> {
+    <TRef> { TEXBoxcarsupport }
+    <TRef> { TEXREPBoxcarsupport }
+    <MRef> { MATBoxcarsupport }
+    <VertexRef> { 2 7 6 3 <Ref> { Boxcarsupport } }
+  }
+  <Polygon> {
+    <TRef> { TEXBoxcarsupport }
+    <TRef> { TEXREPBoxcarsupport }
+    <MRef> { MATBoxcarsupport }
+    <VertexRef> { 3 6 4 0 <Ref> { Boxcarsupport } }
+  }
+  <Polygon> {
+    <TRef> { TEXBoxcarsupport }
+    <TRef> { TEXREPBoxcarsupport }
+    <MRef> { MATBoxcarsupport }
+    <VertexRef> { 7 5 4 6 <Ref> { Boxcarsupport } }
+  }
+}

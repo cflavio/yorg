@@ -1,6 +1,9 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/sheffield/Stone1.egg assets/models/tracks/sheffield/Stone1.egg"
+}
+<Comment> {
   "egg-trans -nv 30 -o assets/models/tracks/countryside/Stone1.egg assets/models/tracks/countryside/Stone1.egg"
 }
 <Texture> TEXStone1 {
@@ -70,242 +73,242 @@
     <Vertex> 4 {
       -0.542364 -0.306257 0.386649
       <UV> { 0.389515 0.448899 }
-      <Normal> { -0.641751 0 0.766913 }
+      <Normal> { -0.0867392 -0.440665 0.893471 }
     }
     <Vertex> 5 {
-      -0.542364 -0.306257 0.386649
-      <UV> { 0.389515 0.448899 }
-      <Normal> { -0.0867392 -0.440665 0.893471 }
+      -0.542364 0.297207 0.386649
+      <UV> { 0.426444 0.548745 }
+      <Normal> { -0.600048 0.710923 0.366785 }
     }
     <Vertex> 6 {
       -0.542364 0.297207 0.386649
       <UV> { 0.426444 0.548745 }
-      <Normal> { -0.600048 0.710923 0.366785 }
-    }
-    <Vertex> 7 {
-      -0.542364 0.297207 0.386649
-      <UV> { 0.426444 0.548745 }
-      <Normal> { -0.641751 0 0.766913 }
-    }
-    <Vertex> 8 {
-      -0.542364 0.297207 0.386649
-      <UV> { 0.426444 0.548745 }
       <Normal> { -0.20093 0.422009 0.884045 }
     }
-    <Vertex> 9 {
+    <Vertex> 7 {
       -0.37389 -0.800412 -0.507781
       <UV> { 0.280974 0.155368 }
       <Normal> { -0.00940692 -0.933047 0.359631 }
     }
-    <Vertex> 10 {
+    <Vertex> 8 {
       -0.37389 -0.800412 -0.507781
       <UV> { 0.280974 0.155368 }
       <Normal> { -0.544169 -0.773528 0.32486 }
     }
-    <Vertex> 11 {
+    <Vertex> 9 {
       -0.37389 0.900868 -0.507781
       <UV> { 0.467372 0.873161 }
       <Normal> { -0.600048 0.710923 0.366785 }
     }
-    <Vertex> 12 {
+    <Vertex> 10 {
       -0.37389 0.900868 -0.507781
       <UV> { 0.467372 0.873161 }
       <Normal> { 0.274011 0.949105 0.1553 }
     }
-    <Vertex> 13 {
+    <Vertex> 11 {
       -0.097505 0.050228 0.605657
       <UV> { 0.498901 0.487534 }
       <Normal> { 0.0731661 -0.349914 0.93392 }
     }
-    <Vertex> 14 {
+    <Vertex> 12 {
       -0.097505 0.050228 0.605657
       <UV> { 0.498901 0.487534 }
       <Normal> { -0.331237 0.217525 0.918131 }
     }
-    <Vertex> 15 {
+    <Vertex> 13 {
       -0.097505 0.050228 0.605657
       <UV> { 0.498901 0.487534 }
       <Normal> { 0.228613 0.275734 0.933652 }
     }
-    <Vertex> 16 {
+    <Vertex> 14 {
       0.11915 0.612172 0.386649
       <UV> { 0.563817 0.578567 }
       <Normal> { 0.274011 0.949105 0.1553 }
     }
-    <Vertex> 17 {
+    <Vertex> 15 {
       0.11915 0.612172 0.386649
       <UV> { 0.563817 0.578567 }
       <Normal> { -0.380089 0.798293 0.467184 }
     }
-    <Vertex> 18 {
+    <Vertex> 16 {
       0.11915 0.612172 0.386649
       <UV> { 0.563817 0.578567 }
       <Normal> { 0.552001 0.665777 0.502031 }
     }
-    <Vertex> 19 {
+    <Vertex> 17 {
       0.11915 0.612172 0.386649
       <UV> { 0.563817 0.578567 }
       <Normal> { 0.0142168 0.358329 0.933487 }
     }
-    <Vertex> 20 {
+    <Vertex> 18 {
       0.248565 -0.461941 0.386649
       <UV> { 0.543176 0.381797 }
       <Normal> { -0.00940692 -0.933047 0.359631 }
     }
-    <Vertex> 21 {
+    <Vertex> 19 {
       0.248565 -0.461941 0.386649
       <UV> { 0.543176 0.381797 }
       <Normal> { 0.588662 -0.630252 0.506221 }
     }
-    <Vertex> 22 {
+    <Vertex> 20 {
       0.248565 -0.461941 0.386649
       <UV> { 0.543176 0.381797 }
       <Normal> { 0.0731661 -0.349914 0.93392 }
     }
-    <Vertex> 23 {
+    <Vertex> 21 {
       0.79692 0.050228 0.386649
       <UV> { 0.675647 0.45841 }
       <Normal> { 0.953781 -0.200605 0.223741 }
+    }
+    <Vertex> 22 {
+      0.79692 0.050228 0.386649
+      <UV> { 0.675647 0.45841 }
+      <Normal> { 0.588662 -0.630252 0.506221 }
+    }
+    <Vertex> 23 {
+      0.79692 0.050228 0.386649
+      <UV> { 0.675647 0.45841 }
+      <Normal> { 0.552001 0.665777 0.502031 }
     }
     <Vertex> 24 {
       0.79692 0.050228 0.386649
       <UV> { 0.675647 0.45841 }
-      <Normal> { 0.588662 -0.630252 0.506221 }
+      <Normal> { 0.230478 -0.246762 0.941269 }
     }
     <Vertex> 25 {
       0.79692 0.050228 0.386649
       <UV> { 0.675647 0.45841 }
-      <Normal> { 0.552001 0.665777 0.502031 }
-    }
-    <Vertex> 26 {
-      0.79692 0.050228 0.386649
-      <UV> { 0.675647 0.45841 }
-      <Normal> { 0.230478 -0.246762 0.941269 }
-    }
-    <Vertex> 27 {
-      0.79692 0.050228 0.386649
-      <UV> { 0.675647 0.45841 }
       <Normal> { 0.228613 0.275734 0.933652 }
     }
-    <Vertex> 28 {
+    <Vertex> 26 {
       0.869993 -0.59993 -0.507781
       <UV> { 0.774163 0.155368 }
       <Normal> { 0.953781 -0.200605 0.223741 }
     }
-    <Vertex> 29 {
+    <Vertex> 27 {
       0.869993 -0.59993 -0.507781
       <UV> { 0.774163 0.155368 }
       <Normal> { 0.153893 -0.954822 0.254227 }
     }
-    <Vertex> 30 {
+    <Vertex> 28 {
       0.869993 -0.59993 -0.507781
       <UV> { 0.774163 0.155368 }
       <Normal> { 0.588662 -0.630252 0.506221 }
     }
-    <Vertex> 31 {
+    <Vertex> 29 {
       1.09637 0.476397 -0.507781
       <UV> { 0.999661 0.543123 }
       <Normal> { 0.953781 -0.200605 0.223741 }
     }
-    <Vertex> 32 {
+    <Vertex> 30 {
       1.09637 0.476397 -0.507781
       <UV> { 0.999661 0.543123 }
       <Normal> { 0.274011 0.949105 0.1553 }
     }
-    <Vertex> 33 {
+    <Vertex> 31 {
       1.09637 0.476397 -0.507781
       <UV> { 0.999661 0.543123 }
       <Normal> { 0.552001 0.665777 0.502031 }
+    }
+    <Vertex> 32 {
+      -0.542364 -0.306257 0.386649
+      <UV> { 0.389515 0.448899 }
+      <Normal> { -0.64175 0 0.766914 }
+    }
+    <Vertex> 33 {
+      -0.542364 0.297207 0.386649
+      <UV> { 0.426444 0.548745 }
+      <Normal> { -0.64175 0 0.766914 }
     }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 28 31 23 <Ref> { Stone1 } }
+    <VertexRef> { 26 29 21 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 9 29 20 <Ref> { Stone1 } }
+    <VertexRef> { 7 27 18 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 0 10 3 <Ref> { Stone1 } }
+    <VertexRef> { 0 8 3 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 11 1 6 <Ref> { Stone1 } }
+    <VertexRef> { 9 1 5 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 32 12 16 <Ref> { Stone1 } }
+    <VertexRef> { 30 10 14 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 30 24 21 <Ref> { Stone1 } }
+    <VertexRef> { 28 22 19 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 9 20 3 <Ref> { Stone1 } }
+    <VertexRef> { 7 18 3 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 2 4 7 <Ref> { Stone1 } }
+    <VertexRef> { 2 32 33 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 11 6 17 <Ref> { Stone1 } }
+    <VertexRef> { 9 5 15 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 33 18 25 <Ref> { Stone1 } }
+    <VertexRef> { 31 16 23 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 22 26 13 <Ref> { Stone1 } }
+    <VertexRef> { 20 24 11 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 5 22 13 <Ref> { Stone1 } }
+    <VertexRef> { 4 20 11 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 7 4 14 <Ref> { Stone1 } }
+    <VertexRef> { 33 32 12 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 19 8 14 <Ref> { Stone1 } }
+    <VertexRef> { 17 6 12 <Ref> { Stone1 } }
   }
   <Polygon> {
     <TRef> { TEXStone1 }
     <TRef> { TEXREPstone1 }
     <MRef> { MATStone1 }
-    <VertexRef> { 27 19 15 <Ref> { Stone1 } }
+    <VertexRef> { 25 17 13 <Ref> { Stone1 } }
   }
 }

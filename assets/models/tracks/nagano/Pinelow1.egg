@@ -1,6 +1,9 @@
 <CoordinateSystem> { Z-Up }
 
 <Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/nagano/Pinelow1.egg assets/models/tracks/nagano/Pinelow1.egg"
+}
+<Comment> {
   "egg-trans -nv 30 -o assets/models/tracks/mountain/Pinelow1.egg assets/models/tracks/mountain/Pinelow1.egg"
 }
 <Texture> TEXPinelow1 {

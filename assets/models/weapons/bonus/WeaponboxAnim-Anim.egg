@@ -3,6 +3,9 @@
 <Comment> {
   "egg-trans -nv 30 -o assets/models/weapons/bonus/WeaponboxAnim-Anim.egg assets/models/weapons/bonus/WeaponboxAnim-Anim.egg"
 }
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/weapons/bonus/WeaponboxAnim-Anim.egg assets/models/weapons/bonus/WeaponboxAnim-Anim.egg"
+}
 <Table> {
   <Bundle> Armature {
     <Table> "<skeleton>" {
