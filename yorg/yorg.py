@@ -50,7 +50,6 @@ class Yorg(Game):
                 'show_waypoints': 0,
                 'show_exit': 1,
                 'menu_joypad': 1,
-                'multiplayer': 0,
                 'win_orig': '',
                 'profiling': 0,
                 'pyprof_percall': 0,
