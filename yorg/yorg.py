@@ -123,12 +123,12 @@ class Yorg(Game):
     def drivers():
         names = ThanksNames.get_thanks(8, 5)
         _drivers = [
-            DriverInfo(1, names[0], 4, -2, -2),
-            DriverInfo(2, names[1], -2, 4, -2),
-            DriverInfo(3, names[2], 0, 4, -4),
-            DriverInfo(4, names[3], 4, -4, 0),
-            DriverInfo(5, names[4], -2, -2, 4),
-            DriverInfo(6, names[5], -4, 0, 4),
-            DriverInfo(7, names[6], 4, 0, -4),
-            DriverInfo(8, names[7], -4, 4, 0)]
+            DriverInfo(0, names[0], 4, -2, -2),
+            DriverInfo(1, names[1], -2, 4, -2),
+            DriverInfo(2, names[2], 0, 4, -4),
+            DriverInfo(3, names[3], 4, -4, 0),
+            DriverInfo(4, names[4], -2, -2, 4),
+            DriverInfo(5, names[5], -4, 0, 4),
+            DriverInfo(6, names[6], 4, 0, -4),
+            DriverInfo(7, names[7], -4, 4, 0)]
         return _drivers

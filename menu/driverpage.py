@@ -53,7 +53,7 @@ class DriverPageGui(ThanksPageGui):
         self.ent.onscreenText['fg'] = menu_args.text_fg
         self.drivers = []
         for row, col in product(range(2), range(4)):
-            idx = (col + 1) + row * 4
+            idx = col + row * 4
             drv_btn = ImgBtn(
                 scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
                 frameColor=(0, 0, 0, 0),
@@ -143,10 +143,10 @@ class DriverPageGui(ThanksPageGui):
         cars = gprops.cars_names[:]
         cars.remove(self.mdt.car)
         shuffle(cars)
-        drv_idx = range(1, 9)
+        drv_idx = range(8)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        gprops.drivers_info[i-1] = gprops.drivers_info[i-1]._replace(img_idx=i-1)
+        gprops.drivers_info[i-1] = gprops.drivers_info[i-1]._replace(img_idx=i)
         nname = self.ent.get()
         gprops.drivers_info[i-1] = gprops.drivers_info[i-1]._replace(name=nname)
         self.notify('on_driver_selected', self.ent.get(), self.mdt.track,
