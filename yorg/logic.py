@@ -222,11 +222,11 @@ class YorgLogic(GameLogic):
         WPInfo = namedtuple('WPInfo', 'root_name wp_name prev_name')
         WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
         share_urls = [
-            'https://www.facebook.com/sharer/sharer.php?u=ya2.it/yorg',
+            'https://www.facebook.com/sharer/sharer.php?u=ya2.it/pages/yorg.html',
             'https://twitter.com/share?text=I%27ve%20achieved%20{time}'
             '%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech'
             '%21&hashtags=yorg',
-            'https://plus.google.com/share?url=ya2.it/yorg',
+            'https://plus.google.com/share?url=ya2.it/pages/yorg.html',
             'https://www.tumblr.com/widgets/share/tool?url=ya2.it']
         items = self.season.ranking.carname2points.items()
         grid_rev_ranking = sorted(items, key=lambda el: el[1])

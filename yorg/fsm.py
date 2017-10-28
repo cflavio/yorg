@@ -30,7 +30,7 @@ class YorgFsm(Fsm):
             'assets/images/gui/yorg_title.txo',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
-            'http://www.ya2.it/support-us')
+            'http://www.ya2.it/pages/support-us.html')
         self.__menu = YorgMenu(menu_props)
         methods = [self.mdt.logic.on_input_back,
                    self.mdt.logic.on_options_back,
