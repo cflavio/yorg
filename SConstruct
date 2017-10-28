@@ -22,7 +22,7 @@ argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
     ('images', 0), ('tracks', 0), ('deployng', 0), ('nointernet', 0),
-    ('pdf', 0), ('tests', 0)]
+    ('pdf', 0), ('tests', 0), ('cores', 0)]
 args = {arg: ARGUMENTS.get(arg, default) for (arg, default) in argument_info}
 full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64'])
 args['images'] = args['images'] or args['deployng'] or args['p3d'] \
@@ -78,9 +78,10 @@ env['LNG'] = lang_path
 env['NOINTERNET'] = args['nointernet']
 env['DEPLOYNG'] = args['deployng']
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
-env['LANGUAGES'] = ['it_IT']
+env['LANGUAGES'] = ['it_IT', 'de_DE']
 env['MODELS_DIR_PATH'] = 'assets/models'
 env['TRACKS_DIR_PATH'] = 'assets/models/tracks'
+env['CORES'] = int(args['cores'])
 PDFInfo = namedtuple('PDFInfo', 'lng root fil excl')
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 yorg_fil_dirs = ['yyagl', 'menu', 'yorg', 'licenses', 'assets', 'venv',
@@ -131,7 +132,8 @@ env['DEV_CONF'] = dev_conf
 VariantDir(path, '.')
 
 img_files = img_tgt_names(files(['png']))
-lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name]
+lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name,
+            lang_path + 'de_DE/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + tracks_tgt_fnames()
 no_int = args['nointernet']
@@ -175,4 +177,4 @@ def process_lang(lang_code):
     env.str(lang_mo, lang_po)
 
 if args['lang']:
-    map(process_lang, ['it_IT'])
+    map(process_lang, ['it_IT', 'de_DE'])

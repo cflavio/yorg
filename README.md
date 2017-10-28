@@ -15,8 +15,6 @@ In order to create a build you should specify the target OS (`windows`, `osx`, `
 
 * `scons linux_64=1`
 
-**NB Only building from Linux is supported.**
-
 Prerequisites for building:
 * Panda3D;
 * SConstruct.
