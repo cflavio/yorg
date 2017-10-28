@@ -14,8 +14,8 @@ from .creditpage import CreditPage
 from .supporterspage import SupportersPage
 
 
-__fields = 'gameprops opt_file multiplayer title_img feed_url site_url ' + \
-    'has_save support_url'
+__fields = 'gameprops opt_file title_img feed_url site_url has_save ' + \
+    'support_url'
 MenuProps = namedtuple('MenuProps', __fields)
 
 

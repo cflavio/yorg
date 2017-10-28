@@ -26,7 +26,6 @@ class YorgFsm(Fsm):
         self.eng.log_mgr.log('entering Menu state')
         menu_props = MenuProps(
             self.mdt.gameprops, self.mdt.options,
-            self.mdt.options['development']['multiplayer'],
             'assets/images/gui/yorg_title.txo',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mdt.options.dct,
