@@ -73,8 +73,8 @@ class YorgMainPageGui(MainPageGui):
         wip_lab = DirectLabel(
             text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft,
             text_align=TextNode.A_left, **lab_args)
-        PageGui.transl_text(wip_lab, 'NB the game is work-in-progress',
-                            _('NB the game is work-in-progress'))
+        PageGui.transl_text(wip_lab, 'Note: the game is work-in-progress',
+                            _('Note: the game is work-in-progress'))
         self.widgets += [wip_lab]
         map(self.add_widget, widgets)
         self.set_news()

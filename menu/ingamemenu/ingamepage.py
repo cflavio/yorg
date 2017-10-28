@@ -10,7 +10,7 @@ class InGamePageGui(PageGui):
         frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         question_txt = _(
-            "What do you want to do?\n\nNB Use 'p' for pausing the game.")
+            "What do you want to do?\n\nNote: use 'p' for pausing the game.")
         menu_args = self.menu_args
         txt = OnscreenText(
             text=question_txt, pos=(0, .64), scale=.08, wordwrap=32,
