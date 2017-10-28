@@ -10,28 +10,28 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: menu/creditpage.py:11
 msgid "Code"
-msgstr "Codice"
+msgstr "Code"
 
 #: menu/creditpage.py:12
 msgid "Art"
-msgstr "Grafica"
+msgstr "Grafik"
 
 #: menu/creditpage.py:13
 msgid "Audio"
-msgstr "Audio"
+msgstr "Ton"
 
 #: menu/creditpage.py:14
 msgid "Testing"
-msgstr "Testing"
+msgstr "Testen"
 
 #: menu/creditpage.py:15
 msgid "Translations"
@@ -39,152 +39,152 @@ msgstr ""
 
 #: menu/creditpage.py:19
 msgid "Supporters"
-msgstr "Supporters"
+msgstr "Unterstützer"
 
 #: menu/inputpage.py:27 menu/inputpage.py:30
 msgid "Use the joypad when present"
-msgstr "Usa il joypad se presente"
+msgstr "Joypad verwenden, sobald vorhanden"
 
 #: menu/inputpage.py:39
 msgid "Accelerate"
-msgstr "Accelerazione"
+msgstr "Beschleunigen"
 
 #: menu/inputpage.py:40
 msgid "Brake/Reverse"
-msgstr "Frena/Indietro"
+msgstr "Bremsen/Rückwärts"
 
 #: menu/inputpage.py:41
 msgid "Left"
-msgstr "Sinistra"
+msgstr "Links"
 
 #: menu/inputpage.py:42
 msgid "Right"
-msgstr "Destra"
+msgstr "Rechts"
 
 #: menu/inputpage.py:43
 msgid "Weapon"
-msgstr "Arma"
+msgstr "Waffe"
 
 #: menu/inputpage.py:44
 msgid "Respawn"
-msgstr "Respawn"
+msgstr "Zurücksetzen"
 
 #: menu/inputpage.py:45
 msgid "Pause"
-msgstr "Pausa"
+msgstr "Pause"
 
 #: menu/inputpage.py:53
 msgid "Press the key to record it"
-msgstr "Premi il tasto per memorizzarlo"
+msgstr "Taste drücken, um sie zu verwenden"
 
 #: menu/optionpage.py:37
 msgid "Language"
-msgstr "Lingua"
+msgstr "Sprache"
 
 #: menu/optionpage.py:42
 msgid "Volume"
-msgstr "Volume"
+msgstr "Lautstärke"
 
 #: menu/optionpage.py:47
 msgid "Fullscreen"
-msgstr "Schermo intero"
+msgstr "Vollbild"
 
 #: menu/optionpage.py:53
 msgid "Resolution"
-msgstr "Risoluzione"
+msgstr "Bildschirmauflösung"
 
 #: menu/optionpage.py:63
 msgid "Antialiasing"
-msgstr "Antialiasing"
+msgstr "Anti-Aliasing"
 
 #: menu/optionpage.py:66
 msgid "(from the next execution)"
-msgstr "(dalla prossima esecuzione)"
+msgstr "(von der nächsten Ausführung)"
 
 #: menu/optionpage.py:71
 msgid "Shaders"
-msgstr "Shaders"
+msgstr "Shader"
 
 #: menu/optionpage.py:75
 msgid "Cars number"
-msgstr "Numero macchine"
+msgstr "Anzahl Autos"
 
 #: menu/optionpage.py:82
 msgid "Configure input"
-msgstr "Configura input"
+msgstr "Eingabe konfigurieren"
 
 #: menu/carpage.py:26
 msgid "Select the car"
-msgstr "Seleziona la macchina"
+msgstr "Auto wählen"
 
 #: menu/carpage.py:72 menu/driverpage.py:71
 msgid "adherence"
-msgstr "aderenza"
+msgstr "Haftvermögen"
 
 #: menu/carpage.py:72 menu/driverpage.py:71
 msgid "speed"
-msgstr "velocità:"
+msgstr "Tempo"
 
 #: menu/carpage.py:73 menu/driverpage.py:72
 msgid "stability"
-msgstr "stabilità"
+msgstr "Stabilität"
 
 #: menu/thankspage.py:15
 msgid "Thanks to: "
-msgstr "Grazie a: "
+msgstr "Danke an: "
 
 #: menu/trackpage.py:17
 msgid "Select the track"
-msgstr "Seleziona la pista"
+msgstr "Strecke wählen"
 
 #: menu/driverpage.py:43
 msgid "Select the driver"
-msgstr "Seleziona il pilota"
+msgstr "Fahrer auswählen"
 
 #: menu/driverpage.py:47
 msgid "Write your name:"
-msgstr "Scrivi il tuo nome:"
+msgstr "Namen eingeben:"
 
 #: menu/driverpage.py:52 menu/driverpage.py:125 menu/driverpage.py:126
 #: menu/driverpage.py:127 menu/driverpage.py:129 menu/driverpage.py:132
 msgid "your name"
-msgstr "tuo nome"
+msgstr "Ihr Name"
 
 #: menu/mainpage.py:43
 msgid "Single Player"
-msgstr "Giocatore singolo"
+msgstr "Einzelspieler"
 
 #: menu/mainpage.py:44
 msgid "Multiplayer"
-msgstr "Multiplayer"
+msgstr "Mehrspieler"
 
 #: menu/mainpage.py:45
 msgid "Options"
-msgstr "Opzioni"
+msgstr "Einstellungen"
 
 #: menu/mainpage.py:46
 msgid "Support us"
-msgstr "Supportaci"
+msgstr "Unterstützen Sie uns"
 
 #: menu/mainpage.py:47
 msgid "Credits"
-msgstr "Riconoscimenti"
+msgstr "Mitwirkende"
 
 #: menu/mainpage.py:48
 msgid "Quit"
-msgstr "Esci"
+msgstr "Verlassen"
 
 #: menu/mainpage.py:77
 msgid "Note: the game is work-in-progress"
-msgstr "NB il gioco è in sviluppo"
+msgstr "Achtung: Das Spiel ist noch unfertig."
 
 #: menu/mainpage.py:108 menu/mainpage.py:111
 msgid "Last news:"
-msgstr "Ultime notizie:"
+msgstr "Neueste Nachrichten:"
 
 #: menu/mainpage.py:121 menu/mainpage.py:124
 msgid "show"
-msgstr "vedi"
+msgstr "anzeigen"
 
 #: menu/clientpage.py:32
 msgid "Client"
@@ -192,39 +192,39 @@ msgstr "Client"
 
 #: menu/clientpage.py:37
 msgid "insert the server address"
-msgstr "inserisci l'indirizzo del server"
+msgstr "Serveradresse eingeben"
 
 #: menu/clientpage.py:39
 msgid "Connect"
-msgstr "Connetti"
+msgstr "Verbinden"
 
 #: menu/clientpage.py:50
 msgid "Waiting for the server"
-msgstr "Aspettando il server"
+msgstr "Auf Server warten"
 
 #: menu/clientpage.py:54
 msgid "Error"
-msgstr "Errore"
+msgstr "Fehler"
 
 #: menu/serverpage.py:23
 msgid "connection from "
-msgstr "connessione da "
+msgstr "Verbindung von "
 
 #: menu/serverpage.py:51
 msgid "Start"
-msgstr "Avvia"
+msgstr "Start"
 
 #: menu/singleplayerpage.py:15
 msgid "Single race"
-msgstr "Gara singola"
+msgstr "Einzelrennen"
 
 #: menu/singleplayerpage.py:16
 msgid "New season"
-msgstr "Nuova stagione"
+msgstr "Neue Saison"
 
 #: menu/singleplayerpage.py:17
 msgid "Continue season"
-msgstr "Continua stagione"
+msgstr "Saison fortsetzen"
 
 #: menu/exitmenu/exitpage.py:15
 msgid ""
@@ -232,17 +232,17 @@ msgid ""
 "\n"
 "It helps us! Thank you!"
 msgstr ""
-"Per favore, visita il nostro sito dopo l'uscita!\n"
-"\n"
-"Ci aiuta! Grazie!"
+"Bitte besuchen Sie unsere Webpräsenz\n"
+"nach dem Beenden!\n"
+"Das hilft uns! Dankesehr!"
 
 #: menu/exitmenu/exitpage.py:20
 msgid "visit our site after exiting"
-msgstr "visita il nostro sito dopo l'uscita"
+msgstr "unsere Webpräsenz nach dem Beenden besuchen"
 
 #: menu/exitmenu/exitpage.py:23
 msgid "don't visit our site after exiting"
-msgstr "non visitare il nostro sito dopo l'uscita"
+msgstr "unsere Webpräsenz nach dem Beenden nicht besuchen"
 
 #: menu/ingamemenu/ingamepage.py:13
 msgid ""
@@ -250,21 +250,21 @@ msgid ""
 "\n"
 "Note: use 'p' for pausing the game."
 msgstr ""
-"Cosa vuoi fare?\n"
+"Was wollen Sie tun?\n"
 "\n"
-"NB Usa 'p' per mettere il gioco in pausa."
+"Tipp: Benutzen Sie „P“, um das Spiel zu pausieren."
 
 #: menu/ingamemenu/ingamepage.py:21
 msgid "back to the game"
-msgstr "torna al gioco"
+msgstr "zurück zum Spiel"
 
 #: menu/ingamemenu/ingamepage.py:22
 msgid "back to the main menu"
-msgstr "torna al menu principale"
+msgstr "zurück zum Hauptmenü"
 
 #: yorg/yorg.py:110 yorg/fsm.py:111
 msgid "Rome"
-msgstr "Roma"
+msgstr "Rom"
 
 #: yorg/yorg.py:110 yorg/fsm.py:111
 msgid "Sheffield"
@@ -284,163 +284,163 @@ msgstr "Dubai"
 
 #: yyagl/engine/gui/page.py:154
 msgid "Back"
-msgstr "Indietro"
+msgstr "Zurück"
 
 #: yyagl/engine/gui/mainpage.py:40
 msgid "version: "
-msgstr "versione: "
+msgstr "Version: "
 
 #: yyagl/racing/tuning/gui.py:24
 msgid "What do you want to upgrade?"
-msgstr "Cosa vuoi migliorare?"
+msgstr "Was möchten Sie aufrüsten?"
 
 #: yyagl/racing/tuning/gui.py:38 yyagl/racing/tuning/gui.py:44
 #: yyagl/racing/tuning/gui.py:50
 msgid "current upgrades: +"
-msgstr "miglioramenti attuali: +"
+msgstr "Derzeitige Aufrüstungen: +"
 
 #: yyagl/racing/tuning/gui.py:56
 msgid "engine: it increases car's maximum speed"
-msgstr "motore: aumenta la velocità massima"
+msgstr "Motor: Erhöht die Höchstgeschwindigkeit"
 
 #: yyagl/racing/tuning/gui.py:62
 msgid "tires: they increase car's adherence"
-msgstr "gomme: aumentano l'aderenza'"
+msgstr "Räder: Erhöhen das Haftvermögen des Wagens"
 
 #: yyagl/racing/tuning/gui.py:68
 msgid "supensions: they increase car's stability"
-msgstr "sospensioni: aumentano la stabilità"
+msgstr "Aufhängungen: Erhöhen die Stabilität des Wagens"
 
 #: yyagl/racing/car/logic.py:688
 msgid "wrong way"
-msgstr "direzione sbagliata"
+msgstr "Falsche Richtung"
 
 #: yyagl/racing/car/gui.py:140
 msgid "speed:"
-msgstr "velocità:"
+msgstr "Tempo:"
 
 #: yyagl/racing/car/gui.py:142
 msgid "lap:"
-msgstr "giro:"
+msgstr "Runde:"
 
 #: yyagl/racing/car/gui.py:143
 msgid "time:"
-msgstr "tempo:"
+msgstr "Zeit:"
 
 #: yyagl/racing/car/gui.py:144
 msgid "best lap:"
-msgstr "miglior giro:"
+msgstr "Beste Runde:"
 
 #: yyagl/racing/car/gui.py:145
 msgid "ranking:"
-msgstr "classifica:"
+msgstr "Rangliste:"
 
 #: yyagl/racing/car/gui.py:146
 msgid "damages:"
-msgstr "danni:"
+msgstr "Schäden:"
 
 #: yyagl/racing/car/gui.py:147
 msgid "weapon:"
-msgstr "arma:"
+msgstr "Waffe:"
 
 #: yyagl/racing/car/gui.py:166 yyagl/racing/car/gui.py:169
 msgid "low"
-msgstr "basso"
+msgstr "niedrig"
 
 #: yyagl/racing/car/gui.py:170
 msgid "hi"
-msgstr "alto"
+msgstr "hoch"
 
 #: yyagl/racing/ranking/gui.py:28
 #: yyagl/racing/race/gui/loading/loadingpage.py:64
 msgid "Ranking"
-msgstr "Classifica"
+msgstr "Rangliste"
 
 #: yyagl/racing/ranking/gui.py:44 yyagl/racing/race/gui/results.py:78
 msgid "Continue"
-msgstr "Continua"
+msgstr "Weiter"
 
 #: yyagl/racing/race/event.py:57
 #, python-format
 msgid "press %s to respawn"
-msgstr "premi %s per respawnare"
+msgstr "%s zum Zurücksetzen"
 
 #: yyagl/racing/race/gui/countdown.py:19
 msgid "GO!"
-msgstr "VIA!"
+msgstr "LOS!"
 
 #: yyagl/racing/race/gui/results.py:35
 msgid "LAP"
-msgstr "GIRO"
+msgstr "RUNDE"
 
 #: yyagl/racing/race/gui/results.py:36
 msgid "TIME"
-msgstr "TEMPO"
+msgstr "ZEIT"
 
 #: yyagl/racing/race/gui/results.py:37
 msgid "RANKING"
-msgstr "CLASSIFICA"
+msgstr "RANGLISTE"
 
 #: yyagl/racing/race/gui/results.py:50
 msgid "share:"
-msgstr "condividi:"
+msgstr "Teilen:"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:26
 msgid "LOADING..."
-msgstr "CARICAMENTO..."
+msgstr "LADEN …"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:34
 msgid "track: "
-msgstr "pista: "
+msgstr "Strecke: "
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:53
 msgid "Starting grid"
-msgstr "Griglia di partenza"
+msgstr "Startaufstellung"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:73
 msgid "Controls"
-msgstr "Controlli"
+msgstr "Steuerung"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:77
 msgid "joypad"
-msgstr "joypad"
+msgstr "Joypad"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:81
 msgid "accelerate"
-msgstr "accelerazione"
+msgstr "Beschleunigen"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:82
 msgid "brake/reverse"
-msgstr "frena/indietro"
+msgstr "Bremsen/Rückwärts"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:83
 msgid "left"
-msgstr "sinistra"
+msgstr "Links"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:84
 msgid "right"
-msgstr "destra"
+msgstr "Rechts"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:85
 msgid "fire"
-msgstr "fuoco"
+msgstr "Feuern"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:86
 msgid "respawn"
-msgstr "respawn"
+msgstr "Zurücksetzen"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:89
 msgid "Upgrades"
-msgstr "Miglioramenti"
+msgstr "Aufrüstungen"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:95
 msgid "engine: +"
-msgstr "motore: +"
+msgstr "Motor: +"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:100
 msgid "tires: +"
-msgstr "gomme: +"
+msgstr "Räder: +"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:105
 msgid "suspensions: +"
-msgstr "sospensioni: +"
+msgstr "Aufhängungen: +"

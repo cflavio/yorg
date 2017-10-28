@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-22 12:33+0200\n"
+"POT-Creation-Date: 2017-10-27 22:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,11 @@ msgstr "Audio"
 msgid "Testing"
 msgstr "Testing"
 
-#: menu/creditpage.py:18
+#: menu/creditpage.py:15
+msgid "Translations"
+msgstr ""
+
+#: menu/creditpage.py:19
 msgid "Supporters"
 msgstr "Supporters"
 
@@ -171,7 +175,7 @@ msgid "Quit"
 msgstr "Esci"
 
 #: menu/mainpage.py:77
-msgid "NB the game is work-in-progress"
+msgid "Note: the game is work-in-progress"
 msgstr "NB il gioco è in sviluppo"
 
 #: menu/mainpage.py:108 menu/mainpage.py:111
@@ -244,7 +248,7 @@ msgstr "non visitare il nostro sito dopo l'uscita"
 msgid ""
 "What do you want to do?\n"
 "\n"
-"NB Use 'p' for pausing the game."
+"Note: use 'p' for pausing the game."
 msgstr ""
 "Cosa vuoi fare?\n"
 "\n"
@@ -260,23 +264,23 @@ msgstr "torna al menu principale"
 
 #: yorg/yorg.py:110 yorg/fsm.py:111
 msgid "Rome"
-msgstr ""
+msgstr "Roma"
 
 #: yorg/yorg.py:110 yorg/fsm.py:111
 msgid "Sheffield"
-msgstr ""
+msgstr "Sheffield"
 
 #: yorg/yorg.py:110 yorg/fsm.py:112
 msgid "Orlando"
-msgstr ""
+msgstr "Orlando"
 
 #: yorg/yorg.py:111 yorg/fsm.py:113
 msgid "Nagano"
-msgstr ""
+msgstr "Nagano"
 
 #: yorg/yorg.py:111 yorg/fsm.py:113
 msgid "Dubai"
-msgstr ""
+msgstr "Dubai"
 
 #: yyagl/engine/gui/page.py:154
 msgid "Back"
@@ -288,24 +292,24 @@ msgstr "versione: "
 
 #: yyagl/racing/tuning/gui.py:24
 msgid "What do you want to upgrade?"
-msgstr ""
+msgstr "Cosa vuoi migliorare?"
 
 #: yyagl/racing/tuning/gui.py:38 yyagl/racing/tuning/gui.py:44
 #: yyagl/racing/tuning/gui.py:50
 msgid "current upgrades: +"
-msgstr ""
+msgstr "miglioramenti attuali: +"
 
 #: yyagl/racing/tuning/gui.py:56
 msgid "engine: it increases car's maximum speed"
-msgstr ""
+msgstr "motore: aumenta la velocità massima"
 
 #: yyagl/racing/tuning/gui.py:62
 msgid "tires: they increase car's adherence"
-msgstr ""
+msgstr "gomme: aumentano l'aderenza'"
 
 #: yyagl/racing/tuning/gui.py:68
 msgid "supensions: they increase car's stability"
-msgstr ""
+msgstr "sospensioni: aumentano la stabilità"
 
 #: yyagl/racing/car/logic.py:688
 msgid "wrong way"
@@ -348,7 +352,7 @@ msgid "hi"
 msgstr "alto"
 
 #: yyagl/racing/ranking/gui.py:28
-#: yyagl/racing/race/gui/loading/loadingpage.py:55
+#: yyagl/racing/race/gui/loading/loadingpage.py:64
 msgid "Ranking"
 msgstr "Classifica"
 
@@ -381,75 +385,62 @@ msgstr "CLASSIFICA"
 msgid "share:"
 msgstr "condividi:"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:25
+#: yyagl/racing/race/gui/loading/loadingpage.py:26
 msgid "LOADING..."
 msgstr "CARICAMENTO..."
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:33
+#: yyagl/racing/race/gui/loading/loadingpage.py:34
 msgid "track: "
 msgstr "pista: "
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:44
+#: yyagl/racing/race/gui/loading/loadingpage.py:53
 msgid "Starting grid"
 msgstr "Griglia di partenza"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:64
+#: yyagl/racing/race/gui/loading/loadingpage.py:73
 msgid "Controls"
 msgstr "Controlli"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:68
+#: yyagl/racing/race/gui/loading/loadingpage.py:77
 msgid "joypad"
 msgstr "joypad"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:72
+#: yyagl/racing/race/gui/loading/loadingpage.py:81
 msgid "accelerate"
 msgstr "accelerazione"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:73
+#: yyagl/racing/race/gui/loading/loadingpage.py:82
 msgid "brake/reverse"
 msgstr "frena/indietro"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:74
+#: yyagl/racing/race/gui/loading/loadingpage.py:83
 msgid "left"
 msgstr "sinistra"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:75
+#: yyagl/racing/race/gui/loading/loadingpage.py:84
 msgid "right"
 msgstr "destra"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:76
+#: yyagl/racing/race/gui/loading/loadingpage.py:85
 msgid "fire"
 msgstr "fuoco"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:77
+#: yyagl/racing/race/gui/loading/loadingpage.py:86
 msgid "respawn"
 msgstr "respawn"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:80
+#: yyagl/racing/race/gui/loading/loadingpage.py:89
 msgid "Upgrades"
-msgstr ""
+msgstr "Miglioramenti"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:86
+#: yyagl/racing/race/gui/loading/loadingpage.py:95
 msgid "engine: +"
-msgstr ""
+msgstr "motore: +"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:91
+#: yyagl/racing/race/gui/loading/loadingpage.py:100
 msgid "tires: +"
-msgstr ""
+msgstr "gomme: +"
 
-#: yyagl/racing/race/gui/loading/loadingpage.py:96
-#, fuzzy
+#: yyagl/racing/race/gui/loading/loadingpage.py:105
 msgid "suspensions: +"
-msgstr "versione: "
-
-#~ msgid "desert"
-#~ msgstr "deserto"
-
-#~ msgid "mountain"
-#~ msgstr "montagna"
-
-#~ msgid "amusement park"
-#~ msgstr "luna park"
-
-#~ msgid "countryside"
-#~ msgstr "campagna"
+msgstr "sospensioni: +"
