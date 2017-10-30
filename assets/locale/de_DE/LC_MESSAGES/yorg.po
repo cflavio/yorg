@@ -35,7 +35,7 @@ msgstr "Testen"
 
 #: menu/creditpage.py:15
 msgid "Translations"
-msgstr ""
+msgstr "Übersetzungen"
 
 #: menu/creditpage.py:19
 msgid "Supporters"
@@ -311,7 +311,7 @@ msgstr "Räder: Erhöhen das Haftvermögen des Wagens"
 msgid "supensions: they increase car's stability"
 msgstr "Aufhängungen: Erhöhen die Stabilität des Wagens"
 
-#: yyagl/racing/car/logic.py:688
+#: yyagl/racing/car/logic.py:697
 msgid "wrong way"
 msgstr "Falsche Richtung"
 

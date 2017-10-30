@@ -29,8 +29,7 @@ class InGamePageGui(PageGui):
             text_scale=.8, **btn_args)
         map(self.add_widget, [frm, txt, btn_visit, btn_dont_visit])
         PageGui.bld_page(self, False)
-        self.eng.hide_cursor()
-        self.eng.show_standard_cursor()
+        self.eng.show_cursor()
         self.eng.do_later(.01, self.eng.toggle_pause, [False])
         # in the next frame since otherwise InGameMenu will be paused while
         # waiting page's creation, and when it is restored it is destroyed,

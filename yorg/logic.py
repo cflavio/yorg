@@ -131,6 +131,10 @@ class YorgLogic(GameLogic):
             if car_name == car:
                 info = drv.logic.dprops.info._replace(name=player_name)
                 drv.logic.dprops = drv.logic.dprops._replace(info=info)
+                for dinfo in self.mdt.gameprops.drivers_info:
+                    if dinfo.name == player_name:
+                        info = drv.logic.dprops.info._replace(img_idx=dinfo.img_idx)
+                drv.logic.dprops = drv.logic.dprops._replace(info=info)
         self.eng.do_later(2.0, self.mdt.fsm.demand,
                           ['Race', track, car, [car], self.season.logic.drivers])
 

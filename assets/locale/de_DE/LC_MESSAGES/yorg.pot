@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-27 22:55+0200\n"
+"POT-Creation-Date: 2017-10-30 11:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -305,7 +305,7 @@ msgstr ""
 msgid "supensions: they increase car's stability"
 msgstr ""
 
-#: yyagl/racing/car/logic.py:688
+#: yyagl/racing/car/logic.py:697
 msgid "wrong way"
 msgstr ""
 
