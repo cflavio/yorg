@@ -10,6 +10,7 @@
 # #network print if the port is closed when creating the server
 # #network send game packets using udp in place of tcp
 # #network weapons
+# #network use xmpp for multiplayer
 
 
 # WAITING =====

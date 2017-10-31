@@ -88,6 +88,7 @@ class CarPageGui(ThanksPageGui):
         return [btn for btn in self.buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
+        self.eng.log('selected ' + car)
         self.notify('on_car_selected', car)
         page_args = [self.track_path, car, self.props]
         self.notify('on_push_page', 'driver_page', page_args)

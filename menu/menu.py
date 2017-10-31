@@ -23,47 +23,62 @@ class YorgMenuLogic(MenuLogic):
 
     def on_push_page(self, page_code, args=[]):
         if page_code == 'singleplayer':
+            self.eng.log('single player')
             page = SingleplayerPage(args[0])
             page.gui.attach(self.on_track_selected)
             page.gui.attach(self.on_continue)
         if page_code == 'multiplayer':
+            self.eng.log('multi player')
             page = MultiplayerPage(args[0])
         if page_code == 'server':
+            self.eng.log('server')
             page = ServerPage(args[0])
         if page_code == 'client':
+            self.eng.log('client')
             page = ClientPage(args[0])
             page.event.attach(self.on_track_selected)
         if page_code == 'single_race':
+            self.eng.log('single race')
             page = TrackPage(args[0])
             page.gui.attach(self.on_track_selected)
         if page_code == 'trackpageserver':
+            self.eng.log('track page server')
             page = TrackPageServer(args[0])
             page.gui.attach(self.on_track_selected)
         if page_code == 'new_season':
+            self.eng.log('new season')
             page = CarPageSeason(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected_season)
         if page_code == 'car_page':
+            self.eng.log('car page')
             page = CarPage(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageserver':
+            self.eng.log('car page server')
             page = CarPageServer(args[0], self.mdt.track)
             page.gui.attach(self.on_car_start_server)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
+            self.eng.log('car page client')
             page = CarPageClient(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'driver_page':
+            self.eng.log('driver page')
             page = DriverPage(args[0], args[1], args[2])
             page.gui.attach(self.on_driver_selected)
         if page_code == 'options':
+            self.eng.log('options')
             page = OptionPage(self.mdt.gui.menu_args, args[0])
         if page_code == 'input':
+            self.eng.log('input')
             page = InputPage(
                 self.mdt.gui.menu_args, args[0], args[1])
         if page_code == 'credits':
+            self.eng.log('credits')
             page = CreditPage(self.mdt.gui.menu_args)
         if page_code == 'supporters':
+            self.eng.log('supporters')
             page = SupportersPage(self.mdt.gui.menu_args)
         self.push_page(page)
 

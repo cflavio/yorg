@@ -104,7 +104,7 @@ class YorgFsm(Fsm):
             seas.create_race_client(race_props)
         else:
             seas.create_race(race_props)
-        self.eng.log_mgr.log('selected drivers: ' + str(drivers))
+        self.eng.log_mgr.log('selected drivers: ' + str([drv.dprops for drv in drivers]))
         seas.race.logic.drivers = drivers
         track_name_transl = track_path
         track_dct = {'rome': _('Rome'), 'sheffield': _('Sheffield'),

@@ -125,16 +125,9 @@ class YorgLogic(GameLogic):
     def on_driver_selected(self, player_name, track, car):
         self.mdt.options['settings']['player_name'] = player_name
         self.mdt.options.store()
-        for drv, car_name in zip(self.season.logic.drivers,
-                                 self.mdt.gameprops.cars_names):
-            drv.logic.dprops = drv.dprops._replace(car_name=car_name)
-            if car_name == car:
-                info = drv.logic.dprops.info._replace(name=player_name)
-                drv.logic.dprops = drv.logic.dprops._replace(info=info)
-                for dinfo in self.mdt.gameprops.drivers_info:
-                    if dinfo.name == player_name:
-                        info = drv.logic.dprops.info._replace(img_idx=dinfo.img_idx)
-                drv.logic.dprops = drv.logic.dprops._replace(info=info)
+        for i, drv in enumerate(self.season.logic.drivers):
+            dinfo = self.mdt.gameprops.drivers_info[i]
+            drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
         self.eng.do_later(2.0, self.mdt.fsm.demand,
                           ['Race', track, car, [car], self.season.logic.drivers])
 
