@@ -45,6 +45,7 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.bld_page(self)
 
     def on_track(self, track):
+        self.eng.log('selected ' + track)
         self.notify('on_track_selected', track)
         self.notify('on_push_page', 'car_page', [self.props])
 

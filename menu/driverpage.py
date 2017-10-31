@@ -134,6 +134,7 @@ class DriverPageGui(ThanksPageGui):
         return task.cont  # don't do a task, attach to modifications events
 
     def on_click(self, i):
+        self.eng.log('selected driver ' + str(i))
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
         self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
@@ -141,14 +142,17 @@ class DriverPageGui(ThanksPageGui):
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
         cars = gprops.cars_names[:]
+        car_idx = cars.index(self.mdt.car)
         cars.remove(self.mdt.car)
         shuffle(cars)
         drv_idx = range(8)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        gprops.drivers_info[i-1] = gprops.drivers_info[i-1]._replace(img_idx=i)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(img_idx=i)
         nname = self.ent.get()
-        gprops.drivers_info[i-1] = gprops.drivers_info[i-1]._replace(name=nname)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(name=nname)
+        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(img_idx=car_idx)
+        self.eng.log('drivers: ' + str(gprops.drivers_info))
         self.notify('on_driver_selected', self.ent.get(), self.mdt.track,
                     self.mdt.car)
 
