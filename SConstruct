@@ -171,7 +171,7 @@ if args['pdf']:
 def process_lang(lang_code):
     lang_name = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
     tmpl = env.str_tmpl(lang_name, files(['py'], ['venv', 'thirdparty']))
-    env.Precious(tmpl)
+    env.NoClean(tmpl)
     lang_mo = lang_path + lang_code + '/LC_MESSAGES/%s.mo' % app_name
     lang_po = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
     env.str(lang_mo, lang_po)
