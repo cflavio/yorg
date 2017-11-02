@@ -119,6 +119,9 @@ class Yorg(Game):
             'assets/models/cars/%s/car',
             damage_info, wheel_gfx_names,)
 
+    def reset_drivers(self):
+        self.gameprops = self.gameprops._replace(drivers_info=self.drivers())
+
     @staticmethod
     def drivers():
         names = ThanksNames.get_thanks(8, 5)

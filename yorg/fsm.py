@@ -24,6 +24,7 @@ class YorgFsm(Fsm):
 
     def enterMenu(self):
         self.eng.log_mgr.log('entering Menu state')
+        self.mdt.reset_drivers()
         menu_props = MenuProps(
             self.mdt.gameprops, self.mdt.options,
             self.mdt.options['development']['multiplayer'],
