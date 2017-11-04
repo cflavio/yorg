@@ -156,7 +156,7 @@ class CarPageGuiServer(CarPageGui):
             btn.disable()
             self.eng.server.send([NetMsgs.car_confirm, car], sender)
             self.eng.server.send([NetMsgs.car_selection, car])
-            self.eng.car_mapping[sender] = car
+            self.eng.car_mapping[data_lst[-1]] = car
             self.evaluate_starting()
 
 
@@ -168,7 +168,7 @@ class CarPageGuiClient(CarPageGui):
 
     def on_car(self, car):
         self.eng.log_mgr.log('car request: ' + car)
-        self.eng.client.send([NetMsgs.car_request, car])
+        self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
 
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.car_confirm:

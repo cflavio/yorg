@@ -34,7 +34,7 @@ class ClientPageGui(ThanksPageGui):
         self.ent = DirectEntry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText=_('insert the server address'))
+            initialText='127.0.0.1')
         self.ent.onscreenText['fg'] = menu_args.text_fg
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_args.btn_args)
