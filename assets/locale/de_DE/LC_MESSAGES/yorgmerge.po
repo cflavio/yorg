@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 11:54+0100\n"
+"POT-Creation-Date: 2017-11-06 18:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -262,23 +262,23 @@ msgstr "zurück zum Spiel"
 msgid "back to the main menu"
 msgstr "zurück zum Hauptmenü"
 
-#: yorg/yorg.py:110 yorg/fsm.py:111
+#: yorg/yorg.py:110 yorg/fsm.py:112
 msgid "Rome"
 msgstr "Rom"
 
-#: yorg/yorg.py:110 yorg/fsm.py:111
+#: yorg/yorg.py:110 yorg/fsm.py:112
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:110 yorg/fsm.py:112
+#: yorg/yorg.py:110 yorg/fsm.py:113
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:111 yorg/fsm.py:113
+#: yorg/yorg.py:111 yorg/fsm.py:114
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:111 yorg/fsm.py:113
+#: yorg/yorg.py:111 yorg/fsm.py:114
 msgid "Dubai"
 msgstr "Dubai"
 
@@ -356,7 +356,12 @@ msgstr "hoch"
 msgid "Ranking"
 msgstr "Rangliste"
 
-#: yyagl/racing/ranking/gui.py:44 yyagl/racing/race/gui/results.py:78
+#: yyagl/racing/ranking/gui.py:48
+#, fuzzy
+msgid "Congratulations!"
+msgstr "Übersetzungen"
+
+#: yyagl/racing/ranking/gui.py:54 yyagl/racing/race/gui/results.py:78
 msgid "Continue"
 msgstr "Weiter"
 

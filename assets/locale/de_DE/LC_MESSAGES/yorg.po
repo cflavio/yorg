@@ -262,23 +262,23 @@ msgstr "zurück zum Spiel"
 msgid "back to the main menu"
 msgstr "zurück zum Hauptmenü"
 
-#: yorg/yorg.py:110 yorg/fsm.py:111
+#: yorg/yorg.py:110 yorg/fsm.py:112
 msgid "Rome"
 msgstr "Rom"
 
-#: yorg/yorg.py:110 yorg/fsm.py:111
+#: yorg/yorg.py:110 yorg/fsm.py:112
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:110 yorg/fsm.py:112
+#: yorg/yorg.py:110 yorg/fsm.py:113
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:111 yorg/fsm.py:113
+#: yorg/yorg.py:111 yorg/fsm.py:114
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:111 yorg/fsm.py:113
+#: yorg/yorg.py:111 yorg/fsm.py:114
 msgid "Dubai"
 msgstr "Dubai"
 
@@ -356,7 +356,11 @@ msgstr "hoch"
 msgid "Ranking"
 msgstr "Rangliste"
 
-#: yyagl/racing/ranking/gui.py:44 yyagl/racing/race/gui/results.py:78
+#: yyagl/racing/ranking/gui.py:48
+msgid "Congratulations!"
+msgstr "Glückwünsche!"
+
+#: yyagl/racing/ranking/gui.py:54 yyagl/racing/race/gui/results.py:78
 msgid "Continue"
 msgstr "Weiter"
 

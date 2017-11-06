@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-30 11:54+0100\n"
+"POT-Creation-Date: 2017-11-06 18:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: menu/creditpage.py:11
@@ -256,23 +256,23 @@ msgstr ""
 msgid "back to the main menu"
 msgstr ""
 
-#: yorg/yorg.py:110 yorg/fsm.py:111
+#: yorg/yorg.py:110 yorg/fsm.py:112
 msgid "Rome"
 msgstr ""
 
-#: yorg/yorg.py:110 yorg/fsm.py:111
+#: yorg/yorg.py:110 yorg/fsm.py:112
 msgid "Sheffield"
 msgstr ""
 
-#: yorg/yorg.py:110 yorg/fsm.py:112
+#: yorg/yorg.py:110 yorg/fsm.py:113
 msgid "Orlando"
 msgstr ""
 
-#: yorg/yorg.py:111 yorg/fsm.py:113
+#: yorg/yorg.py:111 yorg/fsm.py:114
 msgid "Nagano"
 msgstr ""
 
-#: yorg/yorg.py:111 yorg/fsm.py:113
+#: yorg/yorg.py:111 yorg/fsm.py:114
 msgid "Dubai"
 msgstr ""
 
@@ -350,7 +350,11 @@ msgstr ""
 msgid "Ranking"
 msgstr ""
 
-#: yyagl/racing/ranking/gui.py:44 yyagl/racing/race/gui/results.py:78
+#: yyagl/racing/ranking/gui.py:48
+msgid "Congratulations!"
+msgstr ""
+
+#: yyagl/racing/ranking/gui.py:54 yyagl/racing/race/gui/results.py:78
 msgid "Continue"
 msgstr ""
 
