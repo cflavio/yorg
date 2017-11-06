@@ -131,7 +131,7 @@ env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
 
-img_files = img_tgt_names(files(['png']))
+img_files = img_tgt_names(files(['jpg', 'png']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name,
             lang_path + 'de_DE/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
