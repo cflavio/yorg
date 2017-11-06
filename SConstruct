@@ -131,7 +131,7 @@ env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
 
-img_files = img_tgt_names(files(['png']))
+img_files = img_tgt_names(files(['jpg', 'png']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name,
             lang_path + 'de_DE/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
@@ -170,7 +170,9 @@ if args['pdf']:
 
 def process_lang(lang_code):
     lang_name = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
+    env['LNG_CODE'] = lang_code
     tmpl = env.str_tmpl(lang_name, files(['py'], ['venv', 'thirdparty']))
+    env.Precious(tmpl)
     env.NoClean(tmpl)
     lang_mo = lang_path + lang_code + '/LC_MESSAGES/%s.mo' % app_name
     lang_po = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
