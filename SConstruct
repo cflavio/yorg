@@ -16,13 +16,14 @@ from yyagl.build.strings import bld_mo, bld_pot, bld_merge
 from yyagl.build.imgs import bld_images
 from yyagl.build.pdf import bld_pdfs
 from yyagl.build.tracks import bld_models
+from yyagl.build.uml import bld_uml
 
 
 argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
     ('images', 0), ('tracks', 0), ('deployng', 0), ('nointernet', 0),
-    ('pdf', 0), ('tests', 0), ('cores', 0)]
+    ('pdf', 0), ('tests', 0), ('cores', 0), ('uml', 0)]
 args = {arg: ARGUMENTS.get(arg, default) for (arg, default) in argument_info}
 full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64'])
 args['images'] = args['images'] or args['deployng'] or args['p3d'] \
@@ -170,6 +171,8 @@ if args['docs']:
     env.docs([docs_path], files(['py'], ['venv', 'thirdparty']))
 if args['pdf']:
     env.pdf([pdf_path], files(['py'], ['venv', 'thirdparty']))
+if args['uml']:
+    env.uml(['yyagl/assets/uml/class_diagram.png'], ['yyagl/assets/uml/class_diagram.txt'])
 
 def process_lang(lang_code):
     lang_name = 'assets/po/%s.po' % lang_code
