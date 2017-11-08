@@ -16,13 +16,14 @@ from yyagl.build.strings import bld_strings, bld_tmpl_merge
 from yyagl.build.imgs import bld_images
 from yyagl.build.pdf import bld_pdfs
 from yyagl.build.tracks import bld_models
+from yyagl.build.uml import bld_uml
 
 
 argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
     ('images', 0), ('tracks', 0), ('deployng', 0), ('nointernet', 0),
-    ('pdf', 0), ('tests', 0), ('cores', 0)]
+    ('pdf', 0), ('tests', 0), ('cores', 0), ('uml', 0)]
 args = {arg: ARGUMENTS.get(arg, default) for (arg, default) in argument_info}
 full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64'])
 args['images'] = args['images'] or args['deployng'] or args['p3d'] \
@@ -66,12 +67,14 @@ bld_models = Builder(action=bld_models)
 bld_str = Builder(action=bld_strings, suffix='.mo', src_suffix='.po')
 bld_str_tmpl = Builder(action=bld_tmpl_merge, suffix='.pot',
                        src_suffix='.py')
+bld_uml = Builder(action=bld_uml)
 
 env = Environment(BUILDERS={
     'p3d': bld_p3d, 'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
     'source': bld_src, 'devinfo': bld_devinfo, 'tests': bld_tests,
     'docs': bld_docs, 'images': bld_images, 'str': bld_str,
-    'str_tmpl': bld_str_tmpl, 'pdf': bld_pdfs, 'tracks': bld_models})
+    'str_tmpl': bld_str_tmpl, 'pdf': bld_pdfs, 'tracks': bld_models,
+    'uml': bld_uml})
 env['P3D_PATH'] = p3d_path
 env['APPNAME'] = app_name
 env['LNG'] = lang_path
@@ -167,6 +170,8 @@ if args['docs']:
     env.docs([docs_path], files(['py'], ['venv', 'thirdparty']))
 if args['pdf']:
     env.pdf([pdf_path], files(['py'], ['venv', 'thirdparty']))
+if args['uml']:
+    env.uml(['yyagl/assets/uml/class_diagram.png'], ['yyagl/assets/uml/class_diagram.txt'])
 
 def process_lang(lang_code):
     lang_name = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
