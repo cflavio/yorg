@@ -81,7 +81,7 @@ env['LNG'] = lang_path
 env['NOINTERNET'] = args['nointernet']
 env['DEPLOYNG'] = args['deployng']
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
-env['LANGUAGES'] = ['it_IT', 'de_DE']
+env['LANGUAGES'] = ['it_IT', 'de_DE', 'gd']
 env['MODELS_DIR_PATH'] = 'assets/models'
 env['TRACKS_DIR_PATH'] = 'assets/models/tracks'
 env['CORES'] = int(args['cores'])
@@ -136,7 +136,8 @@ VariantDir(path, '.')
 
 img_files = img_tgt_names(files(['jpg', 'png'], ['models'], ['_png.png']))
 lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name,
-            lang_path + 'de_DE/LC_MESSAGES/%s.mo' % app_name]
+            lang_path + 'de_DE/LC_MESSAGES/%s.mo' % app_name,
+            lang_path + 'gd/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + tracks_tgt_fnames()
 no_int = args['nointernet']
@@ -184,4 +185,4 @@ def process_lang(lang_code):
     env.str(lang_mo, lang_po)
 
 if args['lang']:
-    map(process_lang, ['it_IT', 'de_DE'])
+    map(process_lang, ['it_IT', 'de_DE', 'gd'])
