@@ -71,7 +71,7 @@ class Yorg(Game):
         profiling_cfg = ProfilingCfg(profiling=opt_dev['profiling'],
             pyprof_percall=opt_dev['pyprof_percall'])
         lang_cfg = LangCfg(lang=self.options['settings']['lang'],
-                           lang_domain='yorg', languages=['English', 'Italiano', 'Deutsch', 'Gàidhlig'])
+                           lang_domain='yorg', languages=['English', 'Italiano', 'Deutsch', u'G\u00E0idhlig'])
         cursor_cfg = CursorCfg(cursor_path='assets/images/gui/cursor.txo',
             cursor_scale=((256/352.0) * .08, 1, .08),
             cursor_hotspot=(.1, .06))

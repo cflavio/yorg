@@ -176,7 +176,6 @@ if args['uml']:
 
 def process_lang(lang_code):
     lang_name = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
-    env['LNG_CODE'] = lang_code
     tmpl = env.str_tmpl(lang_name, files(['py'], ['venv', 'thirdparty']))
     env.Precious(tmpl)
     env.NoClean(tmpl)

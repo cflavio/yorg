@@ -6,13 +6,13 @@ from .ingamepage import InGamePage
 
 class InGameMenuGui(Gui):
 
-    def __init__(self, mdt, menu_args):
+    def __init__(self, mdt, menu_args, keys):
         Gui.__init__(self, mdt)
         menu_args_c = deepcopy(menu_args)
         menu_args_c.background_img = ''
         menu_args_c.btn_size = (-8.6, 8.6, -.42, .98)
         self.menu = Menu(menu_args_c)
-        page = InGamePage(menu_args_c)
+        page = InGamePage(menu_args_c, keys)
         page.gui.attach(self.on_ingame_back)
         page.gui.attach(self.on_ingame_exit)
         self.menu.push_page(page)
@@ -31,6 +31,6 @@ class InGameMenuGui(Gui):
 class InGameMenu(GameObject):
     gui_cls = InGameMenuGui
 
-    def __init__(self, menu_args):
-        init_lst = [[('gui', self.gui_cls, [self, menu_args])]]
+    def __init__(self, menu_args, keys):
+        init_lst = [[('gui', self.gui_cls, [self, menu_args, keys])]]
         GameObject.__init__(self, init_lst)

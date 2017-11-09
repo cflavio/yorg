@@ -12,7 +12,7 @@ class CreditPageGui(ThanksPageGui):
                    _('Art')+': Luca Quartero',
                    _('Audio')+': Jay Bachelor',
                    _('Testing')+': Dario Murgia',
-                   _('Translations')+': Wuzzy']
+                   _('Translations')+': Wuzzy, GunChleoc']
         dev_str = '\n\n'.join(dev_str)
         txt = OnscreenText(text=dev_str, pos=(0, .79), **menu_args.text_args)
         btn = DirectButton(
