@@ -1,16 +1,22 @@
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectButton import DirectButton
-from yyagl.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page, PageGui, PageFacade
+from yyagl.gameobject import GameObject
 
 
 class InGamePageGui(PageGui):
+
+    def __init__(self, mdt, menu_args, keys):
+        self.keys = keys
+        PageGui.__init__(self, mdt, menu_args)
 
     def bld_page(self, back_btn=True):
         frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         question_txt = _(
-            "What do you want to do?\n\nNote: use 'p' for pausing the game.")
+            "What do you want to do?\n\nNote: use '%s' for pausing the game.")
+        question_txt = question_txt % self.keys.pause
         menu_args = self.menu_args
         txt = OnscreenText(
             text=question_txt, pos=(0, .64), scale=.08, wordwrap=32,
@@ -44,3 +50,11 @@ class InGamePageGui(PageGui):
 
 class InGamePage(Page):
     gui_cls = InGamePageGui
+
+    def __init__(self, menu_args, keys):
+        PageFacade.__init__(self)
+        self.menu_args = menu_args
+        init_lst = [
+            [('event', self.event_cls, [self])],
+            [('gui', self.gui_cls, [self, self.menu_args, keys])]]
+        GameObject.__init__(self, init_lst)

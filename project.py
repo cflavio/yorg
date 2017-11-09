@@ -27,6 +27,7 @@
 
 # replace scons with setuptools
 # make scons for yyagl
+# do automatic update (assets shared among platforms)
 # unit tests
 # django webapp for scores
 # refactor: don't share eng with every colleague, instead share only the
