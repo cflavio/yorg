@@ -12,7 +12,7 @@ from yyagl.build.src import bld_src
 from yyagl.build.devinfo import bld_devinfo
 from yyagl.build.test import bld_ut
 from yyagl.build.docs import bld_docs
-from yyagl.build.strings import bld_strings, bld_tmpl_merge
+from yyagl.build.strings import bld_mo, bld_pot, bld_merge
 from yyagl.build.imgs import bld_images
 from yyagl.build.pdf import bld_pdfs
 from yyagl.build.tracks import bld_models
@@ -63,15 +63,17 @@ bld_docs = Builder(action=bld_docs)
 bld_pdfs = Builder(action=bld_pdfs)
 bld_images = Builder(action=bld_images)
 bld_models = Builder(action=bld_models)
-bld_str = Builder(action=bld_strings, suffix='.mo', src_suffix='.po')
-bld_str_tmpl = Builder(action=bld_tmpl_merge, suffix='.pot',
-                       src_suffix='.py')
+bld_mo = Builder(action=bld_mo, suffix='.mo', src_suffix='.po')
+bld_pot = Builder(action=bld_pot, suffix='.pot', src_suffix='.py')
+bld_merge = Builder(action=bld_merge, suffix='.po', src_suffix='.pot')
+bld_uml = Builder(action=bld_uml)
 
 env = Environment(BUILDERS={
     'p3d': bld_p3d, 'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
     'source': bld_src, 'devinfo': bld_devinfo, 'tests': bld_tests,
-    'docs': bld_docs, 'images': bld_images, 'str': bld_str,
-    'str_tmpl': bld_str_tmpl, 'pdf': bld_pdfs, 'tracks': bld_models})
+    'docs': bld_docs, 'images': bld_images, 'mo': bld_mo, 'pot': bld_pot,
+    'merge': bld_merge, 'pdf': bld_pdfs, 'tracks': bld_models,
+    'uml': bld_uml})
 env['P3D_PATH'] = p3d_path
 env['APPNAME'] = app_name
 env['LNG'] = lang_path
@@ -170,13 +172,14 @@ if args['pdf']:
     env.pdf([pdf_path], files(['py'], ['venv', 'thirdparty']))
 
 def process_lang(lang_code):
-    lang_name = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
-    tmpl = env.str_tmpl(lang_name, files(['py'], ['venv', 'thirdparty']))
+    lang_name = 'assets/po/%s.po' % lang_code
+    tmpl = env.merge(lang_name, ['assets/po/yorg.pot'] + files(['py'], ['venv', 'thirdparty']))
     env.Precious(tmpl)
     env.NoClean(tmpl)
     lang_mo = lang_path + lang_code + '/LC_MESSAGES/%s.mo' % app_name
-    lang_po = lang_path + lang_code + '/LC_MESSAGES/%s.po' % app_name
-    env.str(lang_mo, lang_po)
+    lang_po = 'assets/po/%s.po' % lang_code
+    env.mo(lang_mo, lang_po)
 
 if args['lang']:
+    env.pot('assets/po/yorg.pot', files(['py'], ['venv', 'thirdparty']))
     map(process_lang, ['it_IT', 'de_DE', 'gd'])
