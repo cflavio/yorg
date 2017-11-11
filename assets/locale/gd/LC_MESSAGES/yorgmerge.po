@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-09 11:41+0100\n"
-"PO-Revision-Date: 2017-11-08 21:56+0100\n"
+"PO-Revision-Date: 2017-11-10 09:16+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -242,7 +242,7 @@ msgid "don't visit our site after exiting"
 msgstr "na tadhail air an làrach-lìn againn às dèidh fàgail"
 
 #: menu/ingamemenu/ingamepage.py:18
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "What do you want to do?\n"
 "\n"
@@ -250,7 +250,7 @@ msgid ""
 msgstr ""
 "Dè tha thu airson dèanamh?\n"
 "\n"
-"An aire: cleachd “p” gus an geama a chur ’na stad."
+"An aire: cleachd “%s” gus an geama a chur ’na stad."
 
 #: menu/ingamemenu/ingamepage.py:27
 msgid "back to the game"
