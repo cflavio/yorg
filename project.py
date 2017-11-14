@@ -3,8 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# #network cmdline arg for setting the port
-# #network support three players
 # #network at end of a multiplayer race wait for other cars
 # #network wheels' animations
 # #network physics (collisions to players' car)
@@ -12,6 +10,7 @@
 # #network print if the port is closed when creating the server
 # #network weapons
 # #network use xmpp for multiplayer
+# #network support three players
 
 
 # WAITING =====

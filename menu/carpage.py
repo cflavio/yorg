@@ -125,7 +125,7 @@ class CarPageGuiServer(CarPageGui):
         self.evaluate_starting()
 
     def evaluate_starting(self):
-        connections = self.eng.server.connections + [self]
+        connections = [conn[0] for conn in self.eng.server.connections] + [self]
         if not all(conn in self.current_cars for conn in connections): return
         packet = [NetMsgs.start_race, len(self.current_cars)]
 
