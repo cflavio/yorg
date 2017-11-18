@@ -136,19 +136,19 @@ class YorgLogic(GameLogic):
         dev = self.mdt.options['development']
         tuning = self.mdt.options['save']['tuning']
         car_tun = tuning[saved_car]
+        drivers = [self.__bld_drv(dct) for dct in self.mdt.options['save']['drivers']]
         self.season = Season(self.__season_props(
             self.mdt.gameprops, saved_car, [saved_car],
             self.mdt.options['settings']['cars_number'], False,
             car_tun.f_engine, car_tun.f_tires, car_tun.f_suspensions,
             dev['race_start_time'], dev['countdown_seconds']))
         self.season.load(self.mdt.options['save']['ranking'],
-                         tuning, self.mdt.options['save']['drivers'])
+                         tuning, drivers)
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start(False)
         track_path = self.mdt.options['save']['track']
         car_path = self.mdt.options['save']['car']
-        drivers = [self.__bld_drv(dct) for dct in self.mdt.options['save']['drivers']]
         self.mdt.fsm.demand('Race', track_path, car_path, [car_path], drivers)
 
     def __bld_drv(self, dct):
