@@ -3,14 +3,16 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# #network at end of a multiplayer race wait for other cars
-# #network wheels' animations
-# #network physics (collisions to players' car)
-# #network drivers' names on their cars during multiplayer matches
-# #network print if the port is closed when creating the server
-# #network weapons
-# #network use xmpp for multiplayer
-# #network support three players
+# change cars' hpr to loot-at vectors
+# drivers' names on their cars during multiplayer matches
+# at end start wait for other cars
+# at end wait for other cars
+# wheels' animations
+# physics (collisions to players' car)
+# damages
+# weapons
+# use xmpp for multiplayer
+# support three players
 
 
 # WAITING =====

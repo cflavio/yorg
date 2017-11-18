@@ -5,6 +5,7 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageEvent, PageFacade
 from yyagl.gameobject import GameObject
+from yyagl.engine.network.network import NetworkError
 from .thankspage import ThanksPageGui
 
 
@@ -47,11 +48,18 @@ class ServerPageGui(ThanksPageGui):
             scale=.12, pos=(0, .2), font=menu_args.font, fg=menu_args.text_fg)
         self.add_widget(self.conn_txt)
         scb = lambda: self.notify('on_push_page', 'trackpageserver', [self.props])
-        self.add_widget(DirectButton(
-            text=_('Start'), pos=(0, 1, -.5), command=scb, **menu_args.btn_args))
+        start_btn = DirectButton(
+            text=_('Start'), pos=(0, 1, -.5), command=scb, **menu_args.btn_args)
+        self.add_widget(start_btn)
         ThanksPageGui.bld_page(self)
         evt = self.mdt.event
-        self.eng.server.start(evt.process_msg, evt.process_connection)
+        try:
+            self.eng.server.start(evt.process_msg, evt.process_connection)
+        except NetworkError:
+            txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
+                               scale=.16, font=menu_args.font)
+            start_btn.disable()
+            self.eng.do_later(5, txt.destroy)
 
 
 class ServerPage(Page):

@@ -2,7 +2,7 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
 from yyagl.engine.gui.page import Page, PageEvent
-from yyagl.engine.network.client import ClientError
+from yyagl.engine.network.network import NetworkError
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
@@ -50,7 +50,7 @@ class ClientPageGui(ThanksPageGui):
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
                 font=menu_args.font, fg=menu_args.text_fg)
             self.add_widget(wait_txt)
-        except ClientError:
+        except NetworkError:
             txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
                                scale=.16, font=menu_args.font)
             self.eng.do_later(5, txt.destroy)
