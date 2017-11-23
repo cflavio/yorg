@@ -3,7 +3,7 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# change cars' hpr to loot-at vectors
+# define a const (= .1) for network rate
 # drivers' names on their cars during multiplayer matches
 # at end start wait for other cars
 # at end wait for other cars
@@ -22,6 +22,7 @@
 #     https://www.panda3d.org/forums/viewtopic.php?f=8&t=18798
 # (Panda3D 1.10) embed into a wx / pyqt window
 # (Panda3D 1.10) port to python 3
+# (Panda3D 1.10) log memory usage and alert on low memory systems
 # hardware instancing (gl_InstanceID requires 1.40)
 
 
