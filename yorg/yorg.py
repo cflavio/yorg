@@ -54,6 +54,7 @@ class Yorg(Game):
                 'win_orig': '',
                 'profiling': 0,
                 'pyprof_percall': 0,
+                'verbose': '',
                 'race_start_time': 3.5,
                 'countdown_seconds': 3}}
         opt_path = ''
@@ -78,7 +79,7 @@ class Yorg(Game):
             cursor_hotspot=(.1, .06))
         dev_cfg = DevCfg(mt_render=opt_dev['multithreaded_render'],
             shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
-            menu_joypad=opt_dev['menu_joypad'])
+            menu_joypad=opt_dev['menu_joypad'], verbose=opt_dev['verbose'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         init_lst = [
             [('fsm', YorgFsm, [self])],
