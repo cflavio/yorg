@@ -3,11 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# define a const (= .1) for network rate
+# support all tracks
 # drivers' names on their cars during multiplayer matches
-# at end start wait for other cars
-# at end wait for other cars
-# wheels' animations
 # physics (collisions to players' car)
 # damages
 # weapons
