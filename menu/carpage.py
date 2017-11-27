@@ -132,8 +132,8 @@ class CarPageGuiServer(CarPageGui):
         def process(k):
             '''Processes a car.'''
             return 'server' if k == self else k.get_address().get_ip_string()
-        for k, val in self.current_cars.items():
-            packet += [process(k), val]
+        for i, (k, val) in enumerate(self.current_cars.items()):
+            packet += [process(k), val, self.props.gameprops.drivers_info[i].name]
         self.eng.server.send(packet)
         self.eng.log_mgr.log('start race: ' + str(packet))
         curr_car = self.current_cars[self]

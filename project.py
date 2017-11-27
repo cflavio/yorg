@@ -3,11 +3,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# support all tracks
-# drivers' names on their cars during multiplayer matches
-# physics (collisions to players' car)
 # damages
 # weapons
+# physics (collisions to players' car)
+# add driver's selection
 # use xmpp for multiplayer
 # support three players
 

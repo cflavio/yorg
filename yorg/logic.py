@@ -102,6 +102,10 @@ class YorgLogic(GameLogic):
         self.mdt.fsm.demand('Race', track, car, cars, self.season.logic.drivers)
 
     def on_car_start_client(self, track, car, cars, packet):
+        drv_info = self.mdt.gameprops.drivers_info
+        for i, drv_name in enumerate(packet[4::3]):
+            drv_info[i] = drv_info[i]._replace(name=drv_name)
+        self.mdt.gameprops = self.mdt.gameprops._replace(drivers_info=drv_info)
         dev = self.mdt.options['development']
         self.season = SingleRaceSeason(self.__season_props(
             self.mdt.gameprops, car, cars,
