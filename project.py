@@ -3,8 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# damages
-# weapons
+# synchronize mounted weapons
+# weapons fired
 # physics (collisions to players' car)
 # add driver's selection
 # use xmpp for multiplayer
@@ -25,6 +25,7 @@
 # MAYBE/SOMEDAY =====
 
 # make scons for yyagl
+# uml create automatic class diagrams with fields and methods for each class
 # do automatic update (assets shared among platforms)
 # unit tests
 # django webapp for scores
