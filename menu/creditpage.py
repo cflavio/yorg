@@ -11,10 +11,9 @@ class CreditPageGui(ThanksPageGui):
         dev_str = [_('Code')+': Flavio Calva',
                    _('Art')+': Luca Quartero',
                    _('Audio')+': Jay Bachelor',
-                   _('Testing')+': Dario Murgia',
                    _('Translations')+': Wuzzy, GunChleoc']
         dev_str = '\n\n'.join(dev_str)
-        txt = OnscreenText(text=dev_str, pos=(0, .79), **menu_args.text_args)
+        txt = OnscreenText(text=dev_str, pos=(0, .56), **menu_args.text_args)
         btn = DirectButton(
             text=_('Supporters'), pos=(0, 1, -.4),
             command=lambda: self.notify('on_push_page', 'supporters'),
