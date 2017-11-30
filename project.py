@@ -3,12 +3,11 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# damage and mounted weapon via udp
 # weapons fired
 # physics (collisions to players' car)
 # add driver's selection
-# use xmpp for multiplayer
 # support three players
+# use xmpp for multiplayer
 
 
 # 0.10
