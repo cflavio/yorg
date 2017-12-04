@@ -76,10 +76,10 @@ class YorgFsm(Fsm):
     def enterRace(self, track_path='', car_path='', cars=[], drivers='', ranking=None):
         self.eng.log_mgr.log('entering Race state')
         base.ignore('escape-up')
-        if 'save' not in self.mdt.options.dct:
-            self.mdt.options['save'] = {}
         seas = self.mdt.logic.season
         if not seas.props.single_race:
+            if 'save' not in self.mdt.options.dct:
+                self.mdt.options['save'] = {}
             self.mdt.options['save']['track'] = track_path
             self.mdt.options['save']['car'] = car_path
             self.mdt.options['save']['drivers'] = [drv.to_dct() for drv in drivers]
