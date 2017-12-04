@@ -69,7 +69,8 @@ class Yorg(Game):
             win_size=self.options['settings']['resolution'],
             fullscreen=self.options['settings']['fullscreen'],
             antialiasing=self.options['settings']['antialiasing'],
-            fps=opt_dev['fps'], volume=self.options['settings']['volume'])
+            fps=opt_dev['fps'], shaders=self.options['settings']['shaders'],
+            volume=self.options['settings']['volume'])
         profiling_cfg = ProfilingCfg(profiling=opt_dev['profiling'],
             pyprof_percall=opt_dev['pyprof_percall'])
         lang_cfg = LangCfg(lang=self.options['settings']['lang'],

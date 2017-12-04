@@ -1,5 +1,6 @@
 # BUGS =====
 
+
 # TODO LIST =====
 
 # 0.9 (network)
@@ -11,6 +12,9 @@
 
 
 # 0.10
+# feedback: smoothing the camera movements
+# feedback: steering feels a bit restricted and overly punishing (i.e. easy to
+#   loose control)
 # more gravity and heavier cars
 # gui revamp
 # (feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
