@@ -81,7 +81,7 @@ env['LNG'] = lang_path
 env['NOINTERNET'] = args['nointernet']
 env['DEPLOYNG'] = args['deployng']
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
-env['LANGUAGES'] = ['it_IT', 'de_DE', 'gd']
+env['LANGUAGES'] = ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES']
 env['MODELS_DIR_PATH'] = 'assets/models'
 env['TRACKS_DIR_PATH'] = 'assets/models/tracks'
 env['CORES'] = int(args['cores'])
@@ -185,4 +185,4 @@ def process_lang(lang_code):
 
 if args['lang']:
     env.pot('assets/po/yorg.pot', files(['py'], ['venv', 'thirdparty']))
-    map(process_lang, ['it_IT', 'de_DE', 'gd'])
+    map(process_lang, ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES'])

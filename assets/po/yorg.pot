@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-10 11:43+0100\n"
+"POT-Creation-Date: 2017-12-05 12:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,14 +30,10 @@ msgid "Audio"
 msgstr ""
 
 #: menu/creditpage.py:14
-msgid "Testing"
-msgstr ""
-
-#: menu/creditpage.py:15
 msgid "Translations"
 msgstr ""
 
-#: menu/creditpage.py:19
+#: menu/creditpage.py:18
 msgid "Supporters"
 msgstr ""
 
@@ -198,15 +194,15 @@ msgstr ""
 msgid "Waiting for the server"
 msgstr ""
 
-#: menu/clientpage.py:54
+#: menu/clientpage.py:54 menu/serverpage.py:59
 msgid "Error"
 msgstr ""
 
-#: menu/serverpage.py:23
+#: menu/serverpage.py:24
 msgid "connection from "
 msgstr ""
 
-#: menu/serverpage.py:51
+#: menu/serverpage.py:52
 msgid "Start"
 msgstr ""
 
@@ -253,23 +249,23 @@ msgstr ""
 msgid "back to the main menu"
 msgstr ""
 
-#: yorg/yorg.py:109 yorg/fsm.py:111
+#: yorg/yorg.py:113 yorg/fsm.py:111
 msgid "Rome"
 msgstr ""
 
-#: yorg/yorg.py:109 yorg/fsm.py:111
+#: yorg/yorg.py:113 yorg/fsm.py:111
 msgid "Sheffield"
 msgstr ""
 
-#: yorg/yorg.py:109 yorg/fsm.py:112
+#: yorg/yorg.py:113 yorg/fsm.py:112
 msgid "Orlando"
 msgstr ""
 
-#: yorg/yorg.py:110 yorg/fsm.py:113
+#: yorg/yorg.py:114 yorg/fsm.py:113
 msgid "Nagano"
 msgstr ""
 
-#: yorg/yorg.py:110 yorg/fsm.py:113
+#: yorg/yorg.py:114 yorg/fsm.py:113
 msgid "Dubai"
 msgstr ""
 
@@ -302,7 +298,7 @@ msgstr ""
 msgid "supensions: they increase car's stability"
 msgstr ""
 
-#: yyagl/racing/car/logic.py:697
+#: yyagl/racing/car/logic.py:718
 msgid "wrong way"
 msgstr ""
 
@@ -355,7 +351,7 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: yyagl/racing/race/event.py:58
+#: yyagl/racing/race/event.py:65
 #, python-format
 msgid "press %s to respawn"
 msgstr ""

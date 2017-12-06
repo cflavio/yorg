@@ -11,7 +11,7 @@ class CreditPageGui(ThanksPageGui):
         dev_str = [_('Code')+': Flavio Calva',
                    _('Art')+': Luca Quartero',
                    _('Audio')+': Jay Bachelor',
-                   _('Translations')+': Wuzzy, GunChleoc']
+                   _('Translations')+': Wuzzy, GunChleoc, Leandro Vergara']
         dev_str = '\n\n'.join(dev_str)
         txt = OnscreenText(text=dev_str, pos=(0, .56), **menu_args.text_args)
         btn = DirectButton(

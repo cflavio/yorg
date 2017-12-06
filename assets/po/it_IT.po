@@ -30,14 +30,10 @@ msgid "Audio"
 msgstr "Audio"
 
 #: menu/creditpage.py:14
-msgid "Testing"
-msgstr "Testing"
-
-#: menu/creditpage.py:15
 msgid "Translations"
 msgstr "Traduzioni"
 
-#: menu/creditpage.py:19
+#: menu/creditpage.py:18
 msgid "Supporters"
 msgstr "Supporters"
 
@@ -198,15 +194,15 @@ msgstr "Connetti"
 msgid "Waiting for the server"
 msgstr "Aspettando il server"
 
-#: menu/clientpage.py:54
+#: menu/clientpage.py:54 menu/serverpage.py:59
 msgid "Error"
 msgstr "Errore"
 
-#: menu/serverpage.py:23
+#: menu/serverpage.py:24
 msgid "connection from "
 msgstr "connessione da "
 
-#: menu/serverpage.py:51
+#: menu/serverpage.py:52
 msgid "Start"
 msgstr "Avvia"
 
@@ -259,23 +255,23 @@ msgstr "torna al gioco"
 msgid "back to the main menu"
 msgstr "torna al menu principale"
 
-#: yorg/yorg.py:109 yorg/fsm.py:111
+#: yorg/yorg.py:113 yorg/fsm.py:111
 msgid "Rome"
 msgstr "Roma"
 
-#: yorg/yorg.py:109 yorg/fsm.py:111
+#: yorg/yorg.py:113 yorg/fsm.py:111
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:109 yorg/fsm.py:112
+#: yorg/yorg.py:113 yorg/fsm.py:112
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:110 yorg/fsm.py:113
+#: yorg/yorg.py:114 yorg/fsm.py:113
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:110 yorg/fsm.py:113
+#: yorg/yorg.py:114 yorg/fsm.py:113
 msgid "Dubai"
 msgstr "Dubai"
 
@@ -308,7 +304,7 @@ msgstr "gomme: aumentano l'aderenza'"
 msgid "supensions: they increase car's stability"
 msgstr "sospensioni: aumentano la stabilità"
 
-#: yyagl/racing/car/logic.py:697
+#: yyagl/racing/car/logic.py:718
 msgid "wrong way"
 msgstr "direzione sbagliata"
 
@@ -361,7 +357,7 @@ msgstr "Congratulazioni!"
 msgid "Continue"
 msgstr "Continua"
 
-#: yyagl/racing/race/event.py:58
+#: yyagl/racing/race/event.py:65
 #, python-format
 msgid "press %s to respawn"
 msgstr "premi %s per respawnare"
@@ -445,6 +441,9 @@ msgstr "gomme: +"
 #: yyagl/racing/race/gui/loading/loadingpage.py:105
 msgid "suspensions: +"
 msgstr "sospensioni: +"
+
+#~ msgid "Testing"
+#~ msgstr "Testing"
 
 #~ msgid "insert the server address"
 #~ msgstr "inserisci l'indirizzo del server"
