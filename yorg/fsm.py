@@ -153,6 +153,7 @@ class YorgFsm(Fsm):
 
     def enterExit(self):
         if not self.mdt.options['development']['show_exit']:
+            self.eng.xmpp.destroy()
             sys_exit()
         self.__exit_menu = ExitMenu(self.mdt.gameprops.menu_args)
         base.accept('escape-up', self.demand, ['Menu'])

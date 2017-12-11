@@ -56,7 +56,9 @@ class Yorg(Game):
                 'verbose': '',
                 'verbose_log': 0,
                 'race_start_time': 3.5,
-                'countdown_seconds': 3}}
+                'countdown_seconds': 3,
+                'xmpp_usr': '',
+                'xmpp_pwd': ''}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows

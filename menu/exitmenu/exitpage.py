@@ -38,6 +38,7 @@ class ExitPageGui(PageGui):
     def on_end(visit):
         if visit:
             ExitPageGui.eng.open_browser('http://www.ya2.it')
+        ExitPageGui.eng.xmpp.destroy()
         ExitPageGui.eng.do_later(.5, sys_exit)
 
 
