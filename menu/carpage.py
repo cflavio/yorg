@@ -127,7 +127,7 @@ class CarPageGuiServer(CarPageGui):
     def evaluate_starting(self):
         connections = [conn[0] for conn in self.eng.server.connections] + [self]
         if not all(conn in self.current_cars for conn in connections): return
-        packet = [NetMsgs.start_race, len(self.current_cars)]
+        packet = [NetMsgs.start_drivers, len(self.current_cars)]
 
         def process(k):
             '''Processes a car.'''
@@ -137,7 +137,8 @@ class CarPageGuiServer(CarPageGui):
         self.eng.server.send(packet)
         self.eng.log_mgr.log('start race: ' + str(packet))
         curr_car = self.current_cars[self]
-        self.notify('on_car_start_server', self.track_path, curr_car, self.current_cars.values(), packet)
+        page_args = [self.track_path, curr_car, self.props]
+        self.notify('on_push_page', 'driverpageserver', page_args)
 
     def process_srv(self, data_lst, sender):
         if data_lst[0] != NetMsgs.car_request: return
@@ -191,9 +192,10 @@ class CarPageGuiClient(CarPageGui):
             self.eng.log_mgr.log('car deselection: ' + car)
             btn = self._buttons(car)[0]
             btn.enable()
-        if data_lst[0] == NetMsgs.start_race:
-            self.eng.log_mgr.log('start_race: ' + str(data_lst))
-            self.notify('on_car_start_client', self.track_path, self.car, [self.car], data_lst)
+        if data_lst[0] == NetMsgs.start_drivers:
+            self.eng.log_mgr.log('start_drivers: ' + str(data_lst))
+            page_args = [self.track_path, self.car, self.props]
+            self.notify('on_push_page', 'driverpageclient', page_args)
 
 
 class CarPage(Page):

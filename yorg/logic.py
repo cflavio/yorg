@@ -102,17 +102,6 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
 
-    def on_car_start_server(self, track, car, cars, packet):
-        dev = self.mdt.options['development']
-        self.season = SingleRaceSeason(self.__season_props(
-            self.mdt.gameprops, car, cars,
-            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
-            dev['race_start_time'], dev['countdown_seconds']))
-        self.season.attach_obs(self.mdt.event.on_season_end)
-        self.season.attach_obs(self.mdt.event.on_season_cont)
-        self.season.start()
-        self.mdt.fsm.demand('Race', track, car, cars, self.season.logic.drivers)
-
     def on_car_start_client(self, track, car, cars, packet):
         drv_info = self.mdt.gameprops.drivers_info
         for i, drv_name in enumerate(packet[4::3]):
@@ -147,6 +136,24 @@ class YorgLogic(GameLogic):
             drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
         self.eng.do_later(2.0, self.mdt.fsm.demand,
                           ['Race', track, car, [car], self.season.logic.drivers])
+
+    def on_driver_selected_server(self, player_name, track, car, cars, packet):
+        dev = self.mdt.options['development']
+        self.season = SingleRaceSeason(self.__season_props(
+            self.mdt.gameprops, car, cars,
+            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+            dev['race_start_time'], dev['countdown_seconds']))
+        self.season.attach_obs(self.mdt.event.on_season_end)
+        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.start()
+        self.mdt.options['settings']['player_name'] = player_name
+        self.mdt.gameprops = self.mdt.gameprops._replace(player_name=player_name)
+        self.mdt.options.store()
+        for i, drv in enumerate(self.season.logic.drivers):
+            dinfo = self.mdt.gameprops.drivers_info[i]
+            drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
+        self.eng.do_later(2.0, self.mdt.fsm.demand,
+                          ['Race', track, car, cars, self.season.logic.drivers])
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']

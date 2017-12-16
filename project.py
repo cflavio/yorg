@@ -6,7 +6,6 @@
 # 0.9 (network)
 # weapons fired
 # physics (collisions to players' car)
-# add driver's selection
 # use xmpp for multiplayer
 # for 1.9 do an option for storing the password
 # test three players
@@ -28,7 +27,7 @@
 
 # (Panda3D 1.10) python-keyring for xmpp's credentials
 # (Panda3D 1.10) joypad
-# (Panda3D 1.10) uncomment sleekxmpp/xmlstream/cert.py line 6
+# (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # hardware instancing (gl_InstanceID requires 1.40)
 
 

@@ -35,10 +35,10 @@ class YorgFsm(Fsm):
         methods = [self.mdt.logic.on_input_back,
                    self.mdt.logic.on_options_back,
                    self.mdt.logic.on_car_selected,
-                   self.mdt.logic.on_car_start_server,
                    self.mdt.logic.on_car_start_client,
                    self.mdt.logic.on_car_selected_season,
                    self.mdt.logic.on_driver_selected,
+                   self.mdt.logic.on_driver_selected_server,
                    self.mdt.logic.on_continue]
         map(self.__menu.attach_obs, methods)
         self.__menu.attach_obs(self.demand, rename='on_exit', args=['Exit'])

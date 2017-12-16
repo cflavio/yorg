@@ -7,7 +7,7 @@ from .serverpage import ServerPage
 from .clientpage import ClientPage
 from .trackpage import TrackPage, TrackPageServer
 from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
-from .driverpage import DriverPage
+from .driverpage import DriverPage, DriverPageServer, DriverPageClient
 from .optionpage import OptionPage
 from .inputpage import InputPage
 from .creditpage import CreditPage
@@ -56,17 +56,24 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'carpageserver':
             self.eng.log('car page server')
             page = CarPageServer(args[0], self.mdt.track)
-            page.gui.attach(self.on_car_start_server)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             self.eng.log('car page client')
             page = CarPageClient(args[0], self.mdt.track)
             page.gui.attach(self.on_car_selected)
-            page.gui.attach(self.on_car_start_client)
         if page_code == 'driver_page':
             self.eng.log('driver page')
             page = DriverPage(args[0], args[1], args[2])
             page.gui.attach(self.on_driver_selected)
+        if page_code == 'driverpageserver':
+            self.eng.log('driver page server')
+            page = DriverPageServer(args[0], args[1], args[2])
+            page.gui.attach(self.on_driver_selected_server)
+        if page_code == 'driverpageclient':
+            self.eng.log('driver page client')
+            page = DriverPageClient(args[0], args[1], args[2])
+            page.gui.attach(self.on_driver_selected)
+            page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
             self.eng.log('options')
             page = OptionPage(self.mdt.gui.menu_args, args[0])
@@ -95,8 +102,8 @@ class YorgMenuLogic(MenuLogic):
     def on_car_selected(self, car):
         self.mdt.gui.notify('on_car_selected', car)
 
-    def on_car_start_server(self, track, car, cars, packet):
-        self.mdt.gui.notify('on_car_start_server', track, car, cars, packet)
+    def on_driver_selected_server(self, name, track, car, cars, packet):
+        self.mdt.gui.notify('on_driver_selected_server', name, track, car, cars, packet)
 
     def on_car_start_client(self, track, car, cars, packet):
         self.mdt.gui.notify('on_car_start_client', track, car, cars, packet)

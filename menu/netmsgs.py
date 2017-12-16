@@ -8,4 +8,6 @@ class NetMsgs(object):
     car_deny = 3
     car_selection = 4
     car_deselection = 5
-    start_race = 6
+    start_drivers = 6
+    driver_selection = 7
+    start_race = 8

@@ -9,6 +9,7 @@ from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
 from yorg.thanksnames import ThanksNames
+from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
 
@@ -162,6 +163,97 @@ class DriverPageGui(ThanksPageGui):
         PageGui.destroy(self)
 
 
+class DriverPageServerGui(DriverPageGui):
+
+    def bld_page(self):
+        DriverPageGui.bld_page(self)
+        self.eng.server.register_cb(self.process_srv)
+        self.current_drivers = []
+
+    def on_click(self, i):
+        self.eng.log('selected driver ' + str(i))
+        gprops = self.props.gameprops
+        txt_path = gprops.drivers_img.path_sel
+        self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
+        self.widgets[-1]['state'] = DISABLED
+        self.enable_buttons(False)
+        taskMgr.remove(self.update_tsk)
+        self.current_drivers += [self]
+        cars = gprops.cars_names[:]
+        car_idx = cars.index(self.mdt.car)
+        cars.remove(self.mdt.car)
+        shuffle(cars)
+        drv_idx = range(8)
+        drv_idx.remove(i)
+        shuffle(drv_idx)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(img_idx=i)
+        nname = self.ent.get()
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(name=nname)
+        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(img_idx=car_idx)
+        self.evaluate_starting()
+
+    def evaluate_starting(self):
+        connections = [conn[0] for conn in self.eng.server.connections] + [self]
+        if not all(conn in self.current_drivers for conn in connections): return
+        packet = [NetMsgs.start_race, len(self.current_drivers)]
+
+        def process(k):
+            '''Processes a car.'''
+            return 'server' if k == self else k.get_address().get_ip_string()
+        gprops = self.props.gameprops
+        for i, k in enumerate(self.current_drivers):
+            packet += [process(k), gprops.cars_names[i], self.props.gameprops.drivers_info[i].name]
+        self.eng.server.send(packet)
+        self.eng.log_mgr.log('start race: ' + str(packet))
+        self.eng.log('drivers: ' + str(gprops.drivers_info))
+        self.notify('on_driver_selected_server', self.ent.get(), self.mdt.track, self.mdt.car, gprops.cars_names[:len(self.current_drivers)], packet)
+
+    def process_srv(self, data_lst, sender):
+        if data_lst[0] != NetMsgs.driver_selection: return
+        self.current_drivers += [sender]
+        car = data_lst[1]
+        driver_name = data_lst[2]
+        driver_id = data_lst[3]
+        driver_speed = data_lst[4]
+        driver_adherence = data_lst[5]
+        driver_stability = data_lst[6]
+        self.eng.log_mgr.log('driver selected: %s (%s, %s) ' % (driver_name, driver_id, car))
+        gprops = self.props.gameprops
+        cars = gprops.cars_names[:]
+        car_idx = cars.index(car)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(img_idx=driver_id)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(name=driver_name)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(speed=driver_speed)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(adherence=driver_adherence)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(stability=driver_stability)
+        self.evaluate_starting()
+
+
+class DriverPageClientGui(DriverPageGui):
+
+    def bld_page(self):
+        DriverPageGui.bld_page(self)
+        self.eng.client.register_cb(self.process_client)
+
+    def on_click(self, i):
+        self.eng.log('selected driver ' + str(i))
+        gprops = self.props.gameprops
+        txt_path = gprops.drivers_img.path_sel
+        self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
+        self.widgets[-1]['state'] = DISABLED
+        self.enable_buttons(False)
+        taskMgr.remove(self.update_tsk)
+        self.eng.client.send([
+            NetMsgs.driver_selection, self.mdt.car, self.ent.get(), i,
+            gprops.drivers_info[i].speed, gprops.drivers_info[i].adherence,
+            gprops.drivers_info[i].stability, self.eng.client.my_addr])
+
+    def process_client(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.start_race:
+            self.eng.log_mgr.log('start_race: ' + str(data_lst))
+            self.notify('on_car_start_client', self.mdt.track, self.mdt.car, [self.mdt.car], data_lst)
+
+
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
@@ -178,3 +270,11 @@ class DriverPage(Page):
     def destroy(self):
         GameObject.destroy(self)
         PageFacade.destroy(self)
+
+
+class DriverPageServer(DriverPage):
+    gui_cls = DriverPageServerGui
+
+
+class DriverPageClient(DriverPage):
+    gui_cls = DriverPageClientGui
