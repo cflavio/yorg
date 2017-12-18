@@ -7,7 +7,6 @@
 # weapons fired
 # physics (collisions to players' car)
 # use xmpp for multiplayer
-# for 1.9 do an option for storing the password
 # test three players
 
 
@@ -28,6 +27,7 @@
 # (Panda3D 1.10) python-keyring for xmpp's credentials
 # (Panda3D 1.10) joypad
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
+# python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
 
 

@@ -1,6 +1,5 @@
 from collections import namedtuple
 from yaml import load
-#from keyring import get_password, set_password
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
 from yyagl.racing.season.season import SingleRaceSeason, Season, SeasonProps
@@ -8,7 +7,6 @@ from yyagl.racing.driver.driver import Driver, DriverProps, DriverInfo
 from yyagl.racing.race.raceprops import RaceProps
 from menu.ingamemenu.menu import InGameMenu
 from .thanksnames import ThanksNames
-
 
 class YorgLogic(GameLogic):
 
@@ -18,16 +16,6 @@ class YorgLogic(GameLogic):
 
     def on_start(self):
         GameLogic.on_start(self)
-        if self.mdt.options['development']['xmpp_usr'] and self.mdt.options['development']['xmpp_pwd']:
-        #if self.mdt.options['development']['xmpp_usr']:
-            #pwd = get_password('ya2_rog', self.mdt.options['development']['xmpp_usr'])
-            #if not pwd:
-                pwd = self.mdt.options['development']['xmpp_pwd']
-                #set_password('ya2_rog', self.mdt.options['development']['xmpp_usr'], pwd)
-
-                self.eng.xmpp.start(self.mdt.options['development']['xmpp_usr'], pwd)
-            #self.eng.xmpp.start(self.mdt.options['development']['xmpp_usr'], self.mdt.options['development']['xmpp_pwd'])
-            #self.eng.xmpp.start(self.mdt.options['development']['xmpp_usr'], pwd)
 
         self.__process_default()
         dev = self.mdt.options['development']

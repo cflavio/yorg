@@ -5,6 +5,7 @@ from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
 from .serverpage import ServerPage
 from .clientpage import ClientPage
+from .loginpage import LogInPage
 from .trackpage import TrackPage, TrackPageServer
 from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
 from .driverpage import DriverPage, DriverPageServer, DriverPageClient
@@ -37,6 +38,9 @@ class YorgMenuLogic(MenuLogic):
             self.eng.log('client')
             page = ClientPage(args[0])
             page.event.attach(self.on_track_selected)
+        if page_code == 'login':
+            self.eng.log('login')
+            page = LogInPage(args[0])
         if page_code == 'single_race':
             self.eng.log('single race')
             page = TrackPage(args[0])
