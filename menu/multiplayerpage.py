@@ -1,5 +1,4 @@
 from keyring import get_password, set_password, set_keyring
-#from keyring_jeepney import Keyring
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
@@ -10,31 +9,11 @@ class MultiplayerPageGui(ThanksPageGui):
 
     def __init__(self, mdt, mp_props):
         self.props = mp_props
-        options = self.props.opt_file
-        if options['settings']['xmpp']['usr'] and options['settings']['xmpp']['pwd']:
-        #if options['settings']['xmpp']['usr']:
-            #if platform.startswith('linux'): set_keyring(Keyring())
-            #pwd = get_password('ya2_rog', options['settings']['xmpp']['usr'])
-            #if not pwd:
-                pwd = options['settings']['xmpp']['pwd']
-                #set_password('ya2_rog', options['settings']['xmpp']['usr'], pwd)
-            #self.eng.xmpp.start(options['settings']['xmpp']['usr'], pwd)
-                self.eng.xmpp.start(options['settings']['xmpp']['usr'], pwd, self.on_ok, self.on_ko)
         ThanksPageGui.__init__(self, mdt, mp_props.gameprops.menu_args)
-        if not (options['settings']['xmpp']['usr'] and options['settings']['xmpp']['pwd']):
-            self.on_ko()
 
     def show(self):
         ThanksPageGui.show(self)
-        self.rebuild_page()
-
-    def on_ok(self):
-        self.connected = True
-        self.rebuild_page()
-
-    def on_ko(self):
-        self.connected = False
-        self.rebuild_page()
+        self.bld_page()
 
     def on_logout(self):
         self.eng.xmpp.destroy()
@@ -44,8 +23,8 @@ class MultiplayerPageGui(ThanksPageGui):
         options.store()
         self._on_back()
 
-    def rebuild_page(self):
-        if self.connected or self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
+    def bld_page(self):
+        if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
             scb = lambda: self.notify('on_push_page', 'server', [self.props])
             ccb = lambda: self.notify('on_push_page', 'client', [self.props])
             menu_data = [
@@ -64,14 +43,12 @@ class MultiplayerPageGui(ThanksPageGui):
                              **self.props.gameprops.menu_args.btn_args)
                 for i, menu in enumerate(menu_data)]
         map(self.add_widget, widgets)
+        ThanksPageGui.bld_page(self)
 
     def on_login(self):
         self.transition_exit()
         self.widgets = []
         self.notify('on_push_page', 'login', [self.props])
-
-    def bld_page(self):
-        ThanksPageGui.bld_page(self)
 
 
 class MultiplayerPage(Page):

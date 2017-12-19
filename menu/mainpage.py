@@ -1,5 +1,7 @@
 from datetime import datetime
 from feedparser import parse
+#from keyring_jeepney import Keyring
+import argparse
 from panda3d.core import TextNode
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectLabel import DirectLabel
@@ -20,6 +22,33 @@ class YorgMainPageGui(MainPageGui):
         self.props = mainpage_props
         self.load_settings()
         MainPageGui.__init__(self, mdt, self.props.gameprops.menu_args)
+        options = self.props.opt_file
+        user = options['settings']['xmpp']['usr']
+        password = options['settings']['xmpp']['pwd']
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--user')
+        parser.add_argument('--pwd')
+        args = parser.parse_args()
+        if args.user and args.pwd:
+            user = args.user
+            password = args.pwd
+        if user and password:
+        #if user:
+            #if platform.startswith('linux'): set_keyring(Keyring())
+            #pwd = get_password('ya2_rog', user)
+            #if not pwd:
+                pwd = password
+                #set_password('ya2_rog', user, pwd)
+            #self.eng.xmpp.start(user, pwd)
+                self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko)
+        if not (user and password):
+            self.on_ko()
+
+    def on_ok(self):
+        self.eng.xmpp.send_connected()
+
+    def on_ko(self, msg):
+        pass
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
