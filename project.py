@@ -7,10 +7,17 @@
 # weapons fired
 # physics (collisions to players' car)
 # use xmpp for multiplayer
+# redirect xmpp callbacks in the main thread
+# tooltips
+# patroners' badge
+# section for the current match
+# users' scrolling
+# allow multiplayer only if the client is up-to-date
 # test three players
 
 
 # 0.10
+# add car helios
 # more gravity and heavier cars
 # feedback: steering feels a bit restricted and overly punishing (i.e. easy to
 #   loose control)

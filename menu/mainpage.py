@@ -21,6 +21,7 @@ class YorgMainPageGui(MainPageGui):
     def __init__(self, mdt, mainpage_props):
         self.props = mainpage_props
         self.load_settings()
+        self.conn_attempted = False
         MainPageGui.__init__(self, mdt, self.props.gameprops.menu_args)
         options = self.props.opt_file
         user = options['settings']['xmpp']['usr']
@@ -44,11 +45,37 @@ class YorgMainPageGui(MainPageGui):
         if not (user and password):
             self.on_ko()
 
-    def on_ok(self):
-        self.eng.xmpp.send_connected()
+    def show(self):
+        MainPageGui.show(self)
+        self.widgets[7]['text'] = self.get_label()
 
-    def on_ko(self, msg):
-        pass
+    def on_ok(self):
+        self.conn_attempted = True
+        self.widgets[7]['text'] = self.get_label()
+        self.eng.xmpp.send_connected()
+        self.notify('on_login')
+
+    def on_ko(self, msg=None):
+        self.conn_attempted = True
+        self.widgets[7]['text'] = self.get_label()
+
+    def on_logout(self):
+        self.eng.xmpp.disconnect()
+        options = self.props.opt_file
+        options['settings']['xmpp']['usr'] = ''
+        options['settings']['xmpp']['pwd'] = ''
+        options.store()
+        self.widgets[7]['text'] = self.get_label()
+        self.notify('on_logout')
+
+    def on_login(self):
+        self.notify('on_push_page', 'login', [self.props])
+
+    def on_loginout(self):
+        if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
+            self.on_logout()
+        elif self.conn_attempted:
+            self.on_login()
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
@@ -60,6 +87,14 @@ class YorgMainPageGui(MainPageGui):
         self.antialiasing = sett['antialiasing']
         self.cars_num = sett['cars_number']
         self.shaders = sett['shaders']
+
+    def get_label(self):
+        if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
+            return _('Log out' + ' \1small\1(%s)\2' % self.eng.xmpp.xmpp.boundjid.bare)
+        elif self.conn_attempted:
+            return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
+        return _('Connecting')
+
 
     def bld_page(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
@@ -74,27 +109,35 @@ class YorgMainPageGui(MainPageGui):
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
+            ('LogInOut', self.get_label(), self.on_loginout),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
-            DirectButton(text='', pos=(0, 1, .45-i*.23), command=menu[2],
+            DirectButton(text='', pos=(0, 1, .8-i*.23), command=menu[2],
                          **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(widgets):
             PageGui.transl_text(wdg, menu_data[i][0], menu_data[i][1])
         logo_img = OnscreenImage(
-            self.props.title_img, scale=(.8, 1, .8 * (380.0 / 772)),
-            parent=base.a2dTopRight, pos=(-.8, 1, -.4))
+            self.props.title_img, scale=(.64, 1, .64 * (380.0 / 772)),
+            parent=base.a2dTopLeft, pos=(.65, 1, -.32))
         widgets += [logo_img]
         widgets[-1].set_transparency(True)
         lab_args = self.props.gameprops.menu_args.label_args
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
         wip_lab = DirectLabel(
-            text='', pos=(.05, 1, -.15), parent=base.a2dTopLeft,
+            text='', pos=(.05, 1, -.76), parent=base.a2dTopLeft, text_wordwrap=10,
             text_align=TextNode.A_left, **lab_args)
         PageGui.transl_text(wip_lab, 'Note: the game is work-in-progress',
                             _('Note: the game is work-in-progress'))
-        self.widgets += [wip_lab]
+        lab_args['scale'] = .046
+        lab_args['text_fg'] = self.props.gameprops.menu_args.text_bg
+        users_lab = DirectLabel(
+            text='', pos=(-.65, 1, -.06), parent=base.a2dTopRight,
+            text_align=TextNode.A_left, **lab_args)
+        PageGui.transl_text(users_lab, 'Current online users:',
+                            _('Current online users:'))
+        self.widgets += [wip_lab, users_lab]
         map(self.add_widget, widgets)
         self.set_news()
         MainPageGui.bld_page(self)

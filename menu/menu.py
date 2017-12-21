@@ -41,6 +41,7 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'login':
             self.eng.log('login')
             page = LogInPage(args[0])
+            page.gui.attach(self.on_login)
         if page_code == 'single_race':
             self.eng.log('single race')
             page = TrackPage(args[0])
@@ -121,6 +122,9 @@ class YorgMenuLogic(MenuLogic):
     def on_continue(self):
         self.mdt.gui.notify('on_continue')
 
+    def on_login(self):
+        self.mdt.gui.notify('on_login')
+
 
 class YorgMenuGui(MenuGui):
 
@@ -129,8 +133,16 @@ class YorgMenuGui(MenuGui):
         # each page should callback the menu and it should spawn the next one
         MenuGui.__init__(self, mdt, menu_props.gameprops.menu_args)
         page = YorgMainPage(menu_props)
+        page.gui.attach(self.on_login)
+        page.gui.attach(self.on_logout)
         page.gui.attach(self.on_exit)
         self.eng.do_later(.01, lambda: self.mdt.logic.push_page(page))
+
+    def on_login(self):
+        self.notify('on_login')
+
+    def on_logout(self):
+        self.notify('on_logout')
 
     def on_exit(self):
         self.notify('on_exit')

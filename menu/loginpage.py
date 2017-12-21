@@ -54,6 +54,7 @@ class LogInPageGui(ThanksPageGui):
             self.props.opt_file['settings']['xmpp']['pwd'] = self.pwd_ent.get()
             self.props.opt_file.store()
         self._on_back()
+        self.notify('on_login')
 
     def on_ko(self, err):
         txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),

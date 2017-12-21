@@ -7,12 +7,18 @@ from yyagl.racing.driver.driver import Driver, DriverProps, DriverInfo
 from yyagl.racing.race.raceprops import RaceProps
 from menu.ingamemenu.menu import InGameMenu
 from .thanksnames import ThanksNames
+from menu.multiplayerfrm import MultiplayerFrm
 
 class YorgLogic(GameLogic):
 
     def __init__(self, mdt):
         GameLogic.__init__(self, mdt)
         self.season = None
+        self.eng.do_later(.01, self.init_mp_frm)
+
+    def init_mp_frm(self):
+        if not hasattr(self, 'mp_frm'):
+            self.mp_frm = MultiplayerFrm(self.mdt.gameprops.menu_args)
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -187,6 +193,14 @@ class YorgLogic(GameLogic):
             self.mdt.fsm.demand('Ranking')
         else:
             self.season.logic.notify('on_season_end', True)
+
+    def on_login(self):
+        self.init_mp_frm()
+        self.eng.xmpp.send_connected()
+        self.mp_frm.on_users()
+
+    def on_logout(self):
+        self.mp_frm.on_users()
 
     @staticmethod
     def sign_cb(parent):

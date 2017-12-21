@@ -15,40 +15,18 @@ class MultiplayerPageGui(ThanksPageGui):
         ThanksPageGui.show(self)
         self.bld_page()
 
-    def on_logout(self):
-        self.eng.xmpp.destroy()
-        options = self.props.opt_file
-        options['settings']['xmpp']['usr'] = ''
-        options['settings']['xmpp']['pwd'] = ''
-        options.store()
-        self._on_back()
-
     def bld_page(self):
-        if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
-            scb = lambda: self.notify('on_push_page', 'server', [self.props])
-            ccb = lambda: self.notify('on_push_page', 'client', [self.props])
-            menu_data = [
-                ('Server', scb),
-                ('Client', ccb),
-                (_('Log-out'), self.on_logout)]
-            widgets = [
-                DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                             **self.props.gameprops.menu_args.btn_args)
-                for i, menu in enumerate(menu_data)]
-        else:
-            menu_data = [
-                (_('Log-in'), self.on_login)]
-            widgets = [
-                DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                             **self.props.gameprops.menu_args.btn_args)
-                for i, menu in enumerate(menu_data)]
+        scb = lambda: self.notify('on_push_page', 'server', [self.props])
+        ccb = lambda: self.notify('on_push_page', 'client', [self.props])
+        menu_data = [
+            ('Server', scb),
+            ('Client', ccb)]
+        widgets = [
+            DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
+                         **self.props.gameprops.menu_args.btn_args)
+            for i, menu in enumerate(menu_data)]
         map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
-
-    def on_login(self):
-        self.transition_exit()
-        self.widgets = []
-        self.notify('on_push_page', 'login', [self.props])
 
 
 class MultiplayerPage(Page):
