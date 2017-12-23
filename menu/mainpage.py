@@ -11,53 +11,56 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import PageGui
+from yyagl.engine.logic import VersionChecker
 from yyagl.gameobject import GameObject
 from .multiplayerpage import MultiplayerPage
 from .optionpage import OptionPageProps
 
 
-class YorgMainPageGui(MainPageGui):
+class YorgMainPageGui(MainPageGui, ):
 
     def __init__(self, mdt, mainpage_props):
         self.props = mainpage_props
         self.load_settings()
         self.conn_attempted = False
+        self.ver_check = VersionChecker()
         MainPageGui.__init__(self, mdt, self.props.gameprops.menu_args)
-        options = self.props.opt_file
-        user = options['settings']['xmpp']['usr']
-        password = options['settings']['xmpp']['pwd']
-        parser = argparse.ArgumentParser()
-        parser.add_argument('--user')
-        parser.add_argument('--pwd')
-        args = parser.parse_args()
-        if args.user and args.pwd:
-            user = args.user
-            password = args.pwd
-        if user and password:
-        #if user:
-            #if platform.startswith('linux'): set_keyring(Keyring())
-            #pwd = get_password('ya2_rog', user)
-            #if not pwd:
-                pwd = password
-                #set_password('ya2_rog', user, pwd)
-            #self.eng.xmpp.start(user, pwd)
-                self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko)
-        if not (user and password):
-            self.on_ko()
+        if self.ver_check.is_uptodate():
+            options = self.props.opt_file
+            user = options['settings']['xmpp']['usr']
+            password = options['settings']['xmpp']['pwd']
+            parser = argparse.ArgumentParser()
+            parser.add_argument('--user')
+            parser.add_argument('--pwd')
+            args = parser.parse_args()
+            if args.user and args.pwd:
+                user = args.user
+                password = args.pwd
+            if user and password:
+            #if user:
+                #if platform.startswith('linux'): set_keyring(Keyring())
+                #pwd = get_password('ya2_rog', user)
+                #if not pwd:
+                    pwd = password
+                    #set_password('ya2_rog', user, pwd)
+                #self.eng.xmpp.start(user, pwd)
+                    self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko)
+            if not (user and password):
+                self.on_ko()
 
     def show(self):
         MainPageGui.show(self)
-        self.widgets[7]['text'] = self.get_label()
+        self.widgets[6]['text'] = self.get_label()
 
     def on_ok(self):
         self.conn_attempted = True
-        self.widgets[7]['text'] = self.get_label()
+        self.widgets[6]['text'] = self.get_label()
         self.eng.xmpp.send_connected()
         self.notify('on_login')
 
     def on_ko(self, msg=None):
         self.conn_attempted = True
-        self.widgets[7]['text'] = self.get_label()
+        self.widgets[6]['text'] = self.get_label()
 
     def on_logout(self):
         self.eng.xmpp.disconnect()
@@ -65,7 +68,7 @@ class YorgMainPageGui(MainPageGui):
         options['settings']['xmpp']['usr'] = ''
         options['settings']['xmpp']['pwd'] = ''
         options.store()
-        self.widgets[7]['text'] = self.get_label()
+        self.widgets[6]['text'] = self.get_label()
         self.notify('on_logout')
 
     def on_login(self):
@@ -89,12 +92,13 @@ class YorgMainPageGui(MainPageGui):
         self.shaders = sett['shaders']
 
     def get_label(self):
+        if not self.ver_check.is_uptodate():
+            return _('Not up-to-date')
         if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
             return _('Log out' + ' \1small\1(%s)\2' % self.eng.xmpp.xmpp.boundjid.bare)
         elif self.conn_attempted:
             return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
         return _('Connecting')
-
 
     def bld_page(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
@@ -109,7 +113,7 @@ class YorgMainPageGui(MainPageGui):
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
-            ('LogInOut', self.get_label(), self.on_loginout),
+            ('Not up-to-date', self.get_label(), self.on_loginout),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
             DirectButton(text='', pos=(0, 1, .8-i*.23), command=menu[2],
@@ -130,17 +134,12 @@ class YorgMainPageGui(MainPageGui):
             text_align=TextNode.A_left, **lab_args)
         PageGui.transl_text(wip_lab, 'Note: the game is work-in-progress',
                             _('Note: the game is work-in-progress'))
-        lab_args['scale'] = .046
-        lab_args['text_fg'] = self.props.gameprops.menu_args.text_bg
-        users_lab = DirectLabel(
-            text='', pos=(-.65, 1, -.06), parent=base.a2dTopRight,
-            text_align=TextNode.A_left, **lab_args)
-        PageGui.transl_text(users_lab, 'Current online users:',
-                            _('Current online users:'))
-        self.widgets += [wip_lab, users_lab]
+        self.widgets += [wip_lab]
         map(self.add_widget, widgets)
         self.set_news()
         MainPageGui.bld_page(self)
+        if not self.ver_check.is_uptodate():
+            self.widgets[6]['state'] = DISABLED
 
     def on_options(self):
         self.load_settings()
@@ -210,6 +209,10 @@ class YorgMainPageGui(MainPageGui):
             return unicode(_str)
         except UnicodeDecodeError:
             return ''
+
+    def destroy(self):
+        self.ver_check.destroy()
+        MainPageGui.destroy(self)
 
 
 class YorgMainPage(MainPage):

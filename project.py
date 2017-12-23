@@ -6,13 +6,8 @@
 # 0.9 (network)
 # weapons fired
 # physics (collisions to players' car)
-# use xmpp for multiplayer
-# redirect xmpp callbacks in the main thread
-# tooltips
 # patroners' badge
-# section for the current match
-# users' scrolling
-# allow multiplayer only if the client is up-to-date
+# redirect xmpp callbacks in the main thread
 # test three players
 
 
