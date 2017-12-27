@@ -1,4 +1,3 @@
-from sleekxmpp.jid import JID
 from direct.gui.DirectGuiGlobals import ENTER, EXIT, FLAT
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectFrame import DirectFrame
@@ -10,6 +9,12 @@ from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.engine.gui.page import PageGui
 from yyagl.observer import Subject
 from yyagl.engine.logic import VersionChecker
+
+
+try:
+    from sleekxmpp.jid import JID
+except ImportError:  # sleekxmpp requires openssl 1.0.2
+    print 'OpenSSL 1.0.2 not detected'
 
 
 class UserFrm(Subject):

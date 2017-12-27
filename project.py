@@ -4,7 +4,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# weapons fired
+# weapons fired (rockets)
+# weapons fired (mine)
 # physics (collisions to players' car)
 # patroners' badge
 # redirect xmpp callbacks in the main thread
