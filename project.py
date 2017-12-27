@@ -4,9 +4,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# weapons fired (rockets)
 # weapons fired (mine)
+# manage multiple weapons e.g. drop two mines then collect and fire a rocket
 # physics (collisions to players' car)
+# physics for weapons
 # patroners' badge
 # redirect xmpp callbacks in the main thread
 # test three players
