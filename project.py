@@ -8,7 +8,6 @@
 # physics (collisions to players' car)
 # physics for weapons
 # patroners' badge
-# redirect xmpp callbacks in the main thread
 # test three players
 
 
