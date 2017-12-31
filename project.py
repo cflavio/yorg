@@ -4,6 +4,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# bug: fire when you haven't a weapon
+# optimize invite's gui
+# do a rapid start for network
+# do a command line option for window's origin
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket
 # physics (collisions to players' car)
 # physics for weapons
@@ -14,6 +18,7 @@
 # 0.10
 # add car helios
 # more gravity and heavier cars
+# softer suspensions
 # feedback: steering feels a bit restricted and overly punishing (i.e. easy to
 #   loose control)
 # try to reduce adherence as soon as you turn, then restore it
