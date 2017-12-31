@@ -1,3 +1,4 @@
+import argparse
 from collections import namedtuple
 from sys import platform
 from os.path import join, exists
@@ -67,7 +68,13 @@ class Yorg(Game):
             join(opt_path, 'options.yml') if opt_path else 'options.yml',
             default_opt)
         opt_dev = self.options['development']
-        gui_cfg = GuiCfg(win_title='Yorg', win_orig=opt_dev['win_orig'],
+        win_orig = opt_dev['win_orig']
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--win_orig')
+        args = parser.parse_args()
+        if args.win_orig:
+            win_orig = args.win_orig
+        gui_cfg = GuiCfg(win_title='Yorg', win_orig=win_orig,
             win_size=self.options['settings']['resolution'],
             fullscreen=self.options['settings']['fullscreen'],
             antialiasing=self.options['settings']['antialiasing'],
