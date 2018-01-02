@@ -32,6 +32,7 @@ class YorgMainPageGui(MainPageGui, ):
             parser = argparse.ArgumentParser()
             parser.add_argument('--user')
             parser.add_argument('--pwd')
+            parser.add_argument('--win_orig')
             args = parser.parse_args()
             if args.user and args.pwd:
                 user = args.user
