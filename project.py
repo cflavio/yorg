@@ -1,11 +1,11 @@
 # BUGS =====
 
-
 # TODO LIST =====
 
 # 0.9 (network)
 # optimize invite's gui
 # patroners' badge
+# do a message box in the bottom with vertical side decorators
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket
