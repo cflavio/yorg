@@ -8,6 +8,7 @@ from direct.gui.DirectGuiGlobals import DISABLED
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
+from yyagl.library.panda.shader import load_shader
 from yorg.thanksnames import ThanksNames
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
@@ -89,8 +90,9 @@ class DriverPageGui(ThanksPageGui):
         ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
         with open(ffilterpath) as ffilter:
             vert = ffilter.read()
-        shader = Shader.make(Shader.SL_GLSL, vert, frag)
-        self.sel_drv_img.set_shader(shader)
+        shader = load_shader(vert, frag)
+        if shader:
+            self.sel_drv_img.set_shader(shader)
         self.sel_drv_img.set_transparency(True)
         self.t_s = TextureStage('ts')
         self.t_s.set_mode(TextureStage.MDecal)
