@@ -24,12 +24,12 @@ class InputPageGui(ThanksPageGui):
         self.ibuttons = []
 
         joypad_lab = DirectLabel(
-            text=_('Use the joypad when present'), pos=(-.1, 1, .8),
+            text=_('Use the joypad when present'), pos=(-.3, 1, .8),
             text_align=TextNode.ARight, **menu_args.label_args)
         PageGui.transl_text(joypad_lab, 'Use the joypad when present',
                             _('Use the joypad when present'))
         self.joypad_cb = DirectCheckButton(
-            pos=(.09, 1, .82), text='',
+            pos=(-.11, 1, .82), text='',
             indicatorValue=self.joystick,
             indicator_frameColor=menu_args.text_fg,
             **menu_args.checkbtn_args)
@@ -50,7 +50,7 @@ class InputPageGui(ThanksPageGui):
         l_a = menu_args.label_args.copy()
         l_a['scale'] = .065
         self.hint_lab = DirectLabel(
-            text=_('Press the key to record it'), pos=(0, 1, -.6), **l_a)
+            text=_('Press the key to record it'), pos=(-.2, 1, -.6), **l_a)
         self.hint_lab.hide()
         widgets += [joypad_lab, self.joypad_cb, self.hint_lab]
         map(self.add_widget, widgets)
@@ -58,11 +58,11 @@ class InputPageGui(ThanksPageGui):
 
     def __add_lab(self, text, pos_z):
         return DirectLabel(
-            text=text, pos=(-.1, 1, pos_z), text_align=TextNode.ARight,
+            text=text, pos=(-.3, 1, pos_z), text_align=TextNode.ARight,
             **self.menu_args.label_args)
 
     def __add_btn(self, text, pos_z):
-        btn = DirectButton(pos=(.46, 1, pos_z), text=text,
+        btn = DirectButton(pos=(.26, 1, pos_z), text=text,
                            command=self.start_rec, **self.menu_args.btn_args)
         btn['extraArgs'] = [btn]
         self.ibuttons += [btn]

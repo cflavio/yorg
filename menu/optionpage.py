@@ -36,17 +36,17 @@ class OptionPageGui(ThanksPageGui):
         menu_args = self.menu_args
         widgets = [self.__add_lab('Language', _('Language'), .85)]
         self.lang_opt = DirectOptionMenu(
-            text='', items=self.eng.languages, pos=(.49, 1, .85),
+            text='', items=self.eng.languages, pos=(.29, 1, .85),
             initialitem=self.props.lang, command=self.__change_lang,
             **menu_args.option_args)
         widgets += [self.__add_lab('Volume', _('Volume'), .65)]
         self.vol_slider = DirectSlider(
-            pos=(.52, 0, .68), scale=.49, value=self.props.volume,
+            pos=(.32, 0, .68), scale=.49, value=self.props.volume,
             frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg,
             command=lambda: self.eng.set_volume(self.vol_slider['value']))
         widgets += [self.__add_lab('Fullscreen', _('Fullscreen'), .45)]
         self.fullscreen_cb = DirectCheckButton(
-            pos=(.12, 1, .47), text='', indicatorValue=self.props.fullscreen,
+            pos=(-.08, 1, .47), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_fg,
             command=lambda val: self.eng.toggle_fullscreen(),
             **menu_args.checkbtn_args)
@@ -56,28 +56,28 @@ class OptionPageGui(ThanksPageGui):
             text='',
             items=['x'.join([str(el_res) for el_res in res])
                    for res in self.eng.resolutions],
-            pos=(.49, 1, .25),
+            pos=(.29, 1, .25),
             initialitem='x'.join(str(res) for res in self.eng.closest_res),
             command=lambda res: self.eng.set_resolution(res2vec(res)),
             **menu_args.option_args)
         widgets += [self.__add_lab('Antialiasing', _('Antialiasing'), .05)]
         widgets += [
             self.__add_lab('(from the next execution)',
-                           _('(from the next execution)'), .05, .2,
-                           TextNode.ALeft)]
+                           _('(from the next execution)'), .05, 0,
+                           TextNode.ALeft, .06)]
         self.aa_cb = DirectCheckButton(
-            pos=(.12, 1, .08), text='', indicatorValue=self.props.antialiasing,
+            pos=(-.08, 1, .08), text='', indicatorValue=self.props.antialiasing,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
         self.shaders_cb = DirectCheckButton(
-            pos=(.12, 1, -.12), text='', indicatorValue=self.props.shaders,
+            pos=(-.08, 1, -.12), text='', indicatorValue=self.props.shaders,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Cars number', _('Cars number'), -.35)]
         self.cars_opt = DirectOptionMenu(
-            text='', items=[str(i) for i in range(1, 9)], pos=(.49, 1, -.35),
+            text='', items=[str(i) for i in range(1, 9)], pos=(.29, 1, -.35),
             initialitem=self.props.cars_num - 1, **menu_args.option_args)
         input_btn = DirectButton(
-            text='', pos=(0, 1, -.55), command=self.on_input_btn,
+            text='', pos=(-.2, 1, -.55), command=self.on_input_btn,
             **menu_args.btn_args)
         PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
 
@@ -89,10 +89,11 @@ class OptionPageGui(ThanksPageGui):
         self.__change_lang(self.eng.languages[idx])
         ThanksPageGui.bld_page(self)
 
-    def __add_lab(self, txt, txt_tr, pos_z, pos_x=-.1, align=TextNode.ARight):
+    def __add_lab(self, txt, txt_tr, pos_z, pos_x=-.3, align=TextNode.ARight, scale=None):
+        l_a = self.menu_args.label_args
+        l_a['scale'] = scale or l_a['scale']
         lab = DirectLabel(
-            text='', pos=(pos_x, 1, pos_z), text_align=align,
-            **self.menu_args.label_args)
+            text='', pos=(pos_x, 1, pos_z), text_align=align, **l_a)
         PageGui.transl_text(lab, txt, txt_tr)
         return lab
 

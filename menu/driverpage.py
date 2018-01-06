@@ -42,14 +42,14 @@ class DriverPageGui(ThanksPageGui):
     def bld_page(self):
         self.drv_info = self.props.gameprops.drivers_info
         menu_args = self.menu_args
-        widgets = [OnscreenText(text=_('Select the driver'), pos=(0, .8),
+        widgets = [OnscreenText(text=_('Select the driver'), pos=(-.2, .8),
                                 **menu_args.text_args)]
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        name = OnscreenText(_('Write your name:'), pos=(-.1, .6), scale=.06,
+        name = OnscreenText(_('Write your name:'), pos=(-.3, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
         self.ent = DirectEntry(
-            scale=.08, pos=(0, 1, .6), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=self.props.gameprops.player_name or _('your name'))
         self.ent.onscreenText['fg'] = menu_args.text_fg
@@ -57,7 +57,7 @@ class DriverPageGui(ThanksPageGui):
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
             drv_btn = ImgBtn(
-                scale=.24, pos=(-.75 + col * .5, 1, .25 - row * .5),
+                scale=.24, pos=(-.95 + col * .5, 1, .25 - row * .5),
                 frameColor=(0, 0, 0, 0),
                 image=self.props.gameprops.drivers_img[0] % idx,
                 command=self.on_click, extraArgs=[idx],
@@ -110,7 +110,7 @@ class DriverPageGui(ThanksPageGui):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         return OnscreenText(
-            txt + ':', pos=(-.95 + col * .5, pos_z - row * .5),
+            txt + ':', pos=(-1.15 + col * .5, pos_z - row * .5),
             scale=.046, align=TextNode.A_left, **t_a)
 
     def __add_txt(self, val, pos_z, psign, pcol, col, row):
@@ -118,7 +118,7 @@ class DriverPageGui(ThanksPageGui):
         del t_a['scale']
         return OnscreenText(
             '%s%s%%' % (psign(val), pcol(val)),
-            pos=(-.55 + col * .5, pos_z - row * .5), scale=.052,
+            pos=(-.75 + col * .5, pos_z - row * .5), scale=.052,
             align=TextNode.A_right, **t_a)
 
     def enable_buttons(self, enable):

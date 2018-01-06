@@ -14,7 +14,7 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mdt, trackpage_props.gameprops.menu_args)
 
     def bld_page(self):
-        txt = OnscreenText(text=_('Select the track'), pos=(0, .8),
+        txt = OnscreenText(text=_('Select the track'), pos=(-.2, .8),
                            **self.menu_args.text_args)
         self.add_widget(txt)
         t_a = self.menu_args.text_args.copy()
@@ -27,10 +27,10 @@ class TrackPageGui(ThanksPageGui):
             z_offset = 0 if len(gprops.season_tracks) > tracks_per_row else .35
             num_tracks = len(gprops.season_tracks) - tracks_per_row \
                 if row == 1 else min(tracks_per_row, len(gprops.season_tracks))
-            x_offset = .5 * (tracks_per_row - num_tracks)
+            x_offset = .3 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
                 scale=.3,
-                pos=(-1.0 + col * 1.0 + x_offset, 1, .4 - z_offset - row * .7),
+                pos=(-.8 + col * .6 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
                 image=gprops.track_img % gprops.season_tracks[
                     col + row * tracks_per_row],
@@ -39,7 +39,7 @@ class TrackPageGui(ThanksPageGui):
                 **self.menu_args.imgbtn_args)
             txt = OnscreenText(
                 gprops.tracks_tr()[col + row * tracks_per_row],
-                pos=(-1.0 + col * 1.0 + x_offset, .14 - z_offset - row * .7),
+                pos=(-.8 + col * .6 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
             map(self.add_widget, [btn, txt])
         ThanksPageGui.bld_page(self)

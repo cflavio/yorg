@@ -18,27 +18,28 @@ class LogInPageGui(ThanksPageGui):
         menu_args = self.menu_args
         t_a = menu_args.text_args.copy()
         #del t_a['scale']
-        jid_lab = OnscreenText(_('Your jabber id:'), pos=(-.05, .6),
+        jid_lab = OnscreenText(_('Your jabber id:'), pos=(-.25, .6),
                                align=TextNode.A_right, **t_a)
-        pwd_lab = OnscreenText(_('Your jabber password:'), pos=(-.05, .4),
+        pwd_lab = OnscreenText(_('Your jabber password:'), pos=(-.25, .4),
                                align=TextNode.A_right, **t_a)
         self.jid_ent = DirectEntry(
-            scale=.08, pos=(.05, 1, .6), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, initialText=_('your jabber id'))
         self.pwd_ent = DirectEntry(
-            scale=.08, pos=(.05, 1, .4), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .4), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True)
         self.jid_ent.onscreenText['fg'] = menu_args.text_fg
         self.pwd_ent.onscreenText['fg'] = menu_args.text_fg
         start_btn = DirectButton(
-            text=_('Log-in'), pos=(0, 1, .2), command=self.start,
+            text=_('Log-in'), pos=(-.2, 1, .2), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
         self.store_cb = DirectCheckButton(
-            pos=(0, 1, -.2), text=_('store the password'),
+            pos=(-.2, 1, -.2), text=_('store the password'),
             indicatorValue=False, indicator_frameColor=menu_args.text_fg,
             **menu_args.checkbtn_args)
+        t_a['scale'] = .06
         store_lab = OnscreenText(
-        _('(only if your computer is not shared with other people)'), pos=(0, -.4), **t_a)
+        _('(only if your computer is not shared with other people)'), pos=(-.2, -.32), **t_a)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
                    self.store_cb, store_lab]
         map(self.add_widget, widgets)
@@ -57,7 +58,7 @@ class LogInPageGui(ThanksPageGui):
         self.notify('on_login')
 
     def on_ko(self, err):
-        txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
+        txt = OnscreenText(_('Error'), pos=(-.2, -.05), fg=(1, 0, 0, 1),
                            scale=.16, font=self.menu_args.font)
         self.eng.do_later(5, txt.destroy)
 
