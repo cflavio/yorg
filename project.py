@@ -7,24 +7,23 @@
 # manage friends
 # do a message box with a top bar with left/right arrow for changing the room
 # do a rapid start for network
-# script for killing yorg by pid
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket
 # physics (collisions to players' car)
 # physics for weapons
 # test three players
-
-
-# 0.10
-# add car helios
 # more gravity and heavier cars
 # softer suspensions
 # feedback: steering feels a bit restricted and overly punishing (i.e. easy to
 #   loose control)
 # try to reduce adherence as soon as you turn, then restore it
+# feedback: in crossroads is unclear where to turn - add an indication?
+
+
+# 0.10
+# add car helios
 # gui revamp
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
-# feedback: in crossroads is unclear where to turn - add an indication?
 # feedback: couch multiplayer
 # feedback: add more cameras
 
