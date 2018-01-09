@@ -71,6 +71,8 @@ class Yorg(Game):
         win_orig = opt_dev['win_orig']
         parser = argparse.ArgumentParser()
         parser.add_argument('--win_orig')
+        parser.add_argument('--user')
+        parser.add_argument('--pwd')
         args = parser.parse_args()
         if args.win_orig:
             win_orig = args.win_orig

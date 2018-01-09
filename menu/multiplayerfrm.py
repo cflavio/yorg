@@ -206,6 +206,8 @@ class MultiplayerFrm(GameObject):
         DirectButton(text=_('Start'), pos=(.39, 1, .03), command=self.on_start,
                      parent=self.match_frm, **btn_args)
         self.eng.xmpp.attach(self.on_users)
+        self.eng.xmpp.attach(self.on_user_connected)
+        self.eng.xmpp.attach(self.on_user_disconnected)
         self.set_connection_label()
 
     def set_connection_label(self):
@@ -222,6 +224,12 @@ class MultiplayerFrm(GameObject):
     def trunc(self, name, lgt):
         if len(name) > lgt: return name[:lgt] + '...'
         return name
+
+    def on_user_connected(self, user):
+        self.on_users()
+
+    def on_user_disconnected(self, user):
+        self.on_users()
 
     def on_users(self):
         if not self.eng.xmpp.xmpp:

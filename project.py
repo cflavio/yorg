@@ -3,7 +3,7 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# connections and disconnections
+# keepalive: use domethodlaters in place of active polling
 # manage friends
 # do a message box with a top bar with left/right arrow for changing the room
 # do a rapid start for network

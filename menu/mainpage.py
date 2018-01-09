@@ -57,7 +57,7 @@ class YorgMainPageGui(MainPageGui, ):
         self.conn_attempted = True
         self.widgets[6]['text'] = self.get_label()
         self.eng.xmpp.send_connected()
-        self.notify('on_login')
+        #self.notify('on_login')
 
     def on_ko(self, msg=None):
         self.conn_attempted = True
