@@ -19,7 +19,7 @@ except ImportError:  # sleekxmpp requires openssl 1.0.2
 
 class UserFrm(Subject):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x=.65):
+    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x=.58):
         Subject.__init__(self)
         self.name_full = name_full
         self.menu_args = menu_args
@@ -108,7 +108,7 @@ class UserFrm(Subject):
 
 class UserFrmList(UserFrm):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
+    def __init__(self, name, name_full, is_supporter, is_friend, pos, parent, menu_args):
         UserFrm.__init__(self, name, name_full, is_supporter, pos, parent, menu_args)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
@@ -117,7 +117,7 @@ class UserFrmList(UserFrm):
         self.invite_btn = ImgBtn(
                 parent=self.frm,
                 scale=.024,
-                pos=(.72, 1, .01),
+                pos=(.65, 1, .01),
                 frameColor=(1, 1, 1, 1),
                 frameTexture='assets/images/gui/invite.txo',
                 command=self.on_invite,
@@ -133,6 +133,25 @@ class UserFrmList(UserFrm):
             text_wordwrap=10, **lab_args)
         self.invite_tooltip.set_bin('gui-popup', 10)
         self.invite_tooltip.hide()
+        self.friend_btn = ImgBtn(
+                parent=self.frm,
+                scale=.024,
+                pos=(.72, 1, .01),
+                frameColor=(1, 1, 1, 1),
+                frameTexture='assets/images/gui/friend.txo',
+                command=self.on_friend,
+                extraArgs=[self.name_full],
+                **menu_args.imgbtn_args)
+        self.friend_btn.bind(ENTER, self.on_enter_friend)
+        self.friend_btn.bind(EXIT, self.on_exit_friend)
+        self.friend_btn.hide()
+        self.friend_tooltip = DirectLabel(
+            text=_('add to xmpp friends'),
+            pos=self.friend_btn.get_pos() + (.01, 0, -.08), parent=self.frm,
+            text_bg=(.2, .2, .2, .8), text_align=TextNode.A_right,
+            text_wordwrap=10, **lab_args)
+        self.friend_tooltip.set_bin('gui-popup', 10)
+        self.friend_tooltip.hide()
 
     def show_invite_btn(self, show=True):
         self.__show_invite_btn = show
@@ -142,10 +161,13 @@ class UserFrmList(UserFrm):
         if self.invite_btn.is_hidden():
             self.invite_btn.show()
             if not self.__show_invite_btn: self.invite_btn.disable()
+        if self.friend_btn.is_hidden():
+            self.friend_btn.show()
 
     def on_exit(self, pos):
         UserFrm.on_exit(self, pos)
         if not self.invite_btn.is_hidden(): self.invite_btn.hide()
+        if not self.friend_btn.is_hidden(): self.friend_btn.hide()
 
     def on_invite(self, usr):
         print 'invite ' + usr.name
@@ -159,6 +181,19 @@ class UserFrmList(UserFrm):
     def on_exit_invite(self, pos):
         self.on_exit(pos)
         self.invite_tooltip.hide()
+
+    def on_friend(self, usr):
+        print 'friend ' + usr.name
+        self.friend_btn.disable()
+        self.notify('on_friend', usr)
+
+    def on_enter_friend(self, pos):
+        self.on_enter(pos)
+        self.friend_tooltip.show()
+
+    def on_exit_friend(self, pos):
+        self.on_exit(pos)
+        self.friend_tooltip.hide()
 
 
 class MultiplayerFrm(GameObject):
@@ -249,9 +284,17 @@ class MultiplayerFrm(GameObject):
             label_users = [lab.lab['text'] for lab in self.labels]
             for i, user in enumerate(self.eng.xmpp.users):
                 if self.trunc(user.name, 20) not in label_users:
-                    lab = UserFrmList(self.trunc(user.name, 20), user, user.is_supporter, (0, 1, top - .08 -.08 * i), self.frm.getCanvas(), self.menu_args)
+                    lab = UserFrmList(
+                        self.trunc(user.name, 20),
+                        user,
+                        user.is_supporter,
+                        self.eng.xmpp.is_friend(user.name),
+                        (0, 1, top - .08 -.08 * i),
+                        self.frm.getCanvas(),
+                        self.menu_args)
                     self.labels += [lab]
                     lab.attach(self.on_invite)
+                    lab.attach(self.on_friend)
                 else:
                     lab = [lab for lab in self.labels if lab.lab['text'] == self.trunc(user.name, 20)][0]
                     lab.show_invite_btn(invite_btn and user.name not in self.invited_users)
@@ -266,6 +309,11 @@ class MultiplayerFrm(GameObject):
         self.invited_users += [usr.name]
         self.on_users()  # refactor: it's slow - don't recreate but edit
                          # current entries
+
+    def on_friend(self, usr):
+        self.eng.xmpp.xmpp.send_presence_subscription(
+            usr.name,
+            pfrom=self.eng.xmpp.xmpp.boundjid.full)
 
     def on_start(self):
         print 'start'
