@@ -52,6 +52,67 @@ class FriendDialog(Subject):
         Subject.destroy(self)
 
 
+class MPBtn(object):
+
+    tooltip_align = TextNode.A_right
+    tooltip_offset = (.01, 0, -.08)
+
+    def __init__(self, parent, owner, menu_args, img_path, msg_btn_x, cb, usr, tooltip):
+        self.owner = owner
+        lab_args = menu_args.label_args
+        lab_args['scale'] = .046
+        lab_args['text_fg'] = menu_args.text_bg
+        self.btn = ImgBtn(
+                parent=parent,
+                scale=.024,
+                pos=(msg_btn_x, 1, .01),
+                frameColor=(1, 1, 1, 1),
+                frameTexture=img_path,
+                command=cb,
+                extraArgs=[usr],
+                **menu_args.imgbtn_args)
+        self.btn.bind(ENTER, self.on_enter)
+        self.btn.bind(EXIT, self.on_exit)
+        self.on_create()
+        self.tooltip = DirectLabel(
+            text=tooltip,
+            pos=self.btn.get_pos() + self.tooltip_offset, parent=parent,
+            text_wordwrap=10, text_bg=(.2, .2, .2, .8),
+            text_align=self.tooltip_align, **lab_args)
+        self.tooltip.set_bin('gui-popup', 10)
+        self.tooltip.hide()
+
+    def on_create(self):
+        self.btn.hide()
+
+    def is_hidden(self): return self.btn.is_hidden()
+
+    def show(self): return self.btn.show()
+
+    def hide(self): return self.btn.hide()
+
+    def enable(self): return self.btn.enable()
+
+    def disable(self): return self.btn.disable()
+
+    def on_enter(self, pos):
+        self.owner.on_enter(pos)
+        self.tooltip.show()
+
+    def on_exit(self, pos):
+        self.owner.on_exit(pos)
+        self.tooltip.hide()
+
+
+class StaticMPBtn(MPBtn):
+
+    tooltip_align = TextNode.A_left
+    tooltip_offset = (.01, 0, .05)
+
+    def on_create(self):
+        pass
+
+
 class UserFrm(Subject):
 
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x=.58):
@@ -72,44 +133,15 @@ class UserFrm(Subject):
         self.lab.bind(EXIT, self.on_exit)
         if is_supporter:
             self.lab.set_x(.03)
-            self.supp_btn = ImgBtn(
-                    parent=self.frm,
-                    scale=.024,
-                    pos=(.01, 1, .01),
-                    frameColor=(1, 1, 1, 1),
-                    frameTexture='assets/images/gui/medal.txo',
-                    **menu_args.imgbtn_args)
-            self.supp_btn.bind(ENTER, self.on_enter_supp)
-            self.supp_btn.bind(EXIT, self.on_exit_supp)
-            self.supp_tooltip = DirectLabel(
-                text=_('Supporter!'),
-                pos=self.supp_btn.get_pos() + (.01, 0, .05), parent=self.frm,
-                text_wordwrap=10, text_bg=(.2, .2, .2, .8),
-                text_align=TextNode.A_left, **lab_args)
-            self.supp_tooltip.set_bin('gui-popup', 10)
-            self.supp_tooltip.hide()
-        self.msg_btn = ImgBtn(
-                parent=self.frm,
-                scale=.024,
-                pos=(msg_btn_x, 1, .01),
-                frameColor=(1, 1, 1, 1),
-                frameTexture='assets/images/gui/message.txo',
-                command=self.on_msg,
-                extraArgs=[name],
-                **menu_args.imgbtn_args)
-        self.msg_btn.bind(ENTER, self.on_enter_msg)
-        self.msg_btn.bind(EXIT, self.on_exit_msg)
-        self.msg_btn.hide()
-        self.msg_tooltip = DirectLabel(
-            text=_('send a message to the user'),
-            pos=self.msg_btn.get_pos() + (.01, 0, -.08), parent=self.frm,
-            text_wordwrap=10, text_bg=(.2, .2, .2, .8),
-            text_align=TextNode.A_right, **lab_args)
-        self.msg_tooltip.set_bin('gui-popup', 10)
-        self.msg_tooltip.hide()
+            self.supp_btn = StaticMPBtn(
+                self.frm, self, menu_args, 'assets/images/gui/medal.txo',
+                .01, None, name_full, _('Supporter!'))
+        self.msg_btn = MPBtn(
+            self.frm, self, menu_args, 'assets/images/gui/message.txo',
+            msg_btn_x, self.on_msg, name_full, _('send a message to the user'))
 
     def on_msg(self, usr):
-        print 'message ' + usr
+        print 'message ' + usr.name
 
     def on_enter(self, pos):
         self.lab['text_fg'] = self.menu_args.text_fg
@@ -118,22 +150,6 @@ class UserFrm(Subject):
     def on_exit(self, pos):
         self.lab['text_fg'] = self.menu_args.text_bg
         if not self.msg_btn.is_hidden(): self.msg_btn.hide()
-
-    def on_enter_msg(self, pos):
-        self.on_enter(pos)
-        self.msg_tooltip.show()
-
-    def on_exit_msg(self, pos):
-        self.on_exit(pos)
-        self.msg_tooltip.hide()
-
-    def on_enter_supp(self, pos):
-        self.on_enter(pos)
-        self.supp_tooltip.show()
-
-    def on_exit_supp(self, pos):
-        self.on_exit(pos)
-        self.supp_tooltip.hide()
 
     def destroy(self):
         self.lab.destroy()
@@ -161,22 +177,9 @@ class UserFrmMe(UserFrm):
         self.lab.bind(EXIT, self.on_exit)
         if is_supporter:
             self.lab.set_x(.03)
-            self.supp_btn = ImgBtn(
-                    parent=self.frm,
-                    scale=.024,
-                    pos=(.01, 1, .01),
-                    frameColor=(1, 1, 1, 1),
-                    frameTexture='assets/images/gui/medal.txo',
-                    **menu_args.imgbtn_args)
-            self.supp_btn.bind(ENTER, self.on_enter_supp)
-            self.supp_btn.bind(EXIT, self.on_exit_supp)
-            self.supp_tooltip = DirectLabel(
-                text=_('Supporter!'),
-                pos=self.supp_btn.get_pos() + (.01, 0, .05), parent=self.frm,
-                text_wordwrap=10, text_bg=(.2, .2, .2, .8),
-                text_align=TextNode.A_left, **lab_args)
-            self.supp_tooltip.set_bin('gui-popup', 10)
-            self.supp_tooltip.hide()
+            self.supp_btn = StaticMPBtn(
+                self.frm, self, menu_args, 'assets/images/gui/medal.txo',
+                .01, None, name_full, _('Supporter!'))
 
     def on_enter(self, pos):
         self.lab['text_fg'] = self.menu_args.text_fg
@@ -193,65 +196,17 @@ class UserFrmList(UserFrm):
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_bg
         self.__show_invite_btn = True
-        self.invite_btn = ImgBtn(
-                parent=self.frm,
-                scale=.024,
-                pos=(.65, 1, .01),
-                frameColor=(1, 1, 1, 1),
-                frameTexture='assets/images/gui/invite.txo',
-                command=self.on_invite,
-                extraArgs=[self.name_full],
-                **menu_args.imgbtn_args)
-        self.invite_btn.bind(ENTER, self.on_enter_invite)
-        self.invite_btn.bind(EXIT, self.on_exit_invite)
-        self.invite_btn.hide()
-        self.invite_tooltip = DirectLabel(
-            text=_('invite the user for a match'),
-            pos=self.invite_btn.get_pos() + (.01, 0, -.08), parent=self.frm,
-            text_bg=(.2, .2, .2, .8), text_align=TextNode.A_right,
-            text_wordwrap=10, **lab_args)
-        self.invite_tooltip.set_bin('gui-popup', 10)
-        self.invite_tooltip.hide()
+        self.invite_btn = MPBtn(
+            self.frm, self, menu_args, 'assets/images/gui/invite.txo',
+            .65, self.on_invite, name_full, _('invite the user for a match'))
         if not is_friend:
-            self.friend_btn = ImgBtn(
-                    parent=self.frm,
-                    scale=.024,
-                    pos=(.72, 1, .01),
-                    frameColor=(1, 1, 1, 1),
-                    frameTexture='assets/images/gui/friend.txo',
-                    command=self.on_friend,
-                    extraArgs=[self.name_full],
-                    **menu_args.imgbtn_args)
-            self.friend_btn.bind(ENTER, self.on_enter_friend)
-            self.friend_btn.bind(EXIT, self.on_exit_friend)
-            self.friend_btn.hide()
-            self.friend_tooltip = DirectLabel(
-                text=_('add to xmpp friends'),
-                pos=self.friend_btn.get_pos() + (.01, 0, -.08), parent=self.frm,
-                text_bg=(.2, .2, .2, .8), text_align=TextNode.A_right,
-                text_wordwrap=10, **lab_args)
-            self.friend_tooltip.set_bin('gui-popup', 10)
-            self.friend_tooltip.hide()
+            self.friend_btn = MPBtn(
+                self.frm, self, menu_args, 'assets/images/gui/friend.txo',
+                .72, self.on_friend, name_full, _('add to xmpp friends'))
         else:
-            self.friend_btn = ImgBtn(
-                    parent=self.frm,
-                    scale=.024,
-                    pos=(.72, 1, .01),
-                    frameColor=(1, 1, 1, 1),
-                    frameTexture='assets/images/gui/kick.txo',
-                    command=self.on_unfriend,
-                    extraArgs=[self.name_full],
-                    **menu_args.imgbtn_args)
-            self.friend_btn.bind(ENTER, self.on_enter_friend)
-            self.friend_btn.bind(EXIT, self.on_exit_friend)
-            self.friend_btn.hide()
-            self.friend_tooltip = DirectLabel(
-                text=_('remove from xmpp friends'),
-                pos=self.friend_btn.get_pos() + (.01, 0, -.08), parent=self.frm,
-                text_bg=(.2, .2, .2, .8), text_align=TextNode.A_right,
-                text_wordwrap=10, **lab_args)
-            self.friend_tooltip.set_bin('gui-popup', 10)
-            self.friend_tooltip.hide()
+            self.friend_btn = MPBtn(
+                self.frm, self, menu_args, 'assets/images/gui/kick.txo',
+                .72, self.on_unfriend, name_full, _('remove from xmpp friends'))
 
     def show_invite_btn(self, show=True):
         self.__show_invite_btn = show
@@ -274,14 +229,6 @@ class UserFrmList(UserFrm):
         self.invite_btn.disable()
         self.notify('on_invite', usr)
 
-    def on_enter_invite(self, pos):
-        self.on_enter(pos)
-        self.invite_tooltip.show()
-
-    def on_exit_invite(self, pos):
-        self.on_exit(pos)
-        self.invite_tooltip.hide()
-
     def on_friend(self, usr):
         self.friend_btn.disable()
         self.notify('on_friend', usr)
@@ -290,22 +237,11 @@ class UserFrmList(UserFrm):
         self.friend_btn.disable()
         self.notify('on_unfriend', usr)
 
-    def on_enter_friend(self, pos):
-        self.on_enter(pos)
-        self.friend_tooltip.show()
-
-    def on_exit_friend(self, pos):
-        self.on_exit(pos)
-        self.friend_tooltip.hide()
-
 
 class UserFrmListMe(UserFrmMe):
 
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
         UserFrmMe.__init__(self, name, name_full, is_supporter, pos, parent, menu_args)
-        lab_args = menu_args.label_args
-        lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_bg
 
     def show_invite_btn(self, show=True):
         pass
@@ -325,44 +261,12 @@ class UserFrmListOut(UserFrm):
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_bg
         self.__show_invite_btn = True
-        self.invite_btn = ImgBtn(
-                parent=self.frm,
-                scale=.024,
-                pos=(.65, 1, .01),
-                frameColor=(1, 1, 1, 1),
-                frameTexture='assets/images/gui/invite.txo',
-                command=None,
-                extraArgs=[self.name_full],
-                **menu_args.imgbtn_args)
-        self.invite_btn.bind(ENTER, self.on_enter_invite)
-        self.invite_btn.bind(EXIT, self.on_exit_invite)
-        self.invite_btn.hide()
-        self.invite_tooltip = DirectLabel(
-            text=_("isn't playing yorg"),
-            pos=self.invite_btn.get_pos() + (.01, 0, -.08), parent=self.frm,
-            text_bg=(.2, .2, .2, .8), text_align=TextNode.A_right,
-            text_wordwrap=10, **lab_args)
-        self.invite_tooltip.set_bin('gui-popup', 10)
-        self.invite_tooltip.hide()
-        self.friend_btn = ImgBtn(
-                parent=self.frm,
-                scale=.024,
-                pos=(.72, 1, .01),
-                frameColor=(1, 1, 1, 1),
-                frameTexture='assets/images/gui/kick.txo',
-                command=self.on_unfriend,
-                extraArgs=[self.name_full],
-                **menu_args.imgbtn_args)
-        self.friend_btn.bind(ENTER, self.on_enter_friend)
-        self.friend_btn.bind(EXIT, self.on_exit_friend)
-        self.friend_btn.hide()
-        self.friend_tooltip = DirectLabel(
-            text=_('remove from xmpp friends'),
-            pos=self.friend_btn.get_pos() + (.01, 0, -.08), parent=self.frm,
-            text_bg=(.2, .2, .2, .8), text_align=TextNode.A_right,
-            text_wordwrap=10, **lab_args)
-        self.friend_tooltip.set_bin('gui-popup', 10)
-        self.friend_tooltip.hide()
+        self.invite_btn = MPBtn(
+            self.frm, self, menu_args, 'assets/images/gui/invite.txo',
+            .65, None, name_full, _("isn't playing yorg"))
+        self.friend_btn = MPBtn(
+            self.frm, self, menu_args, 'assets/images/gui/kick.txo',
+            .72, self.on_unfriend, name_full, _('remove from xmpp friends'))
 
     def show_invite_btn(self, show=True):
         self.__show_invite_btn = show
@@ -380,25 +284,9 @@ class UserFrmListOut(UserFrm):
         if not self.invite_btn.is_hidden(): self.invite_btn.hide()
         if not self.friend_btn.is_hidden(): self.friend_btn.hide()
 
-    def on_enter_invite(self, pos):
-        self.on_enter(pos)
-        self.invite_tooltip.show()
-
-    def on_exit_invite(self, pos):
-        self.on_exit(pos)
-        self.invite_tooltip.hide()
-
     def on_unfriend(self, usr):
         self.friend_btn.disable()
         self.notify('on_unfriend', usr)
-
-    def on_enter_friend(self, pos):
-        self.on_enter(pos)
-        self.friend_tooltip.show()
-
-    def on_exit_friend(self, pos):
-        self.on_exit(pos)
-        self.friend_tooltip.hide()
 
 
 class MultiplayerFrm(GameObject):
@@ -552,7 +440,7 @@ class MultiplayerFrm(GameObject):
         idx = len(self.invited_users)
         x = .02 + .4 * (idx / 4)
         y = .38 -.08 * (idx % 4)
-        UserFrm(self.trunc(usr.name, 8), usr.name_full, usr.is_supporter, (x, 1, y), self.match_frm, self.menu_args, .32)
+        UserFrm(self.trunc(usr.name, 8), usr, usr.is_supporter, (x, 1, y), self.match_frm, self.menu_args, .32)
         self.invited_users += [usr.name]
         self.on_users()  # refactor: it's slow - don't recreate but edit
                          # current entries
