@@ -3,7 +3,9 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# manage friends
+# multiplayer gui's refactoring
+# use xmpp for presences (adding ya2_yorg to the roster)
+# replace clientxmpp with server xmppcomponent
 # do a message box with a top bar with left/right arrow for changing the room
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)
