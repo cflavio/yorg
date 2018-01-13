@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# multiplayer gui's refactoring
 # use xmpp for presences (adding ya2_yorg to the roster)
 # replace clientxmpp with server xmppcomponent
 # do a message box with a top bar with left/right arrow for changing the room

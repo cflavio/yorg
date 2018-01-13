@@ -63,27 +63,20 @@ class MPBtn(object):
         lab_args['scale'] = .046
         lab_args['text_fg'] = menu_args.text_bg
         self.btn = ImgBtn(
-                parent=parent,
-                scale=.024,
-                pos=(msg_btn_x, 1, .01),
-                frameColor=(1, 1, 1, 1),
-                frameTexture=img_path,
-                command=cb,
-                extraArgs=[usr],
-                **menu_args.imgbtn_args)
+            parent=parent, scale=.024, pos=(msg_btn_x, 1, .01),
+            frameColor=(1, 1, 1, 1), frameTexture=img_path, command=cb,
+            extraArgs=[usr], **menu_args.imgbtn_args)
         self.btn.bind(ENTER, self.on_enter)
         self.btn.bind(EXIT, self.on_exit)
         self.on_create()
         self.tooltip = DirectLabel(
-            text=tooltip,
-            pos=self.btn.get_pos() + self.tooltip_offset, parent=parent,
-            text_wordwrap=10, text_bg=(.2, .2, .2, .8),
+            text=tooltip, pos=self.btn.get_pos() + self.tooltip_offset,
+            parent=parent, text_wordwrap=10, text_bg=(.2, .2, .2, .8),
             text_align=self.tooltip_align, **lab_args)
         self.tooltip.set_bin('gui-popup', 10)
         self.tooltip.hide()
 
-    def on_create(self):
-        self.btn.hide()
+    def on_create(self): self.btn.hide()
 
     def is_hidden(self): return self.btn.is_hidden()
 
@@ -109,11 +102,10 @@ class StaticMPBtn(MPBtn):
     tooltip_align = TextNode.A_left
     tooltip_offset = (.01, 0, .05)
 
-    def on_create(self):
-        pass
+    def on_create(self): pass
 
 
-class UserFrm(Subject):
+class UserFrmMe(Subject):
 
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x=.58):
         Subject.__init__(self)
@@ -136,20 +128,10 @@ class UserFrm(Subject):
             self.supp_btn = StaticMPBtn(
                 self.frm, self, menu_args, 'assets/images/gui/medal.txo',
                 .01, None, name_full, _('Supporter!'))
-        self.msg_btn = MPBtn(
-            self.frm, self, menu_args, 'assets/images/gui/message.txo',
-            msg_btn_x, self.on_msg, name_full, _('send a message to the user'))
 
-    def on_msg(self, usr):
-        print 'message ' + usr.name
+    def on_enter(self, pos): self.lab['text_fg'] = self.menu_args.text_fg
 
-    def on_enter(self, pos):
-        self.lab['text_fg'] = self.menu_args.text_fg
-        if self.msg_btn.is_hidden(): self.msg_btn.show()
-
-    def on_exit(self, pos):
-        self.lab['text_fg'] = self.menu_args.text_bg
-        if not self.msg_btn.is_hidden(): self.msg_btn.hide()
+    def on_exit(self, pos): self.lab['text_fg'] = self.menu_args.text_bg
 
     def destroy(self):
         self.lab.destroy()
@@ -157,85 +139,23 @@ class UserFrm(Subject):
         Subject.destroy(self)
 
 
-class UserFrmMe(UserFrm):
+class UserFrm(UserFrmMe):
 
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x=.58):
-        Subject.__init__(self)
-        self.name_full = name_full
-        self.menu_args = menu_args
-        lab_args = menu_args.label_args
-        lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_bg
-        self.frm = DirectButton(
-            frameSize=(-.01, .79, .05, -.03), frameColor=(1, 1, 1, 0),
-            pos=pos, parent=parent)
-        self.frm.bind(ENTER, self.on_enter)
-        self.frm.bind(EXIT, self.on_exit)
-        self.lab = DirectLabel(text=name, pos=(0, 1, 0), parent=self.frm,
-                               text_align=TextNode.A_left, **lab_args)
-        self.lab.bind(ENTER, self.on_enter)
-        self.lab.bind(EXIT, self.on_exit)
-        if is_supporter:
-            self.lab.set_x(.03)
-            self.supp_btn = StaticMPBtn(
-                self.frm, self, menu_args, 'assets/images/gui/medal.txo',
-                .01, None, name_full, _('Supporter!'))
+        UserFrmMe.__init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x)
+        self.msg_btn = MPBtn(
+            self.frm, self, menu_args, 'assets/images/gui/message.txo',
+            msg_btn_x, self.on_msg, name_full, _('send a message to the user'))
+
+    def on_msg(self, usr): print 'message ' + usr.name
 
     def on_enter(self, pos):
-        self.lab['text_fg'] = self.menu_args.text_fg
+        UserFrmMe.on_enter(self, pos)
+        if self.msg_btn.is_hidden(): self.msg_btn.show()
 
     def on_exit(self, pos):
-        self.lab['text_fg'] = self.menu_args.text_bg
-
-
-class UserFrmList(UserFrm):
-
-    def __init__(self, name, name_full, is_supporter, is_friend, pos, parent, menu_args):
-        UserFrm.__init__(self, name, name_full, is_supporter, pos, parent, menu_args)
-        lab_args = menu_args.label_args
-        lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_bg
-        self.__show_invite_btn = True
-        self.invite_btn = MPBtn(
-            self.frm, self, menu_args, 'assets/images/gui/invite.txo',
-            .65, self.on_invite, name_full, _('invite the user for a match'))
-        if not is_friend:
-            self.friend_btn = MPBtn(
-                self.frm, self, menu_args, 'assets/images/gui/friend.txo',
-                .72, self.on_friend, name_full, _('add to xmpp friends'))
-        else:
-            self.friend_btn = MPBtn(
-                self.frm, self, menu_args, 'assets/images/gui/kick.txo',
-                .72, self.on_unfriend, name_full, _('remove from xmpp friends'))
-
-    def show_invite_btn(self, show=True):
-        self.__show_invite_btn = show
-
-    def on_enter(self, pos):
-        UserFrm.on_enter(self, pos)
-        if self.invite_btn.is_hidden():
-            self.invite_btn.show()
-            if not self.__show_invite_btn: self.invite_btn.disable()
-        if self.friend_btn.is_hidden():
-            self.friend_btn.show()
-
-    def on_exit(self, pos):
-        UserFrm.on_exit(self, pos)
-        if not self.invite_btn.is_hidden(): self.invite_btn.hide()
-        if not self.friend_btn.is_hidden(): self.friend_btn.hide()
-
-    def on_invite(self, usr):
-        print 'invite ' + usr.name
-        self.invite_btn.disable()
-        self.notify('on_invite', usr)
-
-    def on_friend(self, usr):
-        self.friend_btn.disable()
-        self.notify('on_friend', usr)
-
-    def on_unfriend(self, usr):
-        self.friend_btn.disable()
-        self.notify('on_unfriend', usr)
+        UserFrmMe.on_exit(self, pos)
+        if not self.msg_btn.is_hidden(): self.msg_btn.hide()
 
 
 class UserFrmListMe(UserFrmMe):
@@ -243,14 +163,7 @@ class UserFrmListMe(UserFrmMe):
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
         UserFrmMe.__init__(self, name, name_full, is_supporter, pos, parent, menu_args)
 
-    def show_invite_btn(self, show=True):
-        pass
-
-    def on_enter(self, pos):
-        UserFrmMe.on_enter(self, pos)
-
-    def on_exit(self, pos):
-        UserFrmMe.on_exit(self, pos)
+    def show_invite_btn(self, show=True): pass
 
 
 class UserFrmListOut(UserFrm):
@@ -263,21 +176,24 @@ class UserFrmListOut(UserFrm):
         self.__show_invite_btn = True
         self.invite_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/invite.txo',
-            .65, None, name_full, _("isn't playing yorg"))
+            .65, self.on_invite, name_full, _("isn't playing yorg"))
+        self.create_friend_btn(is_friend, menu_args, name_full)
+
+    def create_friend_btn(self, is_friend, menu_args, name_full):
         self.friend_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/kick.txo',
             .72, self.on_unfriend, name_full, _('remove from xmpp friends'))
 
-    def show_invite_btn(self, show=True):
-        self.__show_invite_btn = show
+    def show_invite_btn(self, show=True): self.__show_invite_btn = show
+
+    def on_invite(self, usr): pass
 
     def on_enter(self, pos):
         UserFrm.on_enter(self, pos)
         if self.invite_btn.is_hidden():
             self.invite_btn.show()
             if not self.__show_invite_btn: self.invite_btn.disable()
-        if self.friend_btn.is_hidden():
-            self.friend_btn.show()
+        if self.friend_btn.is_hidden(): self.friend_btn.show()
 
     def on_exit(self, pos):
         UserFrm.on_exit(self, pos)
@@ -287,6 +203,28 @@ class UserFrmListOut(UserFrm):
     def on_unfriend(self, usr):
         self.friend_btn.disable()
         self.notify('on_unfriend', usr)
+
+
+class UserFrmList(UserFrmListOut):
+
+    def create_friend_btn(self, is_friend, menu_args, name_full):
+        if not is_friend:
+            self.friend_btn = MPBtn(
+                self.frm, self, menu_args, 'assets/images/gui/friend.txo',
+                .72, self.on_friend, name_full, _('add to xmpp friends'))
+        else:
+            self.friend_btn = MPBtn(
+                self.frm, self, menu_args, 'assets/images/gui/kick.txo',
+                .72, self.on_unfriend, name_full, _('remove from xmpp friends'))
+
+    def on_invite(self, usr):
+        print 'invite ' + usr.name
+        self.invite_btn.disable()
+        self.notify('on_invite', usr)
+
+    def on_friend(self, usr):
+        self.friend_btn.disable()
+        self.notify('on_friend', usr)
 
 
 class MultiplayerFrm(GameObject):
@@ -368,21 +306,16 @@ class MultiplayerFrm(GameObject):
             pfrom=self.eng.xmpp.xmpp.boundjid.full,
             ptype='subscribed' if val else 'unsubscribed')
 
-    def on_user_connected(self, user):
-        self.on_users()
+    def on_user_connected(self, user): self.on_users()
 
-    def on_user_disconnected(self, user):
-        self.on_users()
+    def on_user_disconnected(self, user): self.on_users()
 
-    def on_presence_available(self, user):
-        self.on_users()
+    def on_presence_available(self, user): self.on_users()
 
-    def on_presence_unavailable(self, user):
-        self.on_users()
+    def on_presence_unavailable(self, user): self.on_users()
 
     def on_users(self):
-        if not self.eng.xmpp.xmpp:
-            self.set_connection_label()
+        if not self.eng.xmpp.xmpp: self.set_connection_label()
         else:
             if self.conn_lab:
                 self.conn_lab.destroy()
@@ -447,8 +380,7 @@ class MultiplayerFrm(GameObject):
 
     def on_friend(self, usr):
         self.eng.xmpp.xmpp.send_presence_subscription(
-            usr.name,
-            ptype='subscribe',
+            usr.name, ptype='subscribe',
             pfrom=self.eng.xmpp.xmpp.boundjid.full)
 
     def on_unfriend(self, usr):
@@ -456,8 +388,7 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.xmpp.del_roster_item(usr.name)
         print '\n\n', self.eng.xmpp.xmpp.client_roster, '\n\n'
 
-    def on_start(self):
-        print 'start'
+    def on_start(self): print 'start'
 
     def destroy(self):
         self.frm = self.frm.destroy()
