@@ -1,4 +1,3 @@
-from keyring import get_password, set_password, set_keyring
 from direct.gui.DirectButton import DirectButton
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject

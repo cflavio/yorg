@@ -7,16 +7,8 @@ from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.gameobject import GameObject
 from yyagl.engine.gui.imgbtn import ImgBtn
-from yyagl.engine.gui.page import PageGui
 from yyagl.observer import Subject
 from yyagl.engine.logic import VersionChecker
-from yyagl.observer import Subject
-
-
-try:
-    from sleekxmpp.jid import JID
-except ImportError:  # sleekxmpp requires openssl 1.0.2
-    print 'OpenSSL 1.0.2 not detected'
 
 
 class FriendDialog(Subject):
@@ -45,7 +37,7 @@ class FriendDialog(Subject):
         self.dialog.set_pos(-size[0] + .05, 1, -size[2] + .05)
 
     def on_btn(self, val):
-        self.notify('on_friend_answer', self.user, val=='yes')
+        self.notify('on_friend_answer', self.user, val == 'yes')
 
     def destroy(self):
         self.dialog = self.dialog.destroy()
@@ -57,7 +49,8 @@ class MPBtn(object):
     tooltip_align = TextNode.A_right
     tooltip_offset = (.01, 0, -.08)
 
-    def __init__(self, parent, owner, menu_args, img_path, msg_btn_x, cb, usr, tooltip):
+    def __init__(self, parent, owner, menu_args, img_path, msg_btn_x, cb, usr,
+                 tooltip):
         self.owner = owner
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
@@ -107,7 +100,8 @@ class StaticMPBtn(MPBtn):
 
 class UserFrmMe(Subject):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x=.58):
+    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args,
+                 msg_btn_x=.58):
         Subject.__init__(self)
         self.name_full = name_full
         self.menu_args = menu_args
@@ -141,8 +135,10 @@ class UserFrmMe(Subject):
 
 class UserFrm(UserFrmMe):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x=.58):
-        UserFrmMe.__init__(self, name, name_full, is_supporter, pos, parent, menu_args, msg_btn_x)
+    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args,
+                 msg_btn_x=.58):
+        UserFrmMe.__init__(self, name, name_full, is_supporter, pos, parent,
+                           menu_args, msg_btn_x)
         self.msg_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/message.txo',
             msg_btn_x, self.on_msg, name_full, _('send a message to the user'))
@@ -161,15 +157,18 @@ class UserFrm(UserFrmMe):
 class UserFrmListMe(UserFrmMe):
 
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
-        UserFrmMe.__init__(self, name, name_full, is_supporter, pos, parent, menu_args)
+        UserFrmMe.__init__(
+            self, name, name_full, is_supporter, pos, parent, menu_args)
 
     def show_invite_btn(self, show=True): pass
 
 
 class UserFrmListOut(UserFrm):
 
-    def __init__(self, name, name_full, is_supporter, is_friend, pos, parent, menu_args):
-        UserFrm.__init__(self, name, name_full, is_supporter, pos, parent, menu_args)
+    def __init__(self, name, name_full, is_supporter, is_friend, pos, parent,
+                 menu_args):
+        UserFrm.__init__(
+            self, name, name_full, is_supporter, pos, parent, menu_args)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_bg
@@ -215,7 +214,8 @@ class UserFrmList(UserFrmListOut):
         else:
             self.friend_btn = MPBtn(
                 self.frm, self, menu_args, 'assets/images/gui/kick.txo',
-                .72, self.on_unfriend, name_full, _('remove from xmpp friends'))
+                .72, self.on_unfriend, name_full,
+                _('remove from xmpp friends'))
 
     def on_invite(self, usr):
         print 'invite ' + usr.name
@@ -231,6 +231,7 @@ class MultiplayerFrm(GameObject):
 
     def __init__(self, menu_args):
         GameObject.__init__(self)
+        self.dialog = None
         self.ver_check = VersionChecker()
         self.labels = []
         self.invited_users = []
@@ -239,8 +240,9 @@ class MultiplayerFrm(GameObject):
         lab_args['scale'] = .046
         lab_args['text_fg'] = menu_args.text_bg
         self.users_lab = DirectLabel(
-            text=_('Current online users'), pos=(-.85, 1, -.02), hpr=(0, 0, -90),
-            parent=base.a2dTopRight, text_align=TextNode.A_right, **lab_args)
+            text=_('Current online users'), pos=(-.85, 1, -.02),
+            hpr=(0, 0, -90), parent=base.a2dTopRight,
+            text_align=TextNode.A_right, **lab_args)
         self.frm = DirectScrolledFrame(
             frameSize=(-.02, .8, .45, 1.48),
             canvasSize=(-.02, .76, -.08, 3.8),
@@ -258,7 +260,8 @@ class MultiplayerFrm(GameObject):
             pos=(-.82, 1, -1.49), parent=base.a2dTopRight)
         self.match_lab = DirectLabel(
             text=_('Current match'), pos=(-.85, 1, .93), hpr=(0, 0, -90),
-            parent=base.a2dBottomRight, text_align=TextNode.A_right, **lab_args)
+            parent=base.a2dBottomRight, text_align=TextNode.A_right,
+            **lab_args)
         self.match_frm = DirectFrame(
             frameSize=(-.02, .8, 0, .45),
             frameColor=(.2, .2, .2, .5),
@@ -290,6 +293,7 @@ class MultiplayerFrm(GameObject):
             text=txt, pos=(.38, 1, 1.0), parent=self.frm,
             text_wordwrap=10, **lab_args)
 
+    @staticmethod
     def trunc(self, name, lgt):
         if len(name) > lgt: return name[:lgt] + '...'
         return name
@@ -319,7 +323,8 @@ class MultiplayerFrm(GameObject):
         else:
             if self.conn_lab:
                 self.conn_lab.destroy()
-            bare_users = [self.trunc(user.name, 20) for user in self.eng.xmpp.users]
+            bare_users = [self.trunc(user.name, 20)
+                          for user in self.eng.xmpp.users]
             for lab in self.labels[:]:
                 if lab.lab['text'] not in bare_users:
                     lab.destroy()
@@ -332,22 +337,24 @@ class MultiplayerFrm(GameObject):
             for i, user in enumerate(self.eng.xmpp.users):
                 usr_inv = invite_btn and user.is_in_yorg
                 if self.trunc(user.name, 20) not in label_users:
-                    if self.eng.xmpp.xmpp.boundjid.bare != user.name and user.is_in_yorg:
+                    if self.eng.xmpp.xmpp.boundjid.bare != user.name and \
+                            user.is_in_yorg:
                         lab = UserFrmList(
                             self.trunc(user.name, 20),
                             user,
                             user.is_supporter,
                             self.eng.xmpp.is_friend(user.name),
-                            (0, 1, top - .08 -.08 * i),
+                            (0, 1, top - .08 - .08 * i),
                             self.frm.getCanvas(),
                             self.menu_args)
-                    elif self.eng.xmpp.xmpp.boundjid.bare != user.name and not user.is_in_yorg:
+                    elif self.eng.xmpp.xmpp.boundjid.bare != user.name and \
+                            not user.is_in_yorg:
                         lab = UserFrmListOut(
                             self.trunc(user.name, 20),
                             user,
                             user.is_supporter,
                             self.eng.xmpp.is_friend(user.name),
-                            (0, 1, top - .08 -.08 * i),
+                            (0, 1, top - .08 - .08 * i),
                             self.frm.getCanvas(),
                             self.menu_args)
                         lab.show_invite_btn(False)
@@ -356,7 +363,7 @@ class MultiplayerFrm(GameObject):
                             self.trunc(user.name, 20),
                             user,
                             user.is_supporter,
-                            (0, 1, top - .08 -.08 * i),
+                            (0, 1, top - .08 - .08 * i),
                             self.frm.getCanvas(),
                             self.menu_args)
                     self.labels += [lab]
@@ -364,19 +371,21 @@ class MultiplayerFrm(GameObject):
                     lab.attach(self.on_friend)
                     lab.attach(self.on_unfriend)
                 else:
-                    lab = [lab for lab in self.labels if lab.lab['text'] == self.trunc(user.name, 20)][0]
-                    lab.show_invite_btn(usr_inv and user.name not in self.invited_users)
-                    lab.frm.set_z(top - .08 -.08 * i)
+                    lab = [lab for lab in self.labels
+                           if lab.lab['text'] == self.trunc(user.name, 20)][0]
+                    lab.show_invite_btn(
+                        usr_inv and user.name not in self.invited_users)
+                    lab.frm.set_z(top - .08 - .08 * i)
 
     def on_invite(self, usr):
         print 'invited user', usr
         idx = len(self.invited_users)
         x = .02 + .4 * (idx / 4)
-        y = .38 -.08 * (idx % 4)
-        UserFrm(self.trunc(usr.name, 8), usr, usr.is_supporter, (x, 1, y), self.match_frm, self.menu_args, .32)
+        y = .38 - .08 * (idx % 4)
+        UserFrm(self.trunc(usr.name, 8), usr, usr.is_supporter, (x, 1, y),
+                self.match_frm, self.menu_args, .32)
         self.invited_users += [usr.name]
-        self.on_users()  # refactor: it's slow - don't recreate but edit
-                         # current entries
+        self.on_users()
 
     def on_friend(self, usr):
         self.eng.xmpp.xmpp.send_presence_subscription(

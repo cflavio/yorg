@@ -13,7 +13,8 @@ class CreditPageGui(ThanksPageGui):
                    _('Audio')+': Jay Bachelor',
                    _('Translations')+': Wuzzy, GunChleoc, Leandro Vergara']
         dev_str = '\n\n'.join(dev_str)
-        txt = OnscreenText(text=dev_str, pos=(-.2, .72), wordwrap=20, **menu_args.text_args)
+        txt = OnscreenText(text=dev_str, pos=(-.2, .72), wordwrap=20,
+                           **menu_args.text_args)
         btn = DirectButton(
             text=_('Supporters'), pos=(-.2, 1, -.4),
             command=lambda: self.notify('on_push_page', 'supporters'),

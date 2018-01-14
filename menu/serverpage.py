@@ -47,9 +47,11 @@ class ServerPageGui(ThanksPageGui):
         self.conn_txt = OnscreenText(
             scale=.12, pos=(0, .2), font=menu_args.font, fg=menu_args.text_fg)
         self.add_widget(self.conn_txt)
-        scb = lambda: self.notify('on_push_page', 'trackpageserver', [self.props])
+        scb = lambda: self.notify('on_push_page', 'trackpageserver',
+                                  [self.props])
         start_btn = DirectButton(
-            text=_('Start'), pos=(0, 1, -.5), command=scb, **menu_args.btn_args)
+            text=_('Start'), pos=(0, 1, -.5), command=scb,
+            **menu_args.btn_args)
         self.add_widget(start_btn)
         ThanksPageGui.bld_page(self)
         evt = self.mdt.event

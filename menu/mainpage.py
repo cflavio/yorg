@@ -1,7 +1,7 @@
 from datetime import datetime
-from feedparser import parse
-#from keyring_jeepney import Keyring
 import argparse
+from feedparser import parse
+# from keyring_jeepney import Keyring
 from panda3d.core import TextNode
 from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectLabel import DirectLabel
@@ -13,13 +13,14 @@ from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import PageGui
 from yyagl.engine.logic import VersionChecker
 from yyagl.gameobject import GameObject
-from .multiplayerpage import MultiplayerPage
 from .optionpage import OptionPageProps
 
 
 class YorgMainPageGui(MainPageGui, ):
 
     def __init__(self, mdt, mainpage_props):
+        self.__feed_type = ''
+        self.__date_field = ''
         self.props = mainpage_props
         self.load_settings()
         self.conn_attempted = False
@@ -38,13 +39,13 @@ class YorgMainPageGui(MainPageGui, ):
                 user = args.user
                 password = args.pwd
             if user and password:
-            #if user:
-                #if platform.startswith('linux'): set_keyring(Keyring())
-                #pwd = get_password('ya2_rog', user)
-                #if not pwd:
+            # if user:
+                # if platform.startswith('linux'): set_keyring(Keyring())
+                # pwd = get_password('ya2_rog', user)
+                # if not pwd:
                     pwd = password
-                    #set_password('ya2_rog', user, pwd)
-                #self.eng.xmpp.start(user, pwd)
+                    # set_password('ya2_rog', user, pwd)
+                # self.eng.xmpp.start(user, pwd)
                     self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko)
             if not (user and password):
                 self.on_ko()
@@ -57,9 +58,9 @@ class YorgMainPageGui(MainPageGui, ):
         self.conn_attempted = True
         self.widgets[6]['text'] = self.get_label()
         self.eng.xmpp.send_connected()
-        #self.notify('on_login')
+        # self.notify('on_login')
 
-    def on_ko(self, msg=None):
+    def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
         self.widgets[6]['text'] = self.get_label()
 
@@ -96,7 +97,8 @@ class YorgMainPageGui(MainPageGui, ):
         if not self.ver_check.is_uptodate():
             return _('Not up-to-date')
         if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
-            return _('Log out' + ' \1small\1(%s)\2' % self.eng.xmpp.xmpp.boundjid.bare)
+            return _('Log out') + \
+                ' \1small\1(%s)\2' % self.eng.xmpp.xmpp.boundjid.bare
         elif self.conn_attempted:
             return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
         return _('Connecting')
@@ -131,8 +133,8 @@ class YorgMainPageGui(MainPageGui, ):
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
         wip_lab = DirectLabel(
-            text='', pos=(.05, 1, -.76), parent=base.a2dTopLeft, text_wordwrap=10,
-            text_align=TextNode.A_left, **lab_args)
+            text='', pos=(.05, 1, -.76), parent=base.a2dTopLeft,
+            text_wordwrap=10, text_align=TextNode.A_left, **lab_args)
         PageGui.transl_text(wip_lab, 'Note: the game is work-in-progress',
                             _('Note: the game is work-in-progress'))
         self.widgets += [wip_lab]
@@ -154,12 +156,15 @@ class YorgMainPageGui(MainPageGui, ):
         menu_args = self.props.gameprops.menu_args
         feeds = parse(self.props.feed_url)
         if not feeds['entries']: return
-        self.__feed_type = 'rss' if 'published' in feeds['entries'][0] else 'atom'
-        self.__date_field = 'published' if self.__feed_type == 'rss' else 'updated'
+        self.__feed_type = \
+            'rss' if 'published' in feeds['entries'][0] else 'atom'
+        self.__date_field = \
+            'published' if self.__feed_type == 'rss' else 'updated'
         publ = lambda entry: self.__conv(entry[self.__date_field])
         rss = sorted(feeds['entries'], key=publ)
         conv_time = lambda ent: datetime.strftime(self.__conv(ent), '%b %d')
-        rss = [(conv_time(ent[self.__date_field]), ent['title']) for ent in rss]
+        rss = [(conv_time(ent[self.__date_field]), ent['title'])
+               for ent in rss]
         rss.reverse()
         rss = rss[:5]
         rss = [(_rss[0], self.__ellipsis_str(_rss[1])) for _rss in rss]

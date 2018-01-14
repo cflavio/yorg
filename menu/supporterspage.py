@@ -1,5 +1,5 @@
 from direct.gui.OnscreenText import OnscreenText
-from yyagl.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page
 from .thankspage import ThanksPageGui
 from yorg.thanksnames import ThanksNames
 

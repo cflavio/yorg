@@ -9,11 +9,12 @@ from menu.ingamemenu.menu import InGameMenu
 from .thanksnames import ThanksNames
 from menu.multiplayerfrm import MultiplayerFrm
 
+
 class YorgLogic(GameLogic):
 
     def __init__(self, mdt):
         GameLogic.__init__(self, mdt)
-        self.season = None
+        self.season = self.mp_frm = None
         self.eng.do_later(.01, self.init_mp_frm)
 
     def init_mp_frm(self):
@@ -35,15 +36,16 @@ class YorgLogic(GameLogic):
             self.season.attach_obs(self.mdt.event.on_season_end)
             self.season.attach_obs(self.mdt.event.on_season_cont)
             self.season.start()
-            self.mdt.fsm.demand('Race', track, car, [car], self.season.logic.drivers,
-                                self.season.ranking)
+            self.mdt.fsm.demand('Race', track, car, [car],
+                                self.season.logic.drivers, self.season.ranking)
         else:
             self.mdt.fsm.demand('Menu')
 
     @staticmethod
     def __season_props(
-            gameprops, car, player_car_names, cars_number, single_race, tun_engine,
-            tun_tires, tun_suspensions, race_start_time, countdown_seconds):
+            gameprops, car, player_car_names, cars_number, single_race,
+            tun_engine, tun_tires, tun_suspensions, race_start_time,
+            countdown_seconds):
         wpn2img = {
             'Rocket': 'rocketfront',
             'RearRocket': 'rocketrear',
@@ -109,7 +111,8 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mdt.event.on_season_end)
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
-        self.mdt.fsm.demand('Race', track, car, cars, self.season.logic.drivers)
+        self.mdt.fsm.demand('Race', track, car, cars,
+                            self.season.logic.drivers)
 
     def on_car_selected_season(self, car):
         dev = self.mdt.options['development']
@@ -123,15 +126,18 @@ class YorgLogic(GameLogic):
 
     def on_driver_selected(self, player_name, track, car):
         self.mdt.options['settings']['player_name'] = player_name
-        self.mdt.gameprops = self.mdt.gameprops._replace(player_name=player_name)
+        self.mdt.gameprops = self.mdt.gameprops._replace(
+            player_name=player_name)
         self.mdt.options.store()
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mdt.gameprops.drivers_info[i]
             drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
-        self.eng.do_later(2.0, self.mdt.fsm.demand,
-                          ['Race', track, car, [car], self.season.logic.drivers])
+        self.eng.do_later(
+            2.0, self.mdt.fsm.demand,
+            ['Race', track, car, [car], self.season.logic.drivers])
 
     def on_driver_selected_server(self, player_name, track, car, cars, packet):
+        # unused packet
         dev = self.mdt.options['development']
         self.season = SingleRaceSeason(self.__season_props(
             self.mdt.gameprops, car, cars,
@@ -141,20 +147,23 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mdt.event.on_season_cont)
         self.season.start()
         self.mdt.options['settings']['player_name'] = player_name
-        self.mdt.gameprops = self.mdt.gameprops._replace(player_name=player_name)
+        self.mdt.gameprops = self.mdt.gameprops._replace(
+            player_name=player_name)
         self.mdt.options.store()
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mdt.gameprops.drivers_info[i]
             drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
-        self.eng.do_later(2.0, self.mdt.fsm.demand,
-                          ['Race', track, car, cars, self.season.logic.drivers])
+        self.eng.do_later(
+            2.0, self.mdt.fsm.demand,
+            ['Race', track, car, cars, self.season.logic.drivers])
 
     def on_continue(self):
         saved_car = self.mdt.options['save']['car']
         dev = self.mdt.options['development']
         tuning = self.mdt.options['save']['tuning']
         car_tun = tuning[saved_car]
-        drivers = [self.__bld_drv(dct) for dct in self.mdt.options['save']['drivers']]
+        drivers = [self.__bld_drv(dct)
+                   for dct in self.mdt.options['save']['drivers']]
         self.season = Season(self.__season_props(
             self.mdt.gameprops, saved_car, [saved_car],
             self.mdt.options['settings']['cars_number'], False,
@@ -169,11 +178,13 @@ class YorgLogic(GameLogic):
         car_path = self.mdt.options['save']['car']
         self.mdt.fsm.demand('Race', track_path, car_path, [car_path], drivers)
 
-    def __bld_drv(self, dct):
+    @staticmethod
+    def __bld_drv(dct):
         drv = Driver(
             DriverProps(
-                DriverInfo(dct['img_idx'], dct['name'], dct['speed'], dct['adherence'], dct['stability']),
-                dct['car_name'], dct['f_engine'], dct['f_tires'], dct['f_suspensions']))
+                DriverInfo(dct['img_idx'], dct['name'], dct['speed'],
+                dct['adherence'], dct['stability']), dct['car_name'],
+                dct['f_engine'], dct['f_tires'], dct['f_suspensions']))
         return drv
 
     def on_race_loaded(self):
@@ -245,7 +256,8 @@ class YorgLogic(GameLogic):
         WPInfo = namedtuple('WPInfo', 'root_name wp_name prev_name')
         WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
         share_urls = [
-            'https://www.facebook.com/sharer/sharer.php?u=ya2.it/pages/yorg.html',
+            'https://www.facebook.com/sharer/sharer.php?u=' +
+            'ya2.it/pages/yorg.html',
             'https://twitter.com/share?text=I%27ve%20achieved%20{time}'
             '%20in%20the%20{track}%20track%20on%20Yorg%20by%20%40ya2tech'
             '%21&hashtags=yorg',

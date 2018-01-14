@@ -17,7 +17,7 @@ class LogInPageGui(ThanksPageGui):
     def bld_page(self):
         menu_args = self.menu_args
         t_a = menu_args.text_args.copy()
-        #del t_a['scale']
+        # del t_a['scale']
         jid_lab = OnscreenText(_('Your jabber id:'), pos=(-.25, .6),
                                align=TextNode.A_right, **t_a)
         pwd_lab = OnscreenText(_('Your jabber password:'), pos=(-.25, .4),
@@ -39,15 +39,16 @@ class LogInPageGui(ThanksPageGui):
             **menu_args.checkbtn_args)
         t_a['scale'] = .06
         store_lab = OnscreenText(
-        _('(only if your computer is not shared with other people)'), pos=(-.2, -.32), **t_a)
+            _('(only if your computer is not shared with other people)'),
+            pos=(-.2, -.32), **t_a)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
                    self.store_cb, store_lab]
         map(self.add_widget, widgets)
         ThanksPageGui.bld_page(self)
 
     def start(self):
-        connected = self.eng.xmpp.start(self.jid_ent.get(), self.pwd_ent.get(),
-                                        self.on_ok, self.on_ko)
+        self.eng.xmpp.start(self.jid_ent.get(), self.pwd_ent.get(),
+                            self.on_ok, self.on_ko)
 
     def on_ok(self):
         if self.store_cb['indicatorValue']:
@@ -57,7 +58,7 @@ class LogInPageGui(ThanksPageGui):
         self._on_back()
         self.notify('on_login')
 
-    def on_ko(self, err):
+    def on_ko(self, err):  # unused err
         txt = OnscreenText(_('Error'), pos=(-.2, -.05), fg=(1, 0, 0, 1),
                            scale=.16, font=self.menu_args.font)
         self.eng.do_later(5, txt.destroy)

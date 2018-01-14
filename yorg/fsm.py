@@ -20,7 +20,7 @@ class YorgFsm(Fsm):
         self.load_txt = self.preview = self.cam_tsk = self.cam_node = \
             self.ranking_texts = self.send_tsk = self.cam_pivot = \
             self.ready_clients = self.curr_load_txt = self.__menu = \
-            self.race = self.__exit_menu = None
+            self.race = self.__exit_menu = self.loader_tsk = self.models = None
 
     def enterMenu(self):
         self.eng.log_mgr.log('entering Menu state')
@@ -56,7 +56,8 @@ class YorgFsm(Fsm):
 
             fpath = self.mdt.gameprops.wheel_gfx_names.front % car
             rpath = self.mdt.gameprops.wheel_gfx_names.rear % car
-            m_exists = lambda path: exists(path + '.egg') or exists(path + '.bam')
+            m_exists = lambda path: \
+                exists(path + '.egg') or exists(path + '.bam')
             b_path = self.mdt.gameprops.wheel_gfx_names.both % car
             front_path = fpath if m_exists(fpath) else b_path
             rear_path = rpath if m_exists(rpath) else b_path
@@ -75,7 +76,8 @@ class YorgFsm(Fsm):
         self.mdt.audio.menu_music.stop()
         loader.cancelRequest(self.loader_tsk)
 
-    def enterRace(self, track_path='', car_path='', cars=[], drivers='', ranking=None):
+    def enterRace(self, track_path='', car_path='', cars=[], drivers='',
+                  ranking=None):  # unused ranking, cars
         self.eng.log_mgr.log('entering Race state')
         base.ignore('escape-up')
         seas = self.mdt.logic.season
@@ -84,7 +86,8 @@ class YorgFsm(Fsm):
                 self.mdt.options['save'] = {}
             self.mdt.options['save']['track'] = track_path
             self.mdt.options['save']['car'] = car_path
-            self.mdt.options['save']['drivers'] = [drv.to_dct() for drv in drivers]
+            self.mdt.options['save']['drivers'] = [
+                drv.to_dct() for drv in drivers]
             self.mdt.options['save']['tuning'] = seas.tuning.car2tuning
             self.mdt.options['save']['ranking'] = seas.ranking.carname2points
             self.mdt.options.store()
@@ -107,7 +110,8 @@ class YorgFsm(Fsm):
             seas.create_race_client(race_props)
         else:
             seas.create_race(race_props)
-        self.eng.log_mgr.log('selected drivers: ' + str([drv.dprops for drv in drivers]))
+        self.eng.log_mgr.log('selected drivers: ' +
+                             str([drv.dprops for drv in drivers]))
         seas.race.logic.drivers = drivers
         track_name_transl = track_path
         track_dct = {'rome': _('Rome'), 'sheffield': _('Sheffield'),
@@ -116,7 +120,8 @@ class YorgFsm(Fsm):
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         seas.race.fsm.demand(
-            'Loading', race_props, track_name_transl, drivers, seas.ranking, seas.tuning)
+            'Loading', race_props, track_name_transl, drivers, seas.ranking,
+            seas.tuning)
         seas.race.attach_obs(self.mdt.logic.on_race_loaded)
         exit_mth = 'on_ingame_exit_confirm'
         seas.race.attach_obs(self.mdt.fsm.demand, rename=exit_mth,

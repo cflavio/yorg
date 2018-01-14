@@ -5,7 +5,6 @@ from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
-from yyagl.racing.season.season import SingleRaceSeason
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
@@ -125,7 +124,8 @@ class CarPageGuiServer(CarPageGui):
         self.evaluate_starting()
 
     def evaluate_starting(self):
-        connections = [conn[0] for conn in self.eng.server.connections] + [self]
+        connections = [conn[0]
+                       for conn in self.eng.server.connections] + [self]
         if not all(conn in self.current_cars for conn in connections): return
         packet = [NetMsgs.start_drivers, len(self.current_cars)]
 
@@ -133,7 +133,8 @@ class CarPageGuiServer(CarPageGui):
             '''Processes a car.'''
             return 'server' if k == self else k.get_address().get_ip_string()
         for i, (k, val) in enumerate(self.current_cars.items()):
-            packet += [process(k), val, self.props.gameprops.drivers_info[i].name]
+            packet += [process(k), val,
+                       self.props.gameprops.drivers_info[i].name]
         self.eng.server.send(packet)
         self.eng.log_mgr.log('start race: ' + str(packet))
         curr_car = self.current_cars[self]
@@ -169,7 +170,8 @@ class CarPageGuiClient(CarPageGui):
 
     def on_car(self, car):
         self.eng.log_mgr.log('car request: ' + car)
-        self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
+        self.eng.client.send(
+            [NetMsgs.car_request, car, self.eng.client.my_addr])
 
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.car_confirm:

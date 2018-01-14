@@ -66,7 +66,8 @@ class OptionPageGui(ThanksPageGui):
                            _('(from the next execution)'), .05, 0,
                            TextNode.ALeft, .06)]
         self.aa_cb = DirectCheckButton(
-            pos=(-.08, 1, .08), text='', indicatorValue=self.props.antialiasing,
+            pos=(-.08, 1, .08), text='',
+            indicatorValue=self.props.antialiasing,
             indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
         self.shaders_cb = DirectCheckButton(
@@ -89,7 +90,8 @@ class OptionPageGui(ThanksPageGui):
         self.__change_lang(self.eng.languages[idx])
         ThanksPageGui.bld_page(self)
 
-    def __add_lab(self, txt, txt_tr, pos_z, pos_x=-.3, align=TextNode.ARight, scale=None):
+    def __add_lab(self, txt, txt_tr, pos_z, pos_x=-.3, align=TextNode.ARight,
+                  scale=None):
         l_a = self.menu_args.label_args
         l_a['scale'] = scale or l_a['scale']
         lab = DirectLabel(
@@ -104,7 +106,8 @@ class OptionPageGui(ThanksPageGui):
     def update_texts(self):
         PageGui.update_texts(self)
         curr_lang = self.eng.lang_mgr.lang
-        self.lang_opt.set({'en': 0, 'it': 1, 'de': 2, 'gd': 3, 'es': 4, 'gl': 5}[curr_lang], fCommand=0)
+        code2idx = {'en': 0, 'it': 1, 'de': 2, 'gd': 3, 'es': 4, 'gl': 5}
+        self.lang_opt.set(code2idx[curr_lang], fCommand=0)
 
     def __change_lang(self, arg):
         lang_dict = {

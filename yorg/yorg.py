@@ -76,20 +76,26 @@ class Yorg(Game):
         args = parser.parse_args()
         if args.win_orig:
             win_orig = args.win_orig
-        gui_cfg = GuiCfg(win_title='Yorg', win_orig=win_orig,
+        gui_cfg = GuiCfg(
+            win_title='Yorg', win_orig=win_orig,
             win_size=self.options['settings']['resolution'],
             fullscreen=self.options['settings']['fullscreen'],
             antialiasing=self.options['settings']['antialiasing'],
             fps=opt_dev['fps'], shaders=self.options['settings']['shaders'],
             volume=self.options['settings']['volume'])
-        profiling_cfg = ProfilingCfg(profiling=opt_dev['profiling'],
+        profiling_cfg = ProfilingCfg(
+            profiling=opt_dev['profiling'],
             pyprof_percall=opt_dev['pyprof_percall'])
         lang_cfg = LangCfg(lang=self.options['settings']['lang'],
-                           lang_domain='yorg', languages=['English', 'Italiano', 'Deutsch', u'G\u00E0idhlig', 'Spanish', 'Galician'])
-        cursor_cfg = CursorCfg(cursor_path='assets/images/gui/cursor.txo',
+                           lang_domain='yorg',
+                           languages=['English', 'Italiano', 'Deutsch',
+                                      u'G\u00E0idhlig', 'Spanish', 'Galician'])
+        cursor_cfg = CursorCfg(
+            cursor_path='assets/images/gui/cursor.txo',
             cursor_scale=((256/352.0) * .08, 1, .08),
             cursor_hotspot=(.1, .06))
-        dev_cfg = DevCfg(mt_render=opt_dev['multithreaded_render'],
+        dev_cfg = DevCfg(
+            mt_render=opt_dev['multithreaded_render'],
             shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
             menu_joypad=opt_dev['menu_joypad'], verbose=opt_dev['verbose'],
             verbose_log=opt_dev['verbose_log'])

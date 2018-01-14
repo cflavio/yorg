@@ -17,7 +17,8 @@ class ClientEvent(PageEvent):
         if data_lst[0] == NetMsgs.track_selected:
             self.eng.log_mgr.log('track selected: ' + data_lst[1])
             self.notify('on_track_selected', data_lst[1])
-            self.mdt.gui.notify('on_push_page', 'carpageclient', [self.mdt.gui.props])
+            self.mdt.gui.notify('on_push_page', 'carpageclient',
+                                [self.mdt.gui.props])
 
 
 class ClientPageGui(ThanksPageGui):
