@@ -282,6 +282,20 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_presence_unavailable)
         self.set_connection_label()
 
+    def show(self):
+        self.frm.show()
+        self.users_lab.show()
+        self.match_lab.show()
+        self.match_frm.show()
+        self.msg_frm.show()
+
+    def hide(self):
+        self.frm.hide()
+        self.users_lab.hide()
+        self.match_lab.hide()
+        self.match_frm.hide()
+        self.msg_frm.hide()
+
     def set_connection_label(self):
         lab_args = self.menu_args.label_args
         lab_args['scale'] = .046
@@ -294,7 +308,7 @@ class MultiplayerFrm(GameObject):
             text_wordwrap=10, **lab_args)
 
     @staticmethod
-    def trunc(self, name, lgt):
+    def trunc(name, lgt):
         if len(name) > lgt: return name[:lgt] + '...'
         return name
 

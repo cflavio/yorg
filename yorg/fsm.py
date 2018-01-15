@@ -79,6 +79,7 @@ class YorgFsm(Fsm):
     def enterRace(self, track_path='', car_path='', cars=[], drivers='',
                   ranking=None):  # unused ranking, cars
         self.eng.log_mgr.log('entering Race state')
+        self.mdt.logic.mp_frm.hide()
         base.ignore('escape-up')
         seas = self.mdt.logic.season
         if not seas.props.single_race:
@@ -129,6 +130,7 @@ class YorgFsm(Fsm):
 
     def exitRace(self):
         self.eng.log_mgr.log('exiting Race state')
+        self.mdt.logic.mp_frm.show()
         self.mdt.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
 

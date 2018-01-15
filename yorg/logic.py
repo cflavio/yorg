@@ -18,7 +18,7 @@ class YorgLogic(GameLogic):
         self.eng.do_later(.01, self.init_mp_frm)
 
     def init_mp_frm(self):
-        if not hasattr(self, 'mp_frm'):
+        if not self.mp_frm:
             self.mp_frm = MultiplayerFrm(self.mdt.gameprops.menu_args)
 
     def on_start(self):
