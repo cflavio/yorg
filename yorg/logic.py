@@ -7,7 +7,7 @@ from yyagl.racing.driver.driver import Driver, DriverProps, DriverInfo
 from yyagl.racing.race.raceprops import RaceProps
 from menu.ingamemenu.menu import InGameMenu
 from .thanksnames import ThanksNames
-from menu.multiplayerfrm import MultiplayerFrm
+from menu.multiplayer.multiplayerfrm import MultiplayerFrm
 
 
 class YorgLogic(GameLogic):
@@ -20,6 +20,7 @@ class YorgLogic(GameLogic):
     def init_mp_frm(self):
         if not self.mp_frm:
             self.mp_frm = MultiplayerFrm(self.mdt.gameprops.menu_args)
+            self.mp_frm.attach(self.on_msg_focus)
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -77,6 +78,9 @@ class YorgLogic(GameLogic):
                 self.mdt.options['settings']['cars_number'] = 8
         self.mdt.options['settings']['last_version'] = self.eng.version
         self.mdt.options.store()
+
+    def on_msg_focus(self, val):
+        self.mdt.fsm.enable_menu(val == 'out')
 
     def on_input_back(self, new_opt_dct):
         self.mdt.options['settings'].update(new_opt_dct)

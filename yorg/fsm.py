@@ -65,6 +65,8 @@ class YorgFsm(Fsm):
             self.models += [rear_path]
         self.load_models(None)
 
+    def enable_menu(self, val): self.__menu.enable(val)
+
     def load_models(self, model):
         if not self.models: return
         model = self.models.pop(0)
