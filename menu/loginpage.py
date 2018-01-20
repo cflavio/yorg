@@ -28,14 +28,14 @@ class LogInPageGui(ThanksPageGui):
         self.pwd_ent = DirectEntry(
             scale=.08, pos=(-.15, 1, .4), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True)
-        self.jid_ent.onscreenText['fg'] = menu_args.text_fg
-        self.pwd_ent.onscreenText['fg'] = menu_args.text_fg
+        self.jid_ent.onscreenText['fg'] = menu_args.text_active
+        self.pwd_ent.onscreenText['fg'] = menu_args.text_active
         start_btn = DirectButton(
             text=_('Log-in'), pos=(-.2, 1, .2), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
         self.store_cb = DirectCheckButton(
             pos=(-.2, 1, -.2), text=_('store the password'),
-            indicatorValue=False, indicator_frameColor=menu_args.text_fg,
+            indicatorValue=False, indicator_frameColor=menu_args.text_active,
             **menu_args.checkbtn_args)
         t_a['scale'] = .06
         store_lab = OnscreenText(

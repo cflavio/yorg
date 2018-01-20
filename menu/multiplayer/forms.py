@@ -15,7 +15,6 @@ class UserFrmMe(Subject):
         self.menu_args = menu_args
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_bg
         self.frm = DirectButton(
             frameSize=(-.01, .79, .05, -.03), frameColor=(1, 1, 1, 0),
             pos=pos, parent=parent)
@@ -31,9 +30,9 @@ class UserFrmMe(Subject):
                 self.frm, self, menu_args, 'assets/images/gui/medal.txo',
                 .01, None, name_full, _('Supporter!'))
 
-    def on_enter(self, pos): self.lab['text_fg'] = self.menu_args.text_fg
+    def on_enter(self, pos): self.lab['text_fg'] = self.menu_args.text_active
 
-    def on_exit(self, pos): self.lab['text_fg'] = self.menu_args.text_bg
+    def on_exit(self, pos): self.lab['text_fg'] = self.menu_args.text_normal
 
     def destroy(self):
         self.lab.destroy()
@@ -79,7 +78,7 @@ class UserFrmListOut(UserFrm):
             self, name, name_full, is_supporter, pos, parent, menu_args)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_bg
+        lab_args['text_fg'] = self.menu_args.text_normal
         self.__show_invite_btn = True
         self.invite_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/invite.txo',

@@ -14,7 +14,7 @@ class MPBtn(object):
         self.owner = owner
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = menu_args.text_bg
+        lab_args['text_fg'] = menu_args.text_normal
         self.btn = ImgBtn(
             parent=parent, scale=.024, pos=(msg_btn_x, 1, .01),
             frameColor=(1, 1, 1, 1), frameTexture=img_path, command=cb,

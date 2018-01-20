@@ -42,12 +42,13 @@ class OptionPageGui(ThanksPageGui):
         widgets += [self.__add_lab('Volume', _('Volume'), .65)]
         self.vol_slider = DirectSlider(
             pos=(.32, 0, .68), scale=.49, value=self.props.volume,
-            frameColor=menu_args.btn_color, thumb_frameColor=menu_args.text_fg,
+            frameColor=menu_args.btn_color,
+            thumb_frameColor=menu_args.text_active,
             command=lambda: self.eng.set_volume(self.vol_slider['value']))
         widgets += [self.__add_lab('Fullscreen', _('Fullscreen'), .45)]
         self.fullscreen_cb = DirectCheckButton(
             pos=(-.08, 1, .47), text='', indicatorValue=self.props.fullscreen,
-            indicator_frameColor=menu_args.text_fg,
+            indicator_frameColor=menu_args.text_active,
             command=lambda val: self.eng.toggle_fullscreen(),
             **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Resolution', _('Resolution'), .25)]
@@ -68,11 +69,11 @@ class OptionPageGui(ThanksPageGui):
         self.aa_cb = DirectCheckButton(
             pos=(-.08, 1, .08), text='',
             indicatorValue=self.props.antialiasing,
-            indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
+            indicator_frameColor=menu_args.text_active, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
         self.shaders_cb = DirectCheckButton(
             pos=(-.08, 1, -.12), text='', indicatorValue=self.props.shaders,
-            indicator_frameColor=menu_args.text_fg, **menu_args.checkbtn_args)
+            indicator_frameColor=menu_args.text_active, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Cars number', _('Cars number'), -.35)]
         self.cars_opt = DirectOptionMenu(
             text='', items=[str(i) for i in range(1, 9)], pos=(.29, 1, -.35),

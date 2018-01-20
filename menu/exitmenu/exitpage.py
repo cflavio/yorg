@@ -15,7 +15,7 @@ class ExitPageGui(PageGui):
             'Please, visit our site after exiting!\n\nIt helps us! Thank you!')
         txt = OnscreenText(
             text=txt, pos=(0, .64), scale=.08, wordwrap=32,
-            fg=menu_args.text_fg, font=menu_args.font)
+            fg=menu_args.text_active, font=menu_args.font)
         menu_data = [
             ('visit our site after exiting', _('visit our site after exiting'),
              lambda: self.on_end(True)),

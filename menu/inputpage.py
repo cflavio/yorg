@@ -31,7 +31,7 @@ class InputPageGui(ThanksPageGui):
         self.joypad_cb = DirectCheckButton(
             pos=(-.11, 1, .82), text='',
             indicatorValue=self.joystick,
-            indicator_frameColor=menu_args.text_fg,
+            indicator_frameColor=menu_args.text_active,
             **menu_args.checkbtn_args)
         if not JoystickMgr.has_support():
             self.joypad_cb['state'] = DISABLED

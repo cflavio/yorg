@@ -36,7 +36,7 @@ class ClientPageGui(ThanksPageGui):
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText='192.168.1.102')
-        self.ent.onscreenText['fg'] = menu_args.text_fg
+        self.ent.onscreenText['fg'] = menu_args.text_active
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_args.btn_args)
         map(self.add_widget, [txt, self.ent, btn])
@@ -49,7 +49,7 @@ class ClientPageGui(ThanksPageGui):
             self.eng.client.start(self.mdt.event.process_msg, self.ent.get())
             wait_txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
-                font=menu_args.font, fg=menu_args.text_fg)
+                font=menu_args.font, fg=menu_args.text_active)
             self.add_widget(wait_txt)
         except NetworkError:
             txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),

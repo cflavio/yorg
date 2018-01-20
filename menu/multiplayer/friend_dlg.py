@@ -12,7 +12,7 @@ class FriendDialog(Subject):
             base.a2dBottomLeft,
             text=_('Can %s add you to her XMPP contacts?') % user,
             text_wordwrap=16,
-            text_fg=menu_args.text_fg,
+            text_fg=menu_args.text_active,
             text_font=menu_args.font,
             pad=(.03, .03),
             topPad=0,
@@ -21,7 +21,7 @@ class FriendDialog(Subject):
             frameColor=(.8, .8, .8, .9),
             button_relief=FLAT,
             button_frameColor=(.2, .2, .2, .2),
-            button_text_fg=menu_args.text_fg,
+            button_text_fg=menu_args.text_active,
             button_text_font=menu_args.font,
             buttonValueList=['yes', 'no'],
             command=self.on_btn)

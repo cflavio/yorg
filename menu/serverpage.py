@@ -41,11 +41,12 @@ class ServerPageGui(ThanksPageGui):
             addr = local_addr + ' - ' + public_addr
             self.add_widget(OnscreenText(
                 text=addr, scale=.12, pos=(0, .4), font=menu_args.font,
-                fg=menu_args.text_fg))
+                fg=menu_args.text_active))
         except gaierror:
             self.eng.log_mgr.log('no connection')
         self.conn_txt = OnscreenText(
-            scale=.12, pos=(0, .2), font=menu_args.font, fg=menu_args.text_fg)
+            scale=.12, pos=(0, .2), font=menu_args.font,
+            fg=menu_args.text_active)
         self.add_widget(self.conn_txt)
         scb = lambda: self.notify('on_push_page', 'trackpageserver',
                                   [self.props])

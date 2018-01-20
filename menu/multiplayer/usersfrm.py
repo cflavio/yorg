@@ -17,7 +17,6 @@ class UsersFrm(GameObject):
         self.menu_args = menu_args
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = menu_args.text_bg
         self.users_lab = DirectLabel(
             text=_('Current online users'), pos=(-.85, 1, -.02),
             hpr=(0, 0, -90), parent=base.a2dTopRight,
@@ -50,7 +49,6 @@ class UsersFrm(GameObject):
     def set_connection_label(self):
         lab_args = self.menu_args.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_bg
         if not self.ver_check.is_uptodate():
             txt = _("Your game isn't up-to-date, please update")
         else: txt = _("You aren't logged in")

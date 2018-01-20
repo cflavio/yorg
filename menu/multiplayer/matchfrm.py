@@ -14,7 +14,6 @@ class MatchFrm(GameObject):
         self.menu_args = menu_args
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = menu_args.text_bg
         self.match_lab = DirectLabel(
             text=_('Current match'), pos=(-.85, 1, .93), hpr=(0, 0, -90),
             parent=base.a2dBottomRight, text_align=TextNode.A_right,

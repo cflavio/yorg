@@ -51,7 +51,7 @@ class DriverPageGui(ThanksPageGui):
             scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=self.props.gameprops.player_name or _('your name'))
-        self.ent.onscreenText['fg'] = menu_args.text_fg
+        self.ent.onscreenText['fg'] = menu_args.text_active
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = col + row * 4

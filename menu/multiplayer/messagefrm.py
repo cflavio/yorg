@@ -20,7 +20,7 @@ class MessageFrm(GameObject):
         self.presences_sent = []
         t_a = menu_args.text_args
         t_a['scale'] = .05
-        t_a['fg'] = menu_args.text_bg
+        t_a['fg'] = menu_args.text_normal
         self.dst_txt = OnscreenText(
             text='', pos=(.36, .4), parent=self.msg_frm, **t_a)
         self.left_btn = ImgBtn(
@@ -49,7 +49,7 @@ class MessageFrm(GameObject):
             command=self.on_typed_msg, focusInCommand=self.on_focus,
             focusInExtraArgs=['in'], focusOutCommand=self.on_focus,
             focusOutExtraArgs=['out'])
-        self.ent.onscreenText['fg'] = menu_args.text_fg
+        self.ent.onscreenText['fg'] = menu_args.text_active
         self.txt_frm = DirectScrolledFrame(
             frameSize=(-.02, .76, -.02, .28),
             canvasSize=(-.02, .72, -.02, .28),

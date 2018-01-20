@@ -9,7 +9,7 @@ class ThanksPageGui(PageGui):
     def bld_page(self, back_btn=True):
         menu_args = self.menu_args
         t_a = menu_args.text_args
-        t_a['fg'] = menu_args.text_bg
+        t_a['fg'] = menu_args.text_normal
         t_a['scale'] = .06
         thanks_txt = OnscreenText(
             text=_('Thanks to: ') + ThanksNames.get_thanks(1, 3)[0],

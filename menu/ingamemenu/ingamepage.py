@@ -20,7 +20,7 @@ class InGamePageGui(PageGui):
         menu_args = self.menu_args
         txt = OnscreenText(
             text=question_txt, pos=(0, .64), scale=.08, wordwrap=32,
-            fg=menu_args.text_fg, font=menu_args.font)
+            fg=menu_args.text_active, font=menu_args.font)
         on_back = lambda: self.on_end(True)
         on_end = lambda: self.on_end(False)
         menu_data = [
