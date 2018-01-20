@@ -81,7 +81,8 @@ class YorgFsm(Fsm):
     def enterRace(self, track_path='', car_path='', cars=[], drivers='',
                   ranking=None):  # unused ranking, cars
         self.eng.log_mgr.log('entering Race state')
-        self.mdt.logic.mp_frm.hide()
+        if self.mdt.logic.mp_frm:  # None if dev quicksart
+            self.mdt.logic.mp_frm.hide()
         base.ignore('escape-up')
         seas = self.mdt.logic.season
         if not seas.props.single_race:

@@ -42,3 +42,11 @@ class MatchFrm(GameObject):
         self.invited_users += [usr.name]
 
     def on_start(self): print 'start'
+
+    def show(self):
+        self.match_lab.show()
+        self.match_frm.show()
+
+    def hide(self):
+        self.match_lab.hide()
+        self.match_frm.hide()

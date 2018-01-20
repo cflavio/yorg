@@ -70,6 +70,12 @@ class MessageFrm(GameObject):
             text='', pos=(0, .24), parent=self.txt_frm.getCanvas(),
             align=TextNode.A_left, wordwrap=14, **t_a)
 
+    def show(self):
+        self.msg_frm.show()
+
+    def hide(self):
+        self.msg_frm.hide()
+
     def set_msg_txt(self, msg):
         self.msg_txt['text'] += ('\n' if self.msg_txt['text'] else '') + msg
         txt_height = self.msg_txt.textNode.getUpperLeft3d()[2] - \
