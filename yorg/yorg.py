@@ -126,8 +126,8 @@ class Yorg(Game):
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
         self.gameprops = GameProps(
             menu_args, cars_names, self.drivers(),
-            ['rome', 'sheffield', 'orlando', 'nagano', 'dubai'],
-            lambda: [_('Rome'), _('Sheffield'), _('Orlando'),
+            ['toronto', 'rome', 'sheffield', 'orlando', 'nagano', 'dubai'],
+            lambda: [_('Toronto'), _('Rome'), _('Sheffield'), _('Orlando'),
                      _('Nagano'), _('Dubai')],
             'assets/images/tracks/%s.txo',
             self.options['settings']['player_name'],

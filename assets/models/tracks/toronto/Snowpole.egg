@@ -1,0 +1,134 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/toronto/Snowpole.egg assets/models/tracks/toronto/Snowpole.egg"
+}
+<Texture> TEXSnowpole {
+  "tex/TEXSnowpole.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Material> MATSnowpole {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0.5 }
+  <Scalar> specg { 0.5 }
+  <Scalar> specb { 0.5 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Snowpole {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Snowpole {
+    <Vertex> 0 {
+      -0.010297 -0.005945 -1.33539
+      <UV> { 0.034464 0.000212 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 1 {
+      -0.010297 -0.005945 -1.33539
+      <UV> { 0.034464 0.000212 }
+      <Normal> { -0.866026 0.499998 0 }
+    }
+    <Vertex> 2 {
+      -0.010297 -0.005945 1.33539
+      <UV> { 0.034465 0.984965 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 3 {
+      -0.010297 -0.005945 1.33539
+      <UV> { 0.034465 0.984965 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 4 {
+      -0.010297 -0.005945 1.33539
+      <UV> { 0.034465 0.984965 }
+      <Normal> { -0.866026 0.499998 0 }
+    }
+    <Vertex> 5 {
+      0 0.01189 -1.33539
+      <UV> { 0.017278 0.000332 }
+      <Normal> { 0.866026 0.499998 0 }
+    }
+    <Vertex> 6 {
+      0 0.01189 -1.33539
+      <UV> { 0.017278 0.000332 }
+      <Normal> { -0.866026 0.499998 0 }
+    }
+    <Vertex> 7 {
+      0 0.01189 1.33539
+      <UV> { 0.017278 0.985085 }
+      <Normal> { 0.866026 0.499998 0 }
+    }
+    <Vertex> 8 {
+      0 0.01189 1.33539
+      <UV> { 0.017278 0.985085 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 9 {
+      0 0.01189 1.33539
+      <UV> { 0.017278 0.985085 }
+      <Normal> { -0.866026 0.499998 0 }
+    }
+    <Vertex> 10 {
+      0.010297 -0.005945 -1.33539
+      <UV> { 9.1e-05 0.000453 }
+      <Normal> { 0.866026 0.499998 0 }
+    }
+    <Vertex> 11 {
+      0.010297 -0.005945 -1.33539
+      <UV> { 0.051651 9.1e-05 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 12 {
+      0.010297 -0.005945 1.33539
+      <UV> { 9.1e-05 0.985206 }
+      <Normal> { 0.866026 0.499998 0 }
+    }
+    <Vertex> 13 {
+      0.010297 -0.005945 1.33539
+      <UV> { 0.051651 0.984844 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 14 {
+      0.010297 -0.005945 1.33539
+      <UV> { 0.025976 0.999909 }
+      <Normal> { 0 0 1 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXSnowpole }
+    <MRef> { MATSnowpole }
+    <VertexRef> { 5 7 12 10 <Ref> { Snowpole } }
+  }
+  <Polygon> {
+    <TRef> { TEXSnowpole }
+    <MRef> { MATSnowpole }
+    <VertexRef> { 11 13 2 0 <Ref> { Snowpole } }
+  }
+  <Polygon> {
+    <TRef> { TEXSnowpole }
+    <MRef> { MATSnowpole }
+    <VertexRef> { 14 8 3 <Ref> { Snowpole } }
+  }
+  <Polygon> {
+    <TRef> { TEXSnowpole }
+    <MRef> { MATSnowpole }
+    <VertexRef> { 1 4 9 6 <Ref> { Snowpole } }
+  }
+}

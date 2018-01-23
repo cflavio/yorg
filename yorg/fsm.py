@@ -118,9 +118,10 @@ class YorgFsm(Fsm):
                              str([drv.dprops for drv in drivers]))
         seas.race.logic.drivers = drivers
         track_name_transl = track_path
-        track_dct = {'rome': _('Rome'), 'sheffield': _('Sheffield'),
-                     'orlando': _('Orlando'),
-                     'nagano': _('Nagano'), 'dubai': _('Dubai')}
+        track_dct = {
+            'toronto': _('Toronto'), 'rome': _('Rome'),
+            'sheffield': _('Sheffield'), 'orlando': _('Orlando'),
+            'nagano': _('Nagano'), 'dubai': _('Dubai')}
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         seas.race.fsm.demand(

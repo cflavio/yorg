@@ -1,0 +1,142 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/toronto/Treesnow1.egg assets/models/tracks/toronto/Treesnow1.egg"
+}
+<Texture> TEXTreesnow1 {
+  "tex/TEXTreesnow1.png"
+  <Scalar> alpha-file { "tex/TEXTreesnow1.png" }
+  <Scalar> alpha-file-channel { 4 }
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Material> MATTreesnow1 {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> diffa { 0 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0.5 }
+  <Scalar> specg { 0.5 }
+  <Scalar> specb { 0.5 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Treesnow1 {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Treesnow1 {
+    <Vertex> 0 {
+      -1.94664 0 -2.07529
+      <UV> { 0.000691 0.000691 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 1 {
+      -1.94664 -0 3.11864
+      <UV> { 0.000691 0.499309 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 2 {
+      -1.37648 -1.37648 -2.07529
+      <UV> { 0.749584 0.000691 }
+      <Normal> { -0.707107 0.707107 0 }
+    }
+    <Vertex> 3 {
+      -1.37648 -1.37648 3.11864
+      <UV> { 0.749584 0.499309 }
+      <Normal> { -0.707107 0.707107 0 }
+    }
+    <Vertex> 4 {
+      -1.37648 1.37648 -2.07529
+      <UV> { 0.374446 0.500691 }
+      <Normal> { 0.707107 0.707107 0 }
+    }
+    <Vertex> 5 {
+      -1.37648 1.37648 3.11864
+      <UV> { 0.374447 0.999309 }
+      <Normal> { 0.707107 0.707107 0 }
+    }
+    <Vertex> 6 {
+      0 -1.94664 -2.07529
+      <UV> { 0.375828 0.500691 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 7 {
+      0 -1.94664 3.11864
+      <UV> { 0.375828 0.999309 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 8 {
+      -0 1.94664 -2.07529
+      <UV> { 0.749584 0.500691 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 9 {
+      0 1.94664 3.11864
+      <UV> { 0.749584 0.999309 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 10 {
+      1.37648 -1.37648 -2.07529
+      <UV> { 0.000691 0.500691 }
+      <Normal> { 0.707107 0.707107 0 }
+    }
+    <Vertex> 11 {
+      1.37648 -1.37648 3.11864
+      <UV> { 0.000691 0.999309 }
+      <Normal> { 0.707107 0.707107 0 }
+    }
+    <Vertex> 12 {
+      1.37648 1.37648 -2.07529
+      <UV> { 0.375828 0.000691 }
+      <Normal> { -0.707107 0.707107 0 }
+    }
+    <Vertex> 13 {
+      1.37648 1.37648 3.11864
+      <UV> { 0.375828 0.499309 }
+      <Normal> { -0.707107 0.707107 0 }
+    }
+    <Vertex> 14 {
+      1.94664 0 -2.07529
+      <UV> { 0.374447 0.000691 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 15 {
+      1.94664 -0 3.11864
+      <UV> { 0.374447 0.499309 }
+      <Normal> { 0 -1 0 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXTreesnow1 }
+    <MRef> { MATTreesnow1 }
+    <VertexRef> { 0 14 15 1 <Ref> { Treesnow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXTreesnow1 }
+    <MRef> { MATTreesnow1 }
+    <VertexRef> { 6 8 9 7 <Ref> { Treesnow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXTreesnow1 }
+    <MRef> { MATTreesnow1 }
+    <VertexRef> { 10 4 5 11 <Ref> { Treesnow1 } }
+  }
+  <Polygon> {
+    <TRef> { TEXTreesnow1 }
+    <MRef> { MATTreesnow1 }
+    <VertexRef> { 12 2 3 13 <Ref> { Treesnow1 } }
+  }
+}

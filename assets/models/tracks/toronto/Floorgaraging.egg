@@ -1,0 +1,164 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/toronto/Floorgaraging.egg assets/models/tracks/toronto/Floorgaraging.egg"
+}
+<Texture> TEXFloorgaraging {
+  "tex/TEXFloorgaraging.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Material> MATFloorgaraging {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Floorgaraging {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Floorgaraging {
+    <Vertex> 0 {
+      -7.97167 -4.75505 -0.085999
+      <UV> { 0.000314 0.017388 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 1 {
+      -7.97167 -4.75505 -0.085999
+      <UV> { 0.010982 0.000314 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 2 {
+      -7.97167 -4.75505 0.086
+      <UV> { 0.010868 0.017388 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 3 {
+      -7.97167 -4.75505 0.086
+      <UV> { 0.010868 0.017388 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 4 {
+      -7.97167 -4.75505 0.086
+      <UV> { 0.010868 0.017388 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 5 {
+      -7.97167 4.75505 -0.085999
+      <UV> { 0.000314 0.600915 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 6 {
+      -7.97167 4.75505 -0.085999
+      <UV> { 0.010754 0.617989 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 7 {
+      -7.97167 4.75505 0.086
+      <UV> { 0.010868 0.600915 }
+      <Normal> { -1 0 0 }
+    }
+    <Vertex> 8 {
+      -7.97167 4.75505 0.086
+      <UV> { 0.010868 0.600915 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 9 {
+      -7.97167 4.75505 0.086
+      <UV> { 0.010868 0.600915 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 10 {
+      7.97167 -4.75505 -0.085999
+      <UV> { 0.999686 0.017388 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 11 {
+      7.97167 -4.75505 -0.085999
+      <UV> { 0.989246 0.000315 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 12 {
+      7.97167 -4.75505 0.086
+      <UV> { 0.989132 0.017388 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 13 {
+      7.97167 -4.75505 0.086
+      <UV> { 0.989132 0.017388 }
+      <Normal> { 0 -1 0 }
+    }
+    <Vertex> 14 {
+      7.97167 -4.75505 0.086
+      <UV> { 0.989132 0.017388 }
+      <Normal> { 0 0 1 }
+    }
+    <Vertex> 15 {
+      7.97167 4.75505 -0.085999
+      <UV> { 0.989018 0.617989 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 16 {
+      7.97167 4.75505 -0.085999
+      <UV> { 0.999686 0.600916 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 17 {
+      7.97167 4.75505 0.086
+      <UV> { 0.989132 0.600916 }
+      <Normal> { 0 1 0 }
+    }
+    <Vertex> 18 {
+      7.97167 4.75505 0.086
+      <UV> { 0.989132 0.600916 }
+      <Normal> { 1 0 0 }
+    }
+    <Vertex> 19 {
+      7.97167 4.75505 0.086
+      <UV> { 0.989132 0.600916 }
+      <Normal> { 0 0 1 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXFloorgaraging }
+    <MRef> { MATFloorgaraging }
+    <VertexRef> { 0 2 7 5 <Ref> { Floorgaraging } }
+  }
+  <Polygon> {
+    <TRef> { TEXFloorgaraging }
+    <MRef> { MATFloorgaraging }
+    <VertexRef> { 6 8 17 15 <Ref> { Floorgaraging } }
+  }
+  <Polygon> {
+    <TRef> { TEXFloorgaraging }
+    <MRef> { MATFloorgaraging }
+    <VertexRef> { 16 18 12 10 <Ref> { Floorgaraging } }
+  }
+  <Polygon> {
+    <TRef> { TEXFloorgaraging }
+    <MRef> { MATFloorgaraging }
+    <VertexRef> { 11 13 3 1 <Ref> { Floorgaraging } }
+  }
+  <Polygon> {
+    <TRef> { TEXFloorgaraging }
+    <MRef> { MATFloorgaraging }
+    <VertexRef> { 19 9 4 14 <Ref> { Floorgaraging } }
+  }
+}
