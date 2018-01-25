@@ -18,7 +18,9 @@ class MultiplayerFrm(GameObject):
         self.users_frm = UsersFrm(menu_args)
         self.users_frm.attach(self.on_invite)
         self.users_frm.attach(self.on_add_chat)
+        self.users_frm.attach(self.on_add_groupchat)
         self.match_frm = MatchFrm(menu_args)
+        self.match_frm.attach(self.on_start)
         self.msg_frm = MessageFrm(menu_args)
         self.msg_frm.attach(self.on_msg_focus)
         self.eng.xmpp.attach(self.on_users)
@@ -28,6 +30,8 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_presence_available)
         self.eng.xmpp.attach(self.on_presence_unavailable)
         self.eng.xmpp.attach(self.on_msg)
+        self.eng.xmpp.attach(self.on_groupchat_msg)
+        self.eng.xmpp.attach(self.on_invite_chat)
 
     def show(self):
         self.users_frm.show()
@@ -64,9 +68,20 @@ class MultiplayerFrm(GameObject):
 
     def on_presence_unavailable(self, user): self.users_frm.on_users()
 
+    def on_start(self): self.users_frm.room_name = None
+
     def on_msg(self, msg): self.msg_frm.on_msg(msg)
 
+    def on_groupchat_msg(self, msg): self.msg_frm.on_groupchat_msg(msg)
+
+    def on_invite_chat(self, msg):
+        self.msg_frm.add_groupchat(str(msg['body']), str(msg['from'].bare))
+        self.eng.xmpp.xmpp.plugin['xep_0045'].joinMUC(
+            msg['body'], self.eng.xmpp.xmpp.boundjid.bare)
+
     def on_add_chat(self, usr): self.msg_frm.add_chat(usr)
+
+    def on_add_groupchat(self, room, usr): self.msg_frm.add_groupchat(room, usr)
 
     def on_msg_focus(self, val): self.notify('on_msg_focus', val)
 

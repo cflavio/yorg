@@ -40,7 +40,8 @@ class MatchFrm(GameObject):
                 self.match_frm, self.menu_args, .32)
         self.invited_users += [usr.name]
 
-    def on_start(self): print 'start'
+    def on_start(self):
+        self.notify('on_start')
 
     def show(self):
         self.match_lab.show()

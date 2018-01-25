@@ -1,3 +1,4 @@
+from time import strftime
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
@@ -12,6 +13,7 @@ class UsersFrm(GameObject):
     def __init__(self, menu_args):
         GameObject.__init__(self)
         self.ver_check = VersionChecker()
+        self.room_name = None
         self.labels = []
         self.invited_users = []
         self.menu_args = menu_args
@@ -121,11 +123,24 @@ class UsersFrm(GameObject):
                         usr_inv and user.name not in self.invited_users)
                     lab.frm.set_z(top - .08 - .08 * i)
 
-
     def on_invite(self, usr):
-        print 'invited user', usr
         self.notify('on_invite', usr)
         self.on_users()
+        if not self.room_name:
+            jid = self.eng.xmpp.xmpp.boundjid
+            time_code = strftime('%y%m%d%H%M%S')
+            srv = self.eng.xmpp.xmpp.conf_srv
+            self.room_name = 'yorg' + jid.user + time_code + '@' + srv
+            self.eng.xmpp.xmpp.plugin['xep_0045'].joinMUC(
+                self.room_name, self.eng.xmpp.xmpp.boundjid.bare,
+                pfrom=self.eng.xmpp.xmpp.boundjid.full)
+        self.eng.xmpp.xmpp.send_message(
+            mfrom=self.eng.xmpp.xmpp.boundjid.full,
+            mto=usr.name_full,
+            mtype='chat',
+            msubject='invite',
+            mbody=self.room_name)
+        self.notify('on_add_groupchat', self.room_name, usr.name)
 
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)
 
