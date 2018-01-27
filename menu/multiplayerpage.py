@@ -12,9 +12,9 @@ class MultiplayerPageGui(ThanksPageGui):
 
     def show(self):
         ThanksPageGui.show(self)
-        self.bld_page()
+        self.build()
 
-    def bld_page(self):
+    def build(self):
         scb = lambda: self.notify('on_push_page', 'server', [self.props])
         ccb = lambda: self.notify('on_push_page', 'client', [self.props])
         menu_data = [
@@ -24,8 +24,8 @@ class MultiplayerPageGui(ThanksPageGui):
             DirectButton(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
                          **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
-        map(self.add_widget, widgets)
-        ThanksPageGui.bld_page(self)
+        self.add_widgets(widgets)
+        ThanksPageGui.build(self)
 
 
 class MultiplayerPage(Page):

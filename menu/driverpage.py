@@ -38,7 +38,7 @@ class DriverPageGui(ThanksPageGui):
         self.sel_drv_img = None
         ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args)
 
-    def bld_page(self):
+    def build(self):
         self.drv_info = self.props.gameprops.drivers_info
         menu_args = self.menu_args
         widgets = [OnscreenText(text=_('Select the driver'), pos=(-.2, .8),
@@ -85,7 +85,7 @@ class DriverPageGui(ThanksPageGui):
             self.props.gameprops.cars_img % self.mediator.car,
             parent=base.a2dBottomRight, pos=(-.38, 1, .38), scale=.32)
         widgets += [self.sel_drv_img, name, self.ent]
-        map(self.add_widget, widgets)
+        self.add_widgets(widgets)
         ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
         with open(ffilterpath) as ffilter:
             vert = ffilter.read()
@@ -101,7 +101,7 @@ class DriverPageGui(ThanksPageGui):
         tex = Texture()
         tex.load(empty_img)
         self.sel_drv_img.set_texture(self.t_s, tex)
-        ThanksPageGui.bld_page(self)
+        ThanksPageGui.build(self)
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)
 
@@ -169,8 +169,8 @@ class DriverPageGui(ThanksPageGui):
 
 class DriverPageServerGui(DriverPageGui):
 
-    def bld_page(self):
-        DriverPageGui.bld_page(self)
+    def build(self):
+        DriverPageGui.build(self)
         self.eng.server.register_cb(self.process_srv)
         self.current_drivers = []
 
@@ -250,8 +250,8 @@ class DriverPageServerGui(DriverPageGui):
 
 class DriverPageClientGui(DriverPageGui):
 
-    def bld_page(self):
-        DriverPageGui.bld_page(self)
+    def build(self):
+        DriverPageGui.build(self)
         self.eng.client.register_cb(self.process_client)
 
     def on_click(self, i):

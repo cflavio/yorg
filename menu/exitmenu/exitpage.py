@@ -7,7 +7,7 @@ from yyagl.engine.gui.page import Page, PageGui
 
 class ExitPageGui(PageGui):
 
-    def bld_page(self, back_btn=True):
+    def build(self, back_btn=True):
         menu_args = self.menu_args
         frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
@@ -31,8 +31,8 @@ class ExitPageGui(PageGui):
             text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
             text_scale=.7, **btn_args)
         widgets = [frm, txt, btn_visit, btn_dont_visit]
-        map(self.add_widget, widgets)
-        PageGui.bld_page(self, False)
+        self.add_widgets(widgets)
+        PageGui.build(self, False)
 
     @staticmethod
     def on_end(visit):

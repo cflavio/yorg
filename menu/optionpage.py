@@ -32,7 +32,7 @@ class OptionPageGui(ThanksPageGui):
         self.props = option_props
         ThanksPageGui.__init__(self, mediator, menu_args)
 
-    def bld_page(self):
+    def build(self):
         menu_args = self.menu_args
         widgets = [self.__add_lab('Language', _('Language'), .85)]
         self.lang_opt = DirectOptionMenu(
@@ -81,15 +81,15 @@ class OptionPageGui(ThanksPageGui):
         input_btn = DirectButton(
             text='', pos=(-.2, 1, -.55), command=self.on_input_btn,
             **menu_args.btn_args)
-        PageGui.transl_text(input_btn, 'Configure input', _('Configure input'))
+        PageGui.bind_transl(input_btn, 'Configure input', _('Configure input'))
 
         widgets += [
             self.lang_opt, self.vol_slider, self.fullscreen_cb, self.res_opt,
             self.aa_cb, input_btn, self.shaders_cb, self.cars_opt]
-        map(self.add_widget, widgets)
+        self.add_widgets(widgets)
         idx = self.eng.lang_mgr.lang_codes.index(self.props.lang)
         self.__change_lang(self.eng.languages[idx])
-        ThanksPageGui.bld_page(self)
+        ThanksPageGui.build(self)
 
     def __add_lab(self, txt, txt_tr, pos_z, pos_x=-.3, align=TextNode.ARight,
                   scale=None):
@@ -97,15 +97,15 @@ class OptionPageGui(ThanksPageGui):
         l_a['scale'] = scale or l_a['scale']
         lab = DirectLabel(
             text='', pos=(pos_x, 1, pos_z), text_align=align, **l_a)
-        PageGui.transl_text(lab, txt, txt_tr)
+        PageGui.bind_transl(lab, txt, txt_tr)
         return lab
 
     def on_input_btn(self):
         opts = [self.props.joystick, self.props.opt_file['settings']['keys']]
         self.notify('on_push_page', 'input', opts)
 
-    def update_texts(self):
-        PageGui.update_texts(self)
+    def translate(self):
+        PageGui.translate(self)
         curr_lang = self.eng.lang_mgr.lang
         code2idx = {'en': 0, 'it': 1, 'de': 2, 'gd': 3, 'es': 4, 'gl': 5}
         self.lang_opt.set(code2idx[curr_lang], fCommand=0)
@@ -115,7 +115,7 @@ class OptionPageGui(ThanksPageGui):
             'English': 'en', 'Italiano': 'it', 'Deutsch': 'de',
             u'G\u00E0idhlig': 'gd', 'Spanish': 'es', 'Galician': 'gl'}
         self.eng.lang_mgr.set_lang(lang_dict[arg])
-        self.update_texts()
+        self.translate()
 
     def _on_back(self):
         self.mediator.event.on_back()

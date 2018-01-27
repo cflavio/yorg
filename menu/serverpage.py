@@ -31,7 +31,7 @@ class ServerPageGui(ThanksPageGui):
         self.props = serverpage_props
         ThanksPageGui.__init__(self, mediator, serverpage_props.gameprops.menu_args)
 
-    def bld_page(self):
+    def build(self):
         menu_args = self.props.gameprops.menu_args
         sock = socket(AF_INET, SOCK_DGRAM)
         try:
@@ -39,22 +39,22 @@ class ServerPageGui(ThanksPageGui):
             local_addr = sock.getsockname()[0]
             public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
             addr = local_addr + ' - ' + public_addr
-            self.add_widget(OnscreenText(
+            self.add_widgets([OnscreenText(
                 text=addr, scale=.12, pos=(0, .4), font=menu_args.font,
-                fg=menu_args.text_active))
+                fg=menu_args.text_active)])
         except gaierror:
             self.eng.log_mgr.log('no connection')
         self.conn_txt = OnscreenText(
             scale=.12, pos=(0, .2), font=menu_args.font,
             fg=menu_args.text_active)
-        self.add_widget(self.conn_txt)
+        self.add_widgets([self.conn_txt])
         scb = lambda: self.notify('on_push_page', 'trackpageserver',
                                   [self.props])
         start_btn = DirectButton(
             text=_('Start'), pos=(0, 1, -.5), command=scb,
             **menu_args.btn_args)
-        self.add_widget(start_btn)
-        ThanksPageGui.bld_page(self)
+        self.add_widgets([start_btn])
+        ThanksPageGui.build(self)
         evt = self.mediator.event
         try:
             self.eng.server.start(evt.process_msg, evt.process_connection)

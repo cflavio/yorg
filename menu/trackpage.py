@@ -13,10 +13,10 @@ class TrackPageGui(ThanksPageGui):
         self.props = trackpage_props
         ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_args)
 
-    def bld_page(self):
+    def build(self):
         txt = OnscreenText(text=_('Select the track'), pos=(-.2, .8),
                            **self.menu_args.text_args)
-        self.add_widget(txt)
+        self.add_widgets([txt])
         t_a = self.menu_args.text_args.copy()
         t_a['scale'] = .06
         tracks_per_row = 3
@@ -41,8 +41,8 @@ class TrackPageGui(ThanksPageGui):
                 gprops.tracks_tr()[col + row * tracks_per_row],
                 pos=(-.8 + col * .6 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
-            map(self.add_widget, [btn, txt])
-        ThanksPageGui.bld_page(self)
+            self.add_widgets([btn, txt])
+        ThanksPageGui.build(self)
 
     def on_track(self, track):
         self.eng.log('selected ' + track)

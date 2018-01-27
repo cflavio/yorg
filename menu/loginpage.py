@@ -14,7 +14,7 @@ class LogInPageGui(ThanksPageGui):
         self.props = mp_props
         ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
 
-    def bld_page(self):
+    def build(self):
         menu_args = self.menu_args
         t_a = menu_args.text_args.copy()
         # del t_a['scale']
@@ -43,8 +43,8 @@ class LogInPageGui(ThanksPageGui):
             pos=(-.2, -.32), **t_a)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
                    self.store_cb, store_lab]
-        map(self.add_widget, widgets)
-        ThanksPageGui.bld_page(self)
+        self.add_widgets(widgets)
+        ThanksPageGui.build(self)
 
     def start(self):
         self.eng.xmpp.start(self.jid_ent.get(), self.pwd_ent.get(),

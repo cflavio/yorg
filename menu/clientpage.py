@@ -28,7 +28,7 @@ class ClientPageGui(ThanksPageGui):
         self.props = props
         ThanksPageGui.__init__(self, mediator, props.gameprops.menu_args)
 
-    def bld_page(self):
+    def build(self):
         menu_args = self.props.gameprops.menu_args
         txt = OnscreenText(text=_('Client'), pos=(0, .4),
                            **menu_args.text_args)
@@ -39,8 +39,8 @@ class ClientPageGui(ThanksPageGui):
         self.ent.onscreenText['fg'] = menu_args.text_active
         btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
                            command=self.connect, **menu_args.btn_args)
-        map(self.add_widget, [txt, self.ent, btn])
-        ThanksPageGui.bld_page(self)
+        self.add_widgets([txt, self.ent, btn])
+        ThanksPageGui.build(self)
 
     def connect(self):
         menu_args = self.props.gameprops.menu_args
@@ -50,7 +50,7 @@ class ClientPageGui(ThanksPageGui):
             wait_txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
                 font=menu_args.font, fg=menu_args.text_active)
-            self.add_widget(wait_txt)
+            self.add_widgets([wait_txt])
         except NetworkError:
             txt = OnscreenText(_('Error'), pos=(0, -.05), fg=(1, 0, 0, 1),
                                scale=.16, font=menu_args.font)

@@ -11,7 +11,7 @@ class InGamePageGui(PageGui):
         self.keys = keys
         PageGui.__init__(self, mediator, menu_args)
 
-    def bld_page(self, back_btn=True):
+    def build(self, back_btn=True):
         frm = DirectFrame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         question_txt = _(
@@ -33,8 +33,8 @@ class InGamePageGui(PageGui):
         btn_dont_visit = DirectButton(
             text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
             text_scale=.8, **btn_args)
-        map(self.add_widget, [frm, txt, btn_visit, btn_dont_visit])
-        PageGui.bld_page(self, False)
+        self.add_widgets([frm, txt, btn_visit, btn_dont_visit])
+        PageGui.build(self, False)
 
         if self.eng.lib.lib_version().startswith('1.10'):
             self.eng.show_cursor()

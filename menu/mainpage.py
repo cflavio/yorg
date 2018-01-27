@@ -103,7 +103,7 @@ class YorgMainPageGui(MainPageGui, ):
             return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
         return _('Connecting')
 
-    def bld_page(self):
+    def build(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
                                     [self.props])
         mp_cb = lambda: self.notify('on_push_page', 'multiplayer',
@@ -123,7 +123,7 @@ class YorgMainPageGui(MainPageGui, ):
                          **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(widgets):
-            PageGui.transl_text(wdg, menu_data[i][0], menu_data[i][1])
+            PageGui.bind_transl(wdg, menu_data[i][0], menu_data[i][1])
         logo_img = OnscreenImage(
             self.props.title_img, scale=(.64, 1, .64 * (380.0 / 772)),
             parent=base.a2dTopLeft, pos=(.65, 1, -.32))
@@ -135,12 +135,12 @@ class YorgMainPageGui(MainPageGui, ):
         wip_lab = DirectLabel(
             text='', pos=(.05, 1, -.76), parent=base.a2dTopLeft,
             text_wordwrap=10, text_align=TextNode.A_left, **lab_args)
-        PageGui.transl_text(wip_lab, 'Note: the game is work-in-progress',
+        PageGui.bind_transl(wip_lab, 'Note: the game is work-in-progress',
                             _('Note: the game is work-in-progress'))
         self.widgets += [wip_lab]
-        map(self.add_widget, widgets)
+        self.add_widgets(widgets)
         self.set_news()
-        MainPageGui.bld_page(self)
+        MainPageGui.build(self)
         if not self.ver_check.is_uptodate():
             self.widgets[6]['state'] = DISABLED
 
@@ -175,7 +175,7 @@ class YorgMainPageGui(MainPageGui, ):
             _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
             parent=base.a2dBottomLeft, fg=menu_args.text_normal,
             font=menu_args.font)]
-        self.transl_text(texts[-1], 'Last news:', _('Last news:'))
+        self.bind_transl(texts[-1], 'Last news:', _('Last news:'))
         rss = [map(self.__to_unicode, rss_str) for rss_str in rss]
         texts += [OnscreenText(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
@@ -188,8 +188,8 @@ class YorgMainPageGui(MainPageGui, ):
             text=_('show'), pos=(.55, 1, .15), command=self.eng.open_browser,
             extraArgs=[self.props.site_url], parent=base.a2dBottomLeft,
             **btn_args)
-        self.transl_text(show_btn, 'show', _('show'))
-        map(self.add_widget, [frm] + texts + [show_btn])
+        self.bind_transl(show_btn, 'show', _('show'))
+        self.add_widgets([frm] + texts + [show_btn])
 
     def __conv(self, datestr):
         if self.__feed_type == 'rss':

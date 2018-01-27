@@ -18,7 +18,7 @@ class InputPageGui(ThanksPageGui):
         self.keys = keys
         ThanksPageGui.__init__(self, mediator, menu_args)
 
-    def bld_page(self):
+    def build(self):
         menu_args = self.menu_args
         widgets = []
         self.ibuttons = []
@@ -26,7 +26,7 @@ class InputPageGui(ThanksPageGui):
         joypad_lab = DirectLabel(
             text=_('Use the joypad when present'), pos=(-.3, 1, .8),
             text_align=TextNode.ARight, **menu_args.label_args)
-        PageGui.transl_text(joypad_lab, 'Use the joypad when present',
+        PageGui.bind_transl(joypad_lab, 'Use the joypad when present',
                             _('Use the joypad when present'))
         self.joypad_cb = DirectCheckButton(
             pos=(-.11, 1, .82), text='',
@@ -53,8 +53,8 @@ class InputPageGui(ThanksPageGui):
             text=_('Press the key to record it'), pos=(-.2, 1, -.6), **l_a)
         self.hint_lab.hide()
         widgets += [joypad_lab, self.joypad_cb, self.hint_lab]
-        map(self.add_widget, widgets)
-        ThanksPageGui.bld_page(self)
+        self.add_widgets(widgets)
+        ThanksPageGui.build(self)
 
     def __add_lab(self, text, pos_z):
         return DirectLabel(

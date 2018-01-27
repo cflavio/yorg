@@ -6,13 +6,13 @@ from yorg.thanksnames import ThanksNames
 
 class SupportersPageGui(ThanksPageGui):
 
-    def bld_page(self, back_btn=True):
+    def build(self, back_btn=True):
         menu_args = self.menu_args
         text = ', '.join(ThanksNames.get_all_thanks())
         txt = OnscreenText(text=text, pos=(-.2, .72), wordwrap=16,
                            **menu_args.text_args)
-        self.add_widget(txt)
-        ThanksPageGui.bld_page(self)
+        self.add_widgets([txt])
+        ThanksPageGui.build(self)
 
 
 class SupportersPage(Page):

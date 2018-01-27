@@ -19,7 +19,7 @@ class CarPageGui(ThanksPageGui):
         self.props = carpage_props
         ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args)
 
-    def bld_page(self):
+    def build(self):
         gprops = self.props.gameprops
         widgets = [OnscreenText(
             text=_('Select the car'), pos=(-.2, .8),
@@ -29,9 +29,9 @@ class CarPageGui(ThanksPageGui):
             if row * cars_per_row + col >= len(gprops.cars_names):
                 break
             widgets += self.__bld_car(cars_per_row, row, col)
-        map(self.add_widget, widgets)
+        self.add_widgets(widgets)
         self.current_cars = {}
-        ThanksPageGui.bld_page(self)
+        ThanksPageGui.build(self)
 
     def __bld_car(self, cars_per_row, row, col):
         t_a = self.menu_args.text_args.copy()
@@ -103,8 +103,8 @@ class CarPageGuiSeason(CarPageGui):
 
 class CarPageGuiServer(CarPageGui):
 
-    def bld_page(self):
-        CarPageGui.bld_page(self)
+    def build(self):
+        CarPageGui.build(self)
         self.eng.server.register_cb(self.process_srv)
         self.eng.car_mapping = {}
 
@@ -164,8 +164,8 @@ class CarPageGuiServer(CarPageGui):
 
 class CarPageGuiClient(CarPageGui):
 
-    def bld_page(self):
-        CarPageGui.bld_page(self)
+    def build(self):
+        CarPageGui.build(self)
         self.eng.client.register_cb(self.process_client)
 
     def on_car(self, car):

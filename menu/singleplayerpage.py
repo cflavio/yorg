@@ -10,7 +10,7 @@ class SingleplayerPageGui(ThanksPageGui):
         self.props = props
         ThanksPageGui.__init__(self, mediator, props.gameprops.menu_args)
 
-    def bld_page(self):
+    def build(self):
         menu_data = [
             (_('Single race'), self.on_single_race),
             (_('New season'), self.on_start),
@@ -20,11 +20,11 @@ class SingleplayerPageGui(ThanksPageGui):
                 text=menu[0], pos=(-.2, 1, .4-i*.28), command=menu[1],
                 **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
-        map(self.add_widget, widgets)
+        self.add_widgets(widgets)
         self._set_buttons()
         if not self.props.has_save:
             widgets[-1].disable()
-        ThanksPageGui.bld_page(self)
+        ThanksPageGui.build(self)
 
     def on_single_race(self):
         self.notify('on_push_page', 'single_race', [self.props])
