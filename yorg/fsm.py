@@ -1,16 +1,16 @@
 from sys import exit as sys_exit
 from os.path import exists
-from yyagl.gameobject import Fsm
+from yyagl.gameobject import FsmColleague
 from yyagl.racing.car.audio import CarSounds
 from yyagl.racing.car.event import Keys
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 
 
-class YorgFsm(Fsm):
+class YorgFsm(FsmColleague):
 
     def __init__(self, mdt):
-        Fsm.__init__(self, mdt)
+        FsmColleague.__init__(self, mdt)
         self.defaultTransitions = {
             'Menu': ['Race', 'Exit'],
             'Race': ['Ranking', 'Menu', 'Exit'],

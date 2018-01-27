@@ -1,11 +1,11 @@
 from time import strftime
-from yyagl.gameobject import Event
+from yyagl.gameobject import EventColleague
 
 
-class YorgEvent(Event):
+class YorgEvent(EventColleague):
 
     def __init__(self, mdt):
-        Event.__init__(self, mdt)
+        EventColleague.__init__(self, mdt)
         if not self.eng.is_runtime:
             self.accept('f12', self.eng.phys_mgr.toggle_debug)
         fname = 'yorg_' + strftime('%y_%m_%d_%H_%M_%S') + '.png'

@@ -1,13 +1,13 @@
 from copy import deepcopy
-from yyagl.gameobject import GameObject, Gui
+from yyagl.gameobject import GameObject, GuiColleague
 from yyagl.engine.gui.menu import Menu
 from .ingamepage import InGamePage
 
 
-class InGameMenuGui(Gui):
+class InGameMenuGui(GuiColleague):
 
     def __init__(self, mdt, menu_args, keys):
-        Gui.__init__(self, mdt)
+        GuiColleague.__init__(self, mdt)
         menu_args_c = deepcopy(menu_args)
         menu_args_c.background_img = ''
         menu_args_c.btn_size = (-8.6, 8.6, -.42, .98)
@@ -25,7 +25,7 @@ class InGameMenuGui(Gui):
 
     def destroy(self):
         self.menu = self.menu.destroy()
-        Gui.destroy(self)
+        GuiColleague.destroy(self)
 
 
 class InGameMenu(GameObject):
