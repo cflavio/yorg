@@ -77,7 +77,7 @@ class YorgMainPageGui(MainPageGui, ):
         self.notify('on_push_page', 'login', [self.props])
 
     def on_loginout(self):
-        if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
+        if self.eng.xmpp.client and self.eng.xmpp.client.authenticated:
             self.on_logout()
         elif self.conn_attempted:
             self.on_login()
@@ -96,9 +96,9 @@ class YorgMainPageGui(MainPageGui, ):
     def get_label(self):
         if not self.ver_check.is_uptodate():
             return _('Not up-to-date')
-        if self.eng.xmpp.xmpp and self.eng.xmpp.xmpp.authenticated:
+        if self.eng.xmpp.client and self.eng.xmpp.client.authenticated:
             return _('Log out') + \
-                ' \1small\1(%s)\2' % self.eng.xmpp.xmpp.boundjid.bare
+                ' \1small\1(%s)\2' % self.eng.xmpp.client.boundjid.bare
         elif self.conn_attempted:
             return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
         return _('Connecting')

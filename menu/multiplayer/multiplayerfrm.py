@@ -50,9 +50,9 @@ class MultiplayerFrm(GameObject):
     def on_friend_answer(self, user, val):
         self.dialog.detach(self.on_friend_answer)
         self.dialog = self.dialog.destroy()
-        self.eng.xmpp.xmpp.send_presence_subscription(
+        self.eng.xmpp.client.send_presence_subscription(
             pto=user,
-            pfrom=self.eng.xmpp.xmpp.boundjid.full,
+            pfrom=self.eng.xmpp.client.boundjid.full,
             ptype='subscribed' if val else 'unsubscribed')
 
     def on_invite(self, usr):
@@ -76,8 +76,8 @@ class MultiplayerFrm(GameObject):
 
     def on_invite_chat(self, msg):
         self.msg_frm.add_groupchat(str(msg['body']), str(msg['from'].bare))
-        self.eng.xmpp.xmpp.plugin['xep_0045'].joinMUC(
-            msg['body'], self.eng.xmpp.xmpp.boundjid.bare)
+        self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
+            msg['body'], self.eng.xmpp.client.boundjid.bare)
 
     def on_add_chat(self, usr): self.msg_frm.add_chat(usr)
 

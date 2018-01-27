@@ -20,19 +20,28 @@ class UserFrmMe(Subject):
             pos=pos, parent=parent)
         self.frm.bind(ENTER, self.on_enter)
         self.frm.bind(EXIT, self.on_exit)
+        name = name.split('@')[0] + '\1smaller\1@' + name.split('@')[1] + '\2'
         self.lab = DirectLabel(text=name, pos=(0, 1, 0), parent=self.frm,
                                text_align=TextNode.A_left, **lab_args)
         self.lab.bind(ENTER, self.on_enter)
         self.lab.bind(EXIT, self.on_exit)
-        if is_supporter:
-            self.lab.set_x(.03)
-            self.supp_btn = StaticMPBtn(
-                self.frm, self, menu_args, 'assets/images/gui/medal.txo',
-                .01, None, name_full, _('Supporter!'))
+        self.supp_btn = None
+        self.set_supporter(is_supporter)
 
     def on_enter(self, pos): self.lab['text_fg'] = self.menu_args.text_active
 
     def on_exit(self, pos): self.lab['text_fg'] = self.menu_args.text_normal
+
+    def set_supporter(self, is_supporter):
+        if is_supporter:
+            self.lab.set_x(.03)
+            self.supp_btn = StaticMPBtn(
+                self.frm, self, self.menu_args, 'assets/images/gui/medal.txo',
+                .01, None, self.name_full, _('Supporter!'))
+        else:
+            self.lab.set_x(0)
+            if self.supp_btn:
+                self.supp_btn = self.supp_btn.destroy()
 
     def destroy(self):
         self.lab.destroy()

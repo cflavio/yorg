@@ -90,9 +90,16 @@ class MessageFrm(GameObject):
             self.msg_txt.textNode.getLowerRight3d()[2]
         self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
 
+    def set_title(self, title):
+        if title:
+            title = title.split('@')[0] + '\1smaller\1@' + title.split('@')[1] + '\2'
+        if title.endswith('>\2'):
+            title = title[:-2] + '\2>'
+        self.dst_txt['text'] = title
+
     def set_chat(self, chat):
         self.curr_chat = chat
-        self.dst_txt['text'] = chat.title
+        self.set_title(chat.title)
         self.msg_txt['text'] = '\n'.join(chat.messages)
         txt_height = self.msg_txt.textNode.getUpperLeft3d()[2] - \
             self.msg_txt.textNode.getLowerRight3d()[2]
@@ -117,7 +124,7 @@ class MessageFrm(GameObject):
         chat_idx = self.chats.index(self.curr_chat)
         next_idx = (chat_idx + 1) % len(self.chats)
         chat = self.chats[next_idx]
-        self.dst_txt['text'] = chat.title
+        self.set_title(chat.title)
         chat.read = True
         self.set_chat(chat)
 
@@ -134,19 +141,19 @@ class MessageFrm(GameObject):
         self.ent.set('')
         if self.curr_chat.dst not in self.presences_sent and \
                 not str(self.curr_chat.dst).startswith('yorg'):
-            self.eng.xmpp.xmpp.send_presence(
-                pfrom=self.eng.xmpp.xmpp.boundjid.full,
+            self.eng.xmpp.client.send_presence(
+                pfrom=self.eng.xmpp.client.boundjid.full,
                 pto=self.curr_chat.dst)
             self.presences_sent += [self.curr_chat.dst]
         if str(self.curr_chat.dst).startswith('yorg'):
-            self.eng.xmpp.xmpp.send_message(
-                mfrom=self.eng.xmpp.xmpp.boundjid.full,
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
                 mto=self.curr_chat.dst,
                 mtype='groupchat',
                 mbody=val)
         else:
-            self.eng.xmpp.xmpp.send_message(
-                mfrom=self.eng.xmpp.xmpp.boundjid.full,
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
                 mto=self.curr_chat.dst,
                 msubject='chat',
                 mbody=val)
@@ -154,7 +161,9 @@ class MessageFrm(GameObject):
         self.curr_chat.messages += [msg]
 
     def on_msg(self, msg):
-        str_msg = '\1italic\1' + str(JID(msg['from']).bare) + '\2: ' + str(msg['body'])
+        src = str(JID(msg['from']).bare)
+        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         chat = self.__find_chat(msg['from'])
         if not chat:
             chat = Chat(msg['from'], str(JID(msg['from']).bare))
@@ -169,7 +178,9 @@ class MessageFrm(GameObject):
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
     def on_groupchat_msg(self, msg):
-        str_msg = '\1italic\1' + str(JID(msg['mucnick'])) + '\2: ' + str(msg['body'])
+        src = str(JID(msg['mucnick']))
+        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         chat = self.curr_chat
         if not chat:
             chat = Chat(str(JID(msg['from']).bare))
@@ -188,7 +199,7 @@ class MessageFrm(GameObject):
         if chats: return chats[0]
 
     def add_chat(self, usr):
-        self.dst_txt['text'] = JID(usr).bare
+        self.set_title(JID(usr).bare)
         chat = self.__find_chat(usr)
         if not chat:
             chat = Chat(usr, JID(usr).bare)
@@ -196,7 +207,7 @@ class MessageFrm(GameObject):
         self.set_chat(chat)
 
     def add_groupchat(self, room, usr):
-        self.dst_txt['text'] = usr
+        self.set_title(usr)
         chat = self.curr_chat
         if not chat:
             chat = Chat(room, '<%s>' % usr)

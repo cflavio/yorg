@@ -64,7 +64,7 @@ class UsersFrm(GameObject):
         return name
 
     def on_users(self):
-        if not self.eng.xmpp.xmpp: self.set_connection_label()
+        if not self.eng.xmpp.client: self.set_connection_label()
         else:
             if self.conn_lab:
                 self.conn_lab.destroy()
@@ -82,7 +82,7 @@ class UsersFrm(GameObject):
             for i, user in enumerate(self.eng.xmpp.users):
                 usr_inv = invite_btn and user.is_in_yorg
                 if self.trunc(user.name, 20) not in label_users:
-                    if self.eng.xmpp.xmpp.boundjid.bare != user.name and \
+                    if self.eng.xmpp.client.boundjid.bare != user.name and \
                             user.is_in_yorg:
                         lab = UserFrmList(
                             self.trunc(user.name, 20),
@@ -92,7 +92,7 @@ class UsersFrm(GameObject):
                             (0, 1, top - .08 - .08 * i),
                             self.frm.getCanvas(),
                             self.menu_args)
-                    elif self.eng.xmpp.xmpp.boundjid.bare != user.name and \
+                    elif self.eng.xmpp.client.boundjid.bare != user.name and \
                             not user.is_in_yorg:
                         lab = UserFrmListOut(
                             self.trunc(user.name, 20),
@@ -122,20 +122,21 @@ class UsersFrm(GameObject):
                     lab.show_invite_btn(
                         usr_inv and user.name not in self.invited_users)
                     lab.frm.set_z(top - .08 - .08 * i)
+                    lab.set_supporter(user.is_supporter)
 
     def on_invite(self, usr):
         self.notify('on_invite', usr)
         self.on_users()
         if not self.room_name:
-            jid = self.eng.xmpp.xmpp.boundjid
+            jid = self.eng.xmpp.client.boundjid
             time_code = strftime('%y%m%d%H%M%S')
-            srv = self.eng.xmpp.xmpp.conf_srv
+            srv = self.eng.xmpp.client.conf_srv
             self.room_name = 'yorg' + jid.user + time_code + '@' + srv
-            self.eng.xmpp.xmpp.plugin['xep_0045'].joinMUC(
-                self.room_name, self.eng.xmpp.xmpp.boundjid.bare,
-                pfrom=self.eng.xmpp.xmpp.boundjid.full)
-        self.eng.xmpp.xmpp.send_message(
-            mfrom=self.eng.xmpp.xmpp.boundjid.full,
+            self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
+                self.room_name, self.eng.xmpp.client.boundjid.bare,
+                pfrom=self.eng.xmpp.client.boundjid.full)
+        self.eng.xmpp.client.send_message(
+            mfrom=self.eng.xmpp.client.boundjid.full,
             mto=usr.name_full,
             mtype='chat',
             msubject='invite',
@@ -145,14 +146,14 @@ class UsersFrm(GameObject):
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)
 
     def on_friend(self, usr):
-        self.eng.xmpp.xmpp.send_presence_subscription(
+        self.eng.xmpp.client.send_presence_subscription(
             usr.name, ptype='subscribe',
-            pfrom=self.eng.xmpp.xmpp.boundjid.full)
+            pfrom=self.eng.xmpp.client.boundjid.full)
 
     def on_unfriend(self, usr):
-        print '\n\n', self.eng.xmpp.xmpp.client_roster, '\n\n'
-        self.eng.xmpp.xmpp.del_roster_item(usr.name)
-        print '\n\n', self.eng.xmpp.xmpp.client_roster, '\n\n'
+        print '\n\n', self.eng.xmpp.client.client_roster, '\n\n'
+        self.eng.xmpp.client.del_roster_item(usr.name)
+        print '\n\n', self.eng.xmpp.client.client_roster, '\n\n'
 
     def destroy(self):
         self.frm = self.frm.destroy()
