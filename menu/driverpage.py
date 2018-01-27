@@ -33,10 +33,10 @@ void main() {
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, driverpage_props):
+    def __init__(self, mediator, driverpage_props):
         self.props = driverpage_props
         self.sel_drv_img = None
-        ThanksPageGui.__init__(self, mdt, driverpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args)
 
     def bld_page(self):
         self.drv_info = self.props.gameprops.drivers_info
@@ -82,7 +82,7 @@ class DriverPageGui(ThanksPageGui):
                     *txt_def + (psign, pcol, col, row)),
                 txt_lst)
         self.sel_drv_img = OnscreenImage(
-            self.props.gameprops.cars_img % self.mdt.car,
+            self.props.gameprops.cars_img % self.mediator.car,
             parent=base.a2dBottomRight, pos=(-.38, 1, .38), scale=.32)
         widgets += [self.sel_drv_img, name, self.ent]
         map(self.add_widget, widgets)
@@ -144,8 +144,8 @@ class DriverPageGui(ThanksPageGui):
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
         cars = gprops.cars_names[:]
-        car_idx = cars.index(self.mdt.car)
-        cars.remove(self.mdt.car)
+        car_idx = cars.index(self.mediator.car)
+        cars.remove(self.mediator.car)
         shuffle(cars)
         drv_idx = range(8)
         drv_idx.remove(i)
@@ -158,8 +158,8 @@ class DriverPageGui(ThanksPageGui):
         gprops.drivers_info[i] = gprops.drivers_info[i]._replace(
             img_idx=car_idx)
         self.eng.log('drivers: ' + str(gprops.drivers_info))
-        self.notify('on_driver_selected', self.ent.get(), self.mdt.track,
-                    self.mdt.car)
+        self.notify('on_driver_selected', self.ent.get(), self.mediator.track,
+                    self.mediator.car)
 
     def destroy(self):
         self.sel_drv_img = None
@@ -184,8 +184,8 @@ class DriverPageServerGui(DriverPageGui):
         taskMgr.remove(self.update_tsk)
         self.current_drivers += [self]
         cars = gprops.cars_names[:]
-        car_idx = cars.index(self.mdt.car)
-        cars.remove(self.mdt.car)
+        car_idx = cars.index(self.mediator.car)
+        cars.remove(self.mediator.car)
         shuffle(cars)
         drv_idx = range(8)
         drv_idx.remove(i)
@@ -217,8 +217,8 @@ class DriverPageServerGui(DriverPageGui):
         self.eng.log_mgr.log('start race: ' + str(packet))
         self.eng.log('drivers: ' + str(gprops.drivers_info))
         self.notify(
-            'on_driver_selected_server', self.ent.get(), self.mdt.track,
-            self.mdt.car, gprops.cars_names[:len(self.current_drivers)],
+            'on_driver_selected_server', self.ent.get(), self.mediator.track,
+            self.mediator.car, gprops.cars_names[:len(self.current_drivers)],
             packet)
 
     def process_srv(self, data_lst, sender):
@@ -263,15 +263,15 @@ class DriverPageClientGui(DriverPageGui):
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
         self.eng.client.send([
-            NetMsgs.driver_selection, self.mdt.car, self.ent.get(), i,
+            NetMsgs.driver_selection, self.mediator.car, self.ent.get(), i,
             gprops.drivers_info[i].speed, gprops.drivers_info[i].adherence,
             gprops.drivers_info[i].stability, self.eng.client.my_addr])
 
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.start_race:
             self.eng.log_mgr.log('start_race: ' + str(data_lst))
-            self.notify('on_car_start_client', self.mdt.track, self.mdt.car,
-                        [self.mdt.car], data_lst)
+            self.notify('on_car_start_client', self.mediator.track, self.mediator.car,
+                        [self.mediator.car], data_lst)
 
 
 class DriverPage(Page):

@@ -12,12 +12,12 @@ from .thankspage import ThanksPageGui
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, carpage_props, track_path):
+    def __init__(self, mediator, carpage_props, track_path):
         self.car = None
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
-        ThanksPageGui.__init__(self, mdt, carpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args)
 
     def bld_page(self):
         gprops = self.props.gameprops

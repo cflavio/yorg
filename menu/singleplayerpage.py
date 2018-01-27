@@ -6,9 +6,9 @@ from .thankspage import ThanksPageGui
 
 class SingleplayerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, props):
+    def __init__(self, mediator, props):
         self.props = props
-        ThanksPageGui.__init__(self, mdt, props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, props.gameprops.menu_args)
 
     def bld_page(self):
         menu_data = [

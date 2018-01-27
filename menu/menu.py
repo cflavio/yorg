@@ -52,19 +52,19 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_track_selected)
         if page_code == 'new_season':
             self.eng.log('new season')
-            page = CarPageSeason(args[0], self.mdt.track)
+            page = CarPageSeason(args[0], self.mediator.track)
             page.gui.attach(self.on_car_selected_season)
         if page_code == 'car_page':
             self.eng.log('car page')
-            page = CarPage(args[0], self.mdt.track)
+            page = CarPage(args[0], self.mediator.track)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageserver':
             self.eng.log('car page server')
-            page = CarPageServer(args[0], self.mdt.track)
+            page = CarPageServer(args[0], self.mediator.track)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             self.eng.log('car page client')
-            page = CarPageClient(args[0], self.mdt.track)
+            page = CarPageClient(args[0], self.mediator.track)
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
             self.eng.log('driver page')
@@ -81,63 +81,63 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
             self.eng.log('options')
-            page = OptionPage(self.mdt.gui.menu_args, args[0])
+            page = OptionPage(self.mediator.gui.menu_args, args[0])
         if page_code == 'input':
             self.eng.log('input')
             page = InputPage(
-                self.mdt.gui.menu_args, args[0], args[1])
+                self.mediator.gui.menu_args, args[0], args[1])
         if page_code == 'credits':
             self.eng.log('credits')
-            page = CreditPage(self.mdt.gui.menu_args)
+            page = CreditPage(self.mediator.gui.menu_args)
         if page_code == 'supporters':
             self.eng.log('supporters')
-            page = SupportersPage(self.mdt.gui.menu_args)
+            page = SupportersPage(self.mediator.gui.menu_args)
         self.push_page(page)
 
     def on_back(self, page_code, args=[]):
         if page_code == 'input_page':
-            self.mdt.gui.notify('on_input_back', args[0])
+            self.mediator.gui.notify('on_input_back', args[0])
         if page_code == 'options_page':
-            self.mdt.gui.notify('on_options_back', args[0])
+            self.mediator.gui.notify('on_options_back', args[0])
         MenuLogic.on_back(self)
 
     def on_track_selected(self, track):
-        self.mdt.track = track
+        self.mediator.track = track
 
     def on_car_selected(self, car):
-        self.mdt.gui.notify('on_car_selected', car)
+        self.mediator.gui.notify('on_car_selected', car)
 
     def on_driver_selected_server(self, name, track, car, cars, packet):
-        self.mdt.gui.notify('on_driver_selected_server', name, track, car,
+        self.mediator.gui.notify('on_driver_selected_server', name, track, car,
                             cars, packet)
 
     def on_car_start_client(self, track, car, cars, packet):
-        self.mdt.gui.notify('on_car_start_client', track, car, cars, packet)
+        self.mediator.gui.notify('on_car_start_client', track, car, cars, packet)
 
     def on_car_selected_season(self, car):
-        self.mdt.gui.notify('on_car_selected_season', car)
+        self.mediator.gui.notify('on_car_selected_season', car)
 
     def on_driver_selected(self, name, track, car):
-        self.mdt.gui.notify('on_driver_selected', name, track, car)
+        self.mediator.gui.notify('on_driver_selected', name, track, car)
 
     def on_continue(self):
-        self.mdt.gui.notify('on_continue')
+        self.mediator.gui.notify('on_continue')
 
     def on_login(self):
-        self.mdt.gui.notify('on_login')
+        self.mediator.gui.notify('on_login')
 
 
 class YorgMenuGui(MenuGui):
 
-    def __init__(self, mdt, menu_props):
+    def __init__(self, mediator, menu_props):
         # every page should not manage following pages by forwarding params:
         # each page should callback the menu and it should spawn the next one
-        MenuGui.__init__(self, mdt, menu_props.gameprops.menu_args)
+        MenuGui.__init__(self, mediator, menu_props.gameprops.menu_args)
         page = YorgMainPage(menu_props)
         page.gui.attach(self.on_login)
         page.gui.attach(self.on_logout)
         page.gui.attach(self.on_exit)
-        self.eng.do_later(.01, lambda: self.mdt.logic.push_page(page))
+        self.eng.do_later(.01, lambda: self.mediator.logic.push_page(page))
 
     def on_login(self):
         self.notify('on_login')

@@ -5,8 +5,8 @@ from .exitpage import ExitPage
 
 class ExitMenuGui(GuiColleague):
 
-    def __init__(self, mdt, menu_args):
-        GuiColleague.__init__(self, mdt)
+    def __init__(self, mediator, menu_args):
+        GuiColleague.__init__(self, mediator)
         self.menu = Menu(menu_args)
         self.menu.push_page(ExitPage(menu_args))
 

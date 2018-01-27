@@ -17,16 +17,16 @@ class ClientEvent(PageEvent):
         if data_lst[0] == NetMsgs.track_selected:
             self.eng.log_mgr.log('track selected: ' + data_lst[1])
             self.notify('on_track_selected', data_lst[1])
-            self.mdt.gui.notify('on_push_page', 'carpageclient',
-                                [self.mdt.gui.props])
+            self.mediator.gui.notify('on_push_page', 'carpageclient',
+                                [self.mediator.gui.props])
 
 
 class ClientPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, props):
+    def __init__(self, mediator, props):
         self.ent = None
         self.props = props
-        ThanksPageGui.__init__(self, mdt, props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, props.gameprops.menu_args)
 
     def bld_page(self):
         menu_args = self.props.gameprops.menu_args
@@ -46,7 +46,7 @@ class ClientPageGui(ThanksPageGui):
         menu_args = self.props.gameprops.menu_args
         try:
             self.eng.log_mgr.log(self.ent.get())
-            self.eng.client.start(self.mdt.event.process_msg, self.ent.get())
+            self.eng.client.start(self.mediator.event.process_msg, self.ent.get())
             wait_txt = OnscreenText(
                 text=_('Waiting for the server'), scale=.12, pos=(0, -.5),
                 font=menu_args.font, fg=menu_args.text_active)

@@ -10,9 +10,9 @@ from .thankspage import ThanksPageGui
 
 class LogInPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, mp_props):
+    def __init__(self, mediator, mp_props):
         self.props = mp_props
-        ThanksPageGui.__init__(self, mdt, mp_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
 
     def bld_page(self):
         menu_args = self.menu_args

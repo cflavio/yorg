@@ -6,8 +6,8 @@ from .ingamepage import InGamePage
 
 class InGameMenuGui(GuiColleague):
 
-    def __init__(self, mdt, menu_args, keys):
-        GuiColleague.__init__(self, mdt)
+    def __init__(self, mediator, menu_args, keys):
+        GuiColleague.__init__(self, mediator)
         menu_args_c = deepcopy(menu_args)
         menu_args_c.background_img = ''
         menu_args_c.btn_size = (-8.6, 8.6, -.42, .98)

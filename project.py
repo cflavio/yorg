@@ -48,4 +48,4 @@
 # refactor: don't share eng with every colleague, instead share only the
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr
-# refactor: remove mdt from colleague
+# refactor: remove mediator from colleague

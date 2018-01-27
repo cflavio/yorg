@@ -12,35 +12,35 @@ from menu.multiplayer.multiplayerfrm import MultiplayerFrm
 
 class YorgLogic(GameLogic):
 
-    def __init__(self, mdt):
-        GameLogic.__init__(self, mdt)
+    def __init__(self, mediator):
+        GameLogic.__init__(self, mediator)
         self.season = self.mp_frm = None
         self.eng.do_later(.01, self.init_mp_frm)
 
     def init_mp_frm(self):
         if not self.mp_frm:
-            self.mp_frm = MultiplayerFrm(self.mdt.gameprops.menu_args)
+            self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_args)
             self.mp_frm.attach(self.on_msg_focus)
 
     def on_start(self):
         GameLogic.on_start(self)
 
         self.__process_default()
-        dev = self.mdt.options['development']
+        dev = self.mediator.options['development']
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         if car and track:  # for development's quickstart
             self.season = SingleRaceSeason(self.__season_props(
-                self.mdt.gameprops, car, [],
-                self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+                self.mediator.gameprops, car, [],
+                self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
                 dev['race_start_time'], dev['countdown_seconds']))
-            self.season.attach_obs(self.mdt.event.on_season_end)
-            self.season.attach_obs(self.mdt.event.on_season_cont)
+            self.season.attach_obs(self.mediator.event.on_season_end)
+            self.season.attach_obs(self.mediator.event.on_season_cont)
             self.season.start()
-            self.mdt.fsm.demand('Race', track, car, [car],
+            self.mediator.fsm.demand('Race', track, car, [car],
                                 self.season.logic.drivers, self.season.ranking)
         else:
-            self.mdt.fsm.demand('Menu')
+            self.mediator.fsm.demand('Menu')
 
     @staticmethod
     def __season_props(
@@ -71,116 +71,116 @@ class YorgLogic(GameLogic):
             tun_tires, tun_suspensions, race_start_time, countdown_seconds)
 
     def __process_default(self):
-        opt_ver = self.mdt.options['settings']['last_version'].split('-')[0]
+        opt_ver = self.mediator.options['settings']['last_version'].split('-')[0]
         curr_ver = self.eng.version.split('-')[0]
         if curr_ver == '0.8.0' and opt_ver == '0.7.0':
-            if self.mdt.options['settings']['cars_number'] == 7:
-                self.mdt.options['settings']['cars_number'] = 8
-        self.mdt.options['settings']['last_version'] = self.eng.version
-        self.mdt.options.store()
+            if self.mediator.options['settings']['cars_number'] == 7:
+                self.mediator.options['settings']['cars_number'] = 8
+        self.mediator.options['settings']['last_version'] = self.eng.version
+        self.mediator.options.store()
 
     def on_msg_focus(self, val):
-        self.mdt.fsm.enable_menu(val == 'out')
+        self.mediator.fsm.enable_menu(val == 'out')
 
     def on_input_back(self, new_opt_dct):
-        self.mdt.options['settings'].update(new_opt_dct)
-        self.mdt.options.store()
+        self.mediator.options['settings'].update(new_opt_dct)
+        self.mediator.options.store()
 
     def on_options_back(self, new_opt_dct):
-        self.mdt.options['settings'].update(new_opt_dct)
-        self.mdt.options.store()
+        self.mediator.options['settings'].update(new_opt_dct)
+        self.mediator.options.store()
         # refactor: now the page props are static, but they should change
         # when we change the options in the option page
 
     def on_car_selected(self, car):
-        dev = self.mdt.options['development']
+        dev = self.mediator.options['development']
         self.season = SingleRaceSeason(self.__season_props(
-            self.mdt.gameprops, car, [car],
-            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+            self.mediator.gameprops, car, [car],
+            self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds']))
-        self.season.attach_obs(self.mdt.event.on_season_end)
-        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.attach_obs(self.mediator.event.on_season_end)
+        self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
 
     def on_car_start_client(self, track, car, cars, packet):
-        drv_info = self.mdt.gameprops.drivers_info
+        drv_info = self.mediator.gameprops.drivers_info
         for i, drv_name in enumerate(packet[4::3]):
             drv_info[i] = drv_info[i]._replace(name=drv_name)
-        self.mdt.gameprops = self.mdt.gameprops._replace(drivers_info=drv_info)
-        dev = self.mdt.options['development']
+        self.mediator.gameprops = self.mediator.gameprops._replace(drivers_info=drv_info)
+        dev = self.mediator.options['development']
         self.season = SingleRaceSeason(self.__season_props(
-            self.mdt.gameprops, car, cars,
-            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+            self.mediator.gameprops, car, cars,
+            self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds']))
-        self.season.attach_obs(self.mdt.event.on_season_end)
-        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.attach_obs(self.mediator.event.on_season_end)
+        self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
-        self.mdt.fsm.demand('Race', track, car, cars,
+        self.mediator.fsm.demand('Race', track, car, cars,
                             self.season.logic.drivers)
 
     def on_car_selected_season(self, car):
-        dev = self.mdt.options['development']
+        dev = self.mediator.options['development']
         self.season = Season(self.__season_props(
-            self.mdt.gameprops, car, [car],
-            self.mdt.options['settings']['cars_number'], False, 0, 0, 0,
+            self.mediator.gameprops, car, [car],
+            self.mediator.options['settings']['cars_number'], False, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds']))
-        self.season.attach_obs(self.mdt.event.on_season_end)
-        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.attach_obs(self.mediator.event.on_season_end)
+        self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
 
     def on_driver_selected(self, player_name, track, car):
-        self.mdt.options['settings']['player_name'] = player_name
-        self.mdt.gameprops = self.mdt.gameprops._replace(
+        self.mediator.options['settings']['player_name'] = player_name
+        self.mediator.gameprops = self.mediator.gameprops._replace(
             player_name=player_name)
-        self.mdt.options.store()
+        self.mediator.options.store()
         for i, drv in enumerate(self.season.logic.drivers):
-            dinfo = self.mdt.gameprops.drivers_info[i]
+            dinfo = self.mediator.gameprops.drivers_info[i]
             drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
         self.eng.do_later(
-            2.0, self.mdt.fsm.demand,
+            2.0, self.mediator.fsm.demand,
             ['Race', track, car, [car], self.season.logic.drivers])
 
     def on_driver_selected_server(self, player_name, track, car, cars, packet):
         # unused packet
-        dev = self.mdt.options['development']
+        dev = self.mediator.options['development']
         self.season = SingleRaceSeason(self.__season_props(
-            self.mdt.gameprops, car, cars,
-            self.mdt.options['settings']['cars_number'], True, 0, 0, 0,
+            self.mediator.gameprops, car, cars,
+            self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds']))
-        self.season.attach_obs(self.mdt.event.on_season_end)
-        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.attach_obs(self.mediator.event.on_season_end)
+        self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
-        self.mdt.options['settings']['player_name'] = player_name
-        self.mdt.gameprops = self.mdt.gameprops._replace(
+        self.mediator.options['settings']['player_name'] = player_name
+        self.mediator.gameprops = self.mediator.gameprops._replace(
             player_name=player_name)
-        self.mdt.options.store()
+        self.mediator.options.store()
         for i, drv in enumerate(self.season.logic.drivers):
-            dinfo = self.mdt.gameprops.drivers_info[i]
+            dinfo = self.mediator.gameprops.drivers_info[i]
             drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
         self.eng.do_later(
-            2.0, self.mdt.fsm.demand,
+            2.0, self.mediator.fsm.demand,
             ['Race', track, car, cars, self.season.logic.drivers])
 
     def on_continue(self):
-        saved_car = self.mdt.options['save']['car']
-        dev = self.mdt.options['development']
-        tuning = self.mdt.options['save']['tuning']
+        saved_car = self.mediator.options['save']['car']
+        dev = self.mediator.options['development']
+        tuning = self.mediator.options['save']['tuning']
         car_tun = tuning[saved_car]
         drivers = [self.__bld_drv(dct)
-                   for dct in self.mdt.options['save']['drivers']]
+                   for dct in self.mediator.options['save']['drivers']]
         self.season = Season(self.__season_props(
-            self.mdt.gameprops, saved_car, [saved_car],
-            self.mdt.options['settings']['cars_number'], False,
+            self.mediator.gameprops, saved_car, [saved_car],
+            self.mediator.options['settings']['cars_number'], False,
             car_tun.f_engine, car_tun.f_tires, car_tun.f_suspensions,
             dev['race_start_time'], dev['countdown_seconds']))
-        self.season.load(self.mdt.options['save']['ranking'],
+        self.season.load(self.mediator.options['save']['ranking'],
                          tuning, drivers)
-        self.season.attach_obs(self.mdt.event.on_season_end)
-        self.season.attach_obs(self.mdt.event.on_season_cont)
+        self.season.attach_obs(self.mediator.event.on_season_end)
+        self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start(False)
-        track_path = self.mdt.options['save']['track']
-        car_path = self.mdt.options['save']['car']
-        self.mdt.fsm.demand('Race', track_path, car_path, [car_path], drivers)
+        track_path = self.mediator.options['save']['track']
+        car_path = self.mediator.options['save']['car']
+        self.mediator.fsm.demand('Race', track_path, car_path, [car_path], drivers)
 
     @staticmethod
     def __bld_drv(dct):
@@ -202,10 +202,10 @@ class YorgLogic(GameLogic):
         if self.season.__class__ != SingleRaceSeason:
             for car in ranking.carname2points:
                 ranking.carname2points[car] += race_ranking[car]
-            self.mdt.options['save']['ranking'] = ranking.carname2points
-            self.mdt.options['save']['tuning'] = tuning.car2tuning
-            self.mdt.options.store()
-            self.mdt.fsm.demand('Ranking')
+            self.mediator.options['save']['ranking'] = ranking.carname2points
+            self.mediator.options['save']['tuning'] = tuning.car2tuning
+            self.mediator.options.store()
+            self.mediator.fsm.demand('Ranking')
         else:
             self.season.logic.notify('on_season_end', True)
 
@@ -275,13 +275,13 @@ class YorgLogic(GameLogic):
             'assets/models/cars/%s/capsule', 'Capsule', 'assets/models/cars',
             wheel_names, 'Road',
             'assets/particles/sparks.ptf', drivers,
-            self.mdt.options['development']['shaders_dev'],
-            self.mdt.options['settings']['shaders'], music_fpath,
+            self.mediator.options['development']['shaders_dev'],
+            self.mediator.options['settings']['shaders'], music_fpath,
             'assets/models/tracks/%s/collision' % track_name,
             ['Road', 'Offroad'], ['Wall'],
             ['Goal', 'Slow', 'Respawn', 'PitStop'], corner_names,
             WPInfo('Waypoints', 'Waypoint', 'prev'),
-            self.mdt.options['development']['show_waypoints'],
+            self.mediator.options['development']['show_waypoints'],
             WeaponInfo('Weaponboxs', 'EmptyWeaponboxAnim'), 'Start',
             track_name, 'tracks/' + track_name, 'track', 'Empty', 'Anim',
             'omni', self.sign_cb, 'EmptyNameBillboard4Anim',
@@ -292,7 +292,7 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/turn/TurnAnim',
             'assets/models/weapons/mine/MineAnim',
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
-            self.mdt.options['development']['ai'], InGameMenu, share_urls,
+            self.mediator.options['development']['ai'], InGameMenu, share_urls,
             'Respawn', 'PitStop', 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
             grid)
         return race_props

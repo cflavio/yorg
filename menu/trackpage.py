@@ -9,9 +9,9 @@ from .thankspage import ThanksPageGui
 
 class TrackPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, trackpage_props):
+    def __init__(self, mediator, trackpage_props):
         self.props = trackpage_props
-        ThanksPageGui.__init__(self, mdt, trackpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_args)
 
     def bld_page(self):
         txt = OnscreenText(text=_('Select the track'), pos=(-.2, .8),

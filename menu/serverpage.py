@@ -21,15 +21,15 @@ class ServerEvent(PageEvent):
 
     def process_connection(self, client_address):
         self.eng.log_mgr.log('connection from ' + client_address)
-        self.mdt.gui.conn_txt.setText(_('connection from ') + client_address)
+        self.mediator.gui.conn_txt.setText(_('connection from ') + client_address)
 
 
 class ServerPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, serverpage_props):
+    def __init__(self, mediator, serverpage_props):
         self.conn_txt = None
         self.props = serverpage_props
-        ThanksPageGui.__init__(self, mdt, serverpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, serverpage_props.gameprops.menu_args)
 
     def bld_page(self):
         menu_args = self.props.gameprops.menu_args
@@ -55,7 +55,7 @@ class ServerPageGui(ThanksPageGui):
             **menu_args.btn_args)
         self.add_widget(start_btn)
         ThanksPageGui.bld_page(self)
-        evt = self.mdt.event
+        evt = self.mediator.event
         try:
             self.eng.server.start(evt.process_msg, evt.process_connection)
         except NetworkError:

@@ -7,9 +7,9 @@ from yyagl.gameobject import GameObject
 
 class InGamePageGui(PageGui):
 
-    def __init__(self, mdt, menu_args, keys):
+    def __init__(self, mediator, menu_args, keys):
         self.keys = keys
-        PageGui.__init__(self, mdt, menu_args)
+        PageGui.__init__(self, mediator, menu_args)
 
     def bld_page(self, back_btn=True):
         frm = DirectFrame(

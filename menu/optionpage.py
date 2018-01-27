@@ -26,11 +26,11 @@ class OptionPageProps(object):
 
 class OptionPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, option_props):
+    def __init__(self, mediator, menu_args, option_props):
         self.vol_slider = self.fullscreen_cb = self.lang_opt = self.aa_cb = \
             self.shaders_cb = self.res_opt = self.cars_opt = None
         self.props = option_props
-        ThanksPageGui.__init__(self, mdt, menu_args)
+        ThanksPageGui.__init__(self, mediator, menu_args)
 
     def bld_page(self):
         menu_args = self.menu_args
@@ -118,16 +118,16 @@ class OptionPageGui(ThanksPageGui):
         self.update_texts()
 
     def _on_back(self):
-        self.mdt.event.on_back()
+        self.mediator.event.on_back()
         lang_idx = self.lang_opt.selectedIndex
         dct = {
             'lang': self.eng.languages[lang_idx][:2].lower(),
-            'volume': self.mdt.gui.vol_slider.getValue(),
-            'fullscreen': self.mdt.gui.fullscreen_cb['indicatorValue'],
-            'resolution': self.mdt.gui.res_opt.get().replace('x', ' '),
-            'antialiasing': self.mdt.gui.aa_cb['indicatorValue'],
-            'shaders': self.mdt.gui.shaders_cb['indicatorValue'],
-            'cars_number': int(self.mdt.gui.cars_opt.get())}
+            'volume': self.mediator.gui.vol_slider.getValue(),
+            'fullscreen': self.mediator.gui.fullscreen_cb['indicatorValue'],
+            'resolution': self.mediator.gui.res_opt.get().replace('x', ' '),
+            'antialiasing': self.mediator.gui.aa_cb['indicatorValue'],
+            'shaders': self.mediator.gui.shaders_cb['indicatorValue'],
+            'cars_number': int(self.mediator.gui.cars_opt.get())}
         self.notify('on_back', 'options_page', [dct])
 
 

@@ -12,11 +12,11 @@ from .thankspage import ThanksPageGui
 
 class InputPageGui(ThanksPageGui):
 
-    def __init__(self, mdt, menu_args, joystick, keys):
+    def __init__(self, mediator, menu_args, joystick, keys):
         self.joypad_cb = None
         self.joystick = joystick
         self.keys = keys
-        ThanksPageGui.__init__(self, mdt, menu_args)
+        ThanksPageGui.__init__(self, mediator, menu_args)
 
     def bld_page(self):
         menu_args = self.menu_args
@@ -76,27 +76,27 @@ class InputPageGui(ThanksPageGui):
             'arrow_up', 'arrow_down', 'arrow_right', 'lshift', 'rshift',
             'lcontrol', 'lalt', 'space', 'ralt', 'rcontrol']
         self.hint_lab.show()
-        acc = lambda key: self.mdt.event.accept(key, self.rec, [btn, key])
+        acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
         map(acc, self.keys)
 
     def _on_back(self):
-        self.mdt.event.on_back()
+        self.mediator.event.on_back()
         dct = {}
         dct['keys'] = {
-            'forward': self.mdt.gui.ibuttons[0]['text'],
-            'rear': self.mdt.gui.ibuttons[1]['text'],
-            'left': self.mdt.gui.ibuttons[2]['text'],
-            'right': self.mdt.gui.ibuttons[3]['text'],
-            'fire': self.mdt.gui.ibuttons[4]['text'],
-            'respawn': self.mdt.gui.ibuttons[5]['text'],
-            'pause': self.mdt.gui.ibuttons[6]['text']}
-        dct['joystick'] = self.mdt.gui.joypad_cb['indicatorValue']
+            'forward': self.mediator.gui.ibuttons[0]['text'],
+            'rear': self.mediator.gui.ibuttons[1]['text'],
+            'left': self.mediator.gui.ibuttons[2]['text'],
+            'right': self.mediator.gui.ibuttons[3]['text'],
+            'fire': self.mediator.gui.ibuttons[4]['text'],
+            'respawn': self.mediator.gui.ibuttons[5]['text'],
+            'pause': self.mediator.gui.ibuttons[6]['text']}
+        dct['joystick'] = self.mediator.gui.joypad_cb['indicatorValue']
         self.notify('on_back', 'input_page', [dct])
 
     def rec(self, btn, val):
         btn['text'] = val
         self.hint_lab.hide()
-        map(self.mdt.event.ignore, self.keys)
+        map(self.mediator.event.ignore, self.keys)
 
 
 class InputPage(Page):

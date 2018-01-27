@@ -18,14 +18,14 @@ from .optionpage import OptionPageProps
 
 class YorgMainPageGui(MainPageGui, ):
 
-    def __init__(self, mdt, mainpage_props):
+    def __init__(self, mediator, mainpage_props):
         self.__feed_type = ''
         self.__date_field = ''
         self.props = mainpage_props
         self.load_settings()
         self.conn_attempted = False
         self.ver_check = VersionChecker()
-        MainPageGui.__init__(self, mdt, self.props.gameprops.menu_args)
+        MainPageGui.__init__(self, mediator, self.props.gameprops.menu_args)
         if self.ver_check.is_uptodate():
             options = self.props.opt_file
             user = options['settings']['xmpp']['usr']
