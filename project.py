@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# add (remove) users to (from) muc's header
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket
@@ -15,7 +14,6 @@
 # feedback: steering feels a bit restricted and overly punishing (i.e. easy to
 #   loose control)
 # try to reduce adherence as soon as you turn, then restore it
-# feedback: in crossroads is unclear where to turn - add an indication?
 
 
 # 0.10

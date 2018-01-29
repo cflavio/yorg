@@ -28,6 +28,8 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_user_disconnected)
         self.eng.xmpp.attach(self.on_user_subscribe)
         self.eng.xmpp.attach(self.on_presence_available)
+        self.eng.xmpp.attach(self.on_presence_available_room)
+        self.eng.xmpp.attach(self.on_presence_unavailable_room)
         self.eng.xmpp.attach(self.on_presence_unavailable)
         self.eng.xmpp.attach(self.on_msg)
         self.eng.xmpp.attach(self.on_groupchat_msg)
@@ -44,6 +46,7 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.hide()
 
     def on_user_subscribe(self, user):
+        if self.eng.xmpp.is_friend(user): return
         self.dialog = FriendDialog(self.menu_args, user)
         self.dialog.attach(self.on_friend_answer)
 
@@ -54,6 +57,7 @@ class MultiplayerFrm(GameObject):
             pto=user,
             pfrom=self.eng.xmpp.client.boundjid.full,
             ptype='subscribed' if val else 'unsubscribed')
+        self.on_users()
 
     def on_invite(self, usr):
         self.match_frm.on_invite(usr)
@@ -65,6 +69,10 @@ class MultiplayerFrm(GameObject):
     def on_user_disconnected(self, user): self.users_frm.on_users()
 
     def on_presence_available(self, user): self.users_frm.on_users()
+
+    def on_presence_available_room(self, msg): self.msg_frm.on_presence_available_room(msg)
+
+    def on_presence_unavailable_room(self, msg): self.msg_frm.on_presence_unavailable_room(msg)
 
     def on_presence_unavailable(self, user): self.users_frm.on_users()
 

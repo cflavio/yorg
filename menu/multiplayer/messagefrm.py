@@ -1,21 +1,39 @@
 from sleekxmpp.jid import JID
 from panda3d.core import TextNode
-from direct.gui.DirectGuiGlobals import FLAT, NORMAL, DISABLED
+from direct.gui.DirectGuiGlobals import FLAT, NORMAL, DISABLED, ENTER, EXIT
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectEntry import DirectEntry
+from direct.gui.DirectLabel import DirectLabel
+from direct.gui.DirectButton import DirectButton
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.gameobject import GameObject
 from yyagl.engine.gui.imgbtn import ImgBtn
 
 
-class Chat(object):
+class Chat(GameObject):
 
-    def __init__(self, dst, title=None):
+    def __init__(self, dst):
+        GameObject.__init__(self)
         self.dst = dst
-        self.title = title or dst
         self.messages = []
         self.read = True
+
+    @property
+    def title(self):
+        return JID(self.dst).bare
+
+
+class MUC(Chat):
+
+    def __init__(self, dst):
+        Chat.__init__(self, dst)
+        self.users = []
+
+    @property
+    def title(self):
+        is_me = lambda usr: usr == self.eng.xmpp.client.boundjid.bare
+        return ', '.join(sorted(self.users, key=is_me))
 
 
 class MessageFrm(GameObject):
@@ -77,6 +95,27 @@ class MessageFrm(GameObject):
         self.msg_txt = OnscreenText(
             text='', pos=(0, .24), parent=self.txt_frm.getCanvas(),
             align=TextNode.A_left, wordwrap=14, **t_a)
+        lab_args = menu_args.label_args
+        lab_args['scale'] = .046
+        lab_args['text_fg'] = menu_args.text_normal
+        self.lab_frm = DirectButton(
+            frameSize=(-.02, .64, -.01, .05),
+            frameColor=(1, 1, 1, 0),
+            pos=(0, 1, .4), parent=self.msg_frm)
+        self.lab_frm.bind(ENTER, self.on_enter)
+        self.lab_frm.bind(EXIT, self.on_exit)
+        self.tooltip = DirectLabel(
+            text='', pos=(.78, 1, -.06),
+            parent=self.lab_frm, text_wordwrap=16, text_bg=(.2, .2, .2, .8),
+            text_align=TextNode.A_right, **lab_args)
+        self.tooltip.set_bin('gui-popup', 10)
+        self.tooltip.hide()
+
+    def on_enter(self, pos):
+        self.tooltip.show()
+
+    def on_exit(self, pos):
+        self.tooltip.hide()
 
     def show(self):
         self.msg_frm.show()
@@ -91,11 +130,25 @@ class MessageFrm(GameObject):
         self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
 
     def set_title(self, title):
+        ttitle = self.trunc(title, 32)
+        fix_name = lambda name: name if '@' not in name else name.split('@')[0] + '\1smaller\1@' + name.split('@')[1] + '\2'
         if title:
-            title = title.split('@')[0] + '\1smaller\1@' + title.split('@')[1] + '\2'
-        if title.endswith('>\2'):
-            title = title[:-2] + '\2>'
-        self.dst_txt['text'] = title
+            if ',' in ttitle:
+                is_muc = True
+                ttitle = ttitle
+                names = ttitle.split(',')
+                names = [name.strip() for name in names]
+                names = [fix_name(name) for name in names]
+                ttitle = ', '.join(names)
+            else:
+                ttitle = fix_name(ttitle)
+        self.dst_txt['text'] = ttitle
+        self.tooltip['text'] = title
+
+    @staticmethod
+    def trunc(name, lgt):
+        if len(name) > lgt: return name[:lgt] + '...'
+        return name
 
     def set_chat(self, chat):
         self.curr_chat = chat
@@ -166,7 +219,7 @@ class MessageFrm(GameObject):
         str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         chat = self.__find_chat(msg['from'])
         if not chat:
-            chat = Chat(msg['from'], str(JID(msg['from']).bare))
+            chat = Chat(msg['from'])
             self.chats += [chat]
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
@@ -183,7 +236,7 @@ class MessageFrm(GameObject):
         str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         chat = self.curr_chat
         if not chat:
-            chat = Chat(str(JID(msg['from']).bare))
+            chat = MUC(str(JID(msg['from']).bare))
             self.chats += [chat]
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
@@ -194,6 +247,22 @@ class MessageFrm(GameObject):
             chat.read = False
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
+    def on_presence_available_room(self, msg):
+        room = str(JID(msg['muc']['room']).bare)
+        nick = str(msg['muc']['nick'])
+        chat = self.__find_chat(room)
+        chat.users += [nick]
+        if self.curr_chat.dst == room:
+            self.set_title(chat.title)
+
+    def on_presence_unavailable_room(self, msg):
+        room = str(JID(msg['muc']['room']).bare)
+        nick = str(msg['muc']['nick'])
+        chat = self.__find_chat(room)
+        chat.users.remove(nick)
+        if self.curr_chat.dst == room:
+            self.set_title(chat.title)
+
     def __find_chat(self, dst):
         chats = [chat for chat in self.chats if chat.dst == dst]
         if chats: return chats[0]
@@ -202,7 +271,7 @@ class MessageFrm(GameObject):
         self.set_title(JID(usr).bare)
         chat = self.__find_chat(usr)
         if not chat:
-            chat = Chat(usr, JID(usr).bare)
+            chat = Chat(usr)
             self.chats += [chat]
         self.set_chat(chat)
 
@@ -210,7 +279,7 @@ class MessageFrm(GameObject):
         self.set_title(usr)
         chat = self.curr_chat
         if not chat:
-            chat = Chat(room, '<%s>' % usr)
+            chat = MUC(room)
             self.chats += [chat]
         self.set_chat(chat)
 

@@ -10,7 +10,7 @@ class FriendDialog(Subject):
         self.user = user
         self.dialog = YesNoDialog(
             base.a2dBottomLeft,
-            text=_('Can %s add you to her XMPP contacts?') % user,
+            text=_('%s wants to be a (XMPP) friend of you, do you agree?') % user,
             text_wordwrap=16,
             text_fg=menu_args.text_active,
             text_font=menu_args.font,
