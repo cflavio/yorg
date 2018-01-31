@@ -24,7 +24,7 @@ class UsersFrm(GameObject):
             hpr=(0, 0, -90), parent=base.a2dTopRight,
             text_align=TextNode.A_right, **lab_args)
         self.frm = DirectScrolledFrame(
-            frameSize=(-.02, .8, .45, 1.48),
+            frameSize=(-.02, .8, .45, 2.43),
             canvasSize=(-.02, .76, -.08, 3.8),
             scrollBarWidth=.036,
             verticalScroll_relief=FLAT,
@@ -37,7 +37,7 @@ class UsersFrm(GameObject):
             verticalScroll_decButton_frameColor=(.8, .8, .8, .6),
             horizontalScroll_relief=FLAT,
             frameColor=(.2, .2, .2, .5),
-            pos=(-.82, 1, -1.49), parent=base.a2dTopRight)
+            pos=(-.82, 1, -2.44), parent=base.a2dTopRight)
         self.set_connection_label()
 
     def show(self):
@@ -57,6 +57,14 @@ class UsersFrm(GameObject):
         self.conn_lab = DirectLabel(
             text=txt, pos=(.38, 1, 1.0), parent=self.frm,
             text_wordwrap=10, **lab_args)
+
+    def set_size(self, full=True):
+        if full:
+            self.frm.setPos(-.82, 1, -2.44)
+            self.frm['frameSize'] = (-.02, .8, .45, 2.43)
+        else:
+            self.frm.setPos(-.82, 1, -1.97)
+            self.frm['frameSize'] = (-.02, .8, .45, 1.96)
 
     @staticmethod
     def trunc(name, lgt):

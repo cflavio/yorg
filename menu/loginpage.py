@@ -18,31 +18,46 @@ class LogInPageGui(ThanksPageGui):
         menu_args = self.menu_args
         t_a = menu_args.text_args.copy()
         # del t_a['scale']
-        jid_lab = OnscreenText(_('Your jabber id:'), pos=(-.25, .6),
+        jid_lab = OnscreenText(_('Your jabber id:'), pos=(-.25, .8),
                                align=TextNode.A_right, **t_a)
-        pwd_lab = OnscreenText(_('Your jabber password:'), pos=(-.25, .4),
+        pwd_lab = OnscreenText(_('Your jabber password:'), pos=(-.25, .6),
                                align=TextNode.A_right, **t_a)
         self.jid_ent = DirectEntry(
-            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, initialText=_('your jabber id'))
         self.pwd_ent = DirectEntry(
-            scale=.08, pos=(-.15, 1, .4), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True)
         self.jid_ent.onscreenText['fg'] = menu_args.text_active
         self.pwd_ent.onscreenText['fg'] = menu_args.text_active
         start_btn = DirectButton(
-            text=_('Log-in'), pos=(-.2, 1, .2), command=self.start,
+            text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
         self.store_cb = DirectCheckButton(
-            pos=(-.2, 1, -.2), text=_('store the password'),
+            pos=(-.2, 1, .1), text=_('store the password'),
             indicatorValue=False, indicator_frameColor=menu_args.text_active,
             **menu_args.checkbtn_args)
         t_a['scale'] = .06
         store_lab = OnscreenText(
             _('(only if your computer is not shared with other people)'),
-            pos=(-.2, -.32), **t_a)
+            pos=(-.2, -.02), **t_a)
+        notes_txt = _(
+            '1. If you are a supporter, please write us (flavio@ya2.it) your '
+            'jabber id so we can highlight your account as a supporter one.\n'
+            '2. Yorg sends your XMPP presence to other Yorg users, so they '
+            "can see your XMPP presence status. If you don't want this, "
+            "please don't use your personal account and create a new one for "
+            'Yorg.\n'
+            '3. When you add a Yorg friend, you are adding it to your '
+            "account's roster too.\n"
+            "4. Yorg's XMPP code is still experimental: if you have "
+            'important data in your XMPP account, please create a new account '
+            'for playing Yorg with.')
+        notes_lab = OnscreenText(
+            notes_txt, pos=(-1.64, -.16), align=TextNode.A_left, wordwrap=42,
+            **t_a)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
-                   self.store_cb, store_lab]
+                   self.store_cb, store_lab, notes_lab]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
 

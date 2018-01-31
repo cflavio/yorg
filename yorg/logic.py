@@ -21,6 +21,7 @@ class YorgLogic(GameLogic):
         if not self.mp_frm:
             self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_args)
             self.mp_frm.attach(self.on_msg_focus)
+            self.mp_frm.attach(self.on_create_room)
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -81,6 +82,9 @@ class YorgLogic(GameLogic):
 
     def on_msg_focus(self, val):
         self.mediator.fsm.enable_menu(val == 'out')
+
+    def on_create_room(self, room, nick):
+        self.mediator.fsm.create_room(room, nick)
 
     def on_input_back(self, new_opt_dct):
         self.mediator.options['settings'].update(new_opt_dct)

@@ -12,6 +12,7 @@ from .driverpage import DriverPage, DriverPageServer, DriverPageClient
 from .optionpage import OptionPage
 from .inputpage import InputPage
 from .creditpage import CreditPage
+from .roompage import RoomPage
 from .supporterspage import SupportersPage
 
 
@@ -125,6 +126,9 @@ class YorgMenuLogic(MenuLogic):
 
     def on_login(self):
         self.mediator.gui.notify('on_login')
+
+    def create_room(self, room, nick):
+        self.push_page(RoomPage(self.mediator.gui.menu_args, room, nick))
 
 
 class YorgMenuGui(MenuGui):

@@ -67,6 +67,9 @@ class YorgFsm(FsmColleague):
 
     def enable_menu(self, val): self.__menu.enable(val)
 
+    def create_room(self, room, nick):
+        self.__menu.logic.create_room(room, nick)
+
     def load_models(self, model):
         if not self.models: return
         model = self.models.pop(0)

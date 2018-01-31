@@ -18,6 +18,7 @@ class Chat(GameObject):
         self.dst = dst
         self.messages = []
         self.read = True
+        self.closed = False
 
     @property
     def title(self):
@@ -181,13 +182,19 @@ class MessageFrm(GameObject):
         chat.read = True
         self.set_chat(chat)
 
+    @property
+    def open_chats(self):
+        return [chat for chat in self.chats if not chat.closed]
+
     def on_close(self):
-        curr_idx = self.chats.index(self.curr_chat)
-        self.chats.remove(self.curr_chat)
-        if self.chats:
-            self.set_chat(self.chats[curr_idx - 1])
+        curr_idx = self.open_chats.index(self.curr_chat)
+        #self.chats.remove(self.curr_chat)
+        self.curr_chat.closed = True
+        if self.open_chats:
+            self.set_chat(self.open_chats[curr_idx - 1])
         else:
             self.set_chat(Chat(''))
+            self.notify('on_close_all_chats')
 
     def on_typed_msg(self, val):
         self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
@@ -228,6 +235,7 @@ class MessageFrm(GameObject):
             self.add_msg_txt(str_msg)
         else:
             chat.read = False
+            chat.closed = False
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
     def on_groupchat_msg(self, msg):
@@ -245,6 +253,7 @@ class MessageFrm(GameObject):
             self.add_msg_txt(str_msg)
         else:
             chat.read = False
+            chat.closed = False
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
     def on_presence_available_room(self, msg):
