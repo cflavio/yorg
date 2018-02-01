@@ -3,7 +3,7 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# match room's chat
+# after a message, keep the focus in the text entry
 # add supporter badge where it's missing
 # disable invite button for already invited players
 # disable invite buttons if you've accepted a match

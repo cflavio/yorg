@@ -37,17 +37,164 @@ class MUC(Chat):
         return ', '.join(sorted(self.users, key=is_me))
 
 
+class MatchMsgFrm(GameObject):
+
+    def __init__(self, menu_args):
+        GameObject.__init__(self)
+        self.chat = None
+        self.msg_frm = DirectFrame(
+            frameSize=(-.02, 2.5, 0, 1.22),
+            frameColor=(.2, .2, .2, .5),
+            pos=(.04, 1, -1.69), parent=base.a2dTopLeft)
+        t_a = menu_args.text_args
+        t_a['scale'] = .05
+        t_a['fg'] = menu_args.text_normal
+        self.dst_txt = OnscreenText(
+            text='', pos=(0, 1.16), parent=self.msg_frm, align=TextNode.A_left,
+            **t_a)
+        self.ent = DirectEntry(
+            scale=.04, pos=(0, 1, .03), entryFont=menu_args.font, width=62,
+            frameColor=menu_args.btn_color, parent=self.msg_frm,
+            initialText=_('write here your message'),
+            command=self.on_typed_msg, focusInCommand=self.on_focus,
+            focusInExtraArgs=['in'], focusOutCommand=self.on_focus,
+            focusOutExtraArgs=['out'])
+        self.ent.onscreenText['fg'] = menu_args.text_active
+        self.ent['state'] = DISABLED
+        self.txt_frm = DirectScrolledFrame(
+            frameSize=(-.02, 2.46, -.02, 1.02),
+            canvasSize=(-.02, 2.42, -.02, 1.02),
+            scrollBarWidth=.036,
+            verticalScroll_relief=FLAT,
+            verticalScroll_frameColor=(.2, .2, .2, .4),
+            verticalScroll_thumb_relief=FLAT,
+            verticalScroll_thumb_frameColor=(.8, .8, .8, .6),
+            verticalScroll_incButton_relief=FLAT,
+            verticalScroll_incButton_frameColor=(.8, .8, .8, .6),
+            verticalScroll_decButton_relief=FLAT,
+            verticalScroll_decButton_frameColor=(.8, .8, .8, .6),
+            horizontalScroll_relief=FLAT,
+            frameColor=(1, 1, 1, .0),
+            pos=(.02, 1, .11), parent=self.msg_frm)
+        t_a['scale'] = .046
+        self.msg_txt = OnscreenText(
+            text='', pos=(0, .24), parent=self.txt_frm.getCanvas(),
+            align=TextNode.A_left, wordwrap=52, **t_a)
+        lab_args = menu_args.label_args
+        lab_args['scale'] = .046
+        lab_args['text_fg'] = menu_args.text_normal
+        self.lab_frm = DirectButton(
+            frameSize=(-.02, 2.5, -.01, .05),
+            frameColor=(1, 1, 1, 0),
+            pos=(0, 1, 1.15), parent=self.msg_frm)
+        self.lab_frm.bind(ENTER, self.on_enter)
+        self.lab_frm.bind(EXIT, self.on_exit)
+        self.tooltip = DirectLabel(
+            text='', pos=(2.4, 1, -.06),
+            parent=self.lab_frm, text_wordwrap=50, text_bg=(.2, .2, .2, .8),
+            text_align=TextNode.A_right, **lab_args)
+        self.tooltip.set_bin('gui-popup', 10)
+        self.tooltip.hide()
+
+    def on_enter(self, pos):
+        self.tooltip.show()
+
+    def on_exit(self, pos):
+        self.tooltip.hide()
+
+    def add_msg_txt(self, msg):
+        self.msg_txt['text'] += ('\n' if self.msg_txt['text'] else '') + msg
+        txt_height = self.msg_txt.textNode.getUpperLeft3d()[2] - \
+            self.msg_txt.textNode.getLowerRight3d()[2]
+        self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
+
+    def set_title(self, title):
+        ttitle = self.trunc(title, 160)
+        fix_name = lambda name: name if '@' not in name else name.split('@')[0] + '\1smaller\1@' + name.split('@')[1] + '\2'
+        if title:
+            if ',' in ttitle:
+                is_muc = True
+                ttitle = ttitle
+                names = ttitle.split(',')
+                names = [name.strip() for name in names]
+                names = [fix_name(name) for name in names]
+                ttitle = ', '.join(names)
+            else:
+                ttitle = fix_name(ttitle)
+        self.dst_txt['text'] = ttitle
+        self.tooltip['text'] = title
+
+    @staticmethod
+    def trunc(name, lgt):
+        if len(name) > lgt: return name[:lgt] + '...'
+        return name
+
+    def on_typed_msg(self, val):
+        self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
+        self.ent.set('')
+        self.eng.xmpp.client.send_message(
+            mfrom=self.eng.xmpp.client.boundjid.full,
+            mto=self.chat.dst,
+            mtype='groupchat',
+            mbody=val)
+
+    def on_groupchat_msg(self, msg):
+        src = str(JID(msg['mucnick']))
+        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+        if not self.chat:
+            self.chat = MUC(str(JID(msg['from']).bare))
+        self.chat.messages += [str_msg]
+        if self.dst_txt['text'] == '':
+            self.set_chat(self.chat)
+        elif self.chat.dst == str(JID(msg['from']).bare):
+            self.add_msg_txt(str_msg)
+
+    def on_presence_available_room(self, msg):
+        room = str(JID(msg['muc']['room']).bare)
+        nick = str(msg['muc']['nick'])
+        self.chat.users += [nick]
+        self.set_title(self.chat.title)
+
+    def on_presence_unavailable_room(self, msg):
+        room = str(JID(msg['muc']['room']).bare)
+        nick = str(msg['muc']['nick'])
+        self.chat.users.remove(nick)
+        self.set_title(self.chat.title)
+
+    def add_groupchat(self, room, usr):
+        self.set_title(usr)
+        if not self.chat:
+            self.chat = MUC(room)
+        self.set_chat(self.chat)
+
+    def set_chat(self, chat):
+        self.set_title(chat.title)
+        self.msg_txt['text'] = '\n'.join(chat.messages)
+        txt_height = self.msg_txt.textNode.getUpperLeft3d()[2] - \
+            self.msg_txt.textNode.getLowerRight3d()[2]
+        self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
+        self.ent['state'] = NORMAL
+
+    def on_focus(self, val):
+        if val and self.ent.get() == _('write here your message'):
+            self.ent.set('')
+        self.notify('on_match_msg_focus', val)
+
+
 class MessageFrm(GameObject):
 
     def __init__(self, menu_args):
         GameObject.__init__(self)
         self.chats = []
         self.curr_chat = None
+        self.curr_match_room = None
         self.msg_frm = DirectFrame(
             frameSize=(-.02, .8, 0, .45),
             frameColor=(.2, .2, .2, .5),
             pos=(-.82, 1, .02), parent=base.a2dBottomRight)
         self.presences_sent = []
+        self.menu_args = menu_args
         t_a = menu_args.text_args
         t_a['scale'] = .05
         t_a['fg'] = menu_args.text_normal
@@ -239,6 +386,9 @@ class MessageFrm(GameObject):
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
     def on_groupchat_msg(self, msg):
+        if str(JID(msg['from']).bare) == self.curr_match_room:
+            self.match_msg_frm.on_groupchat_msg(msg)
+            return
         src = str(JID(msg['mucnick']))
         src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
         str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
@@ -257,6 +407,9 @@ class MessageFrm(GameObject):
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
     def on_presence_available_room(self, msg):
+        if str(JID(msg['from']).bare) == self.curr_match_room:
+            self.match_msg_frm.on_presence_available_room(msg)
+            return
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
         chat = self.__find_chat(room)
@@ -265,6 +418,9 @@ class MessageFrm(GameObject):
             self.set_title(chat.title)
 
     def on_presence_unavailable_room(self, msg):
+        if str(JID(msg['from']).bare) == self.curr_match_room:
+            self.match_msg_frm.on_presence_unavailable_room(msg)
+            return
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
         chat = self.__find_chat(room)
@@ -291,8 +447,19 @@ class MessageFrm(GameObject):
             chat = MUC(room)
             self.chats += [chat]
         self.set_chat(chat)
+        self.add_match_chat(room, usr)
 
     def on_focus(self, val):
         if val and self.ent.get() == _('write here your message'):
             self.ent.set('')
         self.notify('on_msg_focus', val)
+
+    def on_match_msg_focus(self, val):
+        self.notify('on_msg_focus', val)
+
+    def add_match_chat(self, room, usr):
+        if self.curr_match_room: return
+        self.curr_match_room = room
+        self.match_msg_frm = MatchMsgFrm(self.menu_args)
+        self.match_msg_frm.attach(self.on_match_msg_focus)
+        self.match_msg_frm.add_groupchat(room, usr)
