@@ -1,4 +1,5 @@
 from time import strftime
+from sleekxmpp.jid import JID
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
@@ -115,7 +116,7 @@ class UsersFrm(GameObject):
                             (0, 1, top - .08 - .08 * i),
                             self.frm.getCanvas(),
                             self.menu_args)
-                        lab.show_invite_btn(False)
+                        lab.enable_invite_btn(False)
                     else:
                         lab = UserFrmListMe(
                             self.trunc(user.name, 20),
@@ -133,12 +134,13 @@ class UsersFrm(GameObject):
                     clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
                     lab = [lab for lab in self.labels
                            if clean(lab.lab['text']) == self.trunc(user.name, 20)][0]
-                    lab.show_invite_btn(
+                    lab.enable_invite_btn(
                         usr_inv and user.name not in self.invited_users)
                     lab.frm.set_z(top - .08 - .08 * i)
                     lab.set_supporter(user.is_supporter)
 
     def on_invite(self, usr):
+        self.invited_users += [usr.name]
         self.notify('on_invite', usr)
         self.on_users()
         if not self.room_name:
@@ -156,6 +158,11 @@ class UsersFrm(GameObject):
             msubject='invite',
             mbody=self.room_name)
         self.notify('on_add_groupchat', self.room_name, usr.name)
+
+    def on_declined(self, msg):
+        usr = str(JID(msg['from']).bare)
+        self.invited_users.remove(usr)
+        self.on_users()
 
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)
 

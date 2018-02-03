@@ -95,6 +95,9 @@ class MultiplayerFrm(GameObject):
         self.match_frm.destroy()
         self.match_frm = None
         self.msg_frm.on_room_back()
+        self.users_frm.invited_users = []
+        self.users_frm.in_match_room = False
+        self.on_users()
 
     def on_msg(self, msg):
         self.users_frm.set_size(False)
@@ -132,6 +135,7 @@ class MultiplayerFrm(GameObject):
                 mbody=str(msg['body']))
 
     def on_declined(self, msg):
+        self.users_frm.on_declined(msg)
         self.match_frm.on_declined(msg)
 
     def on_add_chat(self, usr):

@@ -76,7 +76,7 @@ class UserFrmListMe(UserFrmMe):
         UserFrmMe.__init__(
             self, name, name_full, is_supporter, pos, parent, menu_args)
 
-    def show_invite_btn(self, show=True): pass
+    def enable_invite_btn(self, enable=True): pass
 
 
 class UserFrmListOut(UserFrm):
@@ -88,7 +88,7 @@ class UserFrmListOut(UserFrm):
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_normal
-        self.__show_invite_btn = True
+        self.__enable_invite_btn = True
         self.invite_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/invite.txo',
             .65, self.on_invite, name_full, _("isn't playing yorg"))
@@ -99,7 +99,7 @@ class UserFrmListOut(UserFrm):
             self.frm, self, menu_args, 'assets/images/gui/kick.txo',
             .72, self.on_unfriend, name_full, _('remove from xmpp friends'))
 
-    def show_invite_btn(self, show=True): self.__show_invite_btn = show
+    def enable_invite_btn(self, enable=True): self.__enable_invite_btn = enable
 
     def on_invite(self, usr): pass
 
@@ -107,7 +107,8 @@ class UserFrmListOut(UserFrm):
         UserFrm.on_enter(self, pos)
         if self.invite_btn.is_hidden():
             self.invite_btn.show()
-            if not self.__show_invite_btn: self.invite_btn.disable()
+            if not self.__enable_invite_btn: self.invite_btn.disable()
+            else: self.invite_btn.enable()
         if self.friend_btn.is_hidden(): self.friend_btn.show()
 
     def on_exit(self, pos):

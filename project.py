@@ -3,11 +3,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# reactivate invites after exiting from rooms
 # popup if the server players disconnects
 # remove a player from the match box
-# disable invite button for non-in-yorg players
-# disable invite button for playing players
+# disable invite button for non-in-yorg players (less alpha)
+# disable invite button for in-room players (less alpha)
 # add supporter badge where it's missing
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)
