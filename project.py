@@ -3,10 +3,13 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# popup if the server players disconnects
+# destroy the invite popup if the server player quits: when the server quits
+#   send cancel_invite to all invited users who haven't answered yet
+# create secret/protected muc
+# log gui and network events
 # remove a player from the match box
 # disable invite button for non-in-yorg players (less alpha)
-# disable invite button for in-room players (less alpha)
+# disable invite button for in-room and invited players (less alpha)
 # add supporter badge where it's missing
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)

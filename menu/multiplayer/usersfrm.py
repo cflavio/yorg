@@ -40,7 +40,7 @@ class UsersFrm(GameObject):
             frameColor=(.2, .2, .2, .5),
             pos=(-.82, 1, -2.44), parent=base.a2dTopRight)
         self.set_connection_label()
-        self.in_match_room = False
+        self.in_match_room = None
 
     def show(self):
         self.frm.show()

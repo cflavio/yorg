@@ -6,6 +6,7 @@ from .matchfrm import MatchFrm
 from .messagefrm import MessageFrm
 from .friend_dlg import FriendDialog
 from .invite_dlg import InviteDialog
+from .exit_dlg import ExitDialog
 
 
 class MultiplayerFrm(GameObject):
@@ -84,19 +85,28 @@ class MultiplayerFrm(GameObject):
         if self.match_frm:
             self.match_frm.on_presence_unavailable_room(msg)
         self.msg_frm.on_presence_unavailable_room(msg)
+        if str(msg['muc']['nick']) == self.users_frm.in_match_room:
+            self.exit_dlg = ExitDialog(self.menu_args, msg)
+            self.exit_dlg.attach(self.on_exit_dlg)
+
+    def on_exit_dlg(self):
+        self.exit_dlg.destroy()
+        self.notify('on_srv_quitted')
+        self.on_room_back()
 
     def on_presence_unavailable(self, user): self.users_frm.on_users()
 
     def on_start(self): self.users_frm.room_name = None
 
     def on_room_back(self):
-        self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
-            self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
-        self.match_frm.destroy()
-        self.match_frm = None
-        self.msg_frm.on_room_back()
+        if self.msg_frm.curr_match_room:  # if we've accepted the invitation
+            self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
+                self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+            self.match_frm.destroy()
+            self.match_frm = None
+            self.msg_frm.on_room_back()
         self.users_frm.invited_users = []
-        self.users_frm.in_match_room = False
+        self.users_frm.in_match_room = None
         self.on_users()
 
     def on_msg(self, msg):
@@ -118,7 +128,7 @@ class MultiplayerFrm(GameObject):
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
         if val:
-            self.users_frm.in_match_room = True
+            self.users_frm.in_match_room = msg['from'].bare
             self.users_frm.on_users()
             self.msg_frm.add_groupchat(str(msg['body']), str(msg['from'].bare))
             self.eng.xmpp.client.plugin['xep_0045'].joinMUC(

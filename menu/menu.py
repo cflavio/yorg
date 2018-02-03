@@ -95,6 +95,9 @@ class YorgMenuLogic(MenuLogic):
             page = SupportersPage(self.mediator.gui.menu_args)
         self.push_page(page)
 
+    def on_srv_quitted(self):
+        self.on_back('RoomPageGui')
+
     def on_back(self, page_code, args=[]):
         if page_code == 'input_page':
             self.mediator.gui.notify('on_input_back', args[0])
