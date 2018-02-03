@@ -39,6 +39,7 @@ class UsersFrm(GameObject):
             frameColor=(.2, .2, .2, .5),
             pos=(-.82, 1, -2.44), parent=base.a2dTopRight)
         self.set_connection_label()
+        self.in_match_room = False
 
     def show(self):
         self.frm.show()
@@ -79,14 +80,18 @@ class UsersFrm(GameObject):
             bare_users = [self.trunc(user.name, 20)
                           for user in self.eng.xmpp.users]
             for lab in self.labels[:]:
-                if lab.lab['text'] not in bare_users:
+                _lab = lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
+                if _lab not in bare_users:
                     lab.destroy()
                     self.labels.remove(lab)
             nusers = len(self.eng.xmpp.users)
             invite_btn = len(self.invited_users) < 8
+            invite_btn = invite_btn and not self.in_match_room
             top = .08 * nusers + .08
             self.frm['canvasSize'] = (-.02, .76, 0, top)
             label_users = [lab.lab['text'] for lab in self.labels]
+            clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
+            label_users = map(clean, label_users)
             for i, user in enumerate(self.eng.xmpp.users):
                 usr_inv = invite_btn and user.is_in_yorg
                 if self.trunc(user.name, 20) not in label_users:
@@ -125,8 +130,9 @@ class UsersFrm(GameObject):
                     lab.attach(self.on_unfriend)
                     lab.attach(self.on_add_chat)
                 else:
+                    clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
                     lab = [lab for lab in self.labels
-                           if lab.lab['text'] == self.trunc(user.name, 20)][0]
+                           if clean(lab.lab['text']) == self.trunc(user.name, 20)][0]
                     lab.show_invite_btn(
                         usr_inv and user.name not in self.invited_users)
                     lab.frm.set_z(top - .08 - .08 * i)

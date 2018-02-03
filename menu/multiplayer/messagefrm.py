@@ -137,6 +137,7 @@ class MatchMsgFrm(GameObject):
             mto=self.chat.dst,
             mtype='groupchat',
             mbody=val)
+        self.ent['focus'] = 1
 
     def on_groupchat_msg(self, msg):
         src = str(JID(msg['mucnick']))
@@ -181,6 +182,8 @@ class MatchMsgFrm(GameObject):
             self.ent.set('')
         self.notify('on_match_msg_focus', val)
 
+    def destroy(self):
+        self.msg_frm.destroy()
 
 class MessageFrm(GameObject):
 
@@ -366,6 +369,7 @@ class MessageFrm(GameObject):
                 mbody=val)
         msg = '\1italic\1' + _('you') + '\2: ' + val
         self.curr_chat.messages += [msg]
+        self.ent['focus'] = 1
 
     def on_msg(self, msg):
         src = str(JID(msg['from']).bare)
@@ -424,9 +428,12 @@ class MessageFrm(GameObject):
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
         chat = self.__find_chat(room)
-        chat.users.remove(nick)
-        if self.curr_chat.dst == room:
-            self.set_title(chat.title)
+        if nick == self.eng.xmpp.client.boundjid.bare:
+            self.on_close()
+        else:
+            chat.users.remove(nick)
+            if self.curr_chat.dst == room:
+                self.set_title(chat.title)
 
     def __find_chat(self, dst):
         chats = [chat for chat in self.chats if chat.dst == dst]
@@ -456,6 +463,10 @@ class MessageFrm(GameObject):
 
     def on_match_msg_focus(self, val):
         self.notify('on_msg_focus', val)
+
+    def on_room_back(self):
+        self.curr_match_room = None
+        self.match_msg_frm.destroy()
 
     def add_match_chat(self, room, usr):
         if self.curr_match_room: return

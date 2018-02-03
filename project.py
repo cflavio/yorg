@@ -3,14 +3,12 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# after a message, keep the focus in the text entry
-# add supporter badge where it's missing
-# disable invite button for already invited players
-# disable invite buttons if you've accepted a match
-# back/exit from match's room
-# exit from muc (in addition to close) into message box
+# reactivate invites after exiting from rooms
 # popup if the server players disconnects
 # remove a player from the match box
+# disable invite button for non-in-yorg players
+# disable invite button for playing players
+# add supporter badge where it's missing
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket

@@ -96,6 +96,9 @@ class YorgLogic(GameLogic):
         # refactor: now the page props are static, but they should change
         # when we change the options in the option page
 
+    def on_room_back(self):
+        self.mp_frm.on_room_back()
+
     def on_car_selected(self, car):
         dev = self.mediator.options['development']
         self.season = SingleRaceSeason(self.__season_props(

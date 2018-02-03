@@ -81,12 +81,20 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.on_presence_available_room(msg)
 
     def on_presence_unavailable_room(self, msg):
-        self.match_frm.on_presence_unavailable_room(msg)
+        if self.match_frm:
+            self.match_frm.on_presence_unavailable_room(msg)
         self.msg_frm.on_presence_unavailable_room(msg)
 
     def on_presence_unavailable(self, user): self.users_frm.on_users()
 
     def on_start(self): self.users_frm.room_name = None
+
+    def on_room_back(self):
+        self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
+            self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+        self.match_frm.destroy()
+        self.match_frm = None
+        self.msg_frm.on_room_back()
 
     def on_msg(self, msg):
         self.users_frm.set_size(False)
@@ -107,6 +115,8 @@ class MultiplayerFrm(GameObject):
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
         if val:
+            self.users_frm.in_match_room = True
+            self.users_frm.on_users()
             self.msg_frm.add_groupchat(str(msg['body']), str(msg['from'].bare))
             self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
                 msg['body'], self.eng.xmpp.client.boundjid.bare)

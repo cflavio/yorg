@@ -111,3 +111,6 @@ class MatchFrm(GameObject):
 
     def hide(self):
         self.match_frm.hide()
+
+    def destroy(self):
+        self.match_frm.destroy()

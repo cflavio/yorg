@@ -34,6 +34,7 @@ class YorgFsm(FsmColleague):
         self.__menu = YorgMenu(menu_props)
         methods = [self.mediator.logic.on_input_back,
                    self.mediator.logic.on_options_back,
+                   self.mediator.logic.on_room_back,
                    self.mediator.logic.on_car_selected,
                    self.mediator.logic.on_car_start_client,
                    self.mediator.logic.on_car_selected_season,

@@ -100,6 +100,8 @@ class YorgMenuLogic(MenuLogic):
             self.mediator.gui.notify('on_input_back', args[0])
         if page_code == 'options_page':
             self.mediator.gui.notify('on_options_back', args[0])
+        if page_code == 'RoomPageGui':
+            self.mediator.gui.notify('on_room_back')
         MenuLogic.on_back(self)
 
     def on_track_selected(self, track):
