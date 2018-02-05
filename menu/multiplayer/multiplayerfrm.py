@@ -22,12 +22,11 @@ class MultiplayerFrm(GameObject):
         self.users_frm.attach(self.on_invite)
         self.users_frm.attach(self.on_add_chat)
         self.users_frm.attach(self.on_add_groupchat)
-        self.match_frm = MatchFrm(menu_args)
-        self.match_frm.attach(self.on_start)
         self.msg_frm = MessageFrm(menu_args)
         self.msg_frm.attach(self.on_msg_focus)
         self.msg_frm.attach(self.on_close_all_chats)
-        self.match_frm.hide()
+        self.match_frm = None
+        #self.match_frm.hide()
         self.msg_frm.hide()
         self.eng.xmpp.attach(self.on_users)
         self.eng.xmpp.attach(self.on_user_connected)
@@ -41,15 +40,21 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_groupchat_msg)
         self.eng.xmpp.attach(self.on_invite_chat)
         self.eng.xmpp.attach(self.on_declined)
+        self.eng.xmpp.attach(self.on_cancel_invite)
+
+    def create_match_frm(self, room):
+        self.match_frm = MatchFrm(self.menu_args)
+        self.match_frm.attach(self.on_start)
+        self.match_frm.show(room)
 
     def show(self):
         self.users_frm.show()
-        self.match_frm.show()
+        #self.match_frm.show()
         self.msg_frm.show()
 
     def hide(self):
         self.users_frm.hide()
-        self.match_frm.hide()
+        #self.match_frm.hide()
         self.msg_frm.hide()
 
     def on_user_subscribe(self, user):
@@ -67,6 +72,8 @@ class MultiplayerFrm(GameObject):
         self.on_users()
 
     def on_invite(self, usr):
+        if not self.match_frm:
+            self.create_match_frm('')
         self.match_frm.on_invite(usr)
 
     def on_users(self): self.users_frm.on_users()
@@ -99,6 +106,17 @@ class MultiplayerFrm(GameObject):
     def on_start(self): self.users_frm.room_name = None
 
     def on_room_back(self):
+        if self.users_frm.room_name:  # i am the server:
+            invited = self.users_frm.invited_users
+            users = self.match_frm.users_names
+            pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
+            for usr in pending_users:
+                self.eng.xmpp.client.send_message(
+                    mfrom=self.eng.xmpp.client.boundjid.full,
+                    mto=usr,
+                    mtype='chat',
+                    msubject='cancel_invite',
+                    mbody='cancel_invite')
         if self.msg_frm.curr_match_room:  # if we've accepted the invitation
             self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
                 self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
@@ -107,6 +125,7 @@ class MultiplayerFrm(GameObject):
             self.msg_frm.on_room_back()
         self.users_frm.invited_users = []
         self.users_frm.in_match_room = None
+        self.users_frm.room_name = None
         self.on_users()
 
     def on_msg(self, msg):
@@ -135,7 +154,7 @@ class MultiplayerFrm(GameObject):
                 msg['body'], self.eng.xmpp.client.boundjid.bare)
             room = msg['body']
             nick = self.eng.xmpp.client.boundjid.bare
-            self.match_frm.show(room)
+            self.create_match_frm(room)
             self.notify('on_create_room', room, nick)
         else:
             self.eng.xmpp.client.send_message(
@@ -148,6 +167,10 @@ class MultiplayerFrm(GameObject):
         self.users_frm.on_declined(msg)
         self.match_frm.on_declined(msg)
 
+    def on_cancel_invite(self):
+        self.invite_dlg.detach(self.on_invite_answer)
+        self.invite_dlg = self.invite_dlg.destroy()
+
     def on_add_chat(self, usr):
         self.users_frm.set_size(False)
         self.msg_frm.show()
@@ -157,7 +180,7 @@ class MultiplayerFrm(GameObject):
         self.users_frm.set_size(False)
         self.msg_frm.show()
         self.msg_frm.add_groupchat(room, usr)
-        self.match_frm.show(room)
+        self.match_frm.room = room
         self.notify('on_create_room', room, usr)
 
     def on_msg_focus(self, val): self.notify('on_msg_focus', val)

@@ -337,6 +337,7 @@ class MessageFrm(GameObject):
         return [chat for chat in self.chats if not chat.closed]
 
     def on_close(self):
+        if self.curr_chat not in self.open_chats: return
         curr_idx = self.open_chats.index(self.curr_chat)
         #self.chats.remove(self.curr_chat)
         self.curr_chat.closed = True

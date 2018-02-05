@@ -69,6 +69,11 @@ class MatchFrm(GameObject):
                 self.forms.remove(frm)
                 frm.destroy()
 
+    @property
+    def users_names(self):
+        clean = lambda lab: lab.replace('\1smaller\1', '').replace('\2', '')
+        return [clean(frm.lab['text']) for frm in self.forms]
+
     def set_frm_pos(self, frm, i):
         row, col = i % 4, i / 4
         x = .1 + 1.24 * col
