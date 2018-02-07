@@ -4,13 +4,15 @@ from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.observer import Subject
 from .button import StaticMPBtn, MPBtn
+from yyagl.gameobject import GameObject
 
 
-class UserFrmMe(Subject):
+class UserFrmMe(GameObject, Subject):
 
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args,
                  msg_btn_x=.58):
         Subject.__init__(self)
+        GameObject.__init__(self)
         self.name_full = name_full
         self.menu_args = menu_args
         lab_args = menu_args.label_args
@@ -47,6 +49,7 @@ class UserFrmMe(Subject):
         self.lab.destroy()
         self.frm.destroy()
         Subject.destroy(self)
+        GameObject.destroy(self)
 
 
 class UserFrm(UserFrmMe):
@@ -59,7 +62,8 @@ class UserFrm(UserFrmMe):
             self.frm, self, menu_args, 'assets/images/gui/message.txo',
             msg_btn_x, self.on_msg, name_full, _('send a message to the user'))
 
-    def on_msg(self, usr): self.notify('on_add_chat', usr.name_full)
+    def on_msg(self, usr):
+        self.notify('on_add_chat', usr.name_full)
 
     def on_enter(self, pos):
         UserFrmMe.on_enter(self, pos)
@@ -117,6 +121,7 @@ class UserFrmListOut(UserFrm):
         if not self.friend_btn.is_hidden(): self.friend_btn.hide()
 
     def on_unfriend(self, usr):
+        self.eng.log('unfriend with ' + usr.name)
         self.friend_btn.disable()
         self.notify('on_unfriend', usr)
 
@@ -135,9 +140,11 @@ class UserFrmList(UserFrmListOut):
                 _('remove from xmpp friends'))
 
     def on_invite(self, usr):
+        self.eng.log('invite ' + usr.name)
         self.invite_btn.disable()
         self.notify('on_invite', usr)
 
     def on_friend(self, usr):
+        self.eng.log('friend with ' + usr.name)
         self.friend_btn.disable()
         self.notify('on_friend', usr)

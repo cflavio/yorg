@@ -3,9 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# create secret/protected muc
-# use xmpp's muc invite
-# log gui and network events
 # use stanzas for protocol messages
 # remove a player from the match box
 # disable invite button for non-in-yorg players (less alpha)

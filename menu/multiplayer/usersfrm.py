@@ -13,6 +13,7 @@ class UsersFrm(GameObject):
 
     def __init__(self, menu_args):
         GameObject.__init__(self)
+        self.eng.log('create users form')
         self.ver_check = VersionChecker()
         self.room_name = None
         self.labels = []
@@ -151,15 +152,23 @@ class UsersFrm(GameObject):
             self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
                 self.room_name, self.eng.xmpp.client.boundjid.bare,
                 pfrom=self.eng.xmpp.client.boundjid.full)
+            cfg = self.eng.xmpp.client.plugin['xep_0045'].getRoomConfig(self.room_name)
+            values = cfg.get_values()
+            values['muc#roomconfig_publicroom'] = False
+            cfg.set_values(values)
+            self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
+            self.eng.log('created room ' + self.room_name)
         self.eng.xmpp.client.send_message(
             mfrom=self.eng.xmpp.client.boundjid.full,
             mto=usr.name_full,
             mtype='chat',
             msubject='invite',
             mbody=self.room_name)
+        self.eng.log('invited ' + str(usr.name_full))
         self.notify('on_add_groupchat', self.room_name, usr.name)
 
     def on_declined(self, msg):
+        self.eng.log('declined from ' + str(JID(msg['from']).bare))
         usr = str(JID(msg['from']).bare)
         self.invited_users.remove(usr)
         self.on_users()
@@ -167,15 +176,17 @@ class UsersFrm(GameObject):
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)
 
     def on_friend(self, usr):
+        self.eng.log('send friend to ' + usr.name)
         self.eng.xmpp.client.send_presence_subscription(
             usr.name, ptype='subscribe',
             pfrom=self.eng.xmpp.client.boundjid.full)
 
     def on_unfriend(self, usr):
-        print '\n\n', self.eng.xmpp.client.client_roster, '\n\n'
+        self.eng.log('roster ' + str(self.eng.xmpp.client.client_roster))
         self.eng.xmpp.client.del_roster_item(usr.name)
-        print '\n\n', self.eng.xmpp.client.client_roster, '\n\n'
+        self.eng.log('roster ' + str(self.eng.xmpp.client.client_roster))
 
     def destroy(self):
+        self.eng.log('destroyed usersfrm')
         self.frm = self.frm.destroy()
         GameObject.destroy(self)

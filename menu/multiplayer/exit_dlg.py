@@ -1,12 +1,14 @@
 from direct.gui.DirectDialog import OkDialog
 from direct.gui.DirectGuiGlobals import FLAT
 from yyagl.observer import Subject
+from yyagl.gameobject import GameObject
 
 
-class ExitDialog(Subject):
+class ExitDialog(GameObject, Subject):
 
     def __init__(self, menu_args, msg):
         Subject.__init__(self)
+        GameObject.__init__(self)
         self.user = str(msg['muc']['nick'])
         self.msg = msg
         self.dialog = OkDialog(
@@ -24,10 +26,14 @@ class ExitDialog(Subject):
             button_text_fg=menu_args.text_active,
             button_text_font=menu_args.font,
             command=self.on_btn)
+        self.eng.log('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
+        self.eng.log('exit button')
         self.notify('on_exit_dlg')
 
     def destroy(self):
+        self.eng.log('destroyed dialog ' + self.dialog['text'])
         self.dialog = self.dialog.destroy()
         Subject.destroy(self)
+        GameObject.destroy(self)

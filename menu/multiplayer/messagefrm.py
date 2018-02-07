@@ -41,6 +41,7 @@ class MatchMsgFrm(GameObject):
 
     def __init__(self, menu_args):
         GameObject.__init__(self)
+        self.eng.log('created match message form')
         self.chat = None
         self.msg_frm = DirectFrame(
             frameSize=(-.02, 2.5, 0, 1.22),
@@ -142,6 +143,7 @@ class MatchMsgFrm(GameObject):
     def on_groupchat_msg(self, msg):
         src = str(JID(msg['mucnick']))
         src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
         str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         if not self.chat:
             self.chat = MUC(str(JID(msg['from']).bare))
@@ -154,12 +156,14 @@ class MatchMsgFrm(GameObject):
     def on_presence_available_room(self, msg):
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has logged in the chat %s' %(nick, room))
         self.chat.users += [nick]
         self.set_title(self.chat.title)
 
     def on_presence_unavailable_room(self, msg):
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has left the chat %s' %(nick, room))
         self.chat.users.remove(nick)
         self.set_title(self.chat.title)
 
@@ -183,12 +187,15 @@ class MatchMsgFrm(GameObject):
         self.notify('on_match_msg_focus', val)
 
     def destroy(self):
+        self.eng.log('message form destroyed')
         self.msg_frm.destroy()
+        GameObject.destroy(self)
 
 class MessageFrm(GameObject):
 
     def __init__(self, menu_args):
         GameObject.__init__(self)
+        self.eng.log('created message form')
         self.chats = []
         self.curr_chat = None
         self.curr_match_room = None
@@ -396,6 +403,7 @@ class MessageFrm(GameObject):
             return
         src = str(JID(msg['mucnick']))
         src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
         str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         chat = self.curr_chat
         if not chat:
@@ -417,6 +425,7 @@ class MessageFrm(GameObject):
             return
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has logged in the chat %s' %(nick, room))
         chat = self.__find_chat(room)
         chat.users += [nick]
         if self.curr_chat.dst == room:
@@ -428,6 +437,7 @@ class MessageFrm(GameObject):
             return
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has left the chat %s' %(nick, room))
         chat = self.__find_chat(room)
         if nick == self.eng.xmpp.client.boundjid.bare:
             self.on_close()

@@ -13,6 +13,7 @@ class MultiplayerFrm(GameObject):
 
     def __init__(self, menu_args):
         GameObject.__init__(self)
+        self.eng.log('created multiplayer form')
         self.dialog = None
         self.ver_check = VersionChecker()
         self.labels = []
@@ -48,16 +49,19 @@ class MultiplayerFrm(GameObject):
         self.match_frm.show(room)
 
     def show(self):
+        self.eng.log('multiplayer form: show')
         self.users_frm.show()
         #self.match_frm.show()
         self.msg_frm.show()
 
     def hide(self):
+        self.eng.log('multiplayer form: hide')
         self.users_frm.hide()
         #self.match_frm.hide()
         self.msg_frm.hide()
 
     def on_user_subscribe(self, user):
+        self.eng.log('user subscribe: ' + str(user))
         if self.eng.xmpp.is_friend(user): return
         self.dialog = FriendDialog(self.menu_args, user)
         self.dialog.attach(self.on_friend_answer)
@@ -65,6 +69,7 @@ class MultiplayerFrm(GameObject):
     def on_friend_answer(self, user, val):
         self.dialog.detach(self.on_friend_answer)
         self.dialog = self.dialog.destroy()
+        self.eng.log('send presence subscription to %s: %s' %(user, 'subscribed' if val else 'unsubscribed'))
         self.eng.xmpp.client.send_presence_subscription(
             pto=user,
             pfrom=self.eng.xmpp.client.boundjid.full,
@@ -78,11 +83,16 @@ class MultiplayerFrm(GameObject):
 
     def on_users(self): self.users_frm.on_users()
 
-    def on_user_connected(self, user): self.users_frm.on_users()
+    def on_user_connected(self, user):
+        self.eng.log('user connected ' + user)
+        self.users_frm.on_users()
 
-    def on_user_disconnected(self, user): self.users_frm.on_users()
+    def on_user_disconnected(self, user):
+        self.eng.log('user disconnected ' + user)
+        self.users_frm.on_users()
 
-    def on_presence_available(self, user): self.users_frm.on_users()
+    def on_presence_available(self, msg):
+        self.users_frm.on_users()
 
     def on_presence_available_room(self, msg):
         self.match_frm.on_presence_available_room(msg)
@@ -101,16 +111,21 @@ class MultiplayerFrm(GameObject):
         self.notify('on_srv_quitted')
         self.on_room_back()
 
-    def on_presence_unavailable(self, user): self.users_frm.on_users()
+    def on_presence_unavailable(self, msg):
+        self.users_frm.on_users()
 
-    def on_start(self): self.users_frm.room_name = None
+    def on_start(self):
+        self.eng.log('on_start')
+        self.users_frm.room_name = None
 
     def on_room_back(self):
         if self.users_frm.room_name:  # i am the server:
             invited = self.users_frm.invited_users
             users = self.match_frm.users_names
             pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
+            self.eng.log('back (server): %s, %s, %s' % (invited, users, pending_users))
             for usr in pending_users:
+                self.eng.log('cancel_invite ' + usr)
                 self.eng.xmpp.client.send_message(
                     mfrom=self.eng.xmpp.client.boundjid.full,
                     mto=usr,
@@ -118,6 +133,7 @@ class MultiplayerFrm(GameObject):
                     msubject='cancel_invite',
                     mbody='cancel_invite')
         if self.msg_frm.curr_match_room:  # if we've accepted the invitation
+            self.eng.log('back (client)')
             self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
                 self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
             self.match_frm.destroy()
@@ -129,15 +145,18 @@ class MultiplayerFrm(GameObject):
         self.on_users()
 
     def on_msg(self, msg):
+        self.eng.log('received message')
         self.users_frm.set_size(False)
         self.msg_frm.show()
         self.msg_frm.on_msg(msg)
 
     def on_close_all_chats(self):
+        self.eng.log('closed all chats')
         self.users_frm.set_size(True)
         self.msg_frm.hide()
 
-    def on_groupchat_msg(self, msg): self.msg_frm.on_groupchat_msg(msg)
+    def on_groupchat_msg(self, msg):
+        self.msg_frm.on_groupchat_msg(msg)
 
     def on_invite_chat(self, msg):
         self.invite_dlg = InviteDialog(self.menu_args, msg)
@@ -150,6 +169,7 @@ class MultiplayerFrm(GameObject):
             self.users_frm.in_match_room = msg['from'].bare
             self.users_frm.on_users()
             self.msg_frm.add_groupchat(str(msg['body']), str(msg['from'].bare))
+            self.eng.log('join to the chat ' + msg['body'])
             self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
                 msg['body'], self.eng.xmpp.client.boundjid.bare)
             room = msg['body']
@@ -164,6 +184,7 @@ class MultiplayerFrm(GameObject):
                 mbody=str(msg['body']))
 
     def on_declined(self, msg):
+        self.eng.log('on declined')
         self.users_frm.on_declined(msg)
         self.match_frm.on_declined(msg)
 
@@ -172,6 +193,7 @@ class MultiplayerFrm(GameObject):
         self.invite_dlg = self.invite_dlg.destroy()
 
     def on_add_chat(self, usr):
+        self.eng.log('on add chat' + str(usr.name_full))
         self.users_frm.set_size(False)
         self.msg_frm.show()
         self.msg_frm.add_chat(usr)
@@ -186,5 +208,6 @@ class MultiplayerFrm(GameObject):
     def on_msg_focus(self, val): self.notify('on_msg_focus', val)
 
     def destroy(self):
+        self.eng.log('multiplayer form: destroy')
         self.frm = self.frm.destroy()
         GameObject.destroy(self)

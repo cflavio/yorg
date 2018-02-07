@@ -46,7 +46,7 @@ class YorgMainPageGui(MainPageGui, ):
                     pwd = password
                     # set_password('ya2_rog', user, pwd)
                 # self.eng.xmpp.start(user, pwd)
-                    self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko)
+                    self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
             if not (user and password):
                 self.on_ko()
 

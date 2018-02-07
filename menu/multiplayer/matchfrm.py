@@ -11,6 +11,7 @@ class MatchFrm(GameObject):
 
     def __init__(self, menu_args):
         GameObject.__init__(self)
+        self.eng.log('created match form (init)')
         self.room = ''
         self.invited_users = [self.eng.xmpp.client.boundjid.bare]
         self.menu_args = menu_args
@@ -37,6 +38,7 @@ class MatchFrm(GameObject):
     def on_presence_available_room(self, msg):
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has connected to the room %s' % (nick, room))
         if nick == self.eng.xmpp.client.boundjid.bare: return
         if room != self.room: return
         found = False
@@ -58,6 +60,7 @@ class MatchFrm(GameObject):
     def on_presence_unavailable_room(self, msg):
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has disconnected from the room %s' % (nick, room))
         if room != self.room: return
         for i, frm in enumerate(self.forms[:]):
             lab = frm.lab['text']
@@ -82,6 +85,7 @@ class MatchFrm(GameObject):
 
     def on_declined(self, msg):
         usr = str(JID(msg['from']).bare)
+        self.eng.log('user %s has declined' % usr)
         for i, frm in enumerate(self.forms[:]):
             lab = frm.lab['text']
             lab = lab.replace('\1smaller\1', '').replace('\2', '')
@@ -99,6 +103,7 @@ class MatchFrm(GameObject):
         return name
 
     def on_invite(self, usr):
+        self.eng.log('match form: invited user ' + usr.name)
         idx = len(self.invited_users)
         x = .1 + 1.24 * (idx / 4)
         y = .38 - .08 * (idx % 4)
@@ -108,14 +113,19 @@ class MatchFrm(GameObject):
         self.invited_users += [usr.name]
 
     def on_start(self):
+        self.eng.log('match form: start')
         self.notify('on_start')
 
     def show(self, room):
+        self.eng.log('match form: show room ' + room)
         self.room = room
         self.match_frm.show()
 
     def hide(self):
+        self.eng.log('match form: hide')
         self.match_frm.hide()
 
     def destroy(self):
+        self.eng.log('match form: destroy')
         self.match_frm.destroy()
+        GameObject.destroy(self)

@@ -59,7 +59,8 @@ class Yorg(Game):
                 'verbose': '',
                 'verbose_log': 0,
                 'race_start_time': 3.5,
-                'countdown_seconds': 3}}
+                'countdown_seconds': 3,
+                'xmpp_debug': 0}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows
@@ -137,7 +138,7 @@ class Yorg(Game):
             'assets/images/cars/%s.txo',
             self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
             'assets/models/cars/%s/car',
-            damage_info, wheel_gfx_names,)
+            damage_info, wheel_gfx_names, opt_dev['xmpp_debug'])
 
     def reset_drivers(self):
         self.gameprops = self.gameprops._replace(drivers_info=self.drivers())

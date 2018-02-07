@@ -2,15 +2,17 @@ from direct.gui.DirectGuiGlobals import ENTER, EXIT
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.engine.gui.imgbtn import ImgBtn
+from yyagl.gameobject import GameObject
 
 
-class MPBtn(object):
+class MPBtn(GameObject):
 
     tooltip_align = TextNode.A_right
     tooltip_offset = (.01, 0, -.08)
 
     def __init__(self, parent, owner, menu_args, img_path, msg_btn_x, cb, usr,
                  tooltip):
+        GameObject.__init__(self)
         self.owner = owner
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
