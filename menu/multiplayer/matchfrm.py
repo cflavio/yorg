@@ -4,7 +4,7 @@ from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.gameobject import GameObject
-from .forms import UserFrm, UserFrmMe
+from .forms import UserFrm, UserFrmMe, UserFrmMatch
 
 
 class MatchFrm(GameObject):
@@ -107,14 +107,18 @@ class MatchFrm(GameObject):
         idx = len(self.invited_users)
         x = .1 + 1.24 * (idx / 4)
         y = .38 - .08 * (idx % 4)
-        frm = UserFrm('? ' + self.trunc(usr.name, 30), usr, usr.is_supporter, (x, 1, y),
-                      self.match_frm, self.menu_args, 1.0)
+        frm = UserFrmMatch('? ' + self.trunc(usr.name, 30), usr, usr.is_supporter, (x, 1, y),
+                           self.match_frm, self.menu_args)
+        frm.attach(self.on_remove)
         self.forms += [frm]
         self.invited_users += [usr.name]
 
     def on_start(self):
         self.eng.log('match form: start')
         self.notify('on_start')
+
+    def on_remove(self, usr):
+        self.eng.xmpp.client.plugin['xep_0045'].setRole(self.room, usr.name, 'none')
 
     def show(self, room):
         self.eng.log('match form: show room ' + room)

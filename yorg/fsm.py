@@ -70,6 +70,8 @@ class YorgFsm(FsmColleague):
 
     def on_srv_quitted(self): self.__menu.logic.on_srv_quitted()
 
+    def on_removed(self): self.__menu.logic.on_removed()
+
     def create_room(self, room, nick):
         self.__menu.logic.create_room(room, nick)
 

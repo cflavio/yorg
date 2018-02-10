@@ -23,6 +23,7 @@ class YorgLogic(GameLogic):
             self.mp_frm.attach(self.on_msg_focus)
             self.mp_frm.attach(self.on_create_room)
             self.mp_frm.attach(self.on_srv_quitted)
+            self.mp_frm.attach(self.on_removed)
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -89,6 +90,9 @@ class YorgLogic(GameLogic):
 
     def on_srv_quitted(self):
         self.mediator.fsm.on_srv_quitted()
+
+    def on_removed(self):
+        self.mediator.fsm.on_removed()
 
     def on_input_back(self, new_opt_dct):
         self.mediator.options['settings'].update(new_opt_dct)

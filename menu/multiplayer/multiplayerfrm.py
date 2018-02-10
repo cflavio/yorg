@@ -1,3 +1,6 @@
+from json import load
+from socket import socket, AF_INET, SOCK_DGRAM, gaierror
+from urllib2 import urlopen
 from sleekxmpp.jid import JID
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
@@ -7,6 +10,7 @@ from .messagefrm import MessageFrm
 from .friend_dlg import FriendDialog
 from .invite_dlg import InviteDialog
 from .exit_dlg import ExitDialog
+from .remove_dlg import RemovedDialog
 
 
 class MultiplayerFrm(GameObject):
@@ -42,6 +46,8 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_invite_chat)
         self.eng.xmpp.attach(self.on_declined)
         self.eng.xmpp.attach(self.on_cancel_invite)
+        self.eng.xmpp.attach(self.on_ip_address)
+        self.eng.xmpp.attach(self.on_yorg_init)
 
     def create_match_frm(self, room):
         self.match_frm = MatchFrm(self.menu_args)
@@ -91,6 +97,13 @@ class MultiplayerFrm(GameObject):
         self.eng.log('user disconnected ' + user)
         self.users_frm.on_users()
 
+    def on_yorg_init(self, msg):
+        self.eng.log('yorg_init ' + str(msg['from']))
+        usr = [user for user in self.eng.xmpp.users if user.name == str(msg['from'].bare)][0]
+        usr.is_supporter = msg['body'] == '1'
+        usr.is_in_yorg = True
+        self.users_frm.on_users()
+
     def on_presence_available(self, msg):
         self.users_frm.on_users()
 
@@ -105,10 +118,18 @@ class MultiplayerFrm(GameObject):
         if str(msg['muc']['nick']) == self.users_frm.in_match_room:
             self.exit_dlg = ExitDialog(self.menu_args, msg)
             self.exit_dlg.attach(self.on_exit_dlg)
+        if str(msg['muc']['nick']) == self.eng.xmpp.client.boundjid.bare:
+            self.removed_dlg = RemovedDialog(self.menu_args, msg)
+            self.removed_dlg.attach(self.on_remove_dlg)
 
     def on_exit_dlg(self):
         self.exit_dlg.destroy()
         self.notify('on_srv_quitted')
+        self.on_room_back()
+
+    def on_remove_dlg(self):
+        self.removed_dlg.destroy()
+        self.notify('on_removed')
         self.on_room_back()
 
     def on_presence_unavailable(self, msg):
@@ -129,7 +150,7 @@ class MultiplayerFrm(GameObject):
                 self.eng.xmpp.client.send_message(
                     mfrom=self.eng.xmpp.client.boundjid.full,
                     mto=usr,
-                    mtype='chat',
+                    mtype='ya2_yorg',
                     msubject='cancel_invite',
                     mbody='cancel_invite')
         if self.msg_frm.curr_match_room:  # if we've accepted the invitation
@@ -168,19 +189,38 @@ class MultiplayerFrm(GameObject):
         if val:
             self.users_frm.in_match_room = msg['from'].bare
             self.users_frm.on_users()
-            self.msg_frm.add_groupchat(str(msg['body']), str(msg['from'].bare))
-            self.eng.log('join to the chat ' + msg['body'])
+            chat, public_addr, local_addr = msg['body'].split('\n')
+            for usr in self.eng.xmpp.users:
+                if usr.name == msg['from'].bare:
+                    usr.public_addr = public_addr
+                    usr.local_addr = local_addr
+            self.msg_frm.add_groupchat(chat, str(msg['from'].bare))
+            self.eng.log('join to the chat ' + chat)
             self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
-                msg['body'], self.eng.xmpp.client.boundjid.bare)
-            room = msg['body']
+                chat, self.eng.xmpp.client.boundjid.bare)
+            room = chat
             nick = self.eng.xmpp.client.boundjid.bare
             self.create_match_frm(room)
             self.notify('on_create_room', room, nick)
+            public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
+            sock = socket(AF_INET, SOCK_DGRAM)
+            try:
+                sock.connect(('ya2.it', 0))
+                local_addr = sock.getsockname()[0]
+            except gaierror:
+                local_addr = ''
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
+                mto=msg['from'].bare,
+                mtype='ya2_yorg',
+                msubject='ip_address',
+                mbody=public_addr + '\n' + local_addr)
         else:
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
                 mto=str(msg['from'].bare),
                 msubject='declined',
+                mtype='ya2_yorg',
                 mbody=str(msg['body']))
 
     def on_declined(self, msg):
@@ -188,12 +228,20 @@ class MultiplayerFrm(GameObject):
         self.users_frm.on_declined(msg)
         self.match_frm.on_declined(msg)
 
+    def on_ip_address(self, msg):
+        self.eng.log('on ip address')
+        public_addr, local_addr = msg['body'].split('\n')
+        for usr in self.eng.xmpp.users:
+            if usr.name == msg['from'].bare:
+                usr.public_addr = public_addr
+                usr.local_addr = local_addr
+
     def on_cancel_invite(self):
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
 
     def on_add_chat(self, usr):
-        self.eng.log('on add chat' + str(usr.name_full))
+        self.eng.log('on add chat' + str(usr))
         self.users_frm.set_size(False)
         self.msg_frm.show()
         self.msg_frm.add_chat(usr)

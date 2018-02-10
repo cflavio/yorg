@@ -3,11 +3,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# use stanzas for protocol messages
-# remove a player from the match box
+# add supporter badge where it's missing
 # disable invite button for non-in-yorg players (less alpha)
 # disable invite button for in-room and invited players (less alpha)
-# add supporter badge where it's missing
+# server's address == client's one -> use the local one
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket

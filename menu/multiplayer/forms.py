@@ -126,6 +126,32 @@ class UserFrmListOut(UserFrm):
         self.notify('on_unfriend', usr)
 
 
+class UserFrmMatch(UserFrm):
+
+    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
+        UserFrm.__init__(
+            self, name, name_full, is_supporter, pos, parent, menu_args, 1.0)
+        self.frm['frameSize'] = (-.01, 1.06, .05, -.03)
+        lab_args = menu_args.label_args
+        lab_args['scale'] = .046
+        lab_args['text_fg'] = self.menu_args.text_normal
+        self.remove_btn = MPBtn(
+            self.frm, self, menu_args, 'assets/images/gui/remove.txo',
+            .92, self.on_remove, name_full, _("isn't playing yorg"))
+
+    def on_remove(self, usr):
+        self.notify('on_remove', usr)
+
+    def on_enter(self, pos):
+        UserFrm.on_enter(self, pos)
+        if self.remove_btn.is_hidden():
+            self.remove_btn.show()
+
+    def on_exit(self, pos):
+        UserFrm.on_exit(self, pos)
+        if not self.remove_btn.is_hidden(): self.remove_btn.hide()
+
+
 class UserFrmList(UserFrmListOut):
 
     def create_friend_btn(self, is_friend, menu_args, name_full):

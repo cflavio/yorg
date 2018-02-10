@@ -1,7 +1,10 @@
 from time import strftime
+from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from sleekxmpp.jid import JID
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT
+from json import load
+from urllib2 import urlopen
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectLabel import DirectLabel
 from yyagl.gameobject import GameObject
@@ -84,8 +87,9 @@ class UsersFrm(GameObject):
             for lab in self.labels[:]:
                 _lab = lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
                 if _lab not in bare_users:
-                    lab.destroy()
-                    self.labels.remove(lab)
+                    if _lab not in self.eng.xmpp.client.client_roster.keys():
+                        lab.destroy()
+                        self.labels.remove(lab)
             nusers = len(self.eng.xmpp.users)
             invite_btn = len(self.invited_users) < 8
             invite_btn = invite_btn and not self.in_match_room
@@ -158,12 +162,19 @@ class UsersFrm(GameObject):
             cfg.set_values(values)
             self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
             self.eng.log('created room ' + self.room_name)
+        public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
+        sock = socket(AF_INET, SOCK_DGRAM)
+        try:
+            sock.connect(('ya2.it', 0))
+            local_addr = sock.getsockname()[0]
+        except gaierror:
+            local_addr = ''
         self.eng.xmpp.client.send_message(
             mfrom=self.eng.xmpp.client.boundjid.full,
             mto=usr.name_full,
-            mtype='chat',
+            mtype='ya2_yorg',
             msubject='invite',
-            mbody=self.room_name)
+            mbody=self.room_name + '\n' + public_addr + '\n' + local_addr)
         self.eng.log('invited ' + str(usr.name_full))
         self.notify('on_add_groupchat', self.room_name, usr.name)
 

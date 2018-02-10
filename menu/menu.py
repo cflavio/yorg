@@ -98,6 +98,9 @@ class YorgMenuLogic(MenuLogic):
     def on_srv_quitted(self):
         self.on_back('RoomPageGui')
 
+    def on_removed(self):
+        self.on_back('RoomPageGui')
+
     def on_back(self, page_code, args=[]):
         if page_code == 'input_page':
             self.mediator.gui.notify('on_input_back', args[0])
