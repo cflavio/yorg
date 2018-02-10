@@ -1,4 +1,4 @@
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import DirectEntry
 from yyagl.engine.gui.page import Page, PageEvent
@@ -37,8 +37,8 @@ class ClientPageGui(ThanksPageGui):
             frameColor=menu_args.btn_color,
             initialText='192.168.1.102')
         self.ent.onscreenText['fg'] = menu_args.text_active
-        btn = DirectButton(text=_('Connect'), pos=(0, 1, -.2),
-                           command=self.connect, **menu_args.btn_args)
+        btn = Btn(text=_('Connect'), pos=(0, 1, -.2),
+                  command=self.connect, **menu_args.btn_args)
         self.add_widgets([txt, self.ent, btn])
         ThanksPageGui.build(self)
 

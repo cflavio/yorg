@@ -1,7 +1,7 @@
 from sys import exit as sys_exit
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectFrame import DirectFrame
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from yyagl.engine.gui.page import Page, PageGui
 
 
@@ -24,10 +24,10 @@ class ExitPageGui(PageGui):
              lambda: self.on_end(False))]
         btn_args = self.menu_args.btn_args
         btn_args['frameSize'] = (-12, 12, -.8, 1.2)
-        btn_visit = DirectButton(
+        btn_visit = Btn(
             text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2],
             text_scale=.9, **btn_args)
-        btn_dont_visit = DirectButton(
+        btn_dont_visit = Btn(
             text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
             text_scale=.7, **btn_args)
         widgets = [frm, txt, btn_visit, btn_dont_visit]

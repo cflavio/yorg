@@ -1,5 +1,5 @@
 from direct.gui.DirectGuiGlobals import ENTER, EXIT
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.observer import Subject
@@ -17,7 +17,7 @@ class UserFrmMe(GameObject, Subject):
         self.menu_args = menu_args
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        self.frm = DirectButton(
+        self.frm = Btn(
             frameSize=(-.01, .79, .05, -.03), frameColor=(1, 1, 1, 0),
             pos=pos, parent=parent)
         self.frm.bind(ENTER, self.on_enter)

@@ -1,4 +1,4 @@
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -16,7 +16,7 @@ class SingleplayerPageGui(ThanksPageGui):
             (_('New season'), self.on_start),
             (_('Continue season'), lambda: self.notify('on_continue'))]
         widgets = [
-            DirectButton(
+            Btn(
                 text=menu[0], pos=(-.2, 1, .4-i*.28), command=menu[1],
                 **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]

@@ -1,4 +1,4 @@
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui

@@ -1,6 +1,6 @@
 from panda3d.core import TextNode
 from direct.gui.DirectCheckButton import DirectCheckButton
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from direct.gui.DirectEntry import DirectEntry
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageFacade
@@ -30,7 +30,7 @@ class LogInPageGui(ThanksPageGui):
             frameColor=menu_args.btn_color, obscured=True)
         self.jid_ent.onscreenText['fg'] = menu_args.text_active
         self.pwd_ent.onscreenText['fg'] = menu_args.text_active
-        start_btn = DirectButton(
+        start_btn = Btn(
             text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
         self.store_cb = DirectCheckButton(

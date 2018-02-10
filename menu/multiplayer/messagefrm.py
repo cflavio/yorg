@@ -5,7 +5,7 @@ from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectEntry import DirectEntry
 from direct.gui.DirectLabel import DirectLabel
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.gameobject import GameObject
 from yyagl.engine.gui.imgbtn import ImgBtn
@@ -84,7 +84,7 @@ class MatchMsgFrm(GameObject):
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = menu_args.text_normal
-        self.lab_frm = DirectButton(
+        self.lab_frm = Btn(
             frameSize=(-.02, 2.5, -.01, .05),
             frameColor=(1, 1, 1, 0),
             pos=(0, 1, 1.15), parent=self.msg_frm)
@@ -256,7 +256,7 @@ class MessageFrm(GameObject):
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = menu_args.text_normal
-        self.lab_frm = DirectButton(
+        self.lab_frm = Btn(
             frameSize=(-.02, .64, -.01, .05),
             frameColor=(1, 1, 1, 0),
             pos=(0, 1, .4), parent=self.msg_frm)

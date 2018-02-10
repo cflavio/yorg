@@ -1,5 +1,5 @@
 from direct.gui.OnscreenText import OnscreenText
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from yyagl.engine.gui.page import Page
 from .thankspage import ThanksPageGui
 
@@ -15,7 +15,7 @@ class CreditPageGui(ThanksPageGui):
         dev_str = '\n\n'.join(dev_str)
         txt = OnscreenText(text=dev_str, pos=(-.2, .72), wordwrap=20,
                            **menu_args.text_args)
-        btn = DirectButton(
+        btn = Btn(
             text=_('Supporters'), pos=(-.2, 1, -.4),
             command=lambda: self.notify('on_push_page', 'supporters'),
             **menu_args.btn_args)

@@ -1,7 +1,7 @@
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from json import load
 from urllib2 import urlopen
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageEvent, PageFacade
 from yyagl.gameobject import GameObject
@@ -50,7 +50,7 @@ class ServerPageGui(ThanksPageGui):
         self.add_widgets([self.conn_txt])
         scb = lambda: self.notify('on_push_page', 'trackpageserver',
                                   [self.props])
-        start_btn = DirectButton(
+        start_btn = Btn(
             text=_('Start'), pos=(0, 1, -.5), command=scb,
             **menu_args.btn_args)
         self.add_widgets([start_btn])

@@ -3,7 +3,7 @@ from panda3d.core import TextNode
 from direct.gui.DirectCheckButton import DirectCheckButton
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.joystick import JoystickMgr
 from yyagl.gameobject import GameObject
@@ -62,7 +62,7 @@ class InputPageGui(ThanksPageGui):
             **self.menu_args.label_args)
 
     def __add_btn(self, text, pos_z):
-        btn = DirectButton(pos=(.26, 1, pos_z), text=text,
+        btn = Btn(pos=(.26, 1, pos_z), text=text,
                            command=self.start_rec, **self.menu_args.btn_args)
         btn['extraArgs'] = [btn]
         self.ibuttons += [btn]

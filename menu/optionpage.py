@@ -3,7 +3,7 @@ from direct.gui.DirectCheckButton import DirectCheckButton
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
 from direct.gui.DirectSlider import DirectSlider
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -60,7 +60,8 @@ class OptionPageGui(ThanksPageGui):
             pos=(.29, 1, .25),
             initialitem='x'.join(str(res) for res in self.eng.closest_res),
             command=lambda res: self.eng.set_resolution(res2vec(res)),
-            **menu_args.option_args)
+            **menu_args.option_args
+            )
         widgets += [self.__add_lab('Antialiasing', _('Antialiasing'), .05)]
         widgets += [
             self.__add_lab('(from the next execution)',
@@ -78,7 +79,7 @@ class OptionPageGui(ThanksPageGui):
         self.cars_opt = DirectOptionMenu(
             text='', items=[str(i) for i in range(1, 9)], pos=(.29, 1, -.35),
             initialitem=self.props.cars_num - 1, **menu_args.option_args)
-        input_btn = DirectButton(
+        input_btn = Btn(
             text='', pos=(-.2, 1, -.55), command=self.on_input_btn,
             **menu_args.btn_args)
         PageGui.bind_transl(input_btn, 'Configure input', _('Configure input'))

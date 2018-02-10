@@ -1,6 +1,6 @@
 from sleekxmpp.jid import JID
 from direct.gui.DirectFrame import DirectFrame
-from direct.gui.DirectButton import DirectButton
+from yyagl.library.gui import Btn
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.gameobject import GameObject
@@ -23,7 +23,7 @@ class MatchFrm(GameObject):
             pos=(.04, 1, -.46), parent=base.a2dTopLeft)
         btn_args = self.menu_args.btn_args
         btn_args['scale'] = .06
-        DirectButton(text=_('Start'), pos=(1.2, 1, .03), command=self.on_start,
+        Btn(text=_('Start'), pos=(1.2, 1, .03), command=self.on_start,
                      parent=self.match_frm, **btn_args)
         frm = UserFrmMe(
             self.eng.xmpp.client.boundjid.bare, self.eng.xmpp.client.boundjid.bare,

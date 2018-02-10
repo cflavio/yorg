@@ -3,7 +3,6 @@ import argparse
 from feedparser import parse
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
-from direct.gui.DirectButton import DirectButton
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectFrame import DirectFrame
@@ -13,6 +12,7 @@ from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import PageGui
 from yyagl.engine.logic import VersionChecker
 from yyagl.gameobject import GameObject
+from yyagl.library.gui import Btn
 from .optionpage import OptionPageProps
 
 
@@ -119,8 +119,8 @@ class YorgMainPageGui(MainPageGui, ):
             ('Not up-to-date', self.get_label(), self.on_loginout),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
-            DirectButton(text='', pos=(0, 1, .8-i*.23), command=menu[2],
-                         **self.props.gameprops.menu_args.btn_args)
+            Btn(text='', pos=(0, 1, .8-i*.23), command=menu[2],
+                **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         for i, wdg in enumerate(widgets):
             PageGui.bind_transl(wdg, menu_data[i][0], menu_data[i][1])
@@ -184,7 +184,7 @@ class YorgMainPageGui(MainPageGui, ):
                   for i in range(min(5, len(rss)))]
         btn_args = self.props.gameprops.menu_args.btn_args.copy()
         btn_args['scale'] = .055
-        show_btn = DirectButton(
+        show_btn = Btn(
             text=_('show'), pos=(.55, 1, .15), command=self.eng.open_browser,
             extraArgs=[self.props.site_url], parent=base.a2dBottomLeft,
             **btn_args)
