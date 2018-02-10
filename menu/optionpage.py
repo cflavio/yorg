@@ -2,8 +2,7 @@ from panda3d.core import TextNode, LVector2i
 from direct.gui.DirectCheckButton import DirectCheckButton
 from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectOptionMenu import DirectOptionMenu
-from direct.gui.DirectSlider import DirectSlider
-from yyagl.library.gui import Btn
+from yyagl.library.gui import Btn, Slider
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -40,7 +39,7 @@ class OptionPageGui(ThanksPageGui):
             initialitem=self.props.lang, command=self.__change_lang,
             **menu_args.option_args)
         widgets += [self.__add_lab('Volume', _('Volume'), .65)]
-        self.vol_slider = DirectSlider(
+        self.vol_slider = Slider(
             pos=(.32, 0, .68), scale=.49, value=self.props.volume,
             frameColor=menu_args.btn_color,
             thumb_frameColor=menu_args.text_active,
@@ -123,7 +122,7 @@ class OptionPageGui(ThanksPageGui):
         lang_idx = self.lang_opt.selectedIndex
         dct = {
             'lang': self.eng.languages[lang_idx][:2].lower(),
-            'volume': self.mediator.gui.vol_slider.getValue(),
+            'volume': self.mediator.gui.vol_slider.get_value(),
             'fullscreen': self.mediator.gui.fullscreen_cb['indicatorValue'],
             'resolution': self.mediator.gui.res_opt.get().replace('x', ' '),
             'antialiasing': self.mediator.gui.aa_cb['indicatorValue'],
