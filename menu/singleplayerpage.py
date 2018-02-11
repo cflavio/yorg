@@ -21,7 +21,7 @@ class SingleplayerPageGui(ThanksPageGui):
                 **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
-        self._set_buttons()
+        self._set_widgets()
         if not self.props.has_save:
             widgets[-1].disable()
         ThanksPageGui.build(self)
