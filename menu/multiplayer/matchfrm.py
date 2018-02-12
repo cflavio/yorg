@@ -25,9 +25,10 @@ class MatchFrm(GameObject):
         btn_args['scale'] = .06
         Btn(text=_('Start'), pos=(1.2, 1, .03), command=self.on_start,
                      parent=self.match_frm, **btn_args)
+        usr = [usr for usr in self.eng.xmpp.users if usr.name == self.eng.xmpp.client.boundjid.bare][0]
         frm = UserFrmMe(
             self.eng.xmpp.client.boundjid.bare, self.eng.xmpp.client.boundjid.bare,
-            False, (.1, 1, .38), self.match_frm, self.menu_args, .32)
+            usr.is_supporter, (.1, 1, .38), self.match_frm, self.menu_args, .32)
         self.forms = [frm]
         for i in range(0, 8):
             row, col = i % 4, i / 4
@@ -43,18 +44,19 @@ class MatchFrm(GameObject):
         if room != self.room: return
         found = False
         for frm in self.forms:
-            lab = frm.lab['text']
+            lab = frm.lab.lab['text']
             lab = lab.replace('\1smaller\1', '').replace('\2', '')
             if lab.startswith('? '): lab = lab[2:]
             if lab == nick:
                 found = True
-                frm.lab['text'] = frm.lab['text'][2:]
+                frm.lab.lab['text'] = frm.lab.lab['text'][2:]
         if not found:
             idx = len(self.forms)
             x = .1 + 1.24 * (idx / 4)
             y = .38 - .08 * (idx % 4)
-            frm = UserFrm(self.trunc(nick, 30), nick, False, (x, 1, y),
-                          self.match_frm, self.menu_args, 1.0)
+            usr = [usr for usr in self.eng.xmpp.users if usr.name == nick][0]
+            frm = UserFrm(self.trunc(nick, 30), nick, usr.is_supporter,
+                          (x, 1, y), self.match_frm, self.menu_args, 1.0)
             self.forms += [frm]
 
     def on_presence_unavailable_room(self, msg):
@@ -63,7 +65,7 @@ class MatchFrm(GameObject):
         self.eng.log('user %s has disconnected from the room %s' % (nick, room))
         if room != self.room: return
         for i, frm in enumerate(self.forms[:]):
-            lab = frm.lab['text']
+            lab = frm.lab.lab['text']
             lab = lab.replace('\1smaller\1', '').replace('\2', '')
             if lab == nick:
                 for j in range(i + 1, 8):
@@ -87,7 +89,7 @@ class MatchFrm(GameObject):
         usr = str(JID(msg['from']).bare)
         self.eng.log('user %s has declined' % usr)
         for i, frm in enumerate(self.forms[:]):
-            lab = frm.lab['text']
+            lab = frm.lab.lab['text']
             lab = lab.replace('\1smaller\1', '').replace('\2', '')
             if lab.startswith('? '): lab = lab[2:]
             if lab == usr:

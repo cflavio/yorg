@@ -143,6 +143,9 @@ class Yorg(Game):
     def reset_drivers(self):
         self.gameprops = self.gameprops._replace(drivers_info=self.drivers())
 
+    def kill(self):
+        self.eng.xmpp.disconnect()
+
     @staticmethod
     def drivers():
         names = ThanksNames.get_thanks(8, 5)

@@ -9,7 +9,7 @@ from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectLabel import DirectLabel
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
-from .forms import UserFrmListMe, UserFrmList, UserFrmListOut
+from .forms import UserFrmListMe, UserFrmList
 
 
 class UsersFrm(GameObject):
@@ -85,7 +85,7 @@ class UsersFrm(GameObject):
             bare_users = [self.trunc(user.name, 20)
                           for user in self.eng.xmpp.users]
             for lab in self.labels[:]:
-                _lab = lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
+                _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
                 if _lab not in bare_users:
                     if _lab not in self.eng.xmpp.client.client_roster.keys():
                         lab.destroy()
@@ -95,14 +95,13 @@ class UsersFrm(GameObject):
             invite_btn = invite_btn and not self.in_match_room
             top = .08 * nusers + .08
             self.frm['canvasSize'] = (-.02, .76, 0, top)
-            label_users = [lab.lab['text'] for lab in self.labels]
+            label_users = [lab.lab.lab['text'] for lab in self.labels]
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
             label_users = map(clean, label_users)
             for i, user in enumerate(self.eng.xmpp.users):
                 usr_inv = invite_btn and user.is_in_yorg
                 if self.trunc(user.name, 20) not in label_users:
-                    if self.eng.xmpp.client.boundjid.bare != user.name and \
-                            user.is_in_yorg:
+                    if self.eng.xmpp.client.boundjid.bare != user.name:
                         lab = UserFrmList(
                             self.trunc(user.name, 20),
                             user,
@@ -111,17 +110,6 @@ class UsersFrm(GameObject):
                             (0, 1, top - .08 - .08 * i),
                             self.frm.getCanvas(),
                             self.menu_args)
-                    elif self.eng.xmpp.client.boundjid.bare != user.name and \
-                            not user.is_in_yorg:
-                        lab = UserFrmListOut(
-                            self.trunc(user.name, 20),
-                            user,
-                            user.is_supporter,
-                            self.eng.xmpp.is_friend(user.name),
-                            (0, 1, top - .08 - .08 * i),
-                            self.frm.getCanvas(),
-                            self.menu_args)
-                        lab.enable_invite_btn(False)
                     else:
                         lab = UserFrmListMe(
                             self.trunc(user.name, 20),
@@ -135,14 +123,14 @@ class UsersFrm(GameObject):
                     lab.attach(self.on_friend)
                     lab.attach(self.on_unfriend)
                     lab.attach(self.on_add_chat)
-                else:
-                    clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
-                    lab = [lab for lab in self.labels
-                           if clean(lab.lab['text']) == self.trunc(user.name, 20)][0]
-                    lab.enable_invite_btn(
-                        usr_inv and user.name not in self.invited_users)
-                    lab.frm.set_z(top - .08 - .08 * i)
-                    lab.set_supporter(user.is_supporter)
+            for i, user in enumerate(self.eng.xmpp.users):
+                clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
+                lab = [lab for lab in self.labels
+                       if clean(lab.lab.lab['text']) == self.trunc(user.name, 20)][0]
+                lab.enable_invite_btn(
+                    usr_inv and user.name not in self.invited_users)
+                lab.frm.set_z(top - .08 - .08 * i)
+                lab.lab.set_supporter(user.is_supporter)
 
     def on_invite(self, usr):
         self.invited_users += [usr.name]
