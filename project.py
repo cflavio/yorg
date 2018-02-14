@@ -3,8 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# users connected both in-game and with a chat client
-# disable invite button for in-room and invited players (less alpha)
 # manage protocol acks
 # server's address == client's one -> use the local one
 # do a rapid start for network

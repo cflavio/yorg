@@ -1,5 +1,6 @@
-from direct.gui.DirectGuiGlobals import ENTER, EXIT
+from direct.gui.DirectGuiGlobals import ENTER, EXIT, NORMAL, DISABLED
 from direct.gui.DirectLabel import DirectLabel
+from direct.gui.DirectButton import DirectButton
 from panda3d.core import TextNode
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -23,6 +24,12 @@ class MPBtn(GameObject):
             extraArgs=[usr], **menu_args.imgbtn_args)
         self.btn.bind(ENTER, self.on_enter)
         self.btn.bind(EXIT, self.on_exit)
+        self.tooltip_btn = DirectButton(
+            parent=parent, scale=.024, pos=(msg_btn_x, 1, .01),
+            frameColor=(1, 1, 1, 0), frameSize=(-1, 1, -1, 1), command=None,
+            **menu_args.imgbtn_args)
+        self.tooltip_btn.bind(ENTER, self.on_enter)
+        self.tooltip_btn.bind(EXIT, self.on_exit)
         self.on_create()
         self.tooltip = DirectLabel(
             text=tooltip, pos=self.btn.get_pos() + self.tooltip_offset,
@@ -31,17 +38,30 @@ class MPBtn(GameObject):
         self.tooltip.set_bin('gui-popup', 10)
         self.tooltip.hide()
 
-    def on_create(self): self.btn.hide()
+    def on_create(self):
+        self.btn.hide()
+        self.tooltip_btn.hide()
 
     def is_hidden(self): return self.btn.is_hidden()
 
-    def show(self): return self.btn.show()
+    def show(self):
+        if self.btn['state'] == DISABLED:
+            self.tooltip_btn.show()
+        else:
+            self.tooltip_btn.hide()
+        return self.btn.show()
 
-    def hide(self): return self.btn.hide()
+    def hide(self):
+        self.tooltip_btn.hide()
+        return self.btn.hide()
 
-    def enable(self): return self.btn.enable()
+    def enable(self):
+        self.tooltip_btn.hide()
+        return self.btn.enable()
 
-    def disable(self): return self.btn.disable()
+    def disable(self):
+        self.tooltip_btn.show()
+        return self.btn.disable()
 
     def on_enter(self, pos):
         self.owner.on_enter(pos)

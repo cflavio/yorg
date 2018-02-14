@@ -48,6 +48,7 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_cancel_invite)
         self.eng.xmpp.attach(self.on_ip_address)
         self.eng.xmpp.attach(self.on_yorg_init)
+        self.eng.xmpp.attach(self.on_is_playing)
 
     def create_match_frm(self, room):
         self.match_frm = MatchFrm(self.menu_args)
@@ -104,6 +105,12 @@ class MultiplayerFrm(GameObject):
         usr.is_in_yorg = True
         self.users_frm.on_users()
 
+    def on_is_playing(self, msg):
+        self.eng.log('is playing ' + str(msg['from']))
+        usr = [user for user in self.eng.xmpp.users if user.name == str(msg['from'].bare)][0]
+        usr.is_playing = msg['body'] == '1'
+        self.users_frm.on_users()
+
     def on_presence_available(self, msg):
         self.users_frm.on_users()
 
@@ -118,7 +125,8 @@ class MultiplayerFrm(GameObject):
         if str(msg['muc']['nick']) == self.users_frm.in_match_room:
             self.exit_dlg = ExitDialog(self.menu_args, msg)
             self.exit_dlg.attach(self.on_exit_dlg)
-        if str(msg['muc']['nick']) == self.eng.xmpp.client.boundjid.bare:
+        if str(msg['muc']['nick']) == self.eng.xmpp.client.boundjid.bare and \
+                self.match_frm and msg['muc']['room'] == self.match_frm.room:
             self.removed_dlg = RemovedDialog(self.menu_args, msg)
             self.removed_dlg.attach(self.on_remove_dlg)
 
@@ -163,6 +171,14 @@ class MultiplayerFrm(GameObject):
         self.users_frm.invited_users = []
         self.users_frm.in_match_room = None
         self.users_frm.room_name = None
+        for usr_name in ['ya2_yorg@jabb3r.org'] + \
+            [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
+                mto=usr_name,
+                mtype='ya2_yorg',
+                msubject='is_playing',
+                mbody='0')
         self.on_users()
 
     def on_msg(self, msg):
@@ -182,6 +198,14 @@ class MultiplayerFrm(GameObject):
     def on_invite_chat(self, msg):
         self.invite_dlg = InviteDialog(self.menu_args, msg)
         self.invite_dlg.attach(self.on_invite_answer)
+        for usr_name in ['ya2_yorg@jabb3r.org'] + \
+            [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
+                mto=usr_name,
+                mtype='ya2_yorg',
+                msubject='is_playing',
+                mbody='1')
 
     def on_invite_answer(self, msg, val):
         self.invite_dlg.detach(self.on_invite_answer)
@@ -222,6 +246,14 @@ class MultiplayerFrm(GameObject):
                 msubject='declined',
                 mtype='ya2_yorg',
                 mbody=str(msg['body']))
+            for usr_name in ['ya2_yorg@jabb3r.org'] + \
+                [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+                self.eng.xmpp.client.send_message(
+                    mfrom=self.eng.xmpp.client.boundjid.full,
+                    mto=usr_name,
+                    mtype='ya2_yorg',
+                    msubject='is_playing',
+                    mbody='1')
 
     def on_declined(self, msg):
         self.eng.log('on declined')

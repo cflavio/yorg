@@ -77,13 +77,13 @@ class MatchFrm(GameObject):
     @property
     def users_names(self):
         clean = lambda lab: lab.replace('\1smaller\1', '').replace('\2', '')
-        return [clean(frm.lab['text']) for frm in self.forms]
+        return [clean(frm.lab.lab['text']) for frm in self.forms]
 
     def set_frm_pos(self, frm, i):
         row, col = i % 4, i / 4
         x = .1 + 1.24 * col
         y = .38 - .08 * row
-        frm.frm.set_pos(x, 1, y)
+        frm.frm.set_pos((x, 1, y))
 
     def on_declined(self, msg):
         usr = str(JID(msg['from']).bare)

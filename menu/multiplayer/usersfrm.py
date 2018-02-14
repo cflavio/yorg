@@ -83,14 +83,14 @@ class UsersFrm(GameObject):
             if self.conn_lab:
                 self.conn_lab.destroy()
             bare_users = [self.trunc(user.name, 20)
-                          for user in self.eng.xmpp.users]
+                          for user in self.eng.xmpp.users_nodup]
             for lab in self.labels[:]:
                 _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
                 if _lab not in bare_users:
                     if _lab not in self.eng.xmpp.client.client_roster.keys():
                         lab.destroy()
                         self.labels.remove(lab)
-            nusers = len(self.eng.xmpp.users)
+            nusers = len(self.eng.xmpp.users_nodup)
             invite_btn = len(self.invited_users) < 8
             invite_btn = invite_btn and not self.in_match_room
             top = .08 * nusers + .08
@@ -98,7 +98,7 @@ class UsersFrm(GameObject):
             label_users = [lab.lab.lab['text'] for lab in self.labels]
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
             label_users = map(clean, label_users)
-            for i, user in enumerate(self.eng.xmpp.users):
+            for i, user in enumerate(self.eng.xmpp.users_nodup):
                 usr_inv = invite_btn and user.is_in_yorg
                 if self.trunc(user.name, 20) not in label_users:
                     if self.eng.xmpp.client.boundjid.bare != user.name:
@@ -107,6 +107,8 @@ class UsersFrm(GameObject):
                             user,
                             user.is_supporter,
                             self.eng.xmpp.is_friend(user.name),
+                            user.is_in_yorg,
+                            user.is_playing,
                             (0, 1, top - .08 - .08 * i),
                             self.frm.getCanvas(),
                             self.menu_args)
@@ -123,12 +125,20 @@ class UsersFrm(GameObject):
                     lab.attach(self.on_friend)
                     lab.attach(self.on_unfriend)
                     lab.attach(self.on_add_chat)
-            for i, user in enumerate(self.eng.xmpp.users):
+            for i, user in enumerate(self.eng.xmpp.users_nodup):
                 clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
                 lab = [lab for lab in self.labels
                        if clean(lab.lab.lab['text']) == self.trunc(user.name, 20)][0]
-                lab.enable_invite_btn(
-                    usr_inv and user.name not in self.invited_users)
+                enb_val = usr_inv and user.name not in self.invited_users and user.is_in_yorg and not user.is_playing
+                if hasattr(lab, 'invite_btn'):
+                    inv_btn = lab.invite_btn
+                    if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
+                    elif len(self.invited_users) == 8: inv_btn.tooltip['text'] = _("you can't invite more players")
+                    elif self.in_match_room: inv_btn.tooltip['text'] = _("you're already in a match")
+                    elif not user.is_in_yorg: inv_btn.tooltip['text'] = _("the user isn't playing yorg")
+                    elif user.name in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
+                    elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
+                lab.enable_invite_btn(enb_val)
                 lab.frm.set_z(top - .08 - .08 * i)
                 lab.lab.set_supporter(user.is_supporter)
 
@@ -150,6 +160,14 @@ class UsersFrm(GameObject):
             cfg.set_values(values)
             self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
             self.eng.log('created room ' + self.room_name)
+            for usr_name in ['ya2_yorg@jabb3r.org'] + \
+                [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+                self.eng.xmpp.client.send_message(
+                    mfrom=self.eng.xmpp.client.boundjid.full,
+                    mto=usr_name,
+                    mtype='ya2_yorg',
+                    msubject='is_playing',
+                    mbody='1')
         public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
         sock = socket(AF_INET, SOCK_DGRAM)
         try:

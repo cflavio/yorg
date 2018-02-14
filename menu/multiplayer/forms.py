@@ -102,14 +102,14 @@ class UserFrmListMe(UserFrmMe):
 
 class UserFrmList(UserFrm):
 
-    def __init__(self, name, name_full, is_supporter, is_friend, pos, parent,
+    def __init__(self, name, name_full, is_supporter, is_friend, is_in_yorg, is_playing, pos, parent,
                  menu_args):
         UserFrm.__init__(
             self, name, name_full, is_supporter, pos, parent, menu_args)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_normal
-        self.__enable_invite_btn = True
+        self.__enable_invite_btn = is_in_yorg and not is_playing
         self.invite_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/invite.txo',
             .65, self.on_invite, name_full, _("isn't playing yorg"))
