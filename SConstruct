@@ -172,7 +172,11 @@ if args['docs']:
 if args['pdf']:
     env.pdf([pdf_path], files(['py'], ['venv', 'thirdparty']))
 if args['uml']:
-    env.uml(['yyagl/assets/uml/class_diagram.png'], ['yyagl/assets/uml/class_diagram.txt'])
+    env.uml(
+        ['yyagl/assets/uml/class_diagram.png',
+         'yyagl/assets/uml/sequence_diagrams.pdf'],
+        ['yyagl/assets/uml/class_diagram.txt',
+         'yyagl/assets/uml/sequence_diagrams.txt'])
 
 def process_lang(lang_code):
     lang_name = 'assets/po/%s.po' % lang_code

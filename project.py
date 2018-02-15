@@ -3,20 +3,19 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# manage protocol acks
-# server's address == client's one -> use the local one
 # do a rapid start for network
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket
 # physics (collisions to players' car)
 # physics for weapons
 # test three players
+# server's address == client's one -> use the local one
+# manage protocol acks (make sequence diagrams)
 # more gravity and heavier cars
 # softer suspensions
 # feedback: steering feels a bit restricted and overly punishing (i.e. easy to
 #   loose control)
 # try to reduce adherence as soon as you turn, then restore it
-
 
 # 0.10
 # add car helios
