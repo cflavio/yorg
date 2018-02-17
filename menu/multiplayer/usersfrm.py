@@ -1,6 +1,8 @@
 from time import strftime
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
-from sleekxmpp.jid import JID
+try: from sleekxmpp.jid import JID
+except ImportError:  # sleekxmpp requires openssl 1.0.2
+    print 'OpenSSL 1.0.2 not detected'
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT
 from json import load

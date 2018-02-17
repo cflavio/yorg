@@ -1,4 +1,5 @@
 from collections import namedtuple
+from random import shuffle
 from yaml import load
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
@@ -6,6 +7,7 @@ from yyagl.racing.season.season import SingleRaceSeason, Season, SeasonProps
 from yyagl.racing.driver.driver import Driver, DriverProps, DriverInfo
 from yyagl.racing.race.raceprops import RaceProps
 from menu.ingamemenu.menu import InGameMenu
+from menu.netmsgs import NetMsgs
 from .thanksnames import ThanksNames
 from menu.multiplayer.multiplayerfrm import MultiplayerFrm
 
@@ -16,6 +18,12 @@ class YorgLogic(GameLogic):
         GameLogic.__init__(self, mediator)
         self.season = self.mp_frm = None
         self.eng.do_later(.01, self.init_mp_frm)
+        dev = self.mediator.options['development']
+        car = dev['car'] if 'car' in dev else ''
+        track = dev['track'] if 'track' in dev else ''
+        server = dev['server'] if 'server' in dev else ''
+        if car and server:  # for development's quickstart
+            self.mediator.options.persistent = False
 
     def init_mp_frm(self):
         if not self.mp_frm:
@@ -27,12 +35,12 @@ class YorgLogic(GameLogic):
 
     def on_start(self):
         GameLogic.on_start(self)
-
         self.__process_default()
         dev = self.mediator.options['development']
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
-        if car and track:  # for development's quickstart
+        server = dev['server'] if 'server' in dev else ''
+        if car and track and not server:  # for development's quickstart
             self.season = SingleRaceSeason(self.__season_props(
                 self.mediator.gameprops, car, [],
                 self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
@@ -42,8 +50,93 @@ class YorgLogic(GameLogic):
             self.season.start()
             self.mediator.fsm.demand('Race', track, car, [car],
                                 self.season.logic.drivers, self.season.ranking)
+        elif car and server:  # for development's quickstart
+            if server == 'server': # i am the server
+                def process_msg(data_lst, sender):
+                    if data_lst[0] == NetMsgs.car_request:
+                        client_car = data_lst[1]
+                        self.eng.car_mapping[data_lst[-1]] = client_car
+                    if data_lst[0] == NetMsgs.driver_selection:
+                        self.current_drivers += [sender]
+                        _car = data_lst[1]
+                        driver_name = data_lst[2]
+                        driver_id = data_lst[3]
+                        driver_speed = data_lst[4]
+                        driver_adherence = data_lst[5]
+                        driver_stability = data_lst[6]
+                        self.eng.log_mgr.log(
+                            'driver selected: %s (%s, %s) ' % (driver_name, driver_id, _car))
+                        gprops = self.mediator.gameprops
+                        cars = gprops.cars_names[:]
+                        car_idx = cars.index(_car)
+                        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
+                            img_idx=driver_id)
+                        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
+                            name=driver_name)
+                        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
+                            speed=driver_speed)
+                        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
+                            adherence=driver_adherence)
+                        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
+                            stability=driver_stability)
+                def process_connection(client_address):
+                    self.eng.log_mgr.log('connection from ' + client_address)
+                    self.current_drivers = [self, client_address]
+                    self.start_network_race_server(car, track)
+                self.eng.server.start(process_msg, process_connection)
+                self.eng.car_mapping = {}
+                self.eng.car_mapping['self'] = car
+                gprops = self.mediator.gameprops
+                cars = gprops.cars_names[:]
+                car_idx = cars.index(car)
+                cars.remove(car)
+                shuffle(cars)
+                drv_idx = range(8)
+                drv_idx.remove(0)
+                shuffle(drv_idx)
+                gprops.drivers_info[car_idx] = gprops.drivers_info[0]._replace(
+                    img_idx=0)
+                nname = self.mediator.options['settings']['player_name']
+                gprops.drivers_info[car_idx] = gprops.drivers_info[0]._replace(
+                    name=nname)
+                gprops.drivers_info[0] = gprops.drivers_info[0]._replace(
+                    img_idx=car_idx)
+            else:
+                def process_msg(data_lst, sender):
+                    if data_lst[0] == NetMsgs.track_selected:
+                        self.eng.log_mgr.log('track selected: ' + data_lst[1])
+                        self.sel_track = data_lst[1]
+                    if data_lst[0] == NetMsgs.start_race:
+                        self.eng.log_mgr.log('start_race: ' + str(data_lst))
+                        self.on_car_start_client(self.sel_track, car, [car], data_lst)
+                self.eng.client.start(process_msg, server)
+                self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
+                gprops = self.mediator.gameprops
+                self.eng.client.send([
+                    NetMsgs.driver_selection, car, self.mediator.options['settings']['player_name'], 1,
+                    gprops.drivers_info[1].speed, gprops.drivers_info[1].adherence,
+                    gprops.drivers_info[1].stability, self.eng.client.my_addr])
         else:
             self.mediator.fsm.demand('Menu')
+
+    def start_network_race_server(self, car, track):
+        self.eng.server.send([NetMsgs.track_selected, track])
+        packet = [NetMsgs.start_race, len(self.current_drivers)]
+
+        def process(k):
+            '''Processes a car.'''
+            return 'server' if k == self else k
+        gprops = self.mediator.gameprops
+        for i, k in enumerate(self.current_drivers):
+            car_idx = gprops.drivers_info[i].img_idx
+            packet += [process(k), gprops.cars_names[car_idx],
+                       self.mediator.gameprops.drivers_info[i].name]
+        self.eng.server.send(packet)
+        self.eng.log_mgr.log('start race: ' + str(packet))
+        self.eng.log('drivers: ' + str(gprops.drivers_info))
+        self.on_driver_selected_server(
+            self.mediator.options['settings']['player_name'], track, car,
+            gprops.cars_names[:len(self.current_drivers)], packet)
 
     @staticmethod
     def __season_props(

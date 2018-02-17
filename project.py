@@ -3,7 +3,7 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# do a rapid start for network
+# refactor the quickstart for selecting the cars
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket
 # physics (collisions to players' car)

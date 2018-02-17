@@ -60,7 +60,8 @@ class Yorg(Game):
                 'verbose_log': 0,
                 'race_start_time': 3.5,
                 'countdown_seconds': 3,
-                'xmpp_debug': 0}}
+                'xmpp_debug': 0,
+                'server': ''}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows
@@ -74,9 +75,12 @@ class Yorg(Game):
         parser.add_argument('--win_orig')
         parser.add_argument('--user')
         parser.add_argument('--pwd')
+        parser.add_argument('--car')
+        parser.add_argument('--server')
         args = parser.parse_args()
-        if args.win_orig:
-            win_orig = args.win_orig
+        if args.win_orig: win_orig = args.win_orig
+        if args.car: opt_dev['car'] = args.car
+        if args.server: opt_dev['server'] = args.server
         gui_cfg = GuiCfg(
             win_title='Yorg', win_orig=win_orig,
             win_size=self.options['settings']['resolution'],

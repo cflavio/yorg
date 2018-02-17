@@ -1,7 +1,9 @@
 from json import load
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from urllib2 import urlopen
-from sleekxmpp.jid import JID
+try: from sleekxmpp.jid import JID
+except ImportError:  # sleekxmpp requires openssl 1.0.2
+    print 'OpenSSL 1.0.2 not detected'
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
 from .usersfrm import UsersFrm
