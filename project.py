@@ -3,14 +3,14 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# refactor the quickstart for selecting the cars
+# remove named tuples
 # bind a unique code to each fired weapon (so, don't lookup)
 # manage multiple weapons e.g. drop two mines then collect and fire a rocket
 # physics (collisions to players' car)
 # physics for weapons
 # test three players
 # server's address == client's one -> use the local one
-# manage protocol acks (make sequence diagrams)
+# manage protocol acks (NB sequence diagrams)
 # more gravity and heavier cars
 # softer suspensions
 # feedback: steering feels a bit restricted and overly punishing (i.e. easy to

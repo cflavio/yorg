@@ -28,5 +28,9 @@ if sys.platform != 'darwin' and not exists('main.py'):
 # main #######################################################################
 if __name__ == '__main__' or exists('main.pyo'):
     yorg = Yorg()
-    try: yorg.run()
-    except Exception as e: yorg.kill()
+    #try:
+    yorg.run()
+    #except Exception as e:
+    #    print e
+    #    import traceback; traceback.print_stack()
+    #    yorg.kill()
