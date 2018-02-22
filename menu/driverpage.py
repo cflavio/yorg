@@ -58,7 +58,7 @@ class DriverPageGui(ThanksPageGui):
             drv_btn = ImgBtn(
                 scale=.24, pos=(-.95 + col * .5, 1, .25 - row * .5),
                 frameColor=(0, 0, 0, 0),
-                image=self.props.gameprops.drivers_img[0] % idx,
+                image=self.props.gameprops.drivers_img.path % idx,
                 command=self.on_click, extraArgs=[idx],
                 **self.menu_args.imgbtn_args)
             widgets += [drv_btn]
@@ -150,13 +150,12 @@ class DriverPageGui(ThanksPageGui):
         drv_idx = range(8)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(
-            img_idx=i)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
+        gprops.drivers_info[car_idx].img_idx = i
         nname = self.ent.get()
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(
-            name=nname)
-        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(
-            img_idx=car_idx)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
+        gprops.drivers_info[car_idx].name = nname
+        gprops.drivers_info[i].img_idx = car_idx
         self.eng.log('drivers: ' + str(gprops.drivers_info))
         self.notify('on_driver_selected', self.ent.get(), self.mediator.track,
                     self.mediator.car)
@@ -190,13 +189,12 @@ class DriverPageServerGui(DriverPageGui):
         drv_idx = range(8)
         drv_idx.remove(i)
         shuffle(drv_idx)
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(
-            img_idx=i)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
+        gprops.drivers_info[car_idx].img_idx = i
         nname = self.ent.get()
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]._replace(
-            name=nname)
-        gprops.drivers_info[i] = gprops.drivers_info[i]._replace(
-            img_idx=car_idx)
+        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
+        gprops.drivers_info[car_idx].name = nname
+        gprops.drivers_info[i].img_idx = car_idx
         self.evaluate_starting()
 
     def evaluate_starting(self):
@@ -235,16 +233,11 @@ class DriverPageServerGui(DriverPageGui):
         gprops = self.props.gameprops
         cars = gprops.cars_names[:]
         car_idx = cars.index(car)
-        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
-            img_idx=driver_id)
-        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
-            name=driver_name)
-        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
-            speed=driver_speed)
-        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
-            adherence=driver_adherence)
-        gprops.drivers_info[car_idx] = gprops.drivers_info[car_idx]._replace(
-            stability=driver_stability)
+        gprops.drivers_info[car_idx].img_idx = driver_id
+        gprops.drivers_info[car_idx].name = driver_name
+        gprops.drivers_info[car_idx].speed = driver_speed
+        gprops.drivers_info[car_idx].adherence = driver_adherence
+        gprops.drivers_info[car_idx].stability = driver_stability
         self.evaluate_starting()
 
 

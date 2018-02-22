@@ -1,4 +1,3 @@
-from collections import namedtuple
 from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
@@ -16,9 +15,17 @@ from .roompage import RoomPage
 from .supporterspage import SupportersPage
 
 
-__fields = 'gameprops opt_file title_img feed_url site_url has_save ' + \
-    'support_url'
-MenuProps = namedtuple('MenuProps', __fields)
+class MenuProps(object):
+
+    def __init__(self, gameprops, opt_file, title_img, feed_url, site_url,
+                 has_save, support_url):
+        self.gameprops = gameprops
+        self.opt_file = opt_file
+        self.title_img = title_img
+        self.feed_url = feed_url
+        self.site_url = site_url
+        self.has_save = has_save
+        self.support_url = support_url
 
 
 class YorgMenuLogic(MenuLogic):

@@ -1,5 +1,4 @@
 import argparse
-from collections import namedtuple
 from sys import platform
 from os.path import join, exists
 from panda3d.core import Filename
@@ -15,6 +14,28 @@ from .event import YorgEvent
 from .fsm import YorgFsm
 from .audio import YorgAudio
 from .thanksnames import ThanksNames
+
+
+class DriverPaths(object):
+
+    def __init__(self, path, path_sel):
+        self.path = path
+        self.path_sel = path_sel
+
+
+class DamageInfo(object):
+
+    def __init__(self, low, hi):
+        self.low = low
+        self.hi = hi
+
+
+class WheelGfxNames(object):
+
+    def __init__(self, front, rear, both):
+        self.front = front
+        self.rear = rear
+        self.both = both
 
 
 class Yorg(Game):
@@ -118,8 +139,6 @@ class Yorg(Game):
             'assets/images/icons/%s.txo')
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
-        DriverPaths = namedtuple('DriverPaths', 'path path_sel')
-        DamageInfo = namedtuple('DamageInfo', 'low hi')
         damage_info = DamageInfo('assets/models/cars/%s/cardamage1',
                                  'assets/models/cars/%s/cardamage2')
         Game.__init__(self, init_lst, conf)
@@ -127,7 +146,6 @@ class Yorg(Game):
         wheel_gfx_names = [
             self.eng.curr_path + 'assets/models/cars/%s/' + wname
             for wname in wheel_gfx_names]
-        WheelGfxNames = namedtuple('WheelGfxNames', 'front rear both')
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
         self.gameprops = GameProps(
             menu_args, cars_names, self.drivers(),
@@ -145,7 +163,7 @@ class Yorg(Game):
             damage_info, wheel_gfx_names, opt_dev['xmpp_debug'])
 
     def reset_drivers(self):
-        self.gameprops = self.gameprops._replace(drivers_info=self.drivers())
+        self.gameprops.drivers_info = self.drivers()
 
     def kill(self):
         self.eng.xmpp.disconnect()

@@ -1,4 +1,3 @@
-from collections import namedtuple
 from random import shuffle
 from yaml import load
 from direct.gui.OnscreenText import OnscreenText
@@ -10,6 +9,37 @@ from menu.ingamemenu.menu import InGameMenu
 from menu.netmsgs import NetMsgs
 from .thanksnames import ThanksNames
 from menu.multiplayer.multiplayerfrm import MultiplayerFrm
+
+
+class Wheels(object):
+
+    def __init__(self, fr, fl, rr, rl):
+        self.fr = fr
+        self.fl = fl
+        self.rr = rr
+        self.rl = rl
+
+
+class WheelNames(object):
+
+    def __init__(self, frontrear, both):
+        self.frontrear = frontrear
+        self.both = both
+
+
+class WPInfo(object):
+
+    def __init__(self, root_name, wp_name, prev_name):
+        self.root_name = root_name
+        self.wp_name = wp_name
+        self.prev_name = prev_name
+
+
+class WeaponInfo(object):
+
+    def __init__(self, root_name, weap_name):
+        self.root_name = root_name
+        self.weap_name = weap_name
 
 
 class YorgLogic(GameLogic):
@@ -93,12 +123,12 @@ class YorgLogic(GameLogic):
                         drivers = sprops.drivers
                         for drv in drivers:
                             if drv.dprops.info.img_idx == driver_id:
-                                drv.logic.dprops = drv.logic.dprops._replace(car_name=_car)
-                                drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(name=driver_name))
-                                drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(speed=driver_speed))
-                                drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(adherence=driver_adherence))
-                                drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(stability=driver_stability))
-                        sprops._replace(drivers=drivers)
+                                drv.logic.dprops.car_name = _car
+                                drv.logic.dprops.info.name = driver_name
+                                drv.logic.dprops.info.speed = driver_speed
+                                drv.logic.dprops.info.adherence = driver_adherence
+                                drv.logic.dprops.info.stability = driver_stability
+                        sprops.drivers = drivers
                         self.start_network_race_server(car, track)
                 def process_connection(client_address):
                     self.eng.log_mgr.log('connection from ' + client_address)
@@ -125,8 +155,8 @@ class YorgLogic(GameLogic):
                 drivers = sprops.drivers
                 for drv in drivers:
                     if drv.dprops.info.img_idx == 0:
-                        drv.logic.dprops = drv.dprops._replace(car_name=car)
-                        drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(name=self.mediator.options['settings']['player_name']))
+                        drv.logic.dprops.car_name = car
+                        drv.logic.dprops.info.name = self.mediator.options['settings']['player_name']
             else:
                 def process_msg(data_lst, sender):
                     if data_lst[0] == NetMsgs.track_selected:
@@ -271,13 +301,13 @@ class YorgLogic(GameLogic):
         for pdrv in packet_drivers:
             for drv in drivers:
                 if drv.dprops.info.img_idx == pdrv[1]:
-                    drv.logic.dprops = drv.logic.dprops._replace(car_name = pdrv[2])
-                    drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(name=pdrv[3]))
-                    drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(speed=pdrv[4]))
-                    drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(adherence=pdrv[5]))
-                    drv.logic.dprops = drv.logic.dprops._replace(info=drv.dprops.info._replace(stability=pdrv[6]))
-        sprops = sprops._replace(drivers=drivers)
-        sprops = sprops._replace(car_names=cars)
+                    drv.logic.dprops.car_name = pdrv[2]
+                    drv.logic.dprops.info.name = pdrv[3]
+                    drv.logic.dprops.info.speed = pdrv[4]
+                    drv.logic.dprops.info.adherence = pdrv[5]
+                    drv.logic.dprops.info.stability = pdrv[6]
+        sprops.drivers = drivers
+        sprops.car_names = cars
         dev = self.mediator.options['development']
         #self.season = SingleRaceSeason(self.__season_props(
         #    self.mediator.gameprops, car, cars,
@@ -302,12 +332,11 @@ class YorgLogic(GameLogic):
 
     def on_driver_selected(self, player_name, track, car):
         self.mediator.options['settings']['player_name'] = player_name
-        self.mediator.gameprops = self.mediator.gameprops._replace(
-            player_name=player_name)
+        self.mediator.gameprops.player_name = player_name
         self.mediator.options.store()
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mediator.gameprops.drivers_info[i]
-            drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
+            drv.logic.dprops.info = dinfo
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
             ['Race', track, car, [car], self.season.logic.drivers])
@@ -319,19 +348,18 @@ class YorgLogic(GameLogic):
         #    self.mediator.gameprops, car, cars,
         #    self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
         #    dev['race_start_time'], dev['countdown_seconds']))
-        sprops = sprops._replace(car_names=cars)
-        sprops = sprops._replace(player_car_names=cars)
+        sprops.car_names = cars
+        sprops.player_car_names = cars
         self.season = SingleRaceSeason(sprops)
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mediator.gameprops.drivers_info[i]
-            drv.logic.dprops = drv.logic.dprops._replace(info=dinfo)
-        self.season.logic.props = self.season.props._replace(car_names=cars)
+            drv.logic.dprops.info = dinfo
+        self.season.logic.props.car_names = cars
         self.season.attach_obs(self.mediator.event.on_season_end)
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
         self.mediator.options['settings']['player_name'] = player_name
-        self.mediator.gameprops = self.mediator.gameprops._replace(
-            player_name=player_name)
+        self.mediator.gameprops.player_name = player_name
         self.mediator.options.store()
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
@@ -409,14 +437,12 @@ class YorgLogic(GameLogic):
 
     def build_race_props(self, drivers, track_name, keys, joystick,
                          sounds):
-        Wheels = namedtuple('Wheels', 'fr fl rr rl')
         frwheels = Wheels('EmptyWheelFront', 'EmptyWheelFront.001',
                           'EmptyWheelRear', 'EmptyWheelRear.001')
         # names for front and rear wheels
         bwheels = Wheels('EmptyWheel', 'EmptyWheel.001', 'EmptyWheel.002',
                          'EmptyWheel.003')
         # names for both wheels
-        WheelNames = namedtuple('WheelNames', 'frontrear both')
         wheel_names = WheelNames(frwheels, bwheels)
         track_fpath = 'assets/models/tracks/%s/track.yml' % track_name
         with open(self.eng.curr_path + track_fpath) as ftrack:
@@ -433,8 +459,6 @@ class YorgLogic(GameLogic):
             camera_vec = track_cfg['camera_vector']
             shadow_src = track_cfg['shadow_source']
             laps_num = track_cfg['laps']
-        WPInfo = namedtuple('WPInfo', 'root_name wp_name prev_name')
-        WeaponInfo = namedtuple('WeaponInfo', 'root_name weap_name')
         share_urls = [
             'https://www.facebook.com/sharer/sharer.php?u=' +
             'ya2.it/pages/yorg.html',
