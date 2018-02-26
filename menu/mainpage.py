@@ -3,7 +3,6 @@ import argparse
 from feedparser import parse
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
-from direct.gui.DirectLabel import DirectLabel
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.OnscreenText import OnscreenText
@@ -12,7 +11,7 @@ from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import PageGui
 from yyagl.engine.logic import VersionChecker
 from yyagl.gameobject import GameObject
-from yyagl.library.gui import Btn
+from yyagl.library.gui import Btn, Label, Text
 from .optionpage import OptionPageProps
 
 
@@ -120,10 +119,9 @@ class YorgMainPageGui(MainPageGui, ):
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
             Btn(text='', pos=(0, 1, .8-i*.23), command=menu[2],
+                tra_src=menu_data[i][0], tra_tra=menu_data[i][1],
                 **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
-        for i, wdg in enumerate(widgets):
-            PageGui.bind_transl(wdg, menu_data[i][0], menu_data[i][1])
         logo_img = OnscreenImage(
             self.props.title_img, scale=(.64, 1, .64 * (380.0 / 772)),
             parent=base.a2dTopLeft, pos=(.65, 1, -.32))
@@ -132,11 +130,12 @@ class YorgMainPageGui(MainPageGui, ):
         lab_args = self.props.gameprops.menu_args.label_args
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
-        wip_lab = DirectLabel(
+        wip_lab = Label(
             text='', pos=(.05, 1, -.76), parent=base.a2dTopLeft,
-            text_wordwrap=10, text_align=TextNode.A_left, **lab_args)
-        PageGui.bind_transl(wip_lab, 'Note: the game is work-in-progress',
-                            _('Note: the game is work-in-progress'))
+            text_wordwrap=10, text_align=TextNode.A_left,
+            tra_src='Note: the game is work-in-progress',
+            tra_tra=_('Note: the game is work-in-progress'),
+            **lab_args)
         self.widgets += [wip_lab]
         self.add_widgets(widgets)
         self.set_news()
@@ -171,13 +170,13 @@ class YorgMainPageGui(MainPageGui, ):
         frm = DirectFrame(
             frameSize=(0, 1.0, 0, .75), frameColor=(.2, .2, .2, .5),
             pos=(.05, 1, .1), parent=base.a2dBottomLeft)
-        texts = [OnscreenText(
+        texts = [Text(
             _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
             parent=base.a2dBottomLeft, fg=menu_args.text_normal,
-            font=menu_args.font)]
-        self.bind_transl(texts[-1], 'Last news:', _('Last news:'))
+            font=menu_args.font, tra_src='Last news:',
+            tra_tra=_('Last news:'))]
         rss = [map(self.__to_unicode, rss_str) for rss_str in rss]
-        texts += [OnscreenText(
+        texts += [Text(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
             fg=menu_args.text_normal, font=menu_args.font)
@@ -187,8 +186,7 @@ class YorgMainPageGui(MainPageGui, ):
         show_btn = Btn(
             text=_('show'), pos=(.55, 1, .15), command=self.eng.open_browser,
             extraArgs=[self.props.site_url], parent=base.a2dBottomLeft,
-            **btn_args)
-        self.bind_transl(show_btn, 'show', _('show'))
+            tra_src='show', tra_tra=_('show'), **btn_args)
         self.add_widgets([frm] + texts + [show_btn])
 
     def __conv(self, datestr):

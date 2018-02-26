@@ -1,9 +1,8 @@
 from string import ascii_lowercase
 from panda3d.core import TextNode
-from direct.gui.DirectCheckButton import DirectCheckButton
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.library.gui import Btn
+from yyagl.library.gui import Btn, PandaCheckBtn, Label
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.joystick import JoystickMgr
 from yyagl.gameobject import GameObject
@@ -23,12 +22,13 @@ class InputPageGui(ThanksPageGui):
         widgets = []
         self.ibuttons = []
 
-        joypad_lab = DirectLabel(
+        joypad_lab = Label(
             text=_('Use the joypad when present'), pos=(-.3, 1, .8),
-            text_align=TextNode.ARight, **menu_args.label_args)
-        PageGui.bind_transl(joypad_lab, 'Use the joypad when present',
-                            _('Use the joypad when present'))
-        self.joypad_cb = DirectCheckButton(
+            text_align=TextNode.ARight,
+            tra_src='Use the joypad when present',
+            tra_tra=_('Use the joypad when present'),
+            **menu_args.label_args)
+        self.joypad_cb = PandaCheckBtn(
             pos=(-.11, 1, .82), text='',
             indicatorValue=self.joystick,
             indicator_frameColor=menu_args.text_active,

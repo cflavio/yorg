@@ -1,7 +1,5 @@
 from panda3d.core import TextNode
-from direct.gui.DirectCheckButton import DirectCheckButton
-from yyagl.library.gui import Btn
-from direct.gui.DirectEntry import DirectEntry
+from yyagl.library.gui import Btn, CheckBtn, Entry
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
@@ -22,10 +20,10 @@ class LogInPageGui(ThanksPageGui):
                                align=TextNode.A_right, **t_a)
         pwd_lab = OnscreenText(_('Your jabber password:'), pos=(-.25, .6),
                                align=TextNode.A_right, **t_a)
-        self.jid_ent = DirectEntry(
+        self.jid_ent = Entry(
             scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, initialText=_('your jabber id'))
-        self.pwd_ent = DirectEntry(
+        self.pwd_ent = Entry(
             scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True)
         self.jid_ent.onscreenText['fg'] = menu_args.text_active
@@ -33,7 +31,7 @@ class LogInPageGui(ThanksPageGui):
         start_btn = Btn(
             text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
-        self.store_cb = DirectCheckButton(
+        self.store_cb = CheckBtn(
             pos=(-.2, 1, .1), text=_('store the password'),
             indicatorValue=False, indicator_frameColor=menu_args.text_active,
             **menu_args.checkbtn_args)

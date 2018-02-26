@@ -1,6 +1,6 @@
 from yyagl.library.gui import Btn
 from direct.gui.OnscreenText import OnscreenText
-from direct.gui.DirectGui import DirectEntry
+from yyagl.library.gui import Entry
 from yyagl.engine.gui.page import Page, PageEvent
 from yyagl.engine.network.network import NetworkError
 from .netmsgs import NetMsgs
@@ -32,7 +32,7 @@ class ClientPageGui(ThanksPageGui):
         menu_args = self.props.gameprops.menu_args
         txt = OnscreenText(text=_('Client'), pos=(0, .4),
                            **menu_args.text_args)
-        self.ent = DirectEntry(
+        self.ent = Entry(
             scale=.12, pos=(-.68, 1, .2), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText='192.168.1.102')

@@ -2,9 +2,9 @@ from itertools import product
 from random import shuffle
 from panda3d.core import TextureStage, Texture, PNMImage, TextNode
 from direct.gui.OnscreenText import OnscreenText
-from direct.gui.DirectEntry import DirectEntry
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.DirectGuiGlobals import DISABLED
+from yyagl.library.gui import Entry
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -47,7 +47,7 @@ class DriverPageGui(ThanksPageGui):
         del t_a['scale']
         name = OnscreenText(_('Write your name:'), pos=(-.3, .6), scale=.06,
                             align=TextNode.A_right, **t_a)
-        self.ent = DirectEntry(
+        self.ent = Entry(
             scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=self.props.gameprops.player_name or _('your name'))

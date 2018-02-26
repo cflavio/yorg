@@ -5,9 +5,8 @@ from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT, NORMAL, DISABLED, ENTER, EXIT
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
-from direct.gui.DirectEntry import DirectEntry
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.library.gui import Btn
+from yyagl.library.gui import Btn, Entry
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.gameobject import GameObject
 from yyagl.engine.gui.imgbtn import ImgBtn
@@ -55,7 +54,7 @@ class MatchMsgFrm(GameObject):
         self.dst_txt = OnscreenText(
             text='', pos=(0, 1.16), parent=self.msg_frm, align=TextNode.A_left,
             **t_a)
-        self.ent = DirectEntry(
+        self.ent = Entry(
             scale=.04, pos=(0, 1, .03), entryFont=menu_args.font, width=62,
             frameColor=menu_args.btn_color, parent=self.msg_frm,
             initialText=_('write here your message'),
@@ -184,7 +183,7 @@ class MatchMsgFrm(GameObject):
         self.ent['state'] = NORMAL
 
     def on_focus(self, val):
-        if val and self.ent.get() == _('write here your message'):
+        if val == 'in' and self.ent.get() == _('write here your message'):
             self.ent.set('')
         self.notify('on_match_msg_focus', val)
 
@@ -227,7 +226,7 @@ class MessageFrm(GameObject):
             command=self.on_close,
             **menu_args.imgbtn_args)
         self.close_btn.disable()
-        self.ent = DirectEntry(
+        self.ent = Entry(
             scale=.04, pos=(0, 1, .03), entryFont=menu_args.font, width=19.5,
             frameColor=menu_args.btn_color, parent=self.msg_frm,
             initialText=_('write here your message'),
@@ -392,7 +391,7 @@ class MessageFrm(GameObject):
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(chat)
-        elif self.curr_chat.dst == msg['from']:
+        elif self.curr_chat.dst == JID(msg['from']).bare:
             self.add_msg_txt(str_msg)
         else:
             chat.read = False

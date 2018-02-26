@@ -1,10 +1,9 @@
 from panda3d.core import TextNode, LVector2i
-from direct.gui.DirectCheckButton import DirectCheckButton
 from direct.gui.DirectLabel import DirectLabel
-from direct.gui.DirectOptionMenu import DirectOptionMenu
-from yyagl.library.gui import Btn, Slider
+from yyagl.library.gui import Btn, Slider, CheckBtn, OptionMenu
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
+from yyagl.library.gui import Label
 from .thankspage import ThanksPageGui
 
 
@@ -34,7 +33,7 @@ class OptionPageGui(ThanksPageGui):
     def build(self):
         menu_args = self.menu_args
         widgets = [self.__add_lab('Language', _('Language'), .85)]
-        self.lang_opt = DirectOptionMenu(
+        self.lang_opt = OptionMenu(
             text='', items=self.eng.languages, pos=(.29, 1, .85),
             initialitem=self.props.lang, command=self.__change_lang,
             **menu_args.option_args)
@@ -45,14 +44,14 @@ class OptionPageGui(ThanksPageGui):
             thumb_frameColor=menu_args.text_active,
             command=lambda: self.eng.set_volume(self.vol_slider['value']))
         widgets += [self.__add_lab('Fullscreen', _('Fullscreen'), .45)]
-        self.fullscreen_cb = DirectCheckButton(
+        self.fullscreen_cb = CheckBtn(
             pos=(-.08, 1, .47), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_active,
             command=lambda val: self.eng.toggle_fullscreen(),
             **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Resolution', _('Resolution'), .25)]
         res2vec = lambda res: LVector2i(*[int(val) for val in res.split('x')])
-        self.res_opt = DirectOptionMenu(
+        self.res_opt = OptionMenu(
             text='',
             items=['x'.join([str(el_res) for el_res in res])
                    for res in self.eng.resolutions],
@@ -66,23 +65,22 @@ class OptionPageGui(ThanksPageGui):
             self.__add_lab('(from the next execution)',
                            _('(from the next execution)'), .05, 0,
                            TextNode.ALeft, .06)]
-        self.aa_cb = DirectCheckButton(
+        self.aa_cb = CheckBtn(
             pos=(-.08, 1, .08), text='',
             indicatorValue=self.props.antialiasing,
             indicator_frameColor=menu_args.text_active, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
-        self.shaders_cb = DirectCheckButton(
+        self.shaders_cb = CheckBtn(
             pos=(-.08, 1, -.12), text='', indicatorValue=self.props.shaders,
             indicator_frameColor=menu_args.text_active, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Cars number', _('Cars number'), -.35)]
-        self.cars_opt = DirectOptionMenu(
+        self.cars_opt = OptionMenu(
             text='', items=[str(i) for i in range(1, 9)], pos=(.29, 1, -.35),
             initialitem=self.props.cars_num - 1, **menu_args.option_args)
         input_btn = Btn(
             text='', pos=(-.2, 1, -.55), command=self.on_input_btn,
+            tra_src='Configure input', tra_tra=_('Configure input'),
             **menu_args.btn_args)
-        PageGui.bind_transl(input_btn, 'Configure input', _('Configure input'))
-
         widgets += [
             self.lang_opt, self.vol_slider, self.fullscreen_cb, self.res_opt,
             self.aa_cb, input_btn, self.shaders_cb, self.cars_opt]
@@ -95,9 +93,9 @@ class OptionPageGui(ThanksPageGui):
                   scale=None):
         l_a = self.menu_args.label_args
         l_a['scale'] = scale or l_a['scale']
-        lab = DirectLabel(
-            text='', pos=(pos_x, 1, pos_z), text_align=align, **l_a)
-        PageGui.bind_transl(lab, txt, txt_tr)
+        lab = Label(
+            text='', pos=(pos_x, 1, pos_z), text_align=align,
+            tra_src=txt, tra_tra=txt_tr, **l_a)
         return lab
 
     def on_input_btn(self):
