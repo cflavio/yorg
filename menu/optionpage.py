@@ -56,7 +56,7 @@ class OptionPageGui(ThanksPageGui):
             items=['x'.join([str(el_res) for el_res in res])
                    for res in self.eng.resolutions],
             pos=(.29, 1, .25),
-            initialitem='x'.join(str(res) for res in self.eng.closest_res),
+            initialitem='x'.join(str(res) for res in self.eng.closest_resolution),
             command=lambda res: self.eng.set_resolution(res2vec(res)),
             **menu_args.option_args
             )

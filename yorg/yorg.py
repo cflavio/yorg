@@ -147,6 +147,15 @@ class Yorg(Game):
             self.eng.curr_path + 'assets/models/cars/%s/' + wname
             for wname in wheel_gfx_names]
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
+        social_sites = [
+            ('facebook', 'http://www.facebook.com/Ya2Tech'),
+            ('twitter', 'http://twitter.com/ya2tech'),
+            ('google_plus', 'https://plus.google.com/118211180567488443153'),
+            ('youtube',
+             'http://www.youtube.com/user/ya2games?sub_confirmation=1'),
+            ('pinterest', 'http://www.pinterest.com/ya2tech'),
+            ('tumblr', 'http://ya2tech.tumblr.com'),
+            ('feed', 'http://www.ya2.it/pages/feed-following.html')]
         self.gameprops = GameProps(
             menu_args, cars_names, self.drivers(),
             ['toronto', 'rome', 'sheffield', 'orlando', 'nagano', 'dubai'],
@@ -160,7 +169,8 @@ class Yorg(Game):
             'assets/images/cars/%s.txo',
             self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
             'assets/models/cars/%s/car',
-            damage_info, wheel_gfx_names, opt_dev['xmpp_debug'])
+            damage_info, wheel_gfx_names, opt_dev['xmpp_debug'],
+            social_sites)
 
     def reset_drivers(self):
         self.gameprops.drivers_info = self.drivers()

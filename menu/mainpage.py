@@ -172,13 +172,13 @@ class YorgMainPageGui(MainPageGui, ):
             pos=(.05, 1, .1), parent=base.a2dBottomLeft)
         texts = [Text(
             _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
-            parent=base.a2dBottomLeft, fg=menu_args.text_normal,
+            parent='bottomleft', fg=menu_args.text_normal,
             font=menu_args.font, tra_src='Last news:',
             tra_tra=_('Last news:'))]
         rss = [map(self.__to_unicode, rss_str) for rss_str in rss]
         texts += [Text(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
-            wordwrap=32, parent=base.a2dBottomLeft, align=TextNode.A_left,
+            wordwrap=32, parent='bottomleft', align='left',
             fg=menu_args.text_normal, font=menu_args.font)
                   for i in range(min(5, len(rss)))]
         btn_args = self.props.gameprops.menu_args.btn_args.copy()

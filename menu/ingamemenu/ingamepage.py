@@ -36,7 +36,7 @@ class InGamePageGui(PageGui):
         self.add_widgets([frm, txt, btn_visit, btn_dont_visit])
         PageGui.build(self, False)
 
-        if self.eng.lib.lib_version().startswith('1.10'):
+        if self.eng.lib.version().startswith('1.10'):
             self.eng.show_cursor()
         else:
             self.eng.hide_cursor()

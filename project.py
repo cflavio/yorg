@@ -30,6 +30,7 @@
 # (Panda3D 1.10) joypad
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # (Panda3D 1.10) write snow shader
+# (Panda3D 1.10) hw skinning
 # python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
 
