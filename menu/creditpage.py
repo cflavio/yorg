@@ -1,5 +1,4 @@
-from direct.gui.OnscreenText import OnscreenText
-from yyagl.library.gui import Btn
+from yyagl.library.gui import Btn, Text
 from yyagl.engine.gui.page import Page
 from .thankspage import ThanksPageGui
 
@@ -13,7 +12,7 @@ class CreditPageGui(ThanksPageGui):
                    _('Audio')+': Jay Bachelor',
                    _('Translations')+': Wuzzy, GunChleoc, Leandro Vergara']
         dev_str = '\n\n'.join(dev_str)
-        txt = OnscreenText(text=dev_str, pos=(-.2, .72), wordwrap=20,
+        txt = Text(dev_str, pos=(-.2, .72), wordwrap=20,
                            **menu_args.text_args)
         btn = Btn(
             text=_('Supporters'), pos=(-.2, 1, -.4),

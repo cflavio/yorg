@@ -2,7 +2,7 @@ from itertools import product
 from yaml import load
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
-from direct.gui.OnscreenText import OnscreenText
+from yyagl.library.gui import Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -21,8 +21,8 @@ class CarPageGui(ThanksPageGui):
 
     def build(self):
         gprops = self.props.gameprops
-        widgets = [OnscreenText(
-            text=_('Select the car'), pos=(-.2, .8),
+        widgets = [Text(
+            _('Select the car'), pos=(-.2, .8),
             **self.menu_args.text_args)]
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
@@ -51,7 +51,7 @@ class CarPageGui(ThanksPageGui):
                 gprops.cars_names[col + row * cars_per_row]],
             **self.menu_args.imgbtn_args)
         widgets = [btn]
-        txt = OnscreenText(
+        txt = Text(
             gprops.cars_names[col + row * cars_per_row],
             pos=(-1.4 + col * .64 + x_offset, .64 - z_offset - row * .7),
             scale=.072, **t_a)
@@ -78,10 +78,10 @@ class CarPageGui(ThanksPageGui):
                   row):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        return OnscreenText(
+        return Text(
             '%s: %s%s%%' % (txt, psign(val), pcol(val)),
             pos=(-1.1 + col * .64 + x_offset, pos_z - z_offset - row * .7),
-            scale=.052, align=TextNode.A_right, **t_a)
+            scale=.052, align='right', **t_a)
 
     def _buttons(self, car):
         return [btn for btn in self.buttons if btn['extraArgs'] == [car]]

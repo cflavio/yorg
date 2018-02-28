@@ -4,18 +4,17 @@ from feedparser import parse
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED
-from direct.gui.DirectFrame import DirectFrame
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
-from yyagl.engine.gui.page import PageGui
+from yyagl.engine.gui.page import Page, PageFacade, PageGui
 from yyagl.engine.logic import VersionChecker
 from yyagl.gameobject import GameObject
-from yyagl.library.gui import Btn, Label, Text
+from yyagl.library.gui import Btn, Label, Text, Img, Frame
 from .optionpage import OptionPageProps
 
 
-class YorgMainPageGui(MainPageGui, ):
+class YorgMainPageGui(MainPageGui):
 
     def __init__(self, mediator, mainpage_props):
         self.__feed_type = ''
@@ -122,11 +121,10 @@ class YorgMainPageGui(MainPageGui, ):
                 tra_src=menu_data[i][0], tra_tra=menu_data[i][1],
                 **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
-        logo_img = OnscreenImage(
+        logo_img = Img(
             self.props.title_img, scale=(.64, 1, .64 * (380.0 / 772)),
             parent=base.a2dTopLeft, pos=(.65, 1, -.32))
         widgets += [logo_img]
-        widgets[-1].set_transparency(True)
         lab_args = self.props.gameprops.menu_args.label_args
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
@@ -167,7 +165,7 @@ class YorgMainPageGui(MainPageGui, ):
         rss.reverse()
         rss = rss[:5]
         rss = [(_rss[0], self.__ellipsis_str(_rss[1])) for _rss in rss]
-        frm = DirectFrame(
+        frm = Frame(
             frameSize=(0, 1.0, 0, .75), frameColor=(.2, .2, .2, .5),
             pos=(.05, 1, .1), parent=base.a2dBottomLeft)
         texts = [Text(
@@ -219,7 +217,7 @@ class YorgMainPageGui(MainPageGui, ):
         MainPageGui.destroy(self)
 
 
-class YorgMainPage(MainPage):
+class YorgMainPage(MainPage, PageFacade):
     gui_cls = YorgMainPageGui
 
     def __init__(self, mainpage_props):
@@ -228,8 +226,8 @@ class YorgMainPage(MainPage):
             [('gui', self.gui_cls, [self, mainpage_props])]]
         GameObject.__init__(self, init_lst)
         # don't construct it using GameObject
-        MainPage.__init__(self)
+        PageFacade.__init__(self)
 
     def destroy(self):
         GameObject.destroy(self)
-        MainPage.destroy(self)
+        PageFacade.destroy(self)

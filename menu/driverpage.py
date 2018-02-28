@@ -1,10 +1,8 @@
 from itertools import product
 from random import shuffle
 from panda3d.core import TextureStage, Texture, PNMImage, TextNode
-from direct.gui.OnscreenText import OnscreenText
-from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.DirectGuiGlobals import DISABLED
-from yyagl.library.gui import Entry
+from yyagl.library.gui import Entry, Text, Img
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -41,12 +39,12 @@ class DriverPageGui(ThanksPageGui):
     def build(self):
         self.drv_info = self.props.gameprops.drivers_info
         menu_args = self.menu_args
-        widgets = [OnscreenText(text=_('Select the driver'), pos=(-.2, .8),
+        widgets = [Text(_('Select the driver'), pos=(-.2, .8),
                                 **menu_args.text_args)]
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        name = OnscreenText(_('Write your name:'), pos=(-.3, .6), scale=.06,
-                            align=TextNode.A_right, **t_a)
+        name = Text(_('Write your name:'), pos=(-.3, .6), scale=.06,
+                            align='right', **t_a)
         self.ent = Entry(
             scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
@@ -81,7 +79,7 @@ class DriverPageGui(ThanksPageGui):
                 lambda txt_def: self.__add_txt(
                     *txt_def + (psign, pcol, col, row)),
                 txt_lst)
-        self.sel_drv_img = OnscreenImage(
+        self.sel_drv_img = Img(
             self.props.gameprops.cars_img % self.mediator.car,
             parent=base.a2dBottomRight, pos=(-.38, 1, .38), scale=.32)
         widgets += [self.sel_drv_img, name, self.ent]
@@ -108,17 +106,17 @@ class DriverPageGui(ThanksPageGui):
     def __add_lab(self, txt, pos_z, row, col):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        return OnscreenText(
+        return Text(
             txt + ':', pos=(-1.15 + col * .5, pos_z - row * .5),
-            scale=.046, align=TextNode.A_left, **t_a)
+            scale=.046, align='left', **t_a)
 
     def __add_txt(self, val, pos_z, psign, pcol, col, row):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        return OnscreenText(
+        return Text(
             '%s%s%%' % (psign(val), pcol(val)),
             pos=(-.75 + col * .5, pos_z - row * .5), scale=.052,
-            align=TextNode.A_right, **t_a)
+            align='right', **t_a)
 
     def enable_buttons(self, enable):
         [(drv.enable if enable else drv.disable)() for drv in self.drivers]
@@ -139,7 +137,7 @@ class DriverPageGui(ThanksPageGui):
         self.eng.log('selected driver ' + str(i))
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
-        self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
+        self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
@@ -177,7 +175,7 @@ class DriverPageServerGui(DriverPageGui):
         self.eng.log('selected driver ' + str(i))
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
-        self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
+        self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)

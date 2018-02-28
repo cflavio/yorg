@@ -49,7 +49,7 @@ class InputPageGui(ThanksPageGui):
 
         l_a = menu_args.label_args.copy()
         l_a['scale'] = .065
-        self.hint_lab = DirectLabel(
+        self.hint_lab = Label(
             text=_('Press the key to record it'), pos=(-.2, 1, -.6), **l_a)
         self.hint_lab.hide()
         widgets += [joypad_lab, self.joypad_cb, self.hint_lab]
@@ -57,7 +57,7 @@ class InputPageGui(ThanksPageGui):
         ThanksPageGui.build(self)
 
     def __add_lab(self, text, pos_z):
-        return DirectLabel(
+        return Label(
             text=text, pos=(-.3, 1, pos_z), text_align=TextNode.ARight,
             **self.menu_args.label_args)
 

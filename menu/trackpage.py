@@ -1,5 +1,5 @@
 from itertools import product
-from direct.gui.OnscreenText import OnscreenText
+from yyagl.library.gui import Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -14,7 +14,7 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_args)
 
     def build(self):
-        txt = OnscreenText(text=_('Select the track'), pos=(-.2, .8),
+        txt = Text(_('Select the track'), pos=(-.2, .8),
                            **self.menu_args.text_args)
         self.add_widgets([txt])
         t_a = self.menu_args.text_args.copy()
@@ -37,7 +37,7 @@ class TrackPageGui(ThanksPageGui):
                 command=self.on_track, extraArgs=[gprops.season_tracks[
                     col + row * tracks_per_row]],
                 **self.menu_args.imgbtn_args)
-            txt = OnscreenText(
+            txt = Text(
                 gprops.tracks_tr()[col + row * tracks_per_row],
                 pos=(-.8 + col * .6 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
