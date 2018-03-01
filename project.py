@@ -3,8 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# bind a unique code to each fired weapon (so, don't lookup)
-# manage multiple weapons e.g. drop two mines then collect and fire a rocket
+# if the client picks another weapon, the server doesn't show it
+# test slow (during loading) client
 # physics (collisions to players' car)
 # physics for weapons
 # test three players
