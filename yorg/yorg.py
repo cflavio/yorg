@@ -82,6 +82,7 @@ class Yorg(Game):
                 'race_start_time': 3.5,
                 'countdown_seconds': 3,
                 'xmpp_debug': 0,
+                'xmpp_server': 'ya2_yorg@jabb3r.org',
                 'server': ''}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
@@ -124,7 +125,8 @@ class Yorg(Game):
             mt_render=opt_dev['multithreaded_render'],
             shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
             menu_joypad=opt_dev['menu_joypad'], verbose=opt_dev['verbose'],
-            verbose_log=opt_dev['verbose_log'])
+            verbose_log=opt_dev['verbose_log'],
+            xmpp_server=opt_dev['xmpp_server'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         init_lst = [
             [('fsm', YorgFsm, [self])],

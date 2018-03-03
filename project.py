@@ -3,11 +3,9 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# if the client picks another weapon, the server doesn't show it
-# test slow (during loading) client
 # physics (collisions to players' car)
-# physics for weapons
 # test three players
+# launch a network race from the new gui
 # server's address == client's one -> use the local one
 # manage protocol acks (NB sequence diagrams)
 # more gravity and heavier cars

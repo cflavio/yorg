@@ -57,7 +57,8 @@ class YorgLogic(GameLogic):
 
     def init_mp_frm(self):
         if not self.mp_frm:
-            self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_args)
+            self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_args,
+                                         self.eng.cfg.dev_cfg.xmpp_server)
             self.mp_frm.attach(self.on_msg_focus)
             self.mp_frm.attach(self.on_create_room)
             self.mp_frm.attach(self.on_srv_quitted)

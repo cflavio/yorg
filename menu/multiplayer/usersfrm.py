@@ -16,10 +16,11 @@ from .forms import UserFrmListMe, UserFrmList
 
 class UsersFrm(GameObject):
 
-    def __init__(self, menu_args):
+    def __init__(self, menu_args, yorg_srv):
         GameObject.__init__(self)
         self.eng.log('create users form')
         self.ver_check = VersionChecker()
+        self.yorg_srv = yorg_srv
         self.room_name = None
         self.labels = []
         self.invited_users = []
@@ -45,6 +46,9 @@ class UsersFrm(GameObject):
             horizontalScroll_relief=FLAT,
             frameColor=(.2, .2, .2, .5),
             pos=(-.82, 1, -2.44), parent=base.a2dTopRight)
+        self.conn_lab = DirectLabel(
+            text='', pos=(.38, 1, 1.5), parent=self.frm,
+            text_wordwrap=10, **lab_args)
         self.set_connection_label()
         self.in_match_room = None
 
@@ -59,12 +63,13 @@ class UsersFrm(GameObject):
     def set_connection_label(self):
         lab_args = self.menu_args.label_args
         lab_args['scale'] = .046
-        if not self.ver_check.is_uptodate():
+        txt = ''
+        if not self.eng.xmpp.is_server_up:
+            txt = _("Yorg's server isn't running")
+        elif not self.ver_check.is_uptodate():
             txt = _("Your game isn't up-to-date, please update")
-        else: txt = _("You aren't logged in")
-        self.conn_lab = DirectLabel(
-            text=txt, pos=(.38, 1, 1.0), parent=self.frm,
-            text_wordwrap=10, **lab_args)
+        elif not self.eng.xmpp.client: txt = _("You aren't logged in")
+        self.conn_lab['text'] = txt
 
     def set_size(self, full=True):
         if full:
@@ -80,69 +85,66 @@ class UsersFrm(GameObject):
         return name
 
     def on_users(self):
-        if not self.eng.xmpp.client: self.set_connection_label()
-        else:
-            if self.conn_lab:
-                self.conn_lab.destroy()
-            bare_users = [self.trunc(user.name, 20)
-                          for user in self.eng.xmpp.users_nodup]
-            for lab in self.labels[:]:
-                _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
-                if _lab not in bare_users:
-                    if _lab not in self.eng.xmpp.client.client_roster.keys():
-                        lab.destroy()
-                        self.labels.remove(lab)
-            nusers = len(self.eng.xmpp.users_nodup)
-            invite_btn = len(self.invited_users) < 8
-            invite_btn = invite_btn and not self.in_match_room
-            top = .08 * nusers + .08
-            self.frm['canvasSize'] = (-.02, .76, 0, top)
-            label_users = [lab.lab.lab['text'] for lab in self.labels]
+        self.set_connection_label()
+        bare_users = [self.trunc(user.name, 20)
+                      for user in self.eng.xmpp.users_nodup]
+        for lab in self.labels[:]:
+            _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
+            if _lab not in bare_users:
+                if _lab not in self.eng.xmpp.client.client_roster.keys():
+                    lab.destroy()
+                    self.labels.remove(lab)
+        nusers = len(self.eng.xmpp.users_nodup)
+        invite_btn = len(self.invited_users) < 8
+        invite_btn = invite_btn and not self.in_match_room
+        top = .08 * nusers + .08
+        self.frm['canvasSize'] = (-.02, .76, 0, top)
+        label_users = [lab.lab.lab['text'] for lab in self.labels]
+        clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
+        label_users = map(clean, label_users)
+        for i, user in enumerate(self.eng.xmpp.users_nodup):
+            usr_inv = invite_btn and user.is_in_yorg
+            if self.trunc(user.name, 20) not in label_users:
+                if self.eng.xmpp.client.boundjid.bare != user.name:
+                    lab = UserFrmList(
+                        self.trunc(user.name, 20),
+                        user,
+                        user.is_supporter,
+                        self.eng.xmpp.is_friend(user.name),
+                        user.is_in_yorg,
+                        user.is_playing,
+                        (0, 1, top - .08 - .08 * i),
+                        self.frm.getCanvas(),
+                        self.menu_args)
+                else:
+                    lab = UserFrmListMe(
+                        self.trunc(user.name, 20),
+                        user,
+                        user.is_supporter,
+                        (0, 1, top - .08 - .08 * i),
+                        self.frm.getCanvas(),
+                        self.menu_args)
+                self.labels += [lab]
+                lab.attach(self.on_invite)
+                lab.attach(self.on_friend)
+                lab.attach(self.on_unfriend)
+                lab.attach(self.on_add_chat)
+        for i, user in enumerate(self.eng.xmpp.users_nodup):
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
-            label_users = map(clean, label_users)
-            for i, user in enumerate(self.eng.xmpp.users_nodup):
-                usr_inv = invite_btn and user.is_in_yorg
-                if self.trunc(user.name, 20) not in label_users:
-                    if self.eng.xmpp.client.boundjid.bare != user.name:
-                        lab = UserFrmList(
-                            self.trunc(user.name, 20),
-                            user,
-                            user.is_supporter,
-                            self.eng.xmpp.is_friend(user.name),
-                            user.is_in_yorg,
-                            user.is_playing,
-                            (0, 1, top - .08 - .08 * i),
-                            self.frm.getCanvas(),
-                            self.menu_args)
-                    else:
-                        lab = UserFrmListMe(
-                            self.trunc(user.name, 20),
-                            user,
-                            user.is_supporter,
-                            (0, 1, top - .08 - .08 * i),
-                            self.frm.getCanvas(),
-                            self.menu_args)
-                    self.labels += [lab]
-                    lab.attach(self.on_invite)
-                    lab.attach(self.on_friend)
-                    lab.attach(self.on_unfriend)
-                    lab.attach(self.on_add_chat)
-            for i, user in enumerate(self.eng.xmpp.users_nodup):
-                clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
-                lab = [lab for lab in self.labels
-                       if clean(lab.lab.lab['text']) == self.trunc(user.name, 20)][0]
-                enb_val = usr_inv and user.name not in self.invited_users and user.is_in_yorg and not user.is_playing
-                if hasattr(lab, 'invite_btn'):
-                    inv_btn = lab.invite_btn
-                    if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
-                    elif len(self.invited_users) == 8: inv_btn.tooltip['text'] = _("you can't invite more players")
-                    elif self.in_match_room: inv_btn.tooltip['text'] = _("you're already in a match")
-                    elif not user.is_in_yorg: inv_btn.tooltip['text'] = _("the user isn't playing yorg")
-                    elif user.name in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
-                    elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
-                lab.enable_invite_btn(enb_val)
-                lab.frm.set_z(top - .08 - .08 * i)
-                lab.lab.set_supporter(user.is_supporter)
+            lab = [lab for lab in self.labels
+                   if clean(lab.lab.lab['text']) == self.trunc(user.name, 20)][0]
+            enb_val = usr_inv and user.name not in self.invited_users and user.is_in_yorg and not user.is_playing
+            if hasattr(lab, 'invite_btn'):
+                inv_btn = lab.invite_btn
+                if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
+                elif len(self.invited_users) == 8: inv_btn.tooltip['text'] = _("you can't invite more players")
+                elif self.in_match_room: inv_btn.tooltip['text'] = _("you're already in a match")
+                elif not user.is_in_yorg: inv_btn.tooltip['text'] = _("the user isn't playing yorg")
+                elif user.name in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
+                elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
+            lab.enable_invite_btn(enb_val)
+            lab.frm.set_z(top - .08 - .08 * i)
+            lab.lab.set_supporter(user.is_supporter)
 
     def on_invite(self, usr):
         self.invited_users += [usr.name]
@@ -162,7 +164,7 @@ class UsersFrm(GameObject):
             cfg.set_values(values)
             self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
             self.eng.log('created room ' + self.room_name)
-            for usr_name in ['ya2_yorg@jabb3r.org'] + \
+            for usr_name in [self.yorg_srv] + \
                 [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
                 self.eng.xmpp.client.send_message(
                     mfrom=self.eng.xmpp.client.boundjid.full,

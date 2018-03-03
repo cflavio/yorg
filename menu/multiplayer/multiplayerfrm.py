@@ -17,15 +17,16 @@ from .remove_dlg import RemovedDialog
 
 class MultiplayerFrm(GameObject):
 
-    def __init__(self, menu_args):
+    def __init__(self, menu_args, yorg_srv):
         GameObject.__init__(self)
         self.eng.log('created multiplayer form')
         self.dialog = None
+        self.yorg_srv = yorg_srv
         self.ver_check = VersionChecker()
         self.labels = []
         self.invited_users = []
         self.menu_args = menu_args
-        self.users_frm = UsersFrm(menu_args)
+        self.users_frm = UsersFrm(menu_args, yorg_srv)
         self.users_frm.attach(self.on_invite)
         self.users_frm.attach(self.on_add_chat)
         self.users_frm.attach(self.on_add_groupchat)
@@ -173,7 +174,7 @@ class MultiplayerFrm(GameObject):
         self.users_frm.invited_users = []
         self.users_frm.in_match_room = None
         self.users_frm.room_name = None
-        for usr_name in ['ya2_yorg@jabb3r.org'] + \
+        for usr_name in [self.yorg_srv] + \
             [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
@@ -200,7 +201,7 @@ class MultiplayerFrm(GameObject):
     def on_invite_chat(self, msg):
         self.invite_dlg = InviteDialog(self.menu_args, msg)
         self.invite_dlg.attach(self.on_invite_answer)
-        for usr_name in ['ya2_yorg@jabb3r.org'] + \
+        for usr_name in [self.yorg_srv] + \
             [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
@@ -248,7 +249,7 @@ class MultiplayerFrm(GameObject):
                 msubject='declined',
                 mtype='ya2_yorg',
                 mbody=str(msg['body']))
-            for usr_name in ['ya2_yorg@jabb3r.org'] + \
+            for usr_name in [self.yorg_srv] + \
                 [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
                 self.eng.xmpp.client.send_message(
                     mfrom=self.eng.xmpp.client.boundjid.full,
