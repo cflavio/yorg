@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# physics (collisions to players' car)
 # test three players
 # launch a network race from the new gui
 # server's address == client's one -> use the local one
