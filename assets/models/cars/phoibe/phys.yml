@@ -1,12 +1,12 @@
 max_speed: 122.0  # Km/h
-mass: 250  # kilograms
+mass: 280  # kilograms
 steering_min_speed: 30  # degrees
 steering_max_speed: 6  # degrees
 steering_clamp: 40  # degrees
 steering_inc: 120  # degrees per second
 steering_dec: 120  # degrees per second
-engine_acc_frc: 1600
-engine_dec_frc: -1600
+engine_acc_frc: 1800
+engine_dec_frc: -1800
 brake_frc: 12
 eng_brk_frc: 6
 pitch_control: 0  # default 0

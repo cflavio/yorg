@@ -3,15 +3,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# test three players
 # launch a network race from the new gui
 # server's address == client's one -> use the local one
-# manage protocol acks (NB sequence diagrams)
-# more gravity and heavier cars
-# softer suspensions
-# feedback: steering feels a bit restricted and overly punishing (i.e. easy to
-#   loose control)
-# try to reduce adherence as soon as you turn, then restore it
+# manage protocol acks (NB sequence diagrams): when you receive an ack then
+#   start with the callback
 
 # 0.10
 # add car helios
