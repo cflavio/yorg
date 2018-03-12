@@ -25,13 +25,13 @@ class YorgFsm(FsmColleague):
     def enterMenu(self):
         self.eng.log_mgr.log('entering Menu state')
         self.mediator.reset_drivers()
-        menu_props = MenuProps(
+        self.__menu_props = MenuProps(
             self.mediator.gameprops, self.mediator.options,
             'assets/images/gui/yorg_title.txo',
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mediator.options.dct,
             'http://www.ya2.it/pages/support-us.html')
-        self.__menu = YorgMenu(menu_props)
+        self.__menu = YorgMenu(self.__menu_props)
         methods = [self.mediator.logic.on_input_back,
                    self.mediator.logic.on_options_back,
                    self.mediator.logic.on_room_back,
@@ -65,6 +65,14 @@ class YorgFsm(FsmColleague):
             self.models += [front_path]
             self.models += [rear_path]
         self.load_models(None)
+
+    def on_start_match(self):
+        self.__menu.logic.on_push_page('trackpageserver', [self.__menu_props])
+
+    def on_start_match_client(self, track):
+        self.__menu.logic.on_track_selected(track)
+        self.__menu.logic.on_push_page('carpageclient', [self.__menu_props])
+
 
     def enable_menu(self, val): self.__menu.enable(val)
 

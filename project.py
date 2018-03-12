@@ -4,7 +4,6 @@
 
 # 0.9 (network)
 # launch a network race from the new gui
-# server's address == client's one -> use the local one
 # manage protocol acks (NB sequence diagrams): when you receive an ack then
 #   start with the callback
 

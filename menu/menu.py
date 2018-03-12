@@ -125,7 +125,7 @@ class YorgMenuLogic(MenuLogic):
 
     def on_driver_selected_server(self, name, track, car, cars, packet):
         self.mediator.gui.notify('on_driver_selected_server', name, track, car,
-                            cars, packet)
+                                 cars, packet)
 
     def on_car_start_client(self, track, car, cars, packet):
         self.mediator.gui.notify('on_car_start_client', track, car, cars, packet)

@@ -6,6 +6,7 @@ except ImportError:  # sleekxmpp requires openssl 1.0.2
     print 'OpenSSL 1.0.2 not detected'
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
+from menu.netmsgs import NetMsgs
 from .usersfrm import UsersFrm
 from .matchfrm import MatchFrm
 from .messagefrm import MessageFrm
@@ -89,7 +90,14 @@ class MultiplayerFrm(GameObject):
     def on_invite(self, usr):
         if not self.match_frm:
             self.create_match_frm('')
+            self.eng.server.start(self.process_msg_srv, self.process_connection)
         self.match_frm.on_invite(usr)
+
+    def process_msg_srv(data_lst):
+        print data_lst
+
+    def process_connection(self, client_address):
+        self.eng.log_mgr.log('connection from ' + client_address)
 
     def on_users(self): self.users_frm.on_users()
 
@@ -149,6 +157,7 @@ class MultiplayerFrm(GameObject):
     def on_start(self):
         self.eng.log('on_start')
         self.users_frm.room_name = None
+        self.notify('on_start_match')
 
     def on_room_back(self):
         if self.users_frm.room_name:  # i am the server:
@@ -242,6 +251,13 @@ class MultiplayerFrm(GameObject):
                 mtype='ya2_yorg',
                 msubject='ip_address',
                 mbody=public_addr + '\n' + local_addr)
+            for usr in self.eng.xmpp.users:
+                if usr.name == msg['from'].bare:
+                    if public_addr == usr.public_addr:
+                        ip_addr = usr.local_addr
+                    else:
+                        ip_addr = usr.public_addr
+            self.eng.client.start(self.process_msg_client, ip_addr)
         else:
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
@@ -257,6 +273,12 @@ class MultiplayerFrm(GameObject):
                     mtype='ya2_yorg',
                     msubject='is_playing',
                     mbody='1')
+
+    def process_msg_client(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.track_selected:
+            self.eng.log_mgr.log('track selected: ' + data_lst[1])
+            self.notify('on_start_match_client', data_lst[1])
+
 
     def on_declined(self, msg):
         self.eng.log('on declined')

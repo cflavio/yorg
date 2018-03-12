@@ -249,7 +249,7 @@ class DriverPageClientGui(DriverPageGui):
         self.eng.log('selected driver ' + str(i))
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
-        self.sel_drv_img.setTexture(self.t_s, loader.loadTexture(txt_path % i))
+        self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)

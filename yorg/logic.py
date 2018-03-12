@@ -63,6 +63,8 @@ class YorgLogic(GameLogic):
             self.mp_frm.attach(self.on_create_room)
             self.mp_frm.attach(self.on_srv_quitted)
             self.mp_frm.attach(self.on_removed)
+            self.mp_frm.attach(self.on_start_match)
+            self.mp_frm.attach(self.on_start_match_client)
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -186,6 +188,12 @@ class YorgLogic(GameLogic):
         else:
             self.mediator.fsm.demand('Menu')
 
+    def on_start_match(self):
+        self.mediator.fsm.on_start_match()
+
+    def on_start_match_client(self, track):
+        self.mediator.fsm.on_start_match_client(track)
+
     def start_network_race_server(self, car, track):
         self.eng.server.send([NetMsgs.track_selected, track])
         packet = [NetMsgs.start_race, len(self.current_drivers)]
@@ -292,29 +300,32 @@ class YorgLogic(GameLogic):
         #for i, drv_name in enumerate(packet[4::3]):
         #    drv_info[i] = drv_info[i]._replace(name=drv_name)
         #self.mediator.gameprops = self.mediator.gameprops._replace(drivers_info=drv_info)
-        sprops = self.season.props
+        dev = self.mediator.options['development']
+        sprops = self.__season_props(
+            self.mediator.gameprops, car, cars,
+            self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
+            dev['race_start_time'], dev['countdown_seconds'])
+        self.season = SingleRaceSeason(sprops)
         drivers = sprops.drivers
         packet_drivers = []
         for i in range(packet[1]):
-            offset = i * 7
-            pdrv = packet[2 + offset: 2 + offset + 7]
+            offset = i * 3
+            pdrv = packet[2 + offset: 2 + offset + 3]
             packet_drivers += [pdrv]
         for pdrv in packet_drivers:
             for drv in drivers:
                 if drv.dprops.info.img_idx == pdrv[1]:
                     drv.logic.dprops.car_name = pdrv[2]
                     drv.logic.dprops.info.name = pdrv[3]
-                    drv.logic.dprops.info.speed = pdrv[4]
-                    drv.logic.dprops.info.adherence = pdrv[5]
-                    drv.logic.dprops.info.stability = pdrv[6]
+                    #drv.logic.dprops.info.speed = pdrv[4]
+                    #drv.logic.dprops.info.adherence = pdrv[5]
+                    #drv.logic.dprops.info.stability = pdrv[6]
         sprops.drivers = drivers
         sprops.car_names = cars
-        dev = self.mediator.options['development']
         #self.season = SingleRaceSeason(self.__season_props(
         #    self.mediator.gameprops, car, cars,
         #    self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
         #    dev['race_start_time'], dev['countdown_seconds']))
-        self.season = SingleRaceSeason(sprops)
         self.season.attach_obs(self.mediator.event.on_season_end)
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
@@ -342,13 +353,17 @@ class YorgLogic(GameLogic):
             2.0, self.mediator.fsm.demand,
             ['Race', track, car, [car], self.season.logic.drivers])
 
-    def on_driver_selected_server(self, player_name, track, car, cars, packet, sprops):
+    def on_driver_selected_server(self, player_name, track, car, cars, packet):
         # unused packet
         dev = self.mediator.options['development']
         #self.season = SingleRaceSeason(self.__season_props(
         #    self.mediator.gameprops, car, cars,
         #    self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
         #    dev['race_start_time'], dev['countdown_seconds']))
+        sprops = self.__season_props(
+            self.mediator.gameprops, car, cars,
+            self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
+            dev['race_start_time'], dev['countdown_seconds'])
         sprops.car_names = cars
         sprops.player_car_names = cars
         self.season = SingleRaceSeason(sprops)
