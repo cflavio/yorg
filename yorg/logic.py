@@ -1,5 +1,6 @@
 from random import shuffle
 from yaml import load
+from collections import OrderedDict
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
 from yyagl.racing.season.season import SingleRaceSeason, Season, SeasonProps
@@ -221,7 +222,7 @@ class YorgLogic(GameLogic):
         self.eng.log('drivers: ' + str(drivers))
         self.on_driver_selected_server(
             self.mediator.options['settings']['player_name'], track, car,
-            cars_names, packet, sprops)
+            cars_names, packet)
 
     @staticmethod
     def __season_props(
@@ -238,10 +239,10 @@ class YorgLogic(GameLogic):
         for drv_info, car_name in zip(gameprops.drivers_info,
                                       gameprops.cars_names):
             drivers += [Driver(DriverProps(drv_info, car_name, 0, 0, 0))]
-        if car not in gameprops.cars_names[:int(cars_number)]:
-            cars = gameprops.cars_names[:int(cars_number) - 1] + [car]
-        else:
-            cars = gameprops.cars_names[:int(cars_number)]
+        cars = player_car_names[:] + gameprops.cars_names
+        cars = list(OrderedDict.fromkeys(cars))[:int(cars_number)]
+        # cars = list(dict.fromkeys(cars))[:int(cars_number)]  # python 3.6
+
         return SeasonProps(
             gameprops, cars, car, player_car_names, drivers,
             ['assets/images/tuning/engine.txo',
@@ -309,17 +310,17 @@ class YorgLogic(GameLogic):
         drivers = sprops.drivers
         packet_drivers = []
         for i in range(packet[1]):
-            offset = i * 3
-            pdrv = packet[2 + offset: 2 + offset + 3]
+            offset = i * 7
+            pdrv = packet[2 + offset: 2 + offset + 7]
             packet_drivers += [pdrv]
         for pdrv in packet_drivers:
             for drv in drivers:
                 if drv.dprops.info.img_idx == pdrv[1]:
                     drv.logic.dprops.car_name = pdrv[2]
                     drv.logic.dprops.info.name = pdrv[3]
-                    #drv.logic.dprops.info.speed = pdrv[4]
-                    #drv.logic.dprops.info.adherence = pdrv[5]
-                    #drv.logic.dprops.info.stability = pdrv[6]
+                    drv.logic.dprops.info.speed = pdrv[4]
+                    drv.logic.dprops.info.adherence = pdrv[5]
+                    drv.logic.dprops.info.stability = pdrv[6]
         sprops.drivers = drivers
         sprops.car_names = cars
         #self.season = SingleRaceSeason(self.__season_props(
