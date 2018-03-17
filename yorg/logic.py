@@ -354,8 +354,7 @@ class YorgLogic(GameLogic):
             2.0, self.mediator.fsm.demand,
             ['Race', track, car, [car], self.season.logic.drivers])
 
-    def on_driver_selected_server(self, player_name, track, car, cars, packet):
-        # unused packet
+    def on_driver_selected_server(self, player_name, track, car, cars):
         dev = self.mediator.options['development']
         #self.season = SingleRaceSeason(self.__season_props(
         #    self.mediator.gameprops, car, cars,
@@ -378,6 +377,26 @@ class YorgLogic(GameLogic):
         self.mediator.options['settings']['player_name'] = player_name
         self.mediator.gameprops.player_name = player_name
         self.mediator.options.store()
+
+        packet = [NetMsgs.start_race, len(self.eng.car_mapping)]
+
+        def process(k):
+            '''Processes a car.'''
+            for addr, carname in self.eng.car_mapping.items():
+                if carname == k: return addr
+        sprops = self.season.props
+        drivers = sprops.drivers
+        for k in self.eng.car_mapping.values():
+            for _drv in drivers:
+                if _drv.dprops.car_name == k:
+                    drv = _drv
+            packet += [process(k), drv.dprops.info.img_idx,
+                       drv.dprops.car_name, drv.dprops.info.name,
+                       drv.dprops.info.speed, drv.dprops.info.adherence,
+                       drv.dprops.info.stability]
+        self.eng.server.send(packet)
+        self.eng.log_mgr.log('start race: ' + str(packet))
+        self.eng.log('drivers: ' + str(drivers))
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
             ['Race', track, car, cars, self.season.logic.drivers])

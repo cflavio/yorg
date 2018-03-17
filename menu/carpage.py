@@ -136,7 +136,7 @@ class CarPageGuiServer(CarPageGui):
             packet += [process(k), val,
                        self.props.gameprops.drivers_info[i].name]
         self.eng.server.send(packet)
-        self.eng.log_mgr.log('start race: ' + str(packet))
+        self.eng.log_mgr.log('start drivers: ' + str(packet))
         curr_car = self.current_cars[self]
         page_args = [self.track_path, curr_car, self.props]
         self.notify('on_push_page', 'driverpageserver', page_args)

@@ -3,9 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# launch a network race from the new gui
-# manage protocol acks (NB sequence diagrams): when you receive an ack then
-#   start with the callback
+# manage multiple invites
+# manage quit (see sequence diagrams)
 
 # 0.10
 # add car helios
@@ -22,6 +21,7 @@
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # (Panda3D 1.10) write snow shader
 # (Panda3D 1.10) hw skinning
+# (Panda3D 1.10) make both installer and zip file for linux (for itch.io)
 # python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
 

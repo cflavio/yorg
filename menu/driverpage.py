@@ -200,22 +200,9 @@ class DriverPageServerGui(DriverPageGui):
         connections += [self]
         if not all(conn in self.current_drivers for conn in connections):
             return
-        packet = [NetMsgs.start_race, len(self.current_drivers)]
-
-        def process(k):
-            '''Processes a car.'''
-            return 'server' if k == self else k.get_address().get_ip_string()
-        gprops = self.props.gameprops
-        for i, k in enumerate(self.current_drivers):
-            packet += [process(k), gprops.cars_names[i],
-                       self.props.gameprops.drivers_info[i].name]
-        self.eng.server.send(packet)
-        self.eng.log_mgr.log('start race: ' + str(packet))
-        self.eng.log('drivers: ' + str(gprops.drivers_info))
         self.notify(
             'on_driver_selected_server', self.ent.get(), self.mediator.track,
-            self.mediator.car, gprops.cars_names[:len(self.current_drivers)],
-            packet)
+            self.mediator.car, self.eng.car_mapping.values())
 
     def process_srv(self, data_lst, sender):
         if data_lst[0] != NetMsgs.driver_selection: return
@@ -261,8 +248,9 @@ class DriverPageClientGui(DriverPageGui):
     def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.start_race:
             self.eng.log_mgr.log('start_race: ' + str(data_lst))
+            cars = data_lst[4::7]
             self.notify('on_car_start_client', self.mediator.track, self.mediator.car,
-                        [self.mediator.car], data_lst)
+                        cars, data_lst)
 
 
 class DriverPage(Page):
