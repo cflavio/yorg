@@ -110,6 +110,7 @@ class UsersFrm(GameObject):
                         self.trunc(user.name, 20),
                         user,
                         user.is_supporter,
+                        user.is_online,
                         self.eng.xmpp.is_friend(user.name),
                         user.is_in_yorg,
                         user.is_playing,
@@ -145,6 +146,7 @@ class UsersFrm(GameObject):
             lab.enable_invite_btn(enb_val)
             lab.frm.set_z(top - .08 - .08 * i)
             lab.lab.set_supporter(user.is_supporter)
+            lab.lab.set_online(user.is_online)
 
     def on_invite(self, usr):
         self.invited_users += [usr.name]

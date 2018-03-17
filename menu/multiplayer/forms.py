@@ -7,18 +7,21 @@ from .button import StaticMPBtn, MPBtn
 from yyagl.gameobject import GameObject
 
 
-class UserLabel(object):
+class UserLabel(GameObject):
 
-    def __init__(self, name, parent, menu_args, is_supporter, name_full):
+    def __init__(self, name, parent, menu_args, is_supporter, is_online, name_full):
+        GameObject.__init__(self)
         self.menu_args = menu_args
         self.parent = parent
         self.name_full = name_full
+        self.is_online = is_online
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         self.lab = DirectLabel(text=name, pos=(0, 1, 0), parent=parent,
                                text_align=TextNode.A_left, **lab_args)
         self.supp_btn = None
         self.set_supporter(is_supporter)
+        self.set_online()
 
     def on_enter(self, pos): self.lab['text_fg'] = self.menu_args.text_active
 
@@ -35,15 +38,21 @@ class UserLabel(object):
             if self.supp_btn:
                 self.supp_btn = self.supp_btn.destroy()
 
+    def set_online(self, val=None):
+        if val is not None: self.is_online = val
+        if self.name_full == self.eng.xmpp.client.boundjid.full: self.is_online = True
+        self.lab.set_alpha_scale(1 if self.is_online else .4)
+
     def destroy(self):
         self.lab.destroy()
         if self.supp_btn: self.supp_btn.destroy()
+        GameObject.destroy(self)
 
 
 class UserFrmMe(GameObject, Subject):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args,
-                 msg_btn_x=.58):
+    def __init__(self, name, name_full, is_supporter, is_online, pos, parent,
+                 menu_args, msg_btn_x=.58):
         Subject.__init__(self)
         GameObject.__init__(self)
         self.name_full = name_full
@@ -52,7 +61,7 @@ class UserFrmMe(GameObject, Subject):
             frameSize=(-.01, .79, .05, -.03), frameColor=(1, 1, 1, 0),
             pos=pos, parent=parent)
         name = name.split('@')[0] + '\1smaller\1@' + name.split('@')[1] + '\2'
-        self.lab = UserLabel(name, self.frm, menu_args, is_supporter, name_full)
+        self.lab = UserLabel(name, self.frm, menu_args, is_supporter, is_online, name_full)
         self.frm.bind(ENTER, self.on_enter)
         self.frm.bind(EXIT, self.on_exit)
 
@@ -71,10 +80,10 @@ class UserFrmMe(GameObject, Subject):
 
 class UserFrm(UserFrmMe):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args,
-                 msg_btn_x=.58):
-        UserFrmMe.__init__(self, name, name_full, is_supporter, pos, parent,
-                           menu_args, msg_btn_x)
+    def __init__(self, name, name_full, is_supporter, is_online, pos, parent,
+                 menu_args, msg_btn_x=.58):
+        UserFrmMe.__init__(self, name, name_full, is_supporter, is_online, pos,
+                           parent, menu_args, msg_btn_x)
         self.msg_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/message.txo',
             msg_btn_x, self.on_msg, name_full, _('send a message to the user'))
@@ -95,17 +104,18 @@ class UserFrmListMe(UserFrmMe):
 
     def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
         UserFrmMe.__init__(
-            self, name, name_full, is_supporter, pos, parent, menu_args)
+            self, name, name_full, is_supporter, True, pos, parent, menu_args)
 
     def enable_invite_btn(self, enable=True): pass
 
 
 class UserFrmList(UserFrm):
 
-    def __init__(self, name, name_full, is_supporter, is_friend, is_in_yorg, is_playing, pos, parent,
-                 menu_args):
+    def __init__(self, name, name_full, is_supporter, is_online, is_friend,
+                 is_in_yorg, is_playing, pos, parent, menu_args):
         UserFrm.__init__(
-            self, name, name_full, is_supporter, pos, parent, menu_args)
+            self, name, name_full, is_supporter, is_online, pos, parent,
+            menu_args)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_normal
@@ -159,9 +169,11 @@ class UserFrmList(UserFrm):
 
 class UserFrmMatch(UserFrm):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
+    def __init__(self, name, name_full, is_supporter, is_online, pos, parent,
+                 menu_args):
         UserFrm.__init__(
-            self, name, name_full, is_supporter, pos, parent, menu_args, 1.0)
+            self, name, name_full, is_supporter, is_online, pos, parent,
+            menu_args, 1.0)
         self.frm['frameSize'] = (-.01, 1.06, .05, -.03)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046

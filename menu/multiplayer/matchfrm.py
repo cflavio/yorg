@@ -30,7 +30,7 @@ class MatchFrm(GameObject):
         usr = [usr for usr in self.eng.xmpp.users if usr.name == self.eng.xmpp.client.boundjid.bare][0]
         frm = UserFrmMe(
             self.eng.xmpp.client.boundjid.bare, self.eng.xmpp.client.boundjid.bare,
-            usr.is_supporter, (.1, 1, .38), self.match_frm, self.menu_args, .32)
+            usr.is_supporter, True, (.1, 1, .38), self.match_frm, self.menu_args, .32)
         self.forms = [frm]
         for i in range(0, 8):
             row, col = i % 4, i / 4
@@ -58,6 +58,7 @@ class MatchFrm(GameObject):
             y = .38 - .08 * (idx % 4)
             usr = [usr for usr in self.eng.xmpp.users if usr.name == nick][0]
             frm = UserFrm(self.trunc(nick, 30), nick, usr.is_supporter,
+                          usr.is_online,
                           (x, 1, y), self.match_frm, self.menu_args, 1.0)
             self.forms += [frm]
 
@@ -111,7 +112,7 @@ class MatchFrm(GameObject):
         idx = len(self.invited_users)
         x = .1 + 1.24 * (idx / 4)
         y = .38 - .08 * (idx % 4)
-        frm = UserFrmMatch('? ' + self.trunc(usr.name, 30), usr, usr.is_supporter, (x, 1, y),
+        frm = UserFrmMatch('? ' + self.trunc(usr.name, 30), usr, usr.is_supporter, usr.is_online, (x, 1, y),
                            self.match_frm, self.menu_args)
         frm.attach(self.on_remove)
         self.forms += [frm]
