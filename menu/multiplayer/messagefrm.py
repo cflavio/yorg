@@ -468,6 +468,10 @@ class MessageFrm(GameObject):
         self.set_chat(chat)
         self.add_match_chat(room, usr)
 
+    def remove_groupchat(self):
+        self.match_msg_frm.detach(self.on_match_msg_focus)
+        self.match_msg_frm = self.match_msg_frm.destroy()
+
     def on_focus(self, val):
         if val and self.ent.get() == _('write here your message'):
             self.ent.set('')

@@ -70,9 +70,9 @@ class YorgFsm(FsmColleague):
         self.__menu.logic.on_push_page('trackpageserver', [self.__menu_props])
 
     def on_start_match_client(self, track):
+        self.mediator.logic.mp_frm.on_track_selected()
         self.__menu.logic.on_track_selected(track)
         self.__menu.logic.on_push_page('carpageclient', [self.__menu_props])
-
 
     def enable_menu(self, val): self.__menu.enable(val)
 

@@ -158,7 +158,15 @@ class MultiplayerFrm(GameObject):
     def on_start(self):
         self.eng.log('on_start')
         self.users_frm.room_name = None
+        self.match_frm.destroy()
+        self.match_frm = None
+        self.msg_frm.remove_groupchat()
         self.notify('on_start_match')
+
+    def on_track_selected(self):
+        self.match_frm.destroy()
+        self.match_frm = None
+        self.msg_frm.remove_groupchat()
 
     def on_room_back(self):
         if self.users_frm.room_name:  # i am the server:
