@@ -8,7 +8,7 @@ from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
 from menu.netmsgs import NetMsgs
 from .usersfrm import UsersFrm
-from .matchfrm import MatchFrm
+from .matchfrm import MatchFrmServer, MatchFrmServerClient
 from .messagefrm import MessageFrm
 from .friend_dlg import FriendDialog
 from .invite_dlg import InviteDialog
@@ -54,8 +54,9 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_yorg_init)
         self.eng.xmpp.attach(self.on_is_playing)
 
-    def create_match_frm(self, room):
-        self.match_frm = MatchFrm(self.menu_args)
+    def create_match_frm(self, room, is_server):
+        cls = MatchFrmServer if is_server else MatchFrmServerClient
+        self.match_frm = cls(self.menu_args)
         self.match_frm.attach(self.on_start)
         self.match_frm.show(room)
 
@@ -89,7 +90,7 @@ class MultiplayerFrm(GameObject):
 
     def on_invite(self, usr):
         if not self.match_frm:
-            self.create_match_frm('')
+            self.create_match_frm('', True)
             self.eng.server.start(self.process_msg_srv, self.process_connection)
         self.match_frm.on_invite(usr)
 
@@ -236,7 +237,7 @@ class MultiplayerFrm(GameObject):
                 chat, self.eng.xmpp.client.boundjid.bare)
             room = chat
             nick = self.eng.xmpp.client.boundjid.bare
-            self.create_match_frm(room)
+            self.create_match_frm(room, False)
             self.notify('on_create_room', room, nick)
             public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
             sock = socket(AF_INET, SOCK_DGRAM)

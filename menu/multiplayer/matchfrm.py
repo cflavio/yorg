@@ -23,10 +23,6 @@ class MatchFrm(GameObject):
             frameSize=(-.02, 2.5, 0, .45),
             frameColor=(.2, .2, .2, .5),
             pos=(.04, 1, -.46), parent=base.a2dTopLeft)
-        btn_args = self.menu_args.btn_args
-        btn_args['scale'] = .06
-        Btn(text=_('Start'), pos=(1.2, 1, .03), command=self.on_start,
-                     parent=self.match_frm, **btn_args)
         usr = [usr for usr in self.eng.xmpp.users if usr.name == self.eng.xmpp.client.boundjid.bare][0]
         frm = UserFrmMe(
             self.eng.xmpp.client.boundjid.bare, self.eng.xmpp.client.boundjid.bare,
@@ -138,3 +134,24 @@ class MatchFrm(GameObject):
         self.eng.log('match form: destroy')
         self.match_frm.destroy()
         GameObject.destroy(self)
+
+
+class MatchFrmServer(MatchFrm):
+
+    def __init__(self, menu_args):
+        MatchFrm.__init__(self, menu_args)
+        btn_args = self.menu_args.btn_args
+        btn_args['scale'] = .06
+        Btn(text=_('Start'), pos=(1.2, 1, .03), command=self.on_start,
+                     parent=self.match_frm, **btn_args)
+
+
+class MatchFrmServerClient(MatchFrm):
+
+    def __init__(self, menu_args):
+        MatchFrm.__init__(self, menu_args)
+        lab_args = menu_args.label_args
+        lab_args['scale'] = .046
+        DirectLabel(
+                text=_('please wait for the server'), pos=(1.2, 1, .03),
+                parent=self.match_frm, **lab_args)
