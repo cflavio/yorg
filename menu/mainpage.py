@@ -50,17 +50,17 @@ class YorgMainPageGui(MainPageGui):
 
     def show(self):
         MainPageGui.show(self)
-        self.widgets[6]['text'] = self.get_label()
+        self.widgets[5]['text'] = self.get_label()
 
     def on_ok(self):
         self.conn_attempted = True
-        self.widgets[6]['text'] = self.get_label()
+        self.widgets[5]['text'] = self.get_label()
         self.eng.xmpp.send_connected()
         # self.notify('on_login')
 
     def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
-        self.widgets[6]['text'] = self.get_label()
+        self.widgets[5]['text'] = self.get_label()
 
     def on_logout(self):
         self.eng.xmpp.disconnect()
@@ -68,7 +68,7 @@ class YorgMainPageGui(MainPageGui):
         options['settings']['xmpp']['usr'] = ''
         options['settings']['xmpp']['pwd'] = ''
         options.store()
-        self.widgets[6]['text'] = self.get_label()
+        self.widgets[5]['text'] = self.get_label()
         self.notify('on_logout')
 
     def on_login(self):
@@ -104,20 +104,17 @@ class YorgMainPageGui(MainPageGui):
     def build(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
                                     [self.props])
-        mp_cb = lambda: self.notify('on_push_page', 'multiplayer',
-                                    [self.props])
         supp_cb = lambda: self.eng.open_browser(self.props.support_url)
         cred_cb = lambda: self.notify('on_push_page', 'credits')
         menu_data = [
             ('Single Player', _('Single Player'), sp_cb),
-            ('Multiplayer', _('Multiplayer'), mp_cb),
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
             ('Not up-to-date', self.get_label(), self.on_loginout),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
-            Btn(text='', pos=(0, 1, .8-i*.23), command=menu[2],
+            Btn(text='', pos=(0, 1, .64-i*.23), command=menu[2],
                 tra_src=menu_data[i][0], tra_tra=menu_data[i][1],
                 **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
@@ -139,7 +136,7 @@ class YorgMainPageGui(MainPageGui):
         self.set_news()
         MainPageGui.build(self)
         if not self.ver_check.is_uptodate():
-            self.widgets[6]['state'] = DISABLED
+            self.widgets[5]['state'] = DISABLED
 
     def on_options(self):
         self.load_settings()

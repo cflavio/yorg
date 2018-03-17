@@ -2,8 +2,6 @@ from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
-from .serverpage import ServerPage
-from .clientpage import ClientPage
 from .loginpage import LogInPage
 from .trackpage import TrackPage, TrackPageServer
 from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
@@ -36,16 +34,6 @@ class YorgMenuLogic(MenuLogic):
             page = SingleplayerPage(args[0])
             page.gui.attach(self.on_track_selected)
             page.gui.attach(self.on_continue)
-        if page_code == 'multiplayer':
-            self.eng.log('multi player')
-            page = MultiplayerPage(args[0])
-        if page_code == 'server':
-            self.eng.log('server')
-            page = ServerPage(args[0])
-        if page_code == 'client':
-            self.eng.log('client')
-            page = ClientPage(args[0])
-            page.event.attach(self.on_track_selected)
         if page_code == 'login':
             self.eng.log('login')
             page = LogInPage(args[0])
