@@ -5,7 +5,8 @@ from .multiplayerpage import MultiplayerPage
 from .loginpage import LogInPage
 from .trackpage import TrackPage, TrackPageServer
 from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
-from .driverpage import DriverPage, DriverPageServer, DriverPageClient
+from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
+    DriverPageClient
 from .optionpage import OptionPage
 from .inputpage import InputPage
 from .creditpage import CreditPage
@@ -64,7 +65,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
             self.eng.log('driver page')
-            page = DriverPage(args[0], args[1], args[2])
+            page = DriverPageSinglePlayer(args[0], args[1], args[2])
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driverpageserver':
             self.eng.log('driver page server')

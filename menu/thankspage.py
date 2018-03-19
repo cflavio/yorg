@@ -14,6 +14,6 @@ class ThanksPageGui(PageGui):
         thanks_txt = Text(
             _('Thanks to: ') + ThanksNames.get_thanks(1, 3)[0],
             pos=(.05, .05), align=TextNode.A_left, parent='bottomleft',
-            **t_a)
+            wordwrap=64, **t_a)
         self.add_widgets([thanks_txt])
         PageGui.build(self)

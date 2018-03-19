@@ -22,6 +22,7 @@ class MultiplayerFrm(GameObject):
         GameObject.__init__(self)
         self.eng.log('created multiplayer form')
         self.dialog = None
+        self.invite_dlg = None
         self.yorg_srv = yorg_srv
         self.ver_check = VersionChecker()
         self.labels = []
@@ -217,6 +218,14 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.on_groupchat_msg(msg)
 
     def on_invite_chat(self, msg):
+        if self.invite_dlg:  # we've already an invite
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
+                mto=str(msg['from'].bare),
+                msubject='declined',
+                mtype='ya2_yorg',
+                mbody=str(msg['body']))
+            return
         self.invite_dlg = InviteDialog(self.menu_args, msg)
         self.invite_dlg.attach(self.on_invite_answer)
         for usr_name in [self.yorg_srv] + \

@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# manage multiple invites
 # manage quit (see sequence diagrams)
 
 # 0.10
