@@ -3,6 +3,7 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# quit from carpage and driverpage
 # manage quit (see sequence diagrams)
 
 # 0.10

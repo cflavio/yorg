@@ -1,6 +1,4 @@
-from direct.gui.OnscreenText import OnscreenText
-from direct.gui.DirectFrame import DirectFrame
-from yyagl.library.gui import Btn
+from yyagl.library.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 
@@ -12,14 +10,14 @@ class InGamePageGui(PageGui):
         PageGui.__init__(self, mediator, menu_args)
 
     def build(self, back_btn=True):
-        frm = DirectFrame(
+        frm = Frame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         question_txt = _(
             "What do you want to do?\n\nNote: use '%s' for pausing the game.")
         question_txt = question_txt % self.keys.pause
         menu_args = self.menu_args
-        txt = OnscreenText(
-            text=question_txt, pos=(0, .64), scale=.08, wordwrap=32,
+        txt = Text(
+            question_txt, pos=(0, .64), scale=.08, wordwrap=32,
             fg=menu_args.text_active, font=menu_args.font)
         on_back = lambda: self.on_end(True)
         on_end = lambda: self.on_end(False)
@@ -42,7 +40,8 @@ class InGamePageGui(PageGui):
             self.eng.hide_cursor()
             self.eng.show_standard_cursor()
 
-        self.eng.do_later(.01, self.eng.toggle_pause, [False])
+        if not (self.eng.server.is_active or self.eng.client.is_active):
+            self.eng.do_later(.01, self.eng.toggle_pause, [False])
         # in the next frame since otherwise InGameMenu will be paused while
         # waiting page's creation, and when it is restored it is destroyed,
         # then the creation callback finds a None menu
@@ -51,7 +50,8 @@ class InGamePageGui(PageGui):
         self.eng.hide_standard_cursor()
         evt_name = 'back' if back_to_game else 'exit'
         self.notify('on_ingame_' + evt_name)
-        self.eng.do_later(.01, self.eng.toggle_pause)
+        if not (self.eng.server.is_active or self.eng.client.is_active):
+            self.eng.do_later(.01, self.eng.toggle_pause)
 
 
 class InGamePage(Page):

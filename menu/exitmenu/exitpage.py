@@ -1,7 +1,6 @@
 from sys import exit as sys_exit
 from direct.gui.OnscreenText import OnscreenText
-from direct.gui.DirectFrame import DirectFrame
-from yyagl.library.gui import Btn
+from yyagl.library.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui
 
 
@@ -9,12 +8,12 @@ class ExitPageGui(PageGui):
 
     def build(self, back_btn=True):
         menu_args = self.menu_args
-        frm = DirectFrame(
+        frm = Frame(
             frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
         txt = _(
             'Please, visit our site after exiting!\n\nIt helps us! Thank you!')
-        txt = OnscreenText(
-            text=txt, pos=(0, .64), scale=.08, wordwrap=32,
+        txt = Text(
+            txt, pos=(0, .64), scale=.08, wordwrap=32,
             fg=menu_args.text_active, font=menu_args.font)
         menu_data = [
             ('visit our site after exiting', _('visit our site after exiting'),
