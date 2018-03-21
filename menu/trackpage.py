@@ -42,7 +42,7 @@ class TrackPageGui(ThanksPageGui):
                 pos=(-.8 + col * .6 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
             self.add_widgets([btn, txt])
-        ThanksPageGui.build(self)
+        ThanksPageGui.build(self, exit_behav=self.eng.server.is_active)
 
     def on_track(self, track):
         self.eng.log('selected ' + track)

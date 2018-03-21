@@ -286,6 +286,9 @@ class YorgLogic(GameLogic):
     def on_room_back(self):
         self.mp_frm.on_room_back()
 
+    def on_quit(self):
+        self.mp_frm.on_quit()
+
     def on_car_selected(self, car):
         dev = self.mediator.options['development']
         self.season = SingleRaceSeason(self.__season_props(

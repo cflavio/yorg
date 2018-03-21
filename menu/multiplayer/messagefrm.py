@@ -433,7 +433,7 @@ class MessageFrm(GameObject):
             self.set_title(chat.title)
 
     def on_presence_unavailable_room(self, msg):
-        if str(JID(msg['from']).bare) == self.curr_match_room:
+        if self.match_msg_frm and str(JID(msg['from']).bare) == self.curr_match_room:
             self.match_msg_frm.on_presence_unavailable_room(msg)
             return
         room = str(JID(msg['muc']['room']).bare)
@@ -465,6 +465,7 @@ class MessageFrm(GameObject):
         if not chat:
             chat = MUC(room)
             self.chats += [chat]
+        chat.users += [usr]
         self.set_chat(chat)
         self.add_match_chat(room, usr)
 

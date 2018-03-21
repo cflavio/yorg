@@ -36,7 +36,7 @@ class DriverPageGui(ThanksPageGui):
         self.sel_drv_img = None
         ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args)
 
-    def build(self):
+    def build(self, exit_behav):
         self.drv_info = self.props.gameprops.drivers_info
         menu_args = self.menu_args
         widgets = [Text(_('Select the driver'), pos=(-.2, .8),
@@ -94,7 +94,7 @@ class DriverPageGui(ThanksPageGui):
         tex = Texture()
         tex.load(empty_img)
         self.sel_drv_img.set_texture(self.t_s, tex)
-        ThanksPageGui.build(self)
+        ThanksPageGui.build(self, exit_behav=exit_behav)
 
     def __add_lab(self, txt, pos_z, row, col):
         t_a = self.menu_args.text_args.copy()
@@ -147,7 +147,7 @@ class DriverPageGui(ThanksPageGui):
 class DriverPageSinglePlayerGui(DriverPageGui):
 
     def build(self):
-        DriverPageGui.build(self)
+        DriverPageGui.build(self, exit_behav=False)
         menu_args = self.menu_args
         self.ent = Entry(
             scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
@@ -180,7 +180,7 @@ class DriverPageSinglePlayerGui(DriverPageGui):
 class DriverPageServerGui(DriverPageGui):
 
     def build(self):
-        DriverPageGui.build(self)
+        DriverPageGui.build(self, exit_behav=True)
         self.eng.server.register_cb(self.process_srv)
         self.current_drivers = []
         self.name['align'] = TextNode.ACenter
@@ -246,7 +246,7 @@ class DriverPageServerGui(DriverPageGui):
 class DriverPageClientGui(DriverPageGui):
 
     def build(self):
-        DriverPageGui.build(self)
+        DriverPageGui.build(self, exit_behav=True)
         self.eng.client.register_cb(self.process_client)
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)

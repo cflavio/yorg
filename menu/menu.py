@@ -92,10 +92,14 @@ class YorgMenuLogic(MenuLogic):
         self.push_page(page)
 
     def on_srv_quitted(self):
-        self.on_back('RoomPageGui')
+        curr_page = self.pages[-1].__class__.__name__
+        if curr_page == 'RoomPageGui':
+            self.on_back(curr_page)
+        else:
+            self.on_quit(curr_page)
 
     def on_removed(self):
-        self.on_back('RoomPageGui')
+        self.on_back(self.pages[-1].__class__.__name__)
 
     def on_back(self, page_code, args=[]):
         if page_code == 'input_page':
@@ -105,6 +109,10 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'RoomPageGui':
             self.mediator.gui.notify('on_room_back')
         MenuLogic.on_back(self)
+
+    def on_quit(self, page_code, args=[]):
+        self.mediator.gui.notify('on_quit')
+        MenuLogic.on_quit(self, page_code)
 
     def on_track_selected(self, track):
         self.mediator.track = track

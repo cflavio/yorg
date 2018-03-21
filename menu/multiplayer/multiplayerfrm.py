@@ -120,7 +120,9 @@ class MultiplayerFrm(GameObject):
 
     def on_is_playing(self, msg):
         self.eng.log('is playing ' + str(msg['from']))
-        usr = [user for user in self.eng.xmpp.users if user.name == str(msg['from'].bare)][0]
+        users = [user for user in self.eng.xmpp.users if user.name == str(msg['from'].bare)]
+        if not users: return  # when we get messages while we were offline
+        usr = users[0]
         usr.is_playing = msg['body'] == '1'
         self.users_frm.on_users()
 
@@ -146,7 +148,7 @@ class MultiplayerFrm(GameObject):
     def on_exit_dlg(self):
         self.exit_dlg.destroy()
         self.notify('on_srv_quitted')
-        self.on_room_back()
+        #self.on_room_back()
 
     def on_remove_dlg(self):
         self.removed_dlg.destroy()
@@ -187,9 +189,41 @@ class MultiplayerFrm(GameObject):
             self.eng.log('back (client)')
             self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
                 self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
-            self.match_frm.destroy()
-            self.match_frm = None
-            self.msg_frm.on_room_back()
+            if self.match_frm:  # it's also invoked when server quits in car's page by os_srv_quitted
+                self.match_frm.destroy()
+                self.match_frm = None
+                self.msg_frm.on_room_back()
+        self.users_frm.invited_users = []
+        self.users_frm.in_match_room = None
+        self.users_frm.room_name = None
+        for usr_name in [self.yorg_srv] + \
+            [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
+                mto=usr_name,
+                mtype='ya2_yorg',
+                msubject='is_playing',
+                mbody='0')
+        self.on_users()
+
+    def on_quit(self):
+        if self.users_frm.room_name:  # i am the server:
+            invited = self.users_frm.invited_users
+            users = self.match_frm.users_names
+            pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
+            self.eng.log('back (server): %s, %s, %s' % (invited, users, pending_users))
+            for usr in pending_users:
+                self.eng.log('cancel_invite ' + usr)
+                self.eng.xmpp.client.send_message(
+                    mfrom=self.eng.xmpp.client.boundjid.full,
+                    mto=usr,
+                    mtype='ya2_yorg',
+                    msubject='cancel_invite',
+                    mbody='cancel_invite')
+        if self.msg_frm.curr_match_room:  # if we've accepted the invitation
+            self.eng.log('back (client)')
+            self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
+                self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
         self.users_frm.invited_users = []
         self.users_frm.in_match_room = None
         self.users_frm.room_name = None

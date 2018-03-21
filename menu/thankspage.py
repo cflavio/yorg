@@ -6,7 +6,7 @@ from yyagl.engine.gui.page import PageGui
 
 class ThanksPageGui(PageGui):
 
-    def build(self, back_btn=True):
+    def build(self, back_btn=True, exit_behav=False):
         menu_args = self.menu_args
         t_a = menu_args.text_args
         t_a['fg'] = menu_args.text_normal
@@ -16,4 +16,4 @@ class ThanksPageGui(PageGui):
             pos=(.05, .05), align=TextNode.A_left, parent='bottomleft',
             wordwrap=64, **t_a)
         self.add_widgets([thanks_txt])
-        PageGui.build(self)
+        PageGui.build(self, back_btn, exit_behav)
