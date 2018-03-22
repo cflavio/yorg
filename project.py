@@ -3,8 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# disable gui on quit
 # manage quit (see sequence diagrams)
-# the server starts but a pending invited accepts after this
 
 # 0.10
 # add car helios
