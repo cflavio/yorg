@@ -3,7 +3,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# manage quit (see sequence diagrams)
+# server quits while loading
+# client quits while loading
+# server quits during game
+# client quits during game
 
 # 0.10
 # add car helios

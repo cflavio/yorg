@@ -70,6 +70,11 @@ class YorgFsm(FsmColleague):
         self.eng.xmpp.attach(self.on_presence_unavailable_room)
 
     def on_presence_unavailable_room(self, msg):
+        for usr in self.eng.xmpp.users:
+            if usr.name == str(msg['muc']['nick']):
+                for conn in self.eng.server.connections[:]:
+                    if usr.public_addr == conn[1] or usr.local_addr == conn[1]:
+                        self.eng.server.connections.remove(conn)
         if str(msg['muc']['nick']) == self.mediator.logic.mp_frm.users_frm.in_match_room:
             self.__menu.enable(False)
 
