@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# disable gui on quit
 # manage quit (see sequence diagrams)
 
 # 0.10

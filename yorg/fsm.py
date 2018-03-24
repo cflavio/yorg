@@ -5,6 +5,7 @@ from yyagl.racing.car.audio import CarSounds
 from yyagl.racing.car.event import Keys
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
+from menu.multiplayer.exit_dlg import ExitDialog
 
 
 class YorgFsm(FsmColleague):
@@ -66,6 +67,11 @@ class YorgFsm(FsmColleague):
             self.models += [front_path]
             self.models += [rear_path]
         self.load_models(None)
+        self.eng.xmpp.attach(self.on_presence_unavailable_room)
+
+    def on_presence_unavailable_room(self, msg):
+        if str(msg['muc']['nick']) == self.mediator.logic.mp_frm.users_frm.in_match_room:
+            self.__menu.enable(False)
 
     def on_start_match(self):
         self.__menu.logic.on_push_page('trackpageserver', [self.__menu_props])
