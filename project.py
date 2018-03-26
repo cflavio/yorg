@@ -3,10 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# server quits while loading
-# client quits while loading
-# server quits during game
-# client quits during game
+# when the server quits, the client comes back to the menu and reconnects
+# think of more race conditions (pun intended)
 
 # 0.10
 # add car helios
