@@ -36,7 +36,7 @@ class YorgMainPageGui(MainPageGui):
             if args.user and args.pwd:
                 user = args.user
                 password = args.pwd
-            if user and password:
+            if user and password and not self.eng.xmpp.client:
             # if user:
                 # if platform.startswith('linux'): set_keyring(Keyring())
                 # pwd = get_password('ya2_rog', user)

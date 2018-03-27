@@ -262,7 +262,7 @@ class YorgLogic(GameLogic):
         self.mediator.options.store()
 
     def on_msg_focus(self, val):
-        self.mediator.fsm.enable_menu(val == 'out')
+        self.mediator.fsm.enable_menu_navigation(val == 'out')
 
     def on_create_room(self, room, nick):
         self.mediator.fsm.create_room(room, nick)

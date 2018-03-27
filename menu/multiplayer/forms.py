@@ -122,31 +122,31 @@ class UserFrmList(UserFrm):
         self.__enable_invite_btn = is_in_yorg and not is_playing
         self.invite_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/invite.txo',
-            .65, self.on_invite, name_full, _("isn't playing yorg"))
+            .65, self.on_invite, name_full.name, _("isn't playing yorg"))
         self.create_friend_btn(is_friend, menu_args, name_full)
 
     def create_friend_btn(self, is_friend, menu_args, name_full):
         if not is_friend:
             self.friend_btn = MPBtn(
                 self.frm, self, menu_args, 'assets/images/gui/friend.txo',
-                .72, self.on_friend, name_full, _('add to xmpp friends'))
+                .72, self.on_friend, name_full.name, _('add to xmpp friends'))
         else:
             self.friend_btn = MPBtn(
                 self.frm, self, menu_args, 'assets/images/gui/kick.txo',
-                .72, self.on_unfriend, name_full,
+                .72, self.on_unfriend, name_full.name,
                 _('remove from xmpp friends'))
 
     def enable_invite_btn(self, enable=True): self.__enable_invite_btn = enable
 
-    def on_invite(self, usr):
-        self.eng.log('invite ' + usr.name)
+    def on_invite(self, usr_name):
+        self.eng.log('invite ' + usr_name)
         self.invite_btn.disable()
-        self.notify('on_invite', usr)
+        self.notify('on_invite', self.eng.xmpp.find_usr(usr_name))
 
-    def on_friend(self, usr):
-        self.eng.log('friend with ' + usr.name)
+    def on_friend(self, usr_name):
+        self.eng.log('friend with ' + usr_name)
         self.friend_btn.disable()
-        self.notify('on_friend', usr)
+        self.notify('on_friend', usr_name)
 
     def on_enter(self, pos):
         UserFrm.on_enter(self, pos)
@@ -162,7 +162,7 @@ class UserFrmList(UserFrm):
         if not self.friend_btn.is_hidden(): self.friend_btn.hide()
 
     def on_unfriend(self, usr):
-        self.eng.log('unfriend with ' + usr.name)
+        self.eng.log('unfriend with ' + usr)
         self.friend_btn.disable()
         self.notify('on_unfriend', usr)
 
@@ -180,7 +180,7 @@ class UserFrmMatch(UserFrm):
         lab_args['text_fg'] = self.menu_args.text_normal
         self.remove_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/remove.txo',
-            .92, self.on_remove, name_full, _("isn't playing yorg"))
+            .92, self.on_remove, name_full.name, _("remove from the match"))
 
     def on_remove(self, usr):
         self.notify('on_remove', usr)

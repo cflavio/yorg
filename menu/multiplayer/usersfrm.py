@@ -198,15 +198,15 @@ class UsersFrm(GameObject):
 
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)
 
-    def on_friend(self, usr):
-        self.eng.log('send friend to ' + usr.name)
+    def on_friend(self, usr_name):
+        self.eng.log('send friend to ' + usr_name)
         self.eng.xmpp.client.send_presence_subscription(
-            usr.name, ptype='subscribe',
+            usr_name, ptype='subscribe',
             pfrom=self.eng.xmpp.client.boundjid.full)
 
     def on_unfriend(self, usr):
         self.eng.log('roster ' + str(self.eng.xmpp.client.client_roster))
-        self.eng.xmpp.client.del_roster_item(usr.name)
+        self.eng.xmpp.client.del_roster_item(usr)
         self.eng.log('roster ' + str(self.eng.xmpp.client.client_roster))
 
     def destroy(self):

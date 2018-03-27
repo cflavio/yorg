@@ -458,6 +458,7 @@ class MessageFrm(GameObject):
             chat = Chat(usr)
             self.chats += [chat]
         self.set_chat(chat)
+        self.ent['focus'] = 1
 
     def add_groupchat(self, room, usr):
         self.set_title(usr)

@@ -370,7 +370,8 @@ class MultiplayerFrm(GameObject):
         self.match_frm.room = room
         self.notify('on_create_room', room, usr)
 
-    def on_msg_focus(self, val): self.notify('on_msg_focus', val)
+    def on_msg_focus(self, val):
+        self.notify('on_msg_focus', val)
 
     def destroy(self):
         self.eng.log('multiplayer form: destroy')

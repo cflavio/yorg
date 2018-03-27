@@ -118,8 +118,8 @@ class MatchFrm(GameObject):
         self.eng.log('match form: start')
         self.notify('on_start')
 
-    def on_remove(self, usr):
-        self.eng.xmpp.client.plugin['xep_0045'].setRole(self.room, usr.name, 'none')
+    def on_remove(self, usr_name):
+        self.eng.xmpp.client.plugin['xep_0045'].setRole(self.room, usr_name, 'none')
 
     def show(self, room):
         self.eng.log('match form: show room ' + room)

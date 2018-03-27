@@ -89,6 +89,8 @@ class YorgFsm(FsmColleague):
 
     def enable_menu(self, val): self.__menu.enable(val)
 
+    def enable_menu_navigation(self, val): self.__menu.enable_navigation(val)
+
     def on_srv_quitted(self):
         if self.getCurrentOrNextState() == 'Menu':
             self.__menu.logic.on_srv_quitted()

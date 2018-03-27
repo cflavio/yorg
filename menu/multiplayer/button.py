@@ -11,8 +11,8 @@ class MPBtn(GameObject):
     tooltip_align = TextNode.A_right
     tooltip_offset = (.01, 0, -.08)
 
-    def __init__(self, parent, owner, menu_args, img_path, msg_btn_x, cb, usr,
-                 tooltip):
+    def __init__(self, parent, owner, menu_args, img_path, msg_btn_x, cb,
+                 usr_name, tooltip):
         GameObject.__init__(self)
         self.owner = owner
         lab_args = menu_args.label_args
@@ -21,7 +21,7 @@ class MPBtn(GameObject):
         self.btn = ImgBtn(
             parent=parent, scale=.024, pos=(msg_btn_x, 1, .01),
             frameColor=(1, 1, 1, 1), frameTexture=img_path, command=cb,
-            extraArgs=[usr], **menu_args.imgbtn_args)
+            extraArgs=[usr_name], **menu_args.imgbtn_args)
         self.btn.bind(ENTER, self.on_enter)
         self.btn.bind(EXIT, self.on_exit)
         self.tooltip_btn = DirectButton(
