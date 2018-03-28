@@ -3,6 +3,7 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# @ doesn't work on osx
 # think of more race conditions (pun intended)
 
 # 0.10

@@ -37,7 +37,7 @@ class LogInPageGui(ThanksPageGui):
         t_a['scale'] = .06
         store_lab = Text(
             _('(only if your computer is not shared with other people)'),
-            pos=(-.2, -.02), **t_a)
+            pos=(-.2, -.02), wordwrap=64, **t_a)
         notes_txt = _(
             '1. If you are a supporter, please write us (flavio@ya2.it) your '
             'jabber id so we can highlight your account as a supporter one.\n'

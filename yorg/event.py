@@ -19,7 +19,7 @@ class YorgEvent(EventColleague):
             del self.mediator.options['save']
             self.mediator.options.store()
         self.mediator.fsm.demand('Menu')
-        self.mediator.logic.season.race.destroy()
+        #self.mediator.logic.season.race.destroy()
         self.mediator.logic.season = self.mediator.logic.season.destroy()
 
     def on_season_cont(self, next_track, curr_car, drivers):

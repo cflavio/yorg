@@ -64,11 +64,11 @@ class UsersFrm(GameObject):
         lab_args = self.menu_args.label_args
         lab_args['scale'] = .046
         txt = ''
-        if not self.eng.xmpp.is_server_up:
-            txt = _("Yorg's server isn't running")
-        elif not self.ver_check.is_uptodate():
+        if not self.ver_check.is_uptodate():
             txt = _("Your game isn't up-to-date, please update")
         elif not self.eng.xmpp.client: txt = _("You aren't logged in")
+        elif not self.eng.xmpp.is_server_up:
+            txt = _("Yorg's server isn't running")
         self.conn_lab['text'] = txt
 
     def set_size(self, full=True):

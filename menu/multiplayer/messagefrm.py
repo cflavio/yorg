@@ -132,7 +132,7 @@ class MatchMsgFrm(GameObject):
         return name
 
     def on_typed_msg(self, val):
-        self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
+        #self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
         self.ent.set('')
         self.eng.xmpp.client.send_message(
             mfrom=self.eng.xmpp.client.boundjid.full,
@@ -400,8 +400,8 @@ class MessageFrm(GameObject):
 
     def on_groupchat_msg(self, msg):
         if str(JID(msg['from']).bare) == self.curr_match_room:
-            self.match_msg_frm.on_groupchat_msg(msg)
-            return
+            if self.match_msg_frm:  # we're still in the room page
+                self.match_msg_frm.on_groupchat_msg(msg)
         src = str(JID(msg['mucnick']))
         src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
         self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
@@ -462,7 +462,7 @@ class MessageFrm(GameObject):
 
     def add_groupchat(self, room, usr):
         self.set_title(usr)
-        chat = self.curr_chat
+        chat = self.__find_chat(room)
         if not chat:
             chat = MUC(room)
             self.chats += [chat]

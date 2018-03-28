@@ -166,6 +166,8 @@ class MultiplayerFrm(GameObject):
         self.match_frm = None
         self.msg_frm.remove_groupchat()
         self.notify('on_start_match')
+        self.users_frm.set_size(False)
+        self.msg_frm.show()
 
     def on_track_selected(self):
         self.match_frm.destroy()
@@ -195,6 +197,16 @@ class MultiplayerFrm(GameObject):
                 msubject='is_playing',
                 mbody='0')
         self.on_users()
+
+    def send_is_playing(self, value):
+        for usr_name in [self.yorg_srv] + \
+            [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
+                mto=usr_name,
+                mtype='ya2_yorg',
+                msubject='is_playing',
+                mbody='1' if value else '0')
 
     def cancel_invites(self):
         invited = self.users_frm.invited_users
@@ -338,7 +350,8 @@ class MultiplayerFrm(GameObject):
         if data_lst[0] == NetMsgs.track_selected:
             self.eng.log_mgr.log('track selected: ' + data_lst[1])
             self.notify('on_start_match_client', data_lst[1])
-
+            self.users_frm.set_size(False)
+            self.msg_frm.show()
 
     def on_declined(self, msg):
         self.eng.log('on declined')
@@ -364,8 +377,6 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.add_chat(usr)
 
     def on_add_groupchat(self, room, usr):
-        self.users_frm.set_size(False)
-        self.msg_frm.show()
         self.msg_frm.add_groupchat(room, usr)
         self.match_frm.room = room
         self.notify('on_create_room', room, usr)
