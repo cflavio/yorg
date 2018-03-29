@@ -152,8 +152,8 @@ class DriverPageSinglePlayerGui(DriverPageGui):
         self.ent = Entry(
             scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
-            initialText=self.props.gameprops.player_name or _('your name'))
-        self.ent.onscreenText['fg'] = menu_args.text_active
+            initialText=self.props.gameprops.player_name or _('your name'),
+            text_fg=menu_args.text_active)
         self.add_widgets([self.ent])
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)

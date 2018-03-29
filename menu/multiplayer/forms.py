@@ -40,7 +40,8 @@ class UserLabel(GameObject):
 
     def set_online(self, val=None):
         if val is not None: self.is_online = val
-        if self.name_full == self.eng.xmpp.client.boundjid.full: self.is_online = True
+        if not self.eng.xmpp.client: self.is_online = False
+        elif self.name_full == self.eng.xmpp.client.boundjid.full: self.is_online = True
         self.lab.set_alpha_scale(1 if self.is_online else .4)
 
     def destroy(self):

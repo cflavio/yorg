@@ -21,12 +21,12 @@ class LogInPageGui(ThanksPageGui):
                                align='right', **t_a)
         self.jid_ent = Entry(
             scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, initialText=_('your jabber id'))
+            frameColor=menu_args.btn_color, initialText=_('your jabber id'),
+            text_fg=menu_args.text_active)
         self.pwd_ent = Entry(
             scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, obscured=True)
-        self.jid_ent.onscreenText['fg'] = menu_args.text_active
-        self.pwd_ent.onscreenText['fg'] = menu_args.text_active
+            frameColor=menu_args.btn_color, obscured=True,
+            text_fg=menu_args.text_active)
         start_btn = Btn(
             text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
@@ -59,8 +59,8 @@ class LogInPageGui(ThanksPageGui):
         ThanksPageGui.build(self)
 
     def start(self):
-        self.eng.xmpp.start(self.jid_ent.get(), self.pwd_ent.get(),
-                            self.on_ok, self.on_ko)
+        self.eng.xmpp.start(self.jid_ent.get().replace('_AT_', '@'),
+                            self.pwd_ent.get(), self.on_ok, self.on_ko)
 
     def on_ok(self):
         if self.store_cb['indicatorValue']:

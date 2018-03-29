@@ -220,6 +220,7 @@ class YorgLogic(GameLogic):
         self.eng.server.send(packet)
         self.eng.log_mgr.log('start race: ' + str(packet))
         self.eng.log('drivers: ' + str(drivers))
+        self.eng.log('current drivers: ' + str(self.current_drivers))
         self.on_driver_selected_server(
             self.mediator.options['settings']['player_name'], track, car,
             cars_names, packet)

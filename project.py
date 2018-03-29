@@ -3,7 +3,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# @ doesn't work on osx
+# uncomplete jabber id inserted
+# login: jid tab pwd enter
+# on logout names aren't removed
+# windows: the race doesn't start
 # think of more race conditions (pun intended)
 
 # 0.10

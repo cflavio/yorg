@@ -60,8 +60,7 @@ class MatchMsgFrm(GameObject):
             initialText=_('write here your message'),
             command=self.on_typed_msg, focusInCommand=self.on_focus,
             focusInExtraArgs=['in'], focusOutCommand=self.on_focus,
-            focusOutExtraArgs=['out'])
-        self.ent.onscreenText['fg'] = menu_args.text_active
+            focusOutExtraArgs=['out'], text_fg=menu_args.text_active)
         self.ent['state'] = DISABLED
         self.txt_frm = DirectScrolledFrame(
             frameSize=(-.02, 2.46, -.02, 1.02),
@@ -232,8 +231,7 @@ class MessageFrm(GameObject):
             initialText=_('write here your message'),
             command=self.on_typed_msg, focusInCommand=self.on_focus,
             focusInExtraArgs=['in'], focusOutCommand=self.on_focus,
-            focusOutExtraArgs=['out'])
-        self.ent.onscreenText['fg'] = menu_args.text_active
+            focusOutExtraArgs=['out'], text_fg=menu_args.text_active)
         self.ent['state'] = DISABLED
         self.txt_frm = DirectScrolledFrame(
             frameSize=(-.02, .76, -.02, .28),
