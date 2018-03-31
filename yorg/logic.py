@@ -460,6 +460,7 @@ class YorgLogic(GameLogic):
 
     def on_logout(self):
         self.mp_frm.on_users()
+        self.mp_frm.on_logout()
 
     @staticmethod
     def sign_cb(parent):

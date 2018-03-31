@@ -158,6 +158,9 @@ class MultiplayerFrm(GameObject):
     def on_presence_unavailable(self, msg):
         self.users_frm.on_users()
 
+    def on_logout(self):
+        self.users_frm.on_logout()
+
     def on_start(self):
         self.eng.log('on_start')
         self.cancel_invites()

@@ -1,8 +1,10 @@
+from socket import socket, gethostbyname, gaierror, SHUT_RDWR, create_connection, timeout
 from panda3d.core import TextNode
 from yyagl.library.gui import Btn, CheckBtn, Entry, Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
+from .check_dlg import CheckDialog
 
 
 class LogInPageGui(ThanksPageGui):
@@ -22,11 +24,11 @@ class LogInPageGui(ThanksPageGui):
         self.jid_ent = Entry(
             scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, initialText=_('your jabber id'),
-            text_fg=menu_args.text_active)
+            text_fg=menu_args.text_active, on_tab=self.on_tab)
         self.pwd_ent = Entry(
             scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True,
-            text_fg=menu_args.text_active)
+            text_fg=menu_args.text_active, command=self.start)
         start_btn = Btn(
             text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
@@ -58,9 +60,31 @@ class LogInPageGui(ThanksPageGui):
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
 
-    def start(self):
+    def start(self, pwd_name=None):
+        if not self.check(self.jid_ent.get()):
+            self.check_dlg = CheckDialog(self.menu_args)
+            self.check_dlg.attach(self.on_check_dlg)
+            return
         self.eng.xmpp.start(self.jid_ent.get().replace('_AT_', '@'),
-                            self.pwd_ent.get(), self.on_ok, self.on_ko)
+                            self.pwd_ent.get(), self.on_ok, self.on_ko,
+                            self.props.gameprops.xmpp_debug)
+
+    def check(self, jid):
+        try:
+            jid, domain = jid.split('@')  # check the pattern
+            gethostbyname(domain)  # check if the domain exists
+            s = create_connection((domain, 5222), timeout=3.0)  # xmpp up?
+            s.shutdown(SHUT_RDWR)
+            s.close()
+            return True
+        except (ValueError, gaierror, timeout) as e:
+            print jid, e
+
+    def on_check_dlg(self): self.check_dlg.destroy()
+
+    def on_tab(self):
+        self.jid_ent['focus'] = 0
+        self.pwd_ent['focus'] = 1
 
     def on_ok(self):
         if self.store_cb['indicatorValue']:

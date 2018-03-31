@@ -125,32 +125,32 @@ msgstr "Velocidade"
 msgid "stability"
 msgstr "Estabilidade"
 
-#: menu/loginpage.py:18
+#: menu/loginpage.py:19
 msgid "Your jabber id:"
 msgstr ""
 
-#: menu/loginpage.py:20
+#: menu/loginpage.py:21
 msgid "Your jabber password:"
 msgstr ""
 
-#: menu/loginpage.py:24
+#: menu/loginpage.py:25
 #, fuzzy
 msgid "your jabber id"
 msgstr "O teu Nome"
 
-#: menu/loginpage.py:31
+#: menu/loginpage.py:32
 msgid "Log-in"
 msgstr ""
 
-#: menu/loginpage.py:34
+#: menu/loginpage.py:35
 msgid "store the password"
 msgstr ""
 
-#: menu/loginpage.py:39
+#: menu/loginpage.py:40
 msgid "(only if your computer is not shared with other people)"
 msgstr ""
 
-#: menu/loginpage.py:42
+#: menu/loginpage.py:43
 msgid ""
 "1. If you are a supporter, please write us (flavio@ya2.it) your jabber id so "
 "we can highlight your account as a supporter one.\n"
@@ -163,7 +163,7 @@ msgid ""
 "your XMPP account, please create a new account for playing Yorg with."
 msgstr ""
 
-#: menu/loginpage.py:74
+#: menu/loginpage.py:89
 msgid "Error"
 msgstr "Erro"
 
@@ -174,6 +174,13 @@ msgstr "Grazas a:"
 #: menu/trackpage.py:17
 msgid "Select the track"
 msgstr "Selecciona o Circuito"
+
+#: menu/check_dlg.py:13
+msgid ""
+"The jabber id that you've inserted is not correct: it should be something "
+"like nickname@domainname.tld where nickname is your nickname and domainname."
+"tld is a valid domain."
+msgstr ""
 
 #: menu/driverpage.py:42
 msgid "Select the driver"
@@ -314,15 +321,15 @@ msgid "Current online users"
 msgstr ""
 
 #: menu/multiplayer/usersfrm.py:68
-msgid "Yorg's server isn't running"
-msgstr ""
-
-#: menu/multiplayer/usersfrm.py:70
 msgid "Your game isn't up-to-date, please update"
 msgstr ""
 
-#: menu/multiplayer/usersfrm.py:71
+#: menu/multiplayer/usersfrm.py:69
 msgid "You aren't logged in"
+msgstr ""
+
+#: menu/multiplayer/usersfrm.py:71
+msgid "Yorg's server isn't running"
 msgstr ""
 
 #: menu/multiplayer/usersfrm.py:140
@@ -349,14 +356,13 @@ msgstr ""
 msgid "the user is already playing a match"
 msgstr ""
 
-#: menu/multiplayer/messagefrm.py:60 menu/multiplayer/messagefrm.py:186
-#: menu/multiplayer/messagefrm.py:232 menu/multiplayer/messagefrm.py:478
+#: menu/multiplayer/messagefrm.py:60 menu/multiplayer/messagefrm.py:185
+#: menu/multiplayer/messagefrm.py:231 menu/multiplayer/messagefrm.py:476
 #, fuzzy
 msgid "write here your message"
 msgstr "Escribe o teu Nome:"
 
-#: menu/multiplayer/messagefrm.py:135 menu/multiplayer/messagefrm.py:359
-#: menu/multiplayer/messagefrm.py:379
+#: menu/multiplayer/messagefrm.py:357 menu/multiplayer/messagefrm.py:377
 msgid "you"
 msgstr ""
 
@@ -369,23 +375,23 @@ msgstr ""
 msgid "Supporter!"
 msgstr "Contribuintes"
 
-#: menu/multiplayer/forms.py:89
+#: menu/multiplayer/forms.py:90
 msgid "send a message to the user"
 msgstr ""
 
-#: menu/multiplayer/forms.py:125
+#: menu/multiplayer/forms.py:126
 msgid "isn't playing yorg"
 msgstr ""
 
-#: menu/multiplayer/forms.py:132
+#: menu/multiplayer/forms.py:133
 msgid "add to xmpp friends"
 msgstr ""
 
-#: menu/multiplayer/forms.py:137
+#: menu/multiplayer/forms.py:138
 msgid "remove from xmpp friends"
 msgstr ""
 
-#: menu/multiplayer/forms.py:183
+#: menu/multiplayer/forms.py:184
 msgid "remove from the match"
 msgstr ""
 
@@ -394,27 +400,27 @@ msgstr ""
 msgid "%s has invited you to a match, do you agree?"
 msgstr ""
 
-#: yorg/yorg.py:164 yorg/fsm.py:157
+#: yorg/yorg.py:164 yorg/fsm.py:163
 msgid "Toronto"
 msgstr ""
 
-#: yorg/yorg.py:164 yorg/fsm.py:157
+#: yorg/yorg.py:164 yorg/fsm.py:163
 msgid "Rome"
 msgstr "Roma"
 
-#: yorg/yorg.py:164 yorg/fsm.py:158
+#: yorg/yorg.py:164 yorg/fsm.py:164
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:164 yorg/fsm.py:158
+#: yorg/yorg.py:164 yorg/fsm.py:164
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:165 yorg/fsm.py:159
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:165 yorg/fsm.py:159
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Dubai"
 msgstr "Dubai"
 
@@ -451,39 +457,39 @@ msgstr "Suspensión: Mellora a estabilidade do coche"
 msgid "wrong way"
 msgstr "Camiño Erróneo"
 
-#: yyagl/racing/car/gui.py:140
+#: yyagl/racing/car/gui.py:146
 msgid "speed:"
 msgstr "Velocidade:"
 
-#: yyagl/racing/car/gui.py:142
+#: yyagl/racing/car/gui.py:148
 msgid "lap:"
 msgstr "Volta:"
 
-#: yyagl/racing/car/gui.py:143
+#: yyagl/racing/car/gui.py:149
 msgid "time:"
 msgstr "Tempo:"
 
-#: yyagl/racing/car/gui.py:144
+#: yyagl/racing/car/gui.py:150
 msgid "best lap:"
 msgstr "Mellor Volta:"
 
-#: yyagl/racing/car/gui.py:145
+#: yyagl/racing/car/gui.py:151
 msgid "ranking:"
 msgstr "Posición:"
 
-#: yyagl/racing/car/gui.py:146
+#: yyagl/racing/car/gui.py:152
 msgid "damages:"
 msgstr "Danos:"
 
-#: yyagl/racing/car/gui.py:147
+#: yyagl/racing/car/gui.py:153
 msgid "weapon:"
 msgstr "Arma:"
 
-#: yyagl/racing/car/gui.py:177 yyagl/racing/car/gui.py:180
+#: yyagl/racing/car/gui.py:183 yyagl/racing/car/gui.py:186
 msgid "low"
 msgstr "Baixos"
 
-#: yyagl/racing/car/gui.py:181
+#: yyagl/racing/car/gui.py:187
 msgid "hi"
 msgstr "Altos"
 
