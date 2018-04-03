@@ -3,7 +3,10 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# windows: the race doesn't start
+# try with a remote connection
+# windows: the race doesn't start if shaders + aa
+# manage remote ports closed
+# configurable port
 # think of more race conditions (pun intended)
 
 # 0.10

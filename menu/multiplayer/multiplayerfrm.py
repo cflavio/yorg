@@ -316,7 +316,7 @@ class MultiplayerFrm(GameObject):
             public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
             sock = socket(AF_INET, SOCK_DGRAM)
             try:
-                sock.connect(('ya2.it', 0))
+                sock.connect(('ya2.it', 8080))
                 local_addr = sock.getsockname()[0]
             except gaierror:
                 local_addr = ''
