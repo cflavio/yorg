@@ -14,6 +14,8 @@ from .friend_dlg import FriendDialog
 from .invite_dlg import InviteDialog
 from .exit_dlg import ExitDialog
 from .remove_dlg import RemovedDialog
+from .network_dlg import NetworkDialog
+from yyagl.engine.network.network import NetworkError
 
 
 class MultiplayerFrm(GameObject):
@@ -298,13 +300,24 @@ class MultiplayerFrm(GameObject):
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
         if val:
-            self.users_frm.in_match_room = msg['from'].bare
-            self.users_frm.on_users()
             chat, public_addr, local_addr = msg['body'].split('\n')
             for usr in self.eng.xmpp.users:
                 if usr.name == msg['from'].bare:
                     usr.public_addr = public_addr
                     usr.local_addr = local_addr
+            for usr in self.eng.xmpp.users:
+                if usr.name == msg['from'].bare:
+                    if public_addr == usr.public_addr:
+                        ip_addr = usr.local_addr
+                    else:
+                        ip_addr = usr.public_addr
+            try: self.eng.client.start(self.process_msg_client, ip_addr)
+            except NetworkError:
+                self.network_dlg = NetworkDialog(self.menu_args)
+                self.network_dlg.attach(self.on_network_dlg)
+                return
+            self.users_frm.in_match_room = msg['from'].bare
+            self.users_frm.on_users()
             self.msg_frm.add_groupchat(chat, str(msg['from'].bare))
             self.eng.log('join to the chat ' + chat)
             self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
@@ -326,13 +339,6 @@ class MultiplayerFrm(GameObject):
                 mtype='ya2_yorg',
                 msubject='ip_address',
                 mbody=public_addr + '\n' + local_addr)
-            for usr in self.eng.xmpp.users:
-                if usr.name == msg['from'].bare:
-                    if public_addr == usr.public_addr:
-                        ip_addr = usr.local_addr
-                    else:
-                        ip_addr = usr.public_addr
-            self.eng.client.start(self.process_msg_client, ip_addr)
         else:
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
@@ -368,6 +374,9 @@ class MultiplayerFrm(GameObject):
             if usr.name == msg['from'].bare:
                 usr.public_addr = public_addr
                 usr.local_addr = local_addr
+
+    def on_network_dlg(self):
+        self.network_dlg.destroy()
 
     def on_cancel_invite(self):
         self.invite_dlg.detach(self.on_invite_answer)

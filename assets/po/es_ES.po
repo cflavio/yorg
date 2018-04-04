@@ -125,32 +125,32 @@ msgstr "Velocidad"
 msgid "stability"
 msgstr "Estabilidad"
 
-#: menu/loginpage.py:19
+#: menu/loginpage.py:20
 msgid "Your jabber id:"
 msgstr ""
 
-#: menu/loginpage.py:21
+#: menu/loginpage.py:22
 msgid "Your jabber password:"
 msgstr ""
 
-#: menu/loginpage.py:25
+#: menu/loginpage.py:26
 #, fuzzy
 msgid "your jabber id"
 msgstr "Tu Nombre"
 
-#: menu/loginpage.py:32
+#: menu/loginpage.py:33
 msgid "Log-in"
 msgstr ""
 
-#: menu/loginpage.py:35
+#: menu/loginpage.py:36
 msgid "store the password"
 msgstr ""
 
-#: menu/loginpage.py:40
+#: menu/loginpage.py:41
 msgid "(only if your computer is not shared with other people)"
 msgstr ""
 
-#: menu/loginpage.py:43
+#: menu/loginpage.py:44
 msgid ""
 "1. If you are a supporter, please write us (flavio@ya2.it) your jabber id so "
 "we can highlight your account as a supporter one.\n"
@@ -163,7 +163,7 @@ msgid ""
 "your XMPP account, please create a new account for playing Yorg with."
 msgstr ""
 
-#: menu/loginpage.py:89
+#: menu/loginpage.py:98
 msgid "Error"
 msgstr "Error"
 
@@ -393,6 +393,13 @@ msgstr ""
 
 #: menu/multiplayer/forms.py:184
 msgid "remove from the match"
+msgstr ""
+
+#: menu/multiplayer/network_dlg.py:13
+msgid ""
+"Connection error. Please check that your router is configured for doing port-"
+"forwarding for port 9099 on your host and your firewall allows traffic for "
+"Yorg on port 9099."
 msgstr ""
 
 #: menu/multiplayer/invite_dlg.py:16
