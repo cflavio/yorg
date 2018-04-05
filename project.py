@@ -3,7 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# try with a remote connection
+# store last jid inserted (e.g. password not stored)
+# ingame: show id's domain only if nicknames are equal
 # think of more race conditions (pun intended)
 
 # 0.10
@@ -12,6 +13,7 @@
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
 # feedback: couch multiplayer
 # feedback: add more cameras
+# upnp / pyraknet / nat traversal / hole punching
 
 
 # WAITING =====

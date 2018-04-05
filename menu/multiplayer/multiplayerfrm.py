@@ -300,6 +300,19 @@ class MultiplayerFrm(GameObject):
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
         if val:
+            mypublic_addr = load(urlopen('http://httpbin.org/ip'))['origin']
+            sock = socket(AF_INET, SOCK_DGRAM)
+            try:
+                sock.connect(('ya2.it', 8080))
+                local_addr = sock.getsockname()[0]
+            except gaierror:
+                local_addr = ''
+            self.eng.xmpp.client.send_message(
+                mfrom=self.eng.xmpp.client.boundjid.full,
+                mto=msg['from'].bare,
+                mtype='ya2_yorg',
+                msubject='ip_address',
+                mbody=mypublic_addr + '\n' + local_addr)
             chat, public_addr, local_addr = msg['body'].split('\n')
             for usr in self.eng.xmpp.users:
                 if usr.name == msg['from'].bare:
@@ -307,7 +320,7 @@ class MultiplayerFrm(GameObject):
                     usr.local_addr = local_addr
             for usr in self.eng.xmpp.users:
                 if usr.name == msg['from'].bare:
-                    if public_addr == usr.public_addr:
+                    if mypublic_addr == usr.public_addr:
                         ip_addr = usr.local_addr
                     else:
                         ip_addr = usr.public_addr
@@ -326,19 +339,6 @@ class MultiplayerFrm(GameObject):
             nick = self.eng.xmpp.client.boundjid.bare
             self.create_match_frm(room, False)
             self.notify('on_create_room', room, nick)
-            public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
-            sock = socket(AF_INET, SOCK_DGRAM)
-            try:
-                sock.connect(('ya2.it', 8080))
-                local_addr = sock.getsockname()[0]
-            except gaierror:
-                local_addr = ''
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=msg['from'].bare,
-                mtype='ya2_yorg',
-                msubject='ip_address',
-                mbody=public_addr + '\n' + local_addr)
         else:
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
