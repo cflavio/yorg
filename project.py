@@ -3,8 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# store last jid inserted (e.g. password not stored)
-# ingame: show id's domain only if nicknames are equal
 # think of more race conditions (pun intended)
 
 # 0.10

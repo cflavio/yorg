@@ -21,9 +21,12 @@ class LogInPageGui(ThanksPageGui):
                                align='right', **t_a)
         pwd_lab = Text(_('Your jabber password:'), pos=(-.25, .6),
                                align='right', **t_a)
+        init_txt = self.props.opt_file['settings']['xmpp']['usr'] if \
+            self.props.opt_file['settings']['xmpp']['usr'] else \
+            _('your jabber id')
         self.jid_ent = Entry(
             scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, initialText=_('your jabber id'),
+            frameColor=menu_args.btn_color, initialText=init_txt,
             text_fg=menu_args.text_active, on_tab=self.on_tab)
         self.pwd_ent = Entry(
             scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
@@ -87,10 +90,10 @@ class LogInPageGui(ThanksPageGui):
         self.pwd_ent['focus'] = 1
 
     def on_ok(self):
+        self.props.opt_file['settings']['xmpp']['usr'] = self.jid_ent.get()
         if self.store_cb['indicatorValue']:
-            self.props.opt_file['settings']['xmpp']['usr'] = self.jid_ent.get()
             self.props.opt_file['settings']['xmpp']['pwd'] = self.pwd_ent.get()
-            self.props.opt_file.store()
+        self.props.opt_file.store()
         self._on_back()
         self.notify('on_login')
 
