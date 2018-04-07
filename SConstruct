@@ -189,4 +189,4 @@ def process_lang(lang_code):
 
 if args['lang']:
     env.pot('assets/po/yorg.pot', files(['py'], ['venv', 'thirdparty']))
-    map(process_lang, ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES'])
+    map(process_lang, ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR'])
