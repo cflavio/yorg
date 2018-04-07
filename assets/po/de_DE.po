@@ -138,19 +138,19 @@ msgstr ""
 msgid "your jabber id"
 msgstr "Ihr Name"
 
-#: menu/loginpage.py:33
+#: menu/loginpage.py:36
 msgid "Log-in"
 msgstr ""
 
-#: menu/loginpage.py:36
+#: menu/loginpage.py:39
 msgid "store the password"
 msgstr ""
 
-#: menu/loginpage.py:41
+#: menu/loginpage.py:44
 msgid "(only if your computer is not shared with other people)"
 msgstr ""
 
-#: menu/loginpage.py:44
+#: menu/loginpage.py:47
 msgid ""
 "1. If you are a supporter, please write us (flavio@ya2.it) your jabber id so "
 "we can highlight your account as a supporter one.\n"
@@ -163,7 +163,7 @@ msgid ""
 "your XMPP account, please create a new account for playing Yorg with."
 msgstr ""
 
-#: menu/loginpage.py:98
+#: menu/loginpage.py:101
 msgid "Error"
 msgstr "Fehler"
 
@@ -458,46 +458,46 @@ msgid "tires: they increase car's adherence"
 msgstr "Räder: Erhöhen das Haftvermögen des Wagens"
 
 #: yyagl/racing/tuning/gui.py:68
-msgid "supensions: they increase car's stability"
+msgid "suspensions: they increase car's stability"
 msgstr "Aufhängungen: Erhöhen die Stabilität des Wagens"
 
-#: yyagl/racing/car/logic.py:743
+#: yyagl/racing/car/logic.py:755
 msgid "wrong way"
 msgstr "Falsche Richtung"
 
-#: yyagl/racing/car/gui.py:146
+#: yyagl/racing/car/gui.py:148
 msgid "speed:"
 msgstr "Tempo:"
 
-#: yyagl/racing/car/gui.py:148
+#: yyagl/racing/car/gui.py:150
 msgid "lap:"
 msgstr "Runde:"
 
-#: yyagl/racing/car/gui.py:149
+#: yyagl/racing/car/gui.py:151
 msgid "time:"
 msgstr "Zeit:"
 
-#: yyagl/racing/car/gui.py:150
+#: yyagl/racing/car/gui.py:152
 msgid "best lap:"
 msgstr "Beste Runde:"
 
-#: yyagl/racing/car/gui.py:151
+#: yyagl/racing/car/gui.py:153
 msgid "ranking:"
 msgstr "Rangliste:"
 
-#: yyagl/racing/car/gui.py:152
+#: yyagl/racing/car/gui.py:154
 msgid "damages:"
 msgstr "Schäden:"
 
-#: yyagl/racing/car/gui.py:153
+#: yyagl/racing/car/gui.py:155
 msgid "weapon:"
 msgstr "Waffe:"
 
-#: yyagl/racing/car/gui.py:183 yyagl/racing/car/gui.py:186
+#: yyagl/racing/car/gui.py:185 yyagl/racing/car/gui.py:188
 msgid "low"
 msgstr "niedrig"
 
-#: yyagl/racing/car/gui.py:187
+#: yyagl/racing/car/gui.py:189
 msgid "hi"
 msgstr "hoch"
 
