@@ -1,0 +1,608 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-06 23:57+0200\n"
+"PO-Revision-Date: 2018-04-07 10:57+0000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: xin <xin@riseup.net>\n"
+"Language: fr_FR\n"
+
+#: menu/creditpage.py:10
+msgid "Code"
+msgstr "Code"
+
+#: menu/creditpage.py:11
+msgid "Art"
+msgstr "Art"
+
+#: menu/creditpage.py:12
+msgid "Audio"
+msgstr "Audio"
+
+#: menu/creditpage.py:13
+msgid "Translations"
+msgstr "Traductions"
+
+#: menu/creditpage.py:18
+msgid "Supporters"
+msgstr "Soutiens"
+
+#: menu/inputpage.py:26 menu/inputpage.py:29
+msgid "Use the joypad when present"
+msgstr "Utiliser la manette si connectée"
+
+#: menu/inputpage.py:39
+msgid "Accelerate"
+msgstr "Accélérer"
+
+#: menu/inputpage.py:40
+msgid "Brake/Reverse"
+msgstr "Freiner/Reculer"
+
+#: menu/inputpage.py:41
+msgid "Left"
+msgstr "Gauche"
+
+#: menu/inputpage.py:42
+msgid "Right"
+msgstr "Droite"
+
+#: menu/inputpage.py:43
+msgid "Weapon"
+msgstr "Arme"
+
+#: menu/inputpage.py:44
+msgid "Respawn"
+msgstr "Réapparition"
+
+#: menu/inputpage.py:45
+msgid "Pause"
+msgstr "Pause"
+
+#: menu/inputpage.py:53
+msgid "Press the key to record it"
+msgstr "Appuyer sur une touche pour l'enregistrer"
+
+#: menu/optionpage.py:35
+msgid "Language"
+msgstr "Langue"
+
+#: menu/optionpage.py:40
+msgid "Volume"
+msgstr "Volume"
+
+#: menu/optionpage.py:46
+msgid "Fullscreen"
+msgstr "Plein écran"
+
+#: menu/optionpage.py:52
+msgid "Resolution"
+msgstr "Résolution"
+
+#: menu/optionpage.py:63
+msgid "Antialiasing"
+msgstr "Anticrénelage"
+
+#: menu/optionpage.py:66
+msgid "(from the next execution)"
+msgstr "(au prochain lancement)"
+
+#: menu/optionpage.py:72
+msgid "Shaders"
+msgstr "Shaders"
+
+#: menu/optionpage.py:76
+msgid "Cars number"
+msgstr "Nombre de voitures"
+
+#: menu/optionpage.py:82
+msgid "Configure input"
+msgstr "Configurer les contrôles"
+
+#: menu/carpage.py:25
+msgid "Select the car"
+msgstr "Sélectionner la voiture"
+
+#: menu/carpage.py:71 menu/driverpage.py:65
+msgid "adherence"
+msgstr "adhérence"
+
+#: menu/carpage.py:71 menu/driverpage.py:65
+msgid "speed"
+msgstr "vitesse"
+
+#: menu/carpage.py:72 menu/driverpage.py:66
+msgid "stability"
+msgstr "stabilité"
+
+#: menu/loginpage.py:20
+msgid "Your jabber id:"
+msgstr "Votre identifiant jabber :"
+
+#: menu/loginpage.py:22
+msgid "Your jabber password:"
+msgstr "Votre mot de passe jabber :"
+
+#: menu/loginpage.py:26
+msgid "your jabber id"
+msgstr "votre identifiant jabber"
+
+#: menu/loginpage.py:36
+msgid "Log-in"
+msgstr "Identification"
+
+#: menu/loginpage.py:39
+msgid "store the password"
+msgstr "enregistrer le mot de passe"
+
+#: menu/loginpage.py:44
+msgid "(only if your computer is not shared with other people)"
+msgstr "(seulement si votre ordinateur n'est pas partagé avec d'autres personnes)"
+
+#: menu/loginpage.py:47
+msgid ""
+"1. If you are a supporter, please write us (flavio@ya2.it) your jabber id so we "
+"can highlight your account as a supporter one.\n"
+"2. Yorg sends your XMPP presence to other Yorg users, so they can see your XMPP "
+"presence status. If you don't want this, please don't use your personal account "
+"and create a new one for Yorg.\n"
+"3. When you add a Yorg friend, you are adding it to your account's roster too.\n"
+"4. Yorg's XMPP code is still experimental: if you have important data in your XMPP "
+"account, please create a new account for playing Yorg with."
+msgstr ""
+"1. Si vous êtres un soutien, veuillez nous envoyer votre identifiant jabber "
+"(flavio@ya2.it) pour que nous puissions mettre en valeur votre compte comme "
+"soutien.\n"
+"2. Yorg envoi votre présence XMPP aux autres personnes utilisant Yorg, ainsi elles "
+"peuvent voir votre statut de présence XMPP. Si vous ne le voulez pas, veuillez ne "
+"pas utiliser de compte personnel et créez en un nouveau pour Yorg.\n"
+"3. Quand vous ajoutez un ami Yorg, vous l'ajoutez également à la liste de votre "
+"compte.\n"
+"4. Le code XMPP de Yorg est encore expérimental : si vous avez des données "
+"importantes sur votre compte XMPP, veuillez créer un nouveau compte pour jouer à "
+"Yorg."
+
+#: menu/loginpage.py:101
+msgid "Error"
+msgstr "Erreur"
+
+#: menu/thankspage.py:15
+msgid "Thanks to: "
+msgstr "Merci à : "
+
+#: menu/trackpage.py:17
+msgid "Select the track"
+msgstr "Sélectionner le circuit"
+
+#: menu/check_dlg.py:13
+msgid ""
+"The jabber id that you've inserted is not correct: it should be something like "
+"nickname@domainname.tld where nickname is your nickname and domainname.tld is a "
+"valid domain."
+msgstr ""
+"L'identifiant jabber que vous avez inséré n'est pas correct : cela doit être "
+"quelque chose comme surnom@nomdedomaine.tld où surnom est votre surnom et "
+"nomdedomaine.tld est un domaine valide."
+
+#: menu/driverpage.py:42
+msgid "Select the driver"
+msgstr "Sélectionner le pilote"
+
+#: menu/driverpage.py:46
+msgid "Write your name:"
+msgstr "Écrivez votre nom :"
+
+#: menu/driverpage.py:155 menu/driverpage.py:162 menu/driverpage.py:163
+#: menu/driverpage.py:164 menu/driverpage.py:166 menu/driverpage.py:169
+msgid "your name"
+msgstr "votre nom"
+
+#: menu/mainpage.py:96
+msgid "Not up-to-date"
+msgstr "Pas à jour"
+
+#: menu/mainpage.py:98
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: menu/mainpage.py:101
+msgid "Log in"
+msgstr "Connexion"
+
+#: menu/mainpage.py:101
+msgid "multiplayer"
+msgstr "multijoueur"
+
+#: menu/mainpage.py:102
+msgid "Connecting"
+msgstr "Connexion"
+
+#: menu/mainpage.py:110
+msgid "Single Player"
+msgstr "Un joueur"
+
+#: menu/mainpage.py:111
+msgid "Options"
+msgstr "Options"
+
+#: menu/mainpage.py:112
+msgid "Support us"
+msgstr "Soutenez-nous"
+
+#: menu/mainpage.py:113
+msgid "Credits"
+msgstr "Crédits"
+
+#: menu/mainpage.py:115 yyagl/engine/gui/page.py:175
+msgid "Quit"
+msgstr "Quitter"
+
+#: menu/mainpage.py:132
+msgid "Note: the game is work-in-progress"
+msgstr "Note : le jeu est un chantier en cours"
+
+#: menu/mainpage.py:169 menu/mainpage.py:172
+msgid "Last news:"
+msgstr "Dernières nouvelles :"
+
+#: menu/mainpage.py:182 menu/mainpage.py:184
+msgid "show"
+msgstr "afficher"
+
+#: menu/singleplayerpage.py:15
+msgid "Single race"
+msgstr "Une seule course"
+
+#: menu/singleplayerpage.py:16
+msgid "New season"
+msgstr "Nouvelles saison"
+
+#: menu/singleplayerpage.py:17
+msgid "Continue season"
+msgstr "Continuer saison"
+
+#: menu/exitmenu/exitpage.py:14
+msgid ""
+"Please, visit our site after exiting!\n"
+"\n"
+"It helps us! Thank you!"
+msgstr ""
+"Veuillez visiter notre site après avoir quitté !\n"
+"\n"
+"Cela nous aide ! Merci !"
+
+#: menu/exitmenu/exitpage.py:19
+msgid "visit our site after exiting"
+msgstr "visiter notre site après avoir quitté"
+
+#: menu/exitmenu/exitpage.py:22
+msgid "don't visit our site after exiting"
+msgstr "ne pas visiter notre site après avoir quitté"
+
+#: menu/ingamemenu/ingamepage.py:16
+#, python-format
+msgid ""
+"What do you want to do?\n"
+"\n"
+"Note: use '%s' for pausing the game."
+msgstr ""
+"Que voulez-vous faire ?\n"
+"\n"
+"Note : utilisez '%s' pour mettre le jeu en pause."
+
+#: menu/ingamemenu/ingamepage.py:25
+msgid "back to the game"
+msgstr "retour au jeu"
+
+#: menu/ingamemenu/ingamepage.py:26
+msgid "back to the main menu"
+msgstr "retour au menu principal"
+
+#: menu/multiplayer/matchfrm.py:145
+msgid "Start"
+msgstr "Démarrer"
+
+#: menu/multiplayer/matchfrm.py:156
+msgid "please wait for the server"
+msgstr "veuillez attendre le serveur"
+
+#: menu/multiplayer/exit_dlg.py:15
+#, python-format
+msgid "the server user %s has quitted"
+msgstr "l'utilisateur du serveur %s a quitté"
+
+#: menu/multiplayer/friend_dlg.py:15
+#, python-format
+msgid "%s wants to be a (XMPP) friend of you, do you agree?"
+msgstr "%s veut être votre ami (XMPP), êtes-vous d'accord ?"
+
+#: menu/multiplayer/usersfrm.py:31
+msgid "Current online users"
+msgstr "Utilisateurs actuellement en ligne"
+
+#: menu/multiplayer/usersfrm.py:68
+msgid "Your game isn't up-to-date, please update"
+msgstr "Votre jeu n'est pas à jour, veuillez mettre à jour"
+
+#: menu/multiplayer/usersfrm.py:69
+msgid "You aren't logged in"
+msgstr "Vous n'êtes pas identifié"
+
+#: menu/multiplayer/usersfrm.py:71
+msgid "Yorg's server isn't running"
+msgstr "Le serveur Yorg n'est pas démarré"
+
+#: menu/multiplayer/usersfrm.py:140
+msgid "invite the user to a match"
+msgstr "inviter l'utilisateur dans une partie"
+
+#: menu/multiplayer/usersfrm.py:141
+msgid "you can't invite more players"
+msgstr "vous ne pouvez pas inviter plus de joueurs"
+
+#: menu/multiplayer/usersfrm.py:142
+msgid "you're already in a match"
+msgstr "vous êtes déjà dans une partie"
+
+#: menu/multiplayer/usersfrm.py:143
+msgid "the user isn't playing yorg"
+msgstr "cet utilisateur ne joue pas à yorg"
+
+#: menu/multiplayer/usersfrm.py:144
+msgid "you've already invited this user"
+msgstr "vous avez déjà invité cet utilisateur"
+
+#: menu/multiplayer/usersfrm.py:145
+msgid "the user is already playing a match"
+msgstr "cet utilisateur est en train de jouer une partie"
+
+#: menu/multiplayer/messagefrm.py:60 menu/multiplayer/messagefrm.py:185
+#: menu/multiplayer/messagefrm.py:231 menu/multiplayer/messagefrm.py:476
+msgid "write here your message"
+msgstr "écrire ici votre message"
+
+#: menu/multiplayer/messagefrm.py:357 menu/multiplayer/messagefrm.py:377
+msgid "you"
+msgstr "vous"
+
+#: menu/multiplayer/remove_dlg.py:14
+msgid "you have been removed from the match"
+msgstr "vous avez été retiré de la partie"
+
+#: menu/multiplayer/forms.py:35
+msgid "Supporter!"
+msgstr "Soutien !"
+
+#: menu/multiplayer/forms.py:90
+msgid "send a message to the user"
+msgstr "envoyer un message à un utilisateur"
+
+#: menu/multiplayer/forms.py:126
+msgid "isn't playing yorg"
+msgstr "ne joue pas à yorg"
+
+#: menu/multiplayer/forms.py:133
+msgid "add to xmpp friends"
+msgstr "ajouter aux amis xmpp"
+
+#: menu/multiplayer/forms.py:138
+msgid "remove from xmpp friends"
+msgstr "retirer des amis xmpp"
+
+#: menu/multiplayer/forms.py:184
+msgid "remove from the match"
+msgstr "retirer de cette partie"
+
+#: menu/multiplayer/network_dlg.py:13
+msgid ""
+"Connection error. Please check that your router is configured for doing port-"
+"forwarding for port 9099 on your host and your firewall allows traffic for Yorg on "
+"port 9099."
+msgstr ""
+"Erreur de connexion. Veillez vérifier que votre routeur est configuré pour faire "
+"de la redirection de port pour le port 9099 sur votre hôte et que votre pare-feu "
+"autorise le trafic pour Yorg sur le port 9099."
+
+#: menu/multiplayer/invite_dlg.py:16
+#, python-format
+msgid "%s has invited you to a match, do you agree?"
+msgstr "%s vous a invité à une partie, êtes-vous d'accord ?"
+
+#: yorg/yorg.py:164 yorg/fsm.py:163
+msgid "Toronto"
+msgstr "Toronto"
+
+#: yorg/yorg.py:164 yorg/fsm.py:163
+msgid "Rome"
+msgstr "Rome"
+
+#: yorg/yorg.py:164 yorg/fsm.py:164
+msgid "Sheffield"
+msgstr "Sheffield"
+
+#: yorg/yorg.py:164 yorg/fsm.py:164
+msgid "Orlando"
+msgstr "Orlando"
+
+#: yorg/yorg.py:165 yorg/fsm.py:165
+msgid "Nagano"
+msgstr "Nagano"
+
+#: yorg/yorg.py:165 yorg/fsm.py:165
+msgid "Dubai"
+msgstr "Dubaï"
+
+#: yyagl/engine/gui/page.py:175
+msgid "Back"
+msgstr "Retour"
+
+#: yyagl/engine/gui/mainpage.py:35
+msgid "version: "
+msgstr "version : "
+
+#: yyagl/racing/tuning/gui.py:24
+msgid "What do you want to upgrade?"
+msgstr "Que voulez-vous améliorer ?"
+
+#: yyagl/racing/tuning/gui.py:38 yyagl/racing/tuning/gui.py:44
+#: yyagl/racing/tuning/gui.py:50
+msgid "current upgrades: +"
+msgstr "améliorations actuelles : +"
+
+#: yyagl/racing/tuning/gui.py:56
+msgid "engine: it increases car's maximum speed"
+msgstr "moteur : cela augmente la vitesse maximale de la voiture"
+
+#: yyagl/racing/tuning/gui.py:62
+msgid "tires: they increase car's adherence"
+msgstr "pneus : cela augmente l'adhérence de la voiture"
+
+#: yyagl/racing/tuning/gui.py:68
+msgid "suspensions: they increase car's stability"
+msgstr "suspensions : cela augmente la stabilité de la voiture"
+
+#: yyagl/racing/car/logic.py:755
+msgid "wrong way"
+msgstr "mauvais sens"
+
+#: yyagl/racing/car/gui.py:148
+msgid "speed:"
+msgstr "vitesse :"
+
+#: yyagl/racing/car/gui.py:150
+msgid "lap:"
+msgstr "tour :"
+
+#: yyagl/racing/car/gui.py:151
+msgid "time:"
+msgstr "temps :"
+
+#: yyagl/racing/car/gui.py:152
+msgid "best lap:"
+msgstr "meilleur tour :"
+
+#: yyagl/racing/car/gui.py:153
+msgid "ranking:"
+msgstr "position :"
+
+#: yyagl/racing/car/gui.py:154
+msgid "damages:"
+msgstr "dégâts :"
+
+#: yyagl/racing/car/gui.py:155
+msgid "weapon:"
+msgstr "arme :"
+
+#: yyagl/racing/car/gui.py:185 yyagl/racing/car/gui.py:188
+msgid "low"
+msgstr "bas"
+
+#: yyagl/racing/car/gui.py:189
+msgid "hi"
+msgstr "haut"
+
+#: yyagl/racing/ranking/gui.py:27 yyagl/racing/race/gui/loading/loadingpage.py:63
+msgid "Ranking"
+msgstr "Classement"
+
+#: yyagl/racing/ranking/gui.py:44
+msgid "Congratulations!"
+msgstr "Félicitations !"
+
+#: yyagl/racing/ranking/gui.py:53 yyagl/racing/race/gui/results.py:78
+msgid "Continue"
+msgstr "Continuer"
+
+#: yyagl/racing/race/event.py:108
+#, python-format
+msgid "press %s to respawn"
+msgstr "appuyer sur %s pour réapparaître"
+
+#: yyagl/racing/race/gui/countdown.py:19
+msgid "GO!"
+msgstr "C'EST PARTI !"
+
+#: yyagl/racing/race/gui/results.py:35
+msgid "LAP"
+msgstr "TOUR"
+
+#: yyagl/racing/race/gui/results.py:36
+msgid "TIME"
+msgstr "TEMPS"
+
+#: yyagl/racing/race/gui/results.py:37
+msgid "RANKING"
+msgstr "CLASSEMENT"
+
+#: yyagl/racing/race/gui/results.py:50
+msgid "share:"
+msgstr "partager :"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:25
+msgid "LOADING..."
+msgstr "CHARGEMENT..."
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:33
+msgid "track: "
+msgstr "circuit : "
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:52
+msgid "Starting grid"
+msgstr "Grille de départ"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:72
+msgid "Controls"
+msgstr "Contrôles"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:76
+msgid "joypad"
+msgstr "manette"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:80
+msgid "accelerate"
+msgstr "accélérer"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:81
+msgid "brake/reverse"
+msgstr "freiner/reculer"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:82
+msgid "left"
+msgstr "gauche"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:83
+msgid "right"
+msgstr "droite"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:84
+msgid "fire"
+msgstr "tirer"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:85
+msgid "respawn"
+msgstr "réapparaitre"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:88
+msgid "Upgrades"
+msgstr "Améliorations"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:94
+msgid "engine: +"
+msgstr "moteur : +"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:99
+msgid "tires: +"
+msgstr "pneus : +"
+
+#: yyagl/racing/race/gui/loading/loadingpage.py:104
+msgid "suspensions: +"
+msgstr "suspensions : +"
