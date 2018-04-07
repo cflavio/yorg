@@ -217,13 +217,13 @@ class YorgLogic(GameLogic):
                        drv.dprops.info.speed, drv.dprops.info.adherence,
                        drv.dprops.info.stability]
             cars_names += [drv.dprops.car_name]
-        self.eng.server.send(packet)
-        self.eng.log_mgr.log('start race: ' + str(packet))
+        #self.eng.server.send(packet)
+        #self.eng.log_mgr.log('start race (server): ' + str(packet))
         self.eng.log('drivers: ' + str(drivers))
         self.eng.log('current drivers: ' + str(self.current_drivers))
         self.on_driver_selected_server(
             self.mediator.options['settings']['player_name'], track, car,
-            cars_names, packet)
+            cars_names)
 
     @staticmethod
     def __season_props(
@@ -399,7 +399,7 @@ class YorgLogic(GameLogic):
                        drv.dprops.info.speed, drv.dprops.info.adherence,
                        drv.dprops.info.stability]
         self.eng.server.send(packet)
-        self.eng.log_mgr.log('start race: ' + str(packet))
+        self.eng.log_mgr.log('start race (on driver): ' + str(packet))
         self.eng.log('drivers: ' + str(drivers))
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
