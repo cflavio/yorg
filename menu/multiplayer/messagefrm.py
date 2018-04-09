@@ -389,7 +389,7 @@ class MessageFrm(GameObject):
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(chat)
-        elif self.curr_chat.dst == JID(msg['from']).bare:
+        elif JID(self.curr_chat.dst).bare == JID(msg['from']).bare:
             self.add_msg_txt(str_msg)
         else:
             chat.read = False
