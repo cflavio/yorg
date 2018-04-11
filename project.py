@@ -3,6 +3,9 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# driving model: stiffness proportional to speed
+# driving model: lower center of mass
+# driving model: force to rear wheels?
 # think of more race conditions (pun intended)
 
 # 0.10

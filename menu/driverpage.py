@@ -1,7 +1,7 @@
 from itertools import product
 from random import shuffle
 from panda3d.core import TextureStage, Texture, PNMImage, TextNode
-from direct.gui.DirectGuiGlobals import DISABLED
+from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.library.gui import Entry, Text, Img
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
@@ -34,6 +34,7 @@ class DriverPageGui(ThanksPageGui):
     def __init__(self, mediator, driverpage_props):
         self.props = driverpage_props
         self.sel_drv_img = None
+        self.driver = None
         ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args)
 
     def build(self, exit_behav):
@@ -139,6 +140,9 @@ class DriverPageGui(ThanksPageGui):
         self.notify('on_driver_selected', self.ent.get(), self.mediator.track,
                     self.mediator.car)
 
+    def _buttons(self, idx):
+        return [btn for btn in self.buttons if btn['extraArgs'] == [idx]]
+
     def destroy(self):
         self.sel_drv_img = None
         PageGui.destroy(self)
@@ -183,17 +187,28 @@ class DriverPageServerGui(DriverPageGui):
         DriverPageGui.build(self, exit_behav=True)
         self.eng.server.register_cb(self.process_srv)
         self.current_drivers = []
+        self.current_drivers_dct = {}
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
         self.name['text'] += ' ' + self.eng.xmpp.client.boundjid.bare
 
     def on_click(self, i):
         self.eng.log('selected driver ' + str(i))
+        self.eng.server.send([NetMsgs.driver_selection, i])
+        for btn in self._buttons(i):
+            btn.disable()
+        if self in self.current_drivers_dct:
+            curr_drv = self.current_drivers_dct[self]
+            self.eng.log_mgr.log('driver deselected: %s' % curr_drv)
+            self.eng.server.send([NetMsgs.driver_deselection, curr_drv])
+            for btn in self._buttons(curr_drv):
+                btn.enable()
+        self.current_drivers_dct[self] = i
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
         self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
-        self.enable_buttons(False)
+        #self.enable_buttons(False)
         self.current_drivers += [self]
         cars = gprops.cars_names[:]
         car_idx = cars.index(self.mediator.car)
@@ -222,25 +237,40 @@ class DriverPageServerGui(DriverPageGui):
             self.mediator.car, self.eng.car_mapping.values())
 
     def process_srv(self, data_lst, sender):
-        if data_lst[0] != NetMsgs.driver_selection: return
-        self.current_drivers += [sender]
+        if data_lst[0] != NetMsgs.driver_request: return
         car = data_lst[1]
-        driver_name = data_lst[2]
-        driver_id = data_lst[3]
-        driver_speed = data_lst[4]
-        driver_adherence = data_lst[5]
-        driver_stability = data_lst[6]
-        self.eng.log_mgr.log(
-            'driver selected: %s (%s, %s) ' % (driver_name, driver_id, car))
-        gprops = self.props.gameprops
-        cars = gprops.cars_names[:]
-        car_idx = cars.index(car)
-        gprops.drivers_info[car_idx].img_idx = driver_id
-        gprops.drivers_info[car_idx].name = driver_name
-        gprops.drivers_info[car_idx].speed = driver_speed
-        gprops.drivers_info[car_idx].adherence = driver_adherence
-        gprops.drivers_info[car_idx].stability = driver_stability
-        self.evaluate_starting()
+        drv = data_lst[3]
+        self.eng.log_mgr.log('driver requested: %s' % drv)
+        btn = self._buttons(drv)[0]
+        if btn['state'] == DISABLED:
+            self.eng.server.send([NetMsgs.driver_deny], sender)
+            self.eng.log_mgr.log('driver already selected: %s' % drv)
+        elif btn['state'] == NORMAL:
+            self.eng.log_mgr.log('driver selected: %s' % drv)
+            if sender in self.current_drivers_dct:
+                _btn = self._buttons(self.current_drivers_dct[sender])[0]
+                _btn.enable()
+            self.current_drivers_dct[sender] = drv
+            btn.disable()
+            self.eng.server.send([NetMsgs.driver_confirm, drv], sender)
+            self.eng.server.send([NetMsgs.driver_selection, drv])
+            self.current_drivers += [sender]
+            driver_name = data_lst[2]
+            driver_id = data_lst[3]
+            driver_speed = data_lst[4]
+            driver_adherence = data_lst[5]
+            driver_stability = data_lst[6]
+            self.eng.log_mgr.log(
+                'driver selected: %s (%s, %s) ' % (driver_name, driver_id, drv))
+            gprops = self.props.gameprops
+            cars = gprops.cars_names[:]
+            car_idx = cars.index(car)
+            gprops.drivers_info[car_idx].img_idx = driver_id
+            gprops.drivers_info[car_idx].name = driver_name
+            gprops.drivers_info[car_idx].speed = driver_speed
+            gprops.drivers_info[car_idx].adherence = driver_adherence
+            gprops.drivers_info[car_idx].stability = driver_stability
+            self.evaluate_starting()
 
 
 class DriverPageClientGui(DriverPageGui):
@@ -255,23 +285,42 @@ class DriverPageClientGui(DriverPageGui):
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
 
     def on_click(self, i):
-        self.eng.log('selected driver ' + str(i))
+        self.eng.log_mgr.log('driver request: %s' % i)
         gprops = self.props.gameprops
-        txt_path = gprops.drivers_img.path_sel
-        self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
-        self.widgets[-1]['state'] = DISABLED
-        self.enable_buttons(False)
         self.eng.client.send([
-            NetMsgs.driver_selection, self.mediator.car, self.this_name(), i,
+            NetMsgs.driver_request, self.mediator.car, self.this_name(), i,
             gprops.drivers_info[i].speed, gprops.drivers_info[i].adherence,
             gprops.drivers_info[i].stability, self.eng.client.my_addr])
 
     def process_client(self, data_lst, sender):
+        if data_lst[0] == NetMsgs.driver_confirm:
+            if self.driver:
+                _btn = self._buttons(self.driver)[0]
+                _btn.enable()
+            self.driver = drv = data_lst[1]
+            self.eng.log_mgr.log('driver confirmed: %s' % drv)
+            btn = self._buttons(drv)[0]
+            btn.disable()
+            gprops = self.props.gameprops
+            txt_path = gprops.drivers_img.path_sel
+            self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % drv))
+        if data_lst[0] == NetMsgs.driver_deny:
+            self.eng.log_mgr.log('driver denied')
+        if data_lst[0] == NetMsgs.driver_selection:
+            drv = data_lst[1]
+            self.eng.log_mgr.log('driver selection: %s' % drv)
+            btn = self._buttons(drv)[0]
+            btn.disable()
+        if data_lst[0] == NetMsgs.driver_deselection:
+            drv = data_lst[1]
+            self.eng.log_mgr.log('driver deselection: %s' % drv)
+            btn = self._buttons(drv)[0]
+            btn.enable()
         if data_lst[0] == NetMsgs.start_race:
             self.eng.log_mgr.log('start_race: ' + str(data_lst))
             cars = data_lst[4::7]
-            self.notify('on_car_start_client', self.mediator.track, self.mediator.car,
-                        cars, data_lst)
+            self.notify('on_car_start_client', self.mediator.track,
+                        self.mediator.car, cars, data_lst)
 
 
 class DriverPage(Page):
