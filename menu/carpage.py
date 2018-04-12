@@ -62,7 +62,7 @@ class CarPageGui(ThanksPageGui):
             cfg = load(phys_file)
         speed = int(round((cfg['max_speed'] / 120.0 - 1) * 100))
         fric = int(round((cfg['friction_slip'] / 2.6 - 1) * 100))
-        roll = -int(round((cfg['roll_influence'] / .21 - 1) * 100))
+        roll = -int(round((cfg['roll_influence'][0] / .21 - 1) * 100))
         sign = lambda x: '\1green\1+\2' if x > 0 else ''
         psign = lambda x, sgn=sign: '+' if x == 0 else sgn(x)
         __col_ = lambda x: '\1green\1%s\2' if x > 0 else '\1red\1%s\2'

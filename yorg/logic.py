@@ -269,6 +269,7 @@ class YorgLogic(GameLogic):
         self.mediator.fsm.create_room(room, nick)
 
     def on_srv_quitted(self):
+        self.eng.client.stop()
         self.mediator.fsm.on_srv_quitted()
 
     def on_removed(self):
@@ -285,6 +286,8 @@ class YorgLogic(GameLogic):
         # when we change the options in the option page
 
     def on_room_back(self):
+        if self.eng.server.is_active: self.eng.server.stop()
+        if self.eng.client.is_active: self.eng.client.stop()
         self.mp_frm.on_room_back()
 
     def on_quit(self):

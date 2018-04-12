@@ -3,6 +3,9 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# car's gui: text fields
+# car's gui: camera for driving model
+# driving model: maybe the issue is the chassis that hits the ground
 # driving model: lower center of mass
 # think of more race conditions (pun intended)
 

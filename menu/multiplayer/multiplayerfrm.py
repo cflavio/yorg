@@ -118,6 +118,7 @@ class MultiplayerFrm(GameObject):
         usr = [user for user in self.eng.xmpp.users if user.name == str(msg['from'].bare)][0]
         usr.is_supporter = msg['body'] == '1'
         usr.is_in_yorg = True
+        usr.is_playing = False
         self.users_frm.on_users()
 
     def on_is_playing(self, msg):
