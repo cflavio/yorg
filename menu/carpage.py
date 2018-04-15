@@ -1,4 +1,5 @@
 from itertools import product
+from sleekxmpp.jid import JID
 from yaml import load
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
@@ -55,7 +56,12 @@ class CarPageGui(ThanksPageGui):
             gprops.cars_names[col + row * cars_per_row],
             pos=(-1.4 + col * .64 + x_offset, .64 - z_offset - row * .7),
             scale=.072, **t_a)
-        widgets += [txt]
+        name = Text(
+            '',
+            pos=(-1.4 + col * .64 + x_offset, .44 - z_offset - row * .7),
+            scale=.046, **t_a)
+        btn._name_txt = name
+        widgets += [txt, name]
         car_name = gprops.cars_names[col + row * cars_per_row]
         cfg_fpath = gprops.phys_path % car_name
         with open(cfg_fpath) as phys_file:
@@ -110,15 +116,18 @@ class CarPageGuiServer(CarPageGui):
 
     def on_car(self, car):
         self.eng.log_mgr.log('car selected: ' + car)
-        self.eng.server.send([NetMsgs.car_selection, car])
+        name = JID(self.eng.xmpp.client.boundjid).bare
+        self.eng.server.send([NetMsgs.car_selection, car, name])
         for btn in self._buttons(car):
             btn.disable()
+            btn._name_txt['text'] = name
         if self in self.current_cars:
             curr_car = self.current_cars[self]
             self.eng.log_mgr.log('car deselected: ' + curr_car)
             self.eng.server.send([NetMsgs.car_deselection, curr_car])
             for btn in self._buttons(curr_car):
                 btn.enable()
+                btn._name_txt['text'] = ''
         self.current_cars[self] = car
         self.eng.car_mapping['self'] = car
         self.evaluate_starting()
@@ -154,10 +163,24 @@ class CarPageGuiServer(CarPageGui):
             if sender in self.current_cars:
                 _btn = self._buttons(self.current_cars[sender])[0]
                 _btn.enable()
+                _btn._name_txt['text'] = ''
             self.current_cars[sender] = car
             btn.disable()
+            for conn_info in self.eng.server.connections:
+                conn, addr = conn_info
+                if conn == sender:
+                    curr_addr = addr
+            username = ''
+            for usr in self.eng.xmpp.users:
+                if usr.local_addr == addr:
+                    username = usr.name
+            if not username:
+                for usr in self.eng.xmpp.users:
+                    if usr.public_addr == addr:
+                        username = usr.name
+            btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.car_confirm, car], sender)
-            self.eng.server.send([NetMsgs.car_selection, car])
+            self.eng.server.send([NetMsgs.car_selection, car, username])
             self.eng.car_mapping[data_lst[-1]] = car
             self.evaluate_starting()
 
@@ -178,22 +201,27 @@ class CarPageGuiClient(CarPageGui):
             if self.car:
                 _btn = self._buttons(self.car)[0]
                 _btn.enable()
+                _btn._name_txt['text'] = ''
             self.car = car = data_lst[1]
             self.eng.log_mgr.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
+            btn._name_txt['text'] = JID(self.eng.xmpp.client.boundjid).bare
         if data_lst[0] == NetMsgs.car_deny:
             self.eng.log_mgr.log('car denied')
         if data_lst[0] == NetMsgs.car_selection:
             car = data_lst[1]
+            name = data_lst[2]
             self.eng.log_mgr.log('car selection: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
+            btn._name_txt['text'] = name
         if data_lst[0] == NetMsgs.car_deselection:
             car = data_lst[1]
             self.eng.log_mgr.log('car deselection: ' + car)
             btn = self._buttons(car)[0]
             btn.enable()
+            btn._name_txt['text'] = ''
         if data_lst[0] == NetMsgs.start_drivers:
             self.eng.log_mgr.log('start_drivers: ' + str(data_lst))
             page_args = [self.track_path, self.car, self.props]

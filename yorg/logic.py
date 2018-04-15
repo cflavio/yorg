@@ -311,7 +311,7 @@ class YorgLogic(GameLogic):
         dev = self.mediator.options['development']
         sprops = self.__season_props(
             self.mediator.gameprops, car, cars,
-            self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
+            len(cars), True, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds'])
         self.season = SingleRaceSeason(sprops)
         drivers = sprops.drivers
