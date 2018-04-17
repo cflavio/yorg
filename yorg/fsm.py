@@ -176,7 +176,12 @@ class YorgFsm(FsmColleague):
 
     def exitRace(self):
         self.eng.log_mgr.log('exiting Race state')
-        self.mediator.logic.mp_frm.show()
+        dev = self.mediator.options['development']
+        car = dev['car'] if 'car' in dev else ''
+        track = dev['track'] if 'track' in dev else ''
+        server = dev['server'] if 'server' in dev else ''
+        if not (car and track and not server):
+            self.mediator.logic.mp_frm.show()
         self.mediator.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
         self.eng.xmpp.detach(self.on_presence_unavailable_room)

@@ -57,7 +57,11 @@ class YorgLogic(GameLogic):
             self.mediator.options.persistent = False
 
     def init_mp_frm(self):
-        if not self.mp_frm:
+        dev = self.mediator.options['development']
+        car = dev['car'] if 'car' in dev else ''
+        track = dev['track'] if 'track' in dev else ''
+        server = dev['server'] if 'server' in dev else ''
+        if not self.mp_frm and not (car and track and not server):
             self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_args,
                                          self.eng.cfg.dev_cfg.xmpp_server)
             self.mp_frm.attach(self.on_msg_focus)

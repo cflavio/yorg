@@ -61,6 +61,7 @@ class LogInPageGui(ThanksPageGui):
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
                    self.store_cb, store_lab, notes_lab]
         self.add_widgets(widgets)
+        self.eng.attach_obs(self.on_frame)
         ThanksPageGui.build(self)
 
     def start(self, pwd_name=None):
@@ -85,6 +86,14 @@ class LogInPageGui(ThanksPageGui):
 
     def on_check_dlg(self): self.check_dlg.destroy()
 
+    def on_frame(self):
+        init_txt = _('your jabber id')
+        curr_txt = self.jid_ent.get()
+        if curr_txt == init_txt[:-1]:
+            self.jid_ent.set('')
+        elif curr_txt.startswith(init_txt) and len(curr_txt) == len(init_txt) + 1:
+            self.jid_ent.set(curr_txt[-1:])
+
     def on_tab(self):
         self.jid_ent['focus'] = 0
         self.pwd_ent['focus'] = 1
@@ -101,6 +110,10 @@ class LogInPageGui(ThanksPageGui):
         txt = Text(_('Error'), pos=(-.2, -.05), fg=(1, 0, 0, 1),
                            scale=.16, font=self.menu_args.font)
         self.eng.do_later(5, txt.destroy)
+
+    def destroy(self):
+        self.eng.detach_obs(self.on_frame)
+        ThanksPageGui.destroy(self)
 
 
 class LogInPage(Page):

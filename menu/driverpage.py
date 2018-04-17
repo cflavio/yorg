@@ -1,5 +1,6 @@
 from itertools import product
 from random import shuffle
+from sleekxmpp.jid import JID
 from panda3d.core import TextureStage, Texture, PNMImage, TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.library.gui import Entry, Text, Img
@@ -55,7 +56,12 @@ class DriverPageGui(ThanksPageGui):
                 image=self.props.gameprops.drivers_img.path % idx,
                 command=self.on_click, extraArgs=[idx],
                 **self.menu_args.imgbtn_args)
-            widgets += [drv_btn]
+            name = Text(
+                '',
+                pos=(-.95 + col * .5, .25 - row * .5),
+                scale=.046, **t_a)
+            drv_btn._name_txt = name
+            widgets += [drv_btn, name]
             self.drivers += [widgets[-1]]
             sign = lambda pos_x: '\1green\1+\2' if pos_x > 0 else ''
             psign = lambda pos_x, sgn=sign: '+' if pos_x == 0 else sgn(pos_x)
@@ -194,15 +200,18 @@ class DriverPageServerGui(DriverPageGui):
 
     def on_click(self, i):
         self.eng.log('selected driver ' + str(i))
-        self.eng.server.send([NetMsgs.driver_selection, i])
+        name = JID(self.eng.xmpp.client.boundjid).bare
+        self.eng.server.send([NetMsgs.driver_selection, i, name])
         for btn in self._buttons(i):
             btn.disable()
+            btn._name_txt['text'] = name
         if self in self.current_drivers_dct:
             curr_drv = self.current_drivers_dct[self]
             self.eng.log_mgr.log('driver deselected: %s' % curr_drv)
             self.eng.server.send([NetMsgs.driver_deselection, curr_drv])
             for btn in self._buttons(curr_drv):
                 btn.enable()
+                btn._name_txt['text'] = ''
         self.current_drivers_dct[self] = i
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
@@ -250,10 +259,24 @@ class DriverPageServerGui(DriverPageGui):
             if sender in self.current_drivers_dct:
                 _btn = self._buttons(self.current_drivers_dct[sender])[0]
                 _btn.enable()
+                _btn._name_txt['text'] = ''
             self.current_drivers_dct[sender] = drv
             btn.disable()
+            for conn_info in self.eng.server.connections:
+                conn, addr = conn_info
+                if conn == sender:
+                    curr_addr = addr
+            username = ''
+            for usr in self.eng.xmpp.users:
+                if usr.local_addr == addr:
+                    username = usr.name
+            if not username:
+                for usr in self.eng.xmpp.users:
+                    if usr.public_addr == addr:
+                        username = usr.name
+            btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.driver_confirm, drv], sender)
-            self.eng.server.send([NetMsgs.driver_selection, drv])
+            self.eng.server.send([NetMsgs.driver_selection, drv, username])
             self.current_drivers += [sender]
             driver_name = data_lst[2]
             driver_id = data_lst[3]
@@ -297,10 +320,12 @@ class DriverPageClientGui(DriverPageGui):
             if self.driver:
                 _btn = self._buttons(self.driver)[0]
                 _btn.enable()
+                _btn._name_txt['text'] = ''
             self.driver = drv = data_lst[1]
             self.eng.log_mgr.log('driver confirmed: %s' % drv)
             btn = self._buttons(drv)[0]
             btn.disable()
+            btn._name_txt['text'] = JID(self.eng.xmpp.client.boundjid).bare
             gprops = self.props.gameprops
             txt_path = gprops.drivers_img.path_sel
             self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % drv))
@@ -308,14 +333,17 @@ class DriverPageClientGui(DriverPageGui):
             self.eng.log_mgr.log('driver denied')
         if data_lst[0] == NetMsgs.driver_selection:
             drv = data_lst[1]
+            name = data_lst[2]
             self.eng.log_mgr.log('driver selection: %s' % drv)
             btn = self._buttons(drv)[0]
             btn.disable()
+            btn._name_txt['text'] = name
         if data_lst[0] == NetMsgs.driver_deselection:
             drv = data_lst[1]
             self.eng.log_mgr.log('driver deselection: %s' % drv)
             btn = self._buttons(drv)[0]
             btn.enable()
+            btn._name_txt['text'] = ''
         if data_lst[0] == NetMsgs.start_race:
             self.eng.log_mgr.log('start_race: ' + str(data_lst))
             cars = data_lst[4::7]
