@@ -27,7 +27,8 @@ class LogInPageGui(ThanksPageGui):
         self.jid_ent = Entry(
             scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, initialText=init_txt,
-            text_fg=menu_args.text_active, on_tab=self.on_tab)
+            text_fg=menu_args.text_active, on_tab=self.on_tab,
+            on_click=self.on_click)
         self.pwd_ent = Entry(
             scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True,
@@ -93,6 +94,11 @@ class LogInPageGui(ThanksPageGui):
             self.jid_ent.set('')
         elif curr_txt.startswith(init_txt) and len(curr_txt) == len(init_txt) + 1:
             self.jid_ent.set(curr_txt[-1:])
+
+    def on_click(self, pos):
+        init_txt = _('your jabber id')
+        curr_txt = self.jid_ent.get()
+        if curr_txt == init_txt: self.jid_ent.set('')
 
     def on_tab(self):
         self.jid_ent['focus'] = 0

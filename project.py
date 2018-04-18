@@ -3,6 +3,9 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# sometimes it crashes for specific cars/drivers
+# shaders: multiplayer is not synchronized
+# windows-build: test if the server sees client's name in the car/driver page
 # car's gui: text fields
 # car's gui: camera for driving model
 # driving model: maybe the issue is the chassis that hits the ground

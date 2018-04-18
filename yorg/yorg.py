@@ -174,6 +174,14 @@ class Yorg(Game):
             'assets/models/cars/%s/car',
             damage_info, wheel_gfx_names, opt_dev['xmpp_debug'],
             social_sites)
+        self.log_conf(self.options.dct)
+
+    def log_conf(self, dct, pref=''):
+        for key, val in dct.items():
+            if type(val) == dict:
+                self.log_conf(val, pref + key + '::')
+            elif key != 'pwd':
+                self.eng.log('option %s%s = %s' % (pref, key, val))
 
     def reset_drivers(self):
         self.gameprops.drivers_info = self.drivers()
