@@ -3,8 +3,8 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# sometimes it crashes for specific cars/drivers
-# shaders: multiplayer is not synchronized
+# crash: server rea driver 4, client iperion driver 5 (drivers are wrong in
+#   client/server)
 # windows-build: test if the server sees client's name in the car/driver page
 # car's gui: text fields
 # car's gui: camera for driving model
