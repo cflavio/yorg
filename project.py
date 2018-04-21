@@ -3,9 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# crash: server rea driver 4, client iperion driver 5 (drivers are wrong in
-#   client/server)
-# windows-build: test if the server sees client's name in the car/driver page
 # car's gui: text fields
 # car's gui: camera for driving model
 # driving model: maybe the issue is the chassis that hits the ground
@@ -29,12 +26,14 @@
 # (Panda3D 1.10) write snow shader
 # (Panda3D 1.10) hw skinning
 # (Panda3D 1.10) make both installer and zip file for linux (for itch.io)
+# (Panda3D 1.10) deployng: log_filename
 # python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
 
 
 # MAYBE/SOMEDAY =====
 
+# refactoring: select the driver before the car
 # make scons for yyagl
 # embed into a wx / pyqt window
 # port to python 3

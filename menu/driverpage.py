@@ -7,6 +7,7 @@ from yyagl.library.gui import Entry, Text, Img
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
+from yyagl.racing.driver.driver import DriverInfo
 from yyagl.library.panda.shader import load_shader
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
@@ -222,16 +223,12 @@ class DriverPageServerGui(DriverPageGui):
         cars = gprops.cars_names[:]
         car_idx = cars.index(self.mediator.car)
         cars.remove(self.mediator.car)
-        shuffle(cars)
-        drv_idx = range(8)
-        drv_idx.remove(i)
-        shuffle(drv_idx)
+        prev_drv = gprops.drivers_info[car_idx]
         gprops.drivers_info[car_idx] = gprops.drivers_info[i]
         gprops.drivers_info[car_idx].img_idx = i
         nname = self.this_name()
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
         gprops.drivers_info[car_idx].name = nname
-        gprops.drivers_info[i].img_idx = car_idx
+        gprops.drivers_info[i] = prev_drv
         self.evaluate_starting()
 
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
@@ -279,20 +276,19 @@ class DriverPageServerGui(DriverPageGui):
             self.eng.server.send([NetMsgs.driver_selection, drv, username])
             self.current_drivers += [sender]
             driver_name = data_lst[2]
-            driver_id = data_lst[3]
             driver_speed = data_lst[4]
             driver_adherence = data_lst[5]
             driver_stability = data_lst[6]
             self.eng.log_mgr.log(
-                'driver selected: %s (%s, %s) ' % (driver_name, driver_id, drv))
+                'driver selected: %s (%s) ' % (driver_name, drv))
             gprops = self.props.gameprops
             cars = gprops.cars_names[:]
             car_idx = cars.index(car)
-            gprops.drivers_info[car_idx].img_idx = driver_id
-            gprops.drivers_info[car_idx].name = driver_name
-            gprops.drivers_info[car_idx].speed = driver_speed
-            gprops.drivers_info[car_idx].adherence = driver_adherence
-            gprops.drivers_info[car_idx].stability = driver_stability
+            prev_drv = gprops.drivers_info[car_idx]
+            gprops.drivers_info[car_idx] = DriverInfo(drv, driver_name, driver_speed, driver_adherence, driver_stability)
+            for i, drv_i in enumerate(gprops.drivers_info):
+                if drv_i.img_idx == drv and i != car_idx:
+                    gprops.drivers_info[i] = prev_drv
             self.evaluate_starting()
 
 
