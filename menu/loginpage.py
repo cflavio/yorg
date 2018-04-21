@@ -66,7 +66,7 @@ class LogInPageGui(ThanksPageGui):
         ThanksPageGui.build(self)
 
     def start(self, pwd_name=None):
-        if not self.check(self.jid_ent.get()):
+        if not self.check(self.jid_ent.get().replace('_AT_', '@')):
             self.check_dlg = CheckDialog(self.menu_args)
             self.check_dlg.attach(self.on_check_dlg)
             return
