@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# car's gui: camera for driving model
 # driving model: maybe the issue is the chassis that hits the ground
 # driving model: lower center of mass
 # think of more race conditions (pun intended)
@@ -14,7 +13,8 @@
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
 # feedback: couch multiplayer
 # feedback: add more cameras
-# upnp / pyraknet / nat traversal / hole punching
+# upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
+#   pystun, p2pnat)
 
 
 # WAITING =====

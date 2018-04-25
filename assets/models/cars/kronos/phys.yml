@@ -1,11 +1,13 @@
 max_speed: 120.0  # Km/h
+box_size: [.5, 1.0, .2]
+box_pos: [0, 0, .6]
 mass: 280  # kilograms
 steering: [30, 6]  # degrees at min (max) speed
 steering_clamp: 40  # degrees
 steering_inc: 120  # degrees per second
 steering_dec: 120  # degrees per second
 engine_acc_frc: 2000
-engine_acc_frc_ratio: 1.0
+engine_acc_frc_ratio: .5
 engine_dec_frc: -2000
 brake_frc: 12
 eng_brk_frc: 6
