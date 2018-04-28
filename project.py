@@ -3,9 +3,11 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# remove friendship
 # think of more race conditions (pun intended)
 
 # 0.10
+# add friendship
 # add car helios
 # gui revamp
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
