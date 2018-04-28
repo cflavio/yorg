@@ -58,7 +58,7 @@ class CarPageGui(ThanksPageGui):
             scale=.072, **t_a)
         name = Text(
             '',
-            pos=(-1.4 + col * .64 + x_offset, .44 - z_offset - row * .7),
+            pos=(-1.4 + col * .64 + x_offset, .04 - z_offset - row * .7),
             scale=.046, **t_a)
         btn._name_txt = name
         widgets += [txt, name]
@@ -67,7 +67,7 @@ class CarPageGui(ThanksPageGui):
         with open(cfg_fpath) as phys_file:
             cfg = load(phys_file)
         speed = int(round((cfg['max_speed'] / 120.0 - 1) * 100))
-        fric = int(round((cfg['friction_slip'] / 2.6 - 1) * 100))
+        fric = int(round((cfg['friction_slip'][0] / 2.6 - 1) * 100))
         roll = -int(round((cfg['roll_influence'][0] / .21 - 1) * 100))
         sign = lambda x: '\1green\1+\2' if x > 0 else ''
         psign = lambda x, sgn=sign: '+' if x == 0 else sgn(x)

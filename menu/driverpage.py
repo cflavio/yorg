@@ -52,14 +52,14 @@ class DriverPageGui(ThanksPageGui):
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
             drv_btn = ImgBtn(
-                scale=.24, pos=(-.95 + col * .5, 1, .25 - row * .5),
+                scale=.24, pos=(-.95 + col * .5, 1, .3 - row * .64),
                 frameColor=(0, 0, 0, 0),
                 image=self.props.gameprops.drivers_img.path % idx,
                 command=self.on_click, extraArgs=[idx],
                 **self.menu_args.imgbtn_args)
             name = Text(
                 '',
-                pos=(-.95 + col * .5, .25 - row * .5),
+                pos=(-.95 + col * .5, .01 - row * .64),
                 scale=.046, **t_a)
             drv_btn._name_txt = name
             widgets += [drv_btn, name]
@@ -70,14 +70,14 @@ class DriverPageGui(ThanksPageGui):
             def ppcol(x):
                 return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
             pcol = lambda x: x if x == 0 else ppcol(x)
-            lab_lst = [(_('adherence'), .04), (_('speed'), .16),
-                       (_('stability'), .1)]
+            lab_lst = [(_('adherence'), .09), (_('speed'), .21),
+                       (_('stability'), .15)]
             widgets += map(
                 lambda lab_def: self.__add_lab(*(lab_def + (row, col))),
                 lab_lst)
-            txt_lst = [(self.drv_info[idx - 1].adherence, .04),
-                       (self.drv_info[idx - 1].speed, .16),
-                       (self.drv_info[idx - 1].stability, .1)]
+            txt_lst = [(self.drv_info[idx - 1].adherence, .09),
+                       (self.drv_info[idx - 1].speed, .21),
+                       (self.drv_info[idx - 1].stability, .15)]
             widgets += map(
                 lambda txt_def: self.__add_txt(
                     *txt_def + (psign, pcol, col, row)),
@@ -108,7 +108,7 @@ class DriverPageGui(ThanksPageGui):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         return Text(
-            txt + ':', pos=(-1.15 + col * .5, pos_z - row * .5),
+            txt + ':', pos=(-1.15 + col * .5, pos_z - row * .64),
             scale=.046, align='left', **t_a)
 
     def __add_txt(self, val, pos_z, psign, pcol, col, row):
@@ -116,7 +116,7 @@ class DriverPageGui(ThanksPageGui):
         del t_a['scale']
         return Text(
             '%s%s%%' % (psign(val), pcol(val)),
-            pos=(-.75 + col * .5, pos_z - row * .5), scale=.052,
+            pos=(-.75 + col * .5, pos_z - row * .64), scale=.052,
             align='right', **t_a)
 
     def enable_buttons(self, enable):
