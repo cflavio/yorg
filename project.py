@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# remove friendship
 # think of more race conditions (pun intended)
 
 # 0.10

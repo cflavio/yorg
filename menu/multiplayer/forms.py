@@ -116,7 +116,7 @@ class UserFrmList(UserFrm):
                  is_in_yorg, is_playing, pos, parent, menu_args):
         UserFrm.__init__(
             self, name, name_full, is_supporter, is_online, pos, parent,
-            menu_args)
+            menu_args, .72)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_normal
@@ -127,15 +127,16 @@ class UserFrmList(UserFrm):
         self.create_friend_btn(is_friend, menu_args, name_full)
 
     def create_friend_btn(self, is_friend, menu_args, name_full):
-        if not is_friend:
-            self.friend_btn = MPBtn(
-                self.frm, self, menu_args, 'assets/images/gui/friend.txo',
-                .72, self.on_friend, name_full.name, _('add to xmpp friends'))
-        else:
-            self.friend_btn = MPBtn(
-                self.frm, self, menu_args, 'assets/images/gui/kick.txo',
-                .72, self.on_unfriend, name_full.name,
-                _('remove from xmpp friends'))
+        pass
+        #if not is_friend:
+        #    self.friend_btn = MPBtn(
+        #        self.frm, self, menu_args, 'assets/images/gui/friend.txo',
+        #        .72, self.on_friend, name_full.name, _('add to xmpp friends'))
+        #else:
+        #    self.friend_btn = MPBtn(
+        #        self.frm, self, menu_args, 'assets/images/gui/kick.txo',
+        #        .72, self.on_unfriend, name_full.name,
+        #        _('remove from xmpp friends'))
 
     def enable_invite_btn(self, enable=True): self.__enable_invite_btn = enable
 
@@ -155,12 +156,12 @@ class UserFrmList(UserFrm):
             self.invite_btn.show()
             if not self.__enable_invite_btn: self.invite_btn.disable()
             else: self.invite_btn.enable()
-        if self.friend_btn.is_hidden(): self.friend_btn.show()
+        #if self.friend_btn.is_hidden(): self.friend_btn.show()
 
     def on_exit(self, pos):
         UserFrm.on_exit(self, pos)
         if not self.invite_btn.is_hidden(): self.invite_btn.hide()
-        if not self.friend_btn.is_hidden(): self.friend_btn.hide()
+        #if not self.friend_btn.is_hidden(): self.friend_btn.hide()
 
     def on_unfriend(self, usr):
         self.eng.log('unfriend with ' + usr)
