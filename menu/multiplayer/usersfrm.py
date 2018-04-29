@@ -149,8 +149,9 @@ class UsersFrm(GameObject):
             lab.lab.set_online(user.is_online)
 
     def on_invite(self, usr):
-        self.invited_users += [usr.name]
         self.notify('on_invite', usr)
+        if not (self.eng.server.public_addr and self.eng.server.local_addr): return
+        self.invited_users += [usr.name]
         self.on_users()
         if not self.room_name:
             jid = self.eng.xmpp.client.boundjid
@@ -174,19 +175,12 @@ class UsersFrm(GameObject):
                     mtype='ya2_yorg',
                     msubject='is_playing',
                     mbody='1')
-        public_addr = load(urlopen('http://httpbin.org/ip'))['origin']
-        sock = socket(AF_INET, SOCK_DGRAM)
-        try:
-            sock.connect(('ya2.it', 8080))
-            local_addr = sock.getsockname()[0]
-        except gaierror:
-            local_addr = ''
         self.eng.xmpp.client.send_message(
             mfrom=self.eng.xmpp.client.boundjid.full,
             mto=usr.name_full,
             mtype='ya2_yorg',
             msubject='invite',
-            mbody=self.room_name + '\n' + public_addr + '\n' + local_addr)
+            mbody=self.room_name + '\n' + self.eng.server.public_addr + '\n' + self.eng.server.local_addr)
         self.eng.log('invited ' + str(usr.name_full))
         self.notify('on_add_groupchat', self.room_name, usr.name)
 

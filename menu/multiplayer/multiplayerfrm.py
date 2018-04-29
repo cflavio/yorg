@@ -1,6 +1,6 @@
 from json import load
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
-from urllib2 import urlopen
+from urllib2 import urlopen, URLError
 try: from sleekxmpp.jid import JID
 except ImportError:  # sleekxmpp requires openssl 1.0.2
     print 'OpenSSL 1.0.2 not detected'
@@ -11,6 +11,7 @@ from .usersfrm import UsersFrm
 from .matchfrm import MatchFrmServer, MatchFrmServerClient
 from .messagefrm import MessageFrm
 from .friend_dlg import FriendDialog
+from .server_dlg import ServerDialog
 from .invite_dlg import InviteDialog
 from .exit_dlg import ExitDialog
 from .remove_dlg import RemovedDialog
@@ -23,7 +24,7 @@ class MultiplayerFrm(GameObject):
     def __init__(self, menu_args, yorg_srv):
         GameObject.__init__(self)
         self.eng.log('created multiplayer form')
-        self.dialog = None
+        self.dialog = self.server_dlg = None
         self.invite_dlg = None
         self.yorg_srv = yorg_srv
         self.ver_check = VersionChecker()
@@ -92,10 +93,25 @@ class MultiplayerFrm(GameObject):
         self.on_users()
 
     def on_invite(self, usr):
-        if not self.match_frm:
-            self.create_match_frm('', True)
-            self.eng.server.start(self.process_msg_srv, self.process_connection)
-        self.match_frm.on_invite(usr)
+        try:
+            if not self.match_frm:
+                self.eng.server.start(self.process_msg_srv, self.process_connection)
+                self.create_match_frm('', True)
+            self.match_frm.on_invite(usr)
+        except (gaierror, URLError) as e:
+            gaierror_str = _(
+                "We've detected connection problems during server's creation. "
+                "Please check your connection.")
+            urlerror_str = _(
+                "We can't connect to httpbin. Please retry later.")
+            dct_msg = {gaierror: gaierror_str, URLError: urlerror_str}
+            self.server_dlg = ServerDialog(self.menu_args, dct_msg[type(e)])
+            self.server_dlg.attach(self.on_server_dlg)
+            self.eng.server.stop()
+
+    def on_server_dlg(self):
+        self.server_dlg.detach(self.on_server_dlg)
+        self.server_dlg = self.server_dlg.destroy()
 
     def process_msg_srv(data_lst):
         print data_lst
