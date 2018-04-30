@@ -14,6 +14,12 @@
 # feedback: add more cameras
 # upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
 #   pystun, p2pnat)
+# rotate the car towards the direction while flying
+# car should be parallel to the ground while flying
+# lower mass center
+# drifting force function of linear and angular velocities
+# after a flight, when a wheel hits the ground, set its friction to 0 and
+#   restore it in 0.5 seconds linearly
 
 
 # WAITING =====
@@ -25,6 +31,7 @@
 # (Panda3D 1.10) hw skinning
 # (Panda3D 1.10) make both installer and zip file for linux (for itch.io)
 # (Panda3D 1.10) deployng: log_filename
+# (Panda3D 1.10) deployng: use logging for logging
 # python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
 

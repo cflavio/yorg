@@ -492,6 +492,7 @@ class YorgLogic(GameLogic):
                          'EmptyWheel.003')
         # names for both wheels
         wheel_names = WheelNames(frwheels, bwheels)
+        track_gpath = 'assets/models/tracks/%s/track_all.bam' % track_name
         track_fpath = 'assets/models/tracks/%s/track.yml' % track_name
         with open(self.eng.curr_path + track_fpath) as ftrack:
             music_name = load(ftrack)['music']
@@ -525,7 +526,7 @@ class YorgLogic(GameLogic):
             'assets/particles/sparks.ptf', drivers,
             self.mediator.options['development']['shaders_dev'],
             self.mediator.options['settings']['shaders'], music_fpath,
-            'assets/models/tracks/%s/collision' % track_name,
+            track_gpath, 'assets/models/tracks/%s/collision' % track_name,
             ['Road', 'Offroad'], ['Wall'],
             ['Goal', 'Slow', 'Respawn', 'PitStop'], corner_names,
             WPInfo('Waypoints', 'Waypoint', 'prev'),
