@@ -8,6 +8,7 @@
 # 0.10
 # add friendship
 # add car helios
+# refactoring of BitMask32: use constant values in place of magic numbers
 # gui revamp
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
 # feedback: couch multiplayer
