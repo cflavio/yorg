@@ -3,6 +3,7 @@
 # TODO LIST =====
 
 # 0.9 (network)
+# crash: sheffield
 # think of more race conditions (pun intended)
 
 # 0.10

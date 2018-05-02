@@ -7,9 +7,9 @@ It requires *Python 2.x*. You should clone it recursively since it uses [yyagl s
 
 * `scons images=1 lang=1 tracks=1`
 
-If you want to use **deploy-ng** you must specify the switch `ng`, as instance:
+If you want to use **deploy-ng** you must specify the switch `deployng`, as instance:
 
-* `scons ng=1 linux_64=1`
+* `scons deployng=1 linux_64=1`
 
 In order to create a build you should specify the target OS (`windows`, `osx`, `linux_32`, `linux_64`) e.g.:
 
