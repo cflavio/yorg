@@ -3,13 +3,16 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# crash: sheffield
+# exit from a mp race: there is the gray frame
+# exit from a mp race: the client doesn't see server's exit
+# mp race: the client sees a wrong server player name
+# manage D3, D5, E3
 # think of more race conditions (pun intended)
+# refactoring of BitMask32: use constant values in place of magic numbers
 
 # 0.10
 # add friendship
 # add car helios
-# refactoring of BitMask32: use constant values in place of magic numbers
 # gui revamp
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
 # feedback: couch multiplayer

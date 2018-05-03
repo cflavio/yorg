@@ -385,9 +385,9 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mediator.event.on_season_end)
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
-        self.mediator.options['settings']['player_name'] = player_name
+        #self.mediator.options['settings']['player_name'] = player_name
         self.mediator.gameprops.player_name = player_name
-        self.mediator.options.store()
+        #self.mediator.options.store()
 
         packet = [NetMsgs.start_race, len(self.eng.car_mapping)]
 
