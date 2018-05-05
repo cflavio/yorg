@@ -332,6 +332,12 @@ class YorgLogic(GameLogic):
                     drv.logic.dprops.info.speed = pdrv[4]
                     drv.logic.dprops.info.adherence = pdrv[5]
                     drv.logic.dprops.info.stability = pdrv[6]
+        for i, pdrv in enumerate(packet_drivers):
+            prev_drv = drivers[i]
+            for j, drv in enumerate(drivers):
+                if drv.dprops.info.img_idx == pdrv[1]:
+                    drivers[i] = drv
+                    drivers[j] = prev_drv
         sprops.drivers = drivers
         sprops.car_names = cars
         #self.season = SingleRaceSeason(self.__season_props(

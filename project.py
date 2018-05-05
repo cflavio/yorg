@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# mp race: the client sees a wrong server player name
 # exit from a mp race (win or ingame menu): the client doesn't see server's exit
 # manage D3, D5, E3
 
