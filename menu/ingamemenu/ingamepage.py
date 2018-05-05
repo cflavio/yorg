@@ -3,7 +3,7 @@ from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 
 
-class InGamePageGui(PageGui):
+class InGamePageGuiMultiplayer(PageGui):
 
     def __init__(self, mediator, menu_args, keys):
         self.keys = keys
@@ -40,22 +40,28 @@ class InGamePageGui(PageGui):
             self.eng.hide_cursor()
             self.eng.show_standard_cursor()
 
-        if not (self.eng.server.is_active or self.eng.client.is_active):
-            self.eng.do_later(.01, self.eng.toggle_pause, [False])
+    def on_end(self, back_to_game):
+        self.eng.hide_standard_cursor()
+        evt_name = 'back' if back_to_game else 'exit'
+        self.notify('on_ingame_' + evt_name)
+
+
+class InGamePageGui(InGamePageGuiMultiplayer):
+
+    def build(self, back_btn=True):
+        InGamePageGuiMultiplayer.build(self, back_btn)
+        self.eng.do_later(.01, self.eng.toggle_pause, [False])
         # in the next frame since otherwise InGameMenu will be paused while
         # waiting page's creation, and when it is restored it is destroyed,
         # then the creation callback finds a None menu
 
     def on_end(self, back_to_game):
-        self.eng.hide_standard_cursor()
-        evt_name = 'back' if back_to_game else 'exit'
-        self.notify('on_ingame_' + evt_name)
-        if not (self.eng.server.is_active or self.eng.client.is_active):
-            self.eng.do_later(.01, self.eng.toggle_pause)
+        InGamePageGuiMultiplayer.on_end(self, back_to_game)
+        self.eng.do_later(.01, self.eng.toggle_pause)
 
 
-class InGamePage(Page):
-    gui_cls = InGamePageGui
+class InGamePageMultiplayer(Page):
+    gui_cls = InGamePageGuiMultiplayer
 
     def __init__(self, menu_args, keys):
         PageFacade.__init__(self)
@@ -64,3 +70,12 @@ class InGamePage(Page):
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.menu_args, keys])]]
         GameObject.__init__(self, init_lst)
+
+
+class InGamePage(InGamePageMultiplayer):
+    gui_cls = InGamePageGui
+
+    @staticmethod
+    def init_cls():
+        multip = InGamePage.eng.server.is_active or InGamePage.eng.client.is_active
+        return InGamePageMultiplayer if multip else InGamePage

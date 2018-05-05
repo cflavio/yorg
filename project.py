@@ -3,11 +3,9 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# exit from a mp race: there is the gray frame
-# exit from a mp race: the client doesn't see server's exit
 # mp race: the client sees a wrong server player name
+# exit from a mp race (win or ingame menu): the client doesn't see server's exit
 # manage D3, D5, E3
-# think of more race conditions (pun intended)
 
 # 0.10
 # add friendship

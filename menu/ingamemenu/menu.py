@@ -12,7 +12,7 @@ class InGameMenuGui(GuiColleague):
         menu_args_c.background_img = ''
         menu_args_c.btn_size = (-8.6, 8.6, -.42, .98)
         self.menu = Menu(menu_args_c)
-        page = InGamePage(menu_args_c, keys)
+        page = InGamePage.init_cls()(menu_args_c, keys)
         page.gui.attach(self.on_ingame_back)
         page.gui.attach(self.on_ingame_exit)
         self.menu.push_page(page)
