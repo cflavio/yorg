@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.9 (network)
-# exit from a mp race (win or ingame menu): the client doesn't see server's exit
 # manage D3, D5, E3
 
 # 0.10

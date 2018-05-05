@@ -1,6 +1,7 @@
 from yyagl.library.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
+from yyagl.racing.race.event import NetMsgs
 
 
 class InGamePageGuiMultiplayer(PageGui):
@@ -43,6 +44,8 @@ class InGamePageGuiMultiplayer(PageGui):
     def on_end(self, back_to_game):
         self.eng.hide_standard_cursor()
         evt_name = 'back' if back_to_game else 'exit'
+        if self.eng.server.is_active and not back_to_game:
+            self.eng.server.send([NetMsgs.end_race])
         self.notify('on_ingame_' + evt_name)
 
 
