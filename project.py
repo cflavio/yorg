@@ -18,6 +18,7 @@
 # feedback: add more cameras
 # upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
 #   pystun, p2pnat)
+# refactoring of yorg server and players' servers: use rpyc
 # rotate the car towards the direction while flying
 # car should be parallel to the ground while flying
 # lower mass center
