@@ -224,11 +224,11 @@ class DriverPageServerGui(DriverPageGui):
         car_idx = cars.index(self.mediator.car)
         cars.remove(self.mediator.car)
         prev_drv = gprops.drivers_info[car_idx]
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
+        #gprops.drivers_info[car_idx] = gprops.drivers_info[i]
         gprops.drivers_info[car_idx].img_idx = i
         nname = self.this_name()
         gprops.drivers_info[car_idx].name = nname
-        gprops.drivers_info[i] = prev_drv
+        #gprops.drivers_info[i] = prev_drv
         self.evaluate_starting()
 
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
