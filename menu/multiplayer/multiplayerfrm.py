@@ -294,7 +294,7 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.on_groupchat_msg(msg)
 
     def on_invite_chat(self, msg):
-        if self.invite_dlg:  # we've already an invite
+        if self.invite_dlg or self.match_frm:  # we've already an invite
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
                 mto=str(msg['from'].bare),
@@ -312,10 +312,13 @@ class MultiplayerFrm(GameObject):
                 mtype='ya2_yorg',
                 msubject='is_playing',
                 mbody='1')
+        self.users_frm.invited = True
+        self.on_users()
 
     def on_invite_answer(self, msg, val):
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
+        self.users_frm.invited = False
         if val:
             mypublic_addr = load(urlopen('http://httpbin.org/ip'))['origin']
             sock = socket(AF_INET, SOCK_DGRAM)
@@ -398,6 +401,8 @@ class MultiplayerFrm(GameObject):
     def on_cancel_invite(self):
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
+        self.users_frm.invited = False
+        self.on_users()
 
     def on_add_chat(self, usr):
         self.eng.log('on add chat' + str(usr))

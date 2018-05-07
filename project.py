@@ -2,14 +2,12 @@
 
 # TODO LIST =====
 
-# 0.9 (network)
-# manage D3, D5, E3
-
 # 0.10
 # add friendship
 # add car helios
 # gui revamp
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
+#   speed: speed number with a semicircle with a shader
 # feedback: couch multiplayer
 # feedback: add more cameras
 # upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
@@ -35,11 +33,15 @@
 # (Panda3D 1.10) deployng: use logging for logging
 # python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
+# (rpyc) rrfactoring of protocol: use less xmpp and more rpyc (easier
+#  concurrency management), also for the server
+# (rpyc) refactoring network: use pickle for exhanging data
 
 
 # MAYBE/SOMEDAY =====
 
 # refactoring: select the driver before the car
+# refactoring: use python stdlib for tcp/udp
 # make scons for yyagl
 # embed into a wx / pyqt window
 # port to python 3

@@ -51,6 +51,7 @@ class UsersFrm(GameObject):
             text_wordwrap=10, **lab_args)
         self.set_connection_label()
         self.in_match_room = None
+        self.invited = False
 
     def show(self):
         self.frm.show()
@@ -96,7 +97,7 @@ class UsersFrm(GameObject):
                     self.labels.remove(lab)
         nusers = len(self.eng.xmpp.users_nodup)
         invite_btn = len(self.invited_users) < 8
-        invite_btn = invite_btn and not self.in_match_room
+        invite_btn = invite_btn and not self.in_match_room and not self.invited
         top = .08 * nusers + .08
         self.frm['canvasSize'] = (-.02, .76, 0, top)
         label_users = [lab.lab.lab['text'] for lab in self.labels]
