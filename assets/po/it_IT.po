@@ -109,19 +109,19 @@ msgstr "Numero macchine"
 msgid "Configure input"
 msgstr "Configura input"
 
-#: menu/carpage.py:25
+#: menu/carpage.py:26
 msgid "Select the car"
 msgstr "Seleziona la macchina"
 
-#: menu/carpage.py:71 menu/driverpage.py:65
+#: menu/carpage.py:77 menu/driverpage.py:73
 msgid "adherence"
 msgstr "aderenza"
 
-#: menu/carpage.py:71 menu/driverpage.py:65
+#: menu/carpage.py:77 menu/driverpage.py:73
 msgid "speed"
 msgstr "velocità:"
 
-#: menu/carpage.py:72 menu/driverpage.py:66
+#: menu/carpage.py:78 menu/driverpage.py:74
 msgid "stability"
 msgstr "stabilità"
 
@@ -133,23 +133,23 @@ msgstr "Il tuo id jabber"
 msgid "Your jabber password:"
 msgstr "La tua password jabber"
 
-#: menu/loginpage.py:26
+#: menu/loginpage.py:26 menu/loginpage.py:91 menu/loginpage.py:99
 msgid "your jabber id"
 msgstr "il tuo id jabber"
 
-#: menu/loginpage.py:36
+#: menu/loginpage.py:37
 msgid "Log-in"
 msgstr "Log-in"
 
-#: menu/loginpage.py:39
+#: menu/loginpage.py:40
 msgid "store the password"
 msgstr "memorizza la password"
 
-#: menu/loginpage.py:44
+#: menu/loginpage.py:45
 msgid "(only if your computer is not shared with other people)"
 msgstr "(solo se il tuo computer non è condiviso con altre persone)"
 
-#: menu/loginpage.py:47
+#: menu/loginpage.py:48
 msgid ""
 "1. If you are a supporter, please write us (flavio@ya2.it) your jabber id so "
 "we can highlight your account as a supporter one.\n"
@@ -171,7 +171,7 @@ msgstr ""
 "4. Il codice XMPP di Yorg è ancora sperimentale: se hai dati importanti nel "
 "tuo account XMPP, per favore crea un nuovo account per giocare con Yorg."
 
-#: menu/loginpage.py:101
+#: menu/loginpage.py:116
 msgid "Error"
 msgstr "Errore"
 
@@ -193,16 +193,16 @@ msgstr ""
 "tipo nickname@nomedominio.tld dove nickname è il tuo nickname e domainname."
 "tld è un dominio valido."
 
-#: menu/driverpage.py:42
+#: menu/driverpage.py:45
 msgid "Select the driver"
 msgstr "Seleziona il pilota"
 
-#: menu/driverpage.py:46
+#: menu/driverpage.py:49
 msgid "Write your name:"
 msgstr "Scrivi il tuo nome:"
 
-#: menu/driverpage.py:155 menu/driverpage.py:162 menu/driverpage.py:163
-#: menu/driverpage.py:164 menu/driverpage.py:166 menu/driverpage.py:169
+#: menu/driverpage.py:166 menu/driverpage.py:173 menu/driverpage.py:174
+#: menu/driverpage.py:175 menu/driverpage.py:177 menu/driverpage.py:180
 msgid "your name"
 msgstr "tuo nome"
 
@@ -288,7 +288,7 @@ msgstr "visita il nostro sito dopo l'uscita"
 msgid "don't visit our site after exiting"
 msgstr "non visitare il nostro sito dopo l'uscita"
 
-#: menu/ingamemenu/ingamepage.py:16
+#: menu/ingamemenu/ingamepage.py:17
 #, python-format
 msgid ""
 "What do you want to do?\n"
@@ -299,11 +299,11 @@ msgstr ""
 "\n"
 "NB Usa '%s' per mettere il gioco in pausa."
 
-#: menu/ingamemenu/ingamepage.py:25
+#: menu/ingamemenu/ingamepage.py:26
 msgid "back to the game"
 msgstr "torna al gioco"
 
-#: menu/ingamemenu/ingamepage.py:26
+#: menu/ingamemenu/ingamepage.py:27
 msgid "back to the main menu"
 msgstr "torna al menu principale"
 
@@ -329,39 +329,39 @@ msgstr "%s vuole essere un tuo amico (XMPP), accetti?"
 msgid "Current online users"
 msgstr "Giocatori online adesso"
 
-#: menu/multiplayer/usersfrm.py:68
+#: menu/multiplayer/usersfrm.py:69
 msgid "Your game isn't up-to-date, please update"
 msgstr "Il tuo gioco non è aggiornato, per piacere aggiorna"
 
-#: menu/multiplayer/usersfrm.py:69
+#: menu/multiplayer/usersfrm.py:70
 msgid "You aren't logged in"
 msgstr "Non sei loggato"
 
-#: menu/multiplayer/usersfrm.py:71
+#: menu/multiplayer/usersfrm.py:72
 msgid "Yorg's server isn't running"
 msgstr "Il server di Yorg non è attivo"
 
-#: menu/multiplayer/usersfrm.py:140
+#: menu/multiplayer/usersfrm.py:141
 msgid "invite the user to a match"
 msgstr "invita l'utente a una partita"
 
-#: menu/multiplayer/usersfrm.py:141
+#: menu/multiplayer/usersfrm.py:142
 msgid "you can't invite more players"
 msgstr "non puoi invitare altri giocatori"
 
-#: menu/multiplayer/usersfrm.py:142
+#: menu/multiplayer/usersfrm.py:143
 msgid "you're already in a match"
 msgstr "sei già in una partita"
 
-#: menu/multiplayer/usersfrm.py:143
+#: menu/multiplayer/usersfrm.py:144
 msgid "the user isn't playing yorg"
 msgstr "l'utente non sta giocando a yorg"
 
-#: menu/multiplayer/usersfrm.py:144
+#: menu/multiplayer/usersfrm.py:145
 msgid "you've already invited this user"
 msgstr "hai già invitato questo utente"
 
-#: menu/multiplayer/usersfrm.py:145
+#: menu/multiplayer/usersfrm.py:146
 msgid "the user is already playing a match"
 msgstr "l'utente sta già giocando"
 
@@ -390,15 +390,7 @@ msgstr "invia un messaggio all'utente"
 msgid "isn't playing yorg"
 msgstr "non sta giocando a yorg"
 
-#: menu/multiplayer/forms.py:133
-msgid "add to xmpp friends"
-msgstr "aggiungi agli amici xmpp"
-
-#: menu/multiplayer/forms.py:138
-msgid "remove from xmpp friends"
-msgstr "rimuovi dagli amici xmpp"
-
-#: menu/multiplayer/forms.py:184
+#: menu/multiplayer/forms.py:185
 msgid "remove from the match"
 msgstr "rimuovi dalla partita"
 
@@ -412,32 +404,42 @@ msgstr ""
 "configurato per fare port-forwarding sulla porta 9099 verso il tuo computer "
 "e che il tuo firewall permetta traffico per Yorg sulla porta 9099."
 
+#: menu/multiplayer/multiplayerfrm.py:103
+msgid ""
+"We've detected connection problems during server's creation. Please check "
+"your connection."
+msgstr "Abbiamo individuato problemi durante la creazione del server. Per piacere, controlla la tua connessione."
+
+#: menu/multiplayer/multiplayerfrm.py:106
+msgid "We can't connect to httpbin. Please retry later."
+msgstr "Non riusciamo a connetterci a httpbin. Per piacere, ritenda dopo."
+
 #: menu/multiplayer/invite_dlg.py:16
 #, python-format
 msgid "%s has invited you to a match, do you agree?"
 msgstr "%s ti ha invitato a una partita, accetti?"
 
-#: yorg/yorg.py:164 yorg/fsm.py:163
+#: yorg/yorg.py:165 yorg/fsm.py:164
 msgid "Toronto"
 msgstr "Toronto"
 
-#: yorg/yorg.py:164 yorg/fsm.py:163
+#: yorg/yorg.py:165 yorg/fsm.py:164
 msgid "Rome"
 msgstr "Roma"
 
-#: yorg/yorg.py:164 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:164 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:166 yorg/fsm.py:166
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:166 yorg/fsm.py:166
 msgid "Dubai"
 msgstr "Dubai"
 
@@ -470,43 +472,43 @@ msgstr "gomme: aumentano l'aderenza'"
 msgid "suspensions: they increase car's stability"
 msgstr "sospensioni: aumentano la stabilità"
 
-#: yyagl/racing/car/logic.py:755
+#: yyagl/racing/car/logic.py:693
 msgid "wrong way"
 msgstr "direzione sbagliata"
 
-#: yyagl/racing/car/gui.py:148
+#: yyagl/racing/car/gui.py:161
 msgid "speed:"
 msgstr "velocità:"
 
-#: yyagl/racing/car/gui.py:150
+#: yyagl/racing/car/gui.py:163
 msgid "lap:"
 msgstr "giro:"
 
-#: yyagl/racing/car/gui.py:151
+#: yyagl/racing/car/gui.py:164
 msgid "time:"
 msgstr "tempo:"
 
-#: yyagl/racing/car/gui.py:152
+#: yyagl/racing/car/gui.py:165
 msgid "best lap:"
 msgstr "miglior giro:"
 
-#: yyagl/racing/car/gui.py:153
+#: yyagl/racing/car/gui.py:166
 msgid "ranking:"
 msgstr "classifica:"
 
-#: yyagl/racing/car/gui.py:154
+#: yyagl/racing/car/gui.py:167
 msgid "damages:"
 msgstr "danni:"
 
-#: yyagl/racing/car/gui.py:155
+#: yyagl/racing/car/gui.py:168
 msgid "weapon:"
 msgstr "arma:"
 
-#: yyagl/racing/car/gui.py:185 yyagl/racing/car/gui.py:188
+#: yyagl/racing/car/gui.py:205 yyagl/racing/car/gui.py:208
 msgid "low"
 msgstr "basso"
 
-#: yyagl/racing/car/gui.py:189
+#: yyagl/racing/car/gui.py:209
 msgid "hi"
 msgstr "alto"
 
@@ -519,7 +521,7 @@ msgstr "Classifica"
 msgid "Congratulations!"
 msgstr "Congratulazioni!"
 
-#: yyagl/racing/ranking/gui.py:53 yyagl/racing/race/gui/results.py:78
+#: yyagl/racing/ranking/gui.py:53 yyagl/racing/race/gui/results.py:81
 msgid "Continue"
 msgstr "Continua"
 
@@ -532,19 +534,19 @@ msgstr "premi %s per respawnare"
 msgid "GO!"
 msgstr "VIA!"
 
-#: yyagl/racing/race/gui/results.py:35
+#: yyagl/racing/race/gui/results.py:36
 msgid "LAP"
 msgstr "GIRO"
 
-#: yyagl/racing/race/gui/results.py:36
+#: yyagl/racing/race/gui/results.py:37
 msgid "TIME"
 msgstr "TEMPO"
 
-#: yyagl/racing/race/gui/results.py:37
+#: yyagl/racing/race/gui/results.py:38
 msgid "RANKING"
 msgstr "CLASSIFICA"
 
-#: yyagl/racing/race/gui/results.py:50
+#: yyagl/racing/race/gui/results.py:51
 msgid "share:"
 msgstr "condividi:"
 
@@ -607,3 +609,9 @@ msgstr "gomme: +"
 #: yyagl/racing/race/gui/loading/loadingpage.py:104
 msgid "suspensions: +"
 msgstr "sospensioni: +"
+
+#~ msgid "add to xmpp friends"
+#~ msgstr "aggiungi agli amici xmpp"
+
+#~ msgid "remove from xmpp friends"
+#~ msgstr "rimuovi dagli amici xmpp"
