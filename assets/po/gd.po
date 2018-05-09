@@ -1,13 +1,13 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# GunChleoc <fios@foramnagaidhlig.net>, 2017.
+# GunChleoc <fios@foramnagaidhlig.net>, 2017, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2017-11-10 09:16+0100\n"
+"PO-Revision-Date: 2018-05-09 07:58+0100\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
@@ -128,28 +128,28 @@ msgstr "seasmhachd"
 
 #: menu/loginpage.py:20
 msgid "Your jabber id:"
-msgstr ""
+msgstr "An id jabber agad:"
 
 #: menu/loginpage.py:22
 msgid "Your jabber password:"
-msgstr ""
+msgstr "Am facal-faire jabber agad:"
 
 #: menu/loginpage.py:26 menu/loginpage.py:91 menu/loginpage.py:99
-#, fuzzy
 msgid "your jabber id"
-msgstr "d’ ainm"
+msgstr "an id jabber agad"
 
 #: menu/loginpage.py:37
 msgid "Log-in"
-msgstr ""
+msgstr "Clàraich a-steach"
 
 #: menu/loginpage.py:40
 msgid "store the password"
-msgstr ""
+msgstr "glèidh am facal-faire"
 
 #: menu/loginpage.py:45
 msgid "(only if your computer is not shared with other people)"
 msgstr ""
+"(na dèan seo ma tha thu a’ co-roinneadh a’ choimpiutair seo le daoine eile)"
 
 #: menu/loginpage.py:48
 msgid ""
@@ -163,6 +163,17 @@ msgid ""
 "4. Yorg's XMPP code is still experimental: if you have important data in "
 "your XMPP account, please create a new account for playing Yorg with."
 msgstr ""
+"1. Ma tha thu ’nan neach-taic, innis an is jabber agad dhuinn "
+"(flavio@ya2.it) ach an cuir sinn comharra ris a’ chunntas agad gur e neach-"
+"taic a th’ annad.\n"
+"2. Cuiridh Yorg do làthaireachd air XMPP gu cleachdaichean Yorg eile ach am "
+"faic iad a bheil thu an làthair air XMPP. Mur eil thu ’ga iarraidh, na "
+"cleachd an cunntas pearsanta agad agus cruthaich fear fa leth ùr airson "
+"Yorg.\n"
+"3. Ma chuireas tu caraid Yorg ris, cuiridh tu ri liosta a’ chunntais agad e "
+"cuideachd.\n"
+"4. Tha an còd XMPP aig Yorg deuchainneil fhathast: ma tha dàta cudromach sa "
+"chunntas XMPP agad, cruthaich cunntas fa leth ùr airson Yorg a chluich leis."
 
 #: menu/loginpage.py:116
 msgid "Error"
@@ -182,6 +193,9 @@ msgid ""
 "like nickname@domainname.tld where nickname is your nickname and domainname."
 "tld is a valid domain."
 msgstr ""
+"Chan eil an id jabber id a chuir thu a-steach mar bu chòir: bu chòir do "
+"choltas mar “far-ainm@àrainn.tld” a bhith air agus “far-anim” am far-ainm "
+"agad agus “àrainn.tld” ’na àrainn dhligheach."
 
 #: menu/driverpage.py:45
 msgid "Select the driver"
@@ -198,25 +212,23 @@ msgstr "d’ ainm"
 
 #: menu/mainpage.py:96
 msgid "Not up-to-date"
-msgstr ""
+msgstr "Chan eil seo cho ùr ’sa ghabhas"
 
 #: menu/mainpage.py:98
 msgid "Log out"
-msgstr ""
+msgstr "Clàraich a-mach"
 
 #: menu/mainpage.py:101
 msgid "Log in"
-msgstr ""
+msgstr "Clàraich a-steach"
 
 #: menu/mainpage.py:101
-#, fuzzy
 msgid "multiplayer"
-msgstr "Ioma-chluicheadair"
+msgstr "ioma-chluicheadair"
 
 #: menu/mainpage.py:102
-#, fuzzy
 msgid "Connecting"
-msgstr "Ceangail"
+msgstr "’Ga cheangail"
 
 #: menu/mainpage.py:110
 msgid "Single Player"
@@ -304,82 +316,79 @@ msgid "Start"
 msgstr "Tòisich"
 
 #: menu/multiplayer/matchfrm.py:156
-#, fuzzy
 msgid "please wait for the server"
-msgstr "A’ feitheamh ris an fhrithealaiche"
+msgstr "a’ feitheamh ris an fhrithealaiche"
 
 #: menu/multiplayer/exit_dlg.py:15
 #, python-format
 msgid "the server user %s has quitted"
-msgstr ""
+msgstr "dh’fhàg cleachdaiche %s an fhrithealaiche"
 
 #: menu/multiplayer/friend_dlg.py:15
 #, python-format
 msgid "%s wants to be a (XMPP) friend of you, do you agree?"
-msgstr ""
+msgstr "Bu toigh le %s a bhith ’nad charaid (XMPP), a bheil thu ag aontachadh?"
 
 #: menu/multiplayer/usersfrm.py:31
 msgid "Current online users"
-msgstr ""
+msgstr "Cleachdaichean air loidhne an-dràsta"
 
 #: menu/multiplayer/usersfrm.py:69
 msgid "Your game isn't up-to-date, please update"
-msgstr ""
+msgstr "Chan eil an geama agad cho ùr ’sa ghabhas, am faigh thu ùrachadh?"
 
 #: menu/multiplayer/usersfrm.py:70
 msgid "You aren't logged in"
-msgstr ""
+msgstr "Cha do rinn thu clàradh a-steach"
 
 #: menu/multiplayer/usersfrm.py:72
 msgid "Yorg's server isn't running"
-msgstr ""
+msgstr "Chan eil frithealaiche Yorg a’ ruith"
 
 #: menu/multiplayer/usersfrm.py:141
 msgid "invite the user to a match"
-msgstr ""
+msgstr "thoir cuireadh dhan chleachdaiche airson cluich"
 
 #: menu/multiplayer/usersfrm.py:142
 msgid "you can't invite more players"
-msgstr ""
+msgstr "chan urrainn dhut cuireadh a thoirt do bharrachd chleachdaichean"
 
 #: menu/multiplayer/usersfrm.py:143
 msgid "you're already in a match"
-msgstr ""
+msgstr "cha thu a’ cluich mar-thà"
 
 #: menu/multiplayer/usersfrm.py:144
 msgid "the user isn't playing yorg"
-msgstr ""
+msgstr "chan eil an cleachdaiche a’ cluich yorg"
 
 #: menu/multiplayer/usersfrm.py:145
 msgid "you've already invited this user"
-msgstr ""
+msgstr "thug thu cuireadh dhan chleachdaiche seo mu thràth"
 
 #: menu/multiplayer/usersfrm.py:146
 msgid "the user is already playing a match"
-msgstr ""
+msgstr "tha an cleachdaiche seo a’ cluich mar-thà"
 
 #: menu/multiplayer/messagefrm.py:60 menu/multiplayer/messagefrm.py:185
 #: menu/multiplayer/messagefrm.py:231 menu/multiplayer/messagefrm.py:476
-#, fuzzy
 msgid "write here your message"
-msgstr "Sgrìobh d’ ainm:"
+msgstr "sgrìobh do theachdaireachd an-seo"
 
 #: menu/multiplayer/messagefrm.py:357 menu/multiplayer/messagefrm.py:377
 msgid "you"
-msgstr ""
+msgstr "thusa"
 
 #: menu/multiplayer/remove_dlg.py:14
 msgid "you have been removed from the match"
-msgstr ""
+msgstr "chaidh do thoirt air falbh on gheama"
 
 #: menu/multiplayer/forms.py:35
-#, fuzzy
 msgid "Supporter!"
-msgstr "Luchd-taic"
+msgstr "Neach-taic!"
 
 #: menu/multiplayer/forms.py:90
 msgid "send a message to the user"
-msgstr ""
+msgstr "cuir teachdaireachd ris a’ chleachdaiche"
 
 #: menu/multiplayer/forms.py:126
 msgid "isn't playing yorg"
@@ -387,7 +396,7 @@ msgstr ""
 
 #: menu/multiplayer/forms.py:185
 msgid "remove from the match"
-msgstr ""
+msgstr "thoir air falbh on gheama"
 
 #: menu/multiplayer/network_dlg.py:13
 msgid ""
@@ -395,25 +404,32 @@ msgid ""
 "forwarding for port 9099 on your host and your firewall allows traffic for "
 "Yorg on port 9099."
 msgstr ""
+"Mearachd leis a’ cheangal. Dearbhaich gun deach an rùtair agad a rèiteachadh "
+"ach an sìn e air adhart port 9099 air an fhrithealaiche agad agus gun leig "
+"a’ chachaileith-theine trafaig tro phort 9099 airson Yorg."
 
 #: menu/multiplayer/multiplayerfrm.py:103
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
 msgstr ""
+"Mhothaich sinn do dhuilgheadasan ceangail nuair a chruthaich sinn am "
+"frithealaiche. Thoir sùil air a’ cheangal agad."
 
 #: menu/multiplayer/multiplayerfrm.py:106
 msgid "We can't connect to httpbin. Please retry later."
 msgstr ""
+"Chan urrainn dhuinn ceangal a dhèanamh gu httpbin. Feuch ris a-rithist an "
+"ceann greis."
 
 #: menu/multiplayer/invite_dlg.py:16
 #, python-format
 msgid "%s has invited you to a match, do you agree?"
-msgstr ""
+msgstr "Thug %s cuireadh dhut airson geama, a bheil thu a’ gabhail ris?"
 
 #: yorg/yorg.py:165 yorg/fsm.py:164
 msgid "Toronto"
-msgstr ""
+msgstr "Toronto"
 
 #: yorg/yorg.py:165 yorg/fsm.py:164
 msgid "Rome"
