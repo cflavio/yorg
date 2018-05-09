@@ -137,12 +137,12 @@ class DriverPageGui(ThanksPageGui):
         drv_idx = range(8)
         drv_idx.remove(i)
         shuffle(drv_idx)
+        prev_drv = gprops.drivers_info[car_idx]
         gprops.drivers_info[car_idx] = gprops.drivers_info[i]
         gprops.drivers_info[car_idx].img_idx = i
         nname = self.this_name()
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
         gprops.drivers_info[car_idx].name = nname
-        gprops.drivers_info[i].img_idx = car_idx
+        gprops.drivers_info[i] = prev_drv
         self.eng.log('drivers: ' + str(gprops.drivers_info))
         self.notify('on_driver_selected', self.ent.get(), self.mediator.track,
                     self.mediator.car)
