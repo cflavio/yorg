@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-04-07 10:57+0000\n"
+"PO-Revision-Date: 2018-05-11 10:53+0000\n"
 "Last-Translator: xin <xin@riseup.net>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -412,37 +412,40 @@ msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
 msgstr ""
+"Nous avons détecté des problèmes de connexion durant la création du serveur. "
+"Veuillez vérifier votre connexion."
 
 #: menu/multiplayer/multiplayerfrm.py:106
 msgid "We can't connect to httpbin. Please retry later."
 msgstr ""
+"Nous ne pouvons nous connecter à httpbin. Veuillez réessayer plus tard."
 
 #: menu/multiplayer/invite_dlg.py:16
 #, python-format
 msgid "%s has invited you to a match, do you agree?"
 msgstr "%s vous a invité à une partie, êtes-vous d'accord ?"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Toronto"
 msgstr "Toronto"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Rome"
 msgstr "Rome"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Dubai"
 msgstr "Dubaï"
 
