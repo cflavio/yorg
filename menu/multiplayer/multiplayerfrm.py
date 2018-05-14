@@ -324,15 +324,15 @@ class MultiplayerFrm(GameObject):
             sock = socket(AF_INET, SOCK_DGRAM)
             try:
                 sock.connect(('ya2.it', 8080))
-                local_addr = sock.getsockname()[0]
+                mylocal_addr = sock.getsockname()[0]
             except gaierror:
-                local_addr = ''
+                mylocal_addr = ''
             self.eng.xmpp.client.send_message(
                 mfrom=self.eng.xmpp.client.boundjid.full,
                 mto=msg['from'].bare,
                 mtype='ya2_yorg',
                 msubject='ip_address',
-                mbody=mypublic_addr + '\n' + local_addr)
+                mbody=mypublic_addr + '\n' + mylocal_addr)
             chat, public_addr, local_addr = msg['body'].split('\n')
             for usr in self.eng.xmpp.users:
                 if usr.name == msg['from'].bare:
@@ -342,9 +342,11 @@ class MultiplayerFrm(GameObject):
                 if usr.name == msg['from'].bare:
                     if mypublic_addr == usr.public_addr:
                         ip_addr = usr.local_addr
+                        my_addr = mylocal_addr
                     else:
                         ip_addr = usr.public_addr
-            try: self.eng.client.start(self.process_msg_client, ip_addr)
+                        my_addr = mypublic_addr
+            try: self.eng.client.start(self.process_msg_client, ip_addr, my_addr)
             except NetworkError:
                 self.network_dlg = NetworkDialog(self.menu_args)
                 self.network_dlg.attach(self.on_network_dlg)

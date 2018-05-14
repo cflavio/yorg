@@ -181,7 +181,9 @@ class CarPageGuiServer(CarPageGui):
             btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.car_confirm, car], sender)
             self.eng.server.send([NetMsgs.car_selection, car, username])
-            self.eng.car_mapping[data_lst[-1]] = car
+            ip_string = sender.get_address().get_ip_string()
+            if ip_string.startswith('::ffff:'): ip_string = ip_string[7:]
+            self.eng.car_mapping[ip_string] = car
             self.evaluate_starting()
 
 
