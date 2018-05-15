@@ -127,11 +127,11 @@ msgstr "Estabilidad"
 
 #: menu/loginpage.py:20
 msgid "Your jabber id:"
-msgstr ""
+msgstr "Tu ID de Jabber:"
 
 #: menu/loginpage.py:22
 msgid "Your jabber password:"
-msgstr ""
+msgstr "Tu contraseña de Jabber:"
 
 #: menu/loginpage.py:26 menu/loginpage.py:91 menu/loginpage.py:99
 #, fuzzy
@@ -140,15 +140,15 @@ msgstr "Tu Nombre"
 
 #: menu/loginpage.py:37
 msgid "Log-in"
-msgstr ""
+msgstr "Entrar"
 
 #: menu/loginpage.py:40
 msgid "store the password"
-msgstr ""
+msgstr "pon la contraseña"
 
 #: menu/loginpage.py:45
 msgid "(only if your computer is not shared with other people)"
-msgstr ""
+msgstr "(solo si tu ordenador no está compartido con otra gente)"
 
 #: menu/loginpage.py:48
 msgid ""
@@ -162,6 +162,16 @@ msgid ""
 "4. Yorg's XMPP code is still experimental: if you have important data in "
 "your XMPP account, please create a new account for playing Yorg with."
 msgstr ""
+"1. Si eres un contribuyente, por favor escribenos (flavio@ya2.it) tu ID de "
+"Jabber paraque podamos marcar tu cuenta como de Contribuyente. \n"
+"2. Yorg envía tu presencia XMPP a otros usuarios de Yorg , por lo que ellos "
+"pueden vertu estatus de presencia. Si no quieres esto, por favor, no uses tu "
+"cuenta personal y crea una nueva para Yorg.\n"
+"3. Cuando tu añades un amigo de Yorg, tu estás añadiendote a su lista de "
+"cuentas también. \n"
+"4. El código XMPP contunua siendo experimental: si tienes información "
+"importante en tu cuenta XMPP, por favor, crea una nueva cuenta para jugar "
+"con ella a Yorg."
 
 #: menu/loginpage.py:116
 msgid "Error"
@@ -181,6 +191,9 @@ msgid ""
 "like nickname@domainname.tld where nickname is your nickname and domainname."
 "tld is a valid domain."
 msgstr ""
+"El ID de Jabber que has introducido no es correcto: debería ser algocomo "
+"apodo@nombrededominio.tld  donde apodo es tu nick y nombrededominio.tldes un "
+"dominio válido."
 
 #: menu/driverpage.py:45
 msgid "Select the driver"
@@ -197,15 +210,15 @@ msgstr "Tu Nombre"
 
 #: menu/mainpage.py:96
 msgid "Not up-to-date"
-msgstr ""
+msgstr "No actualizado"
 
 #: menu/mainpage.py:98
 msgid "Log out"
-msgstr ""
+msgstr "Desconectar"
 
 #: menu/mainpage.py:101
 msgid "Log in"
-msgstr ""
+msgstr "Conéctate"
 
 #: menu/mainpage.py:101
 #, fuzzy
@@ -309,52 +322,52 @@ msgstr "Esperando por el Servidor"
 #: menu/multiplayer/exit_dlg.py:15
 #, python-format
 msgid "the server user %s has quitted"
-msgstr ""
+msgstr "el usuario del servidor %s ha salido"
 
 #: menu/multiplayer/friend_dlg.py:15
 #, python-format
 msgid "%s wants to be a (XMPP) friend of you, do you agree?"
-msgstr ""
+msgstr "%s quiere ser amigo (XMPP) tuyo, ¿estás de acuerdo?"
 
 #: menu/multiplayer/usersfrm.py:31
 msgid "Current online users"
-msgstr ""
+msgstr "Usuarios conectados actualmente"
 
 #: menu/multiplayer/usersfrm.py:69
 msgid "Your game isn't up-to-date, please update"
-msgstr ""
+msgstr "Tu juego no está actualizado, por favor actualiza"
 
 #: menu/multiplayer/usersfrm.py:70
 msgid "You aren't logged in"
-msgstr ""
+msgstr "No estás logueado"
 
 #: menu/multiplayer/usersfrm.py:72
 msgid "Yorg's server isn't running"
-msgstr ""
+msgstr "El servidor de Yorg no está ejecutándose"
 
 #: menu/multiplayer/usersfrm.py:141
 msgid "invite the user to a match"
-msgstr ""
+msgstr "invitar el usuario a una partida"
 
 #: menu/multiplayer/usersfrm.py:142
 msgid "you can't invite more players"
-msgstr ""
+msgstr "no puedes invitar a más jugadores"
 
 #: menu/multiplayer/usersfrm.py:143
 msgid "you're already in a match"
-msgstr ""
+msgstr "estás en una partida en este momento"
 
 #: menu/multiplayer/usersfrm.py:144
 msgid "the user isn't playing yorg"
-msgstr ""
+msgstr "el usuario no está jugando a yorg"
 
 #: menu/multiplayer/usersfrm.py:145
 msgid "you've already invited this user"
-msgstr ""
+msgstr "ya has invitado a este usuario"
 
 #: menu/multiplayer/usersfrm.py:146
 msgid "the user is already playing a match"
-msgstr ""
+msgstr "el usuario esta jugando una partida en este momento"
 
 #: menu/multiplayer/messagefrm.py:60 menu/multiplayer/messagefrm.py:185
 #: menu/multiplayer/messagefrm.py:231 menu/multiplayer/messagefrm.py:476
@@ -364,11 +377,11 @@ msgstr "Escribe tu Nombre:"
 
 #: menu/multiplayer/messagefrm.py:357 menu/multiplayer/messagefrm.py:377
 msgid "you"
-msgstr ""
+msgstr "tu"
 
 #: menu/multiplayer/remove_dlg.py:14
 msgid "you have been removed from the match"
-msgstr ""
+msgstr "has sido borrado de la partida"
 
 #: menu/multiplayer/forms.py:35
 #, fuzzy
@@ -377,15 +390,15 @@ msgstr "Contribuyentes"
 
 #: menu/multiplayer/forms.py:90
 msgid "send a message to the user"
-msgstr ""
+msgstr "enviar un mensaje al usuario"
 
 #: menu/multiplayer/forms.py:126
 msgid "isn't playing yorg"
-msgstr ""
+msgstr "no está jugado a Yorg"
 
 #: menu/multiplayer/forms.py:185
 msgid "remove from the match"
-msgstr ""
+msgstr "borrar de la partida"
 
 #: menu/multiplayer/network_dlg.py:13
 msgid ""
@@ -393,43 +406,47 @@ msgid ""
 "forwarding for port 9099 on your host and your firewall allows traffic for "
 "Yorg on port 9099."
 msgstr ""
+"Error de Conexión. Por favor, comprueba que tu router tiene el puerto 9099 "
+"abierto y tu firewall permite el tráfico paraYorg en el puerto 9099"
 
 #: menu/multiplayer/multiplayerfrm.py:103
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
 msgstr ""
+"Hemos detectado problemas de conexión durante la creación del servidor. Por "
+"favor Compruebatu conexión"
 
 #: menu/multiplayer/multiplayerfrm.py:106
 msgid "We can't connect to httpbin. Please retry later."
-msgstr ""
+msgstr "No podemos conectar a httpbien. Por favor, inténtalo más tarde."
 
 #: menu/multiplayer/invite_dlg.py:16
 #, python-format
 msgid "%s has invited you to a match, do you agree?"
-msgstr ""
+msgstr "%s te ha invitado a una partida, ¿aceptas?"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Toronto"
-msgstr ""
+msgstr "Toronto"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Rome"
 msgstr "Roma"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Dubai"
 msgstr "Dubai"
 

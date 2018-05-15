@@ -131,24 +131,24 @@ msgstr ""
 
 #: menu/loginpage.py:22
 msgid "Your jabber password:"
-msgstr ""
+msgstr "O teu contrasinal de Jabber"
 
 #: menu/loginpage.py:26 menu/loginpage.py:91 menu/loginpage.py:99
 #, fuzzy
 msgid "your jabber id"
-msgstr "O teu Nome"
+msgstr "O teu ID de Jabber"
 
 #: menu/loginpage.py:37
 msgid "Log-in"
-msgstr ""
+msgstr "Entra"
 
 #: menu/loginpage.py:40
 msgid "store the password"
-msgstr ""
+msgstr "escriba o contrasinal"
 
 #: menu/loginpage.py:45
 msgid "(only if your computer is not shared with other people)"
-msgstr ""
+msgstr "(solo si o teu computador non está compartido con outra xente)"
 
 #: menu/loginpage.py:48
 msgid ""
@@ -162,6 +162,16 @@ msgid ""
 "4. Yorg's XMPP code is still experimental: if you have important data in "
 "your XMPP account, please create a new account for playing Yorg with."
 msgstr ""
+"1. Se ti eres un contribuinte, por favor escibenos (flavio@ya2.it) o teu ID "
+"de Jabberasí podremos marcar a tua conta como un contribuinte2. Yorg envía a "
+"tua presenza XMPP a outros usuarios de Yorg, polo que eles ponde ver o "
+"teuestatus de presenza XMPP. Se non queres isto, por favor non uses a tua "
+"conta persoal e fai unha nova para Yorg. \n"
+"3. Cando engadas un amigo en Yorg, estás engadindoo a lista da tua conta "
+"tamén.\n"
+" 4. O código XMPP de Yorg continúa sendo experimental: se tes información "
+"importante natua conta de XMPP, por favor fai unha nova conta para xogar con "
+"Yorg nela"
 
 #: menu/loginpage.py:116
 msgid "Error"
@@ -181,6 +191,9 @@ msgid ""
 "like nickname@domainname.tld where nickname is your nickname and domainname."
 "tld is a valid domain."
 msgstr ""
+"O ID de Jabber que intruduciches non é correcto: ten que ser algo coma "
+"apodo@nomedodominio.tld onde apodo é o teu nick e nomedodominio.tldé un "
+"dominio válido."
 
 #: menu/driverpage.py:45
 msgid "Select the driver"
@@ -193,19 +206,19 @@ msgstr "Escribe o teu Nome:"
 #: menu/driverpage.py:166 menu/driverpage.py:173 menu/driverpage.py:174
 #: menu/driverpage.py:175 menu/driverpage.py:177 menu/driverpage.py:180
 msgid "your name"
-msgstr "O teu Nome"
+msgstr "Teu Nome"
 
 #: menu/mainpage.py:96
 msgid "Not up-to-date"
-msgstr ""
+msgstr "Non Actualizado"
 
 #: menu/mainpage.py:98
 msgid "Log out"
-msgstr ""
+msgstr "Sair"
 
 #: menu/mainpage.py:101
 msgid "Log in"
-msgstr ""
+msgstr "Loguearse"
 
 #: menu/mainpage.py:101
 #, fuzzy
@@ -239,7 +252,7 @@ msgstr "Sair"
 
 #: menu/mainpage.py:132
 msgid "Note: the game is work-in-progress"
-msgstr "Nota: o xogo está en desenrrolo"
+msgstr "Nota: o xogo está en desenrolo"
 
 #: menu/mainpage.py:169 menu/mainpage.py:172
 msgid "Last news:"
@@ -309,52 +322,52 @@ msgstr "Agardando polo servidor"
 #: menu/multiplayer/exit_dlg.py:15
 #, python-format
 msgid "the server user %s has quitted"
-msgstr ""
+msgstr "o usario do servidor %s saíu"
 
 #: menu/multiplayer/friend_dlg.py:15
 #, python-format
 msgid "%s wants to be a (XMPP) friend of you, do you agree?"
-msgstr ""
+msgstr "%s quere ser amigo teu (XMPP), ¿estás de acordo?"
 
 #: menu/multiplayer/usersfrm.py:31
 msgid "Current online users"
-msgstr ""
+msgstr "Usuarios Online Actuais"
 
 #: menu/multiplayer/usersfrm.py:69
 msgid "Your game isn't up-to-date, please update"
-msgstr ""
+msgstr "O teu xogo non está actualizado, por favor actualiza"
 
 #: menu/multiplayer/usersfrm.py:70
 msgid "You aren't logged in"
-msgstr ""
+msgstr "Non estás logueado"
 
 #: menu/multiplayer/usersfrm.py:72
 msgid "Yorg's server isn't running"
-msgstr ""
+msgstr "O servidor de Yorg non está executándose"
 
 #: menu/multiplayer/usersfrm.py:141
 msgid "invite the user to a match"
-msgstr ""
+msgstr "Invitar o usuario a unha partida"
 
 #: menu/multiplayer/usersfrm.py:142
 msgid "you can't invite more players"
-msgstr ""
+msgstr "Non podes invitar a mais xogadores"
 
 #: menu/multiplayer/usersfrm.py:143
 msgid "you're already in a match"
-msgstr ""
+msgstr "Xa estás actualmente noutra partida"
 
 #: menu/multiplayer/usersfrm.py:144
 msgid "the user isn't playing yorg"
-msgstr ""
+msgstr "o usuario non está a xogar a Yorg"
 
 #: menu/multiplayer/usersfrm.py:145
 msgid "you've already invited this user"
-msgstr ""
+msgstr "xa invitaches a este usuario"
 
 #: menu/multiplayer/usersfrm.py:146
 msgid "the user is already playing a match"
-msgstr ""
+msgstr "o usuario esta neste momento xogando unha partida"
 
 #: menu/multiplayer/messagefrm.py:60 menu/multiplayer/messagefrm.py:185
 #: menu/multiplayer/messagefrm.py:231 menu/multiplayer/messagefrm.py:476
@@ -364,28 +377,28 @@ msgstr "Escribe o teu Nome:"
 
 #: menu/multiplayer/messagefrm.py:357 menu/multiplayer/messagefrm.py:377
 msgid "you"
-msgstr ""
+msgstr "Ti"
 
 #: menu/multiplayer/remove_dlg.py:14
 msgid "you have been removed from the match"
-msgstr ""
+msgstr "foches borrado da partida"
 
 #: menu/multiplayer/forms.py:35
 #, fuzzy
 msgid "Supporter!"
-msgstr "Contribuintes"
+msgstr "Contribuintes!"
 
 #: menu/multiplayer/forms.py:90
 msgid "send a message to the user"
-msgstr ""
+msgstr "enviar unha mensaxe o usuario"
 
 #: menu/multiplayer/forms.py:126
 msgid "isn't playing yorg"
-msgstr ""
+msgstr "non está a xogar a Yorg"
 
 #: menu/multiplayer/forms.py:185
 msgid "remove from the match"
-msgstr ""
+msgstr "borrar da partida"
 
 #: menu/multiplayer/network_dlg.py:13
 msgid ""
@@ -393,43 +406,48 @@ msgid ""
 "forwarding for port 9099 on your host and your firewall allows traffic for "
 "Yorg on port 9099."
 msgstr ""
+"Erro de conexión. Por favor comproba que o teu router está configurado co "
+"porto9099 aberto no tou cliente e o teu firewall permite o tráfico paraYorg "
+"no porto 9099."
 
 #: menu/multiplayer/multiplayerfrm.py:103
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
 msgstr ""
+"Detectamos problemas de conexión durante a creación do servidor. Por favor "
+"comprobaa tua conexión."
 
 #: menu/multiplayer/multiplayerfrm.py:106
 msgid "We can't connect to httpbin. Please retry later."
-msgstr ""
+msgstr "Non podemos conectar a httpbin. Por favor, tentao mais tarde."
 
 #: menu/multiplayer/invite_dlg.py:16
 #, python-format
 msgid "%s has invited you to a match, do you agree?"
-msgstr ""
+msgstr "%s invitoute a unha partida, ¿estás de acordo?"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Toronto"
-msgstr ""
+msgstr "Toronto"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Rome"
 msgstr "Roma"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Dubai"
 msgstr "Dubai"
 
@@ -550,7 +568,7 @@ msgstr "Volta: "
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:52
 msgid "Starting grid"
-msgstr "Grella de Saida"
+msgstr "Posición de Saida"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:72
 msgid "Controls"
