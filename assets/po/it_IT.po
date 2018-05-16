@@ -396,19 +396,22 @@ msgstr "rimuovi dalla partita"
 
 #: menu/multiplayer/network_dlg.py:13
 msgid ""
-"Connection error. Please check that your router is configured for doing port-"
-"forwarding for port 9099 on your host and your firewall allows traffic for "
-"Yorg on port 9099."
+"Connection error. Please check that (i) your firewall allows traffic for "
+"Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
+"a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
 msgstr ""
-"Errore di connessione. Per piacere, controlla che il tuo router sia "
-"configurato per fare port-forwarding sulla porta 9099 verso il tuo computer "
-"e che il tuo firewall permetta traffico per Yorg sulla porta 9099."
+"Errore di connessione. Per favore controlla che (i) il tuo firewall permetta "
+"traffico per Yorg sulla porta 9099 e (ii) l'utente server abbia aperto la "
+"sua porta 9099 (ecco una guida per verificarlo: http://www.ya2.it/pages/"
+"check-your-ports.html)."
 
 #: menu/multiplayer/multiplayerfrm.py:103
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
-msgstr "Abbiamo individuato problemi durante la creazione del server. Per piacere, controlla la tua connessione."
+msgstr ""
+"Abbiamo individuato problemi durante la creazione del server. Per piacere, "
+"controlla la tua connessione."
 
 #: menu/multiplayer/multiplayerfrm.py:106
 msgid "We can't connect to httpbin. Please retry later."
@@ -419,27 +422,27 @@ msgstr "Non riusciamo a connetterci a httpbin. Per piacere, ritenda dopo."
 msgid "%s has invited you to a match, do you agree?"
 msgstr "%s ti ha invitato a una partita, accetti?"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Toronto"
 msgstr "Toronto"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Rome"
 msgstr "Roma"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Dubai"
 msgstr "Dubai"
 

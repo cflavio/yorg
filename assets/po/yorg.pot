@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 16:34+0200\n"
+"POT-Creation-Date: 2018-05-16 14:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,9 +378,9 @@ msgstr ""
 
 #: menu/multiplayer/network_dlg.py:13
 msgid ""
-"Connection error. Please check that your router is configured for doing port-"
-"forwarding for port 9099 on your host and your firewall allows traffic for "
-"Yorg on port 9099."
+"Connection error. Please check that (i) your firewall allows traffic for "
+"Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
+"a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
 msgstr ""
 
 #: menu/multiplayer/multiplayerfrm.py:103
@@ -398,27 +398,27 @@ msgstr ""
 msgid "%s has invited you to a match, do you agree?"
 msgstr ""
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Toronto"
 msgstr ""
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Rome"
 msgstr ""
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Sheffield"
 msgstr ""
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Orlando"
 msgstr ""
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Nagano"
 msgstr ""
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Dubai"
 msgstr ""
 

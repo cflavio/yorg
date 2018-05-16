@@ -10,9 +10,10 @@ class NetworkDialog(GameObject, Subject):
         Subject.__init__(self)
         GameObject.__init__(self)
         net_msg = _(
-            'Connection error. Please check that your router is configured '
-            'for doing port-forwarding for port 9099 on your host and your '
-            'firewall allows traffic for Yorg on port 9099.')
+            'Connection error. Please check that (i) your firewall allows '
+            'traffic for Yorg on port 9099 and (ii) the server user has '
+            'opened her port 9099 (here is a guide for checking it: '
+            'http://www.ya2.it/pages/check-your-ports.html).')
         self.dialog = OkDialog(
             text=net_msg,
             text_wordwrap=16,

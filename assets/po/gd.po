@@ -163,9 +163,9 @@ msgid ""
 "4. Yorg's XMPP code is still experimental: if you have important data in "
 "your XMPP account, please create a new account for playing Yorg with."
 msgstr ""
-"1. Ma tha thu ’nan neach-taic, innis an is jabber agad dhuinn "
-"(flavio@ya2.it) ach an cuir sinn comharra ris a’ chunntas agad gur e neach-"
-"taic a th’ annad.\n"
+"1. Ma tha thu ’nan neach-taic, innis an is jabber agad dhuinn (flavio@ya2."
+"it) ach an cuir sinn comharra ris a’ chunntas agad gur e neach-taic a th’ "
+"annad.\n"
 "2. Cuiridh Yorg do làthaireachd air XMPP gu cleachdaichean Yorg eile ach am "
 "faic iad a bheil thu an làthair air XMPP. Mur eil thu ’ga iarraidh, na "
 "cleachd an cunntas pearsanta agad agus cruthaich fear fa leth ùr airson "
@@ -400,13 +400,10 @@ msgstr "thoir air falbh on gheama"
 
 #: menu/multiplayer/network_dlg.py:13
 msgid ""
-"Connection error. Please check that your router is configured for doing port-"
-"forwarding for port 9099 on your host and your firewall allows traffic for "
-"Yorg on port 9099."
+"Connection error. Please check that (i) your firewall allows traffic for "
+"Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
+"a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
 msgstr ""
-"Mearachd leis a’ cheangal. Dearbhaich gun deach an rùtair agad a rèiteachadh "
-"ach an sìn e air adhart port 9099 air an fhrithealaiche agad agus gun leig "
-"a’ chachaileith-theine trafaig tro phort 9099 airson Yorg."
 
 #: menu/multiplayer/multiplayerfrm.py:103
 msgid ""
@@ -427,27 +424,27 @@ msgstr ""
 msgid "%s has invited you to a match, do you agree?"
 msgstr "Thug %s cuireadh dhut airson geama, a bheil thu a’ gabhail ris?"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Toronto"
 msgstr "Toronto"
 
-#: yorg/yorg.py:165 yorg/fsm.py:164
+#: yorg/yorg.py:165 yorg/fsm.py:165
 msgid "Rome"
 msgstr "An Ròimh"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:165 yorg/fsm.py:166
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:166 yorg/fsm.py:166
+#: yorg/yorg.py:166 yorg/fsm.py:167
 msgid "Dubai"
 msgstr "Dubai"
 
@@ -617,6 +614,15 @@ msgstr "taidhirean: +"
 #: yyagl/racing/race/gui/loading/loadingpage.py:104
 msgid "suspensions: +"
 msgstr "crochaidhean: +"
+
+#~ msgid ""
+#~ "Connection error. Please check that your router is configured for doing "
+#~ "port-forwarding for port 9099 on your host and your firewall allows "
+#~ "traffic for Yorg on port 9099."
+#~ msgstr ""
+#~ "Mearachd leis a’ cheangal. Dearbhaich gun deach an rùtair agad a "
+#~ "rèiteachadh ach an sìn e air adhart port 9099 air an fhrithealaiche agad "
+#~ "agus gun leig a’ chachaileith-theine trafaig tro phort 9099 airson Yorg."
 
 #~ msgid "Client"
 #~ msgstr "Cliant"

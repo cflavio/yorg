@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -399,13 +399,14 @@ msgstr "retirer de cette partie"
 
 #: menu/multiplayer/network_dlg.py:13
 msgid ""
-"Connection error. Please check that your router is configured for doing port-"
-"forwarding for port 9099 on your host and your firewall allows traffic for "
-"Yorg on port 9099."
+"Connection error. Please check that (i) your firewall allows traffic for "
+"Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
+"a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
 msgstr ""
-"Erreur de connexion. Veillez vérifier que votre routeur est configuré pour "
-"faire de la redirection de port pour le port 9099 sur votre hôte et que "
-"votre pare-feu autorise le trafic pour Yorg sur le port 9099."
+"Erreur de connexion. Veuillez vérifier (i) que votre pare-feu autorise le "
+"trafic pour Yorg sur le port 9099 et (ii) que le serveur utilisateur a "
+"ouvert son port 9099 (un guide pour vérifier : "
+"http://www.ya2.it/pages/check-your-ports.html)."
 
 #: menu/multiplayer/multiplayerfrm.py:103
 msgid ""
