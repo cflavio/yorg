@@ -112,8 +112,8 @@ class OptionPageGui(ThanksPageGui):
     def __change_lang(self, arg):
         lang_dict = {
             'English': 'en', 'Italiano': 'it', 'Deutsch': 'de',
-            u'G\u00E0idhlig': 'gd', 'Spanish': 'es', 'Galician': 'gl',
-            'French': 'fr'}
+            u'G\u00E0idhlig': 'gd', u'Espa\u00F1ol': 'es', 'Galego': 'gl',
+            u'Fran\u00E7ais': 'fr'}
         self.eng.lang_mgr.set_lang(lang_dict[arg])
         self.translate()
 

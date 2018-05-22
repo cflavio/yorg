@@ -404,8 +404,8 @@ msgid ""
 "a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
 msgstr ""
 "Erreur de connexion. Veuillez vérifier (i) que votre pare-feu autorise le "
-"trafic pour Yorg sur le port 9099 et (ii) que le serveur utilisateur a "
-"ouvert son port 9099 (un guide pour vérifier : "
+"trafic pour Yorg sur le port 9099 et (ii) que l'utilisateur du serveur a "
+"ouvert son port 9099 (un guide pour vérifier: "
 "http://www.ya2.it/pages/check-your-ports.html)."
 
 #: menu/multiplayer/multiplayerfrm.py:103
