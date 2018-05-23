@@ -421,14 +421,14 @@ class MessageFrm(GameObject):
     def on_presence_available_room(self, msg):
         if str(JID(msg['from']).bare) == self.curr_match_room:
             self.match_msg_frm.on_presence_available_room(msg)
-            return
         room = str(JID(msg['muc']['room']).bare)
         nick = str(msg['muc']['nick'])
         self.eng.log('user %s has logged in the chat %s' %(nick, room))
         chat = self.__find_chat(room)
         chat.users += [nick]
-        if self.curr_chat.dst == room:
-            self.set_title(chat.title)
+        if str(JID(msg['from']).bare) != self.curr_match_room:
+            if self.curr_chat.dst == room:
+                self.set_title(chat.title)
 
     def on_presence_unavailable_room(self, msg):
         if self.match_msg_frm and str(JID(msg['from']).bare) == self.curr_match_room:

@@ -265,11 +265,11 @@ class DriverPageServerGui(DriverPageGui):
                     curr_addr = addr
             username = ''
             for usr in self.eng.xmpp.users:
-                if usr.local_addr == addr:
+                if usr.local_addr == curr_addr:
                     username = usr.name
             if not username:
                 for usr in self.eng.xmpp.users:
-                    if usr.public_addr == addr:
+                    if usr.public_addr == curr_addr:
                         username = usr.name
             btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.driver_confirm, drv], sender)

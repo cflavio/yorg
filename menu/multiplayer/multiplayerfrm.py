@@ -157,6 +157,7 @@ class MultiplayerFrm(GameObject):
             self.match_frm.on_presence_unavailable_room(msg)
         self.msg_frm.on_presence_unavailable_room(msg)
         if str(msg['muc']['nick']) == self.users_frm.in_match_room:
+            self.eng.xmpp.notify('on_server_quit')
             self.exit_dlg = ExitDialog(self.menu_args, msg)
             self.exit_dlg.attach(self.on_exit_dlg)
         if str(msg['muc']['nick']) == self.eng.xmpp.client.boundjid.bare and \

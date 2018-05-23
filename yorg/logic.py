@@ -1,4 +1,5 @@
 from random import shuffle
+from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from yaml import load
 from collections import OrderedDict
 from direct.gui.OnscreenText import OnscreenText
@@ -174,7 +175,10 @@ class YorgLogic(GameLogic):
                         self.eng.log_mgr.log('start_race: ' + str(data_lst))
                         cars = data_lst[4::7]
                         self.on_car_start_client(self.sel_track, car, cars, data_lst)
-                self.eng.client.start(process_msg, server)
+                sock = socket(AF_INET, SOCK_DGRAM)
+                sock.connect(('ya2.it', 8080))
+                mylocal_addr = sock.getsockname()[0]
+                self.eng.client.start(process_msg, server, mylocal_addr)
                 self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
                 gprops = self.mediator.gameprops
                 sprops = self.season.props
