@@ -2,19 +2,12 @@
 
 # TODO LIST =====
 
-# 0.10
+# 0.10 (local multiplayer)
 # add car helios
 # gui revamp
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
 #   speed: speed number with a semicircle with a shader
 # feedback: couch multiplayer
-# upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
-#   pystun, p2pnat)
-# make a client-server solution (server on ya2tech.it) (advantages: doesn't
-#   require port forwarding, robust - no match server)
-# evaluate stun server - pystun or some stun lib
-# evaluate reliable udp: enet, raknet, ...
-# refactoring of yorg server and players' servers: use rpyc
 # rotate the car towards the direction while flying
 # car should be parallel to the ground while flying
 # lower mass center
@@ -22,7 +15,20 @@
 # after a flight, when a wheel hits the ground, set its friction to 0 and
 #   restore it in 0.5 seconds linearly
 
-# 0.11
+# 0.11 (better online multiplayer)
+# do a single page with track, drivers, cars and messages for all: single,
+#  local and online multiplayer
+# upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
+#   pystun, p2pnat)
+# make a client-server solution (server on ya2tech.it) (advantages: doesn't
+#   require port forwarding, robust - no match server)
+# evaluate stun server - pystun or some stun lib
+# evaluate reliable udp: enet, raknet, ...
+# refactoring of yorg server and players' servers: use rpyc
+# remove xmpp: register users from the game with a db on the server, player's
+#   disconnection using socket
+
+# 0.12 (more cameras)
 # add friendship
 # feedback: add more cameras
 

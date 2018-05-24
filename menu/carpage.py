@@ -113,6 +113,8 @@ class CarPageGuiServer(CarPageGui):
         CarPageGui.build(self, exit_behav=True)
         self.eng.server.register_cb(self.process_srv)
         self.eng.car_mapping = {}
+        self.eng.xmpp.attach(self.on_presence_unavailable)
+        self.eng.xmpp.attach(self.on_presence_unavailable_room)
 
     def on_car(self, car):
         self.eng.log_mgr.log('car selected: ' + car)
@@ -185,6 +187,17 @@ class CarPageGuiServer(CarPageGui):
             if ip_string.startswith('::ffff:'): ip_string = ip_string[7:]
             self.eng.car_mapping[ip_string] = car
             self.evaluate_starting()
+
+    def on_presence_unavailable(self, msg):
+        self.evaluate_starting()
+
+    def on_presence_unavailable_room(self, msg):
+        self.evaluate_starting()
+
+    def destroy(self):
+        self.eng.xmpp.detach(self.on_presence_unavailable)
+        self.eng.xmpp.detach(self.on_presence_unavailable_room)
+        CarPageGui.destroy(self)
 
 
 class CarPageGuiClient(CarPageGui):

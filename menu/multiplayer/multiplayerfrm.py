@@ -30,6 +30,7 @@ class MultiplayerFrm(GameObject):
         self.ver_check = VersionChecker()
         self.labels = []
         self.invited_users = []
+        self.curr_inviting_usr = None
         self.menu_args = menu_args
         self.users_frm = UsersFrm(menu_args, yorg_srv)
         self.users_frm.attach(self.on_invite)
@@ -177,6 +178,8 @@ class MultiplayerFrm(GameObject):
 
     def on_presence_unavailable(self, msg):
         self.users_frm.on_users()
+        if str(msg['from']) == str(self.curr_inviting_usr):
+            self.on_cancel_invite()
 
     def on_logout(self):
         self.users_frm.on_logout()
@@ -305,6 +308,7 @@ class MultiplayerFrm(GameObject):
             return
         self.invite_dlg = InviteDialog(self.menu_args, msg)
         self.invite_dlg.attach(self.on_invite_answer)
+        self.curr_inviting_usr = msg['from']
         for usr_name in [self.yorg_srv] + \
             [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
             self.eng.xmpp.client.send_message(
@@ -317,6 +321,7 @@ class MultiplayerFrm(GameObject):
         self.on_users()
 
     def on_invite_answer(self, msg, val):
+        self.curr_inviting_usr = None
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
         self.users_frm.invited = False
@@ -402,6 +407,7 @@ class MultiplayerFrm(GameObject):
         self.network_dlg.destroy()
 
     def on_cancel_invite(self):
+        self.curr_inviting_usr = None
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
         self.users_frm.invited = False
@@ -414,6 +420,7 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.add_chat(usr)
 
     def on_add_groupchat(self, room, usr):
+        if self.match_frm.room == room: return
         self.msg_frm.add_groupchat(room, usr)
         self.match_frm.room = room
         self.notify('on_create_room', room, usr)

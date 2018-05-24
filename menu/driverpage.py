@@ -198,6 +198,8 @@ class DriverPageServerGui(DriverPageGui):
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
         self.name['text'] += ' ' + self.eng.xmpp.client.boundjid.bare
+        #self.eng.xmpp.attach(self.on_presence_unavailable)
+        self.eng.xmpp.attach(self.on_presence_unavailable_room)
 
     def on_click(self, i):
         self.eng.log('selected driver ' + str(i))
@@ -290,6 +292,17 @@ class DriverPageServerGui(DriverPageGui):
                 if drv_i.img_idx == drv and i != car_idx:
                     gprops.drivers_info[i] = prev_drv
             self.evaluate_starting()
+
+    #def on_presence_unavailable(self, msg):
+    #    self.evaluate_starting()
+
+    def on_presence_unavailable_room(self, msg):
+        self.evaluate_starting()
+
+    def destroy(self):
+        #self.eng.xmpp.detach(self.on_presence_unavailable)
+        self.eng.xmpp.detach(self.on_presence_unavailable_room)
+        DriverPageGui.destroy(self)
 
 
 class DriverPageClientGui(DriverPageGui):
