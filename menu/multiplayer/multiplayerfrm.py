@@ -161,6 +161,7 @@ class MultiplayerFrm(GameObject):
             self.eng.xmpp.notify('on_server_quit')
             self.exit_dlg = ExitDialog(self.menu_args, msg)
             self.exit_dlg.attach(self.on_exit_dlg)
+            self.eng.show_cursor()
         if str(msg['muc']['nick']) == self.eng.xmpp.client.boundjid.bare and \
                 self.match_frm and msg['muc']['room'] == self.match_frm.room:
             self.removed_dlg = RemovedDialog(self.menu_args, msg)
