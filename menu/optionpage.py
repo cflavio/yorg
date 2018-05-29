@@ -105,8 +105,8 @@ class OptionPageGui(ThanksPageGui):
     def translate(self):
         PageGui.translate(self)
         curr_lang = self.eng.lang_mgr.lang
-        code2idx = {'en': 0, 'de': 1, 'fr': 2, 'gd': 3, 'gl': 4, 'it': 5,
-                    'es': 6}
+        code2idx = {'en': 0, 'de': 1, 'fr': 3, 'gd': 4, 'gl': 5, 'it': 6,
+                    'es': 2}
         self.lang_opt.set(code2idx[curr_lang], fCommand=0)
 
     def __change_lang(self, arg):

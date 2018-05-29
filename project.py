@@ -11,7 +11,6 @@
 # rotate the car towards the direction while flying
 # car should be parallel to the ground while flying
 # lower mass center
-# drifting force function of linear and angular velocities
 # after a flight, when a wheel hits the ground, set its friction to 0 and
 #   restore it in 0.5 seconds linearly
 
@@ -31,6 +30,7 @@
 # 0.12 (more cameras)
 # add friendship
 # feedback: add more cameras
+# drifting force function of linear and angular velocities
 
 
 # WAITING =====
