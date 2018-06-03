@@ -144,7 +144,7 @@ msgstr "Entra"
 
 #: menu/loginpage.py:40
 msgid "store the password"
-msgstr "escriba o contrasinal"
+msgstr "gardar contrasinal"
 
 #: menu/loginpage.py:45
 msgid "(only if your computer is not shared with other people)"

@@ -144,7 +144,7 @@ msgstr "Entrar"
 
 #: menu/loginpage.py:40
 msgid "store the password"
-msgstr "pon la contraseña"
+msgstr "guardar contraseña"
 
 #: menu/loginpage.py:45
 msgid "(only if your computer is not shared with other people)"
