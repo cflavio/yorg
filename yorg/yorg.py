@@ -115,9 +115,11 @@ class Yorg(Game):
             pyprof_percall=opt_dev['pyprof_percall'])
         lang_cfg = LangCfg(lang=self.options['settings']['lang'],
                            lang_domain='yorg',
-                           languages=['English', 'Deutsch', u'Espa\u00F1ol',
-                                      u'Fran\u00E7ais', u'G\u00E0idhlig',
-                                      'Galego', 'Italiano'])
+                           languages=[('English', 'en'), ('Deutsch', 'de'),
+                                      (u'Espa\u00F1ol', 'es'),
+                                      (u'Fran\u00E7ais', 'fr'),
+                                      (u'G\u00E0idhlig', 'gd'),
+                                      ('Galego', 'gl'), ('Italiano', 'it')])
         cursor_cfg = CursorCfg(
             cursor_path='assets/images/gui/cursor.txo',
             cursor_scale=((256/352.0) * .08, 1, .08),

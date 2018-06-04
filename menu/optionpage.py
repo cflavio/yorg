@@ -33,8 +33,9 @@ class OptionPageGui(ThanksPageGui):
     def build(self):
         menu_args = self.menu_args
         widgets = [self.__add_lab('Language', _('Language'), .85)]
+        langs = [lan[0] for lan in self.eng.languages]
         self.lang_opt = OptionMenu(
-            text='', items=self.eng.languages, pos=(.29, 1, .85),
+            text='', items=langs, pos=(.29, 1, .85),
             initialitem=self.props.lang, command=self.__change_lang,
             **menu_args.option_args)
         widgets += [self.__add_lab('Volume', _('Volume'), .65)]
@@ -86,7 +87,7 @@ class OptionPageGui(ThanksPageGui):
             self.aa_cb, input_btn, self.shaders_cb, self.cars_opt]
         self.add_widgets(widgets)
         idx = self.eng.lang_mgr.lang_codes.index(self.props.lang)
-        self.__change_lang(self.eng.languages[idx])
+        self.__change_lang(self.eng.languages[idx][0])
         ThanksPageGui.build(self)
 
     def __add_lab(self, txt, txt_tr, pos_z, pos_x=-.3, align=TextNode.ARight,
@@ -105,23 +106,19 @@ class OptionPageGui(ThanksPageGui):
     def translate(self):
         PageGui.translate(self)
         curr_lang = self.eng.lang_mgr.lang
-        code2idx = {'en': 0, 'de': 1, 'fr': 3, 'gd': 4, 'gl': 5, 'it': 6,
-                    'es': 2}
-        self.lang_opt.set(code2idx[curr_lang], fCommand=0)
+        idx = [lang for lang in enumerate(self.eng.cfg.lang_cfg.languages) if lang[1][1] == curr_lang][0][0]
+        self.lang_opt.set(idx, fCommand=0)
 
     def __change_lang(self, arg):
-        lang_dict = {
-            'English': 'en', 'Italiano': 'it', 'Deutsch': 'de',
-            u'G\u00E0idhlig': 'gd', u'Espa\u00F1ol': 'es', 'Galego': 'gl',
-            u'Fran\u00E7ais': 'fr'}
-        self.eng.lang_mgr.set_lang(lang_dict[arg])
+        code = [lang for lang in self.eng.cfg.lang_cfg.languages if lang[0] == arg][0][1]
+        self.eng.lang_mgr.set_lang(code)
         self.translate()
 
     def _on_back(self):
         self.mediator.event.on_back()
         lang_idx = self.lang_opt.selectedIndex
         dct = {
-            'lang': self.eng.languages[lang_idx][:2].lower(),
+            'lang': self.eng.languages[lang_idx][1].lower(),
             'volume': self.mediator.gui.vol_slider.get_value(),
             'fullscreen': self.mediator.gui.fullscreen_cb['indicatorValue'],
             'resolution': self.mediator.gui.res_opt.get().replace('x', ' '),
