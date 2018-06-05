@@ -12,3 +12,5 @@ venv/
 options.yml
 *.geany
 *.tags
+yorg_error.txt
+

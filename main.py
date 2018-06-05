@@ -32,4 +32,14 @@ if __name__ == '__main__' or exists('main.pyo'):
         yorg.run()
     except Exception as e:
         import traceback; traceback.print_exc()
+        # for windows:
+        log_path = ''
+        # is it the deployed windows version?
+        if sys.platform == 'win32' and not exists('main.py'):
+            log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
+            if not exists(log_path):
+                Filename.mkdir(Filename(log_path))
+        epath = join(log_path, 'yorg_error.txt') if log_path else 'yorg_error.txt'
+        with open(epath, 'a') as f:
+            import traceback; traceback.print_exc(file=f)
         yorg.kill()

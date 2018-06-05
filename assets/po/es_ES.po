@@ -134,9 +134,8 @@ msgid "Your jabber password:"
 msgstr "Tu contraseña de Jabber:"
 
 #: menu/loginpage.py:26 menu/loginpage.py:91 menu/loginpage.py:99
-#, fuzzy
 msgid "your jabber id"
-msgstr "Tu Nombre"
+msgstr "Tu ID de Jabber"
 
 #: menu/loginpage.py:37
 msgid "Log-in"

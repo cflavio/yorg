@@ -127,14 +127,13 @@ msgstr "Estabilidade"
 
 #: menu/loginpage.py:20
 msgid "Your jabber id:"
-msgstr ""
+msgstr "Teu ID de Jabber:"
 
 #: menu/loginpage.py:22
 msgid "Your jabber password:"
 msgstr "O teu contrasinal de Jabber"
 
 #: menu/loginpage.py:26 menu/loginpage.py:91 menu/loginpage.py:99
-#, fuzzy
 msgid "your jabber id"
 msgstr "O teu ID de Jabber"
 
