@@ -236,7 +236,7 @@ class DriverPageServerGui(DriverPageGui):
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
 
     def evaluate_starting(self):
-        connections = [conn[0] for conn in self.eng.server.connections]
+        connections = self.eng.server.connections[:]
         connections += [self]
         if not all(conn in self.current_drivers for conn in connections):
             return
@@ -261,10 +261,9 @@ class DriverPageServerGui(DriverPageGui):
                 _btn._name_txt['text'] = ''
             self.current_drivers_dct[sender] = drv
             btn.disable()
-            for conn_info in self.eng.server.connections:
-                conn, addr = conn_info
+            for conn in self.eng.server.connections:
                 if conn == sender:
-                    curr_addr = addr
+                    curr_addr = conn.getpeername()
             username = ''
             for usr in self.eng.xmpp.users:
                 if usr.local_addr == curr_addr:

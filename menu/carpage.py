@@ -135,14 +135,13 @@ class CarPageGuiServer(CarPageGui):
         self.evaluate_starting()
 
     def evaluate_starting(self):
-        connections = [conn[0]
-                       for conn in self.eng.server.connections] + [self]
+        connections = [conn for conn in self.eng.server.connections] + [self]
         if not all(conn in self.current_cars for conn in connections): return
         packet = [NetMsgs.start_drivers, len(self.current_cars)]
 
         def process(k):
             '''Processes a car.'''
-            return 'server' if k == self else k.get_address().get_ip_string()
+            return 'server' if k == self else k.getpeername()
         for i, (k, val) in enumerate(self.current_cars.items()):
             packet += [process(k), val,
                        self.props.gameprops.drivers_info[i].name]
@@ -168,10 +167,9 @@ class CarPageGuiServer(CarPageGui):
                 _btn._name_txt['text'] = ''
             self.current_cars[sender] = car
             btn.disable()
-            for conn_info in self.eng.server.connections:
-                conn, addr = conn_info
+            for conn in self.eng.server.connections:
                 if conn == sender:
-                    curr_addr = addr
+                    curr_addr = conn.getpeername()
             username = ''
             for usr in self.eng.xmpp.users:
                 if usr.local_addr == curr_addr:
@@ -183,7 +181,7 @@ class CarPageGuiServer(CarPageGui):
             btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.car_confirm, car], sender)
             self.eng.server.send([NetMsgs.car_selection, car, username])
-            ip_string = sender.get_address().get_ip_string()
+            ip_string = sender.getpeername()[0]
             if ip_string.startswith('::ffff:'): ip_string = ip_string[7:]
             self.eng.car_mapping[ip_string] = car
             self.evaluate_starting()

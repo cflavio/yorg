@@ -17,15 +17,15 @@
 # 0.11 (better online multiplayer)
 # do a single page with track, drivers, cars and messages for all: single,
 #  local and online multiplayer
+# refactoring: select the driver before the car
 # upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
 #   pystun, p2pnat)
 # make a client-server solution (server on ya2tech.it) (advantages: doesn't
 #   require port forwarding, robust - no match server)
 # evaluate stun server - pystun or some stun lib
 # evaluate reliable udp: enet, raknet, ...
-# refactoring of yorg server and players' servers: use rpyc
-# remove xmpp: register users from the game with a db on the server, player's
-#   disconnection using socket
+# server/client threads should be daemons
+# refactoring of yorg server and players' servers: use rpc
 
 # 0.12 (more cameras)
 # add friendship
@@ -47,13 +47,13 @@
 # hardware instancing (gl_InstanceID requires 1.40)
 # (rpyc) refactoring of protocol: use less xmpp and more rpyc (easier
 #  concurrency management), also for the server
-# (rpyc) refactoring network: use pickle for exhanging data
+# (rpyc) refactoring network: use bjson for exchanging data
+# (rpyc) remove xmpp: register users from the game with a db on the server,
+#   player's disconnection using socket () - evaluate, I'm not sure
 
 
 # MAYBE/SOMEDAY =====
 
-# refactoring: select the driver before the car
-# refactoring: use python stdlib for tcp/udp
 # make scons for yyagl
 # embed into a wx / pyqt window
 # port to python 3

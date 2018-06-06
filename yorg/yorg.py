@@ -190,6 +190,8 @@ class Yorg(Game):
 
     def kill(self):
         self.eng.xmpp.disconnect()
+        self.eng.server.destroy()
+        self.eng.client.destroy()
 
     @staticmethod
     def drivers():

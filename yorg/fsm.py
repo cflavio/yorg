@@ -81,7 +81,7 @@ class YorgFsm(FsmColleague):
             if usr.name == str(msg['muc']['nick']):
                 if self.eng.server.is_active:
                     for conn in self.eng.server.connections[:]:
-                        if usr.public_addr == conn[1] or usr.local_addr == conn[1]:
+                        if usr.public_addr == conn.getpeername() or usr.local_addr == conn.getpeername():
                             self.eng.server.connections.remove(conn)
         if self.getCurrentOrNextState() == 'Menu':
             if str(msg['muc']['nick']) == self.mediator.logic.mp_frm.users_frm.in_match_room:
