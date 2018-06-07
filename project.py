@@ -18,14 +18,13 @@
 # do a single page with track, drivers, cars and messages for all: single,
 #  local and online multiplayer
 # refactoring: select the driver before the car
-# upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
-#   pystun, p2pnat)
 # make a client-server solution (server on ya2tech.it) (advantages: doesn't
 #   require port forwarding, robust - no match server)
+# refactoring of yorg server and players' servers: use rpc
+# upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
+#   pystun, p2pnat)
 # evaluate stun server - pystun or some stun lib
 # evaluate reliable udp: enet, raknet, ...
-# server/client threads should be daemons
-# refactoring of yorg server and players' servers: use rpc
 
 # 0.12 (more cameras)
 # add friendship

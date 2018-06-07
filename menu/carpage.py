@@ -111,10 +111,10 @@ class CarPageGuiServer(CarPageGui):
 
     def build(self):
         CarPageGui.build(self, exit_behav=True)
-        self.eng.server.register_cb(self.process_srv)
         self.eng.car_mapping = {}
         self.eng.xmpp.attach(self.on_presence_unavailable)
         self.eng.xmpp.attach(self.on_presence_unavailable_room)
+        self.eng.server.register_rpc(self.car_request)
 
     def on_car(self, car):
         self.eng.log_mgr.log('car selected: ' + car)
@@ -151,14 +151,12 @@ class CarPageGuiServer(CarPageGui):
         page_args = [self.track_path, curr_car, self.props]
         self.notify('on_push_page', 'driverpageserver', page_args)
 
-    def process_srv(self, data_lst, sender):
-        if data_lst[0] != NetMsgs.car_request: return
-        car = data_lst[1]
+    def car_request(self, car, sender):
         self.eng.log_mgr.log('car requested: ' + car)
         btn = self._buttons(car)[0]
         if btn['state'] == DISABLED:
-            self.eng.server.send([NetMsgs.car_deny], sender)
             self.eng.log_mgr.log('car already selected: ' + car)
+            return False
         elif btn['state'] == NORMAL:
             self.eng.log_mgr.log('car selected: ' + car)
             if sender in self.current_cars:
@@ -179,12 +177,12 @@ class CarPageGuiServer(CarPageGui):
                     if usr.public_addr == curr_addr:
                         username = usr.name
             btn._name_txt['text'] = JID(username).bare
-            self.eng.server.send([NetMsgs.car_confirm, car], sender)
             self.eng.server.send([NetMsgs.car_selection, car, username])
             ip_string = sender.getpeername()[0]
             if ip_string.startswith('::ffff:'): ip_string = ip_string[7:]
             self.eng.car_mapping[ip_string] = car
             self.evaluate_starting()
+            return True
 
     def on_presence_unavailable(self, msg):
         self.evaluate_starting()
@@ -203,25 +201,23 @@ class CarPageGuiClient(CarPageGui):
     def build(self):
         CarPageGui.build(self, exit_behav=True)
         self.eng.client.register_cb(self.process_client)
+        self.eng.client.register_rpc('car_request')
 
     def on_car(self, car):
         self.eng.log_mgr.log('car request: ' + car)
-        self.eng.client.send(
-            [NetMsgs.car_request, car, self.eng.client.my_addr])
-
-    def process_client(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.car_confirm:
+        if self.eng.client.car_request(car):
             if self.car:
                 _btn = self._buttons(self.car)[0]
                 _btn.enable()
                 _btn._name_txt['text'] = ''
-            self.car = car = data_lst[1]
+            self.car = car
             self.eng.log_mgr.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
             btn._name_txt['text'] = JID(self.eng.xmpp.client.boundjid).bare
-        if data_lst[0] == NetMsgs.car_deny:
-            self.eng.log_mgr.log('car denied')
+        else: self.eng.log_mgr.log('car denied')
+
+    def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.car_selection:
             car = data_lst[1]
             name = data_lst[2]
