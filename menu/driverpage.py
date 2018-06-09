@@ -192,7 +192,6 @@ class DriverPageServerGui(DriverPageGui):
 
     def build(self):
         DriverPageGui.build(self, exit_behav=True)
-        self.eng.server.register_cb(self.process_srv)
         self.current_drivers = []
         self.current_drivers_dct = {}
         self.name['align'] = TextNode.ACenter
@@ -200,6 +199,7 @@ class DriverPageServerGui(DriverPageGui):
         self.name['text'] += ' ' + self.eng.xmpp.client.boundjid.bare
         #self.eng.xmpp.attach(self.on_presence_unavailable)
         self.eng.xmpp.attach(self.on_presence_unavailable_room)
+        self.eng.server.register_rpc(self.drv_request)
 
     def on_click(self, i):
         self.eng.log('selected driver ' + str(i))
@@ -244,15 +244,13 @@ class DriverPageServerGui(DriverPageGui):
             'on_driver_selected_server', self.this_name(), self.mediator.track,
             self.mediator.car, self.eng.car_mapping.values())
 
-    def process_srv(self, data_lst, sender):
-        if data_lst[0] != NetMsgs.driver_request: return
-        car = data_lst[1]
-        drv = data_lst[3]
+    def drv_request(self, car, driver_name, drv, driver_speed,
+                    driver_adherence, driver_stability, sender):
         self.eng.log_mgr.log('driver requested: %s' % drv)
         btn = self._buttons(drv)[0]
         if btn['state'] == DISABLED:
-            self.eng.server.send([NetMsgs.driver_deny], sender)
             self.eng.log_mgr.log('driver already selected: %s' % drv)
+            return False
         elif btn['state'] == NORMAL:
             self.eng.log_mgr.log('driver selected: %s' % drv)
             if sender in self.current_drivers_dct:
@@ -273,13 +271,8 @@ class DriverPageServerGui(DriverPageGui):
                     if usr.public_addr == curr_addr:
                         username = usr.name
             btn._name_txt['text'] = JID(username).bare
-            self.eng.server.send([NetMsgs.driver_confirm, drv], sender)
             self.eng.server.send([NetMsgs.driver_selection, drv, username])
             self.current_drivers += [sender]
-            driver_name = data_lst[2]
-            driver_speed = data_lst[4]
-            driver_adherence = data_lst[5]
-            driver_stability = data_lst[6]
             self.eng.log_mgr.log(
                 'driver selected: %s (%s) ' % (driver_name, drv))
             gprops = self.props.gameprops
@@ -291,6 +284,7 @@ class DriverPageServerGui(DriverPageGui):
                 if drv_i.img_idx == drv and i != car_idx:
                     gprops.drivers_info[i] = prev_drv
             self.evaluate_starting()
+            return True
 
     #def on_presence_unavailable(self, msg):
     #    self.evaluate_starting()
@@ -312,24 +306,21 @@ class DriverPageClientGui(DriverPageGui):
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
         self.name['text'] += ' ' + self.eng.xmpp.client.boundjid.bare
+        self.eng.client.register_rpc('drv_request')
 
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
 
     def on_click(self, i):
         self.eng.log_mgr.log('driver request: %s' % i)
         gprops = self.props.gameprops
-        self.eng.client.send([
-            NetMsgs.driver_request, self.mediator.car, self.this_name(), i,
-            gprops.drivers_info[i].speed, gprops.drivers_info[i].adherence,
-            gprops.drivers_info[i].stability, self.eng.client.my_addr])
-
-    def process_client(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.driver_confirm:
+        if self.eng.client.drv_request(self.mediator.car, self.this_name(), i,
+                gprops.drivers_info[i].speed, gprops.drivers_info[i].adherence,
+                gprops.drivers_info[i].stability):
             if self.driver:
                 _btn = self._buttons(self.driver)[0]
                 _btn.enable()
                 _btn._name_txt['text'] = ''
-            self.driver = drv = data_lst[1]
+            self.driver = drv = i
             self.eng.log_mgr.log('driver confirmed: %s' % drv)
             btn = self._buttons(drv)[0]
             btn.disable()
@@ -337,8 +328,9 @@ class DriverPageClientGui(DriverPageGui):
             gprops = self.props.gameprops
             txt_path = gprops.drivers_img.path_sel
             self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % drv))
-        if data_lst[0] == NetMsgs.driver_deny:
-            self.eng.log_mgr.log('driver denied')
+        else: self.eng.log_mgr.log('driver denied')
+
+    def process_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.driver_selection:
             drv = data_lst[1]
             name = data_lst[2]
