@@ -1,6 +1,7 @@
 max_speed: 120.0  # Km/h
 box_size: [.72, 1.56, .25]
 box_pos: [0, 0, .55]
+center_mass_offset: .05
 mass: 280  # kilograms
 steering: [30, 6]  # degrees at min (max) speed
 steering_clamp: 40  # degrees
