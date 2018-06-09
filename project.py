@@ -9,8 +9,6 @@
 #   speed: speed number with a semicircle with a shader
 # feedback: couch multiplayer
 # lower mass center
-# after a flight, when a wheel hits the ground, set its friction to 0 and
-#   restore it in 0.5 seconds linearly
 
 # 0.11 (better online multiplayer)
 # do a single page with track, drivers, cars and messages for all: single,
