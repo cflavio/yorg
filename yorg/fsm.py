@@ -150,7 +150,8 @@ class YorgFsm(FsmColleague):
             'assets/sfx/hit.ogg', 'assets/sfx/turbo.ogg',
             'assets/sfx/rotate_all_fire.ogg', 'assets/sfx/rotate_all_hit.ogg')
         race_props = self.mediator.logic.build_race_props(
-            seas.logic.drivers, track_path, keys, joystick, sounds)
+            seas.logic.drivers, track_path, keys, joystick, sounds,
+            self.mediator.options['development']['start_wp'])
         if self.eng.server.is_active:
             seas.create_race_server(race_props)
         elif self.eng.client.is_active:

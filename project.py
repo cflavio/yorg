@@ -8,8 +8,6 @@
 #   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
 #   speed: speed number with a semicircle with a shader
 # feedback: couch multiplayer
-# rotate the car towards the direction while flying
-# car should be parallel to the ground while flying
 # lower mass center
 # after a flight, when a wheel hits the ground, set its friction to 0 and
 #   restore it in 0.5 seconds linearly

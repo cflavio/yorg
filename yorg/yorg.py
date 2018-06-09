@@ -69,6 +69,7 @@ class Yorg(Game):
                 'fps': 0,
                 'car': '',
                 'track': '',
+                'start_wp': '',
                 'shaders_dev': 0,
                 'gamma': 2.2,
                 'show_waypoints': 0,
@@ -129,7 +130,8 @@ class Yorg(Game):
             shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
             menu_joypad=opt_dev['menu_joypad'], verbose=opt_dev['verbose'],
             verbose_log=opt_dev['verbose_log'],
-            xmpp_server=opt_dev['xmpp_server'])
+            xmpp_server=opt_dev['xmpp_server'],
+            start_wp=opt_dev['start_wp'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         init_lst = [
             [('fsm', YorgFsm, [self])],

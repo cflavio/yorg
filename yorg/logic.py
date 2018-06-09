@@ -494,7 +494,7 @@ class YorgLogic(GameLogic):
         txt.set_z(.06 + height / 2)
 
     def build_race_props(self, drivers, track_name, keys, joystick,
-                         sounds):
+                         sounds, start_wp):
         frwheels = Wheels('EmptyWheelFront', 'EmptyWheelFront.001',
                           'EmptyWheelRear', 'EmptyWheelRear.001')
         # names for front and rear wheels
@@ -553,5 +553,5 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             self.mediator.options['development']['ai'], InGameMenu, share_urls,
             'Respawn', 'PitStop', 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
-            grid)
+            grid, start_wp)
         return race_props
