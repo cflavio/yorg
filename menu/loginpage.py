@@ -44,18 +44,22 @@ class LogInPageGui(ThanksPageGui):
         store_lab = Text(
             _('(only if your computer is not shared with other people)'),
             pos=(-.2, -.02), wordwrap=64, **t_a)
-        notes_txt = _(
-            '1. If you are a supporter, please write us (flavio@ya2.it) your '
-            'jabber id so we can highlight your account as a supporter one.\n'
-            '2. Yorg sends your XMPP presence to other Yorg users, so they '
-            "can see your XMPP presence status. If you don't want this, "
-            "please don't use your personal account and create a new one for "
-            'Yorg.\n'
-            '3. When you add a Yorg friend, you are adding it to your '
-            "account's roster too.\n"
-            "4. Yorg's XMPP code is still experimental: if you have "
-            'important data in your XMPP account, please create a new account '
-            'for playing Yorg with.')
+        notes_texts = [
+            _('If you are a supporter, please write us (%s) your '
+              'jabber id so we can highlight your account as a supporter '
+              'one.'),
+            _('Yorg sends your XMPP presence to other Yorg users, so they '
+              "can see your XMPP presence status. If you don't want this, "
+              "please don't use your personal account and create a new one "
+              'for Yorg.'),
+            _('When you add a Yorg friend, you are adding it to your '
+              "account's roster too."),
+            _("Yorg's XMPP code is still experimental: if you have "
+              'important data in your XMPP account, please create a new '
+              'account for playing Yorg with.')]
+        notes_texts = [str(i + 1) + '. ' + elm for i, elm in enumerate(notes_texts)]
+        notes_texts[0] = notes_texts[0] % 'flavio@ya2.it'
+        notes_txt = '\n'.join(notes_texts)
         notes_lab = Text(
             notes_txt, pos=(-1.64, -.16), align='left', wordwrap=42,
             **t_a)

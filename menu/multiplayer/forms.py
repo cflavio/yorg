@@ -123,7 +123,7 @@ class UserFrmList(UserFrm):
         self.__enable_invite_btn = is_in_yorg and not is_playing
         self.invite_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/invite.txo',
-            .65, self.on_invite, name_full.name, _("isn't playing yorg"))
+            .65, self.on_invite, name_full.name, _("%s isn't playing yorg") % name_full.name)
         self.create_friend_btn(is_friend, menu_args, name_full)
 
     def create_friend_btn(self, is_friend, menu_args, name_full):

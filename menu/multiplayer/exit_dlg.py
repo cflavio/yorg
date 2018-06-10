@@ -12,7 +12,7 @@ class ExitDialog(GameObject, Subject):
         self.user = str(msg['muc']['nick'])
         self.msg = msg
         self.dialog = OkDialog(
-            text=_('the server user %s has quitted') % self.user,
+            text=_('the server user %s has quit') % self.user,
             text_wordwrap=16,
             text_fg=menu_args.text_active,
             text_font=menu_args.font,
