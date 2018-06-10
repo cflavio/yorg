@@ -2,25 +2,18 @@
 
 # TODO LIST =====
 
-# 0.10 (local multiplayer)
-# add car helios
-# feedback: couch multiplayer
-
-# 0.11 (better online multiplayer)
-# do a single page with track, drivers, cars and messages for all: single,
-#  local and online multiplayer
-# refactoring: select the driver before the car
+# 0.10 (better online multiplayer)
+# try forwarding external port
 # make a client-server solution (server on ya2tech.it) (advantages: doesn't
 #   require port forwarding, robust - no match server)
-# refactoring of yorg server and players' servers: use rpc
-# upnp / pyraknet / nat traversal / hole punching (nattraverso, pypunchp2p,
-#   pystun, p2pnat)
-# evaluate stun server - pystun or some stun lib
-# evaluate reliable udp: enet, raknet, ...
 
-# 0.12 (more cameras)
-# add friendship
+# 0.11 (more cameras)
 # feedback: add more cameras
+
+# 0.12 (local multiplayer)
+# local multiplayer
+# add car helios
+# add friendship
 # drifting force function of linear and angular velocities
 
 
@@ -36,11 +29,6 @@
 # (Panda3D 1.10) deployng: use logging for logging
 # python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
-# (rpyc) refactoring of protocol: use less xmpp and more rpyc (easier
-#  concurrency management), also for the server
-# (rpyc) refactoring network: use bjson for exchanging data
-# (rpyc) remove xmpp: register users from the game with a db on the server,
-#   player's disconnection using socket () - evaluate, I'm not sure
 
 
 # MAYBE/SOMEDAY =====
@@ -56,3 +44,15 @@
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr
 # refactor: remove mediator from colleague
+# do a single page with track, drivers, cars and messages for all: single,
+#  local and online multiplayer
+# refactoring: select the driver before the car
+# refactoring of protocol: use less xmpp and more rpyc (easier concurrency
+#   management), also for the server
+# remove xmpp: register users from the game with a db on the server, player's
+#   disconnection using socket () - evaluate, I'm not sure
+# refactoring (network): use bjson for exchanging data
+# other options: upnp / pyraknet / nat traversal / hole punching (nattraverso,
+#   pypunchp2p, pystun, p2pnat)
+# other options: evaluate stun server - pystun or some stun lib
+# other options: evaluate reliable udp: enet, raknet, ...

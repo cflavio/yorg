@@ -99,6 +99,7 @@ class YorgMainPageGui(MainPageGui):
                 ' \1small\1(%s)\2' % self.eng.xmpp.client.boundjid.bare
         elif self.conn_attempted:
             return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
+        #i18n: This is a caption of a button.
         return _('Connecting')
 
     def build(self):
