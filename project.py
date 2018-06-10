@@ -4,9 +4,6 @@
 
 # 0.10 (local multiplayer)
 # add car helios
-# gui revamp
-#   feedback: ingame gui - weapon bigger, upperleft or uppercenter corner)
-#   speed: speed number with a semicircle with a shader
 # feedback: couch multiplayer
 
 # 0.11 (better online multiplayer)
