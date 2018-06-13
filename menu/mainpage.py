@@ -3,6 +3,10 @@ import argparse
 from feedparser import parse
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
+from igdc import IGDClient
+from xml.parsers.expat import ExpatError
+from socket import socket, AF_INET, SOCK_DGRAM, SOCK_STREAM, gaierror, error, \
+    SOL_SOCKET, SO_REUSEADDR, timeout
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
@@ -137,6 +141,19 @@ class YorgMainPageGui(MainPageGui):
         MainPageGui.build(self)
         if not self.ver_check.is_uptodate():
             self.widgets[5]['state'] = DISABLED
+        sock = socket(AF_INET, SOCK_DGRAM)
+        sock.connect(('ya2.it', 8080))
+        local_addr = sock.getsockname()[0]
+        try:
+            igdc = IGDClient(local_addr, edebug=True)
+            prots = ['TCP', 'UDP']
+            try: map (lambda prot: igdc.DeletePortMapping(9099, prot), prots)
+            except ExpatError as e: print e
+            map (lambda prot: igdc.AddPortMapping(local_addr, 9099, prot, 9099), prots)
+            self.eng.upnp = True
+        except (timeout, ExpatError) as e:
+            print e
+            self.eng.upnp = False
 
     def on_options(self):
         self.load_settings()
