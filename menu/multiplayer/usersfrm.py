@@ -135,7 +135,7 @@ class UsersFrm(GameObject):
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
             lab = [lab for lab in self.labels
                    if clean(lab.lab.lab['text']) == self.trunc(user.name, 20)][0]
-            enb_val = usr_inv and user.name not in self.invited_users and user.is_in_yorg and not user.is_playing
+            enb_val = usr_inv and user.name not in self.invited_users and user.is_in_yorg and not user.is_playing and self.eng.upnp
             if hasattr(lab, 'invite_btn'):
                 inv_btn = lab.invite_btn
                 if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
@@ -144,6 +144,7 @@ class UsersFrm(GameObject):
                 elif not user.is_in_yorg: inv_btn.tooltip['text'] = _("the user isn't playing yorg")
                 elif user.name in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
                 elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
+                elif not self.eng.upnp: inv_btn.tooltip['text'] = _("can't set UPnP")
             lab.enable_invite_btn(enb_val)
             lab.frm.set_z(top - .08 - .08 * i)
             lab.lab.set_supporter(user.is_supporter)
