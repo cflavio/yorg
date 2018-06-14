@@ -10,7 +10,7 @@ class CreditPageGui(ThanksPageGui):
         dev_str = [_('Code')+': Flavio Calva',
                    _('Art')+': Luca Quartero',
                    _('Audio')+': Jay Bachelor',
-                   _('Translations')+': Wuzzy, GunChleoc, Leandro Vergara']
+                   _('Translations')+': Wuzzy, GunChleoc, Leandro Vergara, xin']
         dev_str = '\n\n'.join(dev_str)
         txt = Text(dev_str, pos=(-.2, .72), wordwrap=20,
                            **menu_args.text_args)

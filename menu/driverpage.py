@@ -63,7 +63,7 @@ class DriverPageGui(ThanksPageGui):
                 scale=.046, **t_a)
             drv_btn._name_txt = name
             widgets += [drv_btn, name]
-            self.drivers += [widgets[-1]]
+            self.drivers += [widgets[-2]]
             sign = lambda pos_x: '\1green\1+\2' if pos_x > 0 else ''
             psign = lambda pos_x, sgn=sign: '+' if pos_x == 0 else sgn(pos_x)
 
