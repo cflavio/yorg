@@ -10,7 +10,7 @@ from .thankspage import ThanksPageGui
 class OptionPageProps(object):
 
     def __init__(self, joystick, keys, lang, volume, fullscreen, antialiasing,
-                 shaders, cars_num, opt_file):
+                 shaders, cars_num, camera, opt_file):
         self.joystick = joystick
         self.keys = keys
         self.lang = lang
@@ -19,6 +19,7 @@ class OptionPageProps(object):
         self.antialiasing = antialiasing
         self.shaders = shaders
         self.cars_num = cars_num
+        self.camera = camera
         self.opt_file = opt_file
 
 
@@ -26,7 +27,7 @@ class OptionPageGui(ThanksPageGui):
 
     def __init__(self, mediator, menu_args, option_props):
         self.vol_slider = self.fullscreen_cb = self.lang_opt = self.aa_cb = \
-            self.shaders_cb = self.res_opt = self.cars_opt = None
+            self.shaders_cb = self.res_opt = self.cars_opt = self.cam_opt = None
         self.props = option_props
         ThanksPageGui.__init__(self, mediator, menu_args)
 
@@ -75,16 +76,25 @@ class OptionPageGui(ThanksPageGui):
             pos=(-.08, 1, -.12), text='', indicatorValue=self.props.shaders,
             indicator_frameColor=menu_args.text_active, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Cars number', _('Cars number'), -.35)]
+        widgets += [self.__add_lab('Camera', _('Camera'), -.55)]
         self.cars_opt = OptionMenu(
             text='', items=[str(i) for i in range(1, 9)], pos=(.29, 1, -.35),
             initialitem=self.props.cars_num - 1, **menu_args.option_args)
+        self.cameras = [_('Top'), _('Rear')]
+        self.camera_codes = ['top', 'rear']
+
+        self.cam_opt = OptionMenu(
+            text='', items=self.cameras, pos=(.29, 1, -.55),
+            initialitem=self.cameras[self.camera_codes.index(self.props.camera)],
+            **menu_args.option_args)
         input_btn = Btn(
-            text='', pos=(-.2, 1, -.55), command=self.on_input_btn,
+            text='', pos=(-.2, 1, -.75), command=self.on_input_btn,
             tra_src='Configure input', tra_tra=_('Configure input'),
             **menu_args.btn_args)
         widgets += [
             self.lang_opt, self.vol_slider, self.fullscreen_cb, self.res_opt,
-            self.aa_cb, input_btn, self.shaders_cb, self.cars_opt]
+            self.aa_cb, input_btn, self.shaders_cb, self.cars_opt,
+            self.cam_opt]
         self.add_widgets(widgets)
         idx = self.eng.lang_mgr.lang_codes.index(self.props.lang)
         self.__change_lang(self.eng.languages[idx][0])
@@ -124,7 +134,8 @@ class OptionPageGui(ThanksPageGui):
             'resolution': self.mediator.gui.res_opt.get().replace('x', ' '),
             'antialiasing': self.mediator.gui.aa_cb['indicatorValue'],
             'shaders': self.mediator.gui.shaders_cb['indicatorValue'],
-            'cars_number': int(self.mediator.gui.cars_opt.get())}
+            'cars_number': int(self.mediator.gui.cars_opt.get()),
+            'camera': self.camera_codes[self.cameras.index(self.mediator.gui.cam_opt.get())]}
         self.notify('on_back', 'options_page', [dct])
 
 

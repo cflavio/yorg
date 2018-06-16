@@ -1,20 +1,10 @@
 # BUGS =====
 
+
 # TODO LIST =====
 
-# 0.10 (better online multiplayer)
-# try forwarding external port
-# make a client-server solution (server on ya2tech.it) (advantages: doesn't
-#   require port forwarding, robust - no match server)
-
-# 0.11 (more cameras)
-# feedback: add more cameras
-
-# 0.12 (local multiplayer)
+# 0.11 (local multiplayer)
 # local multiplayer
-# add car helios
-# add friendship
-# drifting force function of linear and angular velocities
 
 
 # WAITING =====
@@ -44,9 +34,14 @@
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr
 # refactor: remove mediator from colleague
+# add car helios
+# add friendship
+# drifting force function of linear and angular velocities
 # do a single page with track, drivers, cars and messages for all: single,
 #  local and online multiplayer
 # refactoring: select the driver before the car
+# make a client-server solution (server on ya2tech.it) (advantages: doesn't
+#   require port forwarding, robust - no match server)
 # refactoring of protocol: use less xmpp and more rpyc (easier concurrency
 #   management), also for the server
 # remove xmpp: register users from the game with a db on the server, player's

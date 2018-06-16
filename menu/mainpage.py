@@ -94,6 +94,7 @@ class YorgMainPageGui(MainPageGui):
         self.antialiasing = sett['antialiasing']
         self.cars_num = sett['cars_number']
         self.shaders = sett['shaders']
+        self.camera = sett['camera']
 
     def get_label(self):
         if not self.ver_check.is_uptodate():
@@ -164,7 +165,7 @@ class YorgMainPageGui(MainPageGui):
         self.load_settings()
         option_props = OptionPageProps(
             self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
-            self.antialiasing, self.shaders, self.cars_num,
+            self.antialiasing, self.shaders, self.cars_num, self.camera,
             self.props.opt_file)
         self.notify('on_push_page', 'options', [option_props])
 

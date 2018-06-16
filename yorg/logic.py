@@ -83,7 +83,8 @@ class YorgLogic(GameLogic):
             self.season = SingleRaceSeason(self.__season_props(
                 self.mediator.gameprops, car, [],
                 self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
-                dev['race_start_time'], dev['countdown_seconds']))
+                dev['race_start_time'], dev['countdown_seconds'],
+                self.mediator.options['settings']['camera']))
             self.season.attach_obs(self.mediator.event.on_season_end)
             self.season.attach_obs(self.mediator.event.on_season_cont)
             self.season.start()
@@ -93,7 +94,8 @@ class YorgLogic(GameLogic):
             self.season = SingleRaceSeason(self.__season_props(
                 self.mediator.gameprops, car, [],
                 self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
-                dev['race_start_time'], dev['countdown_seconds']))
+                dev['race_start_time'], dev['countdown_seconds'],
+                self.mediator.options['settings']['camera']))
             self.season.attach_obs(self.mediator.event.on_season_end)
             self.season.attach_obs(self.mediator.event.on_season_cont)
             self.season.start()
@@ -237,7 +239,7 @@ class YorgLogic(GameLogic):
     def __season_props(
             gameprops, car, player_car_names, cars_number, single_race,
             tun_engine, tun_tires, tun_suspensions, race_start_time,
-            countdown_seconds):
+            countdown_seconds, camera):
         wpn2img = {
             'Rocket': 'rocketfront',
             'RearRocket': 'rocketrear',
@@ -259,7 +261,8 @@ class YorgLogic(GameLogic):
              'assets/images/tuning/suspensions.txo'],
             'assets/fonts/Hanken-Book.ttf',
             'assets/sfx/countdown.ogg', single_race, wpn2img, tun_engine,
-            tun_tires, tun_suspensions, race_start_time, countdown_seconds)
+            tun_tires, tun_suspensions, race_start_time, countdown_seconds,
+            camera)
 
     def __process_default(self):
         opt_ver = self.mediator.options['settings']['last_version'].split('-')[0]
@@ -306,7 +309,8 @@ class YorgLogic(GameLogic):
         self.season = SingleRaceSeason(self.__season_props(
             self.mediator.gameprops, car, [car],
             self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
-            dev['race_start_time'], dev['countdown_seconds']))
+            dev['race_start_time'], dev['countdown_seconds'],
+            self.mediator.options['settings']['camera']))
         self.season.attach_obs(self.mediator.event.on_season_end)
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
@@ -320,7 +324,8 @@ class YorgLogic(GameLogic):
         sprops = self.__season_props(
             self.mediator.gameprops, car, cars,
             len(cars), True, 0, 0, 0,
-            dev['race_start_time'], dev['countdown_seconds'])
+            dev['race_start_time'], dev['countdown_seconds'],
+            self.mediator.options['settings']['camera'])
         self.season = SingleRaceSeason(sprops)
         drivers = sprops.drivers
         packet_drivers = []
@@ -359,7 +364,8 @@ class YorgLogic(GameLogic):
         self.season = Season(self.__season_props(
             self.mediator.gameprops, car, [car],
             self.mediator.options['settings']['cars_number'], False, 0, 0, 0,
-            dev['race_start_time'], dev['countdown_seconds']))
+            dev['race_start_time'], dev['countdown_seconds'],
+            self.mediator.options['settings']['camera']))
         self.season.attach_obs(self.mediator.event.on_season_end)
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
@@ -384,7 +390,8 @@ class YorgLogic(GameLogic):
         sprops = self.__season_props(
             self.mediator.gameprops, car, cars,
             self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
-            dev['race_start_time'], dev['countdown_seconds'])
+            dev['race_start_time'], dev['countdown_seconds'],
+            self.mediator.options['settings']['camera'])
         sprops.car_names = cars
         sprops.player_car_names = cars
         self.season = SingleRaceSeason(sprops)
@@ -433,7 +440,8 @@ class YorgLogic(GameLogic):
             self.mediator.gameprops, saved_car, [saved_car],
             self.mediator.options['settings']['cars_number'], False,
             car_tun.f_engine, car_tun.f_tires, car_tun.f_suspensions,
-            dev['race_start_time'], dev['countdown_seconds']))
+            dev['race_start_time'], dev['countdown_seconds'],
+            self.mediator.options['settings']['camera']))
         self.season.load(self.mediator.options['save']['ranking'],
                          tuning, drivers)
         self.season.attach_obs(self.mediator.event.on_season_end)
