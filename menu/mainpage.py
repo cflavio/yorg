@@ -148,12 +148,16 @@ class YorgMainPageGui(MainPageGui):
         try:
             igdc = IGDClient(local_addr, edebug=True)
             prots = ['TCP', 'UDP']
-            try: map (lambda prot: igdc.DeletePortMapping(9099, prot), prots)
-            except ExpatError as e: print e
+            try:
+                map (lambda prot: igdc.DeletePortMapping(9099, prot), prots)
+            except (TypeError, ExpatError) as e:
+                print e
+                import traceback; traceback.print_exc()
             map (lambda prot: igdc.AddPortMapping(local_addr, 9099, prot, 9099), prots)
             self.eng.upnp = True
-        except (timeout, ExpatError) as e:
+        except (TypeError, timeout, ExpatError) as e:
             print e
+            import traceback; traceback.print_exc()
             self.eng.upnp = False
 
     def on_options(self):
