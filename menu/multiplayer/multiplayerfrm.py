@@ -150,7 +150,8 @@ class MultiplayerFrm(GameObject):
         self.users_frm.on_users()
 
     def on_presence_available_room(self, msg):
-        self.match_frm.on_presence_available_room(msg)
+        if self.match_frm:  # if the client accepted after server's start
+            self.match_frm.on_presence_available_room(msg)
         self.msg_frm.on_presence_available_room(msg)
 
     def on_presence_unavailable_room(self, msg):
@@ -224,6 +225,7 @@ class MultiplayerFrm(GameObject):
                 msubject='is_playing',
                 mbody='0')
         self.on_users()
+        self.msg_frm.curr_match_room = None
 
     def send_is_playing(self, value):
         for usr_name in [self.yorg_srv] + \
@@ -239,7 +241,7 @@ class MultiplayerFrm(GameObject):
         invited = self.users_frm.invited_users
         users = self.match_frm.users_names
         pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
-        self.eng.log('back (server): %s, %s, %s' % (invited, users, pending_users))
+        self.eng.log('cancel invites: %s, %s, %s' % (invited, users, pending_users))
         for usr in pending_users:
             self.eng.log('cancel_invite ' + usr)
             self.eng.xmpp.client.send_message(
@@ -250,11 +252,12 @@ class MultiplayerFrm(GameObject):
                 mbody='cancel_invite')
 
     def on_quit(self):
+        if self.eng.server.is_active: self.eng.server.stop()
         if self.users_frm.room_name:  # i am the server:
             invited = self.users_frm.invited_users
             users = self.match_frm.users_names
             pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
-            self.eng.log('back (server): %s, %s, %s' % (invited, users, pending_users))
+            self.eng.log('quit (server): %s, %s, %s' % (invited, users, pending_users))
             for usr in pending_users:
                 self.eng.log('cancel_invite ' + usr)
                 self.eng.xmpp.client.send_message(
@@ -267,7 +270,7 @@ class MultiplayerFrm(GameObject):
             self.eng.log('back (client)')
             self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
                 self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
-            if self.match_frm:  # it's also invoked when server quits in car's page by os_srv_quitted
+            if self.match_frm:  # it's also invoked when server quits in car's page by on_srv_quitted
                 self.match_frm.destroy()
                 self.match_frm = None
                 self.msg_frm.on_room_back()
@@ -283,6 +286,7 @@ class MultiplayerFrm(GameObject):
                 msubject='is_playing',
                 mbody='0')
         self.on_users()
+        self.msg_frm.curr_match_room = None
 
     def on_msg(self, msg):
         self.eng.log('received message')
@@ -409,8 +413,9 @@ class MultiplayerFrm(GameObject):
 
     def on_cancel_invite(self):
         self.curr_inviting_usr = None
-        self.invite_dlg.detach(self.on_invite_answer)
-        self.invite_dlg = self.invite_dlg.destroy()
+        if self.invite_dlg:  # the client accepted but the server started
+            self.invite_dlg.detach(self.on_invite_answer)
+            self.invite_dlg = self.invite_dlg.destroy()
         self.users_frm.invited = False
         self.on_users()
 
