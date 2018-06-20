@@ -13,9 +13,9 @@
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # (Panda3D 1.10) write snow shader
 # (Panda3D 1.10) hw skinning
-# (Panda3D 1.10) make both installer and zip file for linux (for itch.io)
 # (Panda3D 1.10) deployng: log_filename
 # (Panda3D 1.10) deployng: use logging for logging
+# (Panda3D 1.10) port to python 3
 # python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
 
@@ -24,7 +24,6 @@
 
 # make scons for yyagl
 # embed into a wx / pyqt window
-# port to python 3
 # uml create automatic class diagrams with fields and methods for each class
 # do automatic update (assets shared among platforms)
 # unit tests
@@ -46,7 +45,3 @@
 # remove xmpp: register users from the game with a db on the server, player's
 #   disconnection using socket () - evaluate, I'm not sure
 # refactoring (network): use bjson for exchanging data
-# other options: upnp / pyraknet / nat traversal / hole punching (nattraverso,
-#   pypunchp2p, pystun, p2pnat)
-# other options: evaluate stun server - pystun or some stun lib
-# other options: evaluate reliable udp: enet, raknet, ...

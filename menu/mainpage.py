@@ -143,10 +143,10 @@ class YorgMainPageGui(MainPageGui):
         MainPageGui.build(self)
         if not self.ver_check.is_uptodate():
             self.widgets[5]['state'] = DISABLED
-        sock = socket(AF_INET, SOCK_DGRAM)
-        sock.connect(('ya2.it', 8080))
-        local_addr = sock.getsockname()[0]
         try:
+            sock = socket(AF_INET, SOCK_DGRAM)
+            sock.connect(('ya2.it', 8080))
+            local_addr = sock.getsockname()[0]
             igdc = IGDClient(local_addr, edebug=True)
             prots = ['TCP', 'UDP']
             try:
@@ -156,7 +156,7 @@ class YorgMainPageGui(MainPageGui):
                 import traceback; traceback.print_exc()
             map (lambda prot: igdc.AddPortMapping(local_addr, 9099, prot, 9099), prots)
             self.eng.upnp = True
-        except (TypeError, timeout, ExpatError) as e:
+        except (TypeError, timeout, ExpatError, gaierror) as e:
             print e
             import traceback; traceback.print_exc()
             self.eng.upnp = False
