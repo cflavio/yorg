@@ -2,6 +2,11 @@
 
 # TODO LIST =====
 
+# 0.10 (better multiplayer)
+# user registration (nick, password, email, last access)
+# email validation/activation
+# avoid re-registration from the same address if they are too close
+
 # 0.11 (local multiplayer)
 # local multiplayer
 

@@ -1,5 +1,5 @@
 from json import load
-from socket import socket, AF_INET, SOCK_DGRAM, gaierror
+from socket import socket, AF_INET, SOCK_DGRAM, gaierror, error
 from urllib2 import urlopen, URLError
 try: from sleekxmpp.jid import JID
 except ImportError:  # sleekxmpp requires openssl 1.0.2
@@ -358,7 +358,7 @@ class MultiplayerFrm(GameObject):
                         ip_addr = usr.public_addr
                         my_addr = mypublic_addr
             try: self.eng.client.start(self.process_msg_client, ip_addr, my_addr)
-            except NetworkError:
+            except (NetworkError, error) as exc:
                 self.network_dlg = NetworkDialog(self.menu_args)
                 self.network_dlg.attach(self.on_network_dlg)
                 return
