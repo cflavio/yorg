@@ -30,8 +30,8 @@ class YorgMainPageGui(MainPageGui):
         MainPageGui.__init__(self, mediator, self.props.gameprops.menu_args)
         if self.ver_check.is_uptodate():
             options = self.props.opt_file
-            user = options['settings']['xmpp']['usr']
-            password = options['settings']['xmpp']['pwd']
+            user = options['settings']['login']['usr']
+            password = options['settings']['login']['pwd']
             parser = argparse.ArgumentParser()
             parser.add_argument('--user')
             parser.add_argument('--pwd')
@@ -69,8 +69,8 @@ class YorgMainPageGui(MainPageGui):
     def on_logout(self):
         self.eng.xmpp.disconnect()
         options = self.props.opt_file
-        options['settings']['xmpp']['usr'] = ''
-        options['settings']['xmpp']['pwd'] = ''
+        options['settings']['login']['usr'] = ''
+        options['settings']['login']['pwd'] = ''
         options.store()
         self.widgets[5]['text'] = self.get_label()
         self.notify('on_logout')
@@ -143,23 +143,6 @@ class YorgMainPageGui(MainPageGui):
         MainPageGui.build(self)
         if not self.ver_check.is_uptodate():
             self.widgets[5]['state'] = DISABLED
-        try:
-            sock = socket(AF_INET, SOCK_DGRAM)
-            sock.connect(('ya2.it', 8080))
-            local_addr = sock.getsockname()[0]
-            igdc = IGDClient(local_addr, edebug=True)
-            prots = ['TCP', 'UDP']
-            try:
-                map (lambda prot: igdc.DeletePortMapping(9099, prot), prots)
-            except (TypeError, ExpatError, UPNPError) as e:
-                print e
-                import traceback; traceback.print_exc()
-            map (lambda prot: igdc.AddPortMapping(local_addr, 9099, prot, 9099), prots)
-            self.eng.upnp = True
-        except (TypeError, timeout, ExpatError, gaierror) as e:
-            print e
-            import traceback; traceback.print_exc()
-            self.eng.upnp = False
 
     def on_options(self):
         self.load_settings()

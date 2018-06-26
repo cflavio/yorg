@@ -17,57 +17,51 @@ class LogInPageGui(ThanksPageGui):
         menu_args = self.menu_args
         t_a = menu_args.text_args.copy()
         # del t_a['scale']
-        jid_lab = Text(_('Your jabber id:'), pos=(-.25, .8),
+        jid_lab = Text(_('Your user id:'), pos=(-.25, .6),
                                align='right', **t_a)
-        pwd_lab = Text(_('Your jabber password:'), pos=(-.25, .6),
+        pwd_lab = Text(_('Your password:'), pos=(-.25, .4),
                                align='right', **t_a)
-        init_txt = self.props.opt_file['settings']['xmpp']['usr'] if \
-            self.props.opt_file['settings']['xmpp']['usr'] else \
-            _('your jabber id')
+        init_txt = self.props.opt_file['settings']['login']['usr'] if \
+            self.props.opt_file['settings']['login']['usr'] else \
+            _('your user id')
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, initialText=init_txt,
             text_fg=menu_args.text_active, on_tab=self.on_tab,
             on_click=self.on_click)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .4), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True,
             text_fg=menu_args.text_active, command=self.start)
         start_btn = Btn(
-            text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
+            text=_('Log-in'), pos=(-.2, 1, .2), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
-        self.store_cb = CheckBtn(
-            pos=(-.2, 1, .1), text=_('store the password'),
-            indicatorValue=False, indicator_frameColor=menu_args.text_active,
-            **menu_args.checkbtn_args)
         t_a['scale'] = .06
-        store_lab = Text(
-            _('(only if your computer is not shared with other people)'),
-            pos=(-.2, -.02), wordwrap=64, **t_a)
-        notes_texts = [
+        note_txt = \
             _('If you are a supporter, please write us (%s) your '
-              'jabber id so we can highlight your account as a supporter '
-              'one.'),
-            _('Yorg sends your XMPP presence to other Yorg users, so they '
-              "can see your XMPP presence status. If you don't want this, "
-              "please don't use your personal account and create a new one "
-              'for Yorg.'),
-            _('When you add a Yorg friend, you are adding it to your '
-              "account's roster too."),
-            _("Yorg's XMPP code is still experimental: if you have "
-              'important data in your XMPP account, please create a new '
-              'account for playing Yorg with.')]
-        notes_texts = [str(i + 1) + '. ' + elm for i, elm in enumerate(notes_texts)]
-        notes_texts[0] = notes_texts[0] % 'flavio@ya2.it'
-        notes_txt = '\n'.join(notes_texts)
+              'user id so we can highlight your account as a supporter '
+              'one.')
+        note_txt = note_txt % 'flavio@ya2.it'
         notes_lab = Text(
-            notes_txt, pos=(-1.64, -.16), align='left', wordwrap=42,
+            note_txt, pos=(-1.64, 0), align='left', wordwrap=42,
             **t_a)
+        register_txt = _(
+            "If you don't have an account, then you can register:")
+        register_lab = Text(
+            register_txt, pos=(-1.64, -.45), align='left', wordwrap=42,
+            **t_a)
+        register_btn = Btn(
+            text='', pos=(-.2, 1, -.6), command=self.on_register,
+            tra_src='Register', tra_tra=_('Register'),
+            **menu_args.btn_args)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
-                   self.store_cb, store_lab, notes_lab]
+                   notes_lab, register_lab, register_btn]
         self.add_widgets(widgets)
         self.eng.attach_obs(self.on_frame)
         ThanksPageGui.build(self)
+
+    def on_register(self):
+        self.notify('on_push_page', 'register', [self.props])
 
     def start(self, pwd_name=None):
         if not self.check(self.jid_ent.get().replace('_AT_', '@')):
@@ -81,10 +75,10 @@ class LogInPageGui(ThanksPageGui):
     def check(self, jid):
         try:
             jid, domain = jid.split('@')  # check the pattern
-            gethostbyname(domain)  # check if the domain exists
-            s = create_connection((domain, 5222), timeout=3.0)  # xmpp up?
-            s.shutdown(SHUT_RDWR)
-            s.close()
+            #gethostbyname(domain)  # check if the domain exists
+            #s = create_connection((domain, 5222), timeout=3.0)  # xmpp up?
+            #s.shutdown(SHUT_RDWR)
+            #s.close()
             return True
         except (ValueError, gaierror, timeout) as e:
             print jid, e
@@ -92,7 +86,7 @@ class LogInPageGui(ThanksPageGui):
     def on_check_dlg(self): self.check_dlg.destroy()
 
     def on_frame(self):
-        init_txt = _('your jabber id')
+        init_txt = _('your user id')
         curr_txt = self.jid_ent.get()
         if curr_txt == init_txt[:-1]:
             self.jid_ent.set('')
@@ -100,7 +94,7 @@ class LogInPageGui(ThanksPageGui):
             self.jid_ent.set(curr_txt[-1:])
 
     def on_click(self, pos):
-        init_txt = _('your jabber id')
+        init_txt = _('your user id')
         curr_txt = self.jid_ent.get()
         if curr_txt == init_txt: self.jid_ent.set('')
 
@@ -109,9 +103,9 @@ class LogInPageGui(ThanksPageGui):
         self.pwd_ent['focus'] = 1
 
     def on_ok(self):
-        self.props.opt_file['settings']['xmpp']['usr'] = self.jid_ent.get()
+        self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
         if self.store_cb['indicatorValue']:
-            self.props.opt_file['settings']['xmpp']['pwd'] = self.pwd_ent.get()
+            self.props.opt_file['settings']['login']['pwd'] = self.pwd_ent.get()
         self.props.opt_file.store()
         self._on_back()
         self.notify('on_login')

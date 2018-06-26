@@ -62,7 +62,7 @@ class Yorg(Game):
                 'player_name': '',
                 'shaders': 1,
                 'camera': 'top',
-                'xmpp':
+                'login':
                     {'usr': '', 'pwd': ''}},
             'development': {
                 'multithreaded_render': 0,
