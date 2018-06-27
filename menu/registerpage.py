@@ -1,4 +1,5 @@
 from socket import socket, gethostbyname, gaierror, SHUT_RDWR, create_connection, timeout
+from hashlib import sha512
 from panda3d.core import TextNode
 from yyagl.library.gui import Btn, CheckBtn, Entry, Text
 from yyagl.engine.gui.page import Page, PageFacade
@@ -51,10 +52,16 @@ class RegisterPageGui(ThanksPageGui):
         ThanksPageGui.build(self)
 
     def register(self, pwd_name=None):
-        #ret_val = self.eng.server.register(
-        #    self.email_ent.get().replace('_AT_', '@'), self.jid_ent.get(),
-        #    self.pwd_ent.get())
-        ret_val = 'ok'
+        def process_msg(data_lst, sender):
+            print sender, data_lst
+        self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
+        self.eng.client.register_rpc('register')
+        self.eng.client.register_rpc('get_salt')
+        salt = self.eng.client.get_salt(self.jid_ent.get())
+        ret_val = self.eng.client.register(
+            self.jid_ent.get(),
+            sha512(self.pwd_ent.get() + salt).hexdigest(), salt,
+            self.email_ent.get().replace('_AT_', '@'))
         self.ret_val = ret_val
         ok_txt = _(
             'Your account has been registered. Now, in order to '
