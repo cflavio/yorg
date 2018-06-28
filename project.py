@@ -3,9 +3,8 @@
 # TODO LIST =====
 
 # 0.10 (better multiplayer)
-# email validation/activation
 # reset password
-# avoid re-registration from the same address if they are too close
+# add logging
 
 # 0.11 (local multiplayer)
 # local multiplayer
