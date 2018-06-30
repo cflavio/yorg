@@ -17,24 +17,24 @@ class LogInPageGui(ThanksPageGui):
         menu_args = self.menu_args
         t_a = menu_args.text_args.copy()
         # del t_a['scale']
-        jid_lab = Text(_('Your user id:'), pos=(-.25, .6),
+        jid_lab = Text(_('Your user id:'), pos=(-.25, .8),
                                align='right', **t_a)
-        pwd_lab = Text(_('Your password:'), pos=(-.25, .4),
+        pwd_lab = Text(_('Your password:'), pos=(-.25, .6),
                                align='right', **t_a)
         init_txt = self.props.opt_file['settings']['login']['usr'] if \
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, initialText=init_txt,
             text_fg=menu_args.text_active, on_tab=self.on_tab,
             on_click=self.on_click)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.15, 1, .4), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color, obscured=True,
             text_fg=menu_args.text_active, command=self.start)
         start_btn = Btn(
-            text=_('Log-in'), pos=(-.2, 1, .2), command=self.start,
+            text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
             **self.props.gameprops.menu_args.btn_args)
         t_a['scale'] = .06
         note_txt = \
@@ -43,25 +43,37 @@ class LogInPageGui(ThanksPageGui):
               'one.')
         note_txt = note_txt % 'flavio@ya2.it'
         notes_lab = Text(
-            note_txt, pos=(-1.64, 0), align='left', wordwrap=42,
+            note_txt, pos=(-1.64, .2), align='left', wordwrap=42,
             **t_a)
         register_txt = _(
             "If you don't have an account, then you can register:")
         register_lab = Text(
-            register_txt, pos=(-1.64, -.45), align='left', wordwrap=42,
+            register_txt, pos=(-1.64, -.2), align='left', wordwrap=42,
             **t_a)
         register_btn = Btn(
-            text='', pos=(-.2, 1, -.6), command=self.on_register,
+            text='', pos=(-.2, 1, -.35), command=self.on_register,
             tra_src='Register', tra_tra=_('Register'),
             **menu_args.btn_args)
+        reset_txt = _(
+            "If you want to reset your password:")
+        reset_lab = Text(
+            reset_txt, pos=(-1.64, -.55), align='left', wordwrap=42,
+            **t_a)
+        reset_btn = Btn(
+            text='', pos=(-.2, 1, -.7), command=self.on_reset,
+            tra_src='Reset', tra_tra=_('Reset'),
+            **menu_args.btn_args)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
-                   notes_lab, register_lab, register_btn]
+                   notes_lab, register_lab, register_btn, reset_lab, reset_btn]
         self.add_widgets(widgets)
         self.eng.attach_obs(self.on_frame)
         ThanksPageGui.build(self)
 
     def on_register(self):
         self.notify('on_push_page', 'register', [self.props])
+
+    def on_reset(self):
+        self.notify('on_push_page', 'reset', [self.props])
 
     def start(self, pwd_name=None):
         if not self.check(self.jid_ent.get().replace('_AT_', '@')):

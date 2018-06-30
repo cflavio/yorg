@@ -5,10 +5,10 @@ from yyagl.library.gui import Btn, CheckBtn, Entry, Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
-from .register_dlg import RegisterDialog
+from .reset_dlg import ResetDialog
 
 
-class RegisterPageGui(ThanksPageGui):
+class ResetPageGui(ThanksPageGui):
 
     def __init__(self, mediator, mp_props):
         self.props = mp_props
@@ -21,8 +21,6 @@ class RegisterPageGui(ThanksPageGui):
         email_lab = Text(_('Your email:'), pos=(-.25, .4),
                                align='right', **t_a)
         jid_lab = Text(_('Your user id:'), pos=(-.25, .2),
-                               align='right', **t_a)
-        pwd_lab = Text(_('Your password:'), pos=(-.25, .0),
                                align='right', **t_a)
         init_txt = self.props.opt_file['settings']['login']['usr'] if \
             self.props.opt_file['settings']['login']['usr'] else \
@@ -37,55 +35,38 @@ class RegisterPageGui(ThanksPageGui):
             frameColor=menu_args.btn_color, initialText=init_txt,
             text_fg=menu_args.text_active, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
-        self.pwd_ent = Entry(
-            scale=.08, pos=(-.15, 1, 0), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, obscured=True,
-            text_fg=menu_args.text_active, command=self.register)
         start_btn = Btn(
-            text=_('Register'), pos=(-.2, 1, -.2), command=self.register,
+            text=_('Reset'), pos=(-.2, 1, -.2), command=self.reset,
             **self.props.gameprops.menu_args.btn_args)
         t_a['scale'] = .06
-        widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
-                   email_lab, self.email_ent]
+        widgets = [self.jid_ent, start_btn, jid_lab, email_lab, self.email_ent]
         self.add_widgets(widgets)
         self.eng.attach_obs(self.on_frame)
         ThanksPageGui.build(self)
 
-    def register(self, pwd_name=None):
+    def reset(self, pwd_name=None):
         def process_msg(data_lst, sender):
             print sender, data_lst
         self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
-        self.eng.client.register_rpc('register')
-        self.eng.client.register_rpc('get_salt')
-        salt = self.eng.client.get_salt(self.jid_ent.get())
-        ret_val = self.eng.client.register(
-            self.jid_ent.get(),
-            sha512(self.pwd_ent.get() + salt).hexdigest(), salt,
-            self.email_ent.get().replace('_AT_', '@'))
-        self.ret_val = ret_val
+        self.eng.client.register_rpc('reset')
+        self.ret_val = ret_val = self.eng.client.reset(self.jid_ent.get(), self.email_ent.get())
         ok_txt = _(
-            'Your account has been registered. Now, in order to '
-            "activate it, you should click the link that we've sent to your "
-            "email (please check your spam folder if you can't find it). "
-            'After that, you can log in.')
-        inv_nick_txt = _(
-            "Your nickname's format is invalid: please use only letters and "
-            'numbers.')
-        inv_email_txt = _("Your email's format is invalid.")
-        already_nick_txt = _('Your nickname already exists.')
-        already_email_txt = _('Your email has already been used.')
+            "We've sent an email to you (please check your spam folder if you "
+            "can't find it) with the instructions for completing the reset.")
+        nomail_txt = _("This email isn't in our archive.")
+        nonick_txt = _("This nickname isn't in our archive.")
+        dontmatch_txt = _("This nickname-email pair isn't in our archive.")
         err_txt = _('Connection error.')
         if ret_val == 'ok': txt = ok_txt
-        elif ret_val == 'invalid_nick': txt = inv_nick_txt
-        elif ret_val == 'invalid_email': txt = inv_email_txt
-        elif ret_val == 'already_used_nick': txt = already_nick_txt
-        elif ret_val == 'already_used_email': txt = already_email_txt
+        elif ret_val == 'nomail': txt = nomail_txt
+        elif ret_val == 'nonick': txt = nonick_txt
+        elif ret_val == 'dontmatch': txt = dontmatch_txt
         else: txt = err_txt
-        self.register_dlg = RegisterDialog(self.menu_args, txt)
-        self.register_dlg.attach(self.on_register_dlg)
+        self.reset_dlg = ResetDialog(self.menu_args, txt)
+        self.reset_dlg.attach(self.on_reset_dlg)
 
-    def on_register_dlg(self):
-        self.register_dlg.destroy()
+    def on_reset_dlg(self):
+        self.reset_dlg.destroy()
         if self.ret_val == 'ok':
             self._on_back()
 
@@ -116,12 +97,10 @@ class RegisterPageGui(ThanksPageGui):
     def on_tab_email(self):
         self.email_ent['focus'] = 0
         self.jid_ent['focus'] = 1
-        self.pwd_ent['focus'] = 0
 
     def on_tab_id(self):
         self.email_ent['focus'] = 0
         self.jid_ent['focus'] = 0
-        self.pwd_ent['focus'] = 1
 
     def on_ok(self):
         self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
@@ -141,8 +120,8 @@ class RegisterPageGui(ThanksPageGui):
         ThanksPageGui.destroy(self)
 
 
-class RegisterPage(Page):
-    gui_cls = RegisterPageGui
+class ResetPage(Page):
+    gui_cls = ResetPageGui
 
     def __init__(self, mp_props):
         init_lst = [

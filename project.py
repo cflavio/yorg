@@ -3,7 +3,6 @@
 # TODO LIST =====
 
 # 0.10 (better multiplayer)
-# reset password
 # add logging
 
 # 0.11 (local multiplayer)
