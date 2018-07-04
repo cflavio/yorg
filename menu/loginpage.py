@@ -1,10 +1,10 @@
 from socket import socket, gethostbyname, gaierror, SHUT_RDWR, create_connection, timeout
+from hashlib import sha512
 from panda3d.core import TextNode
 from yyagl.library.gui import Btn, CheckBtn, Entry, Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
-from .check_dlg import CheckDialog
 
 
 class LogInPageGui(ThanksPageGui):
@@ -76,26 +76,17 @@ class LogInPageGui(ThanksPageGui):
         self.notify('on_push_page', 'reset', [self.props])
 
     def start(self, pwd_name=None):
-        if not self.check(self.jid_ent.get().replace('_AT_', '@')):
-            self.check_dlg = CheckDialog(self.menu_args)
-            self.check_dlg.attach(self.on_check_dlg)
-            return
-        self.eng.xmpp.start(self.jid_ent.get().replace('_AT_', '@'),
-                            self.pwd_ent.get(), self.on_ok, self.on_ko,
-                            self.props.gameprops.xmpp_debug)
-
-    def check(self, jid):
-        try:
-            jid, domain = jid.split('@')  # check the pattern
-            #gethostbyname(domain)  # check if the domain exists
-            #s = create_connection((domain, 5222), timeout=3.0)  # xmpp up?
-            #s.shutdown(SHUT_RDWR)
-            #s.close()
-            return True
-        except (ValueError, gaierror, timeout) as e:
-            print jid, e
-
-    def on_check_dlg(self): self.check_dlg.destroy()
+        def process_msg(data_lst, sender):
+            print sender, data_lst
+        self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
+        self.eng.client.register_rpc('login')
+        self.eng.client.register_rpc('get_salt')
+        salt = self.eng.client.get_salt(self.jid_ent.get())
+        self.pwd = sha512(self.pwd_ent.get() + salt).hexdigest()
+        ret_val = self.eng.client.login(self.jid_ent.get(), self.pwd)
+        if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
+            return self.on_ko(ret_val)
+        self.on_ok()
 
     def on_frame(self):
         init_txt = _('your user id')
@@ -116,14 +107,13 @@ class LogInPageGui(ThanksPageGui):
 
     def on_ok(self):
         self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
-        if self.store_cb['indicatorValue']:
-            self.props.opt_file['settings']['login']['pwd'] = self.pwd_ent.get()
+        self.props.opt_file['settings']['login']['pwd'] = self.pwd
         self.props.opt_file.store()
         self._on_back()
         self.notify('on_login')
 
     def on_ko(self, err):  # unused err
-        txt = Text(_('Error'), pos=(-.2, -.05), fg=(1, 0, 0, 1),
+        txt = Text(_('Error') + ': ' + err, pos=(-.2, -.05), fg=(1, 0, 0, 1),
                            scale=.16, font=self.menu_args.font)
         self.eng.do_later(5, txt.destroy)
 

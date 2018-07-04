@@ -1,9 +1,7 @@
 # BUGS =====
 
-# TODO LIST =====
 
-# 0.10 (better multiplayer)
-# add logging
+# TODO LIST =====
 
 # 0.11 (local multiplayer)
 # local multiplayer
