@@ -90,18 +90,19 @@ class Yorg(Game):
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
-        self.options = DctFile(
-            join(opt_path, 'options.yml') if opt_path else 'options.yml',
-            default_opt)
-        opt_dev = self.options['development']
-        win_orig = opt_dev['win_orig']
         parser = argparse.ArgumentParser()
         parser.add_argument('--win_orig')
         parser.add_argument('--user')
         parser.add_argument('--pwd')
         parser.add_argument('--car')
         parser.add_argument('--server')
+        parser.add_argument('--optfile')
         args = parser.parse_args()
+        optfile = args.optfile if args.optfile else 'options.yml'
+        self.options = DctFile(
+            join(opt_path, optfile) if opt_path else optfile, default_opt)
+        opt_dev = self.options['development']
+        win_orig = opt_dev['win_orig']
         if args.win_orig: win_orig = args.win_orig
         if args.car: opt_dev['car'] = args.car
         if args.server: opt_dev['server'] = args.server

@@ -1,4 +1,5 @@
-from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui
+from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui, MenuFacade
+from yyagl.gameobject import GameObject
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
@@ -153,11 +154,11 @@ class YorgMenuLogic(MenuLogic):
 
 class YorgMenuGui(MenuGui):
 
-    def __init__(self, mediator, menu_props):
+    def __init__(self, mediator, menu_props, yorg_client):
         # every page should not manage following pages by forwarding params:
         # each page should callback the menu and it should spawn the next one
         MenuGui.__init__(self, mediator, menu_props.gameprops.menu_args)
-        page = YorgMainPage(menu_props)
+        page = YorgMainPage(menu_props, yorg_client)
         page.gui.attach(self.on_login)
         page.gui.attach(self.on_logout)
         page.gui.attach(self.on_exit)
@@ -176,3 +177,10 @@ class YorgMenuGui(MenuGui):
 class YorgMenu(Menu):
     gui_cls = YorgMenuGui
     logic_cls = YorgMenuLogic
+
+    def __init__(self, menu_args, yorg_client):
+        comps = [
+            [('logic', self.logic_cls, [self])],
+            [('gui', self.gui_cls, [self, menu_args, yorg_client])]]
+        GameObject.__init__(self, comps)
+        MenuFacade.__init__(self)

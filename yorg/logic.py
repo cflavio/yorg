@@ -10,6 +10,7 @@ from yyagl.racing.race.raceprops import RaceProps
 from menu.ingamemenu.menu import InGameMenu
 from menu.netmsgs import NetMsgs
 from .thanksnames import ThanksNames
+from .client import YorgClient
 from menu.multiplayer.multiplayerfrm import MultiplayerFrm
 
 
@@ -56,6 +57,7 @@ class YorgLogic(GameLogic):
         server = dev['server'] if 'server' in dev else ''
         if car and server:  # for development's quickstart
             self.mediator.options.persistent = False
+        self.yorg_client = YorgClient()
 
     def init_mp_frm(self):
         dev = self.mediator.options['development']
@@ -64,7 +66,8 @@ class YorgLogic(GameLogic):
         server = dev['server'] if 'server' in dev else ''
         if not self.mp_frm and not (car and track and not server):
             self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_args,
-                                         self.eng.cfg.dev_cfg.xmpp_server)
+                                         self.eng.cfg.dev_cfg.xmpp_server,
+                                         self.yorg_client)
             self.mp_frm.attach(self.on_msg_focus)
             self.mp_frm.attach(self.on_create_room)
             self.mp_frm.attach(self.on_srv_quitted)
@@ -480,7 +483,7 @@ class YorgLogic(GameLogic):
 
     def on_login(self):
         self.init_mp_frm()
-        self.eng.xmpp.send_connected()
+        #self.eng.xmpp.send_connected()
         self.mp_frm.on_users()
 
     def on_logout(self):

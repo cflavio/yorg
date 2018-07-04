@@ -21,7 +21,7 @@ from yyagl.engine.network.network import NetworkError
 
 class MultiplayerFrm(GameObject):
 
-    def __init__(self, menu_args, yorg_srv):
+    def __init__(self, menu_args, yorg_srv, yorg_client):
         GameObject.__init__(self)
         self.eng.log('created multiplayer form')
         self.dialog = self.server_dlg = None
@@ -32,7 +32,7 @@ class MultiplayerFrm(GameObject):
         self.invited_users = []
         self.curr_inviting_usr = None
         self.menu_args = menu_args
-        self.users_frm = UsersFrm(menu_args, yorg_srv)
+        self.users_frm = UsersFrm(menu_args, yorg_srv, yorg_client)
         self.users_frm.attach(self.on_invite)
         self.users_frm.attach(self.on_add_chat)
         self.users_frm.attach(self.on_add_groupchat)
@@ -58,6 +58,8 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_ip_address)
         self.eng.xmpp.attach(self.on_yorg_init)
         self.eng.xmpp.attach(self.on_is_playing)
+        yorg_client.attach(self.on_presence_available)
+        yorg_client.attach(self.on_presence_unavailable)
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient
@@ -180,7 +182,7 @@ class MultiplayerFrm(GameObject):
 
     def on_presence_unavailable(self, msg):
         self.users_frm.on_users()
-        if str(msg['from']) == str(self.curr_inviting_usr):
+        if msg == str(self.curr_inviting_usr):
             self.on_cancel_invite()
 
     def on_logout(self):

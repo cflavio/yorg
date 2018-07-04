@@ -9,12 +9,11 @@ from yyagl.gameobject import GameObject
 
 class UserLabel(GameObject):
 
-    def __init__(self, name, parent, menu_args, is_supporter, is_online, name_full):
+    def __init__(self, name, parent, menu_args, is_supporter):
         GameObject.__init__(self)
         self.menu_args = menu_args
+        self.name = name
         self.parent = parent
-        self.name_full = name_full
-        self.is_online = is_online
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         self.lab = DirectLabel(text=name, pos=(0, 1, 0), parent=parent,
@@ -32,7 +31,7 @@ class UserLabel(GameObject):
             self.lab.set_x(.03)
             self.supp_btn = StaticMPBtn(
                 self.parent, self, self.menu_args, 'assets/images/gui/medal.txo',
-                .01, None, self.name_full, _('Supporter!'))
+                .01, None, self.name, _('Supporter!'))
         else:
             self.lab.set_x(0)
             if self.supp_btn:
@@ -41,7 +40,7 @@ class UserLabel(GameObject):
     def set_online(self, val=None):
         if val is not None: self.is_online = val
         if not self.eng.xmpp.client: self.is_online = False
-        elif self.name_full == self.eng.xmpp.client.boundjid.full: self.is_online = True
+        elif self.name == self.eng.xmpp.client.boundjid.full: self.is_online = True
         self.lab.set_alpha_scale(1 if self.is_online else .4)
 
     def destroy(self):
@@ -52,17 +51,15 @@ class UserLabel(GameObject):
 
 class UserFrmMe(GameObject, Subject):
 
-    def __init__(self, name, name_full, is_supporter, is_online, pos, parent,
-                 menu_args, msg_btn_x=.58):
+    def __init__(self, uid, is_supporter, pos, parent, menu_args,
+                 msg_btn_x=.58):
         Subject.__init__(self)
         GameObject.__init__(self)
-        self.name_full = name_full
         self.menu_args = menu_args
         self.frm = Btn(
             frameSize=(-.01, .79, .05, -.03), frameColor=(1, 1, 1, 0),
             pos=pos, parent=parent)
-        name = name.split('@')[0] + '\1smaller\1@' + name.split('@')[1] + '\2'
-        self.lab = UserLabel(name, self.frm, menu_args, is_supporter, is_online, name_full)
+        self.lab = UserLabel(uid, self.frm, menu_args, is_supporter)
         self.frm.bind(ENTER, self.on_enter)
         self.frm.bind(EXIT, self.on_exit)
 
@@ -81,16 +78,16 @@ class UserFrmMe(GameObject, Subject):
 
 class UserFrm(UserFrmMe):
 
-    def __init__(self, name, name_full, is_supporter, is_online, pos, parent,
+    def __init__(self, name, is_supporter, pos, parent,
                  menu_args, msg_btn_x=.58):
-        UserFrmMe.__init__(self, name, name_full, is_supporter, is_online, pos,
-                           parent, menu_args, msg_btn_x)
+        UserFrmMe.__init__(self, name, is_supporter, pos, parent, menu_args,
+                           msg_btn_x)
         self.msg_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/message.txo',
-            msg_btn_x, self.on_msg, name_full, _('send a message to the user'))
+            msg_btn_x, self.on_msg, name, _('send a message to the user'))
 
     def on_msg(self, usr):
-        self.notify('on_add_chat', usr.name_full)
+        self.notify('on_add_chat', usr.uid)
 
     def on_enter(self, pos):
         UserFrmMe.on_enter(self, pos)
@@ -103,28 +100,27 @@ class UserFrm(UserFrmMe):
 
 class UserFrmListMe(UserFrmMe):
 
-    def __init__(self, name, name_full, is_supporter, pos, parent, menu_args):
+    def __init__(self, uid, is_supporter, pos, parent, menu_args):
         UserFrmMe.__init__(
-            self, name, name_full, is_supporter, True, pos, parent, menu_args)
+            self, uid, is_supporter, pos, parent, menu_args)
 
     def enable_invite_btn(self, enable=True): pass
 
 
 class UserFrmList(UserFrm):
 
-    def __init__(self, name, name_full, is_supporter, is_online, is_friend,
-                 is_in_yorg, is_playing, pos, parent, menu_args):
+    def __init__(self, name, is_supporter, is_playing, pos, parent,
+                 menu_args):
         UserFrm.__init__(
-            self, name, name_full, is_supporter, is_online, pos, parent,
-            menu_args, .72)
+            self, name, is_supporter, pos, parent, menu_args, .72)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_normal
-        self.__enable_invite_btn = is_in_yorg and not is_playing
+        self.__enable_invite_btn = not is_playing
         self.invite_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/invite.txo',
-            .65, self.on_invite, name_full.name, _("%s isn't playing yorg") % name_full.name)
-        self.create_friend_btn(is_friend, menu_args, name_full)
+            .65, self.on_invite, name, _("%s isn't playing yorg") % name)
+        #self.create_friend_btn(is_friend, menu_args, name_full)
 
     def create_friend_btn(self, is_friend, menu_args, name_full):
         pass

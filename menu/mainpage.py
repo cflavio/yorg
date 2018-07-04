@@ -20,10 +20,11 @@ from .optionpage import OptionPageProps
 
 class YorgMainPageGui(MainPageGui):
 
-    def __init__(self, mediator, mainpage_props):
+    def __init__(self, mediator, mainpage_props, yorg_client):
         self.__feed_type = ''
         self.__date_field = ''
         self.props = mainpage_props
+        self.yorg_client = yorg_client
         self.load_settings()
         self.conn_attempted = False
         self.ver_check = VersionChecker()
@@ -36,11 +37,12 @@ class YorgMainPageGui(MainPageGui):
             parser.add_argument('--user')
             parser.add_argument('--pwd')
             parser.add_argument('--win_orig')
+            parser.add_argument('--optfile')
             args = parser.parse_args()
             if args.user and args.pwd:
                 user = args.user
                 password = args.pwd
-            if user and password and not self.eng.client.is_active:
+            if user and password:
             # if user:
                 # if platform.startswith('linux'): set_keyring(Keyring())
                 # pwd = get_password('ya2_rog', user)
@@ -49,14 +51,12 @@ class YorgMainPageGui(MainPageGui):
                     # set_password('ya2_rog', user, pwd)
                 # self.eng.xmpp.start(user, pwd)
                     #self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
-                    def process_msg(data_lst, sender):
-                        print sender, data_lst
-                    self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
                     self.eng.client.register_rpc('login')
                     ret_val = self.eng.client.login(user, password)
                     if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
                         return self.on_ko(ret_val)
-                    self.on_ok()
+                    taskMgr.doMethodLater(.1, lambda task: self.on_ok(), 'x')
+                    # otherwise the menu is not attached to the page yet
 
             if not (user and password):
                 self.on_ko()
@@ -66,11 +66,12 @@ class YorgMainPageGui(MainPageGui):
         self.widgets[5]['text'] = self.get_label()
 
     def on_ok(self):
-        self.eng.client.authenticated = True
+        self.yorg_client.authenticated = True
         self.conn_attempted = True
         self.widgets[5]['text'] = self.get_label()
         #self.eng.xmpp.send_connected()
-        # self.notify('on_login')
+        self.yorg_client.start(self.props.opt_file['settings']['login']['usr'])
+        self.notify('on_login')
 
     def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
@@ -78,7 +79,7 @@ class YorgMainPageGui(MainPageGui):
 
     def on_logout(self):
         #self.eng.xmpp.disconnect()
-        self.eng.client.authenticated = False
+        self.yorg_client.authenticated = False
         options = self.props.opt_file
         options['settings']['login']['usr'] = ''
         options['settings']['login']['pwd'] = ''
@@ -90,7 +91,7 @@ class YorgMainPageGui(MainPageGui):
         self.notify('on_push_page', 'login', [self.props])
 
     def on_loginout(self):
-        if self.eng.client.is_active and self.eng.client.authenticated:
+        if self.eng.client.is_active and self.yorg_client.authenticated:
             self.on_logout()
         elif self.conn_attempted:
             self.on_login()
@@ -110,7 +111,7 @@ class YorgMainPageGui(MainPageGui):
     def get_label(self):
         if not self.ver_check.is_uptodate():
             return _('Not up-to-date')
-        if self.eng.client.is_active and self.eng.client.authenticated:
+        if self.eng.client.is_active and self.yorg_client.authenticated:
             return _('Log out') + \
                 ' \1small\1(%s)\2' % self.props.opt_file['settings']['login']['usr']
         elif self.conn_attempted:
@@ -234,10 +235,10 @@ class YorgMainPageGui(MainPageGui):
 class YorgMainPage(MainPage, PageFacade):
     gui_cls = YorgMainPageGui
 
-    def __init__(self, mainpage_props):
+    def __init__(self, mainpage_props, yorg_client):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mainpage_props])]]
+            [('gui', self.gui_cls, [self, mainpage_props, yorg_client])]]
         GameObject.__init__(self, init_lst)
         # don't construct it using GameObject
         PageFacade.__init__(self)

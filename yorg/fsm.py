@@ -33,7 +33,7 @@ class YorgFsm(FsmColleague):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mediator.options.dct,
             'http://www.ya2.it/pages/support-us.html')
-        self.__menu = YorgMenu(self.__menu_props)
+        self.__menu = YorgMenu(self.__menu_props, self.mediator.logic.yorg_client)
         methods = [self.mediator.logic.on_input_back,
                    self.mediator.logic.on_options_back,
                    self.mediator.logic.on_room_back,
