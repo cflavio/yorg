@@ -86,8 +86,8 @@ class UserFrm(UserFrmMe):
             self.frm, self, menu_args, 'assets/images/gui/message.txo',
             msg_btn_x, self.on_msg, name, _('send a message to the user'))
 
-    def on_msg(self, usr):
-        self.notify('on_add_chat', usr.uid)
+    def on_msg(self, uid):
+        self.notify('on_add_chat', uid)
 
     def on_enter(self, pos):
         UserFrmMe.on_enter(self, pos)

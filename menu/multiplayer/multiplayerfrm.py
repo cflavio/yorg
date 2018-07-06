@@ -36,7 +36,7 @@ class MultiplayerFrm(GameObject):
         self.users_frm.attach(self.on_invite)
         self.users_frm.attach(self.on_add_chat)
         self.users_frm.attach(self.on_add_groupchat)
-        self.msg_frm = MessageFrm(menu_args)
+        self.msg_frm = MessageFrm(menu_args, yorg_client)
         self.msg_frm.attach(self.on_msg_focus)
         self.msg_frm.attach(self.on_close_all_chats)
         self.match_frm = None
@@ -60,6 +60,7 @@ class MultiplayerFrm(GameObject):
         self.eng.xmpp.attach(self.on_is_playing)
         yorg_client.attach(self.on_presence_available)
         yorg_client.attach(self.on_presence_unavailable)
+        yorg_client.attach(self.on_msg)
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient
@@ -294,7 +295,7 @@ class MultiplayerFrm(GameObject):
         self.eng.log('received message')
         self.users_frm.set_size(False)
         self.msg_frm.show()
-        self.msg_frm.on_msg(msg)
+        self.msg_frm.on_msg(*msg)
 
     def on_close_all_chats(self):
         self.eng.log('closed all chats')

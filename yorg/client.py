@@ -32,6 +32,8 @@ class YorgClient(GameObject):
                 if usr.uid == data_lst[1]:
                     self.users.remove(usr)
             self.notify('on_presence_unavailable', data_lst[1:])
+        if data_lst[0] == 'msg':
+            self.notify('on_msg', data_lst[1:])
 
     @property
     def users_nodup(self):

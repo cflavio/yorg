@@ -193,8 +193,9 @@ class MatchMsgFrm(GameObject):
 
 class MessageFrm(GameObject):
 
-    def __init__(self, menu_args):
+    def __init__(self, menu_args, yorg_client):
         GameObject.__init__(self)
+        self.yorg_client = yorg_client
         self.eng.log('created message form')
         self.chats = []
         self.curr_chat = None
@@ -356,40 +357,41 @@ class MessageFrm(GameObject):
     def on_typed_msg(self, val):
         self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
         self.ent.set('')
-        if self.curr_chat.dst not in self.presences_sent and \
-                not str(self.curr_chat.dst).startswith('yorg'):
-            self.eng.xmpp.client.send_presence(
-                pfrom=self.eng.xmpp.client.boundjid.full,
-                pto=self.curr_chat.dst)
-            self.presences_sent += [self.curr_chat.dst]
-        if str(self.curr_chat.dst).startswith('yorg'):
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=self.curr_chat.dst,
-                mtype='groupchat',
-                mbody=val)
-        else:
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=self.curr_chat.dst,
-                msubject='chat',
-                mbody=val)
+        #if self.curr_chat.dst not in self.presences_sent and \
+        #        not str(self.curr_chat.dst).startswith('yorg'):
+        #    self.eng.xmpp.client.send_presence(
+        #        pfrom=self.eng.xmpp.client.boundjid.full,
+        #        pto=self.curr_chat.dst)
+        #    self.presences_sent += [self.curr_chat.dst]
+        #if str(self.curr_chat.dst).startswith('yorg'):
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=self.curr_chat.dst,
+        #        mtype='groupchat',
+        #        mbody=val)
+        #else:
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=self.curr_chat.dst,
+        #        msubject='chat',
+        #        mbody=val)
+        self.eng.client.send(['msg', self.yorg_client.myid, self.curr_chat.dst, val])
         msg = '\1italic\1' + _('you') + '\2: ' + val
         self.curr_chat.messages += [msg]
         self.ent['focus'] = 1
 
-    def on_msg(self, msg):
-        src = str(JID(msg['from']).bare)
-        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
-        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
-        chat = self.__find_chat(msg['from'])
+    def on_msg(self, from_, to, txt):
+        #src = str(JID(msg['from']).bare)
+        #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        str_msg = '\1italic\1' + from_ + '\2: ' + txt
+        chat = self.__find_chat(from_)
         if not chat:
-            chat = Chat(msg['from'])
+            chat = Chat(from_)
             self.chats += [chat]
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(chat)
-        elif JID(self.curr_chat.dst).bare == JID(msg['from']).bare:
+        elif self.curr_chat.dst == from_:
             self.add_msg_txt(str_msg)
         else:
             chat.read = False
