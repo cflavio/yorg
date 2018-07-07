@@ -34,6 +34,17 @@ class YorgClient(GameObject):
             self.notify('on_presence_unavailable', data_lst[1:])
         if data_lst[0] == 'msg':
             self.notify('on_msg', data_lst[1:])
+        if data_lst[0] == 'is_playing':
+            self.notify('on_is_playing', data_lst[1], data_lst[2])
+        if data_lst[0] == 'invite_chat':
+            self.notify('on_invite_chat', data_lst[1], data_lst[2], data_lst[3])
+        if data_lst[0] == 'declined':
+            self.notify('on_declined', data_lst[1])
+        if data_lst[0] == 'presence_available_room':
+            self.notify('on_presence_available_room', data_lst[1], data_lst[2])
+
+    def find_usr(self, uid):
+        return [usr for usr in self.users if usr.uid == uid][0]
 
     @property
     def users_nodup(self):

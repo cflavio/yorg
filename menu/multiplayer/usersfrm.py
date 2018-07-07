@@ -113,7 +113,7 @@ class UsersFrm(GameObject):
                         user.is_playing,
                         (0, 1, top - .08 - .08 * i),
                         self.frm.getCanvas(),
-                        self.menu_args)
+                        self.menu_args, self.yorg_client)
                 else:
                     lab = UserFrmListMe(
                         user.uid,
@@ -130,7 +130,7 @@ class UsersFrm(GameObject):
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
             lab = [lab for lab in self.labels
                    if clean(lab.lab.lab['text']) == self.trunc(user.uid, 20)][0]
-            enb_val = invite_btn and user.uid not in self.invited_users and not user.is_playing and self.eng.upnp
+            enb_val = invite_btn and user.uid not in self.invited_users and not user.is_playing
             if hasattr(lab, 'invite_btn'):
                 inv_btn = lab.invite_btn
                 if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
@@ -138,7 +138,6 @@ class UsersFrm(GameObject):
                 elif self.in_match_room: inv_btn.tooltip['text'] = _("you're already in a match")
                 elif user.uid in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
                 elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
-                elif not self.eng.upnp: inv_btn.tooltip['text'] = _("can't set UPnP")
             lab.enable_invite_btn(enb_val)
             lab.frm.set_z(top - .08 - .08 * i)
             lab.lab.set_supporter(user.is_supporter)
@@ -149,40 +148,43 @@ class UsersFrm(GameObject):
         self.invited_users += [usr.uid]
         self.on_users()
         if not self.room_name:
-            jid = self.eng.xmpp.client.boundjid
-            time_code = strftime('%y%m%d%H%M%S')
-            srv = self.eng.xmpp.client.conf_srv
-            self.room_name = 'yorg' + jid.user + time_code + '@' + srv
-            self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
-                self.room_name, self.eng.xmpp.client.boundjid.bare,
-                pfrom=self.eng.xmpp.client.boundjid.full)
-            cfg = self.eng.xmpp.client.plugin['xep_0045'].getRoomConfig(self.room_name)
-            values = cfg.get_values()
-            values['muc#roomconfig_publicroom'] = False
-            cfg.set_values(values)
-            self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
-            self.eng.log('created room ' + self.room_name)
-            for usr_name in [self.yorg_srv] + \
-                [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
-                self.eng.xmpp.client.send_message(
-                    mfrom=self.eng.xmpp.client.boundjid.full,
-                    mto=usr_name,
-                    mtype='ya2_yorg',
-                    msubject='is_playing',
-                    mbody='1')
-        self.eng.xmpp.client.send_message(
-            mfrom=self.eng.xmpp.client.boundjid.full,
-            mto=usr.name_full,
-            mtype='ya2_yorg',
-            msubject='invite',
-            mbody=self.room_name + '\n' + self.eng.server.public_addr + '\n' + self.eng.server.local_addr)
-        self.eng.log('invited ' + str(usr.name_full))
-        self.notify('on_add_groupchat', self.room_name, usr.name)
 
-    def on_declined(self, msg):
-        self.eng.log('declined from ' + str(JID(msg['from']).bare))
-        usr = str(JID(msg['from']).bare)
-        self.invited_users.remove(usr)
+            time_code = strftime('%y%m%d%H%M%S')
+            self.room_name = self.yorg_client.myid + time_code
+            #self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
+            #    self.room_name, self.eng.xmpp.client.boundjid.bare,
+            #    pfrom=self.eng.xmpp.client.boundjid.full)
+            #cfg = self.eng.xmpp.client.plugin['xep_0045'].getRoomConfig(self.room_name)
+            #values = cfg.get_values()
+            #values['muc#roomconfig_publicroom'] = False
+            #cfg.set_values(values)
+            #self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
+            self.eng.client.register_rpc('join_room')
+            self.eng.client.join_room(self.room_name)
+            self.eng.log('created room ' + self.room_name)
+            #for usr_name in [self.yorg_srv] + \
+            #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+            #    self.eng.xmpp.client.send_message(
+            #        mfrom=self.eng.xmpp.client.boundjid.full,
+            #        mto=usr_name,
+            #        mtype='ya2_yorg',
+            #        msubject='is_playing',
+            #        mbody='1')
+        self.eng.client.register_rpc('invite')
+        ret = self.eng.client.invite(usr.uid, self.room_name)
+        #self.eng.xmpp.client.send_message(
+        #    mfrom=self.eng.xmpp.client.boundjid.full,
+        #    mto=usr.name_full,
+        #    mtype='ya2_yorg',
+        #    msubject='invite',
+        #    mbody=self.room_name + '\n' + self.eng.server.public_addr + '\n' + self.eng.server.local_addr)
+        if ret == 'ok':
+            self.eng.log('invited ' + str(usr.uid))
+            self.notify('on_add_groupchat', self.room_name, usr.uid)
+
+    def on_declined(self, from_):
+        self.eng.log('declined from ' + from_)
+        self.invited_users.remove(from_)
         self.on_users()
 
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)

@@ -110,9 +110,10 @@ class UserFrmListMe(UserFrmMe):
 class UserFrmList(UserFrm):
 
     def __init__(self, name, is_supporter, is_playing, pos, parent,
-                 menu_args):
+                 menu_args, yorg_client):
         UserFrm.__init__(
             self, name, is_supporter, pos, parent, menu_args, .72)
+        self.yorg_client = yorg_client
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_normal
@@ -139,7 +140,7 @@ class UserFrmList(UserFrm):
     def on_invite(self, usr_name):
         self.eng.log('invite ' + usr_name)
         self.invite_btn.disable()
-        self.notify('on_invite', self.eng.xmpp.find_usr(usr_name))
+        self.notify('on_invite', self.yorg_client.find_usr(usr_name))
 
     def on_friend(self, usr_name):
         self.eng.log('friend with ' + usr_name)
@@ -167,18 +168,16 @@ class UserFrmList(UserFrm):
 
 class UserFrmMatch(UserFrm):
 
-    def __init__(self, name, name_full, is_supporter, is_online, pos, parent,
-                 menu_args):
+    def __init__(self, uid, usr, is_supporter, pos, parent, menu_args):
         UserFrm.__init__(
-            self, name, name_full, is_supporter, is_online, pos, parent,
-            menu_args, 1.0)
+            self, uid, is_supporter, pos, parent, menu_args, 1.0)
         self.frm['frameSize'] = (-.01, 1.06, .05, -.03)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_args.text_normal
         self.remove_btn = MPBtn(
             self.frm, self, menu_args, 'assets/images/gui/remove.txo',
-            .92, self.on_remove, name_full.name, _("remove from the match"))
+            .92, self.on_remove, usr.uid, _("remove from the match"))
 
     def on_remove(self, usr):
         self.notify('on_remove', usr)

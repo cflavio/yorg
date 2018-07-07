@@ -3,7 +3,6 @@ import argparse
 from feedparser import parse
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
-from igdc import IGDClient, UPNPError
 from xml.parsers.expat import ExpatError
 from socket import socket, AF_INET, SOCK_DGRAM, SOCK_STREAM, gaierror, error, \
     SOL_SOCKET, SO_REUSEADDR, timeout

@@ -24,6 +24,7 @@ class MultiplayerFrm(GameObject):
     def __init__(self, menu_args, yorg_srv, yorg_client):
         GameObject.__init__(self)
         self.eng.log('created multiplayer form')
+        self.yorg_client = yorg_client
         self.dialog = self.server_dlg = None
         self.invite_dlg = None
         self.yorg_srv = yorg_srv
@@ -61,10 +62,15 @@ class MultiplayerFrm(GameObject):
         yorg_client.attach(self.on_presence_available)
         yorg_client.attach(self.on_presence_unavailable)
         yorg_client.attach(self.on_msg)
+        yorg_client.attach(self.on_is_playing)
+        yorg_client.attach(self.on_invite)
+        yorg_client.attach(self.on_invite_chat)
+        yorg_client.attach(self.on_declined)
+        yorg_client.attach(self.on_presence_available_room)
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient
-        self.match_frm = cls(self.menu_args)
+        self.match_frm = cls(self.menu_args, self.yorg_client)
         self.match_frm.attach(self.on_start)
         self.match_frm.show(room)
 
@@ -141,21 +147,21 @@ class MultiplayerFrm(GameObject):
         usr.is_playing = False
         self.users_frm.on_users()
 
-    def on_is_playing(self, msg):
-        self.eng.log('is playing ' + str(msg['from']))
-        users = [user for user in self.eng.xmpp.users if user.name == str(msg['from'].bare)]
-        if not users: return  # when we get messages while we were offline
+    def on_is_playing(self, uid, is_playing):
+        self.eng.log('is playing %s %s' % (uid, is_playing))
+        users = [user for user in self.yorg_client.users if user.uid == uid]
+        #if not users: return  # when we get messages while we were offline
         usr = users[0]
-        usr.is_playing = msg['body'] == '1'
+        usr.is_playing = is_playing
         self.users_frm.on_users()
 
     def on_presence_available(self, msg):
         self.users_frm.on_users()
 
-    def on_presence_available_room(self, msg):
+    def on_presence_available_room(self, uid, room):
         if self.match_frm:  # if the client accepted after server's start
-            self.match_frm.on_presence_available_room(msg)
-        self.msg_frm.on_presence_available_room(msg)
+            self.match_frm.on_presence_available_room(uid, room)
+        self.msg_frm.on_presence_available_room(uid, room)
 
     def on_presence_unavailable_room(self, msg):
         if self.match_frm:
@@ -305,91 +311,93 @@ class MultiplayerFrm(GameObject):
     def on_groupchat_msg(self, msg):
         self.msg_frm.on_groupchat_msg(msg)
 
-    def on_invite_chat(self, msg):
-        if self.invite_dlg or self.match_frm:  # we've already an invite
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=str(msg['from'].bare),
-                msubject='declined',
-                mtype='ya2_yorg',
-                mbody=str(msg['body']))
-            return
-        self.invite_dlg = InviteDialog(self.menu_args, msg)
+    def on_invite_chat(self, from_, to, roomname):
+        #if self.invite_dlg or self.match_frm:  # we've already an invite
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=str(msg['from'].bare),
+        #        msubject='declined',
+        #        mtype='ya2_yorg',
+        #        mbody=str(msg['body']))
+        #    return
+        self.invite_dlg = InviteDialog(self.menu_args, from_, roomname)
         self.invite_dlg.attach(self.on_invite_answer)
-        self.curr_inviting_usr = msg['from']
-        for usr_name in [self.yorg_srv] + \
-            [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=usr_name,
-                mtype='ya2_yorg',
-                msubject='is_playing',
-                mbody='1')
+        self.curr_inviting_usr = from_
+        #for usr_name in [self.yorg_srv] + \
+        #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=usr_name,
+        #        mtype='ya2_yorg',
+        #        msubject='is_playing',
+        #        mbody='1')
         self.users_frm.invited = True
         self.on_users()
 
-    def on_invite_answer(self, msg, val):
+    def on_invite_answer(self, from_, roomname, val):
         self.curr_inviting_usr = None
         self.invite_dlg.detach(self.on_invite_answer)
         self.invite_dlg = self.invite_dlg.destroy()
         self.users_frm.invited = False
         if val:
-            mypublic_addr = load(urlopen('http://httpbin.org/ip'))['origin']
-            sock = socket(AF_INET, SOCK_DGRAM)
-            try:
-                sock.connect(('ya2.it', 8080))
-                mylocal_addr = sock.getsockname()[0]
-            except gaierror:
-                mylocal_addr = ''
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=msg['from'].bare,
-                mtype='ya2_yorg',
-                msubject='ip_address',
-                mbody=mypublic_addr + '\n' + mylocal_addr)
-            chat, public_addr, local_addr = msg['body'].split('\n')
-            for usr in self.eng.xmpp.users:
-                if usr.name == msg['from'].bare:
-                    usr.public_addr = public_addr
-                    usr.local_addr = local_addr
-            for usr in self.eng.xmpp.users:
-                if usr.name == msg['from'].bare:
-                    if mypublic_addr == usr.public_addr:
-                        ip_addr = usr.local_addr
-                        my_addr = mylocal_addr
-                    else:
-                        ip_addr = usr.public_addr
-                        my_addr = mypublic_addr
-            try: self.eng.client.start(self.process_msg_client, ip_addr, my_addr)
-            except (NetworkError, error) as exc:
-                self.network_dlg = NetworkDialog(self.menu_args)
-                self.network_dlg.attach(self.on_network_dlg)
-                return
-            self.users_frm.in_match_room = msg['from'].bare
+            #mypublic_addr = load(urlopen('http://httpbin.org/ip'))['origin']
+            #sock = socket(AF_INET, SOCK_DGRAM)
+            #try:
+            #    sock.connect(('ya2.it', 8080))
+            #    mylocal_addr = sock.getsockname()[0]
+            #except gaierror:
+            #    mylocal_addr = ''
+            #self.eng.xmpp.client.send_message(
+            #    mfrom=self.eng.xmpp.client.boundjid.full,
+            #    mto=msg['from'].bare,
+            #    mtype='ya2_yorg',
+            #    msubject='ip_address',
+            #    mbody=mypublic_addr + '\n' + mylocal_addr)
+            #chat, public_addr, local_addr = msg['body'].split('\n')
+            #for usr in self.eng.xmpp.users:
+            #    if usr.name == msg['from'].bare:
+            #        usr.public_addr = public_addr
+            #        usr.local_addr = local_addr
+            #for usr in self.eng.xmpp.users:
+            #    if usr.name == msg['from'].bare:
+            #        if mypublic_addr == usr.public_addr:
+            #            ip_addr = usr.local_addr
+            #            my_addr = mylocal_addr
+            #        else:
+            #            ip_addr = usr.public_addr
+            #            my_addr = mypublic_addr
+            #try: self.eng.client.start(self.process_msg_client, ip_addr, my_addr)
+            #except (NetworkError, error) as exc:
+            #    self.network_dlg = NetworkDialog(self.menu_args)
+            #    self.network_dlg.attach(self.on_network_dlg)
+            #    return
+            self.users_frm.in_match_room = from_
             self.users_frm.on_users()
-            self.msg_frm.add_groupchat(chat, str(msg['from'].bare))
-            self.eng.log('join to the chat ' + chat)
-            self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
-                chat, self.eng.xmpp.client.boundjid.bare)
-            room = chat
-            nick = self.eng.xmpp.client.boundjid.bare
-            self.create_match_frm(room, False)
-            self.notify('on_create_room', room, nick)
+            self.msg_frm.add_groupchat(roomname, from_)
+            self.eng.log('join to the chat ' + roomname)
+            #self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
+            #    chat, self.eng.xmpp.client.boundjid.bare)
+            self.eng.client.register_rpc('join_room')
+            self.eng.client.join_room(roomname)
+            nick = self.yorg_client.myid
+            self.create_match_frm(roomname, False)
+            self.notify('on_create_room', roomname, nick)
         else:
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=str(msg['from'].bare),
-                msubject='declined',
-                mtype='ya2_yorg',
-                mbody=str(msg['body']))
-            for usr_name in [self.yorg_srv] + \
-                [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
-                self.eng.xmpp.client.send_message(
-                    mfrom=self.eng.xmpp.client.boundjid.full,
-                    mto=usr_name,
-                    mtype='ya2_yorg',
-                    msubject='is_playing',
-                    mbody='1')
+            self.eng.client.send(['declined', self.yorg_client.myid, from_])
+            #self.eng.xmpp.client.send_message(
+            #    mfrom=self.eng.xmpp.client.boundjid.full,
+            #    mto=str(msg['from'].bare),
+            #    msubject='declined',
+            #    mtype='ya2_yorg',
+            #    mbody=str(msg['body']))
+            #for usr_name in [self.yorg_srv] + \
+            #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+            #    self.eng.xmpp.client.send_message(
+            #        mfrom=self.eng.xmpp.client.boundjid.full,
+            #        mto=usr_name,
+            #        mtype='ya2_yorg',
+            #        msubject='is_playing',
+            #        mbody='1')
 
     def process_msg_client(self, data_lst, sender):
         if data_lst[0] == NetMsgs.track_selected:

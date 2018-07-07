@@ -24,6 +24,7 @@
 # MAYBE/SOMEDAY =====
 
 # make scons for yyagl
+# make a submodule for racing - yyarl
 # embed into a wx / pyqt window
 # uml create automatic class diagrams with fields and methods for each class
 # do automatic update (assets shared among platforms)

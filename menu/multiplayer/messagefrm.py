@@ -28,21 +28,23 @@ class Chat(GameObject):
 
 class MUC(Chat):
 
-    def __init__(self, dst):
+    def __init__(self, dst, yorg_client):
         Chat.__init__(self, dst)
         self.users = []
+        self.yorg_client = yorg_client
 
     @property
     def title(self):
-        is_me = lambda usr: usr == self.eng.xmpp.client.boundjid.bare
+        is_me = lambda usr: usr == self.yorg_client.myid
         return ', '.join(sorted(self.users, key=is_me))
 
 
 class MatchMsgFrm(GameObject):
 
-    def __init__(self, menu_args):
+    def __init__(self, menu_args, yorg_client):
         GameObject.__init__(self)
         self.eng.log('created match message form')
+        self.yorg_client = yorg_client
         self.chat = None
         self.msg_frm = DirectFrame(
             frameSize=(-.02, 2.5, 0, 1.22),
@@ -146,18 +148,18 @@ class MatchMsgFrm(GameObject):
         self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
         str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         if not self.chat:
-            self.chat = MUC(str(JID(msg['from']).bare))
+            self.chat = MUC(str(JID(msg['from']).bare), self.yorg_client)
         self.chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(self.chat)
         elif self.chat.dst == str(JID(msg['from']).bare):
             self.add_msg_txt(str_msg)
 
-    def on_presence_available_room(self, msg):
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
-        self.eng.log('user %s has logged in the chat %s' %(nick, room))
-        self.chat.users += [nick]
+    def on_presence_available_room(self, uid, room):
+        #room = str(JID(msg['muc']['room']).bare)
+        #nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has logged in the chat %s' % (uid, room))
+        self.chat.users += [uid]
         self.set_title(self.chat.title)
 
     def on_presence_unavailable_room(self, msg):
@@ -170,7 +172,7 @@ class MatchMsgFrm(GameObject):
     def add_groupchat(self, room, usr):
         self.set_title(usr)
         if not self.chat:
-            self.chat = MUC(room)
+            self.chat = MUC(room, self.yorg_client)
         self.set_chat(self.chat)
 
     def set_chat(self, chat):
@@ -420,15 +422,15 @@ class MessageFrm(GameObject):
             chat.closed = False
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
-    def on_presence_available_room(self, msg):
-        if str(JID(msg['from']).bare) == self.curr_match_room:
-            self.match_msg_frm.on_presence_available_room(msg)
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
-        self.eng.log('user %s has logged in the chat %s' %(nick, room))
+    def on_presence_available_room(self, uid, room):
+        if room == self.curr_match_room:
+            self.match_msg_frm.on_presence_available_room(uid, room)
+        #room = str(JID(msg['muc']['room']).bare)
+        #nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has logged in the chat %s' %(uid, room))
         chat = self.__find_chat(room)
-        chat.users += [nick]
-        if str(JID(msg['from']).bare) != self.curr_match_room:
+        chat.users += [uid]
+        if room != self.curr_match_room:
             if self.curr_chat.dst == room:
                 self.set_title(chat.title)
 
@@ -464,7 +466,7 @@ class MessageFrm(GameObject):
         self.set_title(usr)
         chat = self.__find_chat(room)
         if not chat:
-            chat = MUC(room)
+            chat = MUC(room, self.yorg_client)
             self.chats += [chat]
         chat.users += [usr]
         self.set_chat(chat)
@@ -489,6 +491,6 @@ class MessageFrm(GameObject):
     def add_match_chat(self, room, usr):
         if self.curr_match_room: return
         self.curr_match_room = room
-        self.match_msg_frm = MatchMsgFrm(self.menu_args)
+        self.match_msg_frm = MatchMsgFrm(self.menu_args, self.yorg_client)
         self.match_msg_frm.attach(self.on_match_msg_focus)
         self.match_msg_frm.add_groupchat(room, usr)
