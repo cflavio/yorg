@@ -62,6 +62,7 @@ class MultiplayerFrm(GameObject):
         yorg_client.attach(self.on_presence_available)
         yorg_client.attach(self.on_presence_unavailable)
         yorg_client.attach(self.on_msg)
+        yorg_client.attach(self.on_groupchat_msg)
         yorg_client.attach(self.on_is_playing)
         yorg_client.attach(self.on_invite)
         yorg_client.attach(self.on_invite_chat)
@@ -308,8 +309,8 @@ class MultiplayerFrm(GameObject):
         self.users_frm.set_size(True)
         self.msg_frm.hide()
 
-    def on_groupchat_msg(self, msg):
-        self.msg_frm.on_groupchat_msg(msg)
+    def on_groupchat_msg(self, from_, to, txt):
+        self.msg_frm.on_groupchat_msg(from_, to, txt)
 
     def on_invite_chat(self, from_, to, roomname):
         #if self.invite_dlg or self.match_frm:  # we've already an invite

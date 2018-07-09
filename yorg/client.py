@@ -34,6 +34,8 @@ class YorgClient(GameObject):
             self.notify('on_presence_unavailable', data_lst[1:])
         if data_lst[0] == 'msg':
             self.notify('on_msg', data_lst[1:])
+        if data_lst[0] == 'msg_room':
+            self.notify('on_groupchat_msg', data_lst[1], data_lst[2], data_lst[3])
         if data_lst[0] == 'is_playing':
             self.notify('on_is_playing', data_lst[1], data_lst[2])
         if data_lst[0] == 'invite_chat':

@@ -135,24 +135,31 @@ class MatchMsgFrm(GameObject):
     def on_typed_msg(self, val):
         #self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
         self.ent.set('')
-        self.eng.xmpp.client.send_message(
-            mfrom=self.eng.xmpp.client.boundjid.full,
-            mto=self.chat.dst,
-            mtype='groupchat',
-            mbody=val)
+        self.eng.client.send([
+            'msg_room', self.yorg_client.myid, self.chat.dst, val])
+        #self.eng.xmpp.client.send_message(
+        #    mfrom=self.eng.xmpp.client.boundjid.full,
+        #    mto=self.chat.dst,
+        #    mtype='groupchat',
+        #    mbody=val)
         self.ent['focus'] = 1
 
-    def on_groupchat_msg(self, msg):
-        src = str(JID(msg['mucnick']))
-        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
-        self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
-        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+    def on_groupchat_msg(self, from_, to, txt):
+        #src = str(JID(msg['mucnick']))
+        #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        src = from_
+        #self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
+        self.eng.log('received groupchat message from %s in the chat %s' % (from_, to))
+        #str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+        str_msg = '\1italic\1' + src + '\2: ' + txt
         if not self.chat:
-            self.chat = MUC(str(JID(msg['from']).bare), self.yorg_client)
+            #self.chat = MUC(str(JID(msg['from']).bare), self.yorg_client)
+            self.chat = MUC(to, self.yorg_client)
         self.chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(self.chat)
-        elif self.chat.dst == str(JID(msg['from']).bare):
+        #elif self.chat.dst == str(JID(msg['from']).bare):
+        elif self.chat.dst == to:
             self.add_msg_txt(str_msg)
 
     def on_presence_available_room(self, uid, room):
@@ -400,22 +407,28 @@ class MessageFrm(GameObject):
             chat.closed = False
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
-    def on_groupchat_msg(self, msg):
-        if str(JID(msg['from']).bare) == self.curr_match_room:
+    def on_groupchat_msg(self, from_, to, txt):
+        #if str(JID(msg['from']).bare) == self.curr_match_room:
+        if to == self.curr_match_room:
             if self.match_msg_frm:  # we're still in the room page
-                self.match_msg_frm.on_groupchat_msg(msg)
-        src = str(JID(msg['mucnick']))
-        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
-        self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
-        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+                self.match_msg_frm.on_groupchat_msg(from_, to, txt)
+        #src = str(JID(msg['mucnick']))
+        #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        src = from_
+        #self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
+        self.eng.log('received groupchat message from %s in the chat %s' % (from_, to))
+        #str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+        str_msg = '\1italic\1' + src + '\2: ' + txt
         chat = self.curr_chat
         if not chat:
-            chat = MUC(str(JID(msg['from']).bare))
+            #chat = MUC(str(JID(msg['from']).bare))
+            chat = MUC(to)
             self.chats += [chat]
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(chat)
-        elif self.curr_chat.dst == str(JID(msg['from']).bare):
+        #elif self.curr_chat.dst == str(JID(msg['from']).bare):
+        elif self.curr_chat.dst == to:
             self.add_msg_txt(str_msg)
         else:
             chat.read = False
