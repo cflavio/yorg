@@ -53,7 +53,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_track_selected)
         if page_code == 'trackpageserver':
             self.eng.log('track page server')
-            page = TrackPageServer(args[0])
+            page = TrackPageServer(args[0], args[1])
             page.gui.attach(self.on_track_selected)
         if page_code == 'new_season':
             self.eng.log('new season')

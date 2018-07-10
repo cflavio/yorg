@@ -383,6 +383,7 @@ class MultiplayerFrm(GameObject):
             nick = self.yorg_client.myid
             self.create_match_frm(roomname, False)
             self.notify('on_create_room', roomname, nick)
+            self.yorg_client.attach(self.on_track_selected_msg)
         else:
             self.eng.client.send(['declined', self.yorg_client.myid, from_])
             #self.eng.xmpp.client.send_message(
@@ -406,6 +407,12 @@ class MultiplayerFrm(GameObject):
             self.notify('on_start_match_client', data_lst[1])
             self.users_frm.set_size(False)
             self.msg_frm.show()
+
+    def on_track_selected_msg(self, track):
+        self.eng.log_mgr.log('track selected: ' + track)
+        self.notify('on_start_match_client', track)
+        self.users_frm.set_size(False)
+        self.msg_frm.show()
 
     def on_declined(self, msg):
         self.eng.log('on declined')

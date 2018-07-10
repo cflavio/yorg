@@ -88,7 +88,7 @@ class YorgFsm(FsmColleague):
                 self.__menu.enable(False)
 
     def on_start_match(self):
-        self.__menu.logic.on_push_page('trackpageserver', [self.__menu_props])
+        self.__menu.logic.on_push_page('trackpageserver', [self.__menu_props, self.mediator.logic.mp_frm.msg_frm.curr_match_room])
 
     def on_start_match_client(self, track):
         self.mediator.logic.mp_frm.on_track_selected()

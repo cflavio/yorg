@@ -9,8 +9,9 @@ from .thankspage import ThanksPageGui
 
 class TrackPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, trackpage_props):
+    def __init__(self, mediator, trackpage_props, room):
         self.props = trackpage_props
+        self.room = room
         ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_args)
 
     def build(self):
@@ -55,16 +56,16 @@ class TrackPageGuiServer(TrackPageGui):
     def on_track(self, track):
         self.notify('on_track_selected', track)
         self.notify('on_push_page', 'carpageserver', [self.props])
-        self.eng.server.send([NetMsgs.track_selected, track])
+        self.eng.client.send(['track_selected', track, self.room])
 
 
 class TrackPage(Page):
     gui_cls = TrackPageGui
 
-    def __init__(self, trackpage_props):
+    def __init__(self, trackpage_props, room):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, trackpage_props])]]
+            [('gui', self.gui_cls, [self, trackpage_props, room])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__
