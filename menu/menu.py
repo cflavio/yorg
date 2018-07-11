@@ -32,6 +32,10 @@ class MenuProps(object):
 
 class YorgMenuLogic(MenuLogic):
 
+    def __init__(self, mediator, yorg_client):
+        MenuLogic.__init__(self, mediator)
+        self.yorg_client = yorg_client
+
     def on_push_page(self, page_code, args=[]):
         if page_code == 'singleplayer':
             self.eng.log('single player')
@@ -65,11 +69,12 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageserver':
             self.eng.log('car page server')
-            page = CarPageServer(args[0], self.mediator.track)
+            #page = CarPageServer(args[0], self.mediator.track, self.yorg_client)
+            page = CarPageClient(args[0], self.mediator.track, self.yorg_client)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             self.eng.log('car page client')
-            page = CarPageClient(args[0], self.mediator.track)
+            page = CarPageClient(args[0], self.mediator.track, self.yorg_client)
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
             self.eng.log('driver page')
@@ -77,11 +82,11 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driverpageserver':
             self.eng.log('driver page server')
-            page = DriverPageServer(args[0], args[1], args[2])
+            page = DriverPageServer(args[0], args[1], args[2], self.yorg_client)
             page.gui.attach(self.on_driver_selected_server)
         if page_code == 'driverpageclient':
             self.eng.log('driver page client')
-            page = DriverPageClient(args[0], args[1], args[2])
+            page = DriverPageClient(args[0], args[1], args[2], self.yorg_client)
             page.gui.attach(self.on_driver_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
@@ -180,7 +185,7 @@ class YorgMenu(Menu):
 
     def __init__(self, menu_args, yorg_client):
         comps = [
-            [('logic', self.logic_cls, [self])],
+            [('logic', self.logic_cls, [self, yorg_client])],
             [('gui', self.gui_cls, [self, menu_args, yorg_client])]]
         GameObject.__init__(self, comps)
         MenuFacade.__init__(self)

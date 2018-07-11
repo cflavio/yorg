@@ -33,10 +33,11 @@ void main() {
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, driverpage_props):
+    def __init__(self, mediator, driverpage_props, yorg_client):
         self.props = driverpage_props
         self.sel_drv_img = None
         self.driver = None
+        self.yorg_client = yorg_client
         ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args)
 
     def build(self, exit_behav):
@@ -196,7 +197,7 @@ class DriverPageServerGui(DriverPageGui):
         self.current_drivers_dct = {}
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
-        self.name['text'] += ' ' + self.eng.xmpp.client.boundjid.bare
+        self.name['text'] += ' ' + self.yorg_client.myid
         #self.eng.xmpp.attach(self.on_presence_unavailable)
         self.eng.xmpp.attach(self.on_presence_unavailable_room)
         self.eng.server.register_rpc(self.drv_request)
@@ -305,7 +306,7 @@ class DriverPageClientGui(DriverPageGui):
         self.eng.client.register_cb(self.process_client)
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
-        self.name['text'] += ' ' + self.eng.xmpp.client.boundjid.bare
+        self.name['text'] += ' ' + self.yorg_client.myid
         self.eng.client.register_rpc('drv_request')
 
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
@@ -354,12 +355,12 @@ class DriverPageClientGui(DriverPageGui):
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, track, car, driverpage_props):
+    def __init__(self, track, car, driverpage_props, yorg_client):
         self.track = track
         self.car = car
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, driverpage_props])]]
+            [('gui', self.gui_cls, [self, driverpage_props, yorg_client])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__

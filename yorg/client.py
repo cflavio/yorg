@@ -46,6 +46,12 @@ class YorgClient(GameObject):
             self.notify('on_presence_available_room', data_lst[1], data_lst[2])
         if data_lst[0] == 'track_selected':
             self.notify('on_track_selected_msg', data_lst[1])
+        if data_lst[0] == 'car_selection':
+            self.notify('on_car_selection', data_lst[1:])
+        if data_lst[0] == 'car_deselection':
+            self.notify('on_car_deselection', data_lst[1:])
+        if data_lst[0] == 'start_drivers':
+            self.notify('on_start_drivers', data_lst[1:])
 
     def find_usr(self, uid):
         return [usr for usr in self.users if usr.uid == uid][0]

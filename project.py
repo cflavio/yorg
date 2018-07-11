@@ -3,6 +3,9 @@
 
 # TODO LIST =====
 
+# 0.10
+# clean rooms when people exit
+
 # 0.11 (local multiplayer)
 # local multiplayer
 

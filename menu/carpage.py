@@ -13,11 +13,12 @@ from .thankspage import ThanksPageGui
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, carpage_props, track_path):
+    def __init__(self, mediator, carpage_props, track_path, yorg_client):
         self.car = None
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
+        self.yorg_client = yorg_client
         ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args)
 
     def build(self, exit_behav=False):
@@ -118,11 +119,14 @@ class CarPageGuiServer(CarPageGui):
 
     def on_car(self, car):
         self.eng.log_mgr.log('car selected: ' + car)
-        name = JID(self.eng.xmpp.client.boundjid).bare
-        self.eng.server.send([NetMsgs.car_selection, car, name])
+        #name = JID(self.eng.xmpp.client.boundjid).bare
+        #self.eng.server.send([NetMsgs.car_selection, car, name])
+        self.eng.client.register_rpc('car_request')
+        ret = self.eng.client.car_request(car)
+        if ret != 'ok': return
         for btn in self._buttons(car):
             btn.disable()
-            btn._name_txt['text'] = name
+            btn._name_txt['text'] = self.yorg_client.myid
         if self in self.current_cars:
             curr_car = self.current_cars[self]
             self.eng.log_mgr.log('car deselected: ' + curr_car)
@@ -132,24 +136,24 @@ class CarPageGuiServer(CarPageGui):
                 btn._name_txt['text'] = ''
         self.current_cars[self] = car
         self.eng.car_mapping['self'] = car
-        self.evaluate_starting()
+        #self.evaluate_starting()
 
-    def evaluate_starting(self):
-        connections = [conn for conn in self.eng.server.connections] + [self]
-        if not all(conn in self.current_cars for conn in connections): return
-        packet = [NetMsgs.start_drivers, len(self.current_cars)]
+    #def evaluate_starting(self):
+    #    connections = [conn for conn in self.eng.server.connections] + [self]
+    #    if not all(conn in self.current_cars for conn in connections): return
+    #    packet = [NetMsgs.start_drivers, len(self.current_cars)]
 
-        def process(k):
-            '''Processes a car.'''
-            return 'server' if k == self else k.getpeername()
-        for i, (k, val) in enumerate(self.current_cars.items()):
-            packet += [process(k), val,
-                       self.props.gameprops.drivers_info[i].name]
-        self.eng.server.send(packet)
-        self.eng.log_mgr.log('start drivers: ' + str(packet))
-        curr_car = self.current_cars[self]
-        page_args = [self.track_path, curr_car, self.props]
-        self.notify('on_push_page', 'driverpageserver', page_args)
+    #    def process(k):
+    #        '''Processes a car.'''
+    #        return 'server' if k == self else k.getpeername()
+    #    for i, (k, val) in enumerate(self.current_cars.items()):
+    #        packet += [process(k), val,
+    #                   self.props.gameprops.drivers_info[i].name]
+    #    self.eng.server.send(packet)
+    #    self.eng.log_mgr.log('start drivers: ' + str(packet))
+    #    curr_car = self.current_cars[self]
+    #    page_args = [self.track_path, curr_car, self.props]
+    #    self.notify('on_push_page', 'driverpageserver', page_args)
 
     def car_request(self, car, sender):
         self.eng.log_mgr.log('car requested: ' + car)
@@ -200,8 +204,11 @@ class CarPageGuiClient(CarPageGui):
 
     def build(self):
         CarPageGui.build(self, exit_behav=True)
-        self.eng.client.register_cb(self.process_client)
+        #self.eng.client.register_cb(self.process_client)
         self.eng.client.register_rpc('car_request')
+        self.yorg_client.attach(self.on_car_selection)
+        self.yorg_client.attach(self.on_car_deselection)
+        self.yorg_client.attach(self.on_start_drivers)
 
     def on_car(self, car):
         self.eng.log_mgr.log('car request: ' + car)
@@ -214,36 +221,37 @@ class CarPageGuiClient(CarPageGui):
             self.eng.log_mgr.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
-            btn._name_txt['text'] = JID(self.eng.xmpp.client.boundjid).bare
+            btn._name_txt['text'] = self.yorg_client.myid
         else: self.eng.log_mgr.log('car denied')
 
-    def process_client(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.car_selection:
-            car = data_lst[1]
-            name = data_lst[2]
-            self.eng.log_mgr.log('car selection: ' + car)
-            btn = self._buttons(car)[0]
-            btn.disable()
-            btn._name_txt['text'] = name
-        if data_lst[0] == NetMsgs.car_deselection:
-            car = data_lst[1]
-            self.eng.log_mgr.log('car deselection: ' + car)
-            btn = self._buttons(car)[0]
-            btn.enable()
-            btn._name_txt['text'] = ''
-        if data_lst[0] == NetMsgs.start_drivers:
-            self.eng.log_mgr.log('start_drivers: ' + str(data_lst))
-            page_args = [self.track_path, self.car, self.props]
-            self.notify('on_push_page', 'driverpageclient', page_args)
+    def on_car_selection(self, data_lst):
+        car = data_lst[0]
+        name = data_lst[1]
+        self.eng.log_mgr.log('car selection: ' + car)
+        btn = self._buttons(car)[0]
+        btn.disable()
+        btn._name_txt['text'] = name
+
+    def on_car_deselection(self, data_lst):
+        car = data_lst[0]
+        self.eng.log_mgr.log('car deselection: ' + car)
+        btn = self._buttons(car)[0]
+        btn.enable()
+        btn._name_txt['text'] = ''
+
+    def on_start_drivers(self, data_lst):
+        self.eng.log_mgr.log('start_drivers: ' + str(data_lst))
+        page_args = [self.track_path, self.car, self.props]
+        self.notify('on_push_page', 'driverpageclient', page_args)
 
 
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, carpage_props, track_path):
+    def __init__(self, carpage_props, track_path, yorg_client):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, carpage_props, track_path])]]
+            [('gui', self.gui_cls, [self, carpage_props, track_path, yorg_client])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__
