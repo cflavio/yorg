@@ -153,9 +153,10 @@ class YorgFsm(FsmColleague):
             seas.logic.drivers, track_path, keys, joystick, sounds,
             self.mediator.options['development']['start_wp'])
         if self.eng.server.is_active:
-            seas.create_race_server(race_props)
+            #seas.create_race_server(race_props)
+            seas.create_race_client(race_props, self.mediator.logic.yorg_client)
         elif self.eng.client.is_active:
-            seas.create_race_client(race_props)
+            seas.create_race_client(race_props, self.mediator.logic.yorg_client)
         else:
             seas.create_race(race_props)
         self.eng.log_mgr.log('selected drivers: ' +

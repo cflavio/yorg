@@ -303,18 +303,20 @@ class DriverPageClientGui(DriverPageGui):
 
     def build(self):
         DriverPageGui.build(self, exit_behav=True)
-        self.eng.client.register_cb(self.process_client)
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
         self.name['text'] += ' ' + self.yorg_client.myid
         self.eng.client.register_rpc('drv_request')
+        self.yorg_client.attach(self.on_drv_selection)
+        self.yorg_client.attach(self.on_drv_deselection)
+        self.yorg_client.attach(self.on_start_race)
 
-    def this_name(self): return self.eng.xmpp.client.boundjid.bare
+    def this_name(self): return self.yorg_client.myid
 
     def on_click(self, i):
         self.eng.log_mgr.log('driver request: %s' % i)
         gprops = self.props.gameprops
-        if self.eng.client.drv_request(self.mediator.car, self.this_name(), i,
+        if self.eng.client.drv_request(self.mediator.car, i,
                 gprops.drivers_info[i].speed, gprops.drivers_info[i].adherence,
                 gprops.drivers_info[i].stability):
             if self.driver:
@@ -325,31 +327,32 @@ class DriverPageClientGui(DriverPageGui):
             self.eng.log_mgr.log('driver confirmed: %s' % drv)
             btn = self._buttons(drv)[0]
             btn.disable()
-            btn._name_txt['text'] = JID(self.eng.xmpp.client.boundjid).bare
+            btn._name_txt['text'] = self.yorg_client.myid
             gprops = self.props.gameprops
             txt_path = gprops.drivers_img.path_sel
             self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % drv))
         else: self.eng.log_mgr.log('driver denied')
 
-    def process_client(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.driver_selection:
-            drv = data_lst[1]
-            name = data_lst[2]
-            self.eng.log_mgr.log('driver selection: %s' % drv)
-            btn = self._buttons(drv)[0]
-            btn.disable()
-            btn._name_txt['text'] = name
-        if data_lst[0] == NetMsgs.driver_deselection:
-            drv = data_lst[1]
-            self.eng.log_mgr.log('driver deselection: %s' % drv)
-            btn = self._buttons(drv)[0]
-            btn.enable()
-            btn._name_txt['text'] = ''
-        if data_lst[0] == NetMsgs.start_race:
-            self.eng.log_mgr.log('start_race: ' + str(data_lst))
-            cars = data_lst[4::7]
-            self.notify('on_car_start_client', self.mediator.track,
-                        self.mediator.car, cars, data_lst)
+    def on_drv_selection(self, data_lst):
+        drv = data_lst[0]
+        name = data_lst[1]
+        self.eng.log_mgr.log('driver selection: %s' % drv)
+        btn = self._buttons(drv)[0]
+        btn.disable()
+        btn._name_txt['text'] = name
+
+    def on_drv_deselection(self, data_lst):
+        drv = data_lst[0]
+        self.eng.log_mgr.log('driver deselection: %s' % drv)
+        btn = self._buttons(drv)[0]
+        btn.enable()
+        btn._name_txt['text'] = ''
+
+    def on_start_race(self, data_lst):
+        self.eng.log_mgr.log('start_race: ' + str(data_lst))
+        cars = data_lst[2::6]
+        self.notify('on_car_start_client', self.mediator.track,
+                    self.mediator.car, cars, data_lst)
 
 
 class DriverPage(Page):

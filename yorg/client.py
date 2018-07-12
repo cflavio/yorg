@@ -50,8 +50,18 @@ class YorgClient(GameObject):
             self.notify('on_car_selection', data_lst[1:])
         if data_lst[0] == 'car_deselection':
             self.notify('on_car_deselection', data_lst[1:])
+        if data_lst[0] == 'drv_selection':
+            self.notify('on_drv_selection', data_lst[1:])
+        if data_lst[0] == 'drv_deselection':
+            self.notify('on_drv_deselection', data_lst[1:])
         if data_lst[0] == 'start_drivers':
             self.notify('on_start_drivers', data_lst[1:])
+        if data_lst[0] == 'start_race':
+            self.notify('on_start_race', data_lst[1:])
+        if data_lst[0] == 'begin_race':
+            self.notify('on_begin_race')
+        if data_lst[0] == 'start_countdown':
+            self.notify('on_start_countdown')
 
     def find_usr(self, uid):
         return [usr for usr in self.users if usr.uid == uid][0]

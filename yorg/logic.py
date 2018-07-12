@@ -332,22 +332,22 @@ class YorgLogic(GameLogic):
         self.season = SingleRaceSeason(sprops)
         drivers = sprops.drivers
         packet_drivers = []
-        for i in range(packet[1]):
+        for i in range(packet[0]):
             offset = i * 7
-            pdrv = packet[2 + offset: 2 + offset + 7]
+            pdrv = packet[1 + offset: 1 + offset + 6]
             packet_drivers += [pdrv]
         for pdrv in packet_drivers:
             for drv in drivers:
-                if drv.dprops.info.img_idx == pdrv[1]:
-                    drv.logic.dprops.car_name = pdrv[2]
-                    drv.logic.dprops.info.name = pdrv[3]
-                    drv.logic.dprops.info.speed = pdrv[4]
-                    drv.logic.dprops.info.adherence = pdrv[5]
-                    drv.logic.dprops.info.stability = pdrv[6]
+                if drv.dprops.info.img_idx == pdrv[0]:
+                    drv.logic.dprops.car_name = pdrv[1]
+                    drv.logic.dprops.info.name = pdrv[2]
+                    drv.logic.dprops.info.speed = pdrv[3]
+                    drv.logic.dprops.info.adherence = pdrv[4]
+                    drv.logic.dprops.info.stability = pdrv[5]
         for i, pdrv in enumerate(packet_drivers):
             prev_drv = drivers[i]
             for j, drv in enumerate(drivers):
-                if drv.dprops.info.img_idx == pdrv[1]:
+                if drv.dprops.info.img_idx == pdrv[0]:
                     drivers[i] = drv
                     drivers[j] = prev_drv
         sprops.drivers = drivers
