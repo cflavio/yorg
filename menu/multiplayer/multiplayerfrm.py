@@ -380,6 +380,7 @@ class MultiplayerFrm(GameObject):
             #    chat, self.eng.xmpp.client.boundjid.bare)
             self.eng.client.register_rpc('join_room')
             self.eng.client.join_room(roomname)
+            self.yorg_client.is_client_active = True
             nick = self.yorg_client.myid
             self.create_match_frm(roomname, False)
             self.notify('on_create_room', roomname, nick)

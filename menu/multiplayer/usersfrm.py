@@ -162,6 +162,7 @@ class UsersFrm(GameObject):
             self.eng.client.register_rpc('join_room')
             self.eng.client.join_room(self.room_name)
             self.eng.log('created room ' + self.room_name)
+            self.yorg_client.is_server_active = True
             #for usr_name in [self.yorg_srv] + \
             #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
             #    self.eng.xmpp.client.send_message(

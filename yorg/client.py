@@ -16,6 +16,8 @@ class YorgClient(GameObject):
         self.authenticated = False
         self.eng.client.start(self.on_msg, self.eng.cfg.dev_cfg.server)
         self.users = []
+        self.is_server_active = False
+        self.is_client_active = False
 
     def start(self, uid):
         self.myid = uid
@@ -62,6 +64,12 @@ class YorgClient(GameObject):
             self.notify('on_begin_race')
         if data_lst[0] == 'start_countdown':
             self.notify('on_start_countdown')
+        if data_lst[0] == 'player_info':
+            self.notify('on_player_info', data_lst[1:])
+        if data_lst[0] == 'game_packet':
+            self.notify('on_game_packet', data_lst[1:])
+        if data_lst[0] == 'end_race_player':
+            self.notify('on_end_race_player', data_lst[1])
 
     def find_usr(self, uid):
         return [usr for usr in self.users if usr.uid == uid][0]

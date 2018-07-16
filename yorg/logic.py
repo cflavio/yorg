@@ -57,7 +57,6 @@ class YorgLogic(GameLogic):
         server = dev['server'] if 'server' in dev else ''
         if car and server:  # for development's quickstart
             self.mediator.options.persistent = False
-        self.yorg_client = YorgClient()
 
     def init_mp_frm(self):
         dev = self.mediator.options['development']
@@ -78,6 +77,7 @@ class YorgLogic(GameLogic):
     def on_start(self):
         GameLogic.on_start(self)
         self.__process_default()
+        self.yorg_client = YorgClient()
         dev = self.mediator.options['development']
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
@@ -183,7 +183,7 @@ class YorgLogic(GameLogic):
                 sock = socket(AF_INET, SOCK_DGRAM)
                 sock.connect(('ya2.it', 8080))
                 mylocal_addr = sock.getsockname()[0]
-                self.eng.client.start(process_msg, server, mylocal_addr)
+                self.eng.client.start(process_msg, server)
                 self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
                 gprops = self.mediator.gameprops
                 sprops = self.season.props

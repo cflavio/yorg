@@ -204,6 +204,7 @@ class CarPageGuiClient(CarPageGui):
 
     def build(self):
         CarPageGui.build(self, exit_behav=True)
+        self.eng.car_mapping = {}
         #self.eng.client.register_cb(self.process_client)
         self.eng.client.register_rpc('car_request')
         self.yorg_client.attach(self.on_car_selection)
@@ -231,6 +232,7 @@ class CarPageGuiClient(CarPageGui):
         btn = self._buttons(car)[0]
         btn.disable()
         btn._name_txt['text'] = name
+        self.eng.car_mapping[name] = car
 
     def on_car_deselection(self, data_lst):
         car = data_lst[0]

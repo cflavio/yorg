@@ -134,7 +134,8 @@ class Yorg(Game):
             menu_joypad=opt_dev['menu_joypad'], verbose=opt_dev['verbose'],
             verbose_log=opt_dev['verbose_log'],
             xmpp_server=opt_dev['xmpp_server'],
-            start_wp=opt_dev['start_wp'], port=opt_dev['port'])
+            start_wp=opt_dev['start_wp'], port=opt_dev['port'],
+            server=opt_dev['server'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         init_lst = [
             [('fsm', YorgFsm, [self])],
