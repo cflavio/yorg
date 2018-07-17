@@ -16,7 +16,6 @@ from .invite_dlg import InviteDialog
 from .exit_dlg import ExitDialog
 from .remove_dlg import RemovedDialog
 from .network_dlg import NetworkDialog
-from yyagl.engine.network.network import NetworkError
 
 
 class MultiplayerFrm(GameObject):
