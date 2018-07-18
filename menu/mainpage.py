@@ -41,7 +41,7 @@ class YorgMainPageGui(MainPageGui):
             if args.user and args.pwd:
                 user = args.user
                 password = args.pwd
-            if user and password:
+            if user and password and yorg_client.is_server_up:
             # if user:
                 # if platform.startswith('linux'): set_keyring(Keyring())
                 # pwd = get_password('ya2_rog', user)
@@ -108,6 +108,8 @@ class YorgMainPageGui(MainPageGui):
         self.camera = sett['camera']
 
     def get_label(self):
+        if not self.yorg_client.is_server_up:
+            return _('Server problem')
         if not self.ver_check.is_uptodate():
             return _('Not up-to-date')
         if self.eng.client.is_active and self.yorg_client.authenticated:
@@ -128,7 +130,7 @@ class YorgMainPageGui(MainPageGui):
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
-            ('Not up-to-date', self.get_label(), self.on_loginout),
+            ('Server problem', self.get_label(), self.on_loginout),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
             Btn(text='', pos=(0, 1, .64-i*.23), command=menu[2],

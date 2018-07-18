@@ -1,3 +1,4 @@
+from socket import error
 from yyagl.gameobject import GameObject
 
 
@@ -14,7 +15,9 @@ class YorgClient(GameObject):
     def __init__(self):
         GameObject.__init__(self)
         self.authenticated = False
-        self.eng.client.start(self.on_msg, self.eng.cfg.dev_cfg.server)
+        self.is_server_up = True
+        try: self.eng.client.start(self.on_msg, self.eng.cfg.dev_cfg.server)
+        except error: self.is_server_up = False
         self.users = []
         self.is_server_active = False
         self.is_client_active = False

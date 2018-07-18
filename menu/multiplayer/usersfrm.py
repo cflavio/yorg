@@ -68,9 +68,10 @@ class UsersFrm(GameObject):
         txt = ''
         if not self.ver_check.is_uptodate():
             txt = _("Your game isn't up-to-date, please update")
-        elif not self.yorg_client.authenticated: txt = _("You aren't logged in")
-        elif not self.eng.xmpp.is_server_up:
+        elif not self.yorg_client.is_server_up:
             txt = _("Yorg's server isn't running")
+        elif not self.yorg_client.authenticated: txt = _("You aren't logged in")
+        (self.conn_lab.show if txt else self.conn_lab.hide)()
         self.conn_lab['text'] = txt
 
     def set_size(self, full=True):
