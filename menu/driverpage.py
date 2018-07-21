@@ -199,7 +199,7 @@ class DriverPageServerGui(DriverPageGui):
         self.name['pos'] = (-.2, .6)
         self.name['text'] += ' ' + self.yorg_client.myid
         #self.eng.xmpp.attach(self.on_presence_unavailable)
-        self.eng.xmpp.attach(self.on_presence_unavailable_room)
+        self.yorg_client.attach(self.on_presence_unavailable_room)
         self.eng.server.register_rpc(self.drv_request)
 
     def on_click(self, i):
@@ -290,12 +290,12 @@ class DriverPageServerGui(DriverPageGui):
     #def on_presence_unavailable(self, msg):
     #    self.evaluate_starting()
 
-    def on_presence_unavailable_room(self, msg):
+    def on_presence_unavailable_room(self, uid, room_name):
         self.evaluate_starting()
 
     def destroy(self):
         #self.eng.xmpp.detach(self.on_presence_unavailable)
-        self.eng.xmpp.detach(self.on_presence_unavailable_room)
+        self.yorg_client.detach(self.on_presence_unavailable_room)
         DriverPageGui.destroy(self)
 
 

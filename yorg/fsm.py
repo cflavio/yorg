@@ -68,7 +68,7 @@ class YorgFsm(FsmColleague):
             self.models += [front_path]
             self.models += [rear_path]
         self.load_models(None)
-        self.eng.xmpp.attach(self.on_presence_unavailable_room)
+        self.mediator.logic.yorg_client.attach(self.on_presence_unavailable_room)
         if self.mediator.logic.mp_frm:
             if self.eng.xmpp.client:  # if we're logged
                 self.mediator.logic.mp_frm.send_is_playing(False)
@@ -76,15 +76,15 @@ class YorgFsm(FsmColleague):
             self.mediator.logic.mp_frm.users_frm.in_match_room = None
             self.mediator.logic.mp_frm.msg_frm.curr_match_room = None
 
-    def on_presence_unavailable_room(self, msg):
+    def on_presence_unavailable_room(self, uid, room_name):
         for usr in self.eng.xmpp.users:
-            if usr.name == str(msg['muc']['nick']):
+            if usr.name == uid:
                 if self.eng.server.is_active:
                     for conn in self.eng.server.connections[:]:
                         if usr.public_addr == conn.getpeername() or usr.local_addr == conn.getpeername():
                             self.eng.server.connections.remove(conn)
         if self.getCurrentOrNextState() == 'Menu':
-            if str(msg['muc']['nick']) == self.mediator.logic.mp_frm.users_frm.in_match_room:
+            if uid == self.mediator.logic.mp_frm.users_frm.in_match_room:
                 self.__menu.enable(False)
 
     def on_start_match(self):
@@ -119,7 +119,7 @@ class YorgFsm(FsmColleague):
         self.__menu.destroy()
         self.mediator.audio.menu_music.stop()
         loader.cancelRequest(self.loader_tsk)
-        self.eng.xmpp.detach(self.on_presence_unavailable_room)
+        self.mediator.logic.yorg_client.detach(self.on_presence_unavailable_room)
 
     def enterRace(self, track_path='', car_path='', cars=[], drivers='',
                   ranking=None):  # unused ranking, cars
@@ -176,7 +176,7 @@ class YorgFsm(FsmColleague):
         exit_mth = 'on_ingame_exit_confirm'
         seas.race.attach_obs(self.mediator.fsm.demand, rename=exit_mth,
                              args=['Menu'])
-        self.eng.xmpp.attach(self.on_presence_unavailable_room)
+        self.mediator.logic.yorg_client.attach(self.on_presence_unavailable_room)
 
     def exitRace(self):
         self.eng.log_mgr.log('exiting Race state')
@@ -188,8 +188,7 @@ class YorgFsm(FsmColleague):
             self.mediator.logic.mp_frm.show()
         self.mediator.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
-        self.eng.xmpp.detach(self.on_presence_unavailable_room)
-
+        self.mediator.logic.yorg_client.detach(self.on_presence_unavailable_room)
 
     def enterRanking(self):
         self.mediator.logic.season.ranking.show(

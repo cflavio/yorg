@@ -67,6 +67,7 @@ class MultiplayerFrm(GameObject):
         yorg_client.attach(self.on_invite_chat)
         yorg_client.attach(self.on_declined)
         yorg_client.attach(self.on_presence_available_room)
+        yorg_client.attach(self.on_presence_unavailable_room)
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient
@@ -163,18 +164,18 @@ class MultiplayerFrm(GameObject):
             self.match_frm.on_presence_available_room(uid, room)
         self.msg_frm.on_presence_available_room(uid, room)
 
-    def on_presence_unavailable_room(self, msg):
+    def on_presence_unavailable_room(self, uid, room_name):
         if self.match_frm:
-            self.match_frm.on_presence_unavailable_room(msg)
-        self.msg_frm.on_presence_unavailable_room(msg)
-        if str(msg['muc']['nick']) == self.users_frm.in_match_room:
+            self.match_frm.on_presence_unavailable_room(uid, room_name)
+        self.msg_frm.on_presence_unavailable_room(uid, room_name)
+        if uid == self.users_frm.in_match_room:
             self.eng.xmpp.notify('on_server_quit')
-            self.exit_dlg = ExitDialog(self.menu_args, msg)
+            self.exit_dlg = ExitDialog(self.menu_args, uid)
             self.exit_dlg.attach(self.on_exit_dlg)
             self.eng.show_cursor()
-        if str(msg['muc']['nick']) == self.eng.xmpp.client.boundjid.bare and \
-                self.match_frm and msg['muc']['room'] == self.match_frm.room:
-            self.removed_dlg = RemovedDialog(self.menu_args, msg)
+        if uid == self.yorg_client.myid and \
+                self.match_frm and room_name == self.match_frm.room:
+            self.removed_dlg = RemovedDialog(self.menu_args)
             self.removed_dlg.attach(self.on_remove_dlg)
 
     def on_exit_dlg(self):
@@ -216,8 +217,10 @@ class MultiplayerFrm(GameObject):
             self.cancel_invites()
         if self.msg_frm.curr_match_room:  # if we've accepted the invitation
             self.eng.log('back (client)')
-            self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
-                self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+            #self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
+            #    self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+            self.eng.client.register_rpc('leave_room')
+            self.eng.client.leave_room(self.msg_frm.curr_match_room)
             if self.match_frm:  # it's also invoked when server quits in car's page by os_srv_quitted
                 self.match_frm.destroy()
                 self.match_frm = None
@@ -225,14 +228,14 @@ class MultiplayerFrm(GameObject):
         self.users_frm.invited_users = []
         self.users_frm.in_match_room = None
         self.users_frm.room_name = None
-        for usr_name in [self.yorg_srv] + \
-            [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=usr_name,
-                mtype='ya2_yorg',
-                msubject='is_playing',
-                mbody='0')
+        #for usr_name in [self.yorg_srv] + \
+        #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=usr_name,
+        #        mtype='ya2_yorg',
+        #        msubject='is_playing',
+        #        mbody='0')
         self.on_users()
         self.msg_frm.curr_match_room = None
 
@@ -277,8 +280,10 @@ class MultiplayerFrm(GameObject):
                     mbody='cancel_invite')
         if self.msg_frm.curr_match_room:  # if we've accepted the invitation
             self.eng.log('back (client)')
-            self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
-                self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+            #self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
+            #    self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+            self.eng.client.register_rpc('leave_room')
+            self.eng.client.leave_room(self.msg_frm.curr_match_room)
             if self.match_frm:  # it's also invoked when server quits in car's page by on_srv_quitted
                 self.match_frm.destroy()
                 self.match_frm = None
@@ -286,14 +291,14 @@ class MultiplayerFrm(GameObject):
         self.users_frm.invited_users = []
         self.users_frm.in_match_room = None
         self.users_frm.room_name = None
-        for usr_name in [self.yorg_srv] + \
-            [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=usr_name,
-                mtype='ya2_yorg',
-                msubject='is_playing',
-                mbody='0')
+        #for usr_name in [self.yorg_srv] + \
+        #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=usr_name,
+        #        mtype='ya2_yorg',
+        #        msubject='is_playing',
+        #        mbody='0')
         self.on_users()
         self.msg_frm.curr_match_room = None
 

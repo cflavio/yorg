@@ -169,9 +169,9 @@ class MatchMsgFrm(GameObject):
         self.chat.users += [uid]
         self.set_title(self.chat.title)
 
-    def on_presence_unavailable_room(self, msg):
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
+    def on_presence_unavailable_room(self, uid, room_name):
+        room = room_name
+        nick = uid
         self.eng.log('user %s has left the chat %s' %(nick, room))
         self.chat.users.remove(nick)
         self.set_title(self.chat.title)
@@ -447,15 +447,15 @@ class MessageFrm(GameObject):
             if self.curr_chat.dst == room:
                 self.set_title(chat.title)
 
-    def on_presence_unavailable_room(self, msg):
-        if self.match_msg_frm and str(JID(msg['from']).bare) == self.curr_match_room:
-            self.match_msg_frm.on_presence_unavailable_room(msg)
+    def on_presence_unavailable_room(self, uid, room_name):
+        if self.match_msg_frm and room_name == self.curr_match_room:
+            self.match_msg_frm.on_presence_unavailable_room(uid, room_name)
             return
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
+        room = room_name
+        nick = uid
         self.eng.log('user %s has left the chat %s' %(nick, room))
         chat = self.__find_chat(room)
-        if nick == self.eng.xmpp.client.boundjid.bare:
+        if nick == self.yorg_client.myid:
             self.on_close()
         else:
             chat.users.remove(nick)

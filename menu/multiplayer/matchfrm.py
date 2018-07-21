@@ -54,14 +54,13 @@ class MatchFrm(GameObject):
             x = .1 + 1.24 * (idx / 4)
             y = .38 - .08 * (idx % 4)
             usr = [usr for usr in self.yorg_client.users if usr.uid == uid][0]
-            frm = UserFrm(self.trunc(uid, 30), uid, usr.is_supporter,
-                          usr.is_online,
+            frm = UserFrm(uid, usr.is_supporter,
                           (x, 1, y), self.match_frm, self.menu_args, 1.0)
             self.forms += [frm]
 
-    def on_presence_unavailable_room(self, msg):
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
+    def on_presence_unavailable_room(self, uid, room_name):
+        room = room_name
+        nick = uid
         self.eng.log('user %s has disconnected from the room %s' % (nick, room))
         if room != self.room: return
         for i, frm in enumerate(self.forms[:]):

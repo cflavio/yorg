@@ -6,10 +6,9 @@ from yyagl.gameobject import GameObject
 
 class RemovedDialog(GameObject, Subject):
 
-    def __init__(self, menu_args, msg):
+    def __init__(self, menu_args):
         Subject.__init__(self)
         GameObject.__init__(self)
-        self.msg = msg
         self.dialog = OkDialog(
             text=_('you have been removed from the match'),
             text_wordwrap=16,

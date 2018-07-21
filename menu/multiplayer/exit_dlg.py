@@ -6,11 +6,10 @@ from yyagl.gameobject import GameObject
 
 class ExitDialog(GameObject, Subject):
 
-    def __init__(self, menu_args, msg):
+    def __init__(self, menu_args, uid):
         Subject.__init__(self)
         GameObject.__init__(self)
-        self.user = str(msg['muc']['nick'])
-        self.msg = msg
+        self.user = uid
         self.dialog = OkDialog(
             text=_('the server user %s has quit') % self.user,
             text_wordwrap=16,

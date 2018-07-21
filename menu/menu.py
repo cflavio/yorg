@@ -126,7 +126,7 @@ class YorgMenuLogic(MenuLogic):
 
     def on_quit(self, page_code, args=[]):
         self.mediator.gui.notify('on_quit')
-        MenuLogic.on_quit(self, page_code)
+        MenuLogic.on_quit(self)
 
     def on_track_selected(self, track):
         self.mediator.track = track

@@ -32,10 +32,12 @@ class YorgClient(GameObject):
         if data_lst[0] == 'login':
             self.users += [User(*data_lst[1:])]
             self.notify('on_presence_available', data_lst[1:])
+            self.eng.log('login %s' % data_lst[1])
         if data_lst[0] == 'logout':
             for usr in self.users[:]:
                 if usr.uid == data_lst[1]:
                     self.users.remove(usr)
+                    self.eng.log('logout %s' % data_lst[1])
             self.notify('on_presence_unavailable', data_lst[1:])
         if data_lst[0] == 'msg':
             self.notify('on_msg', data_lst[1:])
@@ -49,6 +51,8 @@ class YorgClient(GameObject):
             self.notify('on_declined', data_lst[1])
         if data_lst[0] == 'presence_available_room':
             self.notify('on_presence_available_room', data_lst[1], data_lst[2])
+        if data_lst[0] == 'presence_unavailable_room':
+            self.notify('on_presence_unavailable_room', data_lst[1], data_lst[2])
         if data_lst[0] == 'track_selected':
             self.notify('on_track_selected_msg', data_lst[1])
         if data_lst[0] == 'car_selection':

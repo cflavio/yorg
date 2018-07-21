@@ -114,7 +114,7 @@ class CarPageGuiServer(CarPageGui):
         CarPageGui.build(self, exit_behav=True)
         self.eng.car_mapping = {}
         self.eng.xmpp.attach(self.on_presence_unavailable)
-        self.eng.xmpp.attach(self.on_presence_unavailable_room)
+        self.yorg_client.attach(self.on_presence_unavailable_room)
         self.eng.server.register_rpc(self.car_request)
 
     def on_car(self, car):
@@ -191,12 +191,12 @@ class CarPageGuiServer(CarPageGui):
     def on_presence_unavailable(self, msg):
         self.evaluate_starting()
 
-    def on_presence_unavailable_room(self, msg):
+    def on_presence_unavailable_room(self, uid, room_name):
         self.evaluate_starting()
 
     def destroy(self):
         self.eng.xmpp.detach(self.on_presence_unavailable)
-        self.eng.xmpp.detach(self.on_presence_unavailable_room)
+        self.yorg_client.detach(self.on_presence_unavailable_room)
         CarPageGui.destroy(self)
 
 
