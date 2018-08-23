@@ -250,7 +250,7 @@ class CarPageGuiClient(CarPageGui):
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, carpage_props, track_path, yorg_client):
+    def __init__(self, carpage_props, track_path, yorg_client=None):
         init_lst = [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, carpage_props, track_path, yorg_client])]]

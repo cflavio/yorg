@@ -169,9 +169,10 @@ class Yorg(Game):
             ('feed', 'http://www.ya2.it/pages/feed-following.html')]
         self.gameprops = GameProps(
             menu_args, cars_names, self.drivers(),
-            ['toronto', 'rome', 'sheffield', 'orlando', 'nagano', 'dubai'],
-            lambda: [_('Toronto'), _('Rome'), _('Sheffield'), _('Orlando'),
-                     _('Nagano'), _('Dubai')],
+            ['moon', 'toronto', 'rome', 'sheffield', 'orlando', 'nagano',
+             'dubai'],
+            lambda: [_('Moon'), _('Toronto'), _('Rome'), _('Sheffield'),
+                     _('Orlando'), _('Nagano'), _('Dubai')],
             'assets/images/tracks/%s.txo',
             self.options['settings']['player_name'],
             DriverPaths('assets/images/drivers/driver%s.txo',

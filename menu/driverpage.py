@@ -358,7 +358,7 @@ class DriverPageClientGui(DriverPageGui):
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, track, car, driverpage_props, yorg_client):
+    def __init__(self, track, car, driverpage_props, yorg_client=None):
         self.track = track
         self.car = car
         init_lst = [

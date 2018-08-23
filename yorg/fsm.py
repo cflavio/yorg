@@ -155,7 +155,7 @@ class YorgFsm(FsmColleague):
         if self.eng.server.is_active:
             #seas.create_race_server(race_props)
             seas.create_race_server(race_props, self.mediator.logic.yorg_client)
-        elif self.eng.client.is_active:
+        elif self.mediator.logic.yorg_client.is_client_active:
             seas.create_race_client(race_props, self.mediator.logic.yorg_client)
         else:
             seas.create_race(race_props)

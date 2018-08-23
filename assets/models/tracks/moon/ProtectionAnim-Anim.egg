@@ -1,0 +1,23 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/moon/ProtectionAnim-Anim.egg assets/models/tracks/moon/ProtectionAnim-Anim.egg"
+}
+<Table> {
+  <Bundle> ArmatureProtectionAnim {
+    <Table> "<skeleton>" {
+      <Table> Bone {
+        <Xfm$Anim> xform {
+          <Scalar> fps { 24 }
+          <Char*> order { sprht }
+          <Char*> contents { ijkprhxyz }
+          <V> {
+            1 1 1 -180 -9e-06 -0 0 0.137275 -0.077285 1 1 1 -180 90 0 0
+            0.137275 -0.077285 1 1 1 5e-06 9e-06 -180 0 0.137275
+            -0.077285
+          }
+        }
+      }
+    }
+  }
+}

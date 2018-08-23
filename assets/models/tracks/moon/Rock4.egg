@@ -1,0 +1,1151 @@
+<CoordinateSystem> { Z-Up }
+
+<Comment> {
+  "egg-trans -nv 30 -o assets/models/tracks/moon/Rock4.egg assets/models/tracks/moon/Rock4.egg"
+}
+<Texture> TEXRock4 {
+  "tex/TEXRock4.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+}
+<Texture> TEXREPRock4 {
+  "tex/rock4seamless.jpg"
+  <Scalar> wrap { repeat }
+  <Scalar> minfilter { linear_mipmap_linear }
+  <Scalar> magfilter { linear_mipmap_linear }
+  <Scalar> envtype { modulate }
+  <Transform> {
+    <Translate> { -0.5 -0.5 -0.5 }
+    <Scale> { 5 5 1 }
+    <Translate> { 0.5 0.5 0.5 }
+  }
+}
+<Material> MATRock4 {
+  <Scalar> diffr { 0.8 }
+  <Scalar> diffg { 0.8 }
+  <Scalar> diffb { 0.8 }
+  <Scalar> ambr { 1 }
+  <Scalar> ambg { 1 }
+  <Scalar> ambb { 1 }
+  <Scalar> emitr { 0 }
+  <Scalar> emitg { 0 }
+  <Scalar> emitb { 0 }
+  <Scalar> specr { 0 }
+  <Scalar> specg { 0 }
+  <Scalar> specb { 0 }
+  <Scalar> shininess { 12.5 }
+}
+<Group> Rock4 {
+  <Transform> {
+    <Matrix4> {
+      1 0 0 0
+      0 1 0 0
+      0 0 1 0
+      0 0 0 1
+    }
+  }
+  <VertexPool> Rock4 {
+    <Vertex> 0 {
+      -0.894426 0 -0.447216
+      <UV> { 0.168952 0.63226 }
+      <Normal> { -0.900084 -0.250499 0.356509 }
+    }
+    <Vertex> 1 {
+      -0.894426 0 -0.447216
+      <UV> { 0.168952 0.63226 }
+      <Normal> { -0.910703 0.394746 0.121637 }
+    }
+    <Vertex> 2 {
+      -0.894426 0 -0.447216
+      <UV> { 0.168952 0.63226 }
+      <Normal> { -0.738174 0 -0.67461 }
+    }
+    <Vertex> 3 {
+      -0.850648 0 0.525736
+      <UV> { 0.177742 0.347906 }
+      <Normal> { -0.955313 0.220843 0.196481 }
+    }
+    <Vertex> 4 {
+      -0.850648 0 0.525736
+      <UV> { 0.177742 0.347906 }
+      <Normal> { -0.953545 -0.202115 -0.223386 }
+    }
+    <Vertex> 5 {
+      -0.734524 -0.309011 0.924273
+      <UV> { 0.194922 0.284419 }
+      <Normal> { -0.533966 -0.774333 0.339542 }
+    }
+    <Vertex> 6 {
+      -0.734524 -0.309011 0.924273
+      <UV> { 0.194922 0.284419 }
+      <Normal> { 0.215611 -0.344179 0.913812 }
+    }
+    <Vertex> 7 {
+      -0.734524 -0.309011 0.924273
+      <UV> { 0.194922 0.284419 }
+      <Normal> { -0.967691 -0.0432888 0.248397 }
+    }
+    <Vertex> 8 {
+      -0.723607 -0.525725 0.44722
+      <UV> { 0.126968 0.279448 }
+      <Normal> { -0.537775 -0.817472 0.206245 }
+    }
+    <Vertex> 9 {
+      -0.723607 -0.525725 0.44722
+      <UV> { 0.126968 0.279448 }
+      <Normal> { -0.966162 -0.211401 -0.147784 }
+    }
+    <Vertex> 10 {
+      -0.723607 -0.525725 0.44722
+      <UV> { 0.126968 0.279448 }
+      <Normal> { -0.79724 -0.383448 -0.466236 }
+    }
+    <Vertex> 11 {
+      -0.723607 0.525725 0.44722
+      <UV> { 0.247828 0.39505 }
+      <Normal> { -0.964528 0.246992 0.0931717 }
+    }
+    <Vertex> 12 {
+      -0.723607 0.525725 0.44722
+      <UV> { 0.247828 0.39505 }
+      <Normal> { -0.537837 0.815639 0.213224 }
+    }
+    <Vertex> 13 {
+      -0.723607 0.525725 0.44722
+      <UV> { 0.247828 0.39505 }
+      <Normal> { -0.712902 0.616087 -0.334973 }
+    }
+    <Vertex> 14 {
+      -0.700752 0.309013 0
+      <UV> { 0.172149 0.494263 }
+      <Normal> { -0.889806 -0.0898259 0.447412 }
+    }
+    <Vertex> 15 {
+      -0.700752 0.309013 0
+      <UV> { 0.172149 0.494263 }
+      <Normal> { -0.939912 0.279377 -0.196249 }
+    }
+    <Vertex> 16 {
+      -0.700752 0.309013 0
+      <UV> { 0.172149 0.494263 }
+      <Normal> { -0.760581 0.615848 0.205544 }
+    }
+    <Vertex> 17 {
+      -0.688189 -0.499997 -0.525736
+      <UV> { 0.136537 0.707234 }
+      <Normal> { -0.805604 -0.565089 0.17798 }
+    }
+    <Vertex> 18 {
+      -0.688189 -0.499997 -0.525736
+      <UV> { 0.136537 0.707234 }
+      <Normal> { -0.724042 -0.194737 -0.661695 }
+    }
+    <Vertex> 19 {
+      -0.688189 -0.499997 -0.525736
+      <UV> { 0.136537 0.707234 }
+      <Normal> { -0.175144 -0.454565 -0.873325 }
+    }
+    <Vertex> 20 {
+      -0.688189 0.499997 -0.525736
+      <UV> { 0.247523 0.608164 }
+      <Normal> { -0.789621 0.599917 0.128834 }
+    }
+    <Vertex> 21 {
+      -0.688189 0.499997 -0.525736
+      <UV> { 0.247523 0.608164 }
+      <Normal> { -0.231529 0.47034 -0.851572 }
+    }
+    <Vertex> 22 {
+      -0.688189 0.499997 -0.525736
+      <UV> { 0.247523 0.608164 }
+      <Normal> { -0.724042 0.194737 -0.661695 }
+    }
+    <Vertex> 23 {
+      -0.605047 -0.309013 0.066257
+      <UV> { 0.011963 0.620218 }
+      <Normal> { -0.882813 -0.333121 0.331168 }
+    }
+    <Vertex> 24 {
+      -0.605047 -0.309013 0.066257
+      <UV> { 0.037483 0.350511 }
+      <Normal> { -0.880442 -0.244514 -0.406245 }
+    }
+    <Vertex> 25 {
+      -0.550475 0.309011 1.0936
+      <UV> { 0.249519 0.310618 }
+      <Normal> { -0.906875 0.21591 0.361885 }
+    }
+    <Vertex> 26 {
+      -0.550475 0.309011 1.0936
+      <UV> { 0.249519 0.310618 }
+      <Normal> { 0.387415 -0.22582 0.89382 }
+    }
+    <Vertex> 27 {
+      -0.550475 0.309011 1.0936
+      <UV> { 0.249519 0.310618 }
+      <Normal> { 0.139963 0.706907 0.69332 }
+    }
+    <Vertex> 28 {
+      -0.550475 0.309011 1.0936
+      <UV> { 0.249519 0.310618 }
+      <Normal> { -0.529221 0.751593 0.393742 }
+    }
+    <Vertex> 29 {
+      -0.52573 0 -0.850652
+      <UV> { 0.217361 0.686677 }
+      <Normal> { 0.0424406 -0.179488 -0.982844 }
+    }
+    <Vertex> 30 {
+      -0.52573 0 -0.850652
+      <UV> { 0.217361 0.686677 }
+      <Normal> { -0.230676 0.476391 -0.848434 }
+    }
+    <Vertex> 31 {
+      -0.52573 0 -0.850652
+      <UV> { 0.217361 0.686677 }
+      <Normal> { -0.738174 0 -0.67461 }
+    }
+    <Vertex> 32 {
+      -0.330118 -0.809017 0.007362
+      <UV> { 0.000301 0.808122 }
+      <Normal> { -0.546166 -0.836866 0.0368648 }
+    }
+    <Vertex> 33 {
+      -0.330118 -0.809017 0.007362
+      <UV> { 0.01019 0.169534 }
+      <Normal> { -0.546166 -0.836866 0.0368648 }
+    }
+    <Vertex> 34 {
+      -0.330118 -0.809017 0.007362
+      <UV> { 0.01019 0.169534 }
+      <Normal> { -0.79724 -0.383448 -0.466236 }
+    }
+    <Vertex> 35 {
+      -0.330118 -0.809017 0.007362
+      <UV> { 0.000301 0.808122 }
+      <Normal> { -0.828797 -0.487971 0.273825 }
+    }
+    <Vertex> 36 {
+      -0.285947 0.809017 0.03681
+      <UV> { 0.377695 0.488543 }
+      <Normal> { -0.640398 0.768021 0.00588033 }
+    }
+    <Vertex> 37 {
+      -0.276388 -0.850649 -0.44722
+      <UV> { 0.127166 0.796088 }
+      <Normal> { 0.0247454 -0.943521 -0.330386 }
+    }
+    <Vertex> 38 {
+      -0.276388 -0.850649 -0.44722
+      <UV> { 0.127166 0.796088 }
+      <Normal> { -0.576332 -0.817188 0.00672008 }
+    }
+    <Vertex> 39 {
+      -0.276388 -0.850649 -0.44722
+      <UV> { 0.127166 0.796088 }
+      <Normal> { -0.135395 -0.442435 -0.886521 }
+    }
+    <Vertex> 40 {
+      -0.276388 0.850649 -0.44722
+      <UV> { 0.337015 0.612253 }
+      <Normal> { -0.602346 0.796226 0.0565888 }
+    }
+    <Vertex> 41 {
+      -0.276388 0.850649 -0.44722
+      <UV> { 0.337015 0.612253 }
+      <Normal> { 0.0247454 0.943521 -0.330386 }
+    }
+    <Vertex> 42 {
+      -0.276388 0.850649 -0.44722
+      <UV> { 0.337015 0.612253 }
+      <Normal> { -0.157265 0.501667 -0.850645 }
+    }
+    <Vertex> 43 {
+      -0.262869 -0.809012 0.525738
+      <UV> { 0.144587 0.192253 }
+      <Normal> { -0.526038 -0.835433 0.159174 }
+    }
+    <Vertex> 44 {
+      -0.262869 -0.809012 0.525738
+      <UV> { 0.144587 0.192253 }
+      <Normal> { 0.0795711 -0.568824 0.818601 }
+    }
+    <Vertex> 45 {
+      -0.262869 -0.809012 0.525738
+      <UV> { 0.144587 0.192253 }
+      <Normal> { -0.0247454 -0.943521 0.330386 }
+    }
+    <Vertex> 46 {
+      -0.262869 0.809012 0.525738
+      <UV> { 0.33545 0.367274 }
+      <Normal> { 0.1005 0.678256 0.727921 }
+    }
+    <Vertex> 47 {
+      -0.262869 0.809012 0.525738
+      <UV> { 0.33545 0.367274 }
+      <Normal> { -0.545087 0.824728 0.150678 }
+    }
+    <Vertex> 48 {
+      -0.262869 0.809012 0.525738
+      <UV> { 0.33545 0.367274 }
+      <Normal> { -0.0247454 0.943521 0.330386 }
+    }
+    <Vertex> 49 {
+      -0.088836 0.499995 -0.688692
+      <UV> { 0.307243 0.680828 }
+      <Normal> { -0.124796 0.394236 -0.910496 }
+    }
+    <Vertex> 50 {
+      -0.022086 0 0.786504
+      <UV> { 0.268324 0.240463 }
+      <Normal> { -0.000188113 -0.0631807 0.998002 }
+    }
+    <Vertex> 51 {
+      -0.022086 0 0.786504
+      <UV> { 0.268324 0.240463 }
+      <Normal> { 0.387415 -0.22582 0.89382 }
+    }
+    <Vertex> 52 {
+      0 -1 0
+      <UV> { 0.058585 0.934788 }
+      <Normal> { 0.0247454 -0.943521 -0.330386 }
+    }
+    <Vertex> 53 {
+      0 -1 0
+      <UV> { 0.058585 0.934788 }
+      <Normal> { -0.499605 -0.865214 0.0424275 }
+    }
+    <Vertex> 54 {
+      0 -1 0
+      <UV> { 0.060659 0.050497 }
+      <Normal> { -0.499605 -0.865214 0.0424275 }
+    }
+    <Vertex> 55 {
+      0 -1 0
+      <UV> { 0.060659 0.050497 }
+      <Normal> { -0.0247454 -0.943521 0.330386 }
+    }
+    <Vertex> 56 {
+      0 -1 0
+      <UV> { 0.060659 0.050497 }
+      <Normal> { 0.654432 -0.754628 -0.0474891 }
+    }
+    <Vertex> 57 {
+      0 -1 0
+      <UV> { 0.058585 0.934788 }
+      <Normal> { 0.654432 -0.754628 -0.0474891 }
+    }
+    <Vertex> 58 {
+      0 -0 -0.77178
+      <UV> { 0.261112 0.736852 }
+      <Normal> { -0.158249 -0.0744981 -0.984585 }
+    }
+    <Vertex> 59 {
+      0 -0 -0.77178
+      <UV> { 0.261112 0.736852 }
+      <Normal> { 0.145737 0.187323 -0.971427 }
+    }
+    <Vertex> 60 {
+      0 1 0
+      <UV> { 0.475478 0.561249 }
+      <Normal> { -0.551005 0.833368 0.0434901 }
+    }
+    <Vertex> 61 {
+      0 1 0
+      <UV> { 0.483551 0.443746 }
+      <Normal> { -0.551005 0.833368 0.0434901 }
+    }
+    <Vertex> 62 {
+      0 1 0
+      <UV> { 0.483551 0.443746 }
+      <Normal> { -0.0247454 0.943521 0.330386 }
+    }
+    <Vertex> 63 {
+      0 1 0
+      <UV> { 0.483551 0.443746 }
+      <Normal> { 0.54755 0.8353 -0.0496325 }
+    }
+    <Vertex> 64 {
+      0 1 0
+      <UV> { 0.475478 0.561249 }
+      <Normal> { 0.54755 0.8353 -0.0496325 }
+    }
+    <Vertex> 65 {
+      0 1 0
+      <UV> { 0.475478 0.561249 }
+      <Normal> { 0.0247454 0.943521 -0.330386 }
+    }
+    <Vertex> 66 {
+      0.014231 -0.499995 -0.666606
+      <UV> { 0.208689 0.78655 }
+      <Normal> { -0.129397 -0.389155 -0.912039 }
+    }
+    <Vertex> 67 {
+      0.118284 -0.499995 0.703416
+      <UV> { 0.226617 0.180895 }
+      <Normal> { 0.136814 -0.408926 0.902254 }
+    }
+    <Vertex> 68 {
+      0.162456 0.499995 0.754949
+      <UV> { 0.336975 0.272361 }
+      <Normal> { 0.22698 0.592837 0.772673 }
+    }
+    <Vertex> 69 {
+      0.162456 0.499995 0.754949
+      <UV> { 0.336975 0.272361 }
+      <Normal> { -0.11566 0.105024 0.987721 }
+    }
+    <Vertex> 70 {
+      0.162456 0.499995 0.754949
+      <UV> { 0.336975 0.272361 }
+      <Normal> { 0.450404 -0.110324 0.885982 }
+    }
+    <Vertex> 71 {
+      0.219689 -0.809017 -0.007362
+      <UV> { 0.147289 0.97637 }
+      <Normal> { 0.702977 -0.656726 0.273009 }
+    }
+    <Vertex> 72 {
+      0.219689 -0.809017 -0.007362
+      <UV> { 0.148343 0.000301 }
+      <Normal> { 0.673187 -0.717503 -0.17891 }
+    }
+    <Vertex> 73 {
+      0.219689 -0.809017 -0.007362
+      <UV> { 0.147289 0.97637 }
+      <Normal> { 0.673187 -0.717503 -0.17891 }
+    }
+    <Vertex> 74 {
+      0.262869 -0.809012 -0.525738
+      <UV> { 0.200616 0.851142 }
+      <Normal> { 0.0247454 -0.943521 -0.330386 }
+    }
+    <Vertex> 75 {
+      0.262869 -0.809012 -0.525738
+      <UV> { 0.200616 0.851142 }
+      <Normal> { 0.589221 -0.80648 0.0490736 }
+    }
+    <Vertex> 76 {
+      0.262869 -0.809012 -0.525738
+      <UV> { 0.200616 0.851142 }
+      <Normal> { -0.118653 -0.489327 -0.863991 }
+    }
+    <Vertex> 77 {
+      0.262869 -0.809012 -0.525738
+      <UV> { 0.200616 0.851142 }
+      <Normal> { 0.4713 -0.583121 -0.661699 }
+    }
+    <Vertex> 78 {
+      0.262869 0.809012 -0.525738
+      <UV> { 0.383105 0.689615 }
+      <Normal> { 0.53454 0.844458 -0.0340182 }
+    }
+    <Vertex> 79 {
+      0.262869 0.809012 -0.525738
+      <UV> { 0.383105 0.689615 }
+      <Normal> { 0.0247454 0.943521 -0.330386 }
+    }
+    <Vertex> 80 {
+      0.262869 0.809012 -0.525738
+      <UV> { 0.383105 0.689615 }
+      <Normal> { 0.4713 0.583121 -0.661699 }
+    }
+    <Vertex> 81 {
+      0.262869 0.809012 -0.525738
+      <UV> { 0.383105 0.689615 }
+      <Normal> { -0.0759759 0.531388 -0.843715 }
+    }
+    <Vertex> 82 {
+      0.276388 -0.850649 0.44722
+      <UV> { 0.195567 0.114351 }
+      <Normal> { 0.168432 -0.530872 0.830545 }
+    }
+    <Vertex> 83 {
+      0.276388 -0.850649 0.44722
+      <UV> { 0.195567 0.114351 }
+      <Normal> { -0.0247454 -0.943521 0.330386 }
+    }
+    <Vertex> 84 {
+      0.276388 -0.850649 0.44722
+      <UV> { 0.195567 0.114351 }
+      <Normal> { 0.651665 -0.743651 -0.149387 }
+    }
+    <Vertex> 85 {
+      0.276388 0.850649 0.44722
+      <UV> { 0.415504 0.303524 }
+      <Normal> { 0.19801 0.609413 0.767729 }
+    }
+    <Vertex> 86 {
+      0.276388 0.850649 0.44722
+      <UV> { 0.415504 0.303524 }
+      <Normal> { 0.604103 0.795132 -0.0531465 }
+    }
+    <Vertex> 87 {
+      0.276388 0.850649 0.44722
+      <UV> { 0.415504 0.303524 }
+      <Normal> { -0.0247454 0.943521 0.330386 }
+    }
+    <Vertex> 88 {
+      0.308032 0.809017 0.184048
+      <UV> { 0.566616 0.665366 }
+      <Normal> { 0.607713 0.789666 -0.0843381 }
+    }
+    <Vertex> 89 {
+      0.308032 0.809017 0.184048
+      <UV> { 0.487447 0.309651 }
+      <Normal> { 0.607713 0.789666 -0.0843381 }
+    }
+    <Vertex> 90 {
+      0.308032 0.809017 0.184048
+      <UV> { 0.566616 0.665366 }
+      <Normal> { 0.796168 0.534032 0.284476 }
+    }
+    <Vertex> 91 {
+      0.425323 -0.309011 -0.850654
+      <UV> { 0.27135 0.803284 }
+      <Normal> { -0.221812 -0.242677 -0.944409 }
+    }
+    <Vertex> 92 {
+      0.425323 -0.309011 -0.850654
+      <UV> { 0.27135 0.803284 }
+      <Normal> { 0.614623 -0.294132 -0.731933 }
+    }
+    <Vertex> 93 {
+      0.425323 0.309011 -0.850654
+      <UV> { 0.32647 0.754891 }
+      <Normal> { -0.176554 0.220272 -0.959327 }
+    }
+    <Vertex> 94 {
+      0.425323 0.309011 -0.850654
+      <UV> { 0.32647 0.754891 }
+      <Normal> { 0.597195 0.433883 -0.674614 }
+    }
+    <Vertex> 95 {
+      0.425323 0.309011 -0.850654
+      <UV> { 0.32647 0.754891 }
+      <Normal> { 0.60706 0 -0.794656 }
+    }
+    <Vertex> 96 {
+      0.52573 0 0.850652
+      <UV> { 0.314407 0.189665 }
+      <Normal> { 0.636221 0.148396 0.757101 }
+    }
+    <Vertex> 97 {
+      0.52573 0 0.850652
+      <UV> { 0.314407 0.189665 }
+      <Normal> { -0.116185 -0.0449677 0.992209 }
+    }
+    <Vertex> 98 {
+      0.52573 0 0.850652
+      <UV> { 0.314407 0.189665 }
+      <Normal> { 0.263673 -0.463914 0.845731 }
+    }
+    <Vertex> 99 {
+      0.53879 -0.309013 0.066257
+      <UV> { 0.342649 0.999699 }
+      <Normal> { 0.855489 -0.304083 0.419132 }
+    }
+    <Vertex> 100 {
+      0.53879 -0.309013 0.066257
+      <UV> { 0.329789 0.000301 }
+      <Normal> { 0.802043 -0.354833 -0.480439 }
+    }
+    <Vertex> 101 {
+      0.688189 -0.499997 0.525736
+      <UV> { 0.283494 0.11272 }
+      <Normal> { 0.26153 -0.477411 0.838857 }
+    }
+    <Vertex> 102 {
+      0.688189 -0.499997 0.525736
+      <UV> { 0.283494 0.11272 }
+      <Normal> { 0.724042 -0.194737 0.661695 }
+    }
+    <Vertex> 103 {
+      0.688189 -0.499997 0.525736
+      <UV> { 0.283494 0.11272 }
+      <Normal> { 0.768333 -0.537938 -0.346823 }
+    }
+    <Vertex> 104 {
+      0.688189 0.499997 0.525736
+      <UV> { 0.399647 0.206755 }
+      <Normal> { 0.558099 0.316984 0.766842 }
+    }
+    <Vertex> 105 {
+      0.688189 0.499997 0.525736
+      <UV> { 0.399647 0.206755 }
+      <Normal> { 0.331313 0.559246 0.759918 }
+    }
+    <Vertex> 106 {
+      0.688189 0.499997 0.525736
+      <UV> { 0.399647 0.206755 }
+      <Normal> { 0.779999 0.608242 -0.147116 }
+    }
+    <Vertex> 107 {
+      0.69339 0.309013 0.044172
+      <UV> { 0.495321 0.866365 }
+      <Normal> { 0.914842 0.39145 0.0991508 }
+    }
+    <Vertex> 108 {
+      0.69339 0.309013 0.044172
+      <UV> { 0.486537 0.115628 }
+      <Normal> { 0.914842 0.39145 0.0991508 }
+    }
+    <Vertex> 109 {
+      0.69339 0.309013 0.044172
+      <UV> { 0.486537 0.115628 }
+      <Normal> { 0.734103 0.63389 -0.243467 }
+    }
+    <Vertex> 110 {
+      0.69339 0.309013 0.044172
+      <UV> { 0.486537 0.115628 }
+      <Normal> { 0.79554 -0.219191 -0.564864 }
+    }
+    <Vertex> 111 {
+      0.69339 0.309013 0.044172
+      <UV> { 0.495321 0.866365 }
+      <Normal> { 0.905885 -0.213538 0.36575 }
+    }
+    <Vertex> 112 {
+      0.723607 -0.525725 -0.44722
+      <UV> { 0.279542 0.873551 }
+      <Normal> { 0.597195 -0.433883 -0.674614 }
+    }
+    <Vertex> 113 {
+      0.723607 -0.525725 -0.44722
+      <UV> { 0.279542 0.873551 }
+      <Normal> { 0.825227 -0.348793 0.444234 }
+    }
+    <Vertex> 114 {
+      0.723607 -0.525725 -0.44722
+      <UV> { 0.279542 0.873551 }
+      <Normal> { 0.517938 -0.85433 0.0431353 }
+    }
+    <Vertex> 115 {
+      0.723607 0.525725 -0.44722
+      <UV> { 0.398808 0.77412 }
+      <Normal> { 0.527621 0.848816 -0.033578 }
+    }
+    <Vertex> 116 {
+      0.723607 0.525725 -0.44722
+      <UV> { 0.398808 0.77412 }
+      <Normal> { 0.897995 0.379543 0.222605 }
+    }
+    <Vertex> 117 {
+      0.723607 0.525725 -0.44722
+      <UV> { 0.398808 0.77412 }
+      <Normal> { 0.597195 0.433883 -0.674614 }
+    }
+    <Vertex> 118 {
+      0.850648 0 -0.525736
+      <UV> { 0.345432 0.833561 }
+      <Normal> { 0.661816 -0.135692 -0.737284 }
+    }
+    <Vertex> 119 {
+      0.850648 0 -0.525736
+      <UV> { 0.345432 0.833561 }
+      <Normal> { 0.948659 -0.0556695 0.311364 }
+    }
+    <Vertex> 120 {
+      0.850648 0 -0.525736
+      <UV> { 0.345432 0.833561 }
+      <Normal> { 0.700224 0.268032 -0.661699 }
+    }
+    <Vertex> 121 {
+      0.894426 0 0.447216
+      <UV> { 0.360395 0.133051 }
+      <Normal> { 0.738174 0 0.67461 }
+    }
+    <Vertex> 122 {
+      0.894426 0 0.447216
+      <UV> { 0.360395 0.133051 }
+      <Normal> { 0.905934 0.396857 -0.147606 }
+    }
+    <Vertex> 123 {
+      0.894426 0 0.447216
+      <UV> { 0.360395 0.133051 }
+      <Normal> { 0.807456 -0.312192 -0.50055 }
+    }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 58 91 66 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 112 92 118 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 58 66 29 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 59 29 49 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 58 49 93 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 113 119 99 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 37 74 52 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 0 17 23 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 40 20 36 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 115 78 88 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 113 99 71 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 38 53 32 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 0 23 14 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 40 36 60 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 116 90 107 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 82 101 67 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 8 43 5 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 11 3 25 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 85 46 68 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 121 104 96 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 97 69 50 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 96 104 68 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 105 85 68 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 70 26 51 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 68 46 27 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 47 12 28 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 26 6 51 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 25 3 7 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 4 9 7 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 6 67 50 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 6 44 67 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 44 82 67 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 67 97 50 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 67 101 98 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 102 121 96 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 108 106 122 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 109 89 106 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 89 86 106 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 62 48 87 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 61 36 47 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 36 12 47 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 15 3 11 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 15 24 4 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 24 9 4 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 33 43 8 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 33 54 43 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 55 83 45 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 72 103 84 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 72 100 103 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 100 123 103 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 89 63 86 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 88 78 64 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 79 41 65 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 36 15 13 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 36 20 16 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 20 1 15 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 24 34 10 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 23 17 35 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 17 38 32 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 56 72 84 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 57 75 71 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 75 114 73 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 100 110 123 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 99 119 111 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 119 116 107 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 94 80 117 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 93 49 81 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 49 42 81 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 49 21 42 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 49 30 21 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 31 2 22 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 31 18 2 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 29 66 19 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 66 39 19 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 120 94 117 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 118 92 95 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 91 58 93 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 66 76 39 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 66 91 76 <Ref> { Rock4 } }
+  }
+  <Polygon> {
+    <TRef> { TEXRock4 }
+    <TRef> { TEXREPRock4 }
+    <MRef> { MATRock4 }
+    <VertexRef> { 92 112 77 <Ref> { Rock4 } }
+  }
+}
