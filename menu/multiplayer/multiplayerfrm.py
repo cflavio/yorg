@@ -423,6 +423,7 @@ class MultiplayerFrm(GameObject):
         self.eng.log('on declined')
         self.users_frm.on_declined(msg)
         self.match_frm.on_declined(msg)
+        self.msg_frm.match_msg_frm.on_declined(msg)
 
     def on_ip_address(self, msg):
         self.eng.log('on ip address')

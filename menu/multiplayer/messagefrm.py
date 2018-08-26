@@ -190,6 +190,9 @@ class MatchMsgFrm(GameObject):
         self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
         self.ent['state'] = NORMAL
 
+    def on_declined(self, from_):
+        self.set_title(self.chat.title)
+
     def on_focus(self, val):
         if val == 'in' and self.ent.get() == _('write here your message'):
             self.ent.set('')
@@ -199,6 +202,7 @@ class MatchMsgFrm(GameObject):
         self.eng.log('message form destroyed')
         self.msg_frm.destroy()
         GameObject.destroy(self)
+
 
 class MessageFrm(GameObject):
 

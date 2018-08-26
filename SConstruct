@@ -90,6 +90,7 @@ filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 yorg_fil_dirs = ['yyagl', 'menu', 'yorg', 'licenses', 'assets', 'venv',
                  'build', 'built']
 yorg_fil = ['./%s/*' % dname for dname in yorg_fil_dirs]
+yorg_fil += ['./yorg_error.txt']
 yorg_lst = [
     PDFInfo('python', './yorg', '*.py', []),
     PDFInfo('python', '.', '*.py SConstruct *.md *.txt', yorg_fil)]
