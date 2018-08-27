@@ -73,6 +73,21 @@ class MatchFrm(GameObject):
                 self.forms.remove(frm)
                 frm.destroy()
 
+    def on_rm_usr_from_match(self, data_lst):
+        nick = data_lst[0]
+        room = data_lst[1]
+        self.eng.log('user %s has been removed from the room %s' % (nick, room))
+        if room != self.room: return
+        for i, frm in enumerate(self.forms[:]):
+            lab = frm.lab.lab['text']
+            lab = lab.replace('\1smaller\1', '').replace('\2', '')
+            if lab == nick:
+                for j in range(i + 1, 8):
+                    if j < len(self.forms):
+                        self.set_frm_pos(self.forms[j], j - 1)
+                self.forms.remove(frm)
+                frm.destroy()
+
     @property
     def users_names(self):
         clean = lambda lab: lab.replace('\1smaller\1', '').replace('\2', '')
@@ -118,7 +133,8 @@ class MatchFrm(GameObject):
         self.notify('on_start')
 
     def on_remove(self, usr_name):
-        self.eng.xmpp.client.plugin['xep_0045'].setRole(self.room, usr_name, 'none')
+        self.eng.client.register_rpc('rm_usr_from_match')
+        self.eng.client.rm_usr_from_match(usr_name, self.room)
 
     def show(self, room):
         self.eng.log('match form: show room ' + room)

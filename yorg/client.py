@@ -77,6 +77,8 @@ class YorgClient(GameObject):
             self.notify('on_game_packet', data_lst[1:])
         if data_lst[0] == 'end_race_player':
             self.notify('on_end_race_player', data_lst[1])
+        if data_lst[0] == 'rm_usr_from_match':
+            self.notify('on_rm_usr_from_match', data_lst[1:])
 
     def find_usr(self, uid):
         return [usr for usr in self.users if usr.uid == uid][0]

@@ -68,6 +68,7 @@ class MultiplayerFrm(GameObject):
         yorg_client.attach(self.on_declined)
         yorg_client.attach(self.on_presence_available_room)
         yorg_client.attach(self.on_presence_unavailable_room)
+        yorg_client.attach(self.on_rm_usr_from_match)
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient
@@ -175,6 +176,13 @@ class MultiplayerFrm(GameObject):
             self.eng.show_cursor()
         if uid == self.yorg_client.myid and \
                 self.match_frm and room_name == self.match_frm.room:
+            self.removed_dlg = RemovedDialog(self.menu_args)
+            self.removed_dlg.attach(self.on_remove_dlg)
+
+    def on_rm_usr_from_match(self, data_lst):
+        self.match_frm.on_rm_usr_from_match(data_lst)
+        if data_lst[0] == self.yorg_client.myid and \
+                self.match_frm and data_lst[1] == self.match_frm.room:
             self.removed_dlg = RemovedDialog(self.menu_args)
             self.removed_dlg.attach(self.on_remove_dlg)
 

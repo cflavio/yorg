@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.10
-# remove a user from a match
 # clean rooms when people exit
 # consecutive multiplayer races
 
