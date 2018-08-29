@@ -173,8 +173,16 @@ class MatchMsgFrm(GameObject):
         room = room_name
         nick = uid
         self.eng.log('user %s has left the chat %s' %(nick, room))
-        self.chat.users.remove(nick)
+        if nick in self.chat.users: # it is being removed multiple times when
+                                    # you remove a user who has accepted
+            self.chat.users.remove(nick)
         self.set_title(self.chat.title)
+
+    def on_rm_usr_from_match(self, uid):
+        if uid in self.chat.users:  # it is being removed multiple times when
+                                    # you remove a user who has accepted
+            self.chat.users.remove(uid)
+        self.update_title()
 
     def add_groupchat(self, room, usr):
         self.set_title(usr)
@@ -190,7 +198,7 @@ class MatchMsgFrm(GameObject):
         self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
         self.ent['state'] = NORMAL
 
-    def on_declined(self, from_):
+    def update_title(self):
         self.set_title(self.chat.title)
 
     def on_focus(self, val):

@@ -81,7 +81,7 @@ class MatchFrm(GameObject):
         for i, frm in enumerate(self.forms[:]):
             lab = frm.lab.lab['text']
             lab = lab.replace('\1smaller\1', '').replace('\2', '')
-            if lab == nick:
+            if nick == lab or '? ' + nick == lab:
                 for j in range(i + 1, 8):
                     if j < len(self.forms):
                         self.set_frm_pos(self.forms[j], j - 1)
