@@ -51,6 +51,7 @@ class YorgMainPageGui(MainPageGui):
                 # self.eng.xmpp.start(user, pwd)
                     #self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
                     self.eng.client.register_rpc('login')
+                    if not self.eng.client.is_active: yorg_client.restart()
                     ret_val = self.eng.client.login(user, password)
                     if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
                         return self.on_ko(ret_val)

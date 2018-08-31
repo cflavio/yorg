@@ -16,11 +16,14 @@ class YorgClient(GameObject):
         GameObject.__init__(self)
         self.authenticated = False
         self.is_server_up = True
-        try: self.is_server_up = self.eng.client.start(self.on_msg, self.eng.cfg.dev_cfg.server)
-        except error: self.is_server_up = False
+        self.restart()
         self.users = []
         self.is_server_active = False
         self.is_client_active = False
+
+    def restart(self):
+        try: self.is_server_up = self.eng.client.start(self.on_msg, self.eng.cfg.dev_cfg.server)
+        except error: self.is_server_up = False
 
     def start(self, uid):
         self.myid = uid
