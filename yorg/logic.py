@@ -333,7 +333,7 @@ class YorgLogic(GameLogic):
         drivers = sprops.drivers
         packet_drivers = []
         for i in range(packet[0]):
-            offset = i * 7
+            offset = i * 6
             pdrv = packet[1 + offset: 1 + offset + 6]
             packet_drivers += [pdrv]
         for pdrv in packet_drivers:

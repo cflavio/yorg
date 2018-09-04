@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.10
-# names in loading screen are wrong
 # clean rooms when people exit
 # consecutive multiplayer races
 
