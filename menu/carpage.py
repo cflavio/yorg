@@ -246,6 +246,12 @@ class CarPageGuiClient(CarPageGui):
         page_args = [self.track_path, self.car, self.props]
         self.notify('on_push_page', 'driverpageclient', page_args)
 
+    def destroy(self):
+        self.yorg_client.detach(self.on_car_selection)
+        self.yorg_client.detach(self.on_car_deselection)
+        self.yorg_client.detach(self.on_start_drivers)
+        CarPageGui.destroy(self)
+
 
 class CarPage(Page):
     gui_cls = CarPageGui

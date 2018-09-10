@@ -354,6 +354,12 @@ class DriverPageClientGui(DriverPageGui):
         self.notify('on_car_start_client', self.mediator.track,
                     self.mediator.car, cars, data_lst)
 
+    def destroy(self):
+        self.yorg_client.detach(self.on_drv_selection)
+        self.yorg_client.detach(self.on_drv_deselection)
+        self.yorg_client.detach(self.on_start_race)
+        DriverPageGui.destroy(self)
+
 
 class DriverPage(Page):
     gui_cls = DriverPageGui

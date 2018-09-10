@@ -56,7 +56,9 @@ class YorgMainPageGui(MainPageGui):
                         yorg_client.restart()
                     while not self.eng.client.netw_thr: pass
                     # wait for the thread
-                    ret_val = self.eng.client.login(user, password)
+                    ret_val = 'ok'
+                    if not yorg_client.authenticated:
+                        ret_val = self.eng.client.login(user, password)
                     if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
                         return self.on_ko(ret_val)
                     taskMgr.doMethodLater(.1, lambda task: self.on_ok(), 'x')

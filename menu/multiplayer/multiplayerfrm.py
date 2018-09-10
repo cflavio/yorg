@@ -430,6 +430,7 @@ class MultiplayerFrm(GameObject):
 
     def on_track_selected_msg(self, track):
         self.eng.log_mgr.log('track selected: ' + track)
+        self.yorg_client.detach(self.on_track_selected_msg)
         self.notify('on_start_match_client', track)
         self.users_frm.set_size(False)
         self.msg_frm.show()

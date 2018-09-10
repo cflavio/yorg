@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.10
-# clean rooms when people exit
 # consecutive multiplayer races
 
 # 0.11 (local multiplayer)
