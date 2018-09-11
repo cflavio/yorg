@@ -145,7 +145,6 @@ class UsersFrm(GameObject):
 
     def on_invite(self, usr):
         self.notify('on_invite', usr)
-        if not (self.eng.server.public_addr and self.eng.server.local_addr): return
         self.invited_users += [usr.uid]
         self.on_users()
         if not self.room_name:

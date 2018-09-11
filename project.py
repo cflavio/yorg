@@ -5,6 +5,8 @@
 
 # 0.10
 # consecutive multiplayer races
+# esc at race's end: (i) wrong cursor on the popup (ii) wrong curson on the main
+#   menu
 
 # 0.11 (local multiplayer)
 # local multiplayer
