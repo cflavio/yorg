@@ -270,13 +270,9 @@ class MultiplayerFrm(GameObject):
         pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
         self.eng.log('cancel invites: %s, %s, %s' % (invited, users, pending_users))
         for usr in pending_users:
-            self.eng.log('cancel_invite ' + usr)
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=usr,
-                mtype='ya2_yorg',
-                msubject='cancel_invite',
-                mbody='cancel_invite')
+            self.eng.log('cancel_invite %s %s' % (usr, self.match_frm.room))
+            self.eng.client.register_rpc('rm_usr_from_match')
+            self.eng.client.rm_usr_from_match(usr, self.match_frm.room)
 
     def on_quit(self):
         if self.eng.server.is_active: self.eng.server.stop()

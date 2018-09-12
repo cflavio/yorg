@@ -4,9 +4,7 @@
 # TODO LIST =====
 
 # 0.10
-# consecutive multiplayer races
-# esc at race's end: (i) wrong cursor on the popup (ii) wrong curson on the main
-#   menu
+# test three players
 
 # 0.11 (local multiplayer)
 # local multiplayer
@@ -14,7 +12,6 @@
 
 # WAITING =====
 
-# (Panda3D 1.10) python-keyring for xmpp's credentials
 # (Panda3D 1.10) joypad
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # (Panda3D 1.10) write snow shader
@@ -22,7 +19,6 @@
 # (Panda3D 1.10) deployng: log_filename
 # (Panda3D 1.10) deployng: use logging for logging
 # (Panda3D 1.10) port to python 3
-# python 3: use keyring_jeepney
 # hardware instancing (gl_InstanceID requires 1.40)
 
 
@@ -45,10 +41,3 @@
 # do a single page with track, drivers, cars and messages for all: single,
 #  local and online multiplayer
 # refactoring: select the driver before the car
-# make a client-server solution (server on ya2tech.it) (advantages: doesn't
-#   require port forwarding, robust - no match server)
-# refactoring of protocol: use less xmpp and more rpyc (easier concurrency
-#   management), also for the server
-# remove xmpp: register users from the game with a db on the server, player's
-#   disconnection using socket () - evaluate, I'm not sure
-# refactoring (network): use bjson for exchanging data
