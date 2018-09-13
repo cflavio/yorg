@@ -9,8 +9,9 @@ from .thankspage import ThanksPageGui
 
 class LogInPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, mp_props):
+    def __init__(self, mediator, mp_props, yorg_client):
         self.props = mp_props
+        self.yorg_client = yorg_client
         ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
 
     def build(self):
@@ -78,7 +79,7 @@ class LogInPageGui(ThanksPageGui):
     def start(self, pwd_name=None):
         def process_msg(data_lst, sender):
             print sender, data_lst
-        self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
+        #self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
         self.eng.client.register_rpc('login')
         self.eng.client.register_rpc('get_salt')
         salt = self.eng.client.get_salt(self.jid_ent.get())
@@ -109,6 +110,7 @@ class LogInPageGui(ThanksPageGui):
         self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
         self.props.opt_file['settings']['login']['pwd'] = self.pwd
         self.props.opt_file.store()
+        self.yorg_client.start(self.props.opt_file['settings']['login']['usr'])
         self._on_back()
         self.notify('on_login')
 
@@ -125,10 +127,10 @@ class LogInPageGui(ThanksPageGui):
 class LogInPage(Page):
     gui_cls = LogInPageGui
 
-    def __init__(self, mp_props):
+    def __init__(self, mp_props, yorg_client):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mp_props])]]
+            [('gui', self.gui_cls, [self, mp_props, yorg_client])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__

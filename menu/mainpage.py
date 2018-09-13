@@ -94,7 +94,7 @@ class YorgMainPageGui(MainPageGui):
         self.notify('on_logout')
 
     def on_login(self):
-        self.notify('on_push_page', 'login', [self.props])
+        self.notify('on_push_page', 'login', [self.props, self.yorg_client])
 
     def on_loginout(self):
         if self.eng.client.is_active and self.yorg_client.authenticated:

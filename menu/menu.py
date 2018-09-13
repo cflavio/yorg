@@ -44,7 +44,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_continue)
         if page_code == 'login':
             self.eng.log('login')
-            page = LogInPage(args[0])
+            page = LogInPage(args[0], args[1])
         if page_code == 'register':
             self.eng.log('register')
             page = RegisterPage(args[0])

@@ -31,6 +31,7 @@
 # do automatic update (assets shared among platforms)
 # unit tests
 # django webapp for scores
+# refactor: use only eng.client (remove eng.server and yorg_client)
 # refactor: don't share eng with every colleague, instead share only the
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr
