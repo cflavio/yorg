@@ -4,7 +4,9 @@
 # TODO LIST =====
 
 # 0.10
-# test three players
+# camera over ground
+# register a user whose name is equal to an inactive one
+# login after a registration -> wrong names (right) and login button
 
 # 0.11 (local multiplayer)
 # local multiplayer
