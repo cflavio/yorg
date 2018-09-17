@@ -86,7 +86,8 @@ class Yorg(Game):
                 'countdown_seconds': 3,
                 'xmpp_debug': 0,
                 'xmpp_server': 'ya2_yorg@jabb3r.org',
-                'server': 'ya2tech.it:9099'}}
+                'server': 'ya2tech.it:9099',
+                'mp_srv_usr': ''}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows

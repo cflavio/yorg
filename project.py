@@ -4,9 +4,7 @@
 # TODO LIST =====
 
 # 0.10
-# camera over ground
-# register a user whose name is equal to an inactive one
-# login after a registration -> wrong names (right) and login button
+# login after a registration -> wrong names (right)
 
 # 0.11 (local multiplayer)
 # local multiplayer

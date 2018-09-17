@@ -82,7 +82,7 @@ class YorgLogic(GameLogic):
         car = dev['car'] if 'car' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         server = dev['server'] if 'server' in dev else ''
-        if car and track and not server:  # for development's quickstart
+        if car and track and not dev['mp_srv_usr']:  # for development's quickstart
             self.season = SingleRaceSeason(self.__season_props(
                 self.mediator.gameprops, car, [],
                 self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
@@ -180,9 +180,6 @@ class YorgLogic(GameLogic):
                         self.eng.log_mgr.log('start_race: ' + str(data_lst))
                         cars = data_lst[4::7]
                         self.on_car_start_client(self.sel_track, car, cars, data_lst)
-                sock = socket(AF_INET, SOCK_DGRAM)
-                sock.connect(('ya2.it', 8080))
-                mylocal_addr = sock.getsockname()[0]
                 self.eng.client.start(process_msg, server)
                 self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
                 gprops = self.mediator.gameprops

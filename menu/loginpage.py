@@ -107,6 +107,7 @@ class LogInPageGui(ThanksPageGui):
         self.pwd_ent['focus'] = 1
 
     def on_ok(self):
+        self.yorg_client.authenticated = True
         self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
         self.props.opt_file['settings']['login']['pwd'] = self.pwd
         self.props.opt_file.store()

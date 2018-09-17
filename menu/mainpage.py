@@ -74,10 +74,10 @@ class YorgMainPageGui(MainPageGui):
     def on_ok(self):
         self.yorg_client.authenticated = True
         self.conn_attempted = True
-        self.widgets[5]['text'] = self.get_label()
         #self.eng.xmpp.send_connected()
         self.yorg_client.start(self.props.opt_file['settings']['login']['usr'])
         self.notify('on_login')
+        self.widgets[5]['text'] = self.get_label()
 
     def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
