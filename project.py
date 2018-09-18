@@ -3,9 +3,6 @@
 
 # TODO LIST =====
 
-# 0.10
-# login after a registration -> wrong names (right)
-
 # 0.11 (local multiplayer)
 # local multiplayer
 

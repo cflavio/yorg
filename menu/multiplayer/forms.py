@@ -20,7 +20,7 @@ class UserLabel(GameObject):
                                text_align=TextNode.A_left, **lab_args)
         self.supp_btn = None
         self.set_supporter(is_supporter)
-        self.set_online()
+        self.set_online(True)
 
     def on_enter(self, pos): self.lab['text_fg'] = self.menu_args.text_active
 
@@ -38,9 +38,7 @@ class UserLabel(GameObject):
                 self.supp_btn = self.supp_btn.destroy()
 
     def set_online(self, val=None):
-        if val is not None: self.is_online = val
-        if not self.eng.xmpp.client: self.is_online = False
-        elif self.name == self.eng.xmpp.client.boundjid.full: self.is_online = True
+        self.is_online = val
         self.lab.set_alpha_scale(1 if self.is_online else .4)
 
     def destroy(self):

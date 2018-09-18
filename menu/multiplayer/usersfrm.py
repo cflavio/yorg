@@ -90,14 +90,14 @@ class UsersFrm(GameObject):
     def on_users(self):
         self.set_connection_label()
         bare_users = [self.trunc(user.uid, 20)
-                      for user in self.yorg_client.users_nodup]
+                      for user in self.yorg_client.sorted_users]
         for lab in self.labels[:]:
             _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
             if _lab not in bare_users:
                 if _lab not in self.yorg_client.users:
                     lab.destroy()
                     self.labels.remove(lab)
-        nusers = len(self.yorg_client.users_nodup)
+        nusers = len(self.yorg_client.sorted_users)
         invite_btn = len(self.invited_users) < 8
         invite_btn = invite_btn and not self.in_match_room and not self.invited
         top = .08 * nusers + .08
@@ -105,7 +105,7 @@ class UsersFrm(GameObject):
         label_users = [lab.lab.lab['text'] for lab in self.labels]
         clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
         label_users = map(clean, label_users)
-        for i, user in enumerate(self.yorg_client.users_nodup):
+        for i, user in enumerate(self.yorg_client.sorted_users):
             if self.trunc(user.uid, 20) not in label_users:
                 if self.yorg_client.myid != user.uid:
                     lab = UserFrmList(
@@ -127,7 +127,7 @@ class UsersFrm(GameObject):
                 lab.attach(self.on_friend)
                 lab.attach(self.on_unfriend)
                 lab.attach(self.on_add_chat)
-        for i, user in enumerate(self.yorg_client.users_nodup):
+        for i, user in enumerate(self.yorg_client.sorted_users):
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
             lab = [lab for lab in self.labels
                    if clean(lab.lab.lab['text']) == self.trunc(user.uid, 20)][0]

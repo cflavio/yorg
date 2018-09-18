@@ -87,5 +87,11 @@ class YorgClient(GameObject):
         return [usr for usr in self.users if usr.uid == uid][0]
 
     @property
-    def users_nodup(self):
-        return self.users
+    def users_nodup(self): return self.users
+
+    @property
+    def sorted_users(self):
+        others = [usr for usr in self.users if usr.uid != self.myid]
+        me = [usr for usr in self.users if usr.uid == self.myid][0]
+        others = sorted(others, key=lambda usr: usr.uid)
+        return others + [me]

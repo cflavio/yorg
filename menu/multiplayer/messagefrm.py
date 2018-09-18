@@ -396,7 +396,11 @@ class MessageFrm(GameObject):
         #        mto=self.curr_chat.dst,
         #        msubject='chat',
         #        mbody=val)
-        self.eng.client.send(['msg', self.yorg_client.myid, self.curr_chat.dst, val])
+        if len(self.curr_chat.dst) > 12 and all(char.isdigit() for char in self.curr_chat.dst[-12:]):
+            self.eng.client.send([
+                'msg_room', self.yorg_client.myid, self.curr_chat.dst, val])
+        else:
+            self.eng.client.send(['msg', self.yorg_client.myid, self.curr_chat.dst, val])
         msg = '\1italic\1' + _('you') + '\2: ' + val
         self.curr_chat.messages += [msg]
         self.ent['focus'] = 1
