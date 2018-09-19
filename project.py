@@ -33,6 +33,8 @@
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr
 # refactor: remove mediator from colleague
+# refactor: where proper (i.e. where observers aren't tied to the observable)
+#   replace observer with publisher-subscriber
 # add car helios
 # add friendship
 # drifting force function of linear and angular velocities

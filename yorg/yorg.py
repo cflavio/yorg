@@ -1,5 +1,6 @@
 import argparse
 from sys import platform
+from copy import deepcopy
 from os.path import join, exists
 from panda3d.core import Filename
 from yyagl.game import Game
@@ -101,8 +102,11 @@ class Yorg(Game):
         parser.add_argument('--optfile')
         args = parser.parse_args()
         optfile = args.optfile if args.optfile else 'options.yml'
+        old_def = deepcopy(default_opt)
         self.options = DctFile(
             join(opt_path, optfile) if opt_path else optfile, default_opt)
+        if self.options['development']['server'] == '':
+            self.options['development']['server'] = old_def['development']['server']
         opt_dev = self.options['development']
         win_orig = opt_dev['win_orig']
         if args.win_orig: win_orig = args.win_orig
