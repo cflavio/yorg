@@ -176,7 +176,7 @@ class Yorg(Game):
             menu_args, cars_names, self.drivers(),
             ['moon', 'toronto', 'rome', 'sheffield', 'orlando', 'nagano',
              'dubai'],
-            lambda: [_('Moon'), _('Toronto'), _('Rome'), _('Sheffield'),
+            lambda: [_('Sinus Aestuum'), _('Toronto'), _('Rome'), _('Sheffield'),
                      _('Orlando'), _('Nagano'), _('Dubai')],
             'assets/images/tracks/%s.txo',
             self.options['settings']['player_name'],

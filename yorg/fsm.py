@@ -166,7 +166,8 @@ class YorgFsm(FsmColleague):
         track_dct = {
             'toronto': _('Toronto'), 'rome': _('Rome'),
             'sheffield': _('Sheffield'), 'orlando': _('Orlando'),
-            'nagano': _('Nagano'), 'dubai': _('Dubai')}
+            'nagano': _('Nagano'), 'dubai': _('Dubai'),
+            'moon': _('Sinus Aestuum')}
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         seas.race.fsm.demand(
