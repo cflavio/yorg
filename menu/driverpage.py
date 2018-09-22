@@ -159,7 +159,6 @@ class DriverPageGui(ThanksPageGui):
 class DriverPageSinglePlayerGui(DriverPageGui):
 
     def build(self):
-        DriverPageGui.build(self, exit_behav=False)
         menu_args = self.menu_args
         self.ent = Entry(
             scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
@@ -168,6 +167,7 @@ class DriverPageSinglePlayerGui(DriverPageGui):
             text_fg=menu_args.text_active)
         self.add_widgets([self.ent])
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
+        DriverPageGui.build(self, exit_behav=False)
         self.enable_buttons(False)
 
     def update_text(self, task):

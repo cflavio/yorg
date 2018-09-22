@@ -32,6 +32,7 @@ class YorgClient(GameObject):
         self.users = [User(*args) for args in users]
 
     def on_msg(self, data_lst, sender):
+        if not self.authenticated: return
         if data_lst[0] == 'login':
             self.users += [User(*data_lst[1:])]
             self.notify('on_presence_available', data_lst[1:])

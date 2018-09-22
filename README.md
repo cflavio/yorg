@@ -20,5 +20,3 @@ Prerequisites for building:
 * SConstruct.
 
 You can find a tutorial for installing and building prerequisites [here](http://www.ya2.it/pages/yorg_setup.html).
-
-[![Bountysource Raised](https://www.bountysource.com/badge/team?team_id=213581&style=raised)](https://salt.bountysource.com/teams/ya2)
