@@ -4,7 +4,9 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# local multiplayer
+# option pages for configuring keys
+# highlight the current widget with different colors per-player
+# screen splitting
 
 
 # WAITING =====
