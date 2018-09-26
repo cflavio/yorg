@@ -104,7 +104,7 @@ class YorgMainPageGui(MainPageGui):
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
-        self.joystick = sett['joystick']
+        self.joysticks = sett['joystick1'], sett['joystick2']
         self.keys = sett['keys']
         self.lang = sett['lang']
         self.volume = sett['volume']
@@ -167,7 +167,7 @@ class YorgMainPageGui(MainPageGui):
     def on_options(self):
         self.load_settings()
         option_props = OptionPageProps(
-            self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
+            self.joysticks, self.keys, self.lang, self.volume, self.fullscreen,
             self.antialiasing, self.shaders, self.cars_num, self.camera,
             self.props.opt_file)
         self.notify('on_push_page', 'options', [option_props])

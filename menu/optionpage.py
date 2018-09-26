@@ -9,9 +9,9 @@ from .thankspage import ThanksPageGui
 
 class OptionPageProps(object):
 
-    def __init__(self, joystick, keys, lang, volume, fullscreen, antialiasing,
+    def __init__(self, joysticks, keys, lang, volume, fullscreen, antialiasing,
                  shaders, cars_num, camera, opt_file):
-        self.joystick = joystick
+        self.joysticks = joysticks
         self.keys = keys
         self.lang = lang
         self.volume = volume
@@ -110,7 +110,7 @@ class OptionPageGui(ThanksPageGui):
         return lab
 
     def on_input_btn(self):
-        opts = [self.props.joystick, self.props.opt_file['settings']['keys']]
+        opts = [self.props.joysticks, self.props.opt_file['settings']['keys']]
         self.notify('on_push_page', 'input', opts)
 
     def translate(self):

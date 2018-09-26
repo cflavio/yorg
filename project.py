@@ -4,9 +4,11 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# option pages for configuring keys
+# button for local multiplayer
 # highlight the current widget with different colors per-player
 # screen splitting
+# use raw keys as default ones
+# prevent duplicate keys
 
 
 # WAITING =====
@@ -41,5 +43,5 @@
 # add friendship
 # drifting force function of linear and angular velocities
 # do a single page with track, drivers, cars and messages for all: single,
-#  local and online multiplayer
+#   local and online multiplayer
 # refactoring: select the driver before the car

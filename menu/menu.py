@@ -11,7 +11,7 @@ from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
     DriverPageClient
 from .optionpage import OptionPage
-from .inputpage import InputPage
+from .inputpage import InputPage, InputPage2
 from .creditpage import CreditPage
 from .roompage import RoomPage
 from .supporterspage import SupportersPage
@@ -96,6 +96,9 @@ class YorgMenuLogic(MenuLogic):
             self.eng.log('input')
             page = InputPage(
                 self.mediator.gui.menu_args, args[0], args[1])
+        if page_code == 'input2':
+            self.eng.log('input2')
+            page = InputPage2(self.mediator.gui.menu_args, args[0], args[1])
         if page_code == 'credits':
             self.eng.log('credits')
             page = CreditPage(self.mediator.gui.menu_args)
