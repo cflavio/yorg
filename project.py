@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# button for local multiplayer
 # highlight the current widget with different colors per-player
 # screen splitting
 # use raw keys as default ones

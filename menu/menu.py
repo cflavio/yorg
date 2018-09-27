@@ -6,8 +6,9 @@ from .multiplayerpage import MultiplayerPage
 from .loginpage import LogInPage
 from .registerpage import RegisterPage
 from .resetpage import ResetPage
-from .trackpage import TrackPage, TrackPageServer
-from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
+from .trackpage import TrackPage, TrackPageServer, TrackPageLocalMP
+from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason, \
+    CarPageLocalMP
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
     DriverPageClient
 from .optionpage import OptionPage
@@ -59,6 +60,10 @@ class YorgMenuLogic(MenuLogic):
             self.eng.log('track page server')
             page = TrackPageServer(args[0], args[1])
             page.gui.attach(self.on_track_selected)
+        if page_code == 'trackpagelocalmp':
+            self.eng.log('track page local multiplayer')
+            page = TrackPageLocalMP(args[0])
+            page.gui.attach(self.on_track_selected_lmp)
         if page_code == 'new_season':
             self.eng.log('new season')
             page = CarPageSeason(args[0], self.mediator.track)
@@ -71,6 +76,10 @@ class YorgMenuLogic(MenuLogic):
             self.eng.log('car page server')
             #page = CarPageServer(args[0], self.mediator.track, self.yorg_client)
             page = CarPageClient(args[0], self.mediator.track, self.yorg_client)
+            page.gui.attach(self.on_car_selected)
+        if page_code == 'carpagelocalmp':
+            self.eng.log('car page local multiplayer')
+            page = CarPageLocalMP(args[0], self.mediator.track, self.yorg_client)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             self.eng.log('car page client')
@@ -132,6 +141,9 @@ class YorgMenuLogic(MenuLogic):
         MenuLogic.on_quit(self)
 
     def on_track_selected(self, track):
+        self.mediator.track = track
+
+    def on_track_selected_lmp(self, track):
         self.mediator.track = track
 
     def on_car_selected(self, car):

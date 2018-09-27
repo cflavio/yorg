@@ -108,6 +108,11 @@ class CarPageGuiSeason(CarPageGui):
         self.notify('on_push_page', 'driver_page', page_args)
 
 
+class CarPageLocalMPGui(CarPageGui):
+
+    pass
+
+
 class CarPageGuiServer(CarPageGui):
 
     def build(self):
@@ -279,3 +284,7 @@ class CarPageServer(CarPage):
 
 class CarPageClient(CarPage):
     gui_cls = CarPageGuiClient
+
+
+class CarPageLocalMP(CarPage):
+    gui_cls = CarPageLocalMPGui

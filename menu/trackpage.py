@@ -51,12 +51,19 @@ class TrackPageGui(ThanksPageGui):
         self.notify('on_push_page', 'car_page', [self.props])
 
 
-class TrackPageGuiServer(TrackPageGui):
+class TrackPageServerGui(TrackPageGui):
 
     def on_track(self, track):
         self.notify('on_track_selected', track)
         self.notify('on_push_page', 'carpageserver', [self.props])
         self.eng.client.send(['track_selected', track, self.room])
+
+
+class TrackPageLocalMPGui(TrackPageGui):
+
+    def on_track(self, track):
+        self.notify('on_track_selected_lmp', track)
+        self.notify('on_push_page', 'carpagelocalmp', [self.props])
 
 
 class TrackPage(Page):
@@ -76,4 +83,8 @@ class TrackPage(Page):
 
 
 class TrackPageServer(TrackPage):
-    gui_cls = TrackPageGuiServer
+    gui_cls = TrackPageServerGui
+
+
+class TrackPageLocalMP(TrackPage):
+    gui_cls = TrackPageLocalMPGui
