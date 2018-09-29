@@ -7,7 +7,7 @@ from yyagl.game import Game
 from yyagl.dictfile import DctFile
 from yyagl.engine.configuration import Cfg, GuiCfg, ProfilingCfg, LangCfg, \
     CursorCfg, DevCfg
-from yyagl.engine.gui.menu import MenuArgs
+from yyagl.engine.gui.menu import MenuArgs, NavInfo
 from yyagl.racing.gameprops import GameProps
 from yyagl.racing.driver.driver import DriverInfo
 from .logic import YorgLogic
@@ -154,12 +154,15 @@ class Yorg(Game):
             [('logic', YorgLogic, [self])],
             [('audio', YorgAudio, [self])],
             [('event', YorgEvent, [self])]]
+        keys = self.options['settings']['keys']
+        nav = NavInfo(keys['left1'], keys['right1'], keys['forward1'],
+                      keys['rear1'], keys['fire1'])
         menu_args = MenuArgs(
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
             (.75, .75, .75, 1), (.75, .25, .25, 1), .1, (-4.6, 4.6, -.32, .88),
             (0, 0, 0, .2), 'assets/images/gui/menu_background.txo',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
-            'assets/images/icons/%s.txo')
+            'assets/images/icons/%s.txo', nav)
         cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
                       'iperion', 'teia']
         damage_info = DamageInfo('assets/models/cars/%s/cardamage1',
