@@ -19,7 +19,7 @@ class CarPageGui(ThanksPageGui):
         self.track_path = track_path
         self.props = carpage_props
         self.yorg_client = yorg_client
-        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args, [0, 1])
 
     def build(self, exit_behav=False):
         gprops = self.props.gameprops
