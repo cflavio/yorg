@@ -19,54 +19,49 @@ msgstr ""
 "X-Generator: Virtaal 0.7.1\n"
 
 #: menu/resetpage.py:21 menu/registerpage.py:21
-#, fuzzy
 msgid "Your email:"
-msgstr "An id jabber agad:"
+msgstr "Am post-d agad:"
 
 #: menu/resetpage.py:23 menu/loginpage.py:21 menu/registerpage.py:23
-#, fuzzy
 msgid "Your user id:"
-msgstr "An id jabber agad:"
+msgstr "ID a’ chleachdaiche agad:"
 
 #: menu/resetpage.py:27 menu/resetpage.py:74 menu/resetpage.py:93
 #: menu/loginpage.py:27 menu/loginpage.py:93 menu/loginpage.py:101
 #: menu/registerpage.py:29 menu/registerpage.py:93 menu/registerpage.py:112
-#, fuzzy
 msgid "your user id"
-msgstr "an id jabber agad"
+msgstr "ID a’ chleachdaiche agad"
 
 #: menu/resetpage.py:30 menu/resetpage.py:80 menu/resetpage.py:88
 #: menu/registerpage.py:32 menu/registerpage.py:99 menu/registerpage.py:107
-#, fuzzy
 msgid "your email"
-msgstr "d’ ainm"
+msgstr "am post-d agad"
 
 #: menu/resetpage.py:39 menu/loginpage.py:65
 msgid "Reset"
-msgstr ""
+msgstr "Ath-shuidhich"
 
 #: menu/resetpage.py:54
 msgid ""
 "We've sent an email to you (please check your spam folder if you can't find "
 "it) with the instructions for completing the reset."
-msgstr ""
+msgstr "Cuir sinn post-d thugad (thoir sùil air a’ phost-truilleis agad mura lorg thu e) le stiùireadh air mar a choileanas tu an ath-shuidheachadh."
 
 #: menu/resetpage.py:56
 msgid "This email isn't in our archive."
-msgstr ""
+msgstr "Chan eil am post-d agad san tasglann againn."
 
 #: menu/resetpage.py:57
 msgid "This nickname isn't in our archive."
-msgstr ""
+msgstr "Chan eil d’ fhar-ainm san tasglann againn."
 
 #: menu/resetpage.py:58
 msgid "This nickname-email pair isn't in our archive."
-msgstr ""
+msgstr "Chan eil d’ fhar-ainm ’s am post-d agad còmhla san tasglann againn."
 
 #: menu/resetpage.py:59 menu/registerpage.py:77
-#, fuzzy
 msgid "Connection error."
-msgstr "ceangal o "
+msgstr "Mearachd leis a’ cheangal. "
 
 #: menu/resetpage.py:114 menu/loginpage.py:119 menu/registerpage.py:135
 msgid "Error"
@@ -162,15 +157,15 @@ msgstr "Àireamh nan càraichean"
 
 #: menu/optionpage.py:79
 msgid "Camera"
-msgstr ""
+msgstr "Camara"
 
 #: menu/optionpage.py:83
 msgid "Top"
-msgstr ""
+msgstr "Barr"
 
 #: menu/optionpage.py:83
 msgid "Rear"
-msgstr ""
+msgstr "Deireadh"
 
 #: menu/optionpage.py:92
 msgid "Configure input"
@@ -193,9 +188,8 @@ msgid "stability"
 msgstr "seasmhachd"
 
 #: menu/loginpage.py:23 menu/registerpage.py:25
-#, fuzzy
 msgid "Your password:"
-msgstr "Am facal-faire jabber agad:"
+msgstr "Am facal-faire agad:"
 
 #: menu/loginpage.py:38
 msgid "Log-in"
@@ -206,19 +200,19 @@ msgstr "Clàraich a-steach"
 msgid ""
 "If you are a supporter, please write us (%s) your user id so we can "
 "highlight your account as a supporter one."
-msgstr ""
+msgstr "Ma tha tu ’nad neach-taic, nach cuir thu fios thugainn (%s) le ID a’ chleachdaiche agad ach an soillsich sinn an cunntas agad mar fhear aig neach-taic."
 
 #: menu/loginpage.py:50
 msgid "If you don't have an account, then you can register:"
-msgstr ""
+msgstr "’S urrainn dhut clàradh leinn mur eil cunntas agad:"
 
 #: menu/loginpage.py:56 menu/registerpage.py:45
 msgid "Register"
-msgstr ""
+msgstr "Clàraich"
 
 #: menu/loginpage.py:59
 msgid "If you want to reset your password:"
-msgstr ""
+msgstr "Ma tha thu airson am facal-faire agad ath-shuidheachadh:"
 
 #: menu/thankspage.py:15
 msgid "Thanks to: "
@@ -243,7 +237,7 @@ msgstr "d’ ainm"
 
 #: menu/mainpage.py:119
 msgid "Server problem"
-msgstr ""
+msgstr "Duilgheadas an fhrithealaiche"
 
 #: menu/mainpage.py:121
 msgid "Not up-to-date"
@@ -303,23 +297,23 @@ msgid ""
 "Your account has been registered. Now, in order to activate it, you should "
 "click the link that we've sent to your email (please check your spam folder "
 "if you can't find it). After that, you can log in."
-msgstr ""
+msgstr "Chaidh an cunntas agad a chlàradh. Nise, airson a ghnìomhachadh, bu chòir dhut briogadh air a’ cheangal a chuir sinn thugad air a’ phost-d (thoir sùil air a’ phost-truilleis agad mura lorg thu e). ’S urrainn dhut clàradh a-steach an uairsin."
 
 #: menu/registerpage.py:72
 msgid "Your nickname's format is invalid: please use only letters and numbers."
-msgstr ""
+msgstr "Tha fòrmat d’ fhar-ainm mì-dhligheach: na cleachd ach litrichean is àireamhan."
 
 #: menu/registerpage.py:74
 msgid "Your email's format is invalid."
-msgstr ""
+msgstr "Tha fòrmat a’ phuist-d agad mì-dhligheach."
 
 #: menu/registerpage.py:75
 msgid "Your nickname already exists."
-msgstr ""
+msgstr "Tha d’ fhar-ainm ann mu thràth."
 
 #: menu/registerpage.py:76
 msgid "Your email has already been used."
-msgstr ""
+msgstr "Chaidh am post-d agad a chleachdadh roimhe."
 
 #: menu/singleplayerpage.py:15
 msgid "Single race"
@@ -338,10 +332,7 @@ msgid ""
 "Please, visit our site after exiting!\n"
 "\n"
 "It helps us! Thank you!"
-msgstr ""
-"Nach tadhail thu air an làrach-lìn againn às dèidh fhàgail?\n"
-"\n"
-"Cuidichidh seo sinn! Mòran taing!"
+msgstr "Nach tadhail thu air an làrach-lìn againn às dèidh fhàgail?\n\nCuidichidh seo sinn! Mòran taing!"
 
 #: menu/exitmenu/exitpage.py:19
 msgid "visit our site after exiting"
@@ -357,10 +348,7 @@ msgid ""
 "What do you want to do?\n"
 "\n"
 "Note: use '%s' for pausing the game."
-msgstr ""
-"Dè tha thu airson dèanamh?\n"
-"\n"
-"An aire: cleachd “%s” gus an geama a chur ’na stad."
+msgstr "Dè tha thu airson dèanamh?\n\nAn aire: cleachd “%s” gus an geama a chur ’na stad."
 
 #: menu/ingamemenu/ingamepage.py:26
 msgid "back to the game"
@@ -379,7 +367,7 @@ msgid "please wait for the server"
 msgstr "a’ feitheamh ris an fhrithealaiche"
 
 #: menu/multiplayer/exit_dlg.py:14
-#, fuzzy, python-format
+#,  python-format
 msgid "the server user %s has quit"
 msgstr "dh’fhàg cleachdaiche %s an fhrithealaiche"
 
@@ -446,9 +434,9 @@ msgid "send a message to the user"
 msgstr "cuir teachdaireachd ris a’ chleachdaiche"
 
 #: menu/multiplayer/forms.py:121
-#, fuzzy, python-format
+#,  python-format
 msgid "%s isn't playing yorg"
-msgstr "chan eil an cleachdaiche a’ cluich yorg"
+msgstr "chan eil %s a’ cluich yorg"
 
 #: menu/multiplayer/forms.py:178
 msgid "remove from the match"
@@ -459,25 +447,17 @@ msgid ""
 "Connection error. Please check that (i) your firewall allows traffic for "
 "Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
 "a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
-msgstr ""
-"Mearachd leis a’ cheangal. Dearbhaich (i) gun ceadaich an cachaileith-theine "
-"agad trafaig airson Yorg air port 9099 agus (ii) gun do dh’fhosgail "
-"cleachdaiche an fhrithealaiche port port 9099 (seo treòir air mar a "
-"dhearbhaicheas tu seo: http://www.ya2.it/pages/check-your-ports.html)."
+msgstr "Mearachd leis a’ cheangal. Dearbhaich (i) gun ceadaich an cachaileith-theine agad trafaig airson Yorg air port 9099 agus (ii) gun do dh’fhosgail cleachdaiche an fhrithealaiche port port 9099 (seo treòir air mar a dhearbhaicheas tu seo: http://www.ya2.it/pages/check-your-ports.html)."
 
 #: menu/multiplayer/multiplayerfrm.py:115
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
-msgstr ""
-"Mhothaich sinn do dhuilgheadasan ceangail nuair a chruthaich sinn am "
-"frithealaiche. Thoir sùil air a’ cheangal agad."
+msgstr "Mhothaich sinn do dhuilgheadasan ceangail nuair a chruthaich sinn am frithealaiche. Thoir sùil air a’ cheangal agad."
 
 #: menu/multiplayer/multiplayerfrm.py:118
 msgid "We can't connect to httpbin. Please retry later."
-msgstr ""
-"Chan urrainn dhuinn ceangal a dhèanamh gu httpbin. Feuch ris a-rithist an "
-"ceann greis."
+msgstr "Chan urrainn dhuinn ceangal a dhèanamh gu httpbin. Feuch ris a-rithist an ceann greis."
 
 #: menu/multiplayer/invite_dlg.py:16
 #, python-format
@@ -486,7 +466,7 @@ msgstr "Thug %s cuireadh dhut airson geama, a bheil thu a’ gabhail ris?"
 
 #: yorg/yorg.py:179 yorg/fsm.py:170
 msgid "Sinus Aestuum"
-msgstr ""
+msgstr "Sinus Aestuum"
 
 #: yorg/yorg.py:179 yorg/fsm.py:167
 msgid "Toronto"
@@ -570,9 +550,8 @@ msgid "damages:"
 msgstr "dochann:"
 
 #: yyagl/racing/car/gui.py:178
-#, fuzzy
 msgid "weapon"
-msgstr "arm:"
+msgstr "arm"
 
 #: yyagl/racing/ranking/gui.py:27
 #: yyagl/racing/race/gui/loading/loadingpage.py:63
