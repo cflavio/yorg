@@ -10,7 +10,7 @@ from .trackpage import TrackPage, TrackPageServer, TrackPageLocalMP
 from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason, \
     CarPageLocalMP
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
-    DriverPageClient
+    DriverPageClient, DriverPageMP
 from .optionpage import OptionPage
 from .inputpage import InputPage, InputPage2
 from .creditpage import CreditPage
@@ -88,6 +88,10 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'driver_page':
             self.eng.log('driver page')
             page = DriverPageSinglePlayer(args[0], args[1], args[2])
+            page.gui.attach(self.on_driver_selected)
+        if page_code == 'driver_page_mp':
+            self.eng.log('driver page multiplayer')
+            page = DriverPageMP(args[0], args[1], args[2])
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driverpageserver':
             self.eng.log('driver page server')

@@ -74,13 +74,13 @@ class DriverPageGui(ThanksPageGui):
             lab_lst = [(_('adherence'), .09), (_('speed'), .21),
                        (_('stability'), .15)]
             widgets += map(
-                lambda lab_def: self.__add_lab(*(lab_def + (row, col))),
+                lambda lab_def: self._add_lab(*(lab_def + (row, col))),
                 lab_lst)
             txt_lst = [(self.drv_info[idx - 1].adherence, .09),
                        (self.drv_info[idx - 1].speed, .21),
                        (self.drv_info[idx - 1].stability, .15)]
             widgets += map(
-                lambda txt_def: self.__add_txt(
+                lambda txt_def: self._add_txt(
                     *txt_def + (psign, pcol, col, row)),
                 txt_lst)
         self.sel_drv_img = Img(
@@ -105,14 +105,14 @@ class DriverPageGui(ThanksPageGui):
         self.sel_drv_img.set_texture(self.t_s, tex)
         ThanksPageGui.build(self, exit_behav=exit_behav)
 
-    def __add_lab(self, txt, pos_z, row, col):
+    def _add_lab(self, txt, pos_z, row, col):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         return Text(
             txt + ':', pos=(-1.15 + col * .5, pos_z - row * .64),
             scale=.046, align='left', **t_a)
 
-    def __add_txt(self, val, pos_z, psign, pcol, col, row):
+    def _add_txt(self, val, pos_z, psign, pcol, col, row):
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
         return Text(
@@ -187,6 +187,77 @@ class DriverPageSinglePlayerGui(DriverPageGui):
     def destroy(self):
         taskMgr.remove(self.update_tsk)
         DriverPageGui.destroy(self)
+
+
+class DriverPageMPGui(DriverPageGui):
+
+    def build(self):
+        self.drv_info = self.props.gameprops.drivers_info
+        menu_args = self.menu_args
+        widgets = [Text(_('Select the driver'), pos=(-.2, .8),
+                                **menu_args.text_args)]
+        t_a = self.menu_args.text_args.copy()
+        del t_a['scale']
+        self.name = Text(_('Write your name:'), pos=(-.3, .6), scale=.06,
+                            align='right', wordwrap=128, **t_a)
+        self.drivers = []
+        for row, col in product(range(2), range(4)):
+            idx = col + row * 4
+            drv_btn = ImgBtn(
+                scale=.24, pos=(-.95 + col * .5, 1, .3 - row * .64),
+                frameColor=(0, 0, 0, 0),
+                image=self.props.gameprops.drivers_img.path % idx,
+                command=self.on_click, extraArgs=[idx],
+                **self.menu_args.imgbtn_args)
+            name = Text(
+                '',
+                pos=(-.95 + col * .5, .01 - row * .64),
+                scale=.046, **t_a)
+            drv_btn._name_txt = name
+            widgets += [drv_btn, name]
+            self.drivers += [widgets[-2]]
+            sign = lambda pos_x: '\1green\1+\2' if pos_x > 0 else ''
+            psign = lambda pos_x, sgn=sign: '+' if pos_x == 0 else sgn(pos_x)
+
+            def ppcol(x):
+                return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
+            pcol = lambda x: x if x == 0 else ppcol(x)
+            lab_lst = [(_('adherence'), .09), (_('speed'), .21),
+                       (_('stability'), .15)]
+            widgets += map(
+                lambda lab_def: self._add_lab(*(lab_def + (row, col))),
+                lab_lst)
+            txt_lst = [(self.drv_info[idx - 1].adherence, .09),
+                       (self.drv_info[idx - 1].speed, .21),
+                       (self.drv_info[idx - 1].stability, .15)]
+            widgets += map(
+                lambda txt_def: self._add_txt(
+                    *txt_def + (psign, pcol, col, row)),
+                txt_lst)
+        self.sel_drv_img = []
+        widgets += [self.name]
+        for i, car in enumerate(self.mediator.cars):
+            self.sel_drv_img += [Img(
+                self.props.gameprops.cars_img % car,
+                parent=base.a2dBottomLeft, pos=(.3, 1, .4 + (1 - i) * .56), scale=.28)]
+            widgets += [self.sel_drv_img[-1]]
+            ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
+            with open(ffilterpath) as ffilter:
+                vert = ffilter.read()
+            shader = load_shader(vert, frag)
+            if shader:
+                self.sel_drv_img[-1].set_shader(shader)
+            self.sel_drv_img[-1].set_transparency(True)
+            self.t_s = TextureStage('ts')
+            self.t_s.set_mode(TextureStage.MDecal)
+            empty_img = PNMImage(1, 1)
+            empty_img.add_alpha()
+            empty_img.alpha_fill(0)
+            tex = Texture()
+            tex.load(empty_img)
+            self.sel_drv_img[-1].set_texture(self.t_s, tex)
+        self.add_widgets(widgets)
+        ThanksPageGui.build(self, exit_behav=False)
 
 
 class DriverPageServerGui(DriverPageGui):
@@ -381,6 +452,21 @@ class DriverPage(Page):
 
 class DriverPageSinglePlayer(DriverPage):
     gui_cls = DriverPageSinglePlayerGui
+
+
+class DriverPageMP(DriverPage):
+    gui_cls = DriverPageMPGui
+
+    def __init__(self, track, cars, driverpage_props, yorg_client=None):
+        self.track = track
+        self.cars = cars
+        init_lst = [
+            [('event', self.event_cls, [self])],
+            [('gui', self.gui_cls, [self, driverpage_props, yorg_client])]]
+        GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)
+        # invoke Page's __init__
+
 
 class DriverPageServer(DriverPage):
     gui_cls = DriverPageServerGui

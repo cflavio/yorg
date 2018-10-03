@@ -110,7 +110,23 @@ class CarPageGuiSeason(CarPageGui):
 
 class CarPageLocalMPGui(CarPageGui):
 
-    pass
+    def __init__(self, mediator, carpage_props, track_path, yorg_client):
+        CarPageGui.__init__(self, mediator, carpage_props, track_path, yorg_client)
+        self.selected_cars = {0: None, 1: None}
+
+    def on_car(self, car, player):
+        self._buttons(car)[0].disable()
+        self.disable_navigation([player])
+        self.selected_cars[player] = car
+        self.eng.log('selected %s (player %s)' % (car, player))
+        self.notify('on_car_selected_mp', [car, player])
+        self.evaluate_start()
+
+    def evaluate_start(self):
+        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < 2: return
+        cars = [self.selected_cars[i] for i in range(2)]
+        page_args = [self.track_path, cars, self.props]
+        self.notify('on_push_page', 'driver_page_mp', page_args)
 
 
 class CarPageGuiServer(CarPageGui):
