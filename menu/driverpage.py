@@ -38,7 +38,7 @@ class DriverPageGui(ThanksPageGui):
         self.sel_drv_img = None
         self.driver = None
         self.yorg_client = yorg_client
-        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args, [0, 1])
 
     def build(self, exit_behav):
         self.drv_info = self.props.gameprops.drivers_info
@@ -191,27 +191,31 @@ class DriverPageSinglePlayerGui(DriverPageGui):
 
 class DriverPageMPGui(DriverPageGui):
 
+    def __init__(self, mediator, driverpage_props, yorg_client):
+        DriverPageGui.__init__(self, mediator, driverpage_props, yorg_client)
+        self.selected_drivers = {0: None, 1: None}
+
     def build(self):
         self.drv_info = self.props.gameprops.drivers_info
         menu_args = self.menu_args
-        widgets = [Text(_('Select the driver'), pos=(-.2, .8),
+        widgets = [Text(_('Select the drivers'), pos=(-.2, .9),
                                 **menu_args.text_args)]
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
-        self.name = Text(_('Write your name:'), pos=(-.3, .6), scale=.06,
+        self.name = Text(_('Write your names:'), pos=(-.3, .7), scale=.06,
                             align='right', wordwrap=128, **t_a)
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
             drv_btn = ImgBtn(
-                scale=.24, pos=(-.95 + col * .5, 1, .3 - row * .64),
+                scale=.24, pos=(-.95 + col * .5, 1, .1 - row * .64),
                 frameColor=(0, 0, 0, 0),
                 image=self.props.gameprops.drivers_img.path % idx,
                 command=self.on_click, extraArgs=[idx],
                 **self.menu_args.imgbtn_args)
             name = Text(
                 '',
-                pos=(-.95 + col * .5, .01 - row * .64),
+                pos=(-.95 + col * .5, -.19 - row * .64),
                 scale=.046, **t_a)
             drv_btn._name_txt = name
             widgets += [drv_btn, name]
@@ -222,19 +226,20 @@ class DriverPageMPGui(DriverPageGui):
             def ppcol(x):
                 return '\1green\1%s\2' % x if x > 0 else '\1red\1%s\2' % x
             pcol = lambda x: x if x == 0 else ppcol(x)
-            lab_lst = [(_('adherence'), .09), (_('speed'), .21),
-                       (_('stability'), .15)]
+            lab_lst = [(_('adherence'), -.11), (_('speed'), .01),
+                       (_('stability'), -.05)]
             widgets += map(
                 lambda lab_def: self._add_lab(*(lab_def + (row, col))),
                 lab_lst)
-            txt_lst = [(self.drv_info[idx - 1].adherence, .09),
-                       (self.drv_info[idx - 1].speed, .21),
-                       (self.drv_info[idx - 1].stability, .15)]
+            txt_lst = [(self.drv_info[idx - 1].adherence, -.11),
+                       (self.drv_info[idx - 1].speed, .01),
+                       (self.drv_info[idx - 1].stability, -.05)]
             widgets += map(
                 lambda txt_def: self._add_txt(
                     *txt_def + (psign, pcol, col, row)),
                 txt_lst)
         self.sel_drv_img = []
+        self.tss = []
         widgets += [self.name]
         for i, car in enumerate(self.mediator.cars):
             self.sel_drv_img += [Img(
@@ -248,16 +253,78 @@ class DriverPageMPGui(DriverPageGui):
             if shader:
                 self.sel_drv_img[-1].set_shader(shader)
             self.sel_drv_img[-1].set_transparency(True)
-            self.t_s = TextureStage('ts')
-            self.t_s.set_mode(TextureStage.MDecal)
+            self.tss += [TextureStage('ts')]
+            self.tss[-1].set_mode(TextureStage.MDecal)
             empty_img = PNMImage(1, 1)
             empty_img.add_alpha()
             empty_img.alpha_fill(0)
             tex = Texture()
             tex.load(empty_img)
-            self.sel_drv_img[-1].set_texture(self.t_s, tex)
+            self.sel_drv_img[-1].set_texture(self.tss[-1], tex)
+        self.ents = [Entry(
+            scale=.08, pos=(-.2, 1, .7 - .2 * i), entryFont=menu_args.font, width=12,
+            frameColor=menu_args.btn_color,
+            initialText=self.props.gameprops.player_name or _('your name'),
+            text_fg=menu_args.text_active) for i in range(2)]
+        self.add_widgets(self.ents)
         self.add_widgets(widgets)
         ThanksPageGui.build(self, exit_behav=False)
+        self.update_tsk = taskMgr.add(self.update_text, 'update text')
+        self.enable_buttons(False)
+
+    def on_click(self, drv, player):
+        self._buttons(drv)[0].disable()
+        self.disable_navigation([player])
+        self.selected_drivers[player] = drv
+        self.eng.log('selected %s (player %s)' % (drv, player))
+        gprops = self.props.gameprops
+        txt_path = gprops.drivers_img.path_sel
+        self.sel_drv_img[player].set_texture(self.tss[player], loader.loadTexture(txt_path % drv))
+        cars = gprops.cars_names[:]
+        car_idx = cars.index(self.mediator.cars[player])
+        cars.remove(self.mediator.cars[player])
+        shuffle(cars)
+        drv_idx = range(8)
+        drv_idx.remove(drv)
+        shuffle(drv_idx)
+        prev_drv = gprops.drivers_info[car_idx]
+        gprops.drivers_info[car_idx] = gprops.drivers_info[drv]
+        gprops.drivers_info[car_idx].img_idx = drv
+        nname = self.this_name()
+        gprops.drivers_info[car_idx].name = nname
+        gprops.drivers_info[drv] = prev_drv
+        self.eng.log('drivers: ' + str(gprops.drivers_info))
+        self.evaluate_start()
+
+    def evaluate_start(self):
+        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < 2: return
+        self.widgets[-1]['state'] = DISABLED
+        self.enable_buttons(False)
+        taskMgr.remove(self.update_tsk)
+        drivers = [self.selected_drivers[i] for i in range(2)]
+        self.notify('on_driver_selected_mp', [ent.get() for ent in self.ents], self.mediator.track,
+                    self.mediator.cars)
+
+    def update_text(self, task):
+        has_name = self.ents[0].get() != _('your name')
+        if has_name and self.ents[0].get().startswith(_('your name')):
+            self.ents[0].enterText(self.ents[0].get()[len(_('your name')):])
+            self.enable_buttons(True)
+            return
+        elif self.ents[0].get() in [_('your name')[:-1], '']:
+            self.ents[0].enterText('')
+            self.enable_buttons(False)
+            return
+        elif self.ents[0].get() not in [_('your name'), '']:
+            self.enable_buttons(True)
+            return
+        return task.cont  # don't do a task, attach to modifications events
+
+    def this_name(self): return self.ents[0].get()
+
+    def destroy(self):
+        taskMgr.remove(self.update_tsk)
+        DriverPageGui.destroy(self)
 
 
 class DriverPageServerGui(DriverPageGui):

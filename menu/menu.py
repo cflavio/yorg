@@ -92,7 +92,7 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'driver_page_mp':
             self.eng.log('driver page multiplayer')
             page = DriverPageMP(args[0], args[1], args[2])
-            page.gui.attach(self.on_driver_selected)
+            page.gui.attach(self.on_driver_selected_mp)
         if page_code == 'driverpageserver':
             self.eng.log('driver page server')
             page = DriverPageServer(args[0], args[1], args[2], self.yorg_client)
@@ -165,6 +165,9 @@ class YorgMenuLogic(MenuLogic):
 
     def on_driver_selected(self, name, track, car):
         self.mediator.gui.notify('on_driver_selected', name, track, car)
+
+    def on_driver_selected_mp(self, name, track, car):
+        self.mediator.gui.notify('on_driver_selected_mp', name, track, car)
 
     def on_continue(self):
         self.mediator.gui.notify('on_continue')

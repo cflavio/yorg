@@ -43,6 +43,7 @@ class YorgFsm(FsmColleague):
                    self.mediator.logic.on_car_selected_season,
                    self.mediator.logic.on_driver_selected,
                    self.mediator.logic.on_driver_selected_server,
+                   self.mediator.logic.on_driver_selected_mp,
                    self.mediator.logic.on_continue,
                    self.mediator.logic.on_login,
                    self.mediator.logic.on_logout]
@@ -139,9 +140,9 @@ class YorgFsm(FsmColleague):
             self.mediator.options['save']['ranking'] = seas.ranking.carname2points
             self.mediator.options.store()
         keys = self.mediator.options['settings']['keys']
-        keys = Keys(keys['forward'], keys['rear'], keys['left'], keys['right'],
-                    keys['fire'], keys['respawn'], keys['pause'])
-        joystick = self.mediator.options['settings']['joystick']
+        keys = Keys(keys['forward1'], keys['rear1'], keys['left1'], keys['right1'],
+                    keys['fire1'], keys['respawn1'], keys['pause'])
+        joystick = self.mediator.options['settings']['joystick1']
         sounds = CarSounds(
             'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',
             'assets/sfx/crash.ogg', 'assets/sfx/crash_high_speed.ogg',
