@@ -384,7 +384,7 @@ class YorgLogic(GameLogic):
     def on_driver_selected_mp(self, player_name, track, cars):
         dev = self.mediator.options['development']
         sprops = self.__season_props(
-            self.mediator.gameprops, cars[0], cars,
+            self.mediator.gameprops, cars, cars,
             self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
             dev['race_start_time'], dev['countdown_seconds'],
             self.mediator.options['settings']['camera'])
@@ -403,7 +403,7 @@ class YorgLogic(GameLogic):
         self.eng.log('drivers: ' + str(drivers))
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
-            ['Race', track, cars[0], cars, self.season.logic.drivers])
+            ['Race', track, cars, cars, self.season.logic.drivers])
 
     def on_driver_selected_server(self, player_name, track, car, cars):
         dev = self.mediator.options['development']
