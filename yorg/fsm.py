@@ -133,7 +133,7 @@ class YorgFsm(FsmColleague):
             if 'save' not in self.mediator.options.dct:
                 self.mediator.options['save'] = {}
             self.mediator.options['save']['track'] = track_path
-            self.mediator.options['save']['car'] = car_path
+            self.mediator.options['save']['cars'] = car_path
             self.mediator.options['save']['drivers'] = [
                 drv.to_dct() for drv in drivers]
             self.mediator.options['save']['tuning'] = seas.tuning.car2tuning
@@ -183,10 +183,10 @@ class YorgFsm(FsmColleague):
     def exitRace(self):
         self.eng.log_mgr.log('exiting Race state')
         dev = self.mediator.options['development']
-        car = dev['car'] if 'car' in dev else ''
+        cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         server = dev['server'] if 'server' in dev else ''
-        if not (car and track and not server):
+        if not (cars and track and not server):
             self.mediator.logic.mp_frm.show()
         self.mediator.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])

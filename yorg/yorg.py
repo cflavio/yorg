@@ -76,7 +76,7 @@ class Yorg(Game):
                 'multithreaded_render': 0,
                 'ai': 0,
                 'fps': 0,
-                'car': '',
+                'cars': '',
                 'track': '',
                 'start_wp': '',
                 'shaders_dev': 0,
@@ -104,7 +104,7 @@ class Yorg(Game):
         parser.add_argument('--win_orig')
         parser.add_argument('--user')
         parser.add_argument('--pwd')
-        parser.add_argument('--car')
+        parser.add_argument('--cars')
         parser.add_argument('--server')
         parser.add_argument('--optfile')
         args = parser.parse_args()
@@ -117,7 +117,7 @@ class Yorg(Game):
         opt_dev = self.options['development']
         win_orig = opt_dev['win_orig']
         if args.win_orig: win_orig = args.win_orig
-        if args.car: opt_dev['car'] = args.car
+        if args.cars: opt_dev['cars'] = args.cars
         if args.server: opt_dev['server'] = args.server
         gui_cfg = GuiCfg(
             win_title='Yorg', win_orig=win_orig,
