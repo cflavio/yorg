@@ -2,7 +2,7 @@ from sys import exit as sys_exit
 from os.path import exists
 from yyagl.gameobject import FsmColleague
 from yyagl.racing.car.audio import CarSounds
-from yyagl.racing.car.event import Keys
+from yyagl.racing.car.event import Keys, PlayerKeys
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 from menu.multiplayer.exit_dlg import ExitDialog
@@ -140,8 +140,11 @@ class YorgFsm(FsmColleague):
             self.mediator.options['save']['ranking'] = seas.ranking.carname2points
             self.mediator.options.store()
         keys = self.mediator.options['settings']['keys']
-        keys = Keys(keys['forward1'], keys['rear1'], keys['left1'], keys['right1'],
-                    keys['fire1'], keys['respawn1'], keys['pause'])
+        p1k = PlayerKeys(keys['forward1'], keys['rear1'], keys['left1'], keys['right1'],
+                         keys['fire1'], keys['respawn1'])
+        p2k = PlayerKeys(keys['forward2'], keys['rear2'], keys['left2'], keys['right2'],
+                         keys['fire2'], keys['respawn2'])
+        keys = Keys([p1k, p2k], keys['pause'])
         joystick = self.mediator.options['settings']['joystick1']
         sounds = CarSounds(
             'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',

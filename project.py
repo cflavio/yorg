@@ -6,6 +6,8 @@
 # 0.11 (local multiplayer)
 # use raw keys as default ones
 # prevent duplicate keys
+# fix stuff like player_cars[0]
+# fix aspect ratio on resolution change
 # supporting up to four players
 
 
