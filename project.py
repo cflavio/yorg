@@ -4,9 +4,9 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# screen splitting
 # use raw keys as default ones
 # prevent duplicate keys
+# supporting up to four players
 
 
 # WAITING =====
