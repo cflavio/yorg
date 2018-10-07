@@ -4,11 +4,11 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# use raw keys as default ones
+# gui for two players
 # prevent duplicate keys
-# fix stuff like player_cars[0]
-# fix aspect ratio on resolution change
+# use raw keys as default ones
 # supporting up to four players
+# fix stuff like player_cars[0]
 
 
 # WAITING =====
