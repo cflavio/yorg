@@ -18,27 +18,27 @@ class RegisterPageGui(ThanksPageGui):
         menu_args = self.menu_args
         t_a = menu_args.text_args.copy()
         # del t_a['scale']
-        email_lab = Text(_('Your email:'), pos=(-.25, .4),
+        email_lab = Text(_('Your email:'), pos=(-.85, .4),
                                align='right', **t_a)
-        jid_lab = Text(_('Your user id:'), pos=(-.25, .2),
+        jid_lab = Text(_('Your user id:'), pos=(-.85, .2),
                                align='right', **t_a)
-        pwd_lab = Text(_('Your password:'), pos=(-.25, .0),
+        pwd_lab = Text(_('Your password:'), pos=(-.85, .0),
                                align='right', **t_a)
         init_txt = self.props.opt_file['settings']['login']['usr'] if \
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.email_ent = Entry(
-            scale=.08, pos=(-.15, 1, .4), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.75, 1, .4), entryFont=menu_args.font, width=20,
             frameColor=menu_args.btn_color, initialText=_('your email'),
             text_fg=menu_args.text_active, on_tab=self.on_tab_email,
             on_click=self.on_click_email)
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, 1, .2), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.75, 1, .2), entryFont=menu_args.font, width=20,
             frameColor=menu_args.btn_color, initialText=init_txt,
             text_fg=menu_args.text_active, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.15, 1, 0), entryFont=menu_args.font, width=12,
+            scale=.08, pos=(-.75, 1, 0), entryFont=menu_args.font, width=20,
             frameColor=menu_args.btn_color, obscured=True,
             text_fg=menu_args.text_active, command=self.register)
         start_btn = Btn(
