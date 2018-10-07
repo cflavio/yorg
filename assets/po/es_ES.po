@@ -18,54 +18,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: menu/resetpage.py:21 menu/registerpage.py:21
-#, fuzzy
 msgid "Your email:"
-msgstr "Tu ID de Jabber:"
+msgstr "Tu email:"
 
 #: menu/resetpage.py:23 menu/loginpage.py:21 menu/registerpage.py:23
-#, fuzzy
 msgid "Your user id:"
-msgstr "Tu ID de Jabber:"
+msgstr "Tu ID de usuario:"
 
 #: menu/resetpage.py:27 menu/resetpage.py:74 menu/resetpage.py:93
 #: menu/loginpage.py:27 menu/loginpage.py:93 menu/loginpage.py:101
 #: menu/registerpage.py:29 menu/registerpage.py:93 menu/registerpage.py:112
-#, fuzzy
 msgid "your user id"
-msgstr "Tu ID de Jabber"
+msgstr "Tu ID de usuario"
 
 #: menu/resetpage.py:30 menu/resetpage.py:80 menu/resetpage.py:88
 #: menu/registerpage.py:32 menu/registerpage.py:99 menu/registerpage.py:107
-#, fuzzy
 msgid "your email"
-msgstr "Tu Nombre"
+msgstr "Tu email"
 
 #: menu/resetpage.py:39 menu/loginpage.py:65
 msgid "Reset"
-msgstr ""
+msgstr "Resetear"
 
 #: menu/resetpage.py:54
 msgid ""
 "We've sent an email to you (please check your spam folder if you can't find "
 "it) with the instructions for completing the reset."
 msgstr ""
+"Te hemos enviado un email con las intrucciones para completar el "
+"reseteochequea la carpeta de Spam si no puedes encontrarlo"
 
 #: menu/resetpage.py:56
 msgid "This email isn't in our archive."
-msgstr ""
+msgstr "Este email no está en nuestro archivo"
 
 #: menu/resetpage.py:57
 msgid "This nickname isn't in our archive."
-msgstr ""
+msgstr "Este apodo no está en nuestro archivo"
 
 #: menu/resetpage.py:58
 msgid "This nickname-email pair isn't in our archive."
-msgstr ""
+msgstr "Esta pareja de apodo-email no está en nuestro archivo"
 
 #: menu/resetpage.py:59 menu/registerpage.py:77
-#, fuzzy
 msgid "Connection error."
-msgstr "Conexión desde"
+msgstr "Error de Conexión."
 
 #: menu/resetpage.py:114 menu/loginpage.py:119 menu/registerpage.py:135
 msgid "Error"
@@ -149,7 +146,7 @@ msgstr "Antialiasing"
 
 #: menu/optionpage.py:68
 msgid "(from the next execution)"
-msgstr "(de la próxima ejecución)"
+msgstr "(en la próxima ejecución)"
 
 #: menu/optionpage.py:74
 msgid "Shaders"
@@ -161,15 +158,15 @@ msgstr "Número de Coches"
 
 #: menu/optionpage.py:79
 msgid "Camera"
-msgstr ""
+msgstr "Cámara"
 
 #: menu/optionpage.py:83
 msgid "Top"
-msgstr ""
+msgstr "Arriba"
 
 #: menu/optionpage.py:83
 msgid "Rear"
-msgstr ""
+msgstr "Detrás"
 
 #: menu/optionpage.py:92
 msgid "Configure input"
@@ -192,9 +189,8 @@ msgid "stability"
 msgstr "Estabilidad"
 
 #: menu/loginpage.py:23 menu/registerpage.py:25
-#, fuzzy
 msgid "Your password:"
-msgstr "Tu contraseña de Jabber:"
+msgstr "Tu contraseña:"
 
 #: menu/loginpage.py:38
 msgid "Log-in"
@@ -206,18 +202,20 @@ msgid ""
 "If you are a supporter, please write us (%s) your user id so we can "
 "highlight your account as a supporter one."
 msgstr ""
+"Si eres un contribuyente, por favor escríbenos (%s) tu id de usuario para "
+"que podamos marcar tu cuenta como tal."
 
 #: menu/loginpage.py:50
 msgid "If you don't have an account, then you can register:"
-msgstr ""
+msgstr "Si no tienes una cuenta, tu puedes registrarte:"
 
 #: menu/loginpage.py:56 menu/registerpage.py:45
 msgid "Register"
-msgstr ""
+msgstr "Registrarte"
 
 #: menu/loginpage.py:59
 msgid "If you want to reset your password:"
-msgstr ""
+msgstr "Si quieres restablecer tu contraseña:"
 
 #: menu/thankspage.py:15
 msgid "Thanks to: "
@@ -235,14 +233,14 @@ msgstr "Selecciona el Piloto"
 msgid "Write your name:"
 msgstr "Escribe tu Nombre:"
 
-#: menu/driverpage.py:167 menu/driverpage.py:174 menu/driverpage.py:175
+#: menu/driverpage.py:166 menu/driverpage.py:174 menu/driverpage.py:175
 #: menu/driverpage.py:176 menu/driverpage.py:178 menu/driverpage.py:181
 msgid "your name"
 msgstr "Tu Nombre"
 
 #: menu/mainpage.py:119
 msgid "Server problem"
-msgstr ""
+msgstr "Problema con el servidor"
 
 #: menu/mainpage.py:121
 msgid "Not up-to-date"
@@ -257,15 +255,13 @@ msgid "Log in"
 msgstr "Conéctate"
 
 #: menu/mainpage.py:126
-#, fuzzy
 msgid "multiplayer"
 msgstr "Multijugador"
 
 #. i18n: This is a caption of a button.
 #: menu/mainpage.py:128
-#, fuzzy
 msgid "Connecting"
-msgstr "Conectar"
+msgstr "Conectando"
 
 #: menu/mainpage.py:136
 msgid "Single Player"
@@ -305,22 +301,26 @@ msgid ""
 "click the link that we've sent to your email (please check your spam folder "
 "if you can't find it). After that, you can log in."
 msgstr ""
+"Tu cuenta ha sido registrada, Ahora, para activarla, deberías clicar el "
+"enlace que te hemos enviado a tu correo (por favor comprueba la carpeta de "
+"Spam si no lo encuentras). Después de eso, ya puedes loguearte."
 
 #: menu/registerpage.py:72
 msgid "Your nickname's format is invalid: please use only letters and numbers."
 msgstr ""
+"El formato de tu apodo es inválido: por favor usa solo letras y números."
 
 #: menu/registerpage.py:74
 msgid "Your email's format is invalid."
-msgstr ""
+msgstr "El formato de tu email es inválido."
 
 #: menu/registerpage.py:75
 msgid "Your nickname already exists."
-msgstr ""
+msgstr "Tu apodo ya existe."
 
 #: menu/registerpage.py:76
 msgid "Your email has already been used."
-msgstr ""
+msgstr "Tu email ya está siendo usado."
 
 #: menu/singleplayerpage.py:15
 msgid "Single race"
@@ -341,6 +341,7 @@ msgid ""
 "It helps us! Thank you!"
 msgstr ""
 "Por favor, visita nuestra web antes de salir!\n"
+"\n"
 "Eso nos ayudará, Gracias!"
 
 #: menu/exitmenu/exitpage.py:19
@@ -375,12 +376,11 @@ msgid "Start"
 msgstr "Empezar"
 
 #: menu/multiplayer/matchfrm.py:171
-#, fuzzy
 msgid "please wait for the server"
-msgstr "Esperando por el Servidor"
+msgstr "Por favor, espera por el Servidor"
 
 #: menu/multiplayer/exit_dlg.py:14
-#, fuzzy, python-format
+#, python-format
 msgid "the server user %s has quit"
 msgstr "el usuario del servidor %s ha salido"
 
@@ -427,9 +427,8 @@ msgstr "el usuario esta jugando una partida en este momento"
 
 #: menu/multiplayer/messagefrm.py:62 menu/multiplayer/messagefrm.py:205
 #: menu/multiplayer/messagefrm.py:253 menu/multiplayer/messagefrm.py:509
-#, fuzzy
 msgid "write here your message"
-msgstr "Escribe tu Nombre:"
+msgstr "Escribe aquí tu mensaje"
 
 #: menu/multiplayer/messagefrm.py:379 menu/multiplayer/messagefrm.py:404
 msgid "you"
@@ -440,18 +439,17 @@ msgid "you have been removed from the match"
 msgstr "has sido borrado de la partida"
 
 #: menu/multiplayer/forms.py:34
-#, fuzzy
 msgid "Supporter!"
-msgstr "Contribuyentes"
+msgstr "¡Contribuyente!"
 
 #: menu/multiplayer/forms.py:85
 msgid "send a message to the user"
 msgstr "enviar un mensaje al usuario"
 
 #: menu/multiplayer/forms.py:121
-#, fuzzy, python-format
+#, python-format
 msgid "%s isn't playing yorg"
-msgstr "no está jugado a Yorg"
+msgstr "%s no está jugado a Yorg"
 
 #: menu/multiplayer/forms.py:178
 msgid "remove from the match"
@@ -487,7 +485,7 @@ msgstr "%s te ha invitado a una partida, ¿aceptas?"
 
 #: yorg/yorg.py:179 yorg/fsm.py:170
 msgid "Sinus Aestuum"
-msgstr ""
+msgstr "Sinus Aestuum"
 
 #: yorg/yorg.py:179 yorg/fsm.py:167
 msgid "Toronto"
@@ -523,7 +521,7 @@ msgstr "Versión: "
 
 #: yyagl/racing/tuning/gui.py:24
 msgid "What do you want to upgrade?"
-msgstr "¿Qué quieres actualizar?"
+msgstr "¿Qué quieres incrementar?"
 
 #: yyagl/racing/tuning/gui.py:38 yyagl/racing/tuning/gui.py:44
 #: yyagl/racing/tuning/gui.py:50
@@ -571,7 +569,6 @@ msgid "damages:"
 msgstr "Daños:"
 
 #: yyagl/racing/car/gui.py:178
-#, fuzzy
 msgid "weapon"
 msgstr "Arma:"
 
