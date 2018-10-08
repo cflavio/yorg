@@ -4,11 +4,10 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# gui for two players
+# fix player_cars[0] in RaceFsm::enterResults
 # prevent duplicate keys
 # use raw keys as default ones
 # supporting up to four players
-# fix stuff like player_cars[0]
 
 
 # WAITING =====
