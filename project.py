@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# fix player_cars[0] in RaceFsm::enterResults
 # prevent duplicate keys
 # use raw keys as default ones
 # supporting up to four players
@@ -27,6 +26,7 @@
 # make scons for yyagl
 # make a submodule for racing - yyarl
 # embed into a wx / pyqt window
+# trail effect with glow for weapons
 # uml create automatic class diagrams with fields and methods for each class
 # do automatic update (assets shared among platforms)
 # unit tests
