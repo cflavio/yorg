@@ -4,7 +4,6 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# prevent duplicate keys
 # use raw keys as default ones
 # supporting up to four players
 

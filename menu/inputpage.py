@@ -7,6 +7,7 @@ from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.joystick import JoystickMgr
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
+from .already_dlg import AlreadyUsedDlg
 
 
 class InputPageGui2(ThanksPageGui):
@@ -76,14 +77,14 @@ class InputPageGui2(ThanksPageGui):
 
     def start_rec(self, btn):
         numbers = [str(n) for n in range(10)]
-        self.keys = list(ascii_lowercase) + numbers + [
+        self._keys = list(ascii_lowercase) + numbers + [
             'backspace', 'insert', 'home', 'page_up', 'num_lock', 'tab',
             'delete', 'end', 'page_down', 'caps_lock', 'enter', 'arrow_left',
             'arrow_up', 'arrow_down', 'arrow_right', 'lshift', 'rshift',
             'lcontrol', 'lalt', 'space', 'ralt', 'rcontrol']
         self.hint_lab.show()
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
-        map(acc, self.keys)
+        map(acc, self._keys)
 
     def _on_back(self):
         self.mediator.event.on_back()
@@ -100,9 +101,22 @@ class InputPageGui2(ThanksPageGui):
         self.notify('on_back', 'input_page2', [dct])
 
     def rec(self, btn, val):
-        btn['text'] = val
+        used = self.already_used(val)
+        if used:
+            self.dial = AlreadyUsedDlg(self.menu_args, val, *used)
+            self.dial.attach(self.on_already_dlg)
+        else: btn['text'] = val
         self.hint_lab.hide()
         map(self.mediator.event.ignore, self.keys)
+
+    def on_already_dlg(self): self.dial = self.dial.destroy()
+
+    def already_used(self, val):
+        labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn', 'pause']
+        for i, btn in enumerate(self.mediator.gui.ibuttons):
+            if btn['text'] == val: return '1', labels[i]
+        for lab in labels[:-1]:
+            if self.keys[lab + '2'] == val: return '2', lab
 
 
 class InputPageGui1(InputPageGui2):
