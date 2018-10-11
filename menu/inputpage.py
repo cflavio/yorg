@@ -53,7 +53,7 @@ class InputPageGui2(ThanksPageGui):
             (_('Respawn'), 'respawn' + suff, -.38)]
         for btn_data in buttons_data:
             widgets += [self._add_lab(btn_data[0], btn_data[2])]
-            widgets += [self._add_btn(self.keys[btn_data[1]], btn_data[2])]
+            widgets += [self._add_btn(self.eng.event.key2desc(self.keys[btn_data[1]]), btn_data[2])]
         l_a = menu_args.label_args.copy()
         l_a['scale'] = .065
         self.hint_lab = Label(
@@ -91,12 +91,12 @@ class InputPageGui2(ThanksPageGui):
         suff = str(self.joyp_idx + 1)
         dct = {}
         dct['keys'] = {
-            'forward' + suff: self.mediator.gui.ibuttons[0]['text'],
-            'rear' + suff: self.mediator.gui.ibuttons[1]['text'],
-            'left' + suff: self.mediator.gui.ibuttons[2]['text'],
-            'right' + suff: self.mediator.gui.ibuttons[3]['text'],
-            'fire' + suff: self.mediator.gui.ibuttons[4]['text'],
-            'respawn' + suff: self.mediator.gui.ibuttons[5]['text']}
+            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
+            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
+            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
+            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
+            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
+            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])}
         dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
         self.notify('on_back', 'input_page2', [dct])
 
@@ -114,9 +114,9 @@ class InputPageGui2(ThanksPageGui):
     def already_used(self, val):
         labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn', 'pause']
         for i, btn in enumerate(self.mediator.gui.ibuttons):
-            if btn['text'] == val: return '1', labels[i]
+            if self.eng.event.desc2key(btn['text']) == val: return '1', labels[i]
         for lab in labels[:-1]:
-            if self.keys[lab + '2'] == val: return '2', lab
+            if self.eng.event.key2desc(self.keys[lab + '2']) == val: return '2', lab
 
 
 class InputPageGui1(InputPageGui2):
@@ -130,7 +130,7 @@ class InputPageGui1(InputPageGui2):
             **self.menu_args.btn_args)
         self.add_widgets([p2_btn])
         self.add_widgets([self._add_lab(_('Pause'), -.56)])
-        self.add_widgets([self._add_btn(self.keys['pause'], -.56)])
+        self.add_widgets([self._add_btn(self.eng.event.key2desc(self.keys['pause']), -.56)])
         InputPageGui2.build(self)
 
     def on_player2(self):
@@ -141,13 +141,13 @@ class InputPageGui1(InputPageGui2):
         suff = str(self.joyp_idx + 1)
         dct = {}
         dct['keys'] = {
-            'forward' + suff: self.mediator.gui.ibuttons[0]['text'],
-            'rear' + suff: self.mediator.gui.ibuttons[1]['text'],
-            'left' + suff: self.mediator.gui.ibuttons[2]['text'],
-            'right' + suff: self.mediator.gui.ibuttons[3]['text'],
-            'fire' + suff: self.mediator.gui.ibuttons[4]['text'],
-            'respawn' + suff: self.mediator.gui.ibuttons[5]['text'],
-            'pause': self.mediator.gui.ibuttons[6]['text']}
+            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
+            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
+            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
+            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
+            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
+            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text']),
+            'pause': self.eng.event.desc2key(self.mediator.gui.ibuttons[6]['text'])}
         dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
         self.notify('on_back', 'input_page1', [dct])
 

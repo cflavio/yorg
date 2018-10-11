@@ -4,8 +4,8 @@
 # TODO LIST =====
 
 # 0.11 (local multiplayer)
-# use raw keys as default ones
-# supporting up to four players
+# supporting up to four players (options/input)
+# supporting up to four players (ingame)
 
 
 # WAITING =====
