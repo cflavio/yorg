@@ -173,10 +173,10 @@ class DriverPageSinglePlayerGui(DriverPageGui):
     def update_text(self, task):
         has_name = self.ent.get() != _('your name')
         if has_name and self.ent.get().startswith(_('your name')):
-            self.ent.enterText(self.ent.get()[len(_('your name')):])
+            self.ent.enter_text(self.ent.get()[len(_('your name')):])
             self.enable_buttons(True)
         elif self.ent.get() in [_('your name')[:-1], '']:
-            self.ent.enterText('')
+            self.ent.enter_text('')
             self.enable_buttons(False)
         elif self.ent.get() not in [_('your name'), '']:
             self.enable_buttons(True)
@@ -308,11 +308,11 @@ class DriverPageMPGui(DriverPageGui):
     def update_text(self, task):
         has_name = self.ents[0].get() != _('your name')
         if has_name and self.ents[0].get().startswith(_('your name')):
-            self.ents[0].enterText(self.ents[0].get()[len(_('your name')):])
+            self.ents[0].enter_text(self.ents[0].get()[len(_('your name')):])
             self.enable_buttons(True)
             return
         elif self.ents[0].get() in [_('your name')[:-1], '']:
-            self.ents[0].enterText('')
+            self.ents[0].enter_text('')
             self.enable_buttons(False)
             return
         elif self.ents[0].get() not in [_('your name'), '']:

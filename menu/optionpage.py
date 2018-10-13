@@ -117,7 +117,7 @@ class OptionPageGui(ThanksPageGui):
         PageGui.translate(self)
         curr_lang = self.eng.lang_mgr.lang
         idx = [lang for lang in enumerate(self.eng.cfg.lang_cfg.languages) if lang[1][1] == curr_lang][0][0]
-        self.lang_opt.set(idx, fCommand=0)
+        self.lang_opt.set(idx, f_cmd=0)
 
     def __change_lang(self, arg):
         code = [lang for lang in self.eng.cfg.lang_cfg.languages if lang[0] == arg][0][1]
@@ -126,7 +126,7 @@ class OptionPageGui(ThanksPageGui):
 
     def _on_back(self):
         self.mediator.event.on_back()
-        lang_idx = self.lang_opt.selectedIndex
+        lang_idx = self.lang_opt.selected_idx
         dct = {
             'lang': self.eng.languages[lang_idx][1].lower(),
             'volume': self.mediator.gui.vol_slider.get_value(),
