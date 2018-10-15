@@ -10,9 +10,9 @@ from .thankspage import ThanksPageGui
 from .already_dlg import AlreadyUsedDlg
 
 
-class InputPageGui2(ThanksPageGui):
+class InputPageGui4(ThanksPageGui):
 
-    joyp_idx = 1
+    joyp_idx = 3
 
     def __init__(self, mediator, menu_args, joysticks, keys):
         self.joypad_cb = None
@@ -119,7 +119,7 @@ class InputPageGui2(ThanksPageGui):
             if self.eng.event.key2desc(self.keys[lab + '2']) == val: return '2', lab
 
 
-class InputPageGui1(InputPageGui2):
+class InputPageGui1(InputPageGui4):
 
     joyp_idx = 0
 
@@ -131,7 +131,7 @@ class InputPageGui1(InputPageGui2):
         self.add_widgets([p2_btn])
         self.add_widgets([self._add_lab(_('Pause'), -.56)])
         self.add_widgets([self._add_btn(self.eng.event.key2desc(self.keys['pause']), -.56)])
-        InputPageGui2.build(self)
+        InputPageGui4.build(self)
 
     def on_player2(self):
         self.notify('on_push_page', 'input2', [self.joysticks, self.keys])
@@ -152,8 +152,68 @@ class InputPageGui1(InputPageGui2):
         self.notify('on_back', 'input_page1', [dct])
 
 
-class InputPage2(Page):
-    gui_cls = InputPageGui2
+class InputPageGui2(InputPageGui4):
+
+    joyp_idx = 1
+
+    def build(self):
+        p_btn = Btn(
+            text='', pos=(-.2, 1, -.74), command=self.on_player3,
+            tra_src='Player 3', tra_tra=_('Player 3'),
+            **self.menu_args.btn_args)
+        self.add_widgets([p_btn])
+        InputPageGui4.build(self)
+
+    def on_player3(self):
+        self.notify('on_push_page', 'input3', [self.joysticks, self.keys])
+
+    def _on_back(self):
+        self.mediator.event.on_back()
+        suff = str(self.joyp_idx + 1)
+        dct = {}
+        dct['keys'] = {
+            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
+            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
+            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
+            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
+            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
+            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])}
+        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        self.notify('on_back', 'input_page2', [dct])
+
+
+class InputPageGui3(InputPageGui4):
+
+    joyp_idx = 2
+
+    def build(self):
+        p_btn = Btn(
+            text='', pos=(-.2, 1, -.74), command=self.on_player3,
+            tra_src='Player 4', tra_tra=_('Player 4'),
+            **self.menu_args.btn_args)
+        self.add_widgets([p_btn])
+        InputPageGui4.build(self)
+
+    def on_player3(self):
+        self.notify('on_push_page', 'input4', [self.joysticks, self.keys])
+
+    def _on_back(self):
+        self.mediator.event.on_back()
+        suff = str(self.joyp_idx + 1)
+        dct = {}
+        dct['keys'] = {
+            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
+            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
+            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
+            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
+            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
+            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])}
+        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        self.notify('on_back', 'input_page3', [dct])
+
+
+class InputPage4(Page):
+    gui_cls = InputPageGui4
 
     def __init__(self, menu_args, joysticks, keys):
         self.menu_args = menu_args
@@ -169,6 +229,14 @@ class InputPage2(Page):
         PageFacade.destroy(self)
 
 
-class InputPage(InputPage2):
+class InputPage2(InputPage4):
+    gui_cls = InputPageGui2
+
+
+class InputPage3(InputPage4):
+    gui_cls = InputPageGui3
+
+
+class InputPage(InputPage4):
     gui_cls = InputPageGui1
 

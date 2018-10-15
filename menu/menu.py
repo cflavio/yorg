@@ -12,9 +12,10 @@ from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason, \
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
     DriverPageClient, DriverPageMP
 from .optionpage import OptionPage
-from .inputpage import InputPage, InputPage2
+from .inputpage import InputPage, InputPage2, InputPage3, InputPage4
 from .creditpage import CreditPage
 from .roompage import RoomPage
+from .numplayerspage import NumPlayersPage
 from .supporterspage import SupportersPage
 
 
@@ -56,6 +57,10 @@ class YorgMenuLogic(MenuLogic):
             self.eng.log('single race')
             page = TrackPage(args[0])
             page.gui.attach(self.on_track_selected)
+        if page_code == 'localmp':
+            self.eng.log('local multiplayer')
+            page = NumPlayersPage(args[0])
+            page.gui.attach(self.on_nplayers)
         if page_code == 'trackpageserver':
             self.eng.log('track page server')
             page = TrackPageServer(args[0], args[1])
@@ -79,7 +84,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpagelocalmp':
             self.eng.log('car page local multiplayer')
-            page = CarPageLocalMP(args[0], self.mediator.track, self.yorg_client)
+            page = CarPageLocalMP(args[0], self.mediator.track, self.yorg_client, self.mediator.nplayers)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             self.eng.log('car page client')
@@ -91,7 +96,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driver_page_mp':
             self.eng.log('driver page multiplayer')
-            page = DriverPageMP(args[0], args[1], args[2])
+            page = DriverPageMP(args[0], args[1], args[2], self.mediator.nplayers)
             page.gui.attach(self.on_driver_selected_mp)
         if page_code == 'driverpageserver':
             self.eng.log('driver page server')
@@ -112,6 +117,12 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'input2':
             self.eng.log('input2')
             page = InputPage2(self.mediator.gui.menu_args, args[0], args[1])
+        if page_code == 'input3':
+            self.eng.log('input3')
+            page = InputPage3(self.mediator.gui.menu_args, args[0], args[1])
+        if page_code == 'input4':
+            self.eng.log('input4')
+            page = InputPage4(self.mediator.gui.menu_args, args[0], args[1])
         if page_code == 'credits':
             self.eng.log('credits')
             page = CreditPage(self.mediator.gui.menu_args)
@@ -149,6 +160,9 @@ class YorgMenuLogic(MenuLogic):
 
     def on_track_selected_lmp(self, track):
         self.mediator.track = track
+
+    def on_nplayers(self, num):
+        self.mediator.nplayers = num
 
     def on_car_selected(self, car):
         self.mediator.gui.notify('on_car_selected', car)

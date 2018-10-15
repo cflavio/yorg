@@ -33,12 +33,13 @@ void main() {
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, driverpage_props, yorg_client):
+    def __init__(self, mediator, driverpage_props, yorg_client, players=1):
         self.props = driverpage_props
         self.sel_drv_img = None
         self.driver = None
         self.yorg_client = yorg_client
-        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args, [0, 1])
+        players = range(players)
+        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args, players)
 
     def build(self, exit_behav):
         self.drv_info = self.props.gameprops.drivers_info
@@ -191,14 +192,15 @@ class DriverPageSinglePlayerGui(DriverPageGui):
 
 class DriverPageMPGui(DriverPageGui):
 
-    def __init__(self, mediator, driverpage_props, yorg_client):
-        DriverPageGui.__init__(self, mediator, driverpage_props, yorg_client)
-        self.selected_drivers = {0: None, 1: None}
+    def __init__(self, mediator, driverpage_props, yorg_client, players):
+        DriverPageGui.__init__(self, mediator, driverpage_props, yorg_client, players)
+        self.selected_drivers = {}
+        for i in range(players): self.selected_drivers[i] = None
 
     def build(self):
         self.drv_info = self.props.gameprops.drivers_info
         menu_args = self.menu_args
-        widgets = [Text(_('Select the drivers'), pos=(-.2, .9),
+        widgets = [Text(_('Select the drivers'), pos=(-.2, .91),
                                 **menu_args.text_args)]
         t_a = self.menu_args.text_args.copy()
         del t_a['scale']
@@ -244,7 +246,7 @@ class DriverPageMPGui(DriverPageGui):
         for i, car in enumerate(self.mediator.cars):
             self.sel_drv_img += [Img(
                 self.props.gameprops.cars_img % car,
-                parent=base.a2dBottomLeft, pos=(.3, 1, .4 + (1 - i) * .56), scale=.28)]
+                parent=base.a2dBottomLeft, pos=(.3, 1, 1.74 - i * .46), scale=.22)]
             widgets += [self.sel_drv_img[-1]]
             ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
             with open(ffilterpath) as ffilter:
@@ -262,10 +264,10 @@ class DriverPageMPGui(DriverPageGui):
             tex.load(empty_img)
             self.sel_drv_img[-1].set_texture(self.tss[-1], tex)
         self.ents = [Entry(
-            scale=.08, pos=(-.2, 1, .7 - .2 * i), entryFont=menu_args.font, width=12,
+            scale=.06, pos=(-.2, 1, .8 - .12 * i), entryFont=menu_args.font, width=12,
             frameColor=menu_args.btn_color,
             initialText=self.props.gameprops.player_name or _('your name'),
-            text_fg=menu_args.text_active) for i in range(2)]
+            text_fg=menu_args.text_active) for i in range(len(self.mediator.cars))]
         self.add_widgets(self.ents)
         self.add_widgets(widgets)
         ThanksPageGui.build(self, exit_behav=False)
@@ -297,11 +299,12 @@ class DriverPageMPGui(DriverPageGui):
         self.evaluate_start()
 
     def evaluate_start(self):
-        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < 2: return
+        nplayers = len(self.selected_drivers.keys())
+        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < nplayers: return
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
-        drivers = [self.selected_drivers[i] for i in range(2)]
+        drivers = [self.selected_drivers[i] for i in range(nplayers)]
         self.notify('on_driver_selected_mp', [ent.get() for ent in self.ents], self.mediator.track,
                     self.mediator.cars)
 
@@ -524,12 +527,12 @@ class DriverPageSinglePlayer(DriverPage):
 class DriverPageMP(DriverPage):
     gui_cls = DriverPageMPGui
 
-    def __init__(self, track, cars, driverpage_props, yorg_client=None):
+    def __init__(self, track, cars, driverpage_props, players, yorg_client=None):
         self.track = track
         self.cars = cars
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, driverpage_props, yorg_client])]]
+            [('gui', self.gui_cls, [self, driverpage_props, yorg_client, players])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__

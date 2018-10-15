@@ -3,10 +3,6 @@
 
 # TODO LIST =====
 
-# 0.11 (local multiplayer)
-# supporting up to four players (options/input)
-# supporting up to four players (ingame)
-
 
 # WAITING =====
 
@@ -17,6 +13,7 @@
 # (Panda3D 1.10) deployng: log_filename
 # (Panda3D 1.10) deployng: use logging for logging
 # (Panda3D 1.10) port to python 3
+# (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
 # hardware instancing (gl_InstanceID requires 1.40)
 
 

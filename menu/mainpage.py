@@ -104,7 +104,7 @@ class YorgMainPageGui(MainPageGui):
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
-        self.joysticks = sett['joystick1'], sett['joystick2']
+        self.joysticks = sett['joystick1'], sett['joystick2'], sett['joystick3'], sett['joystick4']
         self.keys = sett['keys']
         self.lang = sett['lang']
         self.volume = sett['volume']
@@ -130,7 +130,7 @@ class YorgMainPageGui(MainPageGui):
     def build(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
                                     [self.props])
-        lmp_cb = lambda: self.notify('on_push_page', 'trackpagelocalmp',
+        lmp_cb = lambda: self.notify('on_push_page', 'localmp',
                                      [self.props])
         supp_cb = lambda: self.eng.open_browser(self.props.support_url)
         cred_cb = lambda: self.notify('on_push_page', 'credits')

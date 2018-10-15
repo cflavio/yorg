@@ -13,13 +13,14 @@ from .thankspage import ThanksPageGui
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, carpage_props, track_path, yorg_client):
+    def __init__(self, mediator, carpage_props, track_path, yorg_client, players=1):
         self.car = None
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
         self.yorg_client = yorg_client
-        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args, [0, 1])
+        players = range(players)
+        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args, players)
 
     def build(self, exit_behav=False):
         gprops = self.props.gameprops
@@ -110,9 +111,10 @@ class CarPageGuiSeason(CarPageGui):
 
 class CarPageLocalMPGui(CarPageGui):
 
-    def __init__(self, mediator, carpage_props, track_path, yorg_client):
-        CarPageGui.__init__(self, mediator, carpage_props, track_path, yorg_client)
-        self.selected_cars = {0: None, 1: None}
+    def __init__(self, mediator, carpage_props, track_path, yorg_client, players):
+        CarPageGui.__init__(self, mediator, carpage_props, track_path, yorg_client, players)
+        self.selected_cars = {}
+        for i in range(players): self.selected_cars[i] = None
 
     def on_car(self, car, player):
         self._buttons(car)[0].disable()
@@ -123,8 +125,9 @@ class CarPageLocalMPGui(CarPageGui):
         self.evaluate_start()
 
     def evaluate_start(self):
-        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < 2: return
-        cars = [self.selected_cars[i] for i in range(2)]
+        nplayers = len(self.selected_cars.keys())
+        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < nplayers: return
+        cars = [self.selected_cars[i] for i in range(nplayers)]
         page_args = [self.track_path, cars, self.props]
         self.notify('on_push_page', 'driver_page_mp', page_args)
 
@@ -304,3 +307,12 @@ class CarPageClient(CarPage):
 
 class CarPageLocalMP(CarPage):
     gui_cls = CarPageLocalMPGui
+
+
+    def __init__(self, carpage_props, track_path, yorg_client, players):
+        init_lst = [
+            [('event', self.event_cls, [self])],
+            [('gui', self.gui_cls, [self, carpage_props, track_path, yorg_client, players])]]
+        GameObject.__init__(self, init_lst)
+        PageFacade.__init__(self)
+        # invoke Page's __init__

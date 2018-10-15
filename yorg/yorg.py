@@ -61,11 +61,25 @@ class Yorg(Game):
                     'rear2': 'raw-s',
                     'left2': 'raw-a',
                     'right2': 'raw-d',
-                    'fire2': 'raw-c',
-                    'respawn2': 'raw-v',
+                    'fire2': 'raw-x',
+                    'respawn2': 'raw-c',
+                    'forward3': 'raw-i',
+                    'rear3': 'raw-k',
+                    'left3': 'raw-j',
+                    'right3': 'raw-l',
+                    'fire3': 'raw-n',
+                    'respawn3': 'raw-m',
+                    'forward4': 'raw-t',
+                    'rear4': 'raw-g',
+                    'left4': 'raw-f',
+                    'right4': 'raw-h',
+                    'fire4': 'raw-v',
+                    'respawn4': 'raw-b',
                     'pause': 'raw-p'},
                 'joystick1': 0,
                 'joystick2': 0,
+                'joystick3': 0,
+                'joystick4': 0,
                 'last_version': '0.7.0-x',
                 'player_name': '',
                 'shaders': 1,
@@ -159,7 +173,11 @@ class Yorg(Game):
                                 keys['rear1'], keys['fire1'])
         nav2 = NavInfoPerPlayer(keys['left2'], keys['right2'], keys['forward2'],
                                 keys['rear2'], keys['fire2'])
-        nav = NavInfo([nav1, nav2])
+        nav3 = NavInfoPerPlayer(keys['left3'], keys['right3'], keys['forward3'],
+                                keys['rear3'], keys['fire3'])
+        nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
+                                keys['rear4'], keys['fire4'])
+        nav = NavInfo([nav1, nav2, nav3, nav4])
         menu_args = MenuArgs(
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
             (.75, .75, .75, 1), (.75, .25, .25, 1), .1, (-4.6, 4.6, -.32, .88),
