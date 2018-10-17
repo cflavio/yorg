@@ -42,7 +42,7 @@ class InputPageGui4(ThanksPageGui):
             indicatorValue=self.joysticks[self.joyp_idx],
             indicator_frameColor=menu_args.text_active,
             **menu_args.checkbtn_args)
-        if not JoystickMgr.has_support():
+        if not JoystickMgr.supported():
             self.joypad_cb['state'] = DISABLED
         buttons_data = [
             (_('Accelerate'), 'forward' + suff, .5),
