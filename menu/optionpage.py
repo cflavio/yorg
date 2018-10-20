@@ -1,9 +1,9 @@
 from panda3d.core import TextNode, LVector2i
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.library.gui import Btn, Slider, CheckBtn, OptionMenu
+from yyagl.lib.gui import Btn, Slider, CheckBtn, OptionMenu
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
-from yyagl.library.gui import Label
+from yyagl.lib.gui import Label
 from .thankspage import ThanksPageGui
 
 

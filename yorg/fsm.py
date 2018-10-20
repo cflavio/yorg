@@ -71,8 +71,8 @@ class YorgFsm(FsmColleague):
         self.load_models(None)
         self.mediator.logic.yorg_client.attach(self.on_presence_unavailable_room)
         if self.mediator.logic.mp_frm:
-            if self.eng.xmpp.client:  # if we're logged
-                self.mediator.logic.mp_frm.send_is_playing(False)
+            #if self.eng.xmpp.client:  # if we're logged
+            #    self.mediator.logic.mp_frm.send_is_playing(False)
             self.mediator.logic.mp_frm.users_frm.invited_users = []
             self.mediator.logic.mp_frm.users_frm.in_match_room = None
             self.mediator.logic.mp_frm.msg_frm.curr_match_room = None

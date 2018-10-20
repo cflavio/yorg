@@ -1,7 +1,7 @@
 from socket import socket, gethostbyname, gaierror, SHUT_RDWR, create_connection, timeout
 from hashlib import sha512
 from panda3d.core import TextNode
-from yyagl.library.gui import Btn, CheckBtn, Entry, Text
+from yyagl.lib.gui import Btn, CheckBtn, Entry, Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui

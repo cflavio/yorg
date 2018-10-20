@@ -13,7 +13,7 @@ from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import Page, PageFacade, PageGui
 from yyagl.engine.logic import VersionChecker
 from yyagl.gameobject import GameObject
-from yyagl.library.gui import Btn, Label, Text, Img, Frame
+from yyagl.lib.gui import Btn, Label, Text, Img, Frame
 from .optionpage import OptionPageProps
 
 

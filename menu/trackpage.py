@@ -1,5 +1,5 @@
 from itertools import product
-from yyagl.library.gui import Text
+from yyagl.lib.gui import Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject

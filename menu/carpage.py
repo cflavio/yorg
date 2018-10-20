@@ -1,9 +1,8 @@
 from itertools import product
-from sleekxmpp.jid import JID
 from yaml import load
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
-from yyagl.library.gui import Text
+from yyagl.lib.gui import Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -204,7 +203,7 @@ class CarPageGuiServer(CarPageGui):
                 for usr in self.eng.xmpp.users:
                     if usr.public_addr == curr_addr:
                         username = usr.name
-            btn._name_txt['text'] = JID(username).bare
+            #btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.car_selection, car, username])
             ip_string = sender.getpeername()[0]
             if ip_string.startswith('::ffff:'): ip_string = ip_string[7:]

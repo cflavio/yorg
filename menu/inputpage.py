@@ -2,7 +2,7 @@ from string import ascii_lowercase
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.library.gui import Btn, PandaCheckBtn, Label
+from yyagl.lib.gui import Btn, P3dCheckBtn, Label
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.joystick import JoystickMgr
 from yyagl.gameobject import GameObject
@@ -37,7 +37,7 @@ class InputPageGui4(ThanksPageGui):
             tra_src='Use the joypad when present',
             tra_tra=_('Use the joypad when present'),
             **menu_args.label_args)
-        self.joypad_cb = PandaCheckBtn(
+        self.joypad_cb = P3dCheckBtn(
             pos=(-.11, 1, .72), text='',
             indicatorValue=self.joysticks[self.joyp_idx],
             indicator_frameColor=menu_args.text_active,

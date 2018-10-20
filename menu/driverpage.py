@@ -1,14 +1,13 @@
 from itertools import product
 from random import shuffle
-from sleekxmpp.jid import JID
 from panda3d.core import TextureStage, Texture, PNMImage, TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
-from yyagl.library.gui import Entry, Text, Img
+from yyagl.lib.gui import Entry, Text, Img
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
 from yyagl.racing.driver.driver import DriverInfo
-from yyagl.library.panda.shader import load_shader
+from yyagl.lib.p3d.shader import load_shader
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
@@ -345,35 +344,35 @@ class DriverPageServerGui(DriverPageGui):
 
     def on_click(self, i):
         self.eng.log('selected driver ' + str(i))
-        name = JID(self.eng.xmpp.client.boundjid).bare
-        self.eng.server.send([NetMsgs.driver_selection, i, name])
-        for btn in self._buttons(i):
-            btn.disable()
-            btn._name_txt['text'] = name
-        if self in self.current_drivers_dct:
-            curr_drv = self.current_drivers_dct[self]
-            self.eng.log_mgr.log('driver deselected: %s' % curr_drv)
-            self.eng.server.send([NetMsgs.driver_deselection, curr_drv])
-            for btn in self._buttons(curr_drv):
-                btn.enable()
-                btn._name_txt['text'] = ''
-        self.current_drivers_dct[self] = i
-        gprops = self.props.gameprops
-        txt_path = gprops.drivers_img.path_sel
-        self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
-        self.widgets[-1]['state'] = DISABLED
-        #self.enable_buttons(False)
-        self.current_drivers += [self]
-        cars = gprops.cars_names[:]
-        car_idx = cars.index(self.mediator.car)
-        cars.remove(self.mediator.car)
-        prev_drv = gprops.drivers_info[car_idx]
-        #gprops.drivers_info[car_idx] = gprops.drivers_info[i]
-        gprops.drivers_info[car_idx].img_idx = i
-        nname = self.this_name()
-        gprops.drivers_info[car_idx].name = nname
-        #gprops.drivers_info[i] = prev_drv
-        self.evaluate_starting()
+        #name = JID(self.eng.xmpp.client.boundjid).bare
+        #self.eng.server.send([NetMsgs.driver_selection, i, name])
+        #for btn in self._buttons(i):
+        #    btn.disable()
+        #    btn._name_txt['text'] = name
+        #if self in self.current_drivers_dct:
+        #    curr_drv = self.current_drivers_dct[self]
+        #    self.eng.log_mgr.log('driver deselected: %s' % curr_drv)
+        #    self.eng.server.send([NetMsgs.driver_deselection, curr_drv])
+        #    for btn in self._buttons(curr_drv):
+        #        btn.enable()
+        #        btn._name_txt['text'] = ''
+        #self.current_drivers_dct[self] = i
+        #gprops = self.props.gameprops
+        #txt_path = gprops.drivers_img.path_sel
+        #self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
+        #self.widgets[-1]['state'] = DISABLED
+        ##self.enable_buttons(False)
+        #self.current_drivers += [self]
+        #cars = gprops.cars_names[:]
+        #car_idx = cars.index(self.mediator.car)
+        #cars.remove(self.mediator.car)
+        #prev_drv = gprops.drivers_info[car_idx]
+        ##gprops.drivers_info[car_idx] = gprops.drivers_info[i]
+        #gprops.drivers_info[car_idx].img_idx = i
+        ##nname = self.this_name()
+        #gprops.drivers_info[car_idx].name = nname
+        ##gprops.drivers_info[i] = prev_drv
+        #self.evaluate_starting()
 
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
 
@@ -412,7 +411,7 @@ class DriverPageServerGui(DriverPageGui):
                 for usr in self.eng.xmpp.users:
                     if usr.public_addr == curr_addr:
                         username = usr.name
-            btn._name_txt['text'] = JID(username).bare
+            #btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.driver_selection, drv, username])
             self.current_drivers += [sender]
             self.eng.log_mgr.log(

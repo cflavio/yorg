@@ -1,4 +1,4 @@
-from yyagl.library.gui import Btn, Frame, Text
+from yyagl.lib.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 from yyagl.racing.race.event import NetMsgs

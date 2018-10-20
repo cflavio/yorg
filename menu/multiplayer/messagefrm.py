@@ -1,12 +1,9 @@
-try: from sleekxmpp.jid import JID
-except ImportError:  # sleekxmpp requires openssl 1.0.2
-    print 'OpenSSL 1.0.2 not detected'
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT, NORMAL, DISABLED, ENTER, EXIT
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.library.gui import Btn, Entry
+from yyagl.lib.gui import Btn, Entry
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.gameobject import GameObject
 from yyagl.engine.gui.imgbtn import ImgBtn
@@ -21,9 +18,9 @@ class Chat(GameObject):
         self.read = True
         self.closed = False
 
-    @property
-    def title(self):
-        return JID(self.dst).bare
+    #@property
+    #def title(self):
+    #    return JID(self.dst).bare
 
 
 class MUC(Chat):
@@ -483,7 +480,7 @@ class MessageFrm(GameObject):
         if chats: return chats[0]
 
     def add_chat(self, usr):
-        self.set_title(JID(usr).bare)
+        #self.set_title(JID(usr).bare)
         chat = self.__find_chat(usr)
         if not chat:
             chat = Chat(usr)

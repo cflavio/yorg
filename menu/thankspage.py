@@ -1,5 +1,5 @@
 from panda3d.core import TextNode
-from yyagl.library.gui import Text
+from yyagl.lib.gui import Text
 from yorg.thanksnames import ThanksNames
 from yyagl.engine.gui.page import PageGui
 

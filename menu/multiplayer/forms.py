@@ -1,5 +1,5 @@
 from direct.gui.DirectGuiGlobals import ENTER, EXIT
-from yyagl.library.gui import Btn
+from yyagl.lib.gui import Btn
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.observer import Subject

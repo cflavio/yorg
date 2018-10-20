@@ -1,4 +1,4 @@
-from yyagl.library.gui import Text
+from yyagl.lib.gui import Text
 from yyagl.engine.gui.page import Page
 from .thankspage import ThanksPageGui
 from yorg.thanksnames import ThanksNames

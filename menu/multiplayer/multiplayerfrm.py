@@ -1,9 +1,6 @@
 from json import load
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror, error
 from urllib2 import urlopen, URLError
-try: from sleekxmpp.jid import JID
-except ImportError:  # sleekxmpp requires openssl 1.0.2
-    print 'OpenSSL 1.0.2 not detected'
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
 from menu.netmsgs import NetMsgs
@@ -42,22 +39,6 @@ class MultiplayerFrm(GameObject):
         self.match_frm = None
         #self.match_frm.hide()
         self.msg_frm.hide()
-        self.eng.xmpp.attach(self.on_users)
-        self.eng.xmpp.attach(self.on_user_connected)
-        self.eng.xmpp.attach(self.on_user_disconnected)
-        self.eng.xmpp.attach(self.on_user_subscribe)
-        self.eng.xmpp.attach(self.on_presence_available)
-        self.eng.xmpp.attach(self.on_presence_available_room)
-        self.eng.xmpp.attach(self.on_presence_unavailable_room)
-        self.eng.xmpp.attach(self.on_presence_unavailable)
-        self.eng.xmpp.attach(self.on_msg)
-        self.eng.xmpp.attach(self.on_groupchat_msg)
-        self.eng.xmpp.attach(self.on_invite_chat)
-        self.eng.xmpp.attach(self.on_declined)
-        self.eng.xmpp.attach(self.on_cancel_invite)
-        self.eng.xmpp.attach(self.on_ip_address)
-        self.eng.xmpp.attach(self.on_yorg_init)
-        self.eng.xmpp.attach(self.on_is_playing)
         yorg_client.attach(self.on_presence_available)
         yorg_client.attach(self.on_presence_unavailable)
         yorg_client.attach(self.on_msg)

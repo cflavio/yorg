@@ -232,7 +232,6 @@ class Yorg(Game):
         self.gameprops.drivers_info = self.drivers()
 
     def kill(self):
-        self.eng.xmpp.disconnect()
         self.eng.server.destroy()
         self.eng.client.destroy()
 

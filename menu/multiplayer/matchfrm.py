@@ -1,8 +1,5 @@
-try: from sleekxmpp.jid import JID
-except ImportError:  # sleekxmpp requires openssl 1.0.2
-    print 'OpenSSL 1.0.2 not detected'
 from direct.gui.DirectFrame import DirectFrame
-from yyagl.library.gui import Btn
+from yyagl.lib.gui import Btn
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.gameobject import GameObject

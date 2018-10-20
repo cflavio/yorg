@@ -1,4 +1,4 @@
-from yyagl.library.gui import Btn, Text
+from yyagl.lib.gui import Btn, Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui

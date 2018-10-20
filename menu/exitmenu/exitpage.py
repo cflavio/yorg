@@ -1,6 +1,6 @@
 from sys import exit as sys_exit
 from direct.gui.OnscreenText import OnscreenText
-from yyagl.library.gui import Btn, Frame, Text
+from yyagl.lib.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui
 
 
