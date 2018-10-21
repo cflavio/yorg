@@ -14,15 +14,18 @@ if sys.platform != 'darwin' and not exists('main.py'):
         log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
         if not exists(log_path):
             Filename.mkdir(Filename(log_path))
-    ofile = 'yorg_output.txt'
-    opath = join(log_path, ofile) if log_path else ofile
-    sys.stdout = open(opath, 'w')
-    epath = join(log_path, 'yorg_error.txt') if log_path else 'yorg_error.txt'
-    sys.stderr = open(epath, 'w')
-    nout = MultiplexStream()
-    Notify.ptr().setOstreamPtr(nout, 0)
-    lpath = join(log_path, 'yorg_log.txt') if log_path else 'yorg_log.txt'
-    nout.addFile(lpath)
+    try:
+        ofile = 'yorg_output.txt'
+        opath = join(log_path, ofile) if log_path else ofile
+        sys.stdout = open(opath, 'w')
+        epath = join(log_path, 'yorg_error.txt') if log_path else 'yorg_error.txt'
+        sys.stderr = open(epath, 'w')
+        nout = MultiplexStream()
+        Notify.ptr().setOstreamPtr(nout, 0)
+        lpath = join(log_path, 'yorg_log.txt') if log_path else 'yorg_log.txt'
+        nout.addFile(lpath)
+    except IOError: pass  # it doesn't work with deploy-ng but we don't care:
+                          # we've deployng's logging; remove in panda3d 1.10
 
 
 # main #######################################################################
