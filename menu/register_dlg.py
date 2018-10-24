@@ -4,16 +4,13 @@ from yyagl.observer import Subject
 from yyagl.gameobject import GameObject
 
 
-class CheckDialog(GameObject, Subject):
+class RegisterDialog(GameObject, Subject):
 
-    def __init__(self, menu_args):
+    def __init__(self, menu_args, txt):
         Subject.__init__(self)
         GameObject.__init__(self)
         self.dialog = OkDialog(
-            text=_("The jabber id that you've inserted is not correct: it "
-                "should be something like nickname@domainname.tld where "
-                "nickname is your nickname and domainname.tld is a valid "
-                "domain."),
+            text=txt,
             text_wordwrap=16,
             text_fg=menu_args.text_active,
             text_font=menu_args.font,
@@ -30,8 +27,8 @@ class CheckDialog(GameObject, Subject):
         self.eng.log('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
-        self.eng.log('check button')
-        self.notify('on_check_dlg')
+        self.eng.log('register button')
+        self.notify('on_register_dlg')
 
     def destroy(self):
         self.eng.log('destroyed dialog ' + self.dialog['text'])

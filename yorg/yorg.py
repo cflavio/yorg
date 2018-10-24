@@ -1,5 +1,6 @@
 import argparse
 from sys import platform
+from copy import deepcopy
 from os.path import join, exists
 from panda3d.core import Filename
 from yyagl.game import Game
@@ -61,7 +62,8 @@ class Yorg(Game):
                 'last_version': '0.7.0-x',
                 'player_name': '',
                 'shaders': 1,
-                'xmpp':
+                'camera': 'top',
+                'login':
                     {'usr': '', 'pwd': ''}},
             'development': {
                 'multithreaded_render': 0,
@@ -69,12 +71,14 @@ class Yorg(Game):
                 'fps': 0,
                 'car': '',
                 'track': '',
+                'start_wp': '',
                 'shaders_dev': 0,
                 'gamma': 2.2,
                 'show_waypoints': 0,
                 'show_exit': 1,
                 'menu_joypad': 1,
                 'win_orig': '',
+                'port': 9099,
                 'profiling': 0,
                 'pyprof_percall': 0,
                 'verbose': '',
@@ -83,23 +87,28 @@ class Yorg(Game):
                 'countdown_seconds': 3,
                 'xmpp_debug': 0,
                 'xmpp_server': 'ya2_yorg@jabb3r.org',
-                'server': ''}}
+                'server': 'ya2tech.it:9099',
+                'mp_srv_usr': ''}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows
             opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
-        self.options = DctFile(
-            join(opt_path, 'options.yml') if opt_path else 'options.yml',
-            default_opt)
-        opt_dev = self.options['development']
-        win_orig = opt_dev['win_orig']
         parser = argparse.ArgumentParser()
         parser.add_argument('--win_orig')
         parser.add_argument('--user')
         parser.add_argument('--pwd')
         parser.add_argument('--car')
         parser.add_argument('--server')
+        parser.add_argument('--optfile')
         args = parser.parse_args()
+        optfile = args.optfile if args.optfile else 'options.yml'
+        old_def = deepcopy(default_opt)
+        self.options = DctFile(
+            join(opt_path, optfile) if opt_path else optfile, default_opt)
+        if self.options['development']['server'] == '':
+            self.options['development']['server'] = old_def['development']['server']
+        opt_dev = self.options['development']
+        win_orig = opt_dev['win_orig']
         if args.win_orig: win_orig = args.win_orig
         if args.car: opt_dev['car'] = args.car
         if args.server: opt_dev['server'] = args.server
@@ -129,7 +138,9 @@ class Yorg(Game):
             shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
             menu_joypad=opt_dev['menu_joypad'], verbose=opt_dev['verbose'],
             verbose_log=opt_dev['verbose_log'],
-            xmpp_server=opt_dev['xmpp_server'])
+            xmpp_server=opt_dev['xmpp_server'],
+            start_wp=opt_dev['start_wp'], port=opt_dev['port'],
+            server=opt_dev['server'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         init_lst = [
             [('fsm', YorgFsm, [self])],
@@ -163,9 +174,10 @@ class Yorg(Game):
             ('feed', 'http://www.ya2.it/pages/feed-following.html')]
         self.gameprops = GameProps(
             menu_args, cars_names, self.drivers(),
-            ['toronto', 'rome', 'sheffield', 'orlando', 'nagano', 'dubai'],
-            lambda: [_('Toronto'), _('Rome'), _('Sheffield'), _('Orlando'),
-                     _('Nagano'), _('Dubai')],
+            ['moon', 'toronto', 'rome', 'sheffield', 'orlando', 'nagano',
+             'dubai'],
+            lambda: [_('Sinus Aestuum'), _('Toronto'), _('Rome'), _('Sheffield'),
+                     _('Orlando'), _('Nagano'), _('Dubai')],
             'assets/images/tracks/%s.txo',
             self.options['settings']['player_name'],
             DriverPaths('assets/images/drivers/driver%s.txo',
@@ -190,6 +202,8 @@ class Yorg(Game):
 
     def kill(self):
         self.eng.xmpp.disconnect()
+        self.eng.server.destroy()
+        self.eng.client.destroy()
 
     @staticmethod
     def drivers():

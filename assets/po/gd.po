@@ -18,6 +18,55 @@ msgstr ""
 "(n > 2 && n < 20) ? 2 : 3;\n"
 "X-Generator: Virtaal 0.7.1\n"
 
+#: menu/resetpage.py:21 menu/registerpage.py:21
+msgid "Your email:"
+msgstr "Am post-d agad:"
+
+#: menu/resetpage.py:23 menu/loginpage.py:21 menu/registerpage.py:23
+msgid "Your user id:"
+msgstr "ID a’ chleachdaiche agad:"
+
+#: menu/resetpage.py:27 menu/resetpage.py:74 menu/resetpage.py:93
+#: menu/loginpage.py:27 menu/loginpage.py:93 menu/loginpage.py:101
+#: menu/registerpage.py:29 menu/registerpage.py:93 menu/registerpage.py:112
+msgid "your user id"
+msgstr "ID a’ chleachdaiche agad"
+
+#: menu/resetpage.py:30 menu/resetpage.py:80 menu/resetpage.py:88
+#: menu/registerpage.py:32 menu/registerpage.py:99 menu/registerpage.py:107
+msgid "your email"
+msgstr "am post-d agad"
+
+#: menu/resetpage.py:39 menu/loginpage.py:65
+msgid "Reset"
+msgstr "Ath-shuidhich"
+
+#: menu/resetpage.py:54
+msgid ""
+"We've sent an email to you (please check your spam folder if you can't find "
+"it) with the instructions for completing the reset."
+msgstr "Cuir sinn post-d thugad (thoir sùil air a’ phost-truilleis agad mura lorg thu e) le stiùireadh air mar a choileanas tu an ath-shuidheachadh."
+
+#: menu/resetpage.py:56
+msgid "This email isn't in our archive."
+msgstr "Chan eil am post-d agad san tasglann againn."
+
+#: menu/resetpage.py:57
+msgid "This nickname isn't in our archive."
+msgstr "Chan eil d’ fhar-ainm san tasglann againn."
+
+#: menu/resetpage.py:58
+msgid "This nickname-email pair isn't in our archive."
+msgstr "Chan eil d’ fhar-ainm ’s am post-d agad còmhla san tasglann againn."
+
+#: menu/resetpage.py:59 menu/registerpage.py:77
+msgid "Connection error."
+msgstr "Mearachd leis a’ cheangal. "
+
+#: menu/resetpage.py:114 menu/loginpage.py:119 menu/registerpage.py:135
+msgid "Error"
+msgstr "Mearachd"
+
 #: menu/creditpage.py:10
 msgid "Code"
 msgstr "Còd"
@@ -74,193 +123,197 @@ msgstr "Cuir ’na stad"
 msgid "Press the key to record it"
 msgstr "Brùth air an iuchair gus a chlàradh"
 
-#: menu/optionpage.py:35
+#: menu/optionpage.py:36
 msgid "Language"
 msgstr "Cànan"
 
-#: menu/optionpage.py:40
+#: menu/optionpage.py:42
 msgid "Volume"
 msgstr "Àirde na fuaime"
 
-#: menu/optionpage.py:46
+#: menu/optionpage.py:48
 msgid "Fullscreen"
 msgstr "Làn-sgrìn"
 
-#: menu/optionpage.py:52
+#: menu/optionpage.py:54
 msgid "Resolution"
 msgstr "Dùmhlachd-bhreacaidh"
 
-#: menu/optionpage.py:63
+#: menu/optionpage.py:65
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: menu/optionpage.py:66
+#: menu/optionpage.py:68
 msgid "(from the next execution)"
 msgstr "(on ath-thuras a thèid a ruith)"
 
-#: menu/optionpage.py:72
+#: menu/optionpage.py:74
 msgid "Shaders"
 msgstr "Sgàileadairean"
 
-#: menu/optionpage.py:76
+#: menu/optionpage.py:78
 msgid "Cars number"
 msgstr "Àireamh nan càraichean"
 
-#: menu/optionpage.py:82
+#: menu/optionpage.py:79
+msgid "Camera"
+msgstr "Camara"
+
+#: menu/optionpage.py:83
+msgid "Top"
+msgstr "Barr"
+
+#: menu/optionpage.py:83
+msgid "Rear"
+msgstr "Deireadh"
+
+#: menu/optionpage.py:92
 msgid "Configure input"
 msgstr "Rèitich an t-ion-chur"
 
-#: menu/carpage.py:26
+#: menu/carpage.py:27
 msgid "Select the car"
 msgstr "Tagh an càr"
 
-#: menu/carpage.py:77 menu/driverpage.py:73
+#: menu/carpage.py:78 menu/driverpage.py:74
 msgid "adherence"
 msgstr "sticeadh"
 
-#: menu/carpage.py:77 menu/driverpage.py:73
+#: menu/carpage.py:78 menu/driverpage.py:74
 msgid "speed"
 msgstr "luaths"
 
-#: menu/carpage.py:78 menu/driverpage.py:74
+#: menu/carpage.py:79 menu/driverpage.py:75
 msgid "stability"
 msgstr "seasmhachd"
 
-#: menu/loginpage.py:20
-msgid "Your jabber id:"
-msgstr "An id jabber agad:"
+#: menu/loginpage.py:23 menu/registerpage.py:25
+msgid "Your password:"
+msgstr "Am facal-faire agad:"
 
-#: menu/loginpage.py:22
-msgid "Your jabber password:"
-msgstr "Am facal-faire jabber agad:"
-
-#: menu/loginpage.py:26 menu/loginpage.py:91 menu/loginpage.py:99
-msgid "your jabber id"
-msgstr "an id jabber agad"
-
-#: menu/loginpage.py:37
+#: menu/loginpage.py:38
 msgid "Log-in"
 msgstr "Clàraich a-steach"
 
-#: menu/loginpage.py:40
-msgid "store the password"
-msgstr "glèidh am facal-faire"
-
-#: menu/loginpage.py:45
-msgid "(only if your computer is not shared with other people)"
-msgstr ""
-"(na dèan seo ma tha thu a’ co-roinneadh a’ choimpiutair seo le daoine eile)"
-
-#: menu/loginpage.py:48
+#: menu/loginpage.py:42
+#, python-format
 msgid ""
-"1. If you are a supporter, please write us (flavio@ya2.it) your jabber id so "
-"we can highlight your account as a supporter one.\n"
-"2. Yorg sends your XMPP presence to other Yorg users, so they can see your "
-"XMPP presence status. If you don't want this, please don't use your personal "
-"account and create a new one for Yorg.\n"
-"3. When you add a Yorg friend, you are adding it to your account's roster "
-"too.\n"
-"4. Yorg's XMPP code is still experimental: if you have important data in "
-"your XMPP account, please create a new account for playing Yorg with."
-msgstr ""
-"1. Ma tha thu ’nan neach-taic, innis an is jabber agad dhuinn (flavio@ya2."
-"it) ach an cuir sinn comharra ris a’ chunntas agad gur e neach-taic a th’ "
-"annad.\n"
-"2. Cuiridh Yorg do làthaireachd air XMPP gu cleachdaichean Yorg eile ach am "
-"faic iad a bheil thu an làthair air XMPP. Mur eil thu ’ga iarraidh, na "
-"cleachd an cunntas pearsanta agad agus cruthaich fear fa leth ùr airson "
-"Yorg.\n"
-"3. Ma chuireas tu caraid Yorg ris, cuiridh tu ri liosta a’ chunntais agad e "
-"cuideachd.\n"
-"4. Tha an còd XMPP aig Yorg deuchainneil fhathast: ma tha dàta cudromach sa "
-"chunntas XMPP agad, cruthaich cunntas fa leth ùr airson Yorg a chluich leis."
+"If you are a supporter, please write us (%s) your user id so we can "
+"highlight your account as a supporter one."
+msgstr "Ma tha tu ’nad neach-taic, nach cuir thu fios thugainn (%s) le ID a’ chleachdaiche agad ach an soillsich sinn an cunntas agad mar fhear aig neach-taic."
 
-#: menu/loginpage.py:116
-msgid "Error"
-msgstr "Mearachd"
+#: menu/loginpage.py:50
+msgid "If you don't have an account, then you can register:"
+msgstr "’S urrainn dhut clàradh leinn mur eil cunntas agad:"
+
+#: menu/loginpage.py:56 menu/registerpage.py:45
+msgid "Register"
+msgstr "Clàraich"
+
+#: menu/loginpage.py:59
+msgid "If you want to reset your password:"
+msgstr "Ma tha thu airson am facal-faire agad ath-shuidheachadh:"
 
 #: menu/thankspage.py:15
 msgid "Thanks to: "
 msgstr "Taing do: "
 
-#: menu/trackpage.py:17
+#: menu/trackpage.py:18
 msgid "Select the track"
 msgstr "Tagh an t-slighe"
 
-#: menu/check_dlg.py:13
-msgid ""
-"The jabber id that you've inserted is not correct: it should be something "
-"like nickname@domainname.tld where nickname is your nickname and domainname."
-"tld is a valid domain."
-msgstr ""
-"Chan eil an id jabber id a chuir thu a-steach mar bu chòir: bu chòir do "
-"choltas mar “far-ainm@àrainn.tld” a bhith air agus “far-anim” am far-ainm "
-"agad agus “àrainn.tld” ’na àrainn dhligheach."
-
-#: menu/driverpage.py:45
+#: menu/driverpage.py:46
 msgid "Select the driver"
 msgstr "Tagh an draibhear"
 
-#: menu/driverpage.py:49
+#: menu/driverpage.py:50
 msgid "Write your name:"
 msgstr "Sgrìobh d’ ainm:"
 
-#: menu/driverpage.py:166 menu/driverpage.py:173 menu/driverpage.py:174
-#: menu/driverpage.py:175 menu/driverpage.py:177 menu/driverpage.py:180
+#: menu/driverpage.py:167 menu/driverpage.py:174 menu/driverpage.py:175
+#: menu/driverpage.py:176 menu/driverpage.py:178 menu/driverpage.py:181
 msgid "your name"
 msgstr "d’ ainm"
 
-#: menu/mainpage.py:96
+#: menu/mainpage.py:119
+msgid "Server problem"
+msgstr "Duilgheadas an fhrithealaiche"
+
+#: menu/mainpage.py:121
 msgid "Not up-to-date"
 msgstr "Chan eil seo cho ùr ’sa ghabhas"
 
-#: menu/mainpage.py:98
+#: menu/mainpage.py:123
 msgid "Log out"
 msgstr "Clàraich a-mach"
 
-#: menu/mainpage.py:101
+#: menu/mainpage.py:126
 msgid "Log in"
 msgstr "Clàraich a-steach"
 
-#: menu/mainpage.py:101
+#: menu/mainpage.py:126
 msgid "multiplayer"
 msgstr "ioma-chluicheadair"
 
-#: menu/mainpage.py:102
+#. i18n: This is a caption of a button.
+#: menu/mainpage.py:128
 msgid "Connecting"
 msgstr "’Ga cheangail"
 
-#: menu/mainpage.py:110
+#: menu/mainpage.py:136
 msgid "Single Player"
 msgstr "Aon chluicheadair"
 
-#: menu/mainpage.py:111
+#: menu/mainpage.py:137
 msgid "Options"
 msgstr "Roghainnean"
 
-#: menu/mainpage.py:112
+#: menu/mainpage.py:138
 msgid "Support us"
 msgstr "Thoir taic dhuinn"
 
-#: menu/mainpage.py:113
+#: menu/mainpage.py:139
 msgid "Credits"
 msgstr "Urram"
 
-#: menu/mainpage.py:115 yyagl/engine/gui/page.py:175
+#: menu/mainpage.py:141 yyagl/engine/gui/page.py:179
 msgid "Quit"
 msgstr "Fàg an-seo"
 
-#: menu/mainpage.py:132
+#: menu/mainpage.py:158
 msgid "Note: the game is work-in-progress"
 msgstr "An aire: tha sinn ag obair air a’ gheama seo fhathast"
 
-#: menu/mainpage.py:169 menu/mainpage.py:172
+#: menu/mainpage.py:195 menu/mainpage.py:198
 msgid "Last news:"
 msgstr "Na naidheachdan as ùire:"
 
-#: menu/mainpage.py:182 menu/mainpage.py:184
+#: menu/mainpage.py:208 menu/mainpage.py:210
 msgid "show"
 msgstr "seall"
+
+#: menu/registerpage.py:67
+msgid ""
+"Your account has been registered. Now, in order to activate it, you should "
+"click the link that we've sent to your email (please check your spam folder "
+"if you can't find it). After that, you can log in."
+msgstr "Chaidh an cunntas agad a chlàradh. Nise, airson a ghnìomhachadh, bu chòir dhut briogadh air a’ cheangal a chuir sinn thugad air a’ phost-d (thoir sùil air a’ phost-truilleis agad mura lorg thu e). ’S urrainn dhut clàradh a-steach an uairsin."
+
+#: menu/registerpage.py:72
+msgid "Your nickname's format is invalid: please use only letters and numbers."
+msgstr "Tha fòrmat d’ fhar-ainm mì-dhligheach: na cleachd ach litrichean is àireamhan."
+
+#: menu/registerpage.py:74
+msgid "Your email's format is invalid."
+msgstr "Tha fòrmat a’ phuist-d agad mì-dhligheach."
+
+#: menu/registerpage.py:75
+msgid "Your nickname already exists."
+msgstr "Tha d’ fhar-ainm ann mu thràth."
+
+#: menu/registerpage.py:76
+msgid "Your email has already been used."
+msgstr "Chaidh am post-d agad a chleachdadh roimhe."
 
 #: menu/singleplayerpage.py:15
 msgid "Single race"
@@ -279,10 +332,7 @@ msgid ""
 "Please, visit our site after exiting!\n"
 "\n"
 "It helps us! Thank you!"
-msgstr ""
-"Nach tadhail thu air an làrach-lìn againn às dèidh fhàgail?\n"
-"\n"
-"Cuidichidh seo sinn! Mòran taing!"
+msgstr "Nach tadhail thu air an làrach-lìn againn às dèidh fhàgail?\n\nCuidichidh seo sinn! Mòran taing!"
 
 #: menu/exitmenu/exitpage.py:19
 msgid "visit our site after exiting"
@@ -298,10 +348,7 @@ msgid ""
 "What do you want to do?\n"
 "\n"
 "Note: use '%s' for pausing the game."
-msgstr ""
-"Dè tha thu airson dèanamh?\n"
-"\n"
-"An aire: cleachd “%s” gus an geama a chur ’na stad."
+msgstr "Dè tha thu airson dèanamh?\n\nAn aire: cleachd “%s” gus an geama a chur ’na stad."
 
 #: menu/ingamemenu/ingamepage.py:26
 msgid "back to the game"
@@ -311,17 +358,17 @@ msgstr "till dhan gheama"
 msgid "back to the main menu"
 msgstr "till dhan phrìomh chlàr-taice"
 
-#: menu/multiplayer/matchfrm.py:145
+#: menu/multiplayer/matchfrm.py:160
 msgid "Start"
 msgstr "Tòisich"
 
-#: menu/multiplayer/matchfrm.py:156
+#: menu/multiplayer/matchfrm.py:171
 msgid "please wait for the server"
 msgstr "a’ feitheamh ris an fhrithealaiche"
 
-#: menu/multiplayer/exit_dlg.py:15
-#, python-format
-msgid "the server user %s has quitted"
+#: menu/multiplayer/exit_dlg.py:14
+#,  python-format
+msgid "the server user %s has quit"
 msgstr "dh’fhàg cleachdaiche %s an fhrithealaiche"
 
 #: menu/multiplayer/friend_dlg.py:15
@@ -329,72 +376,69 @@ msgstr "dh’fhàg cleachdaiche %s an fhrithealaiche"
 msgid "%s wants to be a (XMPP) friend of you, do you agree?"
 msgstr "Bu toigh le %s a bhith ’nad charaid (XMPP), a bheil thu ag aontachadh?"
 
-#: menu/multiplayer/usersfrm.py:31
+#: menu/multiplayer/usersfrm.py:32
 msgid "Current online users"
 msgstr "Cleachdaichean air loidhne an-dràsta"
 
-#: menu/multiplayer/usersfrm.py:69
+#: menu/multiplayer/usersfrm.py:70
 msgid "Your game isn't up-to-date, please update"
 msgstr "Chan eil an geama agad cho ùr ’sa ghabhas, am faigh thu ùrachadh?"
-
-#: menu/multiplayer/usersfrm.py:70
-msgid "You aren't logged in"
-msgstr "Cha do rinn thu clàradh a-steach"
 
 #: menu/multiplayer/usersfrm.py:72
 msgid "Yorg's server isn't running"
 msgstr "Chan eil frithealaiche Yorg a’ ruith"
 
-#: menu/multiplayer/usersfrm.py:141
+#: menu/multiplayer/usersfrm.py:73
+msgid "You aren't logged in"
+msgstr "Cha do rinn thu clàradh a-steach"
+
+#: menu/multiplayer/usersfrm.py:137
 msgid "invite the user to a match"
 msgstr "thoir cuireadh dhan chleachdaiche airson cluich"
 
-#: menu/multiplayer/usersfrm.py:142
+#: menu/multiplayer/usersfrm.py:138
 msgid "you can't invite more players"
 msgstr "chan urrainn dhut cuireadh a thoirt do bharrachd chleachdaichean"
 
-#: menu/multiplayer/usersfrm.py:143
+#: menu/multiplayer/usersfrm.py:139
 msgid "you're already in a match"
 msgstr "cha thu a’ cluich mar-thà"
 
-#: menu/multiplayer/usersfrm.py:144
-msgid "the user isn't playing yorg"
-msgstr "chan eil an cleachdaiche a’ cluich yorg"
-
-#: menu/multiplayer/usersfrm.py:145
+#: menu/multiplayer/usersfrm.py:140
 msgid "you've already invited this user"
 msgstr "thug thu cuireadh dhan chleachdaiche seo mu thràth"
 
-#: menu/multiplayer/usersfrm.py:146
+#: menu/multiplayer/usersfrm.py:141
 msgid "the user is already playing a match"
 msgstr "tha an cleachdaiche seo a’ cluich mar-thà"
 
-#: menu/multiplayer/messagefrm.py:60 menu/multiplayer/messagefrm.py:185
-#: menu/multiplayer/messagefrm.py:231 menu/multiplayer/messagefrm.py:476
+#: menu/multiplayer/messagefrm.py:62 menu/multiplayer/messagefrm.py:205
+#: menu/multiplayer/messagefrm.py:253 menu/multiplayer/messagefrm.py:509
 msgid "write here your message"
 msgstr "sgrìobh do theachdaireachd an-seo"
 
-#: menu/multiplayer/messagefrm.py:357 menu/multiplayer/messagefrm.py:377
+#: menu/multiplayer/messagefrm.py:379 menu/multiplayer/messagefrm.py:404
 msgid "you"
 msgstr "thusa"
 
-#: menu/multiplayer/remove_dlg.py:14
+#: menu/multiplayer/remove_dlg.py:13
 msgid "you have been removed from the match"
 msgstr "chaidh do thoirt air falbh on gheama"
 
-#: menu/multiplayer/forms.py:35
+#: menu/multiplayer/forms.py:34
 msgid "Supporter!"
 msgstr "Neach-taic!"
 
-#: menu/multiplayer/forms.py:90
+#: menu/multiplayer/forms.py:85
 msgid "send a message to the user"
 msgstr "cuir teachdaireachd ris a’ chleachdaiche"
 
-#: menu/multiplayer/forms.py:126
-msgid "isn't playing yorg"
-msgstr ""
+#: menu/multiplayer/forms.py:121
+#,  python-format
+msgid "%s isn't playing yorg"
+msgstr "chan eil %s a’ cluich yorg"
 
-#: menu/multiplayer/forms.py:185
+#: menu/multiplayer/forms.py:178
 msgid "remove from the match"
 msgstr "thoir air falbh on gheama"
 
@@ -403,60 +447,56 @@ msgid ""
 "Connection error. Please check that (i) your firewall allows traffic for "
 "Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
 "a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
-msgstr ""
-"Mearachd leis a’ cheangal. Dearbhaich (i) gun ceadaich an cachaileith-theine "
-"agad trafaig airson Yorg air port 9099 agus (ii) gun do dh’fhosgail "
-"cleachdaiche an fhrithealaiche port port 9099 (seo treòir air mar a "
-"dhearbhaicheas tu seo: http://www.ya2.it/pages/check-your-ports.html)."
+msgstr "Mearachd leis a’ cheangal. Dearbhaich (i) gun ceadaich an cachaileith-theine agad trafaig airson Yorg air port 9099 agus (ii) gun do dh’fhosgail cleachdaiche an fhrithealaiche port port 9099 (seo treòir air mar a dhearbhaicheas tu seo: http://www.ya2.it/pages/check-your-ports.html)."
 
-#: menu/multiplayer/multiplayerfrm.py:103
+#: menu/multiplayer/multiplayerfrm.py:115
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
-msgstr ""
-"Mhothaich sinn do dhuilgheadasan ceangail nuair a chruthaich sinn am "
-"frithealaiche. Thoir sùil air a’ cheangal agad."
+msgstr "Mhothaich sinn do dhuilgheadasan ceangail nuair a chruthaich sinn am frithealaiche. Thoir sùil air a’ cheangal agad."
 
-#: menu/multiplayer/multiplayerfrm.py:106
+#: menu/multiplayer/multiplayerfrm.py:118
 msgid "We can't connect to httpbin. Please retry later."
-msgstr ""
-"Chan urrainn dhuinn ceangal a dhèanamh gu httpbin. Feuch ris a-rithist an "
-"ceann greis."
+msgstr "Chan urrainn dhuinn ceangal a dhèanamh gu httpbin. Feuch ris a-rithist an ceann greis."
 
 #: menu/multiplayer/invite_dlg.py:16
 #, python-format
 msgid "%s has invited you to a match, do you agree?"
 msgstr "Thug %s cuireadh dhut airson geama, a bheil thu a’ gabhail ris?"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:179 yorg/fsm.py:170
+msgid "Sinus Aestuum"
+msgstr "Sinus Aestuum"
+
+#: yorg/yorg.py:179 yorg/fsm.py:167
 msgid "Toronto"
 msgstr "Toronto"
 
-#: yorg/yorg.py:165 yorg/fsm.py:165
+#: yorg/yorg.py:179 yorg/fsm.py:167
 msgid "Rome"
 msgstr "An Ròimh"
 
-#: yorg/yorg.py:165 yorg/fsm.py:166
+#: yorg/yorg.py:179 yorg/fsm.py:168
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:165 yorg/fsm.py:166
+#: yorg/yorg.py:180 yorg/fsm.py:168
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:166 yorg/fsm.py:167
+#: yorg/yorg.py:180 yorg/fsm.py:169
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:166 yorg/fsm.py:167
+#: yorg/yorg.py:180 yorg/fsm.py:169
 msgid "Dubai"
 msgstr "Dubai"
 
-#: yyagl/engine/gui/page.py:175
+#: yyagl/engine/gui/page.py:179
 msgid "Back"
 msgstr "Air ais"
 
-#: yyagl/engine/gui/mainpage.py:35
+#: yyagl/engine/gui/mainpage.py:33
 msgid "version: "
 msgstr "tionndadh: "
 
@@ -481,45 +521,37 @@ msgstr "taidhirean: meudaichidh iad sticeadh a’ chàir"
 msgid "suspensions: they increase car's stability"
 msgstr "crochaidhean: cuiridh e ri seasmhachd a’ chàir"
 
-#: yyagl/racing/car/logic.py:693
+#: yyagl/racing/car/logic.py:717
 msgid "wrong way"
 msgstr "rathad cearr"
 
-#: yyagl/racing/car/gui.py:161
+#: yyagl/racing/car/gui.py:169
 msgid "speed:"
 msgstr "luaths:"
 
-#: yyagl/racing/car/gui.py:163
+#: yyagl/racing/car/gui.py:171
 msgid "lap:"
 msgstr "cuairt:"
 
-#: yyagl/racing/car/gui.py:164
+#: yyagl/racing/car/gui.py:172
 msgid "time:"
 msgstr "ùine:"
 
-#: yyagl/racing/car/gui.py:165
+#: yyagl/racing/car/gui.py:173
 msgid "best lap:"
 msgstr "a’ chuairt as fhearr:"
 
-#: yyagl/racing/car/gui.py:166
+#: yyagl/racing/car/gui.py:174
 msgid "ranking:"
 msgstr "rangachadh:"
 
-#: yyagl/racing/car/gui.py:167
+#: yyagl/racing/car/gui.py:175
 msgid "damages:"
 msgstr "dochann:"
 
-#: yyagl/racing/car/gui.py:168
-msgid "weapon:"
-msgstr "arm:"
-
-#: yyagl/racing/car/gui.py:205 yyagl/racing/car/gui.py:208
-msgid "low"
-msgstr "ìosal"
-
-#: yyagl/racing/car/gui.py:209
-msgid "hi"
-msgstr "àrd"
+#: yyagl/racing/car/gui.py:178
+msgid "weapon"
+msgstr "arm"
 
 #: yyagl/racing/ranking/gui.py:27
 #: yyagl/racing/race/gui/loading/loadingpage.py:63
@@ -534,7 +566,7 @@ msgstr "Meal do naidheachd!"
 msgid "Continue"
 msgstr "Air adhart"
 
-#: yyagl/racing/race/event.py:108
+#: yyagl/racing/race/event.py:110
 #, python-format
 msgid "press %s to respawn"
 msgstr "brùth air %s airson ath-shìoladh"
@@ -619,6 +651,53 @@ msgstr "taidhirean: +"
 msgid "suspensions: +"
 msgstr "crochaidhean: +"
 
+#~ msgid "store the password"
+#~ msgstr "glèidh am facal-faire"
+
+#~ msgid "(only if your computer is not shared with other people)"
+#~ msgstr ""
+#~ "(na dèan seo ma tha thu a’ co-roinneadh a’ choimpiutair seo le daoine "
+#~ "eile)"
+
+#~ msgid ""
+#~ "1. If you are a supporter, please write us (flavio@ya2.it) your jabber id "
+#~ "so we can highlight your account as a supporter one.\n"
+#~ "2. Yorg sends your XMPP presence to other Yorg users, so they can see "
+#~ "your XMPP presence status. If you don't want this, please don't use your "
+#~ "personal account and create a new one for Yorg.\n"
+#~ "3. When you add a Yorg friend, you are adding it to your account's roster "
+#~ "too.\n"
+#~ "4. Yorg's XMPP code is still experimental: if you have important data in "
+#~ "your XMPP account, please create a new account for playing Yorg with."
+#~ msgstr ""
+#~ "1. Ma tha thu ’nan neach-taic, innis an is jabber agad dhuinn (flavio@ya2."
+#~ "it) ach an cuir sinn comharra ris a’ chunntas agad gur e neach-taic a th’ "
+#~ "annad.\n"
+#~ "2. Cuiridh Yorg do làthaireachd air XMPP gu cleachdaichean Yorg eile ach "
+#~ "am faic iad a bheil thu an làthair air XMPP. Mur eil thu ’ga iarraidh, na "
+#~ "cleachd an cunntas pearsanta agad agus cruthaich fear fa leth ùr airson "
+#~ "Yorg.\n"
+#~ "3. Ma chuireas tu caraid Yorg ris, cuiridh tu ri liosta a’ chunntais agad "
+#~ "e cuideachd.\n"
+#~ "4. Tha an còd XMPP aig Yorg deuchainneil fhathast: ma tha dàta cudromach "
+#~ "sa chunntas XMPP agad, cruthaich cunntas fa leth ùr airson Yorg a chluich "
+#~ "leis."
+
+#~ msgid ""
+#~ "The jabber id that you've inserted is not correct: it should be something "
+#~ "like nickname@domainname.tld where nickname is your nickname and "
+#~ "domainname.tld is a valid domain."
+#~ msgstr ""
+#~ "Chan eil an id jabber id a chuir thu a-steach mar bu chòir: bu chòir do "
+#~ "choltas mar “far-ainm@àrainn.tld” a bhith air agus “far-anim” am far-ainm "
+#~ "agad agus “àrainn.tld” ’na àrainn dhligheach."
+
+#~ msgid "low"
+#~ msgstr "ìosal"
+
+#~ msgid "hi"
+#~ msgstr "àrd"
+
 #~ msgid ""
 #~ "Connection error. Please check that your router is configured for doing "
 #~ "port-forwarding for port 9099 on your host and your firewall allows "
@@ -630,9 +709,6 @@ msgstr "crochaidhean: +"
 
 #~ msgid "Client"
 #~ msgstr "Cliant"
-
-#~ msgid "connection from "
-#~ msgstr "ceangal o "
 
 #~ msgid "Testing"
 #~ msgstr "Deuchainnean"

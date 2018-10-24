@@ -1,8 +1,11 @@
-from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui
+from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui, MenuFacade
+from yyagl.gameobject import GameObject
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
 from .loginpage import LogInPage
+from .registerpage import RegisterPage
+from .resetpage import ResetPage
 from .trackpage import TrackPage, TrackPageServer
 from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
@@ -29,6 +32,10 @@ class MenuProps(object):
 
 class YorgMenuLogic(MenuLogic):
 
+    def __init__(self, mediator, yorg_client):
+        MenuLogic.__init__(self, mediator)
+        self.yorg_client = yorg_client
+
     def on_push_page(self, page_code, args=[]):
         if page_code == 'singleplayer':
             self.eng.log('single player')
@@ -37,15 +44,20 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_continue)
         if page_code == 'login':
             self.eng.log('login')
-            page = LogInPage(args[0])
-            page.gui.attach(self.on_login)
+            page = LogInPage(args[0], args[1])
+        if page_code == 'register':
+            self.eng.log('register')
+            page = RegisterPage(args[0])
+        if page_code == 'reset':
+            self.eng.log('reset')
+            page = ResetPage(args[0])
         if page_code == 'single_race':
             self.eng.log('single race')
             page = TrackPage(args[0])
             page.gui.attach(self.on_track_selected)
         if page_code == 'trackpageserver':
             self.eng.log('track page server')
-            page = TrackPageServer(args[0])
+            page = TrackPageServer(args[0], args[1])
             page.gui.attach(self.on_track_selected)
         if page_code == 'new_season':
             self.eng.log('new season')
@@ -57,11 +69,12 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageserver':
             self.eng.log('car page server')
-            page = CarPageServer(args[0], self.mediator.track)
+            #page = CarPageServer(args[0], self.mediator.track, self.yorg_client)
+            page = CarPageClient(args[0], self.mediator.track, self.yorg_client)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             self.eng.log('car page client')
-            page = CarPageClient(args[0], self.mediator.track)
+            page = CarPageClient(args[0], self.mediator.track, self.yorg_client)
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
             self.eng.log('driver page')
@@ -69,11 +82,11 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driverpageserver':
             self.eng.log('driver page server')
-            page = DriverPageServer(args[0], args[1], args[2])
+            page = DriverPageServer(args[0], args[1], args[2], self.yorg_client)
             page.gui.attach(self.on_driver_selected_server)
         if page_code == 'driverpageclient':
             self.eng.log('driver page client')
-            page = DriverPageClient(args[0], args[1], args[2])
+            page = DriverPageClient(args[0], args[1], args[2], self.yorg_client)
             page.gui.attach(self.on_driver_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
@@ -113,7 +126,7 @@ class YorgMenuLogic(MenuLogic):
 
     def on_quit(self, page_code, args=[]):
         self.mediator.gui.notify('on_quit')
-        MenuLogic.on_quit(self, page_code)
+        MenuLogic.on_quit(self)
 
     def on_track_selected(self, track):
         self.mediator.track = track
@@ -146,11 +159,11 @@ class YorgMenuLogic(MenuLogic):
 
 class YorgMenuGui(MenuGui):
 
-    def __init__(self, mediator, menu_props):
+    def __init__(self, mediator, menu_props, yorg_client):
         # every page should not manage following pages by forwarding params:
         # each page should callback the menu and it should spawn the next one
         MenuGui.__init__(self, mediator, menu_props.gameprops.menu_args)
-        page = YorgMainPage(menu_props)
+        page = YorgMainPage(menu_props, yorg_client)
         page.gui.attach(self.on_login)
         page.gui.attach(self.on_logout)
         page.gui.attach(self.on_exit)
@@ -169,3 +182,10 @@ class YorgMenuGui(MenuGui):
 class YorgMenu(Menu):
     gui_cls = YorgMenuGui
     logic_cls = YorgMenuLogic
+
+    def __init__(self, menu_args, yorg_client):
+        comps = [
+            [('logic', self.logic_cls, [self, yorg_client])],
+            [('gui', self.gui_cls, [self, menu_args, yorg_client])]]
+        GameObject.__init__(self, comps)
+        MenuFacade.__init__(self)

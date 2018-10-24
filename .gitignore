@@ -9,7 +9,7 @@ venv/
 .pydevproject
 .sconsign.dblite
 .settings/
-options.yml
+options*.yml
 *.geany
 *.tags
 yorg_error.txt

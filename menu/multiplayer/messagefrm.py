@@ -28,21 +28,23 @@ class Chat(GameObject):
 
 class MUC(Chat):
 
-    def __init__(self, dst):
+    def __init__(self, dst, yorg_client):
         Chat.__init__(self, dst)
         self.users = []
+        self.yorg_client = yorg_client
 
     @property
     def title(self):
-        is_me = lambda usr: usr == self.eng.xmpp.client.boundjid.bare
+        is_me = lambda usr: usr == self.yorg_client.myid
         return ', '.join(sorted(self.users, key=is_me))
 
 
 class MatchMsgFrm(GameObject):
 
-    def __init__(self, menu_args):
+    def __init__(self, menu_args, yorg_client):
         GameObject.__init__(self)
         self.eng.log('created match message form')
+        self.yorg_client = yorg_client
         self.chat = None
         self.msg_frm = DirectFrame(
             frameSize=(-.02, 2.5, 0, 1.22),
@@ -133,44 +135,59 @@ class MatchMsgFrm(GameObject):
     def on_typed_msg(self, val):
         #self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
         self.ent.set('')
-        self.eng.xmpp.client.send_message(
-            mfrom=self.eng.xmpp.client.boundjid.full,
-            mto=self.chat.dst,
-            mtype='groupchat',
-            mbody=val)
+        self.eng.client.send([
+            'msg_room', self.yorg_client.myid, self.chat.dst, val])
+        #self.eng.xmpp.client.send_message(
+        #    mfrom=self.eng.xmpp.client.boundjid.full,
+        #    mto=self.chat.dst,
+        #    mtype='groupchat',
+        #    mbody=val)
         self.ent['focus'] = 1
 
-    def on_groupchat_msg(self, msg):
-        src = str(JID(msg['mucnick']))
-        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
-        self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
-        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+    def on_groupchat_msg(self, from_, to, txt):
+        #src = str(JID(msg['mucnick']))
+        #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        src = from_
+        #self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
+        self.eng.log('received groupchat message from %s in the chat %s' % (from_, to))
+        #str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+        str_msg = '\1italic\1' + src + '\2: ' + txt
         if not self.chat:
-            self.chat = MUC(str(JID(msg['from']).bare))
+            #self.chat = MUC(str(JID(msg['from']).bare), self.yorg_client)
+            self.chat = MUC(to, self.yorg_client)
         self.chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(self.chat)
-        elif self.chat.dst == str(JID(msg['from']).bare):
+        #elif self.chat.dst == str(JID(msg['from']).bare):
+        elif self.chat.dst == to:
             self.add_msg_txt(str_msg)
 
-    def on_presence_available_room(self, msg):
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
-        self.eng.log('user %s has logged in the chat %s' %(nick, room))
-        self.chat.users += [nick]
+    def on_presence_available_room(self, uid, room):
+        #room = str(JID(msg['muc']['room']).bare)
+        #nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has logged in the chat %s' % (uid, room))
+        self.chat.users += [uid]
         self.set_title(self.chat.title)
 
-    def on_presence_unavailable_room(self, msg):
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
+    def on_presence_unavailable_room(self, uid, room_name):
+        room = room_name
+        nick = uid
         self.eng.log('user %s has left the chat %s' %(nick, room))
-        self.chat.users.remove(nick)
+        if nick in self.chat.users: # it is being removed multiple times when
+                                    # you remove a user who has accepted
+            self.chat.users.remove(nick)
         self.set_title(self.chat.title)
+
+    def on_rm_usr_from_match(self, uid):
+        if uid in self.chat.users:  # it is being removed multiple times when
+                                    # you remove a user who has accepted
+            self.chat.users.remove(uid)
+        self.update_title()
 
     def add_groupchat(self, room, usr):
         self.set_title(usr)
         if not self.chat:
-            self.chat = MUC(room)
+            self.chat = MUC(room, self.yorg_client)
         self.set_chat(self.chat)
 
     def set_chat(self, chat):
@@ -180,6 +197,9 @@ class MatchMsgFrm(GameObject):
             self.msg_txt.textNode.getLowerRight3d()[2]
         self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
         self.ent['state'] = NORMAL
+
+    def update_title(self):
+        self.set_title(self.chat.title)
 
     def on_focus(self, val):
         if val == 'in' and self.ent.get() == _('write here your message'):
@@ -191,10 +211,12 @@ class MatchMsgFrm(GameObject):
         self.msg_frm.destroy()
         GameObject.destroy(self)
 
+
 class MessageFrm(GameObject):
 
-    def __init__(self, menu_args):
+    def __init__(self, menu_args, yorg_client):
         GameObject.__init__(self)
+        self.yorg_client = yorg_client
         self.eng.log('created message form')
         self.chats = []
         self.curr_chat = None
@@ -356,89 +378,100 @@ class MessageFrm(GameObject):
     def on_typed_msg(self, val):
         self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
         self.ent.set('')
-        if self.curr_chat.dst not in self.presences_sent and \
-                not str(self.curr_chat.dst).startswith('yorg'):
-            self.eng.xmpp.client.send_presence(
-                pfrom=self.eng.xmpp.client.boundjid.full,
-                pto=self.curr_chat.dst)
-            self.presences_sent += [self.curr_chat.dst]
-        if str(self.curr_chat.dst).startswith('yorg'):
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=self.curr_chat.dst,
-                mtype='groupchat',
-                mbody=val)
+        #if self.curr_chat.dst not in self.presences_sent and \
+        #        not str(self.curr_chat.dst).startswith('yorg'):
+        #    self.eng.xmpp.client.send_presence(
+        #        pfrom=self.eng.xmpp.client.boundjid.full,
+        #        pto=self.curr_chat.dst)
+        #    self.presences_sent += [self.curr_chat.dst]
+        #if str(self.curr_chat.dst).startswith('yorg'):
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=self.curr_chat.dst,
+        #        mtype='groupchat',
+        #        mbody=val)
+        #else:
+        #    self.eng.xmpp.client.send_message(
+        #        mfrom=self.eng.xmpp.client.boundjid.full,
+        #        mto=self.curr_chat.dst,
+        #        msubject='chat',
+        #        mbody=val)
+        if len(self.curr_chat.dst) > 12 and all(char.isdigit() for char in self.curr_chat.dst[-12:]):
+            self.eng.client.send([
+                'msg_room', self.yorg_client.myid, self.curr_chat.dst, val])
         else:
-            self.eng.xmpp.client.send_message(
-                mfrom=self.eng.xmpp.client.boundjid.full,
-                mto=self.curr_chat.dst,
-                msubject='chat',
-                mbody=val)
+            self.eng.client.send(['msg', self.yorg_client.myid, self.curr_chat.dst, val])
         msg = '\1italic\1' + _('you') + '\2: ' + val
         self.curr_chat.messages += [msg]
         self.ent['focus'] = 1
 
-    def on_msg(self, msg):
-        src = str(JID(msg['from']).bare)
-        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
-        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
-        chat = self.__find_chat(msg['from'])
+    def on_msg(self, from_, to, txt):
+        #src = str(JID(msg['from']).bare)
+        #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        str_msg = '\1italic\1' + from_ + '\2: ' + txt
+        chat = self.__find_chat(from_)
         if not chat:
-            chat = Chat(msg['from'])
+            chat = Chat(from_)
             self.chats += [chat]
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(chat)
-        elif JID(self.curr_chat.dst).bare == JID(msg['from']).bare:
+        elif self.curr_chat.dst == from_:
             self.add_msg_txt(str_msg)
         else:
             chat.read = False
             chat.closed = False
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
-    def on_groupchat_msg(self, msg):
-        if str(JID(msg['from']).bare) == self.curr_match_room:
+    def on_groupchat_msg(self, from_, to, txt):
+        #if str(JID(msg['from']).bare) == self.curr_match_room:
+        if to == self.curr_match_room:
             if self.match_msg_frm:  # we're still in the room page
-                self.match_msg_frm.on_groupchat_msg(msg)
-        src = str(JID(msg['mucnick']))
-        src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
-        self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
-        str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+                self.match_msg_frm.on_groupchat_msg(from_, to, txt)
+        #src = str(JID(msg['mucnick']))
+        #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
+        src = from_
+        #self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
+        self.eng.log('received groupchat message from %s in the chat %s' % (from_, to))
+        #str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
+        str_msg = '\1italic\1' + src + '\2: ' + txt
         chat = self.curr_chat
         if not chat:
-            chat = MUC(str(JID(msg['from']).bare))
+            #chat = MUC(str(JID(msg['from']).bare))
+            chat = MUC(to)
             self.chats += [chat]
         chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(chat)
-        elif self.curr_chat.dst == str(JID(msg['from']).bare):
+        #elif self.curr_chat.dst == str(JID(msg['from']).bare):
+        elif self.curr_chat.dst == to:
             self.add_msg_txt(str_msg)
         else:
             chat.read = False
             chat.closed = False
             self.arrow_btn['frameTexture'] = 'assets/images/gui/message.txo'
 
-    def on_presence_available_room(self, msg):
-        if str(JID(msg['from']).bare) == self.curr_match_room:
-            self.match_msg_frm.on_presence_available_room(msg)
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
-        self.eng.log('user %s has logged in the chat %s' %(nick, room))
+    def on_presence_available_room(self, uid, room):
+        if room == self.curr_match_room:
+            self.match_msg_frm.on_presence_available_room(uid, room)
+        #room = str(JID(msg['muc']['room']).bare)
+        #nick = str(msg['muc']['nick'])
+        self.eng.log('user %s has logged in the chat %s' %(uid, room))
         chat = self.__find_chat(room)
-        chat.users += [nick]
-        if str(JID(msg['from']).bare) != self.curr_match_room:
+        chat.users += [uid]
+        if room != self.curr_match_room:
             if self.curr_chat.dst == room:
                 self.set_title(chat.title)
 
-    def on_presence_unavailable_room(self, msg):
-        if self.match_msg_frm and str(JID(msg['from']).bare) == self.curr_match_room:
-            self.match_msg_frm.on_presence_unavailable_room(msg)
+    def on_presence_unavailable_room(self, uid, room_name):
+        if self.match_msg_frm and room_name == self.curr_match_room:
+            self.match_msg_frm.on_presence_unavailable_room(uid, room_name)
             return
-        room = str(JID(msg['muc']['room']).bare)
-        nick = str(msg['muc']['nick'])
+        room = room_name
+        nick = uid
         self.eng.log('user %s has left the chat %s' %(nick, room))
         chat = self.__find_chat(room)
-        if nick == self.eng.xmpp.client.boundjid.bare:
+        if nick == self.yorg_client.myid:
             self.on_close()
         else:
             chat.users.remove(nick)
@@ -462,7 +495,7 @@ class MessageFrm(GameObject):
         self.set_title(usr)
         chat = self.__find_chat(room)
         if not chat:
-            chat = MUC(room)
+            chat = MUC(room, self.yorg_client)
             self.chats += [chat]
         chat.users += [usr]
         self.set_chat(chat)
@@ -487,6 +520,6 @@ class MessageFrm(GameObject):
     def add_match_chat(self, room, usr):
         if self.curr_match_room: return
         self.curr_match_room = room
-        self.match_msg_frm = MatchMsgFrm(self.menu_args)
+        self.match_msg_frm = MatchMsgFrm(self.menu_args, self.yorg_client)
         self.match_msg_frm.attach(self.on_match_msg_focus)
         self.match_msg_frm.add_groupchat(room, usr)

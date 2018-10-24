@@ -45,7 +45,7 @@ class InGamePageGuiMultiplayer(PageGui):
         self.eng.hide_standard_cursor()
         evt_name = 'back' if back_to_game else 'exit'
         if self.eng.server.is_active and not back_to_game:
-            self.eng.server.send([NetMsgs.end_race])
+            self.eng.client.send(['end_race'])
         self.notify('on_ingame_' + evt_name)
 
 

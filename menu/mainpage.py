@@ -3,6 +3,9 @@ import argparse
 from feedparser import parse
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
+from xml.parsers.expat import ExpatError
+from socket import socket, AF_INET, SOCK_DGRAM, SOCK_STREAM, gaierror, error, \
+    SOL_SOCKET, SO_REUSEADDR, timeout
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
@@ -16,27 +19,29 @@ from .optionpage import OptionPageProps
 
 class YorgMainPageGui(MainPageGui):
 
-    def __init__(self, mediator, mainpage_props):
+    def __init__(self, mediator, mainpage_props, yorg_client):
         self.__feed_type = ''
         self.__date_field = ''
         self.props = mainpage_props
+        self.yorg_client = yorg_client
         self.load_settings()
         self.conn_attempted = False
         self.ver_check = VersionChecker()
         MainPageGui.__init__(self, mediator, self.props.gameprops.menu_args)
         if self.ver_check.is_uptodate():
             options = self.props.opt_file
-            user = options['settings']['xmpp']['usr']
-            password = options['settings']['xmpp']['pwd']
+            user = options['settings']['login']['usr']
+            password = options['settings']['login']['pwd']
             parser = argparse.ArgumentParser()
             parser.add_argument('--user')
             parser.add_argument('--pwd')
             parser.add_argument('--win_orig')
+            parser.add_argument('--optfile')
             args = parser.parse_args()
             if args.user and args.pwd:
                 user = args.user
                 password = args.pwd
-            if user and password and not self.eng.xmpp.client:
+            if user and password and yorg_client.is_server_up:
             # if user:
                 # if platform.startswith('linux'): set_keyring(Keyring())
                 # pwd = get_password('ya2_rog', user)
@@ -44,7 +49,21 @@ class YorgMainPageGui(MainPageGui):
                     pwd = password
                     # set_password('ya2_rog', user, pwd)
                 # self.eng.xmpp.start(user, pwd)
-                    self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
+                    #self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
+                    self.eng.client.register_rpc('login')
+                    if not self.eng.client.netw_thr or \
+                            not self.eng.client.netw_thr.is_running:
+                        yorg_client.restart()
+                    while not self.eng.client.netw_thr: pass
+                    # wait for the thread
+                    ret_val = 'ok'
+                    if not yorg_client.authenticated:
+                        ret_val = self.eng.client.login(user, password)
+                    if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
+                        return self.on_ko(ret_val)
+                    taskMgr.doMethodLater(.1, lambda task: self.on_ok(), 'x')
+                    # otherwise the menu is not attached to the page yet
+
             if not (user and password):
                 self.on_ko()
 
@@ -53,29 +72,32 @@ class YorgMainPageGui(MainPageGui):
         self.widgets[5]['text'] = self.get_label()
 
     def on_ok(self):
+        self.yorg_client.authenticated = True
         self.conn_attempted = True
+        #self.eng.xmpp.send_connected()
+        self.yorg_client.start(self.props.opt_file['settings']['login']['usr'])
+        self.notify('on_login')
         self.widgets[5]['text'] = self.get_label()
-        self.eng.xmpp.send_connected()
-        # self.notify('on_login')
 
     def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
         self.widgets[5]['text'] = self.get_label()
 
     def on_logout(self):
-        self.eng.xmpp.disconnect()
+        #self.eng.xmpp.disconnect()
+        self.yorg_client.authenticated = False
         options = self.props.opt_file
-        options['settings']['xmpp']['usr'] = ''
-        options['settings']['xmpp']['pwd'] = ''
+        options['settings']['login']['usr'] = ''
+        options['settings']['login']['pwd'] = ''
         options.store()
         self.widgets[5]['text'] = self.get_label()
         self.notify('on_logout')
 
     def on_login(self):
-        self.notify('on_push_page', 'login', [self.props])
+        self.notify('on_push_page', 'login', [self.props, self.yorg_client])
 
     def on_loginout(self):
-        if self.eng.xmpp.client and self.eng.xmpp.client.authenticated:
+        if self.eng.client.is_active and self.yorg_client.authenticated:
             self.on_logout()
         elif self.conn_attempted:
             self.on_login()
@@ -90,15 +112,19 @@ class YorgMainPageGui(MainPageGui):
         self.antialiasing = sett['antialiasing']
         self.cars_num = sett['cars_number']
         self.shaders = sett['shaders']
+        self.camera = sett['camera']
 
     def get_label(self):
+        if not self.yorg_client.is_server_up:
+            return _('Server problem')
         if not self.ver_check.is_uptodate():
             return _('Not up-to-date')
-        if self.eng.xmpp.client and self.eng.xmpp.client.authenticated:
+        if self.eng.client.is_active and self.yorg_client.authenticated:
             return _('Log out') + \
-                ' \1small\1(%s)\2' % self.eng.xmpp.client.boundjid.bare
+                ' \1small\1(%s)\2' % self.props.opt_file['settings']['login']['usr']
         elif self.conn_attempted:
             return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
+        #i18n: This is a caption of a button.
         return _('Connecting')
 
     def build(self):
@@ -111,7 +137,7 @@ class YorgMainPageGui(MainPageGui):
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
-            ('Not up-to-date', self.get_label(), self.on_loginout),
+            ('Server problem', self.get_label(), self.on_loginout),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
             Btn(text='', pos=(0, 1, .64-i*.23), command=menu[2],
@@ -142,7 +168,7 @@ class YorgMainPageGui(MainPageGui):
         self.load_settings()
         option_props = OptionPageProps(
             self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
-            self.antialiasing, self.shaders, self.cars_num,
+            self.antialiasing, self.shaders, self.cars_num, self.camera,
             self.props.opt_file)
         self.notify('on_push_page', 'options', [option_props])
 
@@ -217,10 +243,10 @@ class YorgMainPageGui(MainPageGui):
 class YorgMainPage(MainPage, PageFacade):
     gui_cls = YorgMainPageGui
 
-    def __init__(self, mainpage_props):
+    def __init__(self, mainpage_props, yorg_client):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mainpage_props])]]
+            [('gui', self.gui_cls, [self, mainpage_props, yorg_client])]]
         GameObject.__init__(self, init_lst)
         # don't construct it using GameObject
         PageFacade.__init__(self)

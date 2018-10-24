@@ -9,8 +9,9 @@ from .thankspage import ThanksPageGui
 
 class TrackPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, trackpage_props):
+    def __init__(self, mediator, trackpage_props, room):
         self.props = trackpage_props
+        self.room = room
         ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_args)
 
     def build(self):
@@ -19,7 +20,7 @@ class TrackPageGui(ThanksPageGui):
         self.add_widgets([txt])
         t_a = self.menu_args.text_args.copy()
         t_a['scale'] = .06
-        tracks_per_row = 3
+        tracks_per_row = 4
         gprops = self.props.gameprops
         for row, col in product(range(2), range(tracks_per_row)):
             if row * tracks_per_row + col >= len(gprops.season_tracks):
@@ -30,7 +31,7 @@ class TrackPageGui(ThanksPageGui):
             x_offset = .3 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
                 scale=.3,
-                pos=(-.8 + col * .6 + x_offset, 1, .4 - z_offset - row * .7),
+                pos=(-1.4 + col * .6 + x_offset, 1, .4 - z_offset - row * .7),
                 frameColor=(0, 0, 0, 0),
                 image=gprops.track_img % gprops.season_tracks[
                     col + row * tracks_per_row],
@@ -39,7 +40,7 @@ class TrackPageGui(ThanksPageGui):
                 **self.menu_args.imgbtn_args)
             txt = Text(
                 gprops.tracks_tr()[col + row * tracks_per_row],
-                pos=(-.8 + col * .6 + x_offset, .14 - z_offset - row * .7),
+                pos=(-1.4 + col * .6 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
             self.add_widgets([btn, txt])
         ThanksPageGui.build(self, exit_behav=self.eng.server.is_active)
@@ -55,16 +56,16 @@ class TrackPageGuiServer(TrackPageGui):
     def on_track(self, track):
         self.notify('on_track_selected', track)
         self.notify('on_push_page', 'carpageserver', [self.props])
-        self.eng.server.send([NetMsgs.track_selected, track])
+        self.eng.client.send(['track_selected', track, self.room])
 
 
 class TrackPage(Page):
     gui_cls = TrackPageGui
 
-    def __init__(self, trackpage_props):
+    def __init__(self, trackpage_props, room=None):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, trackpage_props])]]
+            [('gui', self.gui_cls, [self, trackpage_props, room])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__

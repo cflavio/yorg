@@ -16,11 +16,12 @@ from .forms import UserFrmListMe, UserFrmList
 
 class UsersFrm(GameObject):
 
-    def __init__(self, menu_args, yorg_srv):
+    def __init__(self, menu_args, yorg_srv, yorg_client):
         GameObject.__init__(self)
         self.eng.log('create users form')
         self.ver_check = VersionChecker()
         self.yorg_srv = yorg_srv
+        self.yorg_client = yorg_client
         self.room_name = None
         self.labels = []
         self.invited_users = []
@@ -67,9 +68,10 @@ class UsersFrm(GameObject):
         txt = ''
         if not self.ver_check.is_uptodate():
             txt = _("Your game isn't up-to-date, please update")
-        elif not self.eng.xmpp.client: txt = _("You aren't logged in")
-        elif not self.eng.xmpp.is_server_up:
+        elif not self.yorg_client.is_server_up:
             txt = _("Yorg's server isn't running")
+        elif not self.yorg_client.authenticated: txt = _("You aren't logged in")
+        (self.conn_lab.show if txt else self.conn_lab.hide)()
         self.conn_lab['text'] = txt
 
     def set_size(self, full=True):
@@ -87,15 +89,15 @@ class UsersFrm(GameObject):
 
     def on_users(self):
         self.set_connection_label()
-        bare_users = [self.trunc(user.name, 20)
-                      for user in self.eng.xmpp.users_nodup]
+        bare_users = [self.trunc(user.uid, 20)
+                      for user in self.yorg_client.sorted_users]
         for lab in self.labels[:]:
             _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
             if _lab not in bare_users:
-                if _lab not in self.eng.xmpp.client.client_roster.keys():
+                if _lab not in self.yorg_client.users:
                     lab.destroy()
                     self.labels.remove(lab)
-        nusers = len(self.eng.xmpp.users_nodup)
+        nusers = len(self.yorg_client.sorted_users)
         invite_btn = len(self.invited_users) < 8
         invite_btn = invite_btn and not self.in_match_room and not self.invited
         top = .08 * nusers + .08
@@ -103,25 +105,19 @@ class UsersFrm(GameObject):
         label_users = [lab.lab.lab['text'] for lab in self.labels]
         clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
         label_users = map(clean, label_users)
-        for i, user in enumerate(self.eng.xmpp.users_nodup):
-            usr_inv = invite_btn and user.is_in_yorg
-            if self.trunc(user.name, 20) not in label_users:
-                if self.eng.xmpp.client.boundjid.bare != user.name:
+        for i, user in enumerate(self.yorg_client.sorted_users):
+            if self.trunc(user.uid, 20) not in label_users:
+                if self.yorg_client.myid != user.uid:
                     lab = UserFrmList(
-                        self.trunc(user.name, 20),
-                        user,
+                        user.uid,
                         user.is_supporter,
-                        user.is_online,
-                        self.eng.xmpp.is_friend(user.name),
-                        user.is_in_yorg,
                         user.is_playing,
                         (0, 1, top - .08 - .08 * i),
                         self.frm.getCanvas(),
-                        self.menu_args)
+                        self.menu_args, self.yorg_client)
                 else:
                     lab = UserFrmListMe(
-                        self.trunc(user.name, 20),
-                        user,
+                        user.uid,
                         user.is_supporter,
                         (0, 1, top - .08 - .08 * i),
                         self.frm.getCanvas(),
@@ -131,64 +127,65 @@ class UsersFrm(GameObject):
                 lab.attach(self.on_friend)
                 lab.attach(self.on_unfriend)
                 lab.attach(self.on_add_chat)
-        for i, user in enumerate(self.eng.xmpp.users_nodup):
+        for i, user in enumerate(self.yorg_client.sorted_users):
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
             lab = [lab for lab in self.labels
-                   if clean(lab.lab.lab['text']) == self.trunc(user.name, 20)][0]
-            enb_val = usr_inv and user.name not in self.invited_users and user.is_in_yorg and not user.is_playing
+                   if clean(lab.lab.lab['text']) == self.trunc(user.uid, 20)][0]
+            enb_val = invite_btn and user.uid not in self.invited_users and not user.is_playing
             if hasattr(lab, 'invite_btn'):
                 inv_btn = lab.invite_btn
                 if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
                 elif len(self.invited_users) == 8: inv_btn.tooltip['text'] = _("you can't invite more players")
                 elif self.in_match_room: inv_btn.tooltip['text'] = _("you're already in a match")
-                elif not user.is_in_yorg: inv_btn.tooltip['text'] = _("the user isn't playing yorg")
-                elif user.name in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
+                elif user.uid in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
                 elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
             lab.enable_invite_btn(enb_val)
             lab.frm.set_z(top - .08 - .08 * i)
             lab.lab.set_supporter(user.is_supporter)
-            lab.lab.set_online(user.is_online)
 
     def on_invite(self, usr):
         self.notify('on_invite', usr)
-        if not (self.eng.server.public_addr and self.eng.server.local_addr): return
-        self.invited_users += [usr.name]
+        self.invited_users += [usr.uid]
         self.on_users()
         if not self.room_name:
-            jid = self.eng.xmpp.client.boundjid
-            time_code = strftime('%y%m%d%H%M%S')
-            srv = self.eng.xmpp.client.conf_srv
-            self.room_name = 'yorg' + jid.user + time_code + '@' + srv
-            self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
-                self.room_name, self.eng.xmpp.client.boundjid.bare,
-                pfrom=self.eng.xmpp.client.boundjid.full)
-            cfg = self.eng.xmpp.client.plugin['xep_0045'].getRoomConfig(self.room_name)
-            values = cfg.get_values()
-            values['muc#roomconfig_publicroom'] = False
-            cfg.set_values(values)
-            self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
-            self.eng.log('created room ' + self.room_name)
-            for usr_name in [self.yorg_srv] + \
-                [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
-                self.eng.xmpp.client.send_message(
-                    mfrom=self.eng.xmpp.client.boundjid.full,
-                    mto=usr_name,
-                    mtype='ya2_yorg',
-                    msubject='is_playing',
-                    mbody='1')
-        self.eng.xmpp.client.send_message(
-            mfrom=self.eng.xmpp.client.boundjid.full,
-            mto=usr.name_full,
-            mtype='ya2_yorg',
-            msubject='invite',
-            mbody=self.room_name + '\n' + self.eng.server.public_addr + '\n' + self.eng.server.local_addr)
-        self.eng.log('invited ' + str(usr.name_full))
-        self.notify('on_add_groupchat', self.room_name, usr.name)
 
-    def on_declined(self, msg):
-        self.eng.log('declined from ' + str(JID(msg['from']).bare))
-        usr = str(JID(msg['from']).bare)
-        self.invited_users.remove(usr)
+            time_code = strftime('%y%m%d%H%M%S')
+            self.room_name = self.yorg_client.myid + time_code
+            #self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
+            #    self.room_name, self.eng.xmpp.client.boundjid.bare,
+            #    pfrom=self.eng.xmpp.client.boundjid.full)
+            #cfg = self.eng.xmpp.client.plugin['xep_0045'].getRoomConfig(self.room_name)
+            #values = cfg.get_values()
+            #values['muc#roomconfig_publicroom'] = False
+            #cfg.set_values(values)
+            #self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
+            self.eng.client.register_rpc('join_room')
+            self.eng.client.join_room(self.room_name)
+            self.eng.log('created room ' + self.room_name)
+            self.yorg_client.is_server_active = True
+            #for usr_name in [self.yorg_srv] + \
+            #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
+            #    self.eng.xmpp.client.send_message(
+            #        mfrom=self.eng.xmpp.client.boundjid.full,
+            #        mto=usr_name,
+            #        mtype='ya2_yorg',
+            #        msubject='is_playing',
+            #        mbody='1')
+        self.eng.client.register_rpc('invite')
+        ret = self.eng.client.invite(usr.uid, self.room_name)
+        #self.eng.xmpp.client.send_message(
+        #    mfrom=self.eng.xmpp.client.boundjid.full,
+        #    mto=usr.name_full,
+        #    mtype='ya2_yorg',
+        #    msubject='invite',
+        #    mbody=self.room_name + '\n' + self.eng.server.public_addr + '\n' + self.eng.server.local_addr)
+        if ret == 'ok':
+            self.eng.log('invited ' + str(usr.uid))
+            self.notify('on_add_groupchat', self.room_name, usr.uid)
+
+    def on_declined(self, from_):
+        self.eng.log('declined from ' + from_)
+        self.invited_users.remove(from_)
         self.on_users()
 
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)
