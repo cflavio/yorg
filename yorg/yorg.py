@@ -1,7 +1,7 @@
 import argparse
 from sys import platform
 from copy import deepcopy
-from os.path import join, exists
+from os.path import exists
 from panda3d.core import Filename
 from yyagl.game import Game
 from yyagl.dictfile import DctFile
@@ -15,6 +15,7 @@ from .event import YorgEvent
 from .fsm import YorgFsm
 from .audio import YorgAudio
 from .thanksnames import ThanksNames
+from yyagl.lib.p3d.p3d import LibP3d
 
 
 class DriverPaths(object):
@@ -113,7 +114,7 @@ class Yorg(Game):
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows
-            opt_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
+            opt_path = str(Filename.get_user_appdata_directory()) + '/Yorg'
         parser = argparse.ArgumentParser()
         parser.add_argument('--win_orig')
         parser.add_argument('--user')
@@ -125,7 +126,8 @@ class Yorg(Game):
         optfile = args.optfile if args.optfile else 'options.yml'
         old_def = deepcopy(default_opt)
         self.options = DctFile(
-            join(opt_path, optfile) if opt_path else optfile, default_opt)
+            LibP3d.fixpath(opt_path + '/' + optfile) if opt_path else optfile,
+            default_opt)
         if self.options['development']['server'] == '':
             self.options['development']['server'] = old_def['development']['server']
         opt_dev = self.options['development']

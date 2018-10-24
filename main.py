@@ -1,8 +1,9 @@
 # log ########################################################################
 import sys
-from os.path import exists, join
+from os.path import exists
 from panda3d.core import MultiplexStream, Notify, Filename
 from yorg.yorg import Yorg
+from yyagl.lib.p3d.p3d import LibP3d
 import direct.particles.ParticleManagerGlobal  # for deploy-ng
 
 
@@ -11,21 +12,18 @@ if sys.platform != 'darwin' and not exists('main.py'):
     log_path = ''
     # is it the deployed windows version?
     if sys.platform == 'win32' and not exists('main.py'):
-        log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
+        log_path = LibP3d.fixpath(str(Filename.get_user_appdata_directory()) + '/Yorg')
         if not exists(log_path):
             Filename.mkdir(Filename(log_path))
-    try:
-        ofile = 'yorg_output.txt'
-        opath = join(log_path, ofile) if log_path else ofile
-        sys.stdout = open(opath, 'w')
-        epath = join(log_path, 'yorg_error.txt') if log_path else 'yorg_error.txt'
-        sys.stderr = open(epath, 'w')
-        nout = MultiplexStream()
-        Notify.ptr().setOstreamPtr(nout, 0)
-        lpath = join(log_path, 'yorg_log.txt') if log_path else 'yorg_log.txt'
-        nout.addFile(lpath)
-    except IOError: pass  # it doesn't work with deploy-ng but we don't care:
-                          # we've deployng's logging; remove in panda3d 1.10
+    ofile = 'yorg_output.txt'
+    opath = (log_path + '/' + ofile) if log_path else ofile
+    sys.stdout = open(LibP3d.fixpath(opath), 'w')
+    epath = (log_path + '/yorg_error.txt') if log_path else 'yorg_error.txt'
+    sys.stderr = open(LibP3d.fixpath(epath), 'w')
+    nout = MultiplexStream()
+    Notify.ptr().setOstreamPtr(nout, 0)
+    lpath = (log_path + '/yorg_log.txt') if log_path else 'yorg_log.txt'
+    nout.addFile(lpath)
 
 
 # main #######################################################################
@@ -39,10 +37,10 @@ if __name__ == '__main__' or exists('main.pyo'):
         log_path = ''
         # is it the deployed windows version?
         if sys.platform == 'win32' and not exists('main.py'):
-            log_path = join(str(Filename.get_user_appdata_directory()), 'Yorg')
+            log_path = LibP3d.fixpath(str(Filename.get_user_appdata_directory()) + '/Yorg')
             if not exists(log_path):
                 Filename.mkdir(Filename(log_path))
-        epath = join(log_path, 'yorg_error.txt') if log_path else 'yorg_error.txt'
-        with open(epath, 'a') as f:
+        epath = (log_path + '/yorg_error.txt') if log_path else 'yorg_error.txt'
+        with open(LibP3d.fixpath(epath), 'a') as f:
             import traceback; traceback.print_exc(file=f)
         yorg.kill()
