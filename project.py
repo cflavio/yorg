@@ -3,6 +3,12 @@
 
 # TODO LIST =====
 
+# improve gui
+# improve sfx
+# dust
+# explosion
+# weapon effects
+
 
 # WAITING =====
 
