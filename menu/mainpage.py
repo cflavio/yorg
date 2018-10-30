@@ -143,19 +143,19 @@ class YorgMainPageGui(MainPageGui):
             ('Credits', _('Credits'), cred_cb),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
-            Btn(text='', pos=(0, 1, .68-i*.23), command=menu[2],
+            Btn(text='', pos=(0, .68-i*.23), cmd=menu[2],
                 tra_src=menu_data[i][0], tra_tra=menu_data[i][1],
                 **self.props.gameprops.menu_args.btn_args)
             for i, menu in enumerate(menu_data)]
         logo_img = Img(
             self.props.title_img, scale=(.64, 1, .64 * (380.0 / 772)),
-            parent=base.a2dTopLeft, pos=(.65, 1, -.32))
+            parent=base.a2dTopLeft, pos=(.65, -.32))
         widgets += [logo_img]
         lab_args = self.props.gameprops.menu_args.label_args
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
         wip_lab = Label(
-            text='', pos=(.05, 1, -.76), parent=base.a2dTopLeft,
+            text='', pos=(.05, -.76), parent=base.a2dTopLeft,
             text_wordwrap=10, text_align=TextNode.A_left,
             tra_src='Note: the game is work-in-progress',
             tra_tra=_('Note: the game is work-in-progress'),
@@ -206,10 +206,10 @@ class YorgMainPageGui(MainPageGui):
             fg=menu_args.text_normal, font=menu_args.font)
                   for i in range(min(5, len(rss)))]
         btn_args = self.props.gameprops.menu_args.btn_args.copy()
-        btn_args['scale'] = .055
+        btn_args['scale'] = (.055, .055)
         show_btn = Btn(
-            text=_('show'), pos=(.55, 1, .15), command=self.eng.open_browser,
-            extraArgs=[self.props.site_url], parent=base.a2dBottomLeft,
+            text=_('show'), pos=(.55, .15), cmd=self.eng.open_browser,
+            extra_args=[self.props.site_url], parent=base.a2dBottomLeft,
             tra_src='show', tra_tra=_('show'), **btn_args)
         self.add_widgets([frm] + texts + [show_btn])
 

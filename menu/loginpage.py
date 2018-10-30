@@ -35,7 +35,7 @@ class LogInPageGui(ThanksPageGui):
             frameColor=menu_args.btn_color, obscured=True,
             text_fg=menu_args.text_active, command=self.start)
         start_btn = Btn(
-            text=_('Log-in'), pos=(-.2, 1, .4), command=self.start,
+            text=_('Log-in'), pos=(-.2, .4), cmd=self.start,
             **self.props.gameprops.menu_args.btn_args)
         t_a['scale'] = .06
         note_txt = \
@@ -52,7 +52,7 @@ class LogInPageGui(ThanksPageGui):
             register_txt, pos=(-1.64, -.2), align='left', wordwrap=42,
             **t_a)
         register_btn = Btn(
-            text='', pos=(-.2, 1, -.35), command=self.on_register,
+            text='', pos=(-.2, -.35), cmd=self.on_register,
             tra_src='Register', tra_tra=_('Register'),
             **menu_args.btn_args)
         reset_txt = _(
@@ -61,7 +61,7 @@ class LogInPageGui(ThanksPageGui):
             reset_txt, pos=(-1.64, -.55), align='left', wordwrap=42,
             **t_a)
         reset_btn = Btn(
-            text='', pos=(-.2, 1, -.7), command=self.on_reset,
+            text='', pos=(-.2, -.7), cmd=self.on_reset,
             tra_src='Reset', tra_tra=_('Reset'),
             **menu_args.btn_args)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,

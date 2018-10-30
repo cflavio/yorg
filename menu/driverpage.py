@@ -53,10 +53,10 @@ class DriverPageGui(ThanksPageGui):
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
             drv_btn = ImgBtn(
-                scale=.24, pos=(-.95 + col * .5, 1, .3 - row * .64),
-                frameColor=(0, 0, 0, 0),
-                image=self.props.gameprops.drivers_img.path % idx,
-                command=self.on_click, extraArgs=[idx],
+                scale=(.24, .24), pos=(-.95 + col * .5, .3 - row * .64),
+                frame_col=(0, 0, 0, 0),
+                img=self.props.gameprops.drivers_img.path % idx,
+                cmd=self.on_click, extra_args=[idx],
                 **self.menu_args.imgbtn_args)
             name = Text(
                 '',
@@ -85,7 +85,7 @@ class DriverPageGui(ThanksPageGui):
                 txt_lst)
         self.sel_drv_img = Img(
             self.props.gameprops.cars_img % self.mediator.car,
-            parent=base.a2dBottomLeft, pos=(.3, 1, .4), scale=.28)
+            parent=base.a2dBottomLeft, pos=(.3, .4), scale=.28)
         widgets += [self.sel_drv_img, self.name]
         self.add_widgets(widgets)
         ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
@@ -94,7 +94,7 @@ class DriverPageGui(ThanksPageGui):
         shader = load_shader(vert, frag)
         if shader:
             self.sel_drv_img.set_shader(shader)
-        self.sel_drv_img.set_transparency(True)
+        self.sel_drv_img.set_transparent()
         self.t_s = TextureStage('ts')
         self.t_s.set_mode(TextureStage.MDecal)
         empty_img = PNMImage(1, 1)
@@ -245,7 +245,7 @@ class DriverPageMPGui(DriverPageGui):
         for i, car in enumerate(self.mediator.cars):
             self.sel_drv_img += [Img(
                 self.props.gameprops.cars_img % car,
-                parent=base.a2dBottomLeft, pos=(.3, 1, 1.74 - i * .46), scale=.22)]
+                parent=base.a2dBottomLeft, pos=(.3, 1.74 - i * .46), scale=.22)]
             widgets += [self.sel_drv_img[-1]]
             ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
             with open(ffilterpath) as ffilter:

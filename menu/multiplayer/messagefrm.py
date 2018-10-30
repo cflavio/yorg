@@ -3,7 +3,7 @@ from direct.gui.DirectGuiGlobals import FLAT, NORMAL, DISABLED, ENTER, EXIT
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.lib.gui import Btn, Entry
+from yyagl.lib.gui import Btn, Entry, Label
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.gameobject import GameObject
 from yyagl.engine.gui.imgbtn import ImgBtn
@@ -231,17 +231,17 @@ class MessageFrm(GameObject):
             text='', pos=(0, .4), parent=self.msg_frm, align=TextNode.A_left,
             **t_a)
         self.arrow_btn = ImgBtn(
-            parent=self.msg_frm, scale=.024, pos=(.7, 1, .42),
-            frameColor=(1, 1, 1, 1),
-            frameTexture='assets/images/gui/arrow.txo',
-            command=self.on_arrow,
+            parent=self.msg_frm, scale=(.024, .024), pos=(.7, 1, .42),
+            frame_col=(1, 1, 1, 1),
+            frame_texture='assets/images/gui/arrow.txo',
+            cmd=self.on_arrow,
             **menu_args.imgbtn_args)
         self.arrow_btn.disable()
         self.close_btn = ImgBtn(
-            parent=self.msg_frm, scale=.024, pos=(.76, 1, .42),
-            frameColor=(1, 1, 1, 1),
-            frameTexture='assets/images/gui/close.txo',
-            command=self.on_close,
+            parent=self.msg_frm, scale=(.024, .024), pos=(.76, 1, .42),
+            frame_col=(1, 1, 1, 1),
+            frame_texture='assets/images/gui/close.txo',
+            cmd=self.on_close,
             **menu_args.imgbtn_args)
         self.close_btn.disable()
         self.ent = Entry(
@@ -276,13 +276,13 @@ class MessageFrm(GameObject):
         lab_args['text_fg'] = menu_args.text_normal
         self.lab_frm = Btn(
             frameSize=(-.02, .64, -.01, .05),
-            frameColor=(1, 1, 1, 0),
+            frame_col=(1, 1, 1, 0),
             pos=(0, 1, .4), parent=self.msg_frm)
         self.lab_frm.bind(ENTER, self.on_enter)
         self.lab_frm.bind(EXIT, self.on_exit)
-        self.tooltip = DirectLabel(
+        self.tooltip = Label(
             text='', pos=(.78, 1, -.06),
-            parent=self.lab_frm, text_wordwrap=16, text_bg=(.2, .2, .2, .8),
+            parent=self.lab_frm, text_wordwrap=16,# text_bg=(.2, .2, .2, .8),
             text_align=TextNode.A_right, **lab_args)
         self.tooltip.set_bin('gui-popup', 10)
         self.tooltip.hide()

@@ -47,7 +47,7 @@ class OptionPageGui(ThanksPageGui):
             command=lambda: self.eng.set_volume(self.vol_slider['value']))
         widgets += [self.__add_lab('Fullscreen', _('Fullscreen'), .45)]
         self.fullscreen_cb = CheckBtn(
-            pos=(-.08, 1, .47), text='', indicatorValue=self.props.fullscreen,
+            pos=(-.08, .47), text='', indicatorValue=self.props.fullscreen,
             indicator_frameColor=menu_args.text_active,
             command=lambda val: self.eng.toggle_fullscreen(),
             **menu_args.checkbtn_args)
@@ -68,12 +68,12 @@ class OptionPageGui(ThanksPageGui):
                            _('(from the next execution)'), .05, 0,
                            TextNode.ALeft, .06)]
         self.aa_cb = CheckBtn(
-            pos=(-.08, 1, .08), text='',
+            pos=(-.08, .08), text='',
             indicatorValue=self.props.antialiasing,
             indicator_frameColor=menu_args.text_active, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
         self.shaders_cb = CheckBtn(
-            pos=(-.08, 1, -.12), text='', indicatorValue=self.props.shaders,
+            pos=(-.08, -.12), text='', indicatorValue=self.props.shaders,
             indicator_frameColor=menu_args.text_active, **menu_args.checkbtn_args)
         widgets += [self.__add_lab('Cars number', _('Cars number'), -.35)]
         widgets += [self.__add_lab('Camera', _('Camera'), -.55)]
@@ -88,7 +88,7 @@ class OptionPageGui(ThanksPageGui):
             initialitem=self.cameras[self.camera_codes.index(self.props.camera)],
             **menu_args.option_args)
         input_btn = Btn(
-            text='', pos=(-.2, 1, -.75), command=self.on_input_btn,
+            text='', pos=(-.2, -.75), cmd=self.on_input_btn,
             tra_src='Configure input', tra_tra=_('Configure input'),
             **menu_args.btn_args)
         widgets += [
@@ -105,7 +105,7 @@ class OptionPageGui(ThanksPageGui):
         l_a = self.menu_args.label_args
         l_a['scale'] = scale or l_a['scale']
         lab = Label(
-            text='', pos=(pos_x, 1, pos_z), text_align=align,
+            text='', pos=(pos_x, pos_z), text_align=align,
             tra_src=txt, tra_tra=txt_tr, **l_a)
         return lab
 

@@ -15,8 +15,8 @@ class CreditPageGui(ThanksPageGui):
         txt = Text(dev_str, pos=(-.2, .72), wordwrap=20,
                            **menu_args.text_args)
         btn = Btn(
-            text=_('Supporters'), pos=(-.2, 1, -.4),
-            command=lambda: self.notify('on_push_page', 'supporters'),
+            text=_('Supporters'), pos=(-.2, -.4),
+            cmd=lambda: self.notify('on_push_page', 'supporters'),
             **menu_args.btn_args)
         self.add_widgets([txt, btn])
         ThanksPageGui.build(self)

@@ -44,12 +44,12 @@ class CarPageGui(ThanksPageGui):
             min(cars_per_row, len(gprops.cars_names))
         x_offset = .4 * (cars_per_row - num_car_row)
         btn = ImgBtn(
-            scale=.32,
-            pos=(-1.4 + col * .64 + x_offset, 1, .4 - z_offset - row * .7),
-            frameColor=(0, 0, 0, 0),
-            image=gprops.car_path % gprops.cars_names[col + row*cars_per_row],
-            command=self.on_car,
-            extraArgs=[
+            scale=(.32, .32),
+            pos=(-1.4 + col * .64 + x_offset, .4 - z_offset - row * .7),
+            frame_col=(0, 0, 0, 0),
+            img=gprops.car_path % gprops.cars_names[col + row*cars_per_row],
+            cmd=self.on_car,
+            extra_args=[
                 gprops.cars_names[col + row * cars_per_row]],
             **self.menu_args.imgbtn_args)
         widgets = [btn]

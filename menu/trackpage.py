@@ -30,12 +30,12 @@ class TrackPageGui(ThanksPageGui):
                 if row == 1 else min(tracks_per_row, len(gprops.season_tracks))
             x_offset = .3 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
-                scale=.3,
-                pos=(-1.4 + col * .6 + x_offset, 1, .4 - z_offset - row * .7),
-                frameColor=(0, 0, 0, 0),
-                image=gprops.track_img % gprops.season_tracks[
+                scale=(.3, .3),
+                pos=(-1.4 + col * .6 + x_offset, .4 - z_offset - row * .7),
+                frame_col=(0, 0, 0, 0),
+                img=gprops.track_img % gprops.season_tracks[
                     col + row * tracks_per_row],
-                command=self.on_track, extraArgs=[gprops.season_tracks[
+                cmd=self.on_track, extra_args=[gprops.season_tracks[
                     col + row * tracks_per_row]],
                 **self.menu_args.imgbtn_args)
             txt = Text(

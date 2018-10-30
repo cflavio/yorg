@@ -5,9 +5,9 @@ from direct.gui.DirectGuiGlobals import FLAT
 from json import load
 from urllib2 import urlopen
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
-from direct.gui.DirectLabel import DirectLabel
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
+from yyagl.lib.gui import Label
 from .forms import UserFrmListMe, UserFrmList
 
 
@@ -25,8 +25,8 @@ class UsersFrm(GameObject):
         self.menu_args = menu_args
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        self.users_lab = DirectLabel(
-            text=_('Current online users'), pos=(-.85, 1, -.02),
+        self.users_lab = Label(
+            text=_('Current online users'), pos=(-.85, -.02),
             hpr=(0, 0, -90), parent=base.a2dTopRight,
             text_align=TextNode.A_right, **lab_args)
         self.frm = DirectScrolledFrame(
@@ -44,8 +44,8 @@ class UsersFrm(GameObject):
             horizontalScroll_relief=FLAT,
             frameColor=(.2, .2, .2, .5),
             pos=(-.82, 1, -2.44), parent=base.a2dTopRight)
-        self.conn_lab = DirectLabel(
-            text='', pos=(.38, 1, 1.5), parent=self.frm,
+        self.conn_lab = Label(
+            text='', pos=(.38, 1.5), parent=self.frm,
             text_wordwrap=10, **lab_args)
         self.set_connection_label()
         self.in_match_room = None
