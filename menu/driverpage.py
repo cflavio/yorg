@@ -145,7 +145,7 @@ class DriverPageGui(ThanksPageGui):
         gprops.drivers_info[car_idx].name = nname
         gprops.drivers_info[i] = prev_drv
         self.eng.log('drivers: ' + str(gprops.drivers_info))
-        self.notify('on_driver_selected', self.ent.get(), self.mediator.track,
+        self.notify('on_driver_selected', self.ent.text, self.mediator.track,
                     self.mediator.car)
 
     def _buttons(self, idx):
@@ -161,9 +161,9 @@ class DriverPageSinglePlayerGui(DriverPageGui):
     def build(self):
         menu_args = self.menu_args
         self.ent = Entry(
-            scale=.08, pos=(-.2, 1, .6), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color,
-            initialText=self.props.gameprops.player_name or _('your name'),
+            scale=.08, pos=(-.2, .6), entry_font=menu_args.font, width=12,
+            frame_col=menu_args.btn_color,
+            initial_text=self.props.gameprops.player_name or _('your name'),
             text_fg=menu_args.text_active)
         self.add_widgets([self.ent])
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
@@ -171,18 +171,18 @@ class DriverPageSinglePlayerGui(DriverPageGui):
         self.enable_buttons(False)
 
     def update_text(self, task):
-        has_name = self.ent.get() != _('your name')
-        if has_name and self.ent.get().startswith(_('your name')):
-            self.ent.enter_text(self.ent.get()[len(_('your name')):])
+        has_name = self.ent.text != _('your name')
+        if has_name and self.ent.text.startswith(_('your name')):
+            self.ent.enter_text(self.ent.text[len(_('your name')):])
             self.enable_buttons(True)
-        elif self.ent.get() in [_('your name')[:-1], '']:
+        elif self.ent.text in [_('your name')[:-1], '']:
             self.ent.enter_text('')
             self.enable_buttons(False)
-        elif self.ent.get() not in [_('your name'), '']:
+        elif self.ent.text not in [_('your name'), '']:
             self.enable_buttons(True)
         return task.cont  # don't do a task, attach to modifications events
 
-    def this_name(self): return self.ent.get()
+    def this_name(self): return self.ent.text
 
     def destroy(self):
         taskMgr.remove(self.update_tsk)

@@ -192,8 +192,8 @@ class YorgMainPageGui(MainPageGui):
         rss = rss[:5]
         rss = [(_rss[0], self.__ellipsis_str(_rss[1])) for _rss in rss]
         frm = Frame(
-            frameSize=(0, 1.0, 0, .75), frameColor=(.2, .2, .2, .5),
-            pos=(.05, 1, .1), parent=base.a2dBottomLeft)
+            frame_size=(0, 1.0, 0, .75), frame_col=(.2, .2, .2, .5),
+            pos=(.05, .1), parent=base.a2dBottomLeft)
         texts = [Text(
             _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
             parent='bottomleft', fg=menu_args.text_normal,

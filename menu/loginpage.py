@@ -26,14 +26,14 @@ class LogInPageGui(ThanksPageGui):
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, 1, .8), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, initialText=init_txt,
+            scale=.08, pos=(-.15, .8), entry_font=menu_args.font, width=12,
+            frame_col=menu_args.btn_color, initial_text=init_txt,
             text_fg=menu_args.text_active, on_tab=self.on_tab,
             on_click=self.on_click)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.15, 1, .6), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, obscured=True,
-            text_fg=menu_args.text_active, command=self.start)
+            scale=.08, pos=(-.15, .6), entry_font=menu_args.font, width=12,
+            frame_col=menu_args.btn_color, obscured=True,
+            text_fg=menu_args.text_active, cmd=self.start)
         start_btn = Btn(
             text=_('Log-in'), pos=(-.2, .4), cmd=self.start,
             **self.props.gameprops.menu_args.btn_args)
@@ -82,16 +82,16 @@ class LogInPageGui(ThanksPageGui):
         #self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
         self.eng.client.register_rpc('login')
         self.eng.client.register_rpc('get_salt')
-        salt = self.eng.client.get_salt(self.jid_ent.get())
-        self.pwd = sha512(self.pwd_ent.get() + salt).hexdigest()
-        ret_val = self.eng.client.login(self.jid_ent.get(), self.pwd)
+        salt = self.eng.client.get_salt(self.jid_ent.text)
+        self.pwd = sha512(self.pwd_ent.text + salt).hexdigest()
+        ret_val = self.eng.client.login(self.jid_ent.text, self.pwd)
         if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
             return self.on_ko(ret_val)
         self.on_ok()
 
     def on_frame(self):
         init_txt = _('your user id')
-        curr_txt = self.jid_ent.get()
+        curr_txt = self.jid_ent.text
         if curr_txt == init_txt[:-1]:
             self.jid_ent.set('')
         elif curr_txt.startswith(init_txt) and len(curr_txt) == len(init_txt) + 1:
@@ -99,7 +99,7 @@ class LogInPageGui(ThanksPageGui):
 
     def on_click(self, pos):
         init_txt = _('your user id')
-        curr_txt = self.jid_ent.get()
+        curr_txt = self.jid_ent.text
         if curr_txt == init_txt: self.jid_ent.set('')
 
     def on_tab(self):
@@ -108,7 +108,7 @@ class LogInPageGui(ThanksPageGui):
 
     def on_ok(self):
         self.yorg_client.authenticated = True
-        self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
+        self.props.opt_file['settings']['login']['usr'] = self.jid_ent.text
         self.props.opt_file['settings']['login']['pwd'] = self.pwd
         self.props.opt_file.store()
         self.yorg_client.start(self.props.opt_file['settings']['login']['usr'])

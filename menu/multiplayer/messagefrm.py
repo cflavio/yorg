@@ -85,13 +85,12 @@ class MatchMsgFrm(GameObject):
         lab_args['text_fg'] = menu_args.text_normal
         self.lab_frm = Btn(
             frameSize=(-.02, 2.5, -.01, .05),
-            frameColor=(1, 1, 1, 0),
-            pos=(0, 1, 1.15), parent=self.msg_frm)
+            frame_col=(1, 1, 1, 0),
+            pos=(0, 1.15), parent=self.msg_frm)
         self.lab_frm.bind(ENTER, self.on_enter)
         self.lab_frm.bind(EXIT, self.on_exit)
-        self.tooltip = DirectLabel(
-            text='', pos=(2.4, 1, -.06),
-            parent=self.lab_frm, text_wordwrap=50, text_bg=(.2, .2, .2, .8),
+        self.tooltip = Label(
+            text='', pos=(2.4, -.06), parent=self.lab_frm, text_wordwrap=50,
             text_align=TextNode.A_right, **lab_args)
         self.tooltip.set_bin('gui-popup', 10)
         self.tooltip.hide()
@@ -245,12 +244,12 @@ class MessageFrm(GameObject):
             **menu_args.imgbtn_args)
         self.close_btn.disable()
         self.ent = Entry(
-            scale=.04, pos=(0, 1, .03), entryFont=menu_args.font, width=19.5,
-            frameColor=menu_args.btn_color, parent=self.msg_frm,
-            initialText=_('write here your message'),
-            command=self.on_typed_msg, focusInCommand=self.on_focus,
-            focusInExtraArgs=['in'], focusOutCommand=self.on_focus,
-            focusOutExtraArgs=['out'], text_fg=menu_args.text_active)
+            scale=.04, pos=(0, .03), entry_font=menu_args.font, width=19.5,
+            frame_col=menu_args.btn_color, parent=self.msg_frm,
+            initial_text=_('write here your message'),
+            cmd=self.on_typed_msg, focus_in_cmd=self.on_focus,
+            focus_in_args=['in'], focus_out_cmd=self.on_focus,
+            focus_out_args=['out'], text_fg=menu_args.text_active)
         self.ent['state'] = DISABLED
         self.txt_frm = DirectScrolledFrame(
             frameSize=(-.02, .76, -.02, .28),

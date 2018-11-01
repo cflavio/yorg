@@ -3,11 +3,16 @@
 
 # TODO LIST =====
 
+# https://github.com/cflavio/yorg/issues/21
+# https://github.com/cflavio/yorg/issues/22
 # improve gui
 # improve sfx
 # dust
 # explosion
 # trail effect with glow for weapons
+# options: reset pwd, logout
+# mainmenu: multiplayer -> local, online
+# online: login, register -> host (room), join
 
 
 # WAITING =====

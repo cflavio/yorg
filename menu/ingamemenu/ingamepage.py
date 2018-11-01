@@ -27,10 +27,10 @@ class InGamePageGuiMultiplayer(PageGui):
             ('back to the main menu', _('back to the main menu'), on_end)]
         btn_args = menu_args.btn_args
         btn_visit = Btn(
-            text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2],
+            text=menu_data[0][1], pos=(0, 0), cmd=menu_data[0][2],
             text_scale=.8, **btn_args)
         btn_dont_visit = Btn(
-            text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
+            text=menu_data[1][1], pos=(0, -.5), cmd=menu_data[1][2],
             text_scale=.8, **btn_args)
         self.add_widgets([frm, txt, btn_visit, btn_dont_visit])
         PageGui.build(self, False)

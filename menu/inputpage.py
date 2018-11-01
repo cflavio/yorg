@@ -39,8 +39,8 @@ class InputPageGui4(ThanksPageGui):
             **menu_args.label_args)
         self.joypad_cb = P3dCheckBtn(
             pos=(-.11, .72), text='',
-            indicatorValue=self.joysticks[self.joyp_idx],
-            indicator_frameColor=menu_args.text_active,
+            indicator_val=self.joysticks[self.joyp_idx],
+            indicator_frame_col=menu_args.text_active,
             **menu_args.checkbtn_args)
         if not JoystickMgr.supported():
             self.joypad_cb['state'] = DISABLED

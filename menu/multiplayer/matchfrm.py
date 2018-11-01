@@ -1,5 +1,5 @@
 from direct.gui.DirectFrame import DirectFrame
-from yyagl.lib.gui import Btn
+from yyagl.lib.gui import Btn, Label
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.gameobject import GameObject
@@ -28,8 +28,8 @@ class MatchFrm(GameObject):
         self.forms = [frm]
         for i in range(0, 8):
             row, col = i % 4, i / 4
-            DirectLabel(
-                text=str(i + 1) + '.', pos=(.06 + 1.24 * col, 1, .38 - .08 * row),
+            Label(
+                text=str(i + 1) + '.', pos=(.06 + 1.24 * col, .38 - .08 * row),
                 parent=self.match_frm, **lab_args)
 
     def on_presence_available_room(self, uid, room):
@@ -153,9 +153,9 @@ class MatchFrmServer(MatchFrm):
     def __init__(self, menu_args, yorg_client):
         MatchFrm.__init__(self, menu_args, yorg_client)
         btn_args = self.menu_args.btn_args
-        btn_args['scale'] = .06
-        Btn(text=_('Start'), pos=(1.2, 1, .03), command=self.on_start,
-                     parent=self.match_frm, **btn_args)
+        btn_args['scale'] = (.06, .06)
+        Btn(text=_('Start'), pos=(1.2, .03), cmd=self.on_start,
+            parent=self.match_frm, **btn_args)
 
 
 class MatchFrmServerClient(MatchFrm):
@@ -164,6 +164,5 @@ class MatchFrmServerClient(MatchFrm):
         MatchFrm.__init__(self, menu_args, yorg_client)
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        DirectLabel(
-                text=_('please wait for the server'), pos=(1.2, 1, .03),
-                parent=self.match_frm, **lab_args)
+        Label(text=_('please wait for the server'), pos=(1.2, 1, .03),
+              parent=self.match_frm, **lab_args)

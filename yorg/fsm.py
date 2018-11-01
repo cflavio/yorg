@@ -78,12 +78,12 @@ class YorgFsm(FsmColleague):
             self.mediator.logic.mp_frm.msg_frm.curr_match_room = None
 
     def on_presence_unavailable_room(self, uid, room_name):
-        for usr in self.eng.xmpp.users:
-            if usr.name == uid:
-                if self.eng.server.is_active:
-                    for conn in self.eng.server.connections[:]:
-                        if usr.public_addr == conn.getpeername() or usr.local_addr == conn.getpeername():
-                            self.eng.server.connections.remove(conn)
+        #for usr in self.eng.xmpp.users:
+        #    if usr.name == uid:
+        #        if self.eng.server.is_active:
+        #            for conn in self.eng.server.connections[:]:
+        #                if usr.public_addr == conn.getpeername() or usr.local_addr == conn.getpeername():
+        #                    self.eng.server.connections.remove(conn)
         if self.getCurrentOrNextState() == 'Menu':
             if uid == self.mediator.logic.mp_frm.users_frm.in_match_room:
                 self.__menu.enable(False)
@@ -227,7 +227,7 @@ class YorgFsm(FsmColleague):
 
     def enterExit(self):
         if not self.mediator.options['development']['show_exit']:
-            self.eng.xmpp.destroy()
+            #self.eng.xmpp.destroy()
             sys_exit()
         self.__exit_menu = ExitMenu(self.mediator.gameprops.menu_args)
         base.accept('escape-up', self.demand, ['Menu'])

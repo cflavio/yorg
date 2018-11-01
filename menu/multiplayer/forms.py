@@ -5,6 +5,7 @@ from panda3d.core import TextNode
 from yyagl.observer import Subject
 from .button import StaticMPBtn, MPBtn
 from yyagl.gameobject import GameObject
+from yyagl.lib.gui import Label
 
 
 class UserLabel(GameObject):
@@ -16,8 +17,8 @@ class UserLabel(GameObject):
         self.parent = parent
         lab_args = menu_args.label_args
         lab_args['scale'] = .046
-        self.lab = DirectLabel(text=name, pos=(0, 1, 0), parent=parent,
-                               text_align=TextNode.A_left, **lab_args)
+        self.lab = Label(text=name, pos=(0, 0), parent=parent,
+                         text_align=TextNode.A_left, **lab_args)
         self.supp_btn = None
         self.set_supporter(is_supporter)
         self.set_online(True)
@@ -55,7 +56,7 @@ class UserFrmMe(GameObject, Subject):
         GameObject.__init__(self)
         self.menu_args = menu_args
         self.frm = Btn(
-            frameSize=(-.01, .79, .05, -.03), frameColor=(1, 1, 1, 0),
+            frameSize=(-.01, .79, .05, -.03), frame_col=(1, 1, 1, 0),
             pos=pos, parent=parent)
         self.lab = UserLabel(uid, self.frm, menu_args, is_supporter)
         self.frm.bind(ENTER, self.on_enter)
