@@ -28,21 +28,21 @@ class RegisterPageGui(ThanksPageGui):
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.email_ent = Entry(
-            scale=.08, pos=(-.75, 1, .4), entryFont=menu_args.font, width=20,
-            frameColor=menu_args.btn_color, initialText=_('your email'),
+            scale=.08, pos=(-.75, .4), entry_font=menu_args.font, width=20,
+            frame_col=menu_args.btn_color, initial_text=_('your email'),
             text_fg=menu_args.text_active, on_tab=self.on_tab_email,
             on_click=self.on_click_email)
         self.jid_ent = Entry(
-            scale=.08, pos=(-.75, 1, .2), entryFont=menu_args.font, width=20,
-            frameColor=menu_args.btn_color, initialText=init_txt,
+            scale=.08, pos=(-.75, .2), entry_font=menu_args.font, width=20,
+            frame_col=menu_args.btn_color, initial_text=init_txt,
             text_fg=menu_args.text_active, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.75, 1, 0), entryFont=menu_args.font, width=20,
-            frameColor=menu_args.btn_color, obscured=True,
-            text_fg=menu_args.text_active, command=self.register)
+            scale=.08, pos=(-.75, 0), entry_font=menu_args.font, width=20,
+            frame_col=menu_args.btn_color, obscured=True,
+            text_fg=menu_args.text_active, cmd=self.register)
         start_btn = Btn(
-            text=_('Register'), pos=(-.2, 1, -.2), command=self.register,
+            text=_('Register'), pos=(-.2, -.2), cmd=self.register,
             **self.props.gameprops.menu_args.btn_args)
         t_a['scale'] = .06
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
@@ -91,13 +91,13 @@ class RegisterPageGui(ThanksPageGui):
 
     def on_frame(self):
         init_txt = _('your user id')
-        curr_txt = self.jid_ent.get()
+        curr_txt = self.jid_ent.text
         if curr_txt == init_txt[:-1]:
             self.jid_ent.set('')
         elif curr_txt.startswith(init_txt) and len(curr_txt) == len(init_txt) + 1:
             self.jid_ent.set(curr_txt[-1:])
         init_txt = _('your email')
-        curr_txt = self.email_ent.get()
+        curr_txt = self.email_ent.text
         if curr_txt == init_txt[:-1]:
             self.email_ent.set('')
         elif curr_txt.startswith(init_txt) and len(curr_txt) == len(init_txt) + 1:
@@ -105,12 +105,12 @@ class RegisterPageGui(ThanksPageGui):
 
     def on_click_email(self, pos):
         init_txt = _('your email')
-        curr_txt = self.email_ent.get()
+        curr_txt = self.email_ent.text
         if curr_txt == init_txt: self.email_ent.set('')
 
     def on_click_id(self, pos):
         init_txt = _('your user id')
-        curr_txt = self.jid_ent.get()
+        curr_txt = self.jid_ent.text
         if curr_txt == init_txt: self.jid_ent.set('')
 
     def on_tab_email(self):
@@ -124,9 +124,9 @@ class RegisterPageGui(ThanksPageGui):
         self.pwd_ent['focus'] = 1
 
     def on_ok(self):
-        self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
+        self.props.opt_file['settings']['login']['usr'] = self.jid_ent.text
         if self.store_cb['indicatorValue']:
-            self.props.opt_file['settings']['login']['pwd'] = self.pwd_ent.get()
+            self.props.opt_file['settings']['login']['pwd'] = self.pwd_ent.text
         self.props.opt_file.store()
         self._on_back()
         self.notify('on_login')

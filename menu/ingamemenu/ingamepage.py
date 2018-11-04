@@ -12,7 +12,7 @@ class InGamePageGuiMultiplayer(PageGui):
 
     def build(self, back_btn=True):
         frm = Frame(
-            frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
+            frame_size=(-1.5, 1.5, -.9, .9), frame_col=(.95, .95, .7, .85))
         question_txt = _(
             "What do you want to do?\n\nNote: use '%s' for pausing the game.")
         question_txt = question_txt % self.keys.pause
