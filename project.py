@@ -3,8 +3,6 @@
 
 # TODO LIST =====
 
-# https://github.com/cflavio/yorg/issues/21
-# https://github.com/cflavio/yorg/issues/22
 # improve gui
 # improve sfx
 # dust
@@ -13,6 +11,7 @@
 # options: reset pwd, logout
 # mainmenu: multiplayer -> local, online
 # online: login, register -> host (room), join
+# https://github.com/cflavio/yorg/issues/23
 
 
 # WAITING =====
@@ -22,6 +21,7 @@
 # (Panda3D 1.10) deployng: use logging for logging
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
+# https://github.com/cflavio/yorg/issues/22
 # hardware instancing (gl_InstanceID requires 1.40)
 
 

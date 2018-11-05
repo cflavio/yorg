@@ -54,14 +54,16 @@ class RegisterPageGui(ThanksPageGui):
     def register(self, pwd_name=None):
         def process_msg(data_lst, sender):
             print sender, data_lst
-        self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
-        self.eng.client.register_rpc('register')
-        self.eng.client.register_rpc('get_salt')
-        salt = self.eng.client.get_salt(self.jid_ent.get())
-        ret_val = self.eng.client.register(
-            self.jid_ent.get(),
-            sha512(self.pwd_ent.get() + salt).hexdigest(), salt,
-            self.email_ent.get().replace('_AT_', '@'))
+        if len(self.pwd_ent.text) >= 6:
+            self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
+            self.eng.client.register_rpc('register')
+            self.eng.client.register_rpc('get_salt')
+            salt = self.eng.client.get_salt(self.jid_ent.text)
+            ret_val = self.eng.client.register(
+                self.jid_ent.text,
+                sha512(self.pwd_ent.text + salt).hexdigest(), salt,
+                self.email_ent.text.replace('_AT_', '@'))
+        else: ret_val = 'short'
         self.ret_val = ret_val
         ok_txt = _(
             'Your account has been registered. Now, in order to '
@@ -74,12 +76,14 @@ class RegisterPageGui(ThanksPageGui):
         inv_email_txt = _("Your email's format is invalid.")
         already_nick_txt = _('Your nickname already exists.')
         already_email_txt = _('Your email has already been used.')
+        short_txt = _('Please use more than 6 characters for your password.')
         err_txt = _('Connection error.')
         if ret_val == 'ok': txt = ok_txt
         elif ret_val == 'invalid_nick': txt = inv_nick_txt
         elif ret_val == 'invalid_email': txt = inv_email_txt
         elif ret_val == 'already_used_nick': txt = already_nick_txt
         elif ret_val == 'already_used_email': txt = already_email_txt
+        elif ret_val == 'short': txt = short_txt
         else: txt = err_txt
         self.register_dlg = RegisterDialog(self.menu_args, txt)
         self.register_dlg.attach(self.on_register_dlg)
