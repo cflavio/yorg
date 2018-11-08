@@ -3,6 +3,8 @@
 
 # TODO LIST =====
 
+# fix shaders
+# fixes for 1.10
 # improve gui
 # improve sfx
 # dust
@@ -11,6 +13,8 @@
 # options: reset pwd, logout
 # mainmenu: multiplayer -> local, online
 # online: login, register -> host (room), join
+#optimize rear camera
+# use a ghost on the car (bigger than the car) for the AI
 # https://github.com/cflavio/yorg/issues/23
 
 
