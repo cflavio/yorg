@@ -3,19 +3,14 @@
 
 # TODO LIST =====
 
-# fix shaders
-# fixes for 1.10
-# improve gui
-# improve sfx
-# dust
-# explosion
-# trail effect with glow for weapons
 # options: reset pwd, logout
 # mainmenu: multiplayer -> local, online
 # online: login, register -> host (room), join
-#optimize rear camera
+# trail effect with glow for weapons
+# optimize rear camera
 # use a ghost on the car (bigger than the car) for the AI
 # https://github.com/cflavio/yorg/issues/23
+# fixes for 1.10
 
 
 # WAITING =====
@@ -43,6 +38,7 @@
 # drifting force function of linear and angular velocities
 # uml create automatic class diagrams with fields and methods for each class
 # unit tests
+# fix shaders
 # embed into a wx / pyqt window
 # do automatic update (assets shared among platforms)
 # add friendship
