@@ -7,7 +7,7 @@ from yyagl.game import Game
 from yyagl.dictfile import DctFile
 from yyagl.engine.configuration import Cfg, GuiCfg, ProfilingCfg, LangCfg, \
     CursorCfg, DevCfg
-from yyagl.engine.gui.menu import MenuArgs, NavInfo, NavInfoPerPlayer
+from yyagl.engine.gui.menu import MenuProps, NavInfo, NavInfoPerPlayer
 from yyagl.racing.gameprops import GameProps
 from yyagl.racing.driver.driver import DriverInfo
 from .logic import YorgLogic
@@ -180,7 +180,7 @@ class Yorg(Game):
         nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
                                 keys['rear4'], keys['fire4'])
         nav = NavInfo([nav1, nav2, nav3, nav4])
-        menu_args = MenuArgs(
+        menu_props = MenuProps(
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
             (.75, .75, .75, 1), (.75, .25, .25, 1), .1, (-4.6, 4.6, -.32, .88),
             (0, 0, 0, .2), 'assets/images/gui/menu_background.txo',
@@ -206,7 +206,7 @@ class Yorg(Game):
             ('tumblr', 'http://ya2tech.tumblr.com'),
             ('feed', 'http://www.ya2.it/pages/feed-following.html')]
         self.gameprops = GameProps(
-            menu_args, cars_names, self.drivers(),
+            menu_props, cars_names, self.drivers(),
             ['moon', 'toronto', 'rome', 'sheffield', 'orlando', 'nagano',
              'dubai'],
             lambda: [_('Sinus Aestuum'), _('Toronto'), _('Rome'), _('Sheffield'),

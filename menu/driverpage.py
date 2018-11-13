@@ -38,14 +38,14 @@ class DriverPageGui(ThanksPageGui):
         self.driver = None
         self.yorg_client = yorg_client
         players = range(players)
-        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_args, players)
+        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_props, players)
 
     def build(self, exit_behav):
         self.drv_info = self.props.gameprops.drivers_info
-        menu_args = self.menu_args
+        menu_props = self.menu_props
         widgets = [Text(_('Select the driver'), pos=(-.2, .8),
-                                **menu_args.text_args)]
-        t_a = self.menu_args.text_args.copy()
+                                **menu_props.text_args)]
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         self.name = Text(_('Write your name:'), pos=(-.3, .6), scale=.06,
                             align='right', wordwrap=128, **t_a)
@@ -57,7 +57,7 @@ class DriverPageGui(ThanksPageGui):
                 frame_col=(0, 0, 0, 0),
                 img=self.props.gameprops.drivers_img.path % idx,
                 cmd=self.on_click, extra_args=[idx],
-                **self.menu_args.imgbtn_args)
+                **self.menu_props.imgbtn_args)
             name = Text(
                 '',
                 pos=(-.95 + col * .5, .01 - row * .64),
@@ -106,14 +106,14 @@ class DriverPageGui(ThanksPageGui):
         ThanksPageGui.build(self, exit_behav=exit_behav)
 
     def _add_lab(self, txt, pos_z, row, col):
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         return Text(
             txt + ':', pos=(-1.15 + col * .5, pos_z - row * .64),
             scale=.046, align='left', **t_a)
 
     def _add_txt(self, val, pos_z, psign, pcol, col, row):
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         return Text(
             '%s%s%%' % (psign(val), pcol(val)),
@@ -159,12 +159,12 @@ class DriverPageGui(ThanksPageGui):
 class DriverPageSinglePlayerGui(DriverPageGui):
 
     def build(self):
-        menu_args = self.menu_args
+        menu_props = self.menu_props
         self.ent = Entry(
-            scale=.08, pos=(-.2, .6), entry_font=menu_args.font, width=12,
-            frame_col=menu_args.btn_color,
+            scale=.08, pos=(-.2, .6), entry_font=menu_props.font, width=12,
+            frame_col=menu_props.btn_col,
             initial_text=self.props.gameprops.player_name or _('your name'),
-            text_fg=menu_args.text_active)
+            text_fg=menu_props.text_active_col)
         self.add_widgets([self.ent])
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         DriverPageGui.build(self, exit_behav=False)
@@ -198,10 +198,10 @@ class DriverPageMPGui(DriverPageGui):
 
     def build(self):
         self.drv_info = self.props.gameprops.drivers_info
-        menu_args = self.menu_args
+        menu_props = self.menu_props
         widgets = [Text(_('Select the drivers'), pos=(-.2, .91),
-                                **menu_args.text_args)]
-        t_a = self.menu_args.text_args.copy()
+                                **menu_props.text_args)]
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         self.name = Text(_('Write your names:'), pos=(-.3, .7), scale=.06,
                             align='right', wordwrap=128, **t_a)
@@ -213,7 +213,7 @@ class DriverPageMPGui(DriverPageGui):
                 frameColor=(0, 0, 0, 0),
                 image=self.props.gameprops.drivers_img.path % idx,
                 command=self.on_click, extraArgs=[idx],
-                **self.menu_args.imgbtn_args)
+                **self.menu_props.imgbtn_args)
             name = Text(
                 '',
                 pos=(-.95 + col * .5, -.19 - row * .64),
@@ -263,10 +263,10 @@ class DriverPageMPGui(DriverPageGui):
             tex.load(empty_img)
             self.sel_drv_img[-1].set_texture(self.tss[-1], tex)
         self.ents = [Entry(
-            scale=.06, pos=(-.2, 1, .8 - .12 * i), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color,
+            scale=.06, pos=(-.2, 1, .8 - .12 * i), entryFont=menu_props.font, width=12,
+            frameColor=menu_props.btn_col,
             initialText=self.props.gameprops.player_name or _('your name'),
-            text_fg=menu_args.text_active) for i in range(len(self.mediator.cars))]
+            text_fg=menu_props.text_active_col) for i in range(len(self.mediator.cars))]
         self.add_widgets(self.ents)
         self.add_widgets(widgets)
         ThanksPageGui.build(self, exit_behav=False)

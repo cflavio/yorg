@@ -12,23 +12,23 @@ class MPBtn(GameObject):
     tooltip_align = TextNode.A_right
     tooltip_offset = (.01, 0, -.08)
 
-    def __init__(self, parent, owner, menu_args, img_path, msg_btn_x, cb,
+    def __init__(self, parent, owner, menu_props, img_path, msg_btn_x, cb,
                  usr_name, tooltip):
         GameObject.__init__(self)
         self.owner = owner
-        lab_args = menu_args.label_args
+        lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        #lab_args['text_fg'] = menu_args.text_normal
+        #lab_args['text_fg'] = menu_props.text_normal_col
         self.btn = ImgBtn(
             parent=parent, scale=(.024, .024), pos=(msg_btn_x, .01),
             frame_col=(1, 1, 1, 1), frame_texture=img_path, cmd=cb,
-            extra_args=[usr_name], **menu_args.imgbtn_args)
+            extra_args=[usr_name], **menu_props.imgbtn_args)
         self.btn.bind(ENTER, self.on_enter)
         self.btn.bind(EXIT, self.on_exit)
         self.tooltip_btn = Btn(
             parent=parent, scale=(.024, .024), pos=(msg_btn_x, .01),
             frame_col=(1, 1, 1, 0), frameSize=(-1, 1, -1, 1), cmd=None,
-            **menu_args.imgbtn_args)
+            **menu_props.imgbtn_args)
         self.tooltip_btn.bind(ENTER, self.on_enter)
         self.tooltip_btn.bind(EXIT, self.on_exit)
         self.on_create()

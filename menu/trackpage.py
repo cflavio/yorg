@@ -12,13 +12,13 @@ class TrackPageGui(ThanksPageGui):
     def __init__(self, mediator, trackpage_props, room):
         self.props = trackpage_props
         self.room = room
-        ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_props)
 
     def build(self):
         txt = Text(_('Select the track'), pos=(-.2, .8),
-                           **self.menu_args.text_args)
+                           **self.menu_props.text_args)
         self.add_widgets([txt])
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         t_a['scale'] = .06
         tracks_per_row = 4
         gprops = self.props.gameprops
@@ -37,7 +37,7 @@ class TrackPageGui(ThanksPageGui):
                     col + row * tracks_per_row],
                 cmd=self.on_track, extra_args=[gprops.season_tracks[
                     col + row * tracks_per_row]],
-                **self.menu_args.imgbtn_args)
+                **self.menu_props.imgbtn_args)
             txt = Text(
                 gprops.tracks_tr()[col + row * tracks_per_row],
                 pos=(-1.4 + col * .6 + x_offset, .14 - z_offset - row * .7),

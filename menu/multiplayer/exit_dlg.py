@@ -6,15 +6,15 @@ from yyagl.gameobject import GameObject
 
 class ExitDialog(GameObject, Subject):
 
-    def __init__(self, menu_args, uid):
+    def __init__(self, menu_props, uid):
         Subject.__init__(self)
         GameObject.__init__(self)
         self.user = uid
         self.dialog = OkDialog(
             text=_('the server user %s has quit') % self.user,
             text_wordwrap=16,
-            text_fg=menu_args.text_active,
-            text_font=menu_args.font,
+            text_fg=menu_props.text_active_col,
+            text_font=menu_props.font,
             pad=(.03, .03),
             topPad=0,
             midPad=.01,
@@ -22,8 +22,8 @@ class ExitDialog(GameObject, Subject):
             frameColor=(.8, .8, .8, .9),
             button_relief=FLAT,
             button_frameColor=(.2, .2, .2, .2),
-            button_text_fg=menu_args.text_active,
-            button_text_font=menu_args.font,
+            button_text_fg=menu_props.text_active_col,
+            button_text_font=menu_props.font,
             command=self.on_btn)
         self.eng.log('created dialog ' + self.dialog['text'])
 

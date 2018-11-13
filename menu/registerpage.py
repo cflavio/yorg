@@ -12,11 +12,11 @@ class RegisterPageGui(ThanksPageGui):
 
     def __init__(self, mediator, mp_props):
         self.props = mp_props
-        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
     def build(self):
-        menu_args = self.menu_args
-        t_a = menu_args.text_args.copy()
+        menu_props = self.menu_props
+        t_a = menu_props.text_args.copy()
         # del t_a['scale']
         email_lab = Text(_('Your email:'), pos=(-.85, .4),
                                align='right', **t_a)
@@ -28,22 +28,22 @@ class RegisterPageGui(ThanksPageGui):
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.email_ent = Entry(
-            scale=.08, pos=(-.75, .4), entry_font=menu_args.font, width=20,
-            frame_col=menu_args.btn_color, initial_text=_('your email'),
-            text_fg=menu_args.text_active, on_tab=self.on_tab_email,
+            scale=.08, pos=(-.75, .4), entry_font=menu_props.font, width=20,
+            frame_col=menu_props.btn_col, initial_text=_('your email'),
+            text_fg=menu_props.text_active_col, on_tab=self.on_tab_email,
             on_click=self.on_click_email)
         self.jid_ent = Entry(
-            scale=.08, pos=(-.75, .2), entry_font=menu_args.font, width=20,
-            frame_col=menu_args.btn_color, initial_text=init_txt,
-            text_fg=menu_args.text_active, on_tab=self.on_tab_id,
+            scale=.08, pos=(-.75, .2), entry_font=menu_props.font, width=20,
+            frame_col=menu_props.btn_col, initial_text=init_txt,
+            text_fg=menu_props.text_active_col, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.75, 0), entry_font=menu_args.font, width=20,
-            frame_col=menu_args.btn_color, obscured=True,
-            text_fg=menu_args.text_active, cmd=self.register)
+            scale=.08, pos=(-.75, 0), entry_font=menu_props.font, width=20,
+            frame_col=menu_props.btn_col, obscured=True,
+            text_fg=menu_props.text_active_col, cmd=self.register)
         start_btn = Btn(
             text=_('Register'), pos=(-.2, -.2), cmd=self.register,
-            **self.props.gameprops.menu_args.btn_args)
+            **self.props.gameprops.menu_props.btn_args)
         t_a['scale'] = .06
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
                    email_lab, self.email_ent]
@@ -85,7 +85,7 @@ class RegisterPageGui(ThanksPageGui):
         elif ret_val == 'already_used_email': txt = already_email_txt
         elif ret_val == 'short': txt = short_txt
         else: txt = err_txt
-        self.register_dlg = RegisterDialog(self.menu_args, txt)
+        self.register_dlg = RegisterDialog(self.menu_props, txt)
         self.register_dlg.attach(self.on_register_dlg)
 
     def on_register_dlg(self):
@@ -137,7 +137,7 @@ class RegisterPageGui(ThanksPageGui):
 
     def on_ko(self, err):  # unused err
         txt = Text(_('Error'), pos=(-.2, -.05), fg=(1, 0, 0, 1),
-                           scale=.16, font=self.menu_args.font)
+                           scale=.16, font=self.menu_props.font)
         self.eng.do_later(5, txt.destroy)
 
     def destroy(self):

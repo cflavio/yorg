@@ -6,9 +6,9 @@ from yyagl.racing.race.event import NetMsgs
 
 class InGamePageGuiMultiplayer(PageGui):
 
-    def __init__(self, mediator, menu_args, keys):
+    def __init__(self, mediator, menu_props, keys):
         self.keys = keys
-        PageGui.__init__(self, mediator, menu_args)
+        PageGui.__init__(self, mediator, menu_props)
 
     def build(self, back_btn=True):
         frm = Frame(
@@ -16,16 +16,16 @@ class InGamePageGuiMultiplayer(PageGui):
         question_txt = _(
             "What do you want to do?\n\nNote: use '%s' for pausing the game.")
         question_txt = question_txt % self.keys.pause
-        menu_args = self.menu_args
+        menu_props = self.menu_props
         txt = Text(
             question_txt, pos=(0, .64), scale=.08, wordwrap=32,
-            fg=menu_args.text_active, font=menu_args.font)
+            fg=menu_props.text_active_col, font=menu_props.font)
         on_back = lambda: self.on_end(True)
         on_end = lambda: self.on_end(False)
         menu_data = [
             ('back to the game', _('back to the game'), on_back),
             ('back to the main menu', _('back to the main menu'), on_end)]
-        btn_args = menu_args.btn_args
+        btn_args = menu_props.btn_args
         btn_visit = Btn(
             text=menu_data[0][1], pos=(0, 0), cmd=menu_data[0][2],
             text_scale=.8, **btn_args)
@@ -66,12 +66,12 @@ class InGamePageGui(InGamePageGuiMultiplayer):
 class InGamePageMultiplayer(Page):
     gui_cls = InGamePageGuiMultiplayer
 
-    def __init__(self, menu_args, keys):
+    def __init__(self, menu_props, keys):
         PageFacade.__init__(self)
-        self.menu_args = menu_args
+        self.menu_props = menu_props
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, keys])]]
+            [('gui', self.gui_cls, [self, self.menu_props, keys])]]
         GameObject.__init__(self, init_lst)
 
 

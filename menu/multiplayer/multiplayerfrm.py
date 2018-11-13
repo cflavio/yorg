@@ -17,7 +17,7 @@ from .network_dlg import NetworkDialog
 
 class MultiplayerFrm(GameObject):
 
-    def __init__(self, menu_args, yorg_srv, yorg_client):
+    def __init__(self, menu_props, yorg_srv, yorg_client):
         GameObject.__init__(self)
         self.eng.log('created multiplayer form')
         self.yorg_client = yorg_client
@@ -28,12 +28,12 @@ class MultiplayerFrm(GameObject):
         self.labels = []
         self.invited_users = []
         self.curr_inviting_usr = None
-        self.menu_args = menu_args
-        self.users_frm = UsersFrm(menu_args, yorg_srv, yorg_client)
+        self.menu_props = menu_props
+        self.users_frm = UsersFrm(menu_props, yorg_srv, yorg_client)
         self.users_frm.attach(self.on_invite)
         self.users_frm.attach(self.on_add_chat)
         self.users_frm.attach(self.on_add_groupchat)
-        self.msg_frm = MessageFrm(menu_args, yorg_client)
+        self.msg_frm = MessageFrm(menu_props, yorg_client)
         self.msg_frm.attach(self.on_msg_focus)
         self.msg_frm.attach(self.on_close_all_chats)
         self.match_frm = None
@@ -53,7 +53,7 @@ class MultiplayerFrm(GameObject):
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient
-        self.match_frm = cls(self.menu_args, self.yorg_client)
+        self.match_frm = cls(self.menu_props, self.yorg_client)
         self.match_frm.attach(self.on_start)
         self.match_frm.show(room)
 
@@ -72,7 +72,7 @@ class MultiplayerFrm(GameObject):
     def on_user_subscribe(self, user):
         self.eng.log('user subscribe: ' + str(user))
         if self.eng.xmpp.is_friend(user): return
-        self.dialog = FriendDialog(self.menu_args, user)
+        self.dialog = FriendDialog(self.menu_props, user)
         self.dialog.attach(self.on_friend_answer)
 
     def on_friend_answer(self, user, val):
@@ -98,7 +98,7 @@ class MultiplayerFrm(GameObject):
             urlerror_str = _(
                 "We can't connect to httpbin. Please retry later.")
             dct_msg = {gaierror: gaierror_str, URLError: urlerror_str}
-            self.server_dlg = ServerDialog(self.menu_args, dct_msg[type(e)])
+            self.server_dlg = ServerDialog(self.menu_props, dct_msg[type(e)])
             self.server_dlg.attach(self.on_server_dlg)
             self.eng.server.stop()
 
@@ -152,12 +152,12 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.on_presence_unavailable_room(uid, room_name)
         if uid == self.users_frm.in_match_room:
             self.eng.xmpp.notify('on_server_quit')
-            self.exit_dlg = ExitDialog(self.menu_args, uid)
+            self.exit_dlg = ExitDialog(self.menu_props, uid)
             self.exit_dlg.attach(self.on_exit_dlg)
             self.eng.show_cursor()
         if uid == self.yorg_client.myid and \
                 self.match_frm and room_name == self.match_frm.room:
-            self.removed_dlg = RemovedDialog(self.menu_args)
+            self.removed_dlg = RemovedDialog(self.menu_props)
             self.removed_dlg.attach(self.on_remove_dlg)
 
     def on_rm_usr_from_match(self, data_lst):
@@ -166,7 +166,7 @@ class MultiplayerFrm(GameObject):
             self.msg_frm.match_msg_frm.on_rm_usr_from_match(data_lst[0])
         if data_lst[0] == self.yorg_client.myid and \
                 self.match_frm and data_lst[1] == self.match_frm.room:
-            self.removed_dlg = RemovedDialog(self.menu_args)
+            self.removed_dlg = RemovedDialog(self.menu_props)
             self.removed_dlg.attach(self.on_remove_dlg)
         elif data_lst[0] == self.yorg_client.myid and \
                 not self.match_frm and self.invite_dlg:
@@ -317,7 +317,7 @@ class MultiplayerFrm(GameObject):
         #        mtype='ya2_yorg',
         #        mbody=str(msg['body']))
         #    return
-        self.invite_dlg = InviteDialog(self.menu_args, from_, roomname)
+        self.invite_dlg = InviteDialog(self.menu_props, from_, roomname)
         self.invite_dlg.attach(self.on_invite_answer)
         self.curr_inviting_usr = from_
         #for usr_name in [self.yorg_srv] + \
@@ -365,7 +365,7 @@ class MultiplayerFrm(GameObject):
             #            my_addr = mypublic_addr
             #try: self.eng.client.start(self.process_msg_client, ip_addr, my_addr)
             #except (NetworkError, error) as exc:
-            #    self.network_dlg = NetworkDialog(self.menu_args)
+            #    self.network_dlg = NetworkDialog(self.menu_props)
             #    self.network_dlg.attach(self.on_network_dlg)
             #    return
             self.users_frm.in_match_room = from_

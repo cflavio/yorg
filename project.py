@@ -35,6 +35,9 @@
 # refactor: remove mediator from colleague
 # refactor: where proper (i.e. where observers aren't tied to the observable)
 #   replace observer with publisher-subscriber
+# refactor: attach/attach_obs, detach/detach_obs
+# refactor: Facade.__init__(self, mth_lst, prop_lst), internally it invokes
+#   the methods _fwd_mth, _fwd_prop
 # drifting force function of linear and angular velocities
 # uml create automatic class diagrams with fields and methods for each class
 # unit tests

@@ -12,11 +12,11 @@ class ResetPageGui(ThanksPageGui):
 
     def __init__(self, mediator, mp_props):
         self.props = mp_props
-        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
     def build(self):
-        menu_args = self.menu_args
-        t_a = menu_args.text_args.copy()
+        menu_props = self.menu_props
+        t_a = menu_props.text_args.copy()
         # del t_a['scale']
         email_lab = Text(_('Your email:'), pos=(-.25, .4),
                                align='right', **t_a)
@@ -26,18 +26,18 @@ class ResetPageGui(ThanksPageGui):
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.email_ent = Entry(
-            scale=.08, pos=(-.15, 1, .4), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, initialText=_('your email'),
-            text_fg=menu_args.text_active, on_tab=self.on_tab_email,
+            scale=.08, pos=(-.15, 1, .4), entryFont=menu_props.font, width=12,
+            frameColor=menu_props.btn_col, initialText=_('your email'),
+            text_fg=menu_props.text_active_col, on_tab=self.on_tab_email,
             on_click=self.on_click_email)
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, 1, .2), entryFont=menu_args.font, width=12,
-            frameColor=menu_args.btn_color, initialText=init_txt,
-            text_fg=menu_args.text_active, on_tab=self.on_tab_id,
+            scale=.08, pos=(-.15, 1, .2), entryFont=menu_props.font, width=12,
+            frameColor=menu_props.btn_col, initialText=init_txt,
+            text_fg=menu_props.text_active_col, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
         start_btn = Btn(
             text=_('Reset'), pos=(-.2, 1, -.2), command=self.reset,
-            **self.props.gameprops.menu_args.btn_args)
+            **self.props.gameprops.menu_props.btn_args)
         t_a['scale'] = .06
         widgets = [self.jid_ent, start_btn, jid_lab, email_lab, self.email_ent]
         self.add_widgets(widgets)
@@ -62,7 +62,7 @@ class ResetPageGui(ThanksPageGui):
         elif ret_val == 'nonick': txt = nonick_txt
         elif ret_val == 'dontmatch': txt = dontmatch_txt
         else: txt = err_txt
-        self.reset_dlg = ResetDialog(self.menu_args, txt)
+        self.reset_dlg = ResetDialog(self.menu_props, txt)
         self.reset_dlg.attach(self.on_reset_dlg)
 
     def on_reset_dlg(self):
@@ -112,7 +112,7 @@ class ResetPageGui(ThanksPageGui):
 
     def on_ko(self, err):  # unused err
         txt = Text(_('Error'), pos=(-.2, -.05), fg=(1, 0, 0, 1),
-                           scale=.16, font=self.menu_args.font)
+                           scale=.16, font=self.menu_props.font)
         self.eng.do_later(5, txt.destroy)
 
     def destroy(self):

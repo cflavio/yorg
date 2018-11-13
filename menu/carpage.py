@@ -19,13 +19,13 @@ class CarPageGui(ThanksPageGui):
         self.props = carpage_props
         self.yorg_client = yorg_client
         players = range(players)
-        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args, players)
+        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_props, players)
 
     def build(self, exit_behav=False):
         gprops = self.props.gameprops
         widgets = [Text(
             _('Select the car'), pos=(-.2, .8),
-            **self.menu_args.text_args)]
+            **self.menu_props.text_args)]
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
             if row * cars_per_row + col >= len(gprops.cars_names):
@@ -36,7 +36,7 @@ class CarPageGui(ThanksPageGui):
         ThanksPageGui.build(self, exit_behav=exit_behav)
 
     def __bld_car(self, cars_per_row, row, col):
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         gprops = self.props.gameprops
         z_offset = 0 if len(gprops.cars_names) > cars_per_row else .35
@@ -51,7 +51,7 @@ class CarPageGui(ThanksPageGui):
             cmd=self.on_car,
             extra_args=[
                 gprops.cars_names[col + row * cars_per_row]],
-            **self.menu_args.imgbtn_args)
+            **self.menu_props.imgbtn_args)
         widgets = [btn]
         txt = Text(
             gprops.cars_names[col + row * cars_per_row],
@@ -83,7 +83,7 @@ class CarPageGui(ThanksPageGui):
 
     def __add_txt(self, txt, val, pos_z, psign, pcol, col, x_offset, z_offset,
                   row):
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         return Text(
             '%s: %s%s%%' % (txt, psign(val), pcol(val)),

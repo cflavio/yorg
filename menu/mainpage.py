@@ -27,7 +27,7 @@ class YorgMainPageGui(MainPageGui):
         self.load_settings()
         self.conn_attempted = False
         self.ver_check = VersionChecker()
-        MainPageGui.__init__(self, mediator, self.props.gameprops.menu_args)
+        MainPageGui.__init__(self, mediator, self.props.gameprops.menu_props)
         if self.ver_check.is_uptodate():
             options = self.props.opt_file
             user = options['settings']['login']['usr']
@@ -145,15 +145,15 @@ class YorgMainPageGui(MainPageGui):
         widgets = [
             Btn(text='', pos=(0, .68-i*.23), cmd=menu[2],
                 tra_src=menu_data[i][0], tra_tra=menu_data[i][1],
-                **self.props.gameprops.menu_args.btn_args)
+                **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         logo_img = Img(
             self.props.title_img, scale=(.64, 1, .64 * (380.0 / 772)),
             parent=base.a2dTopLeft, pos=(.65, -.32))
         widgets += [logo_img]
-        lab_args = self.props.gameprops.menu_args.label_args
+        lab_args = self.props.gameprops.menu_props.label_args
         lab_args['scale'] = .12
-        lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
+        lab_args['text_fg'] = self.props.gameprops.menu_props.text_err_col
         wip_lab = Label(
             text='', pos=(.05, -.76), parent=base.a2dTopLeft,
             text_wordwrap=10, text_align=TextNode.A_left,
@@ -176,7 +176,7 @@ class YorgMainPageGui(MainPageGui):
         self.notify('on_push_page', 'options', [option_props])
 
     def set_news(self):
-        menu_args = self.props.gameprops.menu_args
+        menu_props = self.props.gameprops.menu_props
         feeds = parse(self.props.feed_url)
         if not feeds['entries']: return
         self.__feed_type = \
@@ -196,16 +196,16 @@ class YorgMainPageGui(MainPageGui):
             pos=(.05, .1), parent=base.a2dBottomLeft)
         texts = [Text(
             _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
-            parent='bottomleft', fg=menu_args.text_normal,
-            font=menu_args.font, tra_src='Last news:',
+            parent='bottomleft', fg=menu_props.text_normal_col,
+            font=menu_props.font, tra_src='Last news:',
             tra_tra=_('Last news:'))]
         rss = [map(self.__to_unicode, rss_str) for rss_str in rss]
         texts += [Text(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent='bottomleft', align='left',
-            fg=menu_args.text_normal, font=menu_args.font)
+            fg=menu_props.text_normal_col, font=menu_props.font)
                   for i in range(min(5, len(rss)))]
-        btn_args = self.props.gameprops.menu_args.btn_args.copy()
+        btn_args = self.props.gameprops.menu_props.btn_args.copy()
         btn_args['scale'] = (.055, .055)
         show_btn = Btn(
             text=_('show'), pos=(.55, .15), cmd=self.eng.open_browser,

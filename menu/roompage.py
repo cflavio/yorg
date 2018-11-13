@@ -6,9 +6,9 @@ from .thankspage import ThanksPageGui
 
 class RoomPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, menu_args):
-        self.menu_args = menu_args
-        ThanksPageGui.__init__(self, mediator, menu_args)
+    def __init__(self, mediator, menu_props):
+        self.menu_props = menu_props
+        ThanksPageGui.__init__(self, mediator, menu_props)
 
     def show(self):
         ThanksPageGui.show(self)
@@ -23,10 +23,10 @@ class RoomPageGui(ThanksPageGui):
 class RoomPage(Page):
     gui_cls = RoomPageGui
 
-    def __init__(self, menu_args, room, nick):
+    def __init__(self, menu_props, room, nick):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, menu_args])]]
+            [('gui', self.gui_cls, [self, menu_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__

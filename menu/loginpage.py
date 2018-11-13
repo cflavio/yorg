@@ -12,11 +12,11 @@ class LogInPageGui(ThanksPageGui):
     def __init__(self, mediator, mp_props, yorg_client):
         self.props = mp_props
         self.yorg_client = yorg_client
-        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
     def build(self):
-        menu_args = self.menu_args
-        t_a = menu_args.text_args.copy()
+        menu_props = self.menu_props
+        t_a = menu_props.text_args.copy()
         # del t_a['scale']
         jid_lab = Text(_('Your user id:'), pos=(-.25, .8),
                                align='right', **t_a)
@@ -26,17 +26,17 @@ class LogInPageGui(ThanksPageGui):
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, .8), entry_font=menu_args.font, width=12,
-            frame_col=menu_args.btn_color, initial_text=init_txt,
-            text_fg=menu_args.text_active, on_tab=self.on_tab,
+            scale=.08, pos=(-.15, .8), entry_font=menu_props.font, width=12,
+            frame_col=menu_props.btn_col, initial_text=init_txt,
+            text_fg=menu_props.text_active_col, on_tab=self.on_tab,
             on_click=self.on_click)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.15, .6), entry_font=menu_args.font, width=12,
-            frame_col=menu_args.btn_color, obscured=True,
-            text_fg=menu_args.text_active, cmd=self.start)
+            scale=.08, pos=(-.15, .6), entry_font=menu_props.font, width=12,
+            frame_col=menu_props.btn_col, obscured=True,
+            text_fg=menu_props.text_active_col, cmd=self.start)
         start_btn = Btn(
             text=_('Log-in'), pos=(-.2, .4), cmd=self.start,
-            **self.props.gameprops.menu_args.btn_args)
+            **self.props.gameprops.menu_props.btn_args)
         t_a['scale'] = .06
         note_txt = \
             _('If you are a supporter, please write us (%s) your '
@@ -54,7 +54,7 @@ class LogInPageGui(ThanksPageGui):
         register_btn = Btn(
             text='', pos=(-.2, -.35), cmd=self.on_register,
             tra_src='Register', tra_tra=_('Register'),
-            **menu_args.btn_args)
+            **menu_props.btn_args)
         reset_txt = _(
             "If you want to reset your password:")
         reset_lab = Text(
@@ -63,7 +63,7 @@ class LogInPageGui(ThanksPageGui):
         reset_btn = Btn(
             text='', pos=(-.2, -.7), cmd=self.on_reset,
             tra_src='Reset', tra_tra=_('Reset'),
-            **menu_args.btn_args)
+            **menu_props.btn_args)
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,
                    notes_lab, register_lab, register_btn, reset_lab, reset_btn]
         self.add_widgets(widgets)
@@ -117,7 +117,7 @@ class LogInPageGui(ThanksPageGui):
 
     def on_ko(self, err):  # unused err
         txt = Text(_('Error') + ': ' + err, pos=(-.2, -.05), fg=(1, 0, 0, 1),
-                           scale=.16, font=self.menu_args.font)
+                           scale=.16, font=self.menu_props.font)
         self.eng.do_later(5, txt.destroy)
 
     def destroy(self):

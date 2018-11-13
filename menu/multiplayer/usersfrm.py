@@ -13,7 +13,7 @@ from .forms import UserFrmListMe, UserFrmList
 
 class UsersFrm(GameObject):
 
-    def __init__(self, menu_args, yorg_srv, yorg_client):
+    def __init__(self, menu_props, yorg_srv, yorg_client):
         GameObject.__init__(self)
         self.eng.log('create users form')
         self.ver_check = VersionChecker()
@@ -22,8 +22,8 @@ class UsersFrm(GameObject):
         self.room_name = None
         self.labels = []
         self.invited_users = []
-        self.menu_args = menu_args
-        lab_args = menu_args.label_args
+        self.menu_props = menu_props
+        lab_args = menu_props.label_args
         lab_args['scale'] = .046
         self.users_lab = Label(
             text=_('Current online users'), pos=(-.85, -.02),
@@ -60,7 +60,7 @@ class UsersFrm(GameObject):
         self.users_lab.hide()
 
     def set_connection_label(self):
-        lab_args = self.menu_args.label_args
+        lab_args = self.menu_props.label_args
         lab_args['scale'] = .046
         txt = ''
         if not self.ver_check.is_uptodate():
@@ -111,14 +111,14 @@ class UsersFrm(GameObject):
                         user.is_playing,
                         (0, 1, top - .08 - .08 * i),
                         self.frm.getCanvas(),
-                        self.menu_args, self.yorg_client)
+                        self.menu_props, self.yorg_client)
                 else:
                     lab = UserFrmListMe(
                         user.uid,
                         user.is_supporter,
                         (0, 1, top - .08 - .08 * i),
                         self.frm.getCanvas(),
-                        self.menu_args)
+                        self.menu_props)
                 self.labels += [lab]
                 lab.attach(self.on_invite)
                 lab.attach(self.on_friend)

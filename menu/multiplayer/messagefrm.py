@@ -38,7 +38,7 @@ class MUC(Chat):
 
 class MatchMsgFrm(GameObject):
 
-    def __init__(self, menu_args, yorg_client):
+    def __init__(self, menu_props, yorg_client):
         GameObject.__init__(self)
         self.eng.log('created match message form')
         self.yorg_client = yorg_client
@@ -47,19 +47,19 @@ class MatchMsgFrm(GameObject):
             frameSize=(-.02, 2.5, 0, 1.22),
             frameColor=(.2, .2, .2, .5),
             pos=(.04, 1, -1.69), parent=base.a2dTopLeft)
-        t_a = menu_args.text_args
+        t_a = menu_props.text_args
         t_a['scale'] = .05
-        t_a['fg'] = menu_args.text_normal
+        t_a['fg'] = menu_props.text_normal_col
         self.dst_txt = OnscreenText(
             text='', pos=(0, 1.16), parent=self.msg_frm, align=TextNode.A_left,
             **t_a)
         self.ent = Entry(
-            scale=.04, pos=(0, 1, .03), entryFont=menu_args.font, width=62,
-            frameColor=menu_args.btn_color, parent=self.msg_frm,
+            scale=.04, pos=(0, 1, .03), entryFont=menu_props.font, width=62,
+            frameColor=menu_props.btn_col, parent=self.msg_frm,
             initialText=_('write here your message'),
             command=self.on_typed_msg, focusInCommand=self.on_focus,
             focusInExtraArgs=['in'], focusOutCommand=self.on_focus,
-            focusOutExtraArgs=['out'], text_fg=menu_args.text_active)
+            focusOutExtraArgs=['out'], text_fg=menu_props.text_active_col)
         self.ent['state'] = DISABLED
         self.txt_frm = DirectScrolledFrame(
             frameSize=(-.02, 2.46, -.02, 1.02),
@@ -80,9 +80,9 @@ class MatchMsgFrm(GameObject):
         self.msg_txt = OnscreenText(
             text='', pos=(0, .24), parent=self.txt_frm.getCanvas(),
             align=TextNode.A_left, wordwrap=52, **t_a)
-        lab_args = menu_args.label_args
+        lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = menu_args.text_normal
+        lab_args['text_fg'] = menu_props.text_normal_col
         self.lab_frm = Btn(
             frameSize=(-.02, 2.5, -.01, .05),
             frame_col=(1, 1, 1, 0),
@@ -210,7 +210,7 @@ class MatchMsgFrm(GameObject):
 
 class MessageFrm(GameObject):
 
-    def __init__(self, menu_args, yorg_client):
+    def __init__(self, menu_props, yorg_client):
         GameObject.__init__(self)
         self.yorg_client = yorg_client
         self.eng.log('created message form')
@@ -222,10 +222,10 @@ class MessageFrm(GameObject):
             frameColor=(.2, .2, .2, .5),
             pos=(-.82, 1, .02), parent=base.a2dBottomRight)
         self.presences_sent = []
-        self.menu_args = menu_args
-        t_a = menu_args.text_args
+        self.menu_props = menu_props
+        t_a = menu_props.text_args
         t_a['scale'] = .05
-        t_a['fg'] = menu_args.text_normal
+        t_a['fg'] = menu_props.text_normal_col
         self.dst_txt = OnscreenText(
             text='', pos=(0, .4), parent=self.msg_frm, align=TextNode.A_left,
             **t_a)
@@ -234,22 +234,22 @@ class MessageFrm(GameObject):
             frame_col=(1, 1, 1, 1),
             frame_texture='assets/images/gui/arrow.txo',
             cmd=self.on_arrow,
-            **menu_args.imgbtn_args)
+            **menu_props.imgbtn_args)
         self.arrow_btn.disable()
         self.close_btn = ImgBtn(
             parent=self.msg_frm, scale=(.024, .024), pos=(.76, 1, .42),
             frame_col=(1, 1, 1, 1),
             frame_texture='assets/images/gui/close.txo',
             cmd=self.on_close,
-            **menu_args.imgbtn_args)
+            **menu_props.imgbtn_args)
         self.close_btn.disable()
         self.ent = Entry(
-            scale=.04, pos=(0, .03), entry_font=menu_args.font, width=19.5,
-            frame_col=menu_args.btn_color, parent=self.msg_frm,
+            scale=.04, pos=(0, .03), entry_font=menu_props.font, width=19.5,
+            frame_col=menu_props.btn_col, parent=self.msg_frm,
             initial_text=_('write here your message'),
             cmd=self.on_typed_msg, focus_in_cmd=self.on_focus,
             focus_in_args=['in'], focus_out_cmd=self.on_focus,
-            focus_out_args=['out'], text_fg=menu_args.text_active)
+            focus_out_args=['out'], text_fg=menu_props.text_active_col)
         self.ent['state'] = DISABLED
         self.txt_frm = DirectScrolledFrame(
             frameSize=(-.02, .76, -.02, .28),
@@ -270,11 +270,11 @@ class MessageFrm(GameObject):
         self.msg_txt = OnscreenText(
             text='', pos=(0, .24), parent=self.txt_frm.getCanvas(),
             align=TextNode.A_left, wordwrap=14, **t_a)
-        lab_args = menu_args.label_args
+        lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = menu_args.text_normal
+        lab_args['text_fg'] = menu_props.text_normal_col
         self.lab_frm = Btn(
-            frameSize=(-.02, .64, -.01, .05),
+            frame_size=(-.02, .64, -.01, .05),
             frame_col=(1, 1, 1, 0),
             pos=(0, 1, .4), parent=self.msg_frm)
         self.lab_frm.bind(ENTER, self.on_enter)
@@ -516,6 +516,6 @@ class MessageFrm(GameObject):
     def add_match_chat(self, room, usr):
         if self.curr_match_room: return
         self.curr_match_room = room
-        self.match_msg_frm = MatchMsgFrm(self.menu_args, self.yorg_client)
+        self.match_msg_frm = MatchMsgFrm(self.menu_props, self.yorg_client)
         self.match_msg_frm.attach(self.on_match_msg_focus)
         self.match_msg_frm.add_groupchat(room, usr)

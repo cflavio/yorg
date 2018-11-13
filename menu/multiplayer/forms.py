@@ -10,12 +10,12 @@ from yyagl.lib.gui import Label
 
 class UserLabel(GameObject):
 
-    def __init__(self, name, parent, menu_args, is_supporter):
+    def __init__(self, name, parent, menu_props, is_supporter):
         GameObject.__init__(self)
-        self.menu_args = menu_args
+        self.menu_props = menu_props
         self.name = name
         self.parent = parent
-        lab_args = menu_args.label_args
+        lab_args = menu_props.label_args
         lab_args['scale'] = .046
         self.lab = Label(text=name, pos=(0, 0), parent=parent,
                          text_align=TextNode.A_left, **lab_args)
@@ -23,15 +23,15 @@ class UserLabel(GameObject):
         self.set_supporter(is_supporter)
         self.set_online(True)
 
-    def on_enter(self, pos): self.lab['text_fg'] = self.menu_args.text_active
+    def on_enter(self, pos): self.lab['text_fg'] = self.menu_props.text_active_col
 
-    def on_exit(self, pos): self.lab['text_fg'] = self.menu_args.text_normal
+    def on_exit(self, pos): self.lab['text_fg'] = self.menu_props.text_normal_col
 
     def set_supporter(self, is_supporter):
         if is_supporter:
             self.lab.set_x(.03)
             self.supp_btn = StaticMPBtn(
-                self.parent, self, self.menu_args, 'assets/images/gui/medal.txo',
+                self.parent, self, self.menu_props, 'assets/images/gui/medal.txo',
                 .01, None, self.name, _('Supporter!'))
         else:
             self.lab.set_x(0)
@@ -50,15 +50,15 @@ class UserLabel(GameObject):
 
 class UserFrmMe(GameObject, Subject):
 
-    def __init__(self, uid, is_supporter, pos, parent, menu_args,
+    def __init__(self, uid, is_supporter, pos, parent, menu_props,
                  msg_btn_x=.58):
         Subject.__init__(self)
         GameObject.__init__(self)
-        self.menu_args = menu_args
+        self.menu_props = menu_props
         self.frm = Btn(
             frameSize=(-.01, .79, .05, -.03), frame_col=(1, 1, 1, 0),
             pos=pos, parent=parent)
-        self.lab = UserLabel(uid, self.frm, menu_args, is_supporter)
+        self.lab = UserLabel(uid, self.frm, menu_props, is_supporter)
         self.frm.bind(ENTER, self.on_enter)
         self.frm.bind(EXIT, self.on_exit)
 
@@ -78,11 +78,11 @@ class UserFrmMe(GameObject, Subject):
 class UserFrm(UserFrmMe):
 
     def __init__(self, name, is_supporter, pos, parent,
-                 menu_args, msg_btn_x=.58):
-        UserFrmMe.__init__(self, name, is_supporter, pos, parent, menu_args,
+                 menu_props, msg_btn_x=.58):
+        UserFrmMe.__init__(self, name, is_supporter, pos, parent, menu_props,
                            msg_btn_x)
         self.msg_btn = MPBtn(
-            self.frm, self, menu_args, 'assets/images/gui/message.txo',
+            self.frm, self, menu_props, 'assets/images/gui/message.txo',
             msg_btn_x, self.on_msg, name, _('send a message to the user'))
 
     def on_msg(self, uid):
@@ -99,9 +99,9 @@ class UserFrm(UserFrmMe):
 
 class UserFrmListMe(UserFrmMe):
 
-    def __init__(self, uid, is_supporter, pos, parent, menu_args):
+    def __init__(self, uid, is_supporter, pos, parent, menu_props):
         UserFrmMe.__init__(
-            self, uid, is_supporter, pos, parent, menu_args)
+            self, uid, is_supporter, pos, parent, menu_props)
 
     def enable_invite_btn(self, enable=True): pass
 
@@ -109,28 +109,28 @@ class UserFrmListMe(UserFrmMe):
 class UserFrmList(UserFrm):
 
     def __init__(self, name, is_supporter, is_playing, pos, parent,
-                 menu_args, yorg_client):
+                 menu_props, yorg_client):
         UserFrm.__init__(
-            self, name, is_supporter, pos, parent, menu_args, .72)
+            self, name, is_supporter, pos, parent, menu_props, .72)
         self.yorg_client = yorg_client
-        lab_args = menu_args.label_args
+        lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_normal
+        lab_args['text_fg'] = self.menu_props.text_normal_col
         self.__enable_invite_btn = not is_playing
         self.invite_btn = MPBtn(
-            self.frm, self, menu_args, 'assets/images/gui/invite.txo',
+            self.frm, self, menu_props, 'assets/images/gui/invite.txo',
             .65, self.on_invite, name, _("%s isn't playing yorg") % name)
-        #self.create_friend_btn(is_friend, menu_args, name_full)
+        #self.create_friend_btn(is_friend, menu_props, name_full)
 
-    def create_friend_btn(self, is_friend, menu_args, name_full):
+    def create_friend_btn(self, is_friend, menu_props, name_full):
         pass
         #if not is_friend:
         #    self.friend_btn = MPBtn(
-        #        self.frm, self, menu_args, 'assets/images/gui/friend.txo',
+        #        self.frm, self, menu_props, 'assets/images/gui/friend.txo',
         #        .72, self.on_friend, name_full.name, _('add to xmpp friends'))
         #else:
         #    self.friend_btn = MPBtn(
-        #        self.frm, self, menu_args, 'assets/images/gui/kick.txo',
+        #        self.frm, self, menu_props, 'assets/images/gui/kick.txo',
         #        .72, self.on_unfriend, name_full.name,
         #        _('remove from xmpp friends'))
 
@@ -167,15 +167,15 @@ class UserFrmList(UserFrm):
 
 class UserFrmMatch(UserFrm):
 
-    def __init__(self, uid, usr, is_supporter, pos, parent, menu_args):
+    def __init__(self, uid, usr, is_supporter, pos, parent, menu_props):
         UserFrm.__init__(
-            self, uid, is_supporter, pos, parent, menu_args, 1.0)
+            self, uid, is_supporter, pos, parent, menu_props, 1.0)
         self.frm['frameSize'] = (-.01, 1.06, .05, -.03)
-        lab_args = menu_args.label_args
+        lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        lab_args['text_fg'] = self.menu_args.text_normal
+        lab_args['text_fg'] = self.menu_props.text_normal_col
         self.remove_btn = MPBtn(
-            self.frm, self, menu_args, 'assets/images/gui/remove.txo',
+            self.frm, self, menu_props, 'assets/images/gui/remove.txo',
             .92, self.on_remove, usr.uid, _("remove from the match"))
 
     def on_remove(self, usr):

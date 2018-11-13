@@ -109,26 +109,26 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
             self.eng.log('options')
-            page = OptionPage(self.mediator.gui.menu_args, args[0])
+            page = OptionPage(self.mediator.gui.menu_props, args[0])
         if page_code == 'input':
             self.eng.log('input')
             page = InputPage(
-                self.mediator.gui.menu_args, args[0], args[1])
+                self.mediator.gui.menu_props, args[0], args[1])
         if page_code == 'input2':
             self.eng.log('input2')
-            page = InputPage2(self.mediator.gui.menu_args, args[0], args[1])
+            page = InputPage2(self.mediator.gui.menu_props, args[0], args[1])
         if page_code == 'input3':
             self.eng.log('input3')
-            page = InputPage3(self.mediator.gui.menu_args, args[0], args[1])
+            page = InputPage3(self.mediator.gui.menu_props, args[0], args[1])
         if page_code == 'input4':
             self.eng.log('input4')
-            page = InputPage4(self.mediator.gui.menu_args, args[0], args[1])
+            page = InputPage4(self.mediator.gui.menu_props, args[0], args[1])
         if page_code == 'credits':
             self.eng.log('credits')
-            page = CreditPage(self.mediator.gui.menu_args)
+            page = CreditPage(self.mediator.gui.menu_props)
         if page_code == 'supporters':
             self.eng.log('supporters')
-            page = SupportersPage(self.mediator.gui.menu_args)
+            page = SupportersPage(self.mediator.gui.menu_props)
         self.push_page(page)
 
     def on_srv_quitted(self):
@@ -190,7 +190,7 @@ class YorgMenuLogic(MenuLogic):
         self.mediator.gui.notify('on_login')
 
     def create_room(self, room, nick):
-        self.push_page(RoomPage(self.mediator.gui.menu_args, room, nick))
+        self.push_page(RoomPage(self.mediator.gui.menu_props, room, nick))
 
 
 class YorgMenuGui(MenuGui):
@@ -198,7 +198,7 @@ class YorgMenuGui(MenuGui):
     def __init__(self, mediator, menu_props, yorg_client):
         # every page should not manage following pages by forwarding params:
         # each page should callback the menu and it should spawn the next one
-        MenuGui.__init__(self, mediator, menu_props.gameprops.menu_args)
+        MenuGui.__init__(self, mediator, menu_props.gameprops.menu_props)
         page = YorgMainPage(menu_props, yorg_client)
         page.gui.attach(self.on_login)
         page.gui.attach(self.on_logout)
@@ -219,9 +219,9 @@ class YorgMenu(Menu):
     gui_cls = YorgMenuGui
     logic_cls = YorgMenuLogic
 
-    def __init__(self, menu_args, yorg_client):
+    def __init__(self, menu_props, yorg_client):
         comps = [
             [('logic', self.logic_cls, [self, yorg_client])],
-            [('gui', self.gui_cls, [self, menu_args, yorg_client])]]
+            [('gui', self.gui_cls, [self, menu_props, yorg_client])]]
         GameObject.__init__(self, comps)
         MenuFacade.__init__(self)

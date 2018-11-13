@@ -8,7 +8,7 @@ class SingleplayerPageGui(ThanksPageGui):
 
     def __init__(self, mediator, props):
         self.props = props
-        ThanksPageGui.__init__(self, mediator, props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, props.gameprops.menu_props)
 
     def build(self):
         menu_data = [
@@ -18,7 +18,7 @@ class SingleplayerPageGui(ThanksPageGui):
         widgets = [
             Btn(
                 text=menu[0], pos=(-.2, .4-i*.28), cmd=menu[1],
-                **self.props.gameprops.menu_args.btn_args)
+                **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
         self._set_widgets()

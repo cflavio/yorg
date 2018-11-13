@@ -8,7 +8,7 @@ class MultiplayerPageGui(ThanksPageGui):
 
     def __init__(self, mediator, mp_props):
         self.props = mp_props
-        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
     def show(self):
         ThanksPageGui.show(self)
@@ -22,7 +22,7 @@ class MultiplayerPageGui(ThanksPageGui):
             ('Client', ccb)]
         widgets = [
             Btn(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                **self.props.gameprops.menu_args.btn_args)
+                **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)

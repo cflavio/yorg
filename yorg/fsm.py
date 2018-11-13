@@ -86,7 +86,7 @@ class YorgFsm(FsmColleague):
         #                    self.eng.server.connections.remove(conn)
         if self.getCurrentOrNextState() == 'Menu':
             if uid == self.mediator.logic.mp_frm.users_frm.in_match_room:
-                self.__menu.enable(False)
+                self.__menu.disable()
 
     def on_start_match(self):
         self.__menu.logic.on_push_page('trackpageserver', [self.__menu_props, self.mediator.logic.mp_frm.msg_frm.curr_match_room])
@@ -96,9 +96,11 @@ class YorgFsm(FsmColleague):
         self.__menu.logic.on_track_selected(track)
         self.__menu.logic.on_push_page('carpageclient', [self.__menu_props])
 
-    def enable_menu(self, val): self.__menu.enable(val)
+    def enable_menu(self, val):
+        (self.__menu.enable if val else self.__menu.disable)()
 
-    def enable_menu_navigation(self, val): self.__menu.enable_navigation(val)
+    def enable_menu_navigation(self, val):
+        (self.__menu.enable_navigation if val else self.__menu.disable_navigation)()
 
     def on_srv_quitted(self):
         if self.getCurrentOrNextState() == 'Menu':
@@ -229,7 +231,7 @@ class YorgFsm(FsmColleague):
         if not self.mediator.options['development']['show_exit']:
             #self.eng.xmpp.destroy()
             sys_exit()
-        self.__exit_menu = ExitMenu(self.mediator.gameprops.menu_args)
+        self.__exit_menu = ExitMenu(self.mediator.gameprops.menu_props)
         base.accept('escape-up', self.demand, ['Menu'])
 
     def exitExit(self):

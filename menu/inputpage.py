@@ -14,15 +14,15 @@ class InputPageGui4(ThanksPageGui):
 
     joyp_idx = 3
 
-    def __init__(self, mediator, menu_args, joysticks, keys):
+    def __init__(self, mediator, menu_props, joysticks, keys):
         self.joypad_cb = None
         self.joysticks = joysticks
         self.keys = keys
         self.ibuttons = []
-        ThanksPageGui.__init__(self, mediator, menu_args)
+        ThanksPageGui.__init__(self, mediator, menu_props)
 
     def build(self):
-        menu_args = self.menu_args
+        menu_props = self.menu_props
         widgets = []
 
         suff = str(self.joyp_idx + 1)
@@ -30,18 +30,18 @@ class InputPageGui4(ThanksPageGui):
             text=_('Player') + ' ' + suff, pos=(-.2, .9),
             tra_src='Player' + ' ' + suff,
             tra_tra=_('Player') + ' ' + suff,
-            **menu_args.label_args)
+            **menu_props.label_args)
         joypad_lab = Label(
             text=_('Use the joypad when present'), pos=(-.3, .7),
             text_align=TextNode.ARight,
             tra_src='Use the joypad when present',
             tra_tra=_('Use the joypad when present'),
-            **menu_args.label_args)
+            **menu_props.label_args)
         self.joypad_cb = P3dCheckBtn(
             pos=(-.11, .72), text='',
             indicator_val=self.joysticks[self.joyp_idx],
-            indicator_frame_col=menu_args.text_active,
-            **menu_args.checkbtn_args)
+            indicator_frame_col=menu_props.text_active_col,
+            **menu_props.checkbtn_args)
         if not JoystickMgr.supported():
             self.joypad_cb['state'] = DISABLED
         buttons_data = [
@@ -54,7 +54,7 @@ class InputPageGui4(ThanksPageGui):
         for btn_data in buttons_data:
             widgets += [self._add_lab(btn_data[0], btn_data[2])]
             widgets += [self._add_btn(self.eng.event.key2desc(self.keys[btn_data[1]]), btn_data[2])]
-        l_a = menu_args.label_args.copy()
+        l_a = menu_props.label_args.copy()
         l_a['scale'] = .065
         self.hint_lab = Label(
             text=_('Press the key to record it'), pos=(-.2, -.6), **l_a)
@@ -66,11 +66,11 @@ class InputPageGui4(ThanksPageGui):
     def _add_lab(self, text, pos_z):
         return Label(
             text=text, pos=(-.3, pos_z), text_align=TextNode.ARight,
-            **self.menu_args.label_args)
+            **self.menu_props.label_args)
 
     def _add_btn(self, text, pos_z):
         btn = Btn(pos=(.26, pos_z), text=text, cmd=self.start_rec,
-                  **self.menu_args.btn_args)
+                  **self.menu_props.btn_args)
         btn['extraArgs'] = [btn]
         self.ibuttons += [btn]
         return btn
@@ -103,7 +103,7 @@ class InputPageGui4(ThanksPageGui):
     def rec(self, btn, val):
         used = self.already_used(val)
         if used:
-            self.dial = AlreadyUsedDlg(self.menu_args, val, *used)
+            self.dial = AlreadyUsedDlg(self.menu_props, val, *used)
             self.dial.attach(self.on_already_dlg)
         else: btn['text'] = val
         self.hint_lab.hide()
@@ -127,7 +127,7 @@ class InputPageGui1(InputPageGui4):
         p2_btn = Btn(
             text='', pos=(-.2, -.74), cmd=self.on_player2,
             tra_src='Player 2', tra_tra=_('Player 2'),
-            **self.menu_args.btn_args)
+            **self.menu_props.btn_args)
         self.add_widgets([p2_btn])
         self.add_widgets([self._add_lab(_('Pause'), -.56)])
         self.add_widgets([self._add_btn(self.eng.event.key2desc(self.keys['pause']), -.56)])
@@ -160,7 +160,7 @@ class InputPageGui2(InputPageGui4):
         p_btn = Btn(
             text='', pos=(-.2, -.74), cmd=self.on_player3,
             tra_src='Player 3', tra_tra=_('Player 3'),
-            **self.menu_args.btn_args)
+            **self.menu_props.btn_args)
         self.add_widgets([p_btn])
         InputPageGui4.build(self)
 
@@ -190,7 +190,7 @@ class InputPageGui3(InputPageGui4):
         p_btn = Btn(
             text='', pos=(-.2, -.74), cmd=self.on_player3,
             tra_src='Player 4', tra_tra=_('Player 4'),
-            **self.menu_args.btn_args)
+            **self.menu_props.btn_args)
         self.add_widgets([p_btn])
         InputPageGui4.build(self)
 
@@ -215,11 +215,11 @@ class InputPageGui3(InputPageGui4):
 class InputPage4(Page):
     gui_cls = InputPageGui4
 
-    def __init__(self, menu_args, joysticks, keys):
-        self.menu_args = menu_args
+    def __init__(self, menu_props, joysticks, keys):
+        self.menu_props = menu_props
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, joysticks, keys])]]
+            [('gui', self.gui_cls, [self, self.menu_props, joysticks, keys])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__

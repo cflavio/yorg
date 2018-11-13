@@ -6,7 +6,7 @@ from yyagl.gameobject import GameObject
 
 class InviteDialog(GameObject, Subject):
 
-    def __init__(self, menu_args, from_, roomname):
+    def __init__(self, menu_props, from_, roomname):
         Subject.__init__(self)
         GameObject.__init__(self)
         self.from_ = from_
@@ -15,8 +15,8 @@ class InviteDialog(GameObject, Subject):
             base.a2dBottomLeft,
             text=_('%s has invited you to a match, do you agree?') % from_,
             text_wordwrap=16,
-            text_fg=menu_args.text_active,
-            text_font=menu_args.font,
+            text_fg=menu_props.text_active_col,
+            text_font=menu_props.font,
             pad=(.03, .03),
             topPad=0,
             midPad=.01,
@@ -24,8 +24,8 @@ class InviteDialog(GameObject, Subject):
             frameColor=(.8, .8, .8, .9),
             button_relief=FLAT,
             button_frameColor=(.2, .2, .2, .2),
-            button_text_fg=menu_args.text_active,
-            button_text_font=menu_args.font,
+            button_text_fg=menu_props.text_active_col,
+            button_text_font=menu_props.font,
             buttonValueList=['yes', 'no'],
             command=self.on_btn)
         size = self.dialog['frameSize']
