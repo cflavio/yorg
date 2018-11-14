@@ -9,8 +9,8 @@
 # trail effect with glow for weapons
 # optimize rear camera
 # use a ghost on the car (bigger than the car) for the AI
-# https://github.com/cflavio/yorg/issues/23
 # fixes for 1.10
+# https://github.com/cflavio/yorg/issues/23
 
 
 # WAITING =====
@@ -35,9 +35,14 @@
 # refactor: remove mediator from colleague
 # refactor: where proper (i.e. where observers aren't tied to the observable)
 #   replace observer with publisher-subscriber
-# refactor: attach/attach_obs, detach/detach_obs
+# refactor: attach/attach_obs, detach/detach_obs - the client attach-es it to
+#   the observed, then it attach-es it to the component
 # refactor: Facade.__init__(self, mth_lst, prop_lst), internally it invokes
 #   the methods _fwd_mth, _fwd_prop
+# refactor: notify's sender (see page.py)
+# refactor: invoke Page.__init__
+# refactor: racing should be another package (i.e. yorg contains yyagl/ and
+#   racing/)
 # drifting force function of linear and angular velocities
 # uml create automatic class diagrams with fields and methods for each class
 # unit tests
