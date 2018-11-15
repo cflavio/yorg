@@ -3,18 +3,18 @@
 
 # TODO LIST =====
 
-# options: reset pwd, logout
-# mainmenu: multiplayer -> local, online
-# online: login, register -> host (room), join
-# trail effect with glow for weapons
 # optimize rear camera
 # use a ghost on the car (bigger than the car) for the AI
 # fixes for 1.10
+# https://github.com/cflavio/yorg/issues/25
 # https://github.com/cflavio/yorg/issues/23
 
 
 # WAITING =====
 
+# (refactoring server) options: reset pwd, logout
+# (refactoring server) mainmenu: multiplayer -> local, online
+# (refactoring server) online: login, register -> host (room), join
 # (Panda3D 1.10) joypad
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # (Panda3D 1.10) deployng: use logging for logging
@@ -43,6 +43,7 @@
 # refactor: invoke Page.__init__
 # refactor: racing should be another package (i.e. yorg contains yyagl/ and
 #   racing/)
+# refactor: do_later with a function that returns a class doesn't work
 # drifting force function of linear and angular velocities
 # uml create automatic class diagrams with fields and methods for each class
 # unit tests

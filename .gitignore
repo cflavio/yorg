@@ -5,6 +5,7 @@
 built/
 build/
 venv/
+wvenv/
 .project
 .pydevproject
 .sconsign.dblite
