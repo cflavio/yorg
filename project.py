@@ -3,11 +3,10 @@
 
 # TODO LIST =====
 
-# optimize rear camera
-# use a ghost on the car (bigger than the car) for the AI
+# fix for shaders
 # fixes for 1.10
-# https://github.com/cflavio/yorg/issues/25
-# https://github.com/cflavio/yorg/issues/23
+# https://github.com/cflavio/yorg/issues/25 (car's physics)
+# https://github.com/cflavio/yorg/issues/23 (ai)
 
 
 # WAITING =====
@@ -26,6 +25,7 @@
 
 # MAYBE/SOMEDAY =====
 
+# particles with transform feedback
 # make scons for yyagl
 # make a submodule for racing - yyarl
 # refactor: use only eng.client (remove eng.server and yorg_client)
