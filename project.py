@@ -3,10 +3,8 @@
 
 # TODO LIST =====
 
-# fix for shaders
-# fixes for 1.10
-# https://github.com/cflavio/yorg/issues/25 (car's physics)
-# https://github.com/cflavio/yorg/issues/23 (ai)
+# fix physics for 1.10 (consider issue 25)
+# issue 23 (ai)
 
 
 # WAITING =====
@@ -19,7 +17,7 @@
 # (Panda3D 1.10) deployng: use logging for logging
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
-# https://github.com/cflavio/yorg/issues/22
+# issue 22 (floss drivers for amd)
 # hardware instancing (gl_InstanceID requires 1.40)
 
 

@@ -209,10 +209,10 @@ class DriverPageMPGui(DriverPageGui):
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
             drv_btn = ImgBtn(
-                scale=.24, pos=(-.95 + col * .5, 1, .1 - row * .64),
-                frameColor=(0, 0, 0, 0),
-                image=self.props.gameprops.drivers_img.path % idx,
-                command=self.on_click, extraArgs=[idx],
+                scale=(.24, .24), pos=(-.95 + col * .5, .1 - row * .64),
+                frame_col=(0, 0, 0, 0),
+                img=self.props.gameprops.drivers_img.path % idx,
+                cmd=self.on_click, extra_args=[idx],
                 **self.menu_props.imgbtn_args)
             name = Text(
                 '',
@@ -253,7 +253,7 @@ class DriverPageMPGui(DriverPageGui):
             shader = load_shader(vert, frag)
             if shader:
                 self.sel_drv_img[-1].set_shader(shader)
-            self.sel_drv_img[-1].set_transparency(True)
+            self.sel_drv_img[-1].set_transparent()
             self.tss += [TextureStage('ts')]
             self.tss[-1].set_mode(TextureStage.MDecal)
             empty_img = PNMImage(1, 1)
@@ -263,9 +263,9 @@ class DriverPageMPGui(DriverPageGui):
             tex.load(empty_img)
             self.sel_drv_img[-1].set_texture(self.tss[-1], tex)
         self.ents = [Entry(
-            scale=.06, pos=(-.2, 1, .8 - .12 * i), entryFont=menu_props.font, width=12,
-            frameColor=menu_props.btn_col,
-            initialText=self.props.gameprops.player_name or _('your name'),
+            scale=.06, pos=(-.2, .8 - .12 * i), entry_font=menu_props.font, width=12,
+            frame_col=menu_props.btn_col,
+            initial_text=self.props.gameprops.player_name or _('your name'),
             text_fg=menu_props.text_active_col) for i in range(len(self.mediator.cars))]
         self.add_widgets(self.ents)
         self.add_widgets(widgets)
@@ -295,6 +295,7 @@ class DriverPageMPGui(DriverPageGui):
         gprops.drivers_info[car_idx].name = nname
         gprops.drivers_info[drv] = prev_drv
         self.eng.log('drivers: ' + str(gprops.drivers_info))
+        self.drivers.remove(self._buttons(drv)[0])
         self.evaluate_start()
 
     def evaluate_start(self):
@@ -304,25 +305,22 @@ class DriverPageMPGui(DriverPageGui):
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
         drivers = [self.selected_drivers[i] for i in range(nplayers)]
-        self.notify('on_driver_selected_mp', [ent.get() for ent in self.ents], self.mediator.track,
+        self.notify('on_driver_selected_mp', [ent.text for ent in self.ents], self.mediator.track,
                     self.mediator.cars)
 
     def update_text(self, task):
-        has_name = self.ents[0].get() != _('your name')
-        if has_name and self.ents[0].get().startswith(_('your name')):
-            self.ents[0].enter_text(self.ents[0].get()[len(_('your name')):])
-            self.enable_buttons(True)
-            return
-        elif self.ents[0].get() in [_('your name')[:-1], '']:
-            self.ents[0].enter_text('')
+        has_name = all(ent.text != _('your name') for ent in self.ents)
+        self.enable_buttons(True)
+        for ent in self.ents:
+            if has_name and ent.text.startswith(_('your name')):
+                ent.enter_text(ent.text[len(_('your name')):])
+            elif ent.text in [_('your name')[:-1], '']:
+                ent.enter_text('')
+        if any(ent.text in ['', _('your name')] for ent in self.ents):
             self.enable_buttons(False)
-            return
-        elif self.ents[0].get() not in [_('your name'), '']:
-            self.enable_buttons(True)
-            return
         return task.cont  # don't do a task, attach to modifications events
 
-    def this_name(self): return self.ents[0].get()
+    def this_name(self): return self.ents[0].text
 
     def destroy(self):
         taskMgr.remove(self.update_tsk)
