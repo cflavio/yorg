@@ -3,7 +3,6 @@
 
 # TODO LIST =====
 
-# fix physics for 1.10 (consider issue 25)
 # issue 23 (ai)
 
 
@@ -17,8 +16,7 @@
 # (Panda3D 1.10) deployng: use logging for logging
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
-# issue 22 (floss drivers for amd)
-# hardware instancing (gl_InstanceID requires 1.40)
+# (Panda3D 1.10) issue 22 (floss drivers for amd)
 
 
 # MAYBE/SOMEDAY =====
@@ -46,6 +44,7 @@
 # uml create automatic class diagrams with fields and methods for each class
 # unit tests
 # fix shaders
+# hardware instancing (gl_InstanceID requires 1.40)
 # embed into a wx / pyqt window
 # do automatic update (assets shared among platforms)
 # add friendship
