@@ -94,6 +94,7 @@ class YorgLogic(GameLogic):
             self.season.start()
             self.mediator.fsm.demand('Race', track, cars, [cars],
                                 self.season.logic.drivers, self.season.ranking)
+            taskMgr.doMethodLater(5.0, lambda task: self.mediator.logic.mp_frm.hide(), 'hide')
         elif cars and server:  # for development's quickstart
             self.season = SingleRaceSeason(self.__season_props(
                 self.mediator.gameprops, cars, [],
