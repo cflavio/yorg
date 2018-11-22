@@ -3,7 +3,10 @@
 
 # TODO LIST =====
 
+# ai: if the car is erroneously in the pitlane (move the previous wp to
+#   replicate it)
 # issue 23 (ai)
+# profiling (ai polling?)
 
 
 # WAITING =====
@@ -17,6 +20,8 @@
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
 # (Panda3D 1.10) issue 22 (floss drivers for amd)
+# (fixed is_in_contact) if not is_in_contact: horizontal ai rays, not inclined
+#   like the car
 
 
 # MAYBE/SOMEDAY =====

@@ -272,6 +272,8 @@ class YorgLogic(GameLogic):
         if curr_ver == '0.8.0' and opt_ver == '0.7.0':
             if self.mediator.options['settings']['cars_number'] == 7:
                 self.mediator.options['settings']['cars_number'] = 8
+        if curr_ver == '0.11.0' and opt_ver == '0.10.0':
+            self.mediator.options['development']['multithreaded_render'] = 1
         self.mediator.options['settings']['last_version'] = self.eng.version
         self.mediator.options.store()
 
