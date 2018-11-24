@@ -180,7 +180,8 @@ if args['pdf']:
 if args['uml']:
     env.uml(
         ['yyagl/assets/uml/class_diagram.png',
-         'yyagl/assets/uml/sequence_diagrams.pdf'],
+         'yyagl/assets/uml/sequence_diagrams.pdf',
+         'built/uml_classes.pdf'],
         ['yyagl/assets/uml/class_diagram.txt',
          'yyagl/assets/uml/sequence_diagrams.txt'])
 
