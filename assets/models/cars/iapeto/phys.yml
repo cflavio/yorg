@@ -1,6 +1,6 @@
 max_speed: 116.0  # Km/h
 box_size: [.64, 1.4, .25]
-box_pos: [0, .05, .55]
+box_pos: [0, .05, .65]
 gfx_z: .16
 center_mass_offset: .05
 mass: 285  # kilograms
