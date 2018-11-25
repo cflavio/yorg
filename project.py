@@ -3,10 +3,8 @@
 
 # TODO LIST =====
 
-# ai: if the car is erroneously in the pitlane (move the previous wp to
-#   replicate it)
-# issue 23 (ai)
-# profiling (ai polling?)
+# crash linux mt: remove "load-file-type p3assimp" from config.prc
+# profiling
 
 
 # WAITING =====
@@ -21,14 +19,14 @@
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
 # (Panda3D 1.10) issue 22 (floss drivers for amd)
 # (fixed is_in_contact) if not is_in_contact: horizontal ai rays, not inclined
-#   like the car
+#   like the car (issue 23)
+# (test multithreaded render pipeline)
 
 
 # MAYBE/SOMEDAY =====
 
 # particles with transform feedback
-# make scons for yyagl
-# make a submodule for racing - yyarl
+# hardware instancing (gl_InstanceID requires 1.40)
 # refactor: use only eng.client (remove eng.server and yorg_client)
 # refactor: don't share eng with every colleague, instead share only the
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
@@ -42,15 +40,11 @@
 #   the methods _fwd_mth, _fwd_prop
 # refactor: notify's sender (see page.py)
 # refactor: invoke Page.__init__
+# make a submodule for racing - yyarl
 # refactor: racing should be another package (i.e. yorg contains yyagl/ and
 #   racing/)
 # refactor: do_later with a function that returns a class doesn't work
-# drifting force function of linear and angular velocities
-# uml create automatic class diagrams with fields and methods for each class
-# unit tests
-# fix shaders
-# hardware instancing (gl_InstanceID requires 1.40)
 # embed into a wx / pyqt window
-# do automatic update (assets shared among platforms)
-# add friendship
+# make scons for yyagl
+# unit tests
 # django webapp for scores
