@@ -33,7 +33,7 @@ class YorgFsm(FsmColleague):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mediator.options.dct,
             'http://www.ya2.it/pages/support-us.html')
-        self.__menu = YorgMenu(self.__menu_props, self.mediator.logic.yorg_client)
+        self.__menu = YorgMenu(self.__menu_props)
         methods = [self.mediator.logic.on_input_back,
                    self.mediator.logic.on_options_back,
                    self.mediator.logic.on_room_back,
@@ -69,7 +69,7 @@ class YorgFsm(FsmColleague):
             self.models += [front_path]
             self.models += [rear_path]
         self.load_models(None)
-        self.mediator.logic.yorg_client.attach(self.on_presence_unavailable_room)
+        self.eng.client.attach(self.on_presence_unavailable_room)
         if self.mediator.logic.mp_frm:
             #if self.eng.xmpp.client:  # if we're logged
             #    self.mediator.logic.mp_frm.send_is_playing(False)
@@ -122,7 +122,7 @@ class YorgFsm(FsmColleague):
         self.__menu.destroy()
         self.mediator.audio.menu_music.stop()
         loader.cancelRequest(self.loader_tsk)
-        self.mediator.logic.yorg_client.detach(self.on_presence_unavailable_room)
+        self.eng.client.detach(self.on_presence_unavailable_room)
 
     def enterRace(self, track_path='', car_path='', cars=[], drivers='',
                   ranking=None):  # unused ranking, cars
@@ -164,9 +164,9 @@ class YorgFsm(FsmColleague):
             self.mediator.options['development']['start_wp'])
         if self.eng.server.is_active:
             #seas.create_race_server(race_props)
-            seas.create_race_server(race_props, self.mediator.logic.yorg_client)
-        elif self.mediator.logic.yorg_client.is_client_active:
-            seas.create_race_client(race_props, self.mediator.logic.yorg_client)
+            seas.create_race_server(race_props)
+        elif self.eng.client.is_client_active:
+            seas.create_race_client(race_props)
         else:
             seas.create_race(race_props)
         self.eng.log_mgr.log('selected drivers: ' +
@@ -187,7 +187,7 @@ class YorgFsm(FsmColleague):
         exit_mth = 'on_ingame_exit_confirm'
         seas.race.attach_obs(self.mediator.fsm.demand, rename=exit_mth,
                              args=['Menu'])
-        self.mediator.logic.yorg_client.attach(self.on_presence_unavailable_room)
+        self.eng.client.attach(self.on_presence_unavailable_room)
 
     def exitRace(self):
         self.eng.log_mgr.log('exiting Race state')
@@ -199,7 +199,7 @@ class YorgFsm(FsmColleague):
             self.mediator.logic.mp_frm.show()
         self.mediator.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
-        self.mediator.logic.yorg_client.detach(self.on_presence_unavailable_room)
+        self.eng.client.detach(self.on_presence_unavailable_room)
 
     def enterRanking(self):
         self.mediator.logic.season.ranking.show(

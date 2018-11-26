@@ -17,10 +17,9 @@ from .network_dlg import NetworkDialog
 
 class MultiplayerFrm(GameObject):
 
-    def __init__(self, menu_props, yorg_srv, yorg_client):
+    def __init__(self, menu_props, yorg_srv):
         GameObject.__init__(self)
         self.eng.log('created multiplayer form')
-        self.yorg_client = yorg_client
         self.dialog = self.server_dlg = None
         self.invite_dlg = None
         self.yorg_srv = yorg_srv
@@ -29,31 +28,31 @@ class MultiplayerFrm(GameObject):
         self.invited_users = []
         self.curr_inviting_usr = None
         self.menu_props = menu_props
-        self.users_frm = UsersFrm(menu_props, yorg_srv, yorg_client)
+        self.users_frm = UsersFrm(menu_props, yorg_srv)
         self.users_frm.attach(self.on_invite)
         self.users_frm.attach(self.on_add_chat)
         self.users_frm.attach(self.on_add_groupchat)
-        self.msg_frm = MessageFrm(menu_props, yorg_client)
+        self.msg_frm = MessageFrm(menu_props)
         self.msg_frm.attach(self.on_msg_focus)
         self.msg_frm.attach(self.on_close_all_chats)
         self.match_frm = None
         #self.match_frm.hide()
         self.msg_frm.hide()
-        yorg_client.attach(self.on_presence_available)
-        yorg_client.attach(self.on_presence_unavailable)
-        yorg_client.attach(self.on_msg)
-        yorg_client.attach(self.on_groupchat_msg)
-        yorg_client.attach(self.on_is_playing)
-        yorg_client.attach(self.on_invite)
-        yorg_client.attach(self.on_invite_chat)
-        yorg_client.attach(self.on_declined)
-        yorg_client.attach(self.on_presence_available_room)
-        yorg_client.attach(self.on_presence_unavailable_room)
-        yorg_client.attach(self.on_rm_usr_from_match)
+        self.eng.client.attach(self.on_presence_available)
+        self.eng.client.attach(self.on_presence_unavailable)
+        self.eng.client.attach(self.on_msg)
+        self.eng.client.attach(self.on_groupchat_msg)
+        self.eng.client.attach(self.on_is_playing)
+        self.eng.client.attach(self.on_invite)
+        self.eng.client.attach(self.on_invite_chat)
+        self.eng.client.attach(self.on_declined)
+        self.eng.client.attach(self.on_presence_available_room)
+        self.eng.client.attach(self.on_presence_unavailable_room)
+        self.eng.client.attach(self.on_rm_usr_from_match)
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient
-        self.match_frm = cls(self.menu_props, self.yorg_client)
+        self.match_frm = cls(self.menu_props)
         self.match_frm.attach(self.on_start)
         self.match_frm.show(room)
 
@@ -132,7 +131,7 @@ class MultiplayerFrm(GameObject):
 
     def on_is_playing(self, uid, is_playing):
         self.eng.log('is playing %s %s' % (uid, is_playing))
-        users = [user for user in self.yorg_client.users if user.uid == uid]
+        users = [user for user in self.eng.client.users if user.uid == uid]
         #if not users: return  # when we get messages while we were offline
         usr = users[0]
         usr.is_playing = is_playing
@@ -151,11 +150,11 @@ class MultiplayerFrm(GameObject):
             self.match_frm.on_presence_unavailable_room(uid, room_name)
         self.msg_frm.on_presence_unavailable_room(uid, room_name)
         if uid == self.users_frm.in_match_room:
-            self.eng.xmpp.notify('on_server_quit')
+            #self.eng.xmpp.notify('on_server_quit')
             self.exit_dlg = ExitDialog(self.menu_props, uid)
             self.exit_dlg.attach(self.on_exit_dlg)
             self.eng.show_cursor()
-        if uid == self.yorg_client.myid and \
+        if uid == self.eng.client.myid and \
                 self.match_frm and room_name == self.match_frm.room:
             self.removed_dlg = RemovedDialog(self.menu_props)
             self.removed_dlg.attach(self.on_remove_dlg)
@@ -164,11 +163,11 @@ class MultiplayerFrm(GameObject):
         if self.match_frm:  # if the user has already accepted
             self.match_frm.on_rm_usr_from_match(data_lst)
             self.msg_frm.match_msg_frm.on_rm_usr_from_match(data_lst[0])
-        if data_lst[0] == self.yorg_client.myid and \
+        if data_lst[0] == self.eng.client.myid and \
                 self.match_frm and data_lst[1] == self.match_frm.room:
             self.removed_dlg = RemovedDialog(self.menu_props)
             self.removed_dlg.attach(self.on_remove_dlg)
-        elif data_lst[0] == self.yorg_client.myid and \
+        elif data_lst[0] == self.eng.client.myid and \
                 not self.match_frm and self.invite_dlg:
             self.invite_dlg.detach(self.on_invite_answer)
             self.invite_dlg = self.invite_dlg.destroy()
@@ -376,13 +375,13 @@ class MultiplayerFrm(GameObject):
             #    chat, self.eng.xmpp.client.boundjid.bare)
             self.eng.client.register_rpc('join_room')
             self.eng.client.join_room(roomname)
-            self.yorg_client.is_client_active = True
-            nick = self.yorg_client.myid
+            self.eng.client.is_client_active = True
+            nick = self.eng.client.myid
             self.create_match_frm(roomname, False)
             self.notify('on_create_room', roomname, nick)
-            self.yorg_client.attach(self.on_track_selected_msg)
+            self.eng.client.attach(self.on_track_selected_msg)
         else:
-            self.eng.client.send(['declined', self.yorg_client.myid, from_])
+            self.eng.client.send(['declined', self.eng.client.myid, from_])
             #self.eng.xmpp.client.send_message(
             #    mfrom=self.eng.xmpp.client.boundjid.full,
             #    mto=str(msg['from'].bare),
@@ -407,7 +406,7 @@ class MultiplayerFrm(GameObject):
 
     def on_track_selected_msg(self, track):
         self.eng.log_mgr.log('track selected: ' + track)
-        self.yorg_client.detach(self.on_track_selected_msg)
+        self.eng.client.detach(self.on_track_selected_msg)
         self.notify('on_start_match_client', track)
         self.users_frm.set_size(False)
         self.msg_frm.show()

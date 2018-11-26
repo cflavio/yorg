@@ -12,12 +12,11 @@ from .thankspage import ThanksPageGui
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, carpage_props, track_path, yorg_client, players=1):
+    def __init__(self, mediator, carpage_props, track_path, players=1):
         self.car = None
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
-        self.yorg_client = yorg_client
         players = range(players)
         ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_props, players)
 
@@ -110,8 +109,8 @@ class CarPageGuiSeason(CarPageGui):
 
 class CarPageLocalMPGui(CarPageGui):
 
-    def __init__(self, mediator, carpage_props, track_path, yorg_client, players):
-        CarPageGui.__init__(self, mediator, carpage_props, track_path, yorg_client, players)
+    def __init__(self, mediator, carpage_props, track_path, players):
+        CarPageGui.__init__(self, mediator, carpage_props, track_path, players)
         self.selected_cars = {}
         for i in range(players): self.selected_cars[i] = None
 
@@ -137,7 +136,7 @@ class CarPageGuiServer(CarPageGui):
         CarPageGui.build(self, exit_behav=True)
         self.eng.car_mapping = {}
         self.eng.xmpp.attach(self.on_presence_unavailable)
-        self.yorg_client.attach(self.on_presence_unavailable_room)
+        self.eng.client.attach(self.on_presence_unavailable_room)
         self.eng.server.register_rpc(self.car_request)
 
     def on_car(self, car):
@@ -149,7 +148,7 @@ class CarPageGuiServer(CarPageGui):
         if ret != 'ok': return
         for btn in self._buttons(car):
             btn.disable()
-            btn._name_txt['text'] = self.yorg_client.myid
+            btn._name_txt['text'] = self.eng.client.myid
         if self in self.current_cars:
             curr_car = self.current_cars[self]
             self.eng.log_mgr.log('car deselected: ' + curr_car)
@@ -219,7 +218,7 @@ class CarPageGuiServer(CarPageGui):
 
     def destroy(self):
         self.eng.xmpp.detach(self.on_presence_unavailable)
-        self.yorg_client.detach(self.on_presence_unavailable_room)
+        self.eng.client.detach(self.on_presence_unavailable_room)
         CarPageGui.destroy(self)
 
 
@@ -230,9 +229,9 @@ class CarPageGuiClient(CarPageGui):
         self.eng.car_mapping = {}
         #self.eng.client.register_cb(self.process_client)
         self.eng.client.register_rpc('car_request')
-        self.yorg_client.attach(self.on_car_selection)
-        self.yorg_client.attach(self.on_car_deselection)
-        self.yorg_client.attach(self.on_start_drivers)
+        self.eng.client.attach(self.on_car_selection)
+        self.eng.client.attach(self.on_car_deselection)
+        self.eng.client.attach(self.on_start_drivers)
 
     def on_car(self, car):
         self.eng.log_mgr.log('car request: ' + car)
@@ -245,7 +244,7 @@ class CarPageGuiClient(CarPageGui):
             self.eng.log_mgr.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
-            btn._name_txt['text'] = self.yorg_client.myid
+            btn._name_txt['text'] = self.eng.client.myid
         else: self.eng.log_mgr.log('car denied')
 
     def on_car_selection(self, data_lst):
@@ -270,19 +269,19 @@ class CarPageGuiClient(CarPageGui):
         self.notify('on_push_page', 'driverpageclient', page_args)
 
     def destroy(self):
-        self.yorg_client.detach(self.on_car_selection)
-        self.yorg_client.detach(self.on_car_deselection)
-        self.yorg_client.detach(self.on_start_drivers)
+        self.eng.client.detach(self.on_car_selection)
+        self.eng.client.detach(self.on_car_deselection)
+        self.eng.client.detach(self.on_start_drivers)
         CarPageGui.destroy(self)
 
 
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, carpage_props, track_path, yorg_client=None):
+    def __init__(self, carpage_props, track_path):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, carpage_props, track_path, yorg_client])]]
+            [('gui', self.gui_cls, [self, carpage_props, track_path])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__
@@ -308,10 +307,10 @@ class CarPageLocalMP(CarPage):
     gui_cls = CarPageLocalMPGui
 
 
-    def __init__(self, carpage_props, track_path, yorg_client, players):
+    def __init__(self, carpage_props, track_path, players):
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, carpage_props, track_path, yorg_client, players])]]
+            [('gui', self.gui_cls, [self, carpage_props, track_path, players])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__

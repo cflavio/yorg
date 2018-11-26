@@ -25,23 +25,21 @@ class Chat(GameObject):
 
 class MUC(Chat):
 
-    def __init__(self, dst, yorg_client):
+    def __init__(self, dst):
         Chat.__init__(self, dst)
         self.users = []
-        self.yorg_client = yorg_client
 
     @property
     def title(self):
-        is_me = lambda usr: usr == self.yorg_client.myid
+        is_me = lambda usr: usr == self.eng.client.myid
         return ', '.join(sorted(self.users, key=is_me))
 
 
 class MatchMsgFrm(GameObject):
 
-    def __init__(self, menu_props, yorg_client):
+    def __init__(self, menu_props):
         GameObject.__init__(self)
         self.eng.log('created match message form')
-        self.yorg_client = yorg_client
         self.chat = None
         self.msg_frm = DirectFrame(
             frameSize=(-.02, 2.5, 0, 1.22),
@@ -54,12 +52,12 @@ class MatchMsgFrm(GameObject):
             text='', pos=(0, 1.16), parent=self.msg_frm, align=TextNode.A_left,
             **t_a)
         self.ent = Entry(
-            scale=.04, pos=(0, 1, .03), entryFont=menu_props.font, width=62,
-            frameColor=menu_props.btn_col, parent=self.msg_frm,
-            initialText=_('write here your message'),
-            command=self.on_typed_msg, focusInCommand=self.on_focus,
-            focusInExtraArgs=['in'], focusOutCommand=self.on_focus,
-            focusOutExtraArgs=['out'], text_fg=menu_props.text_active_col)
+            scale=.04, pos=(0, .03), entry_font=menu_props.font, width=62,
+            frame_col=menu_props.btn_col, parent=self.msg_frm,
+            initial_text=_('write here your message'),
+            cmd=self.on_typed_msg, focus_in_cmd=self.on_focus,
+            focus_in_args=['in'], focus_out_cmd=self.on_focus,
+            focus_out_args=['out'], text_fg=menu_props.text_active_col)
         self.ent['state'] = DISABLED
         self.txt_frm = DirectScrolledFrame(
             frameSize=(-.02, 2.46, -.02, 1.02),
@@ -84,7 +82,7 @@ class MatchMsgFrm(GameObject):
         lab_args['scale'] = .046
         lab_args['text_fg'] = menu_props.text_normal_col
         self.lab_frm = Btn(
-            frameSize=(-.02, 2.5, -.01, .05),
+            frame_size=(-.02, 2.5, -.01, .05),
             frame_col=(1, 1, 1, 0),
             pos=(0, 1.15), parent=self.msg_frm)
         self.lab_frm.bind(ENTER, self.on_enter)
@@ -132,7 +130,7 @@ class MatchMsgFrm(GameObject):
         #self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
         self.ent.set('')
         self.eng.client.send([
-            'msg_room', self.yorg_client.myid, self.chat.dst, val])
+            'msg_room', self.eng.client.myid, self.chat.dst, val])
         #self.eng.xmpp.client.send_message(
         #    mfrom=self.eng.xmpp.client.boundjid.full,
         #    mto=self.chat.dst,
@@ -150,7 +148,7 @@ class MatchMsgFrm(GameObject):
         str_msg = '\1italic\1' + src + '\2: ' + txt
         if not self.chat:
             #self.chat = MUC(str(JID(msg['from']).bare), self.yorg_client)
-            self.chat = MUC(to, self.yorg_client)
+            self.chat = MUC(to)
         self.chat.messages += [str_msg]
         if self.dst_txt['text'] == '':
             self.set_chat(self.chat)
@@ -183,7 +181,7 @@ class MatchMsgFrm(GameObject):
     def add_groupchat(self, room, usr):
         self.set_title(usr)
         if not self.chat:
-            self.chat = MUC(room, self.yorg_client)
+            self.chat = MUC(room)
         self.set_chat(self.chat)
 
     def set_chat(self, chat):
@@ -210,9 +208,8 @@ class MatchMsgFrm(GameObject):
 
 class MessageFrm(GameObject):
 
-    def __init__(self, menu_props, yorg_client):
+    def __init__(self, menu_props):
         GameObject.__init__(self)
-        self.yorg_client = yorg_client
         self.eng.log('created message form')
         self.chats = []
         self.curr_chat = None
@@ -394,9 +391,9 @@ class MessageFrm(GameObject):
         #        mbody=val)
         if len(self.curr_chat.dst) > 12 and all(char.isdigit() for char in self.curr_chat.dst[-12:]):
             self.eng.client.send([
-                'msg_room', self.yorg_client.myid, self.curr_chat.dst, val])
+                'msg_room', self.eng.client.myid, self.curr_chat.dst, val])
         else:
-            self.eng.client.send(['msg', self.yorg_client.myid, self.curr_chat.dst, val])
+            self.eng.client.send(['msg', self.eng.client.myid, self.curr_chat.dst, val])
         msg = '\1italic\1' + _('you') + '\2: ' + val
         self.curr_chat.messages += [msg]
         self.ent['focus'] = 1
@@ -467,7 +464,7 @@ class MessageFrm(GameObject):
         nick = uid
         self.eng.log('user %s has left the chat %s' %(nick, room))
         chat = self.__find_chat(room)
-        if nick == self.yorg_client.myid:
+        if nick == self.eng.client.myid:
             self.on_close()
         else:
             chat.users.remove(nick)
@@ -491,7 +488,7 @@ class MessageFrm(GameObject):
         self.set_title(usr)
         chat = self.__find_chat(room)
         if not chat:
-            chat = MUC(room, self.yorg_client)
+            chat = MUC(room)
             self.chats += [chat]
         chat.users += [usr]
         self.set_chat(chat)
@@ -516,6 +513,6 @@ class MessageFrm(GameObject):
     def add_match_chat(self, room, usr):
         if self.curr_match_room: return
         self.curr_match_room = room
-        self.match_msg_frm = MatchMsgFrm(self.menu_props, self.yorg_client)
+        self.match_msg_frm = MatchMsgFrm(self.menu_props)
         self.match_msg_frm.attach(self.on_match_msg_focus)
         self.match_msg_frm.add_groupchat(room, usr)

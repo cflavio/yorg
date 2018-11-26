@@ -3,8 +3,8 @@
 
 # TODO LIST =====
 
-# crash linux mt: remove "load-file-type p3assimp" from config.prc
 # profiling
+# fix remote multiplayer
 
 
 # WAITING =====
@@ -27,7 +27,7 @@
 
 # particles with transform feedback
 # hardware instancing (gl_InstanceID requires 1.40)
-# refactor: use only eng.client (remove eng.server and yorg_client)
+# refactor: remove eng.server
 # refactor: don't share eng with every colleague, instead share only the
 #   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
 #   PhysComponent.log_mgr

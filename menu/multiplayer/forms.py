@@ -56,7 +56,7 @@ class UserFrmMe(GameObject, Subject):
         GameObject.__init__(self)
         self.menu_props = menu_props
         self.frm = Btn(
-            frameSize=(-.01, .79, .05, -.03), frame_col=(1, 1, 1, 0),
+            frame_size=(-.01, .79, .05, -.03), frame_col=(1, 1, 1, 0),
             pos=pos, parent=parent)
         self.lab = UserLabel(uid, self.frm, menu_props, is_supporter)
         self.frm.bind(ENTER, self.on_enter)
@@ -108,11 +108,9 @@ class UserFrmListMe(UserFrmMe):
 
 class UserFrmList(UserFrm):
 
-    def __init__(self, name, is_supporter, is_playing, pos, parent,
-                 menu_props, yorg_client):
+    def __init__(self, name, is_supporter, is_playing, pos, parent, menu_props):
         UserFrm.__init__(
             self, name, is_supporter, pos, parent, menu_props, .72)
-        self.yorg_client = yorg_client
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = self.menu_props.text_normal_col
@@ -139,7 +137,7 @@ class UserFrmList(UserFrm):
     def on_invite(self, usr_name):
         self.eng.log('invite ' + usr_name)
         self.invite_btn.disable()
-        self.notify('on_invite', self.yorg_client.find_usr(usr_name))
+        self.notify('on_invite', self.eng.client.find_usr(usr_name))
 
     def on_friend(self, usr_name):
         self.eng.log('friend with ' + usr_name)

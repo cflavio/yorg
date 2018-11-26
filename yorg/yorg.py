@@ -14,6 +14,7 @@ from .logic import YorgLogic
 from .event import YorgEvent
 from .fsm import YorgFsm
 from .audio import YorgAudio
+from .client import YorgClient
 from .thanksnames import ThanksNames
 from yyagl.lib.p3d.p3d import LibP3d
 
@@ -190,7 +191,7 @@ class Yorg(Game):
                       'iperion', 'teia']
         damage_info = DamageInfo('assets/models/cars/%s/cardamage1',
                                  'assets/models/cars/%s/cardamage2')
-        Game.__init__(self, init_lst, conf)
+        Game.__init__(self, init_lst, conf, YorgClient)
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
         wheel_gfx_names = [
             self.eng.curr_path + 'assets/models/cars/%s/' + wname

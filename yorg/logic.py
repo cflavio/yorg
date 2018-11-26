@@ -65,8 +65,7 @@ class YorgLogic(GameLogic):
         server = dev['server'] if 'server' in dev else ''
         if not self.mp_frm and not (cars and track and not server):
             self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_props,
-                                         self.eng.cfg.dev_cfg.xmpp_server,
-                                         self.yorg_client)
+                                         self.eng.cfg.dev_cfg.xmpp_server)
             self.mp_frm.attach(self.on_msg_focus)
             self.mp_frm.attach(self.on_create_room)
             self.mp_frm.attach(self.on_srv_quitted)
@@ -77,7 +76,6 @@ class YorgLogic(GameLogic):
     def on_start(self):
         GameLogic.on_start(self)
         self.__process_default()
-        self.yorg_client = YorgClient()
         dev = self.mediator.options['development']
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''

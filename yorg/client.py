@@ -1,5 +1,5 @@
 from socket import error
-from yyagl.gameobject import GameObject
+from yyagl.engine.network.client import Client
 
 
 class User(object):
@@ -10,25 +10,26 @@ class User(object):
         self.is_playing = is_playing
 
 
-class YorgClient(GameObject):
+class YorgClient(Client):
 
-    def __init__(self):
-        GameObject.__init__(self)
+    def __init__(self, port, server):
+        Client.__init__(self, port)
+        self.__server = server
         self.authenticated = False
         self.is_server_up = True
-        self.restart()
+        #self.restart()
         self.users = []
         self.is_server_active = False
         self.is_client_active = False
 
     def restart(self):
-        try: self.is_server_up = self.eng.client.start(self.on_msg, self.eng.cfg.dev_cfg.server)
+        try: self.is_server_up = self.start(self.on_msg, self.__server)
         except error: self.is_server_up = False
 
-    def start(self, uid):
+    def init(self, uid):
         self.myid = uid
-        self.eng.client.register_rpc('get_users')
-        users = self.eng.client.get_users()
+        self.register_rpc('get_users')
+        users = self.get_users()
         self.users = [User(*args) for args in users]
 
     def on_msg(self, data_lst, sender):

@@ -8,12 +8,11 @@ from .forms import UserFrm, UserFrmMe, UserFrmMatch
 
 class MatchFrm(GameObject):
 
-    def __init__(self, menu_props, yorg_client):
+    def __init__(self, menu_props):
         GameObject.__init__(self)
         self.eng.log('created match form (init)')
-        self.yorg_client = yorg_client
         self.room = ''
-        self.invited_users = [yorg_client.myid]
+        self.invited_users = [self.eng.client.myid]
         self.menu_props = menu_props
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
@@ -21,9 +20,9 @@ class MatchFrm(GameObject):
             frameSize=(-.02, 2.5, 0, .45),
             frameColor=(.2, .2, .2, .5),
             pos=(.04, 1, -.46), parent=base.a2dTopLeft)
-        usr = [usr for usr in yorg_client.users if usr.uid == yorg_client.myid][0]
+        usr = [usr for usr in self.eng.client.users if usr.uid == self.eng.client.myid][0]
         frm = UserFrmMe(
-            yorg_client.myid, usr.is_supporter, (.1, 1, .38), self.match_frm,
+            self.eng.client.myid, usr.is_supporter, (.1, 1, .38), self.match_frm,
             self.menu_props, .32)
         self.forms = [frm]
         for i in range(0, 8):
@@ -36,7 +35,7 @@ class MatchFrm(GameObject):
         #room = str(JID(msg['muc']['room']).bare)
         #nick = str(msg['muc']['nick'])
         self.eng.log('user %s has connected to the room %s' % (uid, room))
-        if uid == self.yorg_client.myid: return
+        if uid == self.eng.client.myid: return
         if room != self.room: return
         found = False
         for frm in self.forms:
@@ -50,7 +49,7 @@ class MatchFrm(GameObject):
             idx = len(self.forms)
             x = .1 + 1.24 * (idx / 4)
             y = .38 - .08 * (idx % 4)
-            usr = [usr for usr in self.yorg_client.users if usr.uid == uid][0]
+            usr = [usr for usr in self.eng.client.users if usr.uid == uid][0]
             frm = UserFrm(uid, usr.is_supporter,
                           (x, 1, y), self.match_frm, self.menu_props, 1.0)
             self.forms += [frm]
@@ -150,8 +149,8 @@ class MatchFrm(GameObject):
 
 class MatchFrmServer(MatchFrm):
 
-    def __init__(self, menu_props, yorg_client):
-        MatchFrm.__init__(self, menu_props, yorg_client)
+    def __init__(self, menu_props):
+        MatchFrm.__init__(self, menu_props)
         btn_args = self.menu_props.btn_args
         btn_args['scale'] = (.06, .06)
         Btn(text=_('Start'), pos=(1.2, .03), cmd=self.on_start,
@@ -160,8 +159,8 @@ class MatchFrmServer(MatchFrm):
 
 class MatchFrmServerClient(MatchFrm):
 
-    def __init__(self, menu_props, yorg_client):
-        MatchFrm.__init__(self, menu_props, yorg_client)
+    def __init__(self, menu_props):
+        MatchFrm.__init__(self, menu_props)
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
         Label(text=_('please wait for the server'), pos=(1.2, 1, .03),

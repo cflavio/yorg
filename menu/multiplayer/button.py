@@ -27,7 +27,7 @@ class MPBtn(GameObject):
         self.btn.bind(EXIT, self.on_exit)
         self.tooltip_btn = Btn(
             parent=parent, scale=(.024, .024), pos=(msg_btn_x, .01),
-            frame_col=(1, 1, 1, 0), frameSize=(-1, 1, -1, 1), cmd=None,
+            frame_col=(1, 1, 1, 0), frame_size=(-1, 1, -1, 1), cmd=None,
             **menu_props.imgbtn_args)
         self.tooltip_btn.bind(ENTER, self.on_enter)
         self.tooltip_btn.bind(EXIT, self.on_exit)

@@ -13,12 +13,11 @@ from .forms import UserFrmListMe, UserFrmList
 
 class UsersFrm(GameObject):
 
-    def __init__(self, menu_props, yorg_srv, yorg_client):
+    def __init__(self, menu_props, yorg_srv):
         GameObject.__init__(self)
         self.eng.log('create users form')
         self.ver_check = VersionChecker()
         self.yorg_srv = yorg_srv
-        self.yorg_client = yorg_client
         self.room_name = None
         self.labels = []
         self.invited_users = []
@@ -65,9 +64,9 @@ class UsersFrm(GameObject):
         txt = ''
         if not self.ver_check.is_uptodate():
             txt = _("Your game isn't up-to-date, please update")
-        elif not self.yorg_client.is_server_up:
+        elif not self.eng.client.is_server_up:
             txt = _("Yorg's server isn't running")
-        elif not self.yorg_client.authenticated: txt = _("You aren't logged in")
+        elif not self.eng.client.authenticated: txt = _("You aren't logged in")
         (self.conn_lab.show if txt else self.conn_lab.hide)()
         self.conn_lab['text'] = txt
 
@@ -87,14 +86,14 @@ class UsersFrm(GameObject):
     def on_users(self):
         self.set_connection_label()
         bare_users = [self.trunc(user.uid, 20)
-                      for user in self.yorg_client.sorted_users]
+                      for user in self.eng.client.sorted_users]
         for lab in self.labels[:]:
             _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
             if _lab not in bare_users:
-                if _lab not in self.yorg_client.users:
+                if _lab not in self.eng.client.users:
                     lab.destroy()
                     self.labels.remove(lab)
-        nusers = len(self.yorg_client.sorted_users)
+        nusers = len(self.eng.client.sorted_users)
         invite_btn = len(self.invited_users) < 8
         invite_btn = invite_btn and not self.in_match_room and not self.invited
         top = .08 * nusers + .08
@@ -102,16 +101,16 @@ class UsersFrm(GameObject):
         label_users = [lab.lab.lab['text'] for lab in self.labels]
         clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
         label_users = map(clean, label_users)
-        for i, user in enumerate(self.yorg_client.sorted_users):
+        for i, user in enumerate(self.eng.client.sorted_users):
             if self.trunc(user.uid, 20) not in label_users:
-                if self.yorg_client.myid != user.uid:
+                if self.eng.client.myid != user.uid:
                     lab = UserFrmList(
                         user.uid,
                         user.is_supporter,
                         user.is_playing,
                         (0, 1, top - .08 - .08 * i),
                         self.frm.getCanvas(),
-                        self.menu_props, self.yorg_client)
+                        self.menu_props)
                 else:
                     lab = UserFrmListMe(
                         user.uid,
@@ -124,7 +123,7 @@ class UsersFrm(GameObject):
                 lab.attach(self.on_friend)
                 lab.attach(self.on_unfriend)
                 lab.attach(self.on_add_chat)
-        for i, user in enumerate(self.yorg_client.sorted_users):
+        for i, user in enumerate(self.eng.client.sorted_users):
             clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
             lab = [lab for lab in self.labels
                    if clean(lab.lab.lab['text']) == self.trunc(user.uid, 20)][0]
@@ -147,7 +146,7 @@ class UsersFrm(GameObject):
         if not self.room_name:
 
             time_code = strftime('%y%m%d%H%M%S')
-            self.room_name = self.yorg_client.myid + time_code
+            self.room_name = self.eng.client.myid + time_code
             #self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
             #    self.room_name, self.eng.xmpp.client.boundjid.bare,
             #    pfrom=self.eng.xmpp.client.boundjid.full)
@@ -159,7 +158,7 @@ class UsersFrm(GameObject):
             self.eng.client.register_rpc('join_room')
             self.eng.client.join_room(self.room_name)
             self.eng.log('created room ' + self.room_name)
-            self.yorg_client.is_server_active = True
+            self.eng.client.is_server_active = True
             #for usr_name in [self.yorg_srv] + \
             #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
             #    self.eng.xmpp.client.send_message(

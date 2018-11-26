@@ -32,11 +32,10 @@ void main() {
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, driverpage_props, yorg_client, players=1):
+    def __init__(self, mediator, driverpage_props, players=1):
         self.props = driverpage_props
         self.sel_drv_img = None
         self.driver = None
-        self.yorg_client = yorg_client
         players = range(players)
         ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_props, players)
 
@@ -191,8 +190,8 @@ class DriverPageSinglePlayerGui(DriverPageGui):
 
 class DriverPageMPGui(DriverPageGui):
 
-    def __init__(self, mediator, driverpage_props, yorg_client, players):
-        DriverPageGui.__init__(self, mediator, driverpage_props, yorg_client, players)
+    def __init__(self, mediator, driverpage_props, players):
+        DriverPageGui.__init__(self, mediator, driverpage_props, players)
         self.selected_drivers = {}
         for i in range(players): self.selected_drivers[i] = None
 
@@ -335,9 +334,9 @@ class DriverPageServerGui(DriverPageGui):
         self.current_drivers_dct = {}
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
-        self.name['text'] += ' ' + self.yorg_client.myid
+        self.name['text'] += ' ' + self.eng.client.myid
         #self.eng.xmpp.attach(self.on_presence_unavailable)
-        self.yorg_client.attach(self.on_presence_unavailable_room)
+        self.eng.client.attach(self.on_presence_unavailable_room)
         self.eng.server.register_rpc(self.drv_request)
 
     def on_click(self, i):
@@ -433,7 +432,7 @@ class DriverPageServerGui(DriverPageGui):
 
     def destroy(self):
         #self.eng.xmpp.detach(self.on_presence_unavailable)
-        self.yorg_client.detach(self.on_presence_unavailable_room)
+        self.eng.client.detach(self.on_presence_unavailable_room)
         DriverPageGui.destroy(self)
 
 
@@ -443,13 +442,13 @@ class DriverPageClientGui(DriverPageGui):
         DriverPageGui.build(self, exit_behav=True)
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
-        self.name['text'] += ' ' + self.yorg_client.myid
+        self.name['text'] += ' ' + self.eng.client.myid
         self.eng.client.register_rpc('drv_request')
-        self.yorg_client.attach(self.on_drv_selection)
-        self.yorg_client.attach(self.on_drv_deselection)
-        self.yorg_client.attach(self.on_start_race)
+        self.eng.client.attach(self.on_drv_selection)
+        self.eng.client.attach(self.on_drv_deselection)
+        self.eng.client.attach(self.on_start_race)
 
-    def this_name(self): return self.yorg_client.myid
+    def this_name(self): return self.eng.client.myid
 
     def on_click(self, i):
         self.eng.log_mgr.log('driver request: %s' % i)
@@ -465,7 +464,7 @@ class DriverPageClientGui(DriverPageGui):
             self.eng.log_mgr.log('driver confirmed: %s' % drv)
             btn = self._buttons(drv)[0]
             btn.disable()
-            btn._name_txt['text'] = self.yorg_client.myid
+            btn._name_txt['text'] = self.eng.client.myid
             gprops = self.props.gameprops
             txt_path = gprops.drivers_img.path_sel
             self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % drv))
@@ -493,21 +492,21 @@ class DriverPageClientGui(DriverPageGui):
                     self.mediator.car, cars, data_lst)
 
     def destroy(self):
-        self.yorg_client.detach(self.on_drv_selection)
-        self.yorg_client.detach(self.on_drv_deselection)
-        self.yorg_client.detach(self.on_start_race)
+        self.eng.client.detach(self.on_drv_selection)
+        self.eng.client.detach(self.on_drv_deselection)
+        self.eng.client.detach(self.on_start_race)
         DriverPageGui.destroy(self)
 
 
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, track, car, driverpage_props, yorg_client=None):
+    def __init__(self, track, car, driverpage_props):
         self.track = track
         self.car = car
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, driverpage_props, yorg_client])]]
+            [('gui', self.gui_cls, [self, driverpage_props])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__
@@ -524,12 +523,12 @@ class DriverPageSinglePlayer(DriverPage):
 class DriverPageMP(DriverPage):
     gui_cls = DriverPageMPGui
 
-    def __init__(self, track, cars, driverpage_props, players, yorg_client=None):
+    def __init__(self, track, cars, driverpage_props, players):
         self.track = track
         self.cars = cars
         init_lst = [
             [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, driverpage_props, yorg_client, players])]]
+            [('gui', self.gui_cls, [self, driverpage_props, players])]]
         GameObject.__init__(self, init_lst)
         PageFacade.__init__(self)
         # invoke Page's __init__
