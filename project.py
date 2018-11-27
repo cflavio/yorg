@@ -4,7 +4,7 @@
 # TODO LIST =====
 
 # profiling
-# fix remote multiplayer
+# fix local multiplayer
 
 
 # WAITING =====
