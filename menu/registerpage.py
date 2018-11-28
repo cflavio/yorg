@@ -55,7 +55,7 @@ class RegisterPageGui(ThanksPageGui):
         def process_msg(data_lst, sender):
             print sender, data_lst
         if len(self.pwd_ent.text) >= 6:
-            self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
+            self.eng.client.start(process_msg)
             self.eng.client.register_rpc('register')
             self.eng.client.register_rpc('get_salt')
             salt = self.eng.client.get_salt(self.jid_ent.text)

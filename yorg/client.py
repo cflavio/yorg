@@ -13,8 +13,7 @@ class User(object):
 class YorgClient(Client):
 
     def __init__(self, port, server):
-        Client.__init__(self, port)
-        self.__server = server
+        Client.__init__(self, port, server)
         self.authenticated = False
         self.is_server_up = True
         #self.restart()
@@ -23,7 +22,7 @@ class YorgClient(Client):
         self.is_client_active = False
 
     def restart(self):
-        try: self.is_server_up = self.start(self.on_msg, self.__server)
+        try: self.is_server_up = self.start(self.on_msg)
         except error: self.is_server_up = False
 
     def init(self, uid):

@@ -47,7 +47,7 @@ class ResetPageGui(ThanksPageGui):
     def reset(self, pwd_name=None):
         def process_msg(data_lst, sender):
             print sender, data_lst
-        self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
+        self.eng.client.start(process_msg)
         self.eng.client.register_rpc('reset')
         self.ret_val = ret_val = self.eng.client.reset(self.jid_ent.get(), self.email_ent.get())
         ok_txt = _(

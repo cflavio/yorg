@@ -180,7 +180,7 @@ class YorgLogic(GameLogic):
                         self.eng.log_mgr.log('start_race: ' + str(data_lst))
                         cars = data_lst[4::7]
                         self.on_car_start_client(self.sel_track, car, cars, data_lst)
-                self.eng.client.start(process_msg, server)
+                self.eng.client.start(process_msg)
                 self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
                 gprops = self.mediator.gameprops
                 sprops = self.season.props
