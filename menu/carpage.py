@@ -279,15 +279,18 @@ class CarPage(Page):
     gui_cls = CarPageGui
 
     def __init__(self, carpage_props, track_path):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, carpage_props, track_path])]]
-        GameObject.__init__(self, init_lst)
+        self.carpage_props = carpage_props
+        self.track_path = track_path
+        Page.__init__(self, carpage_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.carpage_props, self.track_path])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)
 
 
@@ -303,14 +306,18 @@ class CarPageClient(CarPage):
     gui_cls = CarPageGuiClient
 
 
-class CarPageLocalMP(CarPage):
+class CarPageLocalMP(CarPage, PageFacade):
     gui_cls = CarPageLocalMPGui
 
-
     def __init__(self, carpage_props, track_path, players):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, carpage_props, track_path, players])]]
-        GameObject.__init__(self, init_lst)
+        self.carpage_props = carpage_props
+        self.track_path = track_path
+        self.players = players
+        Page.__init__(self, carpage_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls,
+         [self, self.carpage_props, self.track_path, self.players])]]

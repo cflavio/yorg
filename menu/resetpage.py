@@ -26,17 +26,17 @@ class ResetPageGui(ThanksPageGui):
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.email_ent = Entry(
-            scale=.08, pos=(-.15, 1, .4), entryFont=menu_props.font, width=12,
-            frameColor=menu_props.btn_col, initialText=_('your email'),
+            scale=.08, pos=(-.15, .4), entry_font=menu_props.font, width=12,
+            frame_col=menu_props.btn_col, initial_text=_('your email'),
             text_fg=menu_props.text_active_col, on_tab=self.on_tab_email,
             on_click=self.on_click_email)
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, 1, .2), entryFont=menu_props.font, width=12,
-            frameColor=menu_props.btn_col, initialText=init_txt,
+            scale=.08, pos=(-.15, .2), entry_font=menu_props.font, width=12,
+            frame_col=menu_props.btn_col, initial_text=init_txt,
             text_fg=menu_props.text_active_col, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
         start_btn = Btn(
-            text=_('Reset'), pos=(-.2, 1, -.2), command=self.reset,
+            text=_('Reset'), pos=(-.2, -.2), cmd=self.reset,
             **self.props.gameprops.menu_props.btn_args)
         t_a['scale'] = .06
         widgets = [self.jid_ent, start_btn, jid_lab, email_lab, self.email_ent]
@@ -49,7 +49,7 @@ class ResetPageGui(ThanksPageGui):
             print sender, data_lst
         self.eng.client.start(process_msg)
         self.eng.client.register_rpc('reset')
-        self.ret_val = ret_val = self.eng.client.reset(self.jid_ent.get(), self.email_ent.get())
+        self.ret_val = ret_val = self.eng.client.reset(self.jid_ent.text, self.email_ent.text)
         ok_txt = _(
             "We've sent an email to you (please check your spam folder if you "
             "can't find it) with the instructions for completing the reset.")
@@ -72,13 +72,13 @@ class ResetPageGui(ThanksPageGui):
 
     def on_frame(self):
         init_txt = _('your user id')
-        curr_txt = self.jid_ent.get()
+        curr_txt = self.jid_ent.text
         if curr_txt == init_txt[:-1]:
             self.jid_ent.set('')
         elif curr_txt.startswith(init_txt) and len(curr_txt) == len(init_txt) + 1:
             self.jid_ent.set(curr_txt[-1:])
         init_txt = _('your email')
-        curr_txt = self.email_ent.get()
+        curr_txt = self.email_ent.text
         if curr_txt == init_txt[:-1]:
             self.email_ent.set('')
         elif curr_txt.startswith(init_txt) and len(curr_txt) == len(init_txt) + 1:
@@ -86,12 +86,12 @@ class ResetPageGui(ThanksPageGui):
 
     def on_click_email(self, pos):
         init_txt = _('your email')
-        curr_txt = self.email_ent.get()
+        curr_txt = self.email_ent.text
         if curr_txt == init_txt: self.email_ent.set('')
 
     def on_click_id(self, pos):
         init_txt = _('your user id')
-        curr_txt = self.jid_ent.get()
+        curr_txt = self.jid_ent.text
         if curr_txt == init_txt: self.jid_ent.set('')
 
     def on_tab_email(self):
@@ -103,9 +103,9 @@ class ResetPageGui(ThanksPageGui):
         self.jid_ent['focus'] = 0
 
     def on_ok(self):
-        self.props.opt_file['settings']['login']['usr'] = self.jid_ent.get()
+        self.props.opt_file['settings']['login']['usr'] = self.jid_ent.text
         if self.store_cb['indicatorValue']:
-            self.props.opt_file['settings']['login']['pwd'] = self.pwd_ent.get()
+            self.props.opt_file['settings']['login']['pwd'] = self.pwd_ent.text
         self.props.opt_file.store()
         self._on_back()
         self.notify('on_login')
@@ -120,17 +120,19 @@ class ResetPageGui(ThanksPageGui):
         ThanksPageGui.destroy(self)
 
 
-class ResetPage(Page):
+class ResetPage(Page, PageFacade):
     gui_cls = ResetPageGui
 
     def __init__(self, mp_props):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mp_props])]]
-        GameObject.__init__(self, init_lst)
+        self.mp_props = mp_props
+        Page.__init__(self, mp_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.mp_props])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)

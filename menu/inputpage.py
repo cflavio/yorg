@@ -217,15 +217,19 @@ class InputPage4(Page):
 
     def __init__(self, menu_props, joysticks, keys):
         self.menu_props = menu_props
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_props, joysticks, keys])]]
-        GameObject.__init__(self, init_lst)
+        self.joysticks = joysticks
+        self.keys = keys
+        Page.__init__(self, menu_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls,
+          [self, self.menu_props, self.joysticks, self.keys])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)
 
 

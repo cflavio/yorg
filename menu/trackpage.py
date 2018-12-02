@@ -70,15 +70,18 @@ class TrackPage(Page):
     gui_cls = TrackPageGui
 
     def __init__(self, trackpage_props, room=None):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, trackpage_props, room])]]
-        GameObject.__init__(self, init_lst)
+        self.trackpage_props = trackpage_props
+        self.room = room
+        Page.__init__(self, trackpage_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.trackpage_props, self.room])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)
 
 

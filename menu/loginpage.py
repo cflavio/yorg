@@ -125,17 +125,19 @@ class LogInPageGui(ThanksPageGui):
         ThanksPageGui.destroy(self)
 
 
-class LogInPage(Page):
+class LogInPage(Page, PageFacade):
     gui_cls = LogInPageGui
 
     def __init__(self, mp_props):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mp_props])]]
-        GameObject.__init__(self, init_lst)
+        self.mp_props = mp_props
+        Page.__init__(self, mp_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.mp_props])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)

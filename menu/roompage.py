@@ -24,13 +24,17 @@ class RoomPage(Page):
     gui_cls = RoomPageGui
 
     def __init__(self, menu_props, room, nick):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, menu_props])]]
-        GameObject.__init__(self, init_lst)
+        self.menu_props = menu_props
+        self.room = room
+        self.nick = nick
+        Page.__init__(self, menu_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.menu_props])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)

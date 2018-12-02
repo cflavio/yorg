@@ -246,13 +246,16 @@ class YorgMainPage(MainPage, PageFacade):
     gui_cls = YorgMainPageGui
 
     def __init__(self, mainpage_props):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mainpage_props])]]
-        GameObject.__init__(self, init_lst)
-        # don't construct it using GameObject
+        self.mainpage_props = mainpage_props
+        MainPage.__init__(self, mainpage_props)
         PageFacade.__init__(self)
 
+    @property
+    def init_lst(self):
+        return [
+            [('event', self.event_cls, [self])],
+            [('gui', self.gui_cls, [self, self.mainpage_props])]]
+
     def destroy(self):
-        GameObject.destroy(self)
+        MainPage.destroy(self)
         PageFacade.destroy(self)
