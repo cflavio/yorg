@@ -5,6 +5,8 @@
 
 # profiling
 # particles with moving emitter
+# particles' recycling
+# parameter for emitter's duration
 
 
 # WAITING =====
