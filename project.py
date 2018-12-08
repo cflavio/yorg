@@ -4,9 +4,10 @@
 # TODO LIST =====
 
 # profiling
-# particles with moving emitter
 # particles' recycling
 # parameter for emitter's duration
+# revert is_in_contact workarounds
+# if not is_in_contact: horizontal ai rays, not inclined like the car
 
 
 # WAITING =====
@@ -19,8 +20,8 @@
 # (Panda3D 1.10) deployng: use logging for logging
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
-# (fixed is_in_contact) if not is_in_contact: horizontal ai rays, not inclined
-#   like the car (issue 23)
+# (Panda3D 1.10) flatten the track on the target machine (don't build track_all
+#   on vps)
 # (refactored objects' creation) refactor: facade, pass a single list (meth for
 #   for callables, prop for others)
 
