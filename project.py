@@ -4,8 +4,6 @@
 # TODO LIST =====
 
 # profiling
-# parameter for emitter's duration
-# revert is_in_contact workarounds
 # if not is_in_contact: horizontal ai rays, not inclined like the car
 
 
