@@ -4,7 +4,7 @@
 # TODO LIST =====
 
 # profiling
-# if not is_in_contact: horizontal ai rays, not inclined like the car
+# on respawn on rome's wp 40 themis goes under the terrain
 
 
 # WAITING =====
@@ -18,7 +18,7 @@
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
 # (Panda3D 1.10) flatten the track on the target machine (don't build track_all
-#   on vps)
+#   on vps), copy the textures in the user's folder if needed
 # (refactored objects' creation) refactor: facade, pass a single list (meth for
 #   for callables, prop for others)
 
