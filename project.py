@@ -4,21 +4,21 @@
 # TODO LIST =====
 
 # profiling
-# on respawn on rome's wp 40 themis goes under the terrain
+# fix grid's position (e.g. phoebe in rome)
+# tracks are always rewritten in builds
 
 
 # WAITING =====
 
+# (refactoring server) the server version from a rpc call (not from the file)
 # (refactoring server) options: reset pwd, logout
 # (refactoring server) mainmenu: multiplayer -> local, online
 # (refactoring server) online: login, register -> host (room), join
 # (Panda3D 1.10) joypad
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
-# (Panda3D 1.10) deployng: use logging for logging
+# (Panda3D 1.10) use logging for logging
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
-# (Panda3D 1.10) flatten the track on the target machine (don't build track_all
-#   on vps), copy the textures in the user's folder if needed
 # (refactored objects' creation) refactor: facade, pass a single list (meth for
 #   for callables, prop for others)
 
@@ -36,5 +36,6 @@
 #   it is useful
 # refactor: racing should be another package in another submodule (i.e. yorg
 #   contains yyagl/ and racing/)
+# revamp gui interaction
 # make scons for yyagl
 # unit tests
