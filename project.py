@@ -4,8 +4,8 @@
 # TODO LIST =====
 
 # profiling
-# fix grid's position (e.g. phoebe in rome)
-# tracks are always rewritten in builds
+# restore old tracks' flattening
+# joypad
 
 
 # WAITING =====
@@ -14,7 +14,6 @@
 # (refactoring server) options: reset pwd, logout
 # (refactoring server) mainmenu: multiplayer -> local, online
 # (refactoring server) online: login, register -> host (room), join
-# (Panda3D 1.10) joypad
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # (Panda3D 1.10) use logging for logging
 # (Panda3D 1.10) port to python 3
@@ -36,6 +35,7 @@
 #   it is useful
 # refactor: racing should be another package in another submodule (i.e. yorg
 #   contains yyagl/ and racing/)
+# rewrite the server using twisted
 # revamp gui interaction
 # make scons for yyagl
 # unit tests
