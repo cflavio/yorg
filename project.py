@@ -6,20 +6,20 @@
 # profiling
 # restore old tracks' flattening
 # joypad
+# the server version from a rpc call (not from the file)
+# mainmenu: multiplayer -> local, online
+# online: login/logout,  register, reset pwd -> host (room), join
 
 
 # WAITING =====
 
-# (refactoring server) the server version from a rpc call (not from the file)
-# (refactoring server) options: reset pwd, logout
-# (refactoring server) mainmenu: multiplayer -> local, online
-# (refactoring server) online: login, register -> host (room), join
 # (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
 # (Panda3D 1.10) use logging for logging
 # (Panda3D 1.10) port to python 3
 # (Panda3D 1.10) fix curr_ver == 'deploy-ng' in engine.logic
 # (refactored objects' creation) refactor: facade, pass a single list (meth for
 #   for callables, prop for others)
+# logging: replace server.start's conn_cb with a message when verbose
 
 
 # MAYBE/SOMEDAY =====
@@ -36,6 +36,4 @@
 # refactor: racing should be another package in another submodule (i.e. yorg
 #   contains yyagl/ and racing/)
 # rewrite the server using twisted
-# revamp gui interaction
 # make scons for yyagl
-# unit tests
