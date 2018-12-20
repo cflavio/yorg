@@ -97,7 +97,7 @@ yorg_lst = [
 racing_fil = ['./yyagl/racing/game/*', './yyagl/racing/car/*',
               './yyagl/racing/race/*', './yyagl/racing/track/*']
 racing_lst = [PDFInfo('python', './yyagl/racing', '*.py', racing_fil)]
-yyagl_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/library/*',
+yyagl_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/lib/*',
              './yyagl/tests/*']
 yyagl_lst = [
     PDFInfo('python', './yyagl', '*.py *.pdef', filt_game + yyagl_fil),
@@ -115,9 +115,7 @@ pdf_conf = {
     'racing_race': [PDFInfo('python', './yyagl/racing/race', '*.py', [])],
     'racing_track': [PDFInfo('python', './yyagl/racing/track', '*.py', [])],
     'yyagl': yyagl_lst,
-    'library': [PDFInfo('python', './yyagl/library', '*.py',
-                ['./yyagl/library/panda/*'])],
-    'library_panda': [PDFInfo('python', './yyagl/library/panda', '*.py', [])],
+    'lib': [PDFInfo('python', './yyagl/lib', '*.py', [])],
     'build': build_lst,
     'engine': [PDFInfo('python', './yyagl/engine', '*.py',
                ['./yyagl/engine/gui/*', './yyagl/engine/network/*'])],
