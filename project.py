@@ -5,8 +5,6 @@
 
 # profiling
 # restore old tracks' flattening
-# joypad
-# the server version from a rpc call (not from the file)
 # mainmenu: multiplayer -> local, online
 # online: login/logout,  register, reset pwd -> host (room), join
 
@@ -15,7 +13,8 @@
 
 # Panda3D 1.10: remove thirdparty libraries (manage them with deploy-ng); use
 #   logging for logging; port to python 3; remove linux32 build;
-#   fix curr_ver == 'deploy-ng' in engine.logic
+#   fix curr_ver == 'deploy-ng' in engine.logic; installers
+# py3; joypad
 # (refactored objects' creation): facade, pass a single list (meth for
 #   callables, prop for others)
 # logging: replace server.start's conn_cb with a message when verbose

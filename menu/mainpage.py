@@ -25,6 +25,9 @@ class YorgMainPageGui(MainPageGui):
         self.props = mainpage_props
         self.load_settings()
         self.conn_attempted = False
+        if not self.eng.client.netw_thr or \
+                not self.eng.client.netw_thr.is_running:
+            self.eng.client.restart()
         self.ver_check = VersionChecker()
         MainPageGui.__init__(self, mediator, self.props.gameprops.menu_props)
         if self.ver_check.is_uptodate():
@@ -50,9 +53,6 @@ class YorgMainPageGui(MainPageGui):
                 # self.eng.xmpp.start(user, pwd)
                     #self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
                     self.eng.client.register_rpc('login')
-                    if not self.eng.client.netw_thr or \
-                            not self.eng.client.netw_thr.is_running:
-                        self.eng.client.restart()
                     while not self.eng.client.netw_thr: pass
                     # wait for the thread
                     ret_val = 'ok'
