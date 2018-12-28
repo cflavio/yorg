@@ -15,6 +15,9 @@
 # Panda3D 1.10: remove thirdparty libraries (manage them with deploy-ng); use
 #   logging for logging; port to python 3; remove linux32 build;
 #   fix curr_ver == 'deploy-ng' in engine.logic; installers
+# remove 1.9's builds; make a builder which uses pre-built assets, if it works
+#   on vps then make a trigger for git updates and manage the output (create a
+#   webpage which contains builds and logs)
 # py3; joypad
 # (refactored objects' creation): facade, pass a single list (meth for
 #   callables, prop for others)
