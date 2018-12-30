@@ -67,7 +67,6 @@ class YorgLogic(GameLogic):
             self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_props,
                                          self.eng.cfg.dev_cfg.xmpp_server)
             self.mp_frm.attach(self.on_msg_focus)
-            self.mp_frm.attach(self.on_create_room)
             self.mp_frm.attach(self.on_srv_quitted)
             self.mp_frm.attach(self.on_removed)
             self.mp_frm.attach(self.on_start_match)
@@ -277,9 +276,6 @@ class YorgLogic(GameLogic):
 
     def on_msg_focus(self, val):
         self.mediator.fsm.enable_menu_navigation(val == 'out')
-
-    def on_create_room(self, room, nick):
-        self.mediator.fsm.create_room(room, nick)
 
     def on_srv_quitted(self):
         #self.eng.client.stop()

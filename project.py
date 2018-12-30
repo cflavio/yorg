@@ -6,8 +6,8 @@
 # profiling
 # fix the end of the particles
 # restore old tracks' flattening
-# mainmenu: multiplayer -> local, online
-# online: login/logout,  register, reset pwd -> host (room), join
+# host (room)
+# join
 
 
 # WAITING =====

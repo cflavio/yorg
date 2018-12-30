@@ -3,6 +3,9 @@ from yyagl.gameobject import GameObject
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
+from .onlinepage import OnlinePage
+from .onlineplaypage import OnlinePlayPage
+from .clientpage import ClientPage
 from .loginpage import LogInPage
 from .registerpage import RegisterPage
 from .resetpage import ResetPage
@@ -57,6 +60,19 @@ class YorgMenuLogic(MenuLogic):
             self.eng.log('local multiplayer')
             page = NumPlayersPage(args[0])
             page.gui.attach(self.on_nplayers)
+        if page_code == 'multiplayer':
+            self.eng.log('multiplayer')
+            page = MultiplayerPage(args[0])
+        if page_code == 'online':
+            self.eng.log('online')
+            page = OnlinePage(args[0])
+        if page_code == 'onlineplay':
+            self.eng.log('onlineplay')
+            page = OnlinePlayPage(args[0])
+            page.gui.attach(self.on_create_room)
+        if page_code == 'client':
+            self.eng.log('client')
+            page = ClientPage(args[0])
         if page_code == 'trackpageserver':
             self.eng.log('track page server')
             page = TrackPageServer(args[0], args[1])
@@ -185,7 +201,7 @@ class YorgMenuLogic(MenuLogic):
     def on_login(self):
         self.mediator.gui.notify('on_login')
 
-    def create_room(self, room, nick):
+    def on_create_room(self, room, nick):
         self.push_page(RoomPage(self.mediator.gui.menu_props, room, nick))
 
 

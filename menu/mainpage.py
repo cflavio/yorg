@@ -66,10 +66,6 @@ class YorgMainPageGui(MainPageGui):
             if not (user and password):
                 self.on_ko()
 
-    def show(self):
-        MainPageGui.show(self)
-        self.widgets[2]['text'] = self.get_label()
-
     def on_ok(self):
         self.eng.client.authenticated = True
         self.conn_attempted = True
@@ -81,25 +77,6 @@ class YorgMainPageGui(MainPageGui):
     def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
         self.widgets[2]['text'] = self.get_label()
-
-    def on_logout(self):
-        #self.eng.xmpp.disconnect()
-        self.eng.client.authenticated = False
-        options = self.props.opt_file
-        options['settings']['login']['usr'] = ''
-        options['settings']['login']['pwd'] = ''
-        options.store()
-        self.widgets[2]['text'] = self.get_label()
-        self.notify('on_logout')
-
-    def on_login(self):
-        self.notify('on_push_page', 'login', [self.props])
-
-    def on_loginout(self):
-        if self.eng.client.is_active and self.eng.client.authenticated:
-            self.on_logout()
-        elif self.conn_attempted:
-            self.on_login()
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
@@ -113,36 +90,22 @@ class YorgMainPageGui(MainPageGui):
         self.shaders = sett['shaders']
         self.camera = sett['camera']
 
-    def get_label(self):
-        if not self.eng.client.is_server_up:
-            return _('Server problem')
-        if not self.ver_check.is_uptodate():
-            return _('Not up-to-date')
-        if self.eng.client.is_active and self.eng.client.authenticated:
-            return _('Log out') + \
-                ' \1small\1(%s)\2' % self.props.opt_file['settings']['login']['usr']
-        elif self.conn_attempted:
-            return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
-        #i18n: This is a caption of a button.
-        return _('Connecting')
-
     def build(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
                                     [self.props])
-        lmp_cb = lambda: self.notify('on_push_page', 'localmp',
-                                     [self.props])
+        mp_cb = lambda: self.notify('on_push_page', 'multiplayer',
+                                    [self.props])
         supp_cb = lambda: self.eng.open_browser(self.props.support_url)
         cred_cb = lambda: self.notify('on_push_page', 'credits')
         menu_data = [
             ('Single Player', _('Single Player'), sp_cb),
-            ('Server problem', self.get_label(), self.on_loginout),
-            ('Local multiplayer', _('Local multiplayer'), lmp_cb),
+            ('Multiplayer', _('Multiplayer'), mp_cb),
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
-            Btn(text='', pos=(0, .68-i*.23), cmd=menu[2],
+            Btn(text='', pos=(0, .64-i*.23), cmd=menu[2],
                 tra_src=menu_data[i][0], tra_tra=menu_data[i][1],
                 **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]

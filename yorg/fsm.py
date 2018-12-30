@@ -20,7 +20,7 @@ class YorgFsm(FsmColleague):
             'Exit': ['Menu']}
         self.load_txt = self.preview = self.cam_tsk = self.cam_node = \
             self.ranking_texts = self.send_tsk = self.cam_pivot = \
-            self.ready_clients = self.curr_load_txt = self.__menu = \
+            self.ready_clients = self.curr_load_txt = self.menu = \
             self.race = self.__exit_menu = self.loader_tsk = self.models = None
 
     def enterMenu(self):
@@ -33,7 +33,7 @@ class YorgFsm(FsmColleague):
             'http://feeds.feedburner.com/ya2tech?format=xml',
             'http://www.ya2.it', 'save' in self.mediator.options.dct,
             'http://www.ya2.it/pages/support-us.html')
-        self.__menu = YorgMenu(self.__menu_props)
+        self.menu = YorgMenu(self.__menu_props)
         methods = [self.mediator.logic.on_input_back,
                    self.mediator.logic.on_options_back,
                    self.mediator.logic.on_room_back,
@@ -47,8 +47,8 @@ class YorgFsm(FsmColleague):
                    self.mediator.logic.on_continue,
                    self.mediator.logic.on_login,
                    self.mediator.logic.on_logout]
-        map(self.__menu.attach_obs, methods)
-        self.__menu.attach_obs(self.demand, rename='on_exit', args=['Exit'])
+        map(self.menu.attach_obs, methods)
+        self.menu.attach_obs(self.demand, rename='on_exit', args=['Exit'])
         self.mediator.audio.menu_music.play()
         if self.mediator.logic.season:
             self.mediator.logic.season.detach_obs(self.mediator.event.on_season_end)
@@ -86,31 +86,31 @@ class YorgFsm(FsmColleague):
         #                    self.eng.server.connections.remove(conn)
         if self.getCurrentOrNextState() == 'Menu':
             if uid == self.mediator.logic.mp_frm.users_frm.in_match_room:
-                self.__menu.disable()
+                self.menu.disable()
 
     def on_start_match(self):
-        self.__menu.logic.on_push_page('trackpageserver', [self.__menu_props, self.mediator.logic.mp_frm.msg_frm.curr_match_room])
+        self.menu.logic.on_push_page('trackpageserver', [self.__menu_props, self.mediator.logic.mp_frm.msg_frm.curr_match_room])
 
     def on_start_match_client(self, track):
         self.mediator.logic.mp_frm.on_track_selected()
-        self.__menu.logic.on_track_selected(track)
-        self.__menu.logic.on_push_page('carpageclient', [self.__menu_props])
+        self.menu.logic.on_track_selected(track)
+        self.menu.logic.on_push_page('carpageclient', [self.__menu_props])
 
     def enable_menu(self, val):
-        (self.__menu.enable if val else self.__menu.disable)()
+        (self.menu.enable if val else self.menu.disable)()
 
     def enable_menu_navigation(self, val):
-        (self.__menu.enable_navigation if val else self.__menu.disable_navigation)()
+        (self.menu.enable_navigation if val else self.menu.disable_navigation)()
 
     def on_srv_quitted(self):
         if self.getCurrentOrNextState() == 'Menu':
-            self.__menu.logic.on_srv_quitted()
+            self.menu.logic.on_srv_quitted()
         else: self.demand('Menu')
 
-    def on_removed(self): self.__menu.logic.on_removed()
+    def on_removed(self): self.menu.logic.on_removed()
 
     def create_room(self, room, nick):
-        self.__menu.logic.create_room(room, nick)
+        self.menu.logic.create_room(room, nick)
 
     def load_models(self, model):
         if not self.models: return
@@ -119,7 +119,7 @@ class YorgFsm(FsmColleague):
 
     def exitMenu(self):
         self.eng.log_mgr.log('exiting Menu state')
-        self.__menu.destroy()
+        self.menu.destroy()
         self.mediator.audio.menu_music.stop()
         loader.cancelRequest(self.loader_tsk)
         self.eng.client.detach(self.on_presence_unavailable_room)
