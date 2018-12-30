@@ -5,7 +5,6 @@
 
 # profiling
 # fix the end of the particles
-# restore old tracks' flattening
 # host (room)
 # join
 
