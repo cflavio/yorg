@@ -3,8 +3,6 @@
 
 # TODO LIST =====
 
-# profiling
-# fix the end of the particles
 # host (room)
 # join
 
@@ -25,6 +23,7 @@
 
 # MAYBE/SOMEDAY =====
 
+# profiling
 # lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
 #   'Facade' is called
 # remove eng.server
