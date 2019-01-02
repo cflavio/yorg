@@ -3,8 +3,11 @@
 
 # TODO LIST =====
 
+# fix pause (it doesn't stop the time)
+# fix the printing "waiting for other players"
 # host (room)
 # join
+# remove the multiplayer frame
 
 
 # WAITING =====
