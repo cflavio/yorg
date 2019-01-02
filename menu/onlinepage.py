@@ -1,6 +1,7 @@
 from yyagl.lib.gui import Btn
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
+from yyagl.engine.logic import VersionChecker
 from .thankspage import ThanksPageGui
 
 
@@ -8,6 +9,7 @@ class OnlinePageGui(ThanksPageGui):
 
     def __init__(self, mediator, mp_props):
         self.props = mp_props
+        self.ver_check = VersionChecker()
         ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
     def show(self):
@@ -29,6 +31,7 @@ class OnlinePageGui(ThanksPageGui):
             ('Reset password', _('Reset password'), self.on_reset)]
         widgets = [
             Btn(text=menu[0], pos=(-.2, top-i*.28), cmd=menu[2],
+                tra_src=menu[0], tra_tra=menu[1],
                 **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
