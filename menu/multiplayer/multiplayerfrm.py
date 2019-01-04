@@ -38,17 +38,17 @@ class MultiplayerFrm(GameObject):
         self.match_frm = None
         #self.match_frm.hide()
         self.msg_frm.hide()
-        self.eng.client.attach(self.on_presence_available)
-        self.eng.client.attach(self.on_presence_unavailable)
-        self.eng.client.attach(self.on_msg)
-        self.eng.client.attach(self.on_groupchat_msg)
-        self.eng.client.attach(self.on_is_playing)
-        self.eng.client.attach(self.on_invite)
-        self.eng.client.attach(self.on_invite_chat)
-        self.eng.client.attach(self.on_declined)
-        self.eng.client.attach(self.on_presence_available_room)
-        self.eng.client.attach(self.on_presence_unavailable_room)
-        self.eng.client.attach(self.on_rm_usr_from_match)
+        #self.eng.client.attach(self.on_presence_available)
+        #self.eng.client.attach(self.on_presence_unavailable)
+        #self.eng.client.attach(self.on_msg)
+        #self.eng.client.attach(self.on_groupchat_msg)
+        #self.eng.client.attach(self.on_is_playing)
+        #self.eng.client.attach(self.on_invite)
+        #self.eng.client.attach(self.on_invite_chat)
+        #self.eng.client.attach(self.on_declined)
+        #self.eng.client.attach(self.on_presence_available_room)
+        #self.eng.client.attach(self.on_presence_unavailable_room)
+        #self.eng.client.attach(self.on_rm_usr_from_match)
 
     def create_match_frm(self, room, is_server):
         cls = MatchFrmServer if is_server else MatchFrmServerClient

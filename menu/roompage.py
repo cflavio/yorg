@@ -1,7 +1,9 @@
-from yyagl.lib.gui import Btn
+from time import strftime
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
+from multiplayer.matchfrm import MatchFrmServer
+from multiplayer.messagefrm import MatchMsgFrm
 
 
 class RoomPageGui(ThanksPageGui):
@@ -9,6 +11,15 @@ class RoomPageGui(ThanksPageGui):
     def __init__(self, mediator, menu_props):
         self.menu_props = menu_props
         ThanksPageGui.__init__(self, mediator, menu_props)
+        self.match_frm = MatchFrmServer(menu_props)
+        self.match_msg_frm = MatchMsgFrm(self.menu_props)
+        time_code = strftime('%y%m%d%H%M%S')
+        room_name = self.eng.client.myid + time_code
+        self.eng.client.register_rpc('join_room')
+        self.eng.client.join_room(room_name)
+        self.eng.log('created room ' + room_name)
+        self.eng.client.is_server_active = True
+        self.eng.client.attach(self.on_presence_available_room)
 
     def show(self):
         ThanksPageGui.show(self)
@@ -18,6 +29,16 @@ class RoomPageGui(ThanksPageGui):
         widgets = []
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
+
+    def on_presence_available_room(self, uid, room):
+        self.match_frm.on_presence_available_room(uid, room)
+
+    def destroy(self):
+        self.match_frm.destroy()
+        self.match_msg_frm.destroy()
+
+
+class RoomPageClientGui(RoomPageGui): pass
 
 
 class RoomPage(Page):
@@ -38,3 +59,8 @@ class RoomPage(Page):
     def destroy(self):
         Page.destroy(self)
         PageFacade.destroy(self)
+
+
+
+class RoomPageClient(RoomPage):
+    gui_cls = RoomPageClientGui

@@ -17,7 +17,7 @@ from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
 from .optionpage import OptionPage
 from .inputpage import InputPage, InputPage2, InputPage3, InputPage4
 from .creditpage import CreditPage
-from .roompage import RoomPage
+from .roompage import RoomPage, RoomPageClient
 from .numplayerspage import NumPlayersPage
 from .supporterspage import SupportersPage
 
@@ -73,6 +73,7 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'client':
             self.eng.log('client')
             page = ClientPage(args[0])
+            page.gui.attach(self.on_create_room_client)
         if page_code == 'trackpageserver':
             self.eng.log('track page server')
             page = TrackPageServer(args[0], args[1])
@@ -203,6 +204,9 @@ class YorgMenuLogic(MenuLogic):
 
     def on_create_room(self, room, nick):
         self.push_page(RoomPage(self.mediator.gui.menu_props, room, nick))
+
+    def on_create_room_client(self, room, nick):
+        self.push_page(RoomPageClient(self.mediator.gui.menu_props, room, nick))
 
 
 class YorgMenuGui(MenuGui):

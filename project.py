@@ -5,8 +5,7 @@
 
 # fix pause (it doesn't stop the time)
 # fix the printing "waiting for other players"
-# host (room)
-# join
+# online multiplayer's corner cases
 # remove the multiplayer frame
 
 

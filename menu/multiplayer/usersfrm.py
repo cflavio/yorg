@@ -123,21 +123,21 @@ class UsersFrm(GameObject):
                 lab.attach(self.on_friend)
                 lab.attach(self.on_unfriend)
                 lab.attach(self.on_add_chat)
-        for i, user in enumerate(self.eng.client.sorted_users):
-            clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
-            lab = [lab for lab in self.labels
-                   if clean(lab.lab.lab['text']) == self.trunc(user.uid, 20)][0]
-            enb_val = invite_btn and user.uid not in self.invited_users and not user.is_playing
-            if hasattr(lab, 'invite_btn'):
-                inv_btn = lab.invite_btn
-                if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
-                elif len(self.invited_users) == 8: inv_btn.tooltip['text'] = _("you can't invite more players")
-                elif self.in_match_room: inv_btn.tooltip['text'] = _("you're already in a match")
-                elif user.uid in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
-                elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
-            lab.enable_invite_btn(enb_val)
-            lab.frm.set_z(top - .08 - .08 * i)
-            lab.lab.set_supporter(user.is_supporter)
+        #for i, user in enumerate(self.eng.client.sorted_users):
+        #    clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
+        #    lab = [lab for lab in self.labels
+        #           if clean(lab.lab.lab['text']) == self.trunc(user.uid, 20)][0]
+        #    enb_val = invite_btn and user.uid not in self.invited_users and not user.is_playing
+        #    if hasattr(lab, 'invite_btn'):
+        #        inv_btn = lab.invite_btn
+        #        if enb_val: inv_btn.tooltip['text'] = _('invite the user to a match')
+        #        elif len(self.invited_users) == 8: inv_btn.tooltip['text'] = _("you can't invite more players")
+        #        elif self.in_match_room: inv_btn.tooltip['text'] = _("you're already in a match")
+        #        elif user.uid in self.invited_users: inv_btn.tooltip['text'] = _("you've already invited this user")
+        #        elif user.is_playing: inv_btn.tooltip['text'] = _("the user is already playing a match")
+        #    lab.enable_invite_btn(enb_val)
+        #    lab.frm.set_z(top - .08 - .08 * i)
+        #    lab.lab.set_supporter(user.is_supporter)
 
     def on_invite(self, usr):
         self.notify('on_invite', usr)
