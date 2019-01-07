@@ -11,10 +11,10 @@ class RoomPageGui(ThanksPageGui):
     def __init__(self, mediator, menu_props):
         self.menu_props = menu_props
         ThanksPageGui.__init__(self, mediator, menu_props)
-        self.match_frm = MatchFrmServer(menu_props)
-        self.match_msg_frm = MatchMsgFrm(self.menu_props)
         time_code = strftime('%y%m%d%H%M%S')
         room_name = self.eng.client.myid + time_code
+        self.match_frm = MatchFrmServer(menu_props, room_name)
+        self.match_msg_frm = MatchMsgFrm(self.menu_props)
         self.eng.client.register_rpc('join_room')
         self.eng.client.join_room(room_name)
         self.eng.log('created room ' + room_name)

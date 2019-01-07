@@ -8,10 +8,10 @@ from .forms import UserFrm, UserFrmMe, UserFrmMatch
 
 class MatchFrm(GameObject):
 
-    def __init__(self, menu_props):
+    def __init__(self, menu_props, room):
         GameObject.__init__(self)
         self.eng.log('created match form (init)')
-        self.room = ''
+        self.room = room
         self.invited_users = [self.eng.client.myid]
         self.menu_props = menu_props
         lab_args = menu_props.label_args
@@ -22,7 +22,7 @@ class MatchFrm(GameObject):
             pos=(.04, 1, -.46), parent=base.a2dTopLeft)
         usr = [usr for usr in self.eng.client.users if usr.uid == self.eng.client.myid][0]
         frm = UserFrmMe(
-            self.eng.client.myid, usr.is_supporter, (.1, 1, .38), self.match_frm,
+            self.eng.client.myid, usr.is_supporter, (.1, .38), self.match_frm,
             self.menu_props, .32)
         self.forms = [frm]
         for i in range(0, 8):
@@ -51,7 +51,7 @@ class MatchFrm(GameObject):
             y = .38 - .08 * (idx % 4)
             usr = [usr for usr in self.eng.client.users if usr.uid == uid][0]
             frm = UserFrm(uid, usr.is_supporter,
-                          (x, 1, y), self.match_frm, self.menu_props, 1.0)
+                          (x, y), self.match_frm, self.menu_props, 1.0)
             self.forms += [frm]
 
     def on_presence_unavailable_room(self, uid, room_name):
@@ -149,8 +149,8 @@ class MatchFrm(GameObject):
 
 class MatchFrmServer(MatchFrm):
 
-    def __init__(self, menu_props):
-        MatchFrm.__init__(self, menu_props)
+    def __init__(self, menu_props, room):
+        MatchFrm.__init__(self, menu_props, room)
         btn_args = self.menu_props.btn_args
         btn_args['scale'] = (.06, .06)
         Btn(text=_('Start'), pos=(1.2, .03), cmd=self.on_start,
@@ -159,8 +159,8 @@ class MatchFrmServer(MatchFrm):
 
 class MatchFrmServerClient(MatchFrm):
 
-    def __init__(self, menu_props):
-        MatchFrm.__init__(self, menu_props)
+    def __init__(self, menu_props, room):
+        MatchFrm.__init__(self, menu_props, room)
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
         Label(text=_('please wait for the server'), pos=(1.2, 1, .03),
