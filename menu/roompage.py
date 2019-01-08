@@ -20,6 +20,7 @@ class RoomPageGui(ThanksPageGui):
         self.eng.log('created room ' + room_name)
         self.eng.client.is_server_active = True
         self.eng.client.attach(self.on_presence_available_room)
+        self.match_frm.attach(self.on_start)
 
     def show(self):
         ThanksPageGui.show(self)
@@ -32,6 +33,8 @@ class RoomPageGui(ThanksPageGui):
 
     def on_presence_available_room(self, uid, room):
         self.match_frm.on_presence_available_room(uid, room)
+
+    def on_start(self): self.notify('on_start_match')
 
     def destroy(self):
         self.match_frm.destroy()

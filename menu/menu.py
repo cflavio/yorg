@@ -203,7 +203,12 @@ class YorgMenuLogic(MenuLogic):
         self.mediator.gui.notify('on_login')
 
     def on_create_room(self, room, nick):
-        self.push_page(RoomPage(self.mediator.gui.menu_props, room, nick))
+        page = RoomPage(self.mediator.gui.menu_props, room, nick)
+        self.curr_room = room
+        self.push_page(page)
+        page.gui.attach(self.on_start_match)
+
+    def on_start_match(self): self.notify('on_start_match')
 
     def on_create_room_client(self, room, nick):
         self.push_page(RoomPageClient(self.mediator.gui.menu_props, room, nick))
