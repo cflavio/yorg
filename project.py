@@ -39,3 +39,7 @@
 # racing should be another package in another submodule (i.e. yorg contains
 #   yyagl/ and racing/)
 # yyagl's scons; use twisted for the server; unit tests; webapp; track editor
+# move all track's assets (minimap, menu image, ...) in track's folder
+# gui warnings for missing track's logics information
+# retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
+# retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)

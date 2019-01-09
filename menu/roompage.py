@@ -41,7 +41,16 @@ class RoomPageGui(ThanksPageGui):
         self.match_msg_frm.destroy()
 
 
-class RoomPageClientGui(RoomPageGui): pass
+class RoomPageClientGui(RoomPageGui):
+
+    def __init__(self, mediator, menu_props):
+        RoomPageGui.__init__(self, mediator, menu_props)
+        self.eng.client.attach(self.on_track_selected_msg)
+
+    def on_track_selected_msg(self, track):
+        self.eng.log_mgr.log('track selected: ' + track)
+        self.eng.client.detach(self.on_track_selected_msg)
+        self.notify('on_start_match_client', track)
 
 
 class RoomPage(Page):
