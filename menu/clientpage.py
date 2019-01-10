@@ -82,9 +82,9 @@ class ClientPageGui(ThanksPageGui):
                     lab.attach(self.on_clicked)
 
     def on_clicked(self, roomname):
-        self.eng.log('join to the room ' + roomname)
-        self.eng.client.register_rpc('join_room')
-        self.eng.client.join_room(roomname)
+        #self.eng.log('join to the room ' + roomname)
+        #self.eng.client.register_rpc('join_room')
+        #self.eng.client.join_room(roomname)
         self.eng.client.is_client_active = True
         nick = self.eng.client.myid
         self.notify('on_create_room_client', roomname, nick)

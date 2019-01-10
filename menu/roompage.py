@@ -8,11 +8,11 @@ from multiplayer.messagefrm import MatchMsgFrm
 
 class RoomPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, menu_props):
+    def __init__(self, mediator, menu_props, room_name=None):
         self.menu_props = menu_props
         ThanksPageGui.__init__(self, mediator, menu_props)
-        time_code = strftime('%y%m%d%H%M%S')
-        room_name = self.eng.client.myid + time_code
+        if not room_name:
+            room_name = self.eng.client.myid + strftime('%y%m%d%H%M%S')
         self.match_frm = MatchFrmServer(menu_props, room_name)
         self.match_msg_frm = MatchMsgFrm(self.menu_props)
         self.eng.client.register_rpc('join_room')
@@ -34,7 +34,9 @@ class RoomPageGui(ThanksPageGui):
     def on_presence_available_room(self, uid, room):
         self.match_frm.on_presence_available_room(uid, room)
 
-    def on_start(self): self.notify('on_start_match')
+    def on_start(self):
+        self.eng.client.send(['room_start'])
+        self.notify('on_start_match')
 
     def destroy(self):
         self.match_frm.destroy()
@@ -43,14 +45,14 @@ class RoomPageGui(ThanksPageGui):
 
 class RoomPageClientGui(RoomPageGui):
 
-    def __init__(self, mediator, menu_props):
-        RoomPageGui.__init__(self, mediator, menu_props)
+    def __init__(self, mediator, menu_props, room_name):
+        RoomPageGui.__init__(self, mediator, menu_props, room_name)
         self.eng.client.attach(self.on_track_selected_msg)
 
     def on_track_selected_msg(self, track):
         self.eng.log_mgr.log('track selected: ' + track)
         self.eng.client.detach(self.on_track_selected_msg)
-        self.notify('on_start_match_client', track)
+        self.notify('on_start_match_client_page', track)
 
 
 class RoomPage(Page):
@@ -66,7 +68,7 @@ class RoomPage(Page):
     @property
     def init_lst(self): return [
         [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.menu_props])]]
+        [('gui', self.gui_cls, [self, self.menu_props, self.room])]]
 
     def destroy(self):
         Page.destroy(self)

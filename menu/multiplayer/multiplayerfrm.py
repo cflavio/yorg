@@ -398,18 +398,20 @@ class MultiplayerFrm(GameObject):
             #        mbody='1')
 
     def process_msg_client(self, data_lst, sender):
-        if data_lst[0] == NetMsgs.track_selected:
-            self.eng.log_mgr.log('track selected: ' + data_lst[1])
-            self.notify('on_start_match_client', data_lst[1])
-            self.users_frm.set_size(False)
-            self.msg_frm.show()
+        pass
+        #if data_lst[0] == NetMsgs.track_selected:
+        #    self.eng.log_mgr.log('track selected: ' + data_lst[1])
+        #    self.notify('on_start_match_client', data_lst[1])
+        #    self.users_frm.set_size(False)
+        #    self.msg_frm.show()
 
     def on_track_selected_msg(self, track):
-        self.eng.log_mgr.log('track selected: ' + track)
-        self.eng.client.detach(self.on_track_selected_msg)
-        self.notify('on_start_match_client', track)
-        self.users_frm.set_size(False)
-        self.msg_frm.show()
+        pass
+        #self.eng.log_mgr.log('track selected: ' + track)
+        #self.eng.client.detach(self.on_track_selected_msg)
+        #self.notify('on_start_match_client', track)
+        #self.users_frm.set_size(False)
+        #self.msg_frm.show()
 
     def on_declined(self, msg):
         self.eng.log('on declined')

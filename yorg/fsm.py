@@ -92,7 +92,7 @@ class YorgFsm(FsmColleague):
         self.menu.logic.on_push_page('trackpageserver', [self.__menu_props, self.mediator.fsm.menu.logic.curr_room])
 
     def on_start_match_client(self, track):
-        self.mediator.logic.mp_frm.on_track_selected()
+        #self.mediator.logic.mp_frm.on_track_selected()
         self.menu.logic.on_track_selected(track)
         self.menu.logic.on_push_page('carpageclient', [self.__menu_props])
 

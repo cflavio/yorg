@@ -63,16 +63,16 @@ class YorgLogic(GameLogic):
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         server = dev['server'] if 'server' in dev else ''
-        self.mediator.fsm.menu.logic.attach(self.on_start_match)
-        self.mediator.fsm.menu.logic.attach(self.on_start_match_client)
         if not self.mp_frm and not (cars and track and not server):
             self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_props,
                                          self.eng.cfg.dev_cfg.xmpp_server)
-            self.mp_frm.attach(self.on_msg_focus)
-            self.mp_frm.attach(self.on_srv_quitted)
-            self.mp_frm.attach(self.on_removed)
-            self.mp_frm.attach(self.on_start_match)
-            self.mp_frm.attach(self.on_start_match_client)
+            #self.mp_frm.attach(self.on_msg_focus)
+            #self.mp_frm.attach(self.on_srv_quitted)
+            #self.mp_frm.attach(self.on_removed)
+            #self.mp_frm.attach(self.on_start_match)
+            #self.mp_frm.attach(self.on_start_match_client)
+            self.mediator.fsm.menu.logic.attach(self.on_start_match)
+            self.mediator.fsm.menu.logic.attach(self.on_start_match_client_menu)
 
     def on_start(self):
         GameLogic.on_start(self)
@@ -203,7 +203,7 @@ class YorgLogic(GameLogic):
     def on_start_match(self):
         self.mediator.fsm.on_start_match()
 
-    def on_start_match_client(self, track):
+    def on_start_match_client_menu(self, track):
         self.mediator.fsm.on_start_match_client(track)
 
     def start_network_race_server(self, car, track):
