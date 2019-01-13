@@ -28,9 +28,16 @@ class OnlinePlayPageGui(ThanksPageGui):
         ThanksPageGui.build(self)
 
     def on_server(self):
+        self.eng.server.start(self.process_msg_srv, self.process_connection)
         time_code = strftime('%y%m%d%H%M%S')
         roomname = self.eng.client.myid + time_code
         self.notify('on_create_room', roomname, self.eng.client.myid)
+
+    def process_msg_srv(data_lst):
+        print data_lst
+
+    def process_connection(self, client_address):
+        self.eng.log_mgr.log('connection from ' + client_address)
 
 
 class OnlinePlayPage(Page):
