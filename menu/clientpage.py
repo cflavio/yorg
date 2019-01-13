@@ -80,6 +80,7 @@ class ClientPageGui(ThanksPageGui):
                         self.frm.getCanvas(), self.menu_props)
                     self.labels += [lab]
                     lab.attach(self.on_clicked)
+                    lab.lab.lab.wdg['text'] = lab.lab.lab.wdg['text'][:-12]
 
     def on_clicked(self, roomname):
         #self.eng.log('join to the room ' + roomname)
