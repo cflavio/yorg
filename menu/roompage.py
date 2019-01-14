@@ -2,18 +2,20 @@ from time import strftime
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
-from multiplayer.matchfrm import MatchFrmServer
+from multiplayer.matchfrm import MatchFrmServer, MatchFrmServerClient
 from multiplayer.messagefrm import MatchMsgFrm
 
 
 class RoomPageGui(ThanksPageGui):
+
+    frm_cls = MatchFrmServer
 
     def __init__(self, mediator, menu_props, room_name=None):
         self.menu_props = menu_props
         ThanksPageGui.__init__(self, mediator, menu_props)
         if not room_name:
             room_name = self.eng.client.myid + strftime('%y%m%d%H%M%S')
-        self.match_frm = MatchFrmServer(menu_props, room_name)
+        self.match_frm = self.frm_cls(menu_props, room_name)
         self.match_msg_frm = MatchMsgFrm(self.menu_props)
         self.eng.client.register_rpc('join_room')
         self.eng.client.join_room(room_name)
@@ -44,6 +46,8 @@ class RoomPageGui(ThanksPageGui):
 
 
 class RoomPageClientGui(RoomPageGui):
+
+    frm_cls = MatchFrmServerClient
 
     def __init__(self, mediator, menu_props, room_name):
         RoomPageGui.__init__(self, mediator, menu_props, room_name)
