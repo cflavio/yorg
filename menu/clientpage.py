@@ -1,7 +1,5 @@
 from panda3d.core import TextNode
-from direct.gui.DirectScrolledFrame import DirectScrolledFrame
-from direct.gui.DirectGuiGlobals import FLAT
-from yyagl.lib.gui import Btn, Label
+from yyagl.lib.gui import Btn, Label, ScrolledFrame
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -19,30 +17,22 @@ class ClientPageGui(ThanksPageGui):
         self.build()
 
     def build(self):
-        widgets = []
-        self.add_widgets(widgets)
-        ThanksPageGui.build(self)
         lab_args = self.menu_props.label_args
         lab_args['scale'] = .046
         self.users_lab = Label(
             text=_('Current waiting hosting users'), pos=(.02, -.05),
             parent=base.a2dTopLeft, text_wordwrap=48,
             text_align=TextNode.A_left, **lab_args)
-        self.frm = DirectScrolledFrame(
-            frameSize=(-.02, 2.6, .7, 2.43),
-            canvasSize=(-.02, 2.56, -.08, 3.8),
-            scrollBarWidth=.036,
-            verticalScroll_relief=FLAT,
-            verticalScroll_frameColor=(.2, .2, .2, .4),
-            verticalScroll_thumb_relief=FLAT,
-            verticalScroll_thumb_frameColor=(.8, .8, .8, .6),
-            verticalScroll_incButton_relief=FLAT,
-            verticalScroll_incButton_frameColor=(.8, .8, .8, .6),
-            verticalScroll_decButton_relief=FLAT,
-            verticalScroll_decButton_frameColor=(.8, .8, .8, .6),
-            horizontalScroll_relief=FLAT,
-            frameColor=(.2, .2, .2, .5),
-            pos=(.04, 1, -2.5), parent=base.a2dTopLeft)
+        self.frm = ScrolledFrame(
+            frame_sz=(-.02, 2.6, .7, 2.43),
+            canvas_sz=(-.02, 2.56, -.08, 3.8),
+            scrollbar_width=.036,
+            frame_col=(.2, .2, .2, .5),
+            pos=(.04, -2.5),
+            parent='topleft')
+        widgets = [self.users_lab, self.frm]
+        self.add_widgets(widgets)
+        ThanksPageGui.build(self)
         self.labels = []
         self.invited_users = []
         self.on_hosting()
@@ -77,7 +67,7 @@ class ClientPageGui(ThanksPageGui):
                 if self.eng.client.myid != hst:
                     lab = UserFrmList(
                         hst, 0, 0, (0, top - .08 - .08 * i),
-                        self.frm.getCanvas(), self.menu_props)
+                        self.frm.canvas, self.menu_props)
                     self.labels += [lab]
                     lab.attach(self.on_clicked)
                     lab.lab.lab.wdg['text'] = lab.lab.lab.wdg['text'][:-12]
