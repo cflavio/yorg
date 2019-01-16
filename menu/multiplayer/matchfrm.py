@@ -1,5 +1,5 @@
-from direct.gui.DirectFrame import DirectFrame
-from yyagl.lib.gui import Btn, Label
+from itertools import chain
+from yyagl.lib.gui import Btn, Label, Frame
 from direct.gui.DirectLabel import DirectLabel
 from panda3d.core import TextNode
 from yyagl.gameobject import GameObject
@@ -16,10 +16,10 @@ class MatchFrm(GameObject):
         self.menu_props = menu_props
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        self.match_frm = DirectFrame(
-            frameSize=(-.02, 2.5, 0, .45),
-            frameColor=(.2, .2, .2, .5),
-            pos=(.04, 1, -.46), parent=base.a2dTopLeft)
+        self.match_frm = Frame(
+            frame_size=(-.02, 2.5, 0, .45),
+            frame_col=(.2, .2, .2, .5),
+            pos=(.04, -.46), parent=base.a2dTopLeft)
         usr = [usr for usr in self.eng.client.users if usr.uid == self.eng.client.myid][0]
         frm = UserFrmMe(
             self.eng.client.myid, usr.is_supporter, (.1, .38), self.match_frm,
@@ -30,6 +30,10 @@ class MatchFrm(GameObject):
             Label(
                 text=str(i + 1) + '.', pos=(.06 + 1.24 * col, .38 - .08 * row),
                 parent=self.match_frm, **lab_args)
+
+    @property
+    def widgets(self):
+        return [self.match_frm] + list(chain(*[frm.widgets for frm in self.forms]))
 
     def on_presence_available_room(self, uid, room):
         #room = str(JID(msg['muc']['room']).bare)
@@ -153,8 +157,12 @@ class MatchFrmServer(MatchFrm):
         MatchFrm.__init__(self, menu_props, room)
         btn_args = self.menu_props.btn_args
         btn_args['scale'] = (.06, .06)
-        Btn(text=_('Start'), pos=(1.2, .03), cmd=self.on_start,
+        self.start_btn = Btn(
+            text=_('Start'), pos=(1.2, .03), cmd=self.on_start,
             parent=self.match_frm, **btn_args)
+
+    @property
+    def widgets(self): return [self.start_btn] + MatchFrm.widgets.fget(self)
 
 
 class MatchFrmServerClient(MatchFrm):
@@ -163,5 +171,9 @@ class MatchFrmServerClient(MatchFrm):
         MatchFrm.__init__(self, menu_props, room)
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        Label(text=_('please wait for the server'), pos=(1.2, 1, .03),
-              parent=self.match_frm, **lab_args)
+        self.client_lab = Label(
+            text=_('please wait for the server'), pos=(1.2, .03),
+            parent=self.match_frm, text_wordwrap=36, **lab_args)
+
+    @property
+    def widgets(self): return [self.client_lab] + MatchFrm.widgets.fget(self)

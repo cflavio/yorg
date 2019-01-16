@@ -3,7 +3,7 @@ from direct.gui.DirectGuiGlobals import FLAT, NORMAL, DISABLED, ENTER, EXIT
 from direct.gui.DirectFrame import DirectFrame
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.lib.gui import Btn, Entry, Label
+from yyagl.lib.gui import Btn, Entry, Label, Frame, Text, ScrolledFrame
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.gameobject import GameObject
 from yyagl.engine.gui.imgbtn import ImgBtn
@@ -41,15 +41,15 @@ class MatchMsgFrm(GameObject):
         GameObject.__init__(self)
         self.eng.log('created match message form')
         self.chat = None
-        self.msg_frm = DirectFrame(
-            frameSize=(-.02, 2.5, 0, 1.22),
-            frameColor=(.2, .2, .2, .5),
-            pos=(.04, 1, -1.69), parent=base.a2dTopLeft)
+        self.msg_frm = Frame(
+            frame_size=(-.02, 2.5, 0, 1.22),
+            frame_col=(.2, .2, .2, .5),
+            pos=(.04, -1.69), parent=base.a2dTopLeft)
         t_a = menu_props.text_args
         t_a['scale'] = .05
         t_a['fg'] = menu_props.text_normal_col
-        self.dst_txt = OnscreenText(
-            text='', pos=(0, 1.16), parent=self.msg_frm, align=TextNode.A_left,
+        self.dst_txt = Text(
+            txt='', pos=(0, 1.16), parent=self.msg_frm, align='left',
             **t_a)
         self.ent = Entry(
             scale=.04, pos=(0, .03), entry_font=menu_props.font, width=62,
@@ -59,25 +59,16 @@ class MatchMsgFrm(GameObject):
             focus_in_args=['in'], focus_out_cmd=self.on_focus,
             focus_out_args=['out'], text_fg=menu_props.text_active_col)
         self.ent['state'] = DISABLED
-        self.txt_frm = DirectScrolledFrame(
-            frameSize=(-.02, 2.46, -.02, 1.02),
-            canvasSize=(-.02, 2.42, -.02, 1.02),
-            scrollBarWidth=.036,
-            verticalScroll_relief=FLAT,
-            verticalScroll_frameColor=(.2, .2, .2, .4),
-            verticalScroll_thumb_relief=FLAT,
-            verticalScroll_thumb_frameColor=(.8, .8, .8, .6),
-            verticalScroll_incButton_relief=FLAT,
-            verticalScroll_incButton_frameColor=(.8, .8, .8, .6),
-            verticalScroll_decButton_relief=FLAT,
-            verticalScroll_decButton_frameColor=(.8, .8, .8, .6),
-            horizontalScroll_relief=FLAT,
-            frameColor=(1, 1, 1, .0),
-            pos=(.02, 1, .11), parent=self.msg_frm)
+        self.txt_frm = ScrolledFrame(
+            frame_sz=(-.02, 2.46, -.02, 1.02),
+            canvas_sz=(-.02, 2.42, -.02, 1.02),
+            scrollbar_width=.036,
+            frame_col=(1, 1, 1, .0),
+            pos=(.02, .11), parent=self.msg_frm)
         t_a['scale'] = .046
-        self.msg_txt = OnscreenText(
-            text='', pos=(0, .24), parent=self.txt_frm.getCanvas(),
-            align=TextNode.A_left, wordwrap=52, **t_a)
+        self.msg_txt = Text(
+            txt='', pos=(0, .24), parent=self.txt_frm.canvas,
+            align='left', wordwrap=52, **t_a)
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
         lab_args['text_fg'] = menu_props.text_normal_col
@@ -92,6 +83,11 @@ class MatchMsgFrm(GameObject):
             text_align=TextNode.A_right, **lab_args)
         self.tooltip.set_bin('gui-popup', 10)
         self.tooltip.hide()
+
+    @property
+    def widgets(self):
+        return [self.msg_frm, self.dst_txt, self.ent, self.txt_frm,
+                self.msg_txt, self.lab_frm, self.tooltip]
 
     def on_enter(self, pos):
         self.tooltip.show()

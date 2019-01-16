@@ -23,6 +23,9 @@ class UserLabel(GameObject):
         self.set_supporter(is_supporter)
         self.set_online(True)
 
+    @property
+    def widgets(self): return [self.lab] + ([self.supp_btn] if self.supp_btn else [])
+
     def on_enter(self, pos): self.lab['text_fg'] = self.menu_props.text_active_col
 
     def on_exit(self, pos): self.lab['text_fg'] = self.menu_props.text_normal_col
@@ -61,6 +64,9 @@ class UserFrmMe(GameObject, Subject):
         self.lab = UserLabel(uid, self.frm, menu_props, is_supporter)
         self.frm.bind(ENTER, self.on_enter)
         self.frm.bind(EXIT, self.on_exit)
+
+    @property
+    def widgets(self): return [self.frm] + self.lab.widgets
 
     def on_enter(self, pos):
         self.lab.on_enter(pos)
@@ -177,6 +183,9 @@ class UserFrmMatch(UserFrm):
         self.remove_btn = MPBtn(
             self.frm, self, menu_props, 'assets/images/gui/remove.txo',
             .92, self.on_remove, usr.uid, _("remove from the match"))
+
+    @property
+    def widgets(self): return [self.remove_btn] + UserFrm.widgets.fget(self)
 
     def on_remove(self, usr):
         self.notify('on_remove', usr)

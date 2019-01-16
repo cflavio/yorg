@@ -12,11 +12,11 @@ class RoomPageGui(ThanksPageGui):
 
     def __init__(self, mediator, menu_props, room_name=None):
         self.menu_props = menu_props
-        ThanksPageGui.__init__(self, mediator, menu_props)
         if not room_name:
             room_name = self.eng.client.myid + strftime('%y%m%d%H%M%S')
         self.match_frm = self.frm_cls(menu_props, room_name)
         self.match_msg_frm = MatchMsgFrm(self.menu_props)
+        ThanksPageGui.__init__(self, mediator, menu_props)
         self.eng.client.register_rpc('join_room')
         self.eng.client.join_room(room_name)
         self.eng.log('created room ' + room_name)
@@ -29,8 +29,7 @@ class RoomPageGui(ThanksPageGui):
         self.build()
 
     def build(self):
-        widgets = []
-        self.add_widgets(widgets)
+        self.add_widgets(self.match_frm.widgets + self.match_msg_frm.widgets)
         ThanksPageGui.build(self)
 
     def on_presence_available_room(self, uid, room):
