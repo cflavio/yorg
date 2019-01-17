@@ -3,21 +3,24 @@
 
 # TODO LIST =====
 
+# port to python 3
+# remove linux32 build
+# installers
+# remove thirdparty libraries (manage them with deploy-ng)
+# use logging for logging
+# joypad
+# fix curr_ver == 'deploy-ng' in engine.logic
+# make a builder which uses pre-built assets, if it works
+#   on vps then make a trigger for git updates and manage the output (create a
+#   webpage which contains builds and logs)
 # fix pause (it doesn't stop the time)
 # fix the printing "waiting for other players"
-# online multiplayer's corner cases
 # remove the multiplayer frame
+# interpolate emitter's position during the frame
 
 
 # WAITING =====
 
-# Panda3D 1.10: remove thirdparty libraries (manage them with deploy-ng); use
-#   logging for logging; port to python 3; remove linux32 build;
-#   fix curr_ver == 'deploy-ng' in engine.logic; installers
-# remove 1.9's builds; make a builder which uses pre-built assets, if it works
-#   on vps then make a trigger for git updates and manage the output (create a
-#   webpage which contains builds and logs)
-# py3; joypad
 # (refactored objects' creation): facade, pass a single list (meth for
 #   callables, prop for others)
 # logging: replace server.start's conn_cb with a message when verbose

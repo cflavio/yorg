@@ -1,5 +1,5 @@
 from time import strftime
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page, PageFacade, PageEvent
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 from multiplayer.matchfrm import MatchFrmServer, MatchFrmServerClient
@@ -58,8 +58,20 @@ class RoomPageClientGui(RoomPageGui):
         self.notify('on_start_match_client_page', track)
 
 
+class RoomPageEvent(PageEvent):
+
+    def __init__(self, mdt, room):
+        PageEvent.__init__(self, mdt)
+        self.room = room
+
+    def on_back(self):
+        self.eng.client.register_rpc('leave_room')
+        self.eng.client.leave_room(self.room)
+
+
 class RoomPage(Page):
     gui_cls = RoomPageGui
+    event_cls = RoomPageEvent
 
     def __init__(self, menu_props, room, nick):
         self.menu_props = menu_props
@@ -70,7 +82,7 @@ class RoomPage(Page):
 
     @property
     def init_lst(self): return [
-        [('event', self.event_cls, [self])],
+        [('event', self.event_cls, [self, self.room])],
         [('gui', self.gui_cls, [self, self.menu_props, self.room])]]
 
     def destroy(self):

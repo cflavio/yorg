@@ -83,6 +83,8 @@ class YorgClient(Client):
             self.notify('on_end_race_player', data_lst[1])
         if data_lst[0] == 'rm_usr_from_match':
             self.notify('on_rm_usr_from_match', data_lst[1:])
+        if data_lst[0] == 'update_hosting':
+            self.notify('on_update_hosting')
 
     def find_usr(self, uid):
         return [usr for usr in self.users if usr.uid == uid][0]

@@ -11,6 +11,7 @@ class ClientPageGui(ThanksPageGui):
     def __init__(self, mediator, menu_props):
         self.menu_props = menu_props
         ThanksPageGui.__init__(self, mediator, menu_props.gameprops.menu_props)
+        self.eng.client.attach(self.on_update_hosting)
 
     def show(self):
         ThanksPageGui.show(self)
@@ -35,35 +36,39 @@ class ClientPageGui(ThanksPageGui):
         ThanksPageGui.build(self)
         self.labels = []
         self.invited_users = []
-        self.on_hosting()
+        self.on_update_hosting()
 
     @staticmethod
     def trunc(name, lgt):
         if len(name) > lgt: return name[:lgt] + '...'
         return name
 
-    def on_hosting(self):
-        bare_users = [self.trunc(user.uid, 20)
-                      for user in self.eng.client.sorted_users]
-        for lab in self.labels[:]:
-            _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
-            if _lab not in bare_users:
-                if _lab not in self.eng.client.users:
-                    lab.destroy()
-                    self.labels.remove(lab)
-        nusers = len(self.eng.client.sorted_users)
-        top = .08 * nusers + .08
-        self.frm['canvasSize'] = (-.02, .76, 0, top)
-        label_users = [lab.lab.lab['text'] for lab in self.labels]
-        clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
-        label_users = map(clean, label_users)
+    def on_update_hosting(self):
+        #bare_users = [self.trunc(user.uid, 20)
+        #              for user in self.eng.client.sorted_users]
+        #for lab in self.labels[:]:
+        #    _lab = lab.lab.lab['text'].replace('\1smaller\1', '').replace('\2', '')
+        #    if _lab not in bare_users:
+        #        if _lab not in self.eng.client.users:
+        #            lab.destroy()
+        #            self.labels.remove(lab)
+
+        map(lambda lab: lab.destroy(), self.labels)
+        self.labels = []
 
         self.eng.client.register_rpc('hosting')
         hosting = self.eng.client.hosting()
         self.eng.log('hosting %s' % hosting)
 
+        nusers = len(hosting)
+        top = .08 * nusers + .08
+        self.frm['canvasSize'] = (-.02, .76, 0, top)
+        #label_users = [lab.lab.lab['text'] for lab in self.labels]
+        #clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
+        #label_users = map(clean, label_users)
+
         for i, hst in enumerate(hosting):
-            if self.trunc(hst, 20) not in label_users:
+            #if self.trunc(hst, 20) not in label_users:
                 if self.eng.client.myid != hst:
                     lab = UserFrmList(
                         hst, 0, 0, (0, top - .08 - .08 * i),
@@ -83,6 +88,7 @@ class ClientPageGui(ThanksPageGui):
     def destroy(self):
         self.frm.destroy()
         self.users_lab.destroy()
+        self.eng.client.detach(self.on_update_hosting)
 
 
 class ClientPage(Page):
