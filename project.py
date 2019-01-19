@@ -14,9 +14,8 @@
 #   on vps then make a trigger for git updates and manage the output (create a
 #   webpage which contains builds and logs)
 # fix pause (it doesn't stop the time)
-# fix the printing "waiting for other players"
 # remove the multiplayer frame
-# interpolate emitter's position during the frame
+
 
 
 # WAITING =====
