@@ -71,8 +71,9 @@ class YorgLogic(GameLogic):
             #self.mp_frm.attach(self.on_removed)
             #self.mp_frm.attach(self.on_start_match)
             #self.mp_frm.attach(self.on_start_match_client)
-            self.mediator.fsm.menu.logic.attach(self.on_start_match)
-            self.mediator.fsm.menu.logic.attach(self.on_start_match_client_menu)
+            if not (cars and track):
+                self.mediator.fsm.menu.logic.attach(self.on_start_match)
+                self.mediator.fsm.menu.logic.attach(self.on_start_match_client_menu)
 
     def on_start(self):
         GameLogic.on_start(self)

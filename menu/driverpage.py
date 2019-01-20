@@ -32,12 +32,12 @@ void main() {
 
 class DriverPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, driverpage_props, players=1):
+    def __init__(self, mediator, driverpage_props, nplayers=1):
         self.props = driverpage_props
         self.sel_drv_img = None
         self.driver = None
-        players = range(players)
-        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_props, players)
+        nplayers = range(nplayers)
+        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_props, nplayers)
 
     def build(self, exit_behav):
         self.drv_info = self.props.gameprops.drivers_info
@@ -525,18 +525,18 @@ class DriverPageSinglePlayer(DriverPage):
 class DriverPageMP(DriverPage):
     gui_cls = DriverPageMPGui
 
-    def __init__(self, track, cars, driverpage_props, players):
+    def __init__(self, track, cars, driverpage_props, nplayers):
         self.track = track
         self.cars = cars
         self.driverpage_props = driverpage_props
-        self.players = players
-        DriverPage.__init__(self, driverpage_props)
+        self.nplayers = nplayers
+        DriverPage.__init__(self, track, cars, driverpage_props)
         PageFacade.__init__(self)
 
     @property
     def init_lst(self): return [
         [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.driverpage_props, self.players])]]
+        [('gui', self.gui_cls, [self, self.driverpage_props, self.nplayers])]]
 
 
 class DriverPageServer(DriverPage):

@@ -12,13 +12,13 @@ from .thankspage import ThanksPageGui
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, carpage_props, track_path, players=1):
+    def __init__(self, mediator, carpage_props, track_path, nplayers=1):
         self.car = None
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
-        players = range(players)
-        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_props, players)
+        nplayers = range(nplayers)
+        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_props, nplayers)
 
     def build(self, exit_behav=False):
         gprops = self.props.gameprops
@@ -309,10 +309,10 @@ class CarPageClient(CarPage):
 class CarPageLocalMP(CarPage, PageFacade):
     gui_cls = CarPageLocalMPGui
 
-    def __init__(self, carpage_props, track_path, players):
+    def __init__(self, carpage_props, track_path, nplayers):
         self.carpage_props = carpage_props
         self.track_path = track_path
-        self.players = players
+        self.nplayers = nplayers
         Page.__init__(self, carpage_props)
         PageFacade.__init__(self)
 
@@ -320,4 +320,4 @@ class CarPageLocalMP(CarPage, PageFacade):
     def init_lst(self): return [
         [('event', self.event_cls, [self])],
         [('gui', self.gui_cls,
-         [self, self.carpage_props, self.track_path, self.players])]]
+         [self, self.carpage_props, self.track_path, self.nplayers])]]
