@@ -84,7 +84,7 @@ class InputPageGui4(ThanksPageGui):
             'lcontrol', 'lalt', 'space', 'ralt', 'rcontrol']
         self.hint_lab.show()
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
-        map(acc, self._keys)
+        list(map(acc, self._keys))
 
     def _on_back(self):
         self.mediator.event.on_back()
@@ -107,7 +107,7 @@ class InputPageGui4(ThanksPageGui):
             self.dial.attach(self.on_already_dlg)
         else: btn['text'] = val
         self.hint_lab.hide()
-        map(self.mediator.event.ignore, self.keys)
+        list(map(self.mediator.event.ignore, self.keys))
 
     def on_already_dlg(self): self.dial = self.dial.destroy()
 

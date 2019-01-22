@@ -36,7 +36,7 @@ class DriverPageGui(ThanksPageGui):
         self.props = driverpage_props
         self.sel_drv_img = None
         self.driver = None
-        nplayers = range(nplayers)
+        nplayers = list(range(nplayers))
         ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_props, nplayers)
 
     def build(self, exit_behav):
@@ -72,16 +72,16 @@ class DriverPageGui(ThanksPageGui):
             pcol = lambda x: x if x == 0 else ppcol(x)
             lab_lst = [(_('adherence'), .09), (_('speed'), .21),
                        (_('stability'), .15)]
-            widgets += map(
+            widgets += list(map(
                 lambda lab_def: self._add_lab(*(lab_def + (row, col))),
-                lab_lst)
+                lab_lst))
             txt_lst = [(self.drv_info[idx - 1].adherence, .09),
                        (self.drv_info[idx - 1].speed, .21),
                        (self.drv_info[idx - 1].stability, .15)]
-            widgets += map(
+            widgets += list(map(
                 lambda txt_def: self._add_txt(
                     *txt_def + (psign, pcol, col, row)),
-                txt_lst)
+                txt_lst))
         self.sel_drv_img = Img(
             self.props.gameprops.cars_img % self.mediator.car,
             parent=base.a2dBottomLeft, pos=(.3, .4), scale=.28)
@@ -134,7 +134,7 @@ class DriverPageGui(ThanksPageGui):
         car_idx = cars.index(self.mediator.car)
         cars.remove(self.mediator.car)
         shuffle(cars)
-        drv_idx = range(8)
+        drv_idx = list(range(8))
         drv_idx.remove(i)
         shuffle(drv_idx)
         prev_drv = gprops.drivers_info[car_idx]
@@ -228,16 +228,16 @@ class DriverPageMPGui(DriverPageGui):
             pcol = lambda x: x if x == 0 else ppcol(x)
             lab_lst = [(_('adherence'), -.11), (_('speed'), .01),
                        (_('stability'), -.05)]
-            widgets += map(
+            widgets += list(map(
                 lambda lab_def: self._add_lab(*(lab_def + (row, col))),
-                lab_lst)
+                lab_lst))
             txt_lst = [(self.drv_info[idx - 1].adherence, -.11),
                        (self.drv_info[idx - 1].speed, .01),
                        (self.drv_info[idx - 1].stability, -.05)]
-            widgets += map(
+            widgets += list(map(
                 lambda txt_def: self._add_txt(
                     *txt_def + (psign, pcol, col, row)),
-                txt_lst)
+                txt_lst))
         self.sel_drv_img = []
         self.tss = []
         widgets += [self.name]
@@ -284,7 +284,7 @@ class DriverPageMPGui(DriverPageGui):
         car_idx = cars.index(self.mediator.cars[player])
         cars.remove(self.mediator.cars[player])
         shuffle(cars)
-        drv_idx = range(8)
+        drv_idx = list(range(8))
         drv_idx.remove(drv)
         shuffle(drv_idx)
         prev_drv = gprops.drivers_info[car_idx]

@@ -3,7 +3,7 @@ from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT
 from json import load
-from urllib2 import urlopen
+from urllib.request import urlopen
 from direct.gui.DirectScrolledFrame import DirectScrolledFrame
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
@@ -100,7 +100,7 @@ class UsersFrm(GameObject):
         self.frm['canvasSize'] = (-.02, .76, 0, top)
         label_users = [lab.lab.lab['text'] for lab in self.labels]
         clean = lambda n: n.replace('\1smaller\1', '').replace('\2', '')
-        label_users = map(clean, label_users)
+        label_users = list(map(clean, label_users))
         for i, user in enumerate(self.eng.client.sorted_users):
             if self.trunc(user.uid, 20) not in label_users:
                 if self.eng.client.myid != user.uid:
@@ -187,7 +187,7 @@ class UsersFrm(GameObject):
     def on_add_chat(self, msg): self.notify('on_add_chat', msg)
 
     def on_logout(self):
-        map(lambda lab: lab.destroy(), self.labels)
+        list(map(lambda lab: lab.destroy(), self.labels))
         self.labels = []
 
     def on_friend(self, usr_name):

@@ -44,7 +44,7 @@ class LogInPageGui(ThanksPageGui):
 
     def start(self, pwd_name=None):
         def process_msg(data_lst, sender):
-            print sender, data_lst
+            print(sender, data_lst)
         #self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
         self.eng.client.register_rpc('login')
         self.eng.client.register_rpc('get_salt')

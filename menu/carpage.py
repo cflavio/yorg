@@ -17,7 +17,7 @@ class CarPageGui(ThanksPageGui):
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
-        nplayers = range(nplayers)
+        nplayers = list(range(nplayers))
         ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_props, nplayers)
 
     def build(self, exit_behav=False):
@@ -76,8 +76,8 @@ class CarPageGui(ThanksPageGui):
         pcol = lambda x, _col=_col_: x if x == 0 else _col(x)
         txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
                    (_('stability'), roll, .19)]
-        widgets += map(lambda txt_def: self.__add_txt(
-            *txt_def + (psign, pcol, col, x_offset, z_offset, row)), txt_lst)
+        widgets += list(map(lambda txt_def: self.__add_txt(
+            *txt_def + (psign, pcol, col, x_offset, z_offset, row)), txt_lst))
         return widgets
 
     def __add_txt(self, txt, val, pos_z, psign, pcol, col, x_offset, z_offset,

@@ -3,10 +3,8 @@
 
 # TODO LIST =====
 
-# port to python 3
-# remove linux32 build
-# installers
-# remove thirdparty libraries (manage them with deploy-ng)
+# port the server to python 3
+# installers (remove linux32 build)
 # use logging for logging
 # joypad
 # fix curr_ver == 'deploy-ng' in engine.logic
@@ -15,7 +13,6 @@
 #   webpage which contains builds and logs)
 # fix pause (it doesn't stop the time)
 # remove the multiplayer frame
-
 
 
 # WAITING =====

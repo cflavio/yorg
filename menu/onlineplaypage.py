@@ -34,7 +34,7 @@ class OnlinePlayPageGui(ThanksPageGui):
         self.notify('on_create_room', roomname, self.eng.client.myid)
 
     def process_msg_srv(data_lst):
-        print data_lst
+        print(data_lst)
 
     def process_connection(self, client_address):
         self.eng.log_mgr.log('connection from ' + client_address)

@@ -3,7 +3,7 @@ from yyagl.lib.gui import Btn, Label, ScrolledFrame
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
-from multiplayer.forms import UserFrmList
+from .multiplayer.forms import UserFrmList
 
 
 class ClientPageGui(ThanksPageGui):
@@ -53,7 +53,7 @@ class ClientPageGui(ThanksPageGui):
         #            lab.destroy()
         #            self.labels.remove(lab)
 
-        map(lambda lab: lab.destroy(), self.labels)
+        list(map(lambda lab: lab.destroy(), self.labels))
         self.labels = []
 
         self.eng.client.register_rpc('hosting')

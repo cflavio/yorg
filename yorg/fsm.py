@@ -47,7 +47,7 @@ class YorgFsm(FsmColleague):
                    self.mediator.logic.on_continue,
                    self.mediator.logic.on_login,
                    self.mediator.logic.on_logout]
-        map(self.menu.attach_obs, methods)
+        list(map(self.menu.attach_obs, methods))
         self.menu.attach_obs(self.demand, rename='on_exit', args=['Exit'])
         self.mediator.audio.menu_music.play()
         if self.mediator.logic.season:

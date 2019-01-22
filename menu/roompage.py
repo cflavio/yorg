@@ -2,8 +2,8 @@ from time import strftime
 from yyagl.engine.gui.page import Page, PageFacade, PageEvent
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
-from multiplayer.matchfrm import MatchFrmServer, MatchFrmServerClient
-from multiplayer.messagefrm import MatchMsgFrm
+from .multiplayer.matchfrm import MatchFrmServer, MatchFrmServerClient
+from .multiplayer.messagefrm import MatchMsgFrm
 
 
 class RoomPageGui(ThanksPageGui):

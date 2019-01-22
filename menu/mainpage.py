@@ -160,7 +160,6 @@ class YorgMainPageGui(MainPageGui):
             parent='bottomleft', fg=menu_props.text_normal_col,
             font=menu_props.font, tra_src='Last news:',
             tra_tra=_('Last news:'))]
-        rss = [map(self.__to_unicode, rss_str) for rss_str in rss]
         texts += [Text(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent='bottomleft', align='left',
@@ -191,13 +190,6 @@ class YorgMainPageGui(MainPageGui):
     @staticmethod
     def __ellipsis_str(_str):
         return _str if len(_str) <= 20 else _str[:20] + '...'
-
-    @staticmethod
-    def __to_unicode(_str):  # for managing different encodings
-        try:
-            return unicode(_str)
-        except UnicodeDecodeError:
-            return ''
 
     def destroy(self):
         self.ver_check.destroy()

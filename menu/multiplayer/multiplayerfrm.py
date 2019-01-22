@@ -1,6 +1,6 @@
 from json import load
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror, error
-from urllib2 import urlopen, URLError
+from urllib.request import urlopen, URLError
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
 from menu.netmsgs import NetMsgs
@@ -106,7 +106,7 @@ class MultiplayerFrm(GameObject):
         self.server_dlg = self.server_dlg.destroy()
 
     def process_msg_srv(data_lst):
-        print data_lst
+        print(data_lst)
 
     def process_connection(self, client_address):
         self.eng.log_mgr.log('connection from ' + client_address)

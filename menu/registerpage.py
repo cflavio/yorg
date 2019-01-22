@@ -53,7 +53,7 @@ class RegisterPageGui(ThanksPageGui):
 
     def register(self, pwd_name=None):
         def process_msg(data_lst, sender):
-            print sender, data_lst
+            print(sender, data_lst)
         if len(self.pwd_ent.text) >= 6:
             self.eng.client.start(process_msg)
             self.eng.client.register_rpc('register')

@@ -5,6 +5,7 @@
 built/
 build/
 venv/
+venvmac/
 wvenv/
 .project
 .pydevproject
