@@ -3,7 +3,8 @@
 
 # TODO LIST =====
 
-# port the server to python 3
+# fix the server when a client disconnects
+# online's match start: fix cars' positions
 # installers (remove linux32 build)
 # use logging for logging
 # joypad
@@ -25,6 +26,7 @@
 # MAYBE/SOMEDAY =====
 
 # profiling
+# remove dependencies: bson (struct), pyyaml (configparser+json), feedparser
 # lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
 #   'Facade' is called
 # remove eng.server
