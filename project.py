@@ -3,9 +3,8 @@
 
 # TODO LIST =====
 
-# fix the server when a client disconnects
-# online's match start: fix cars' positions
-# installers (remove linux32 build)
+# installer windows
+# installer osx
 # use logging for logging
 # joypad
 # fix curr_ver == 'deploy-ng' in engine.logic
@@ -13,6 +12,8 @@
 #   on vps then make a trigger for git updates and manage the output (create a
 #   webpage which contains builds and logs)
 # fix pause (it doesn't stop the time)
+# main page hangs if the server is not up
+# wrong start positions in online multiplayer matches
 # remove the multiplayer frame
 
 
@@ -26,7 +27,9 @@
 # MAYBE/SOMEDAY =====
 
 # profiling
-# remove dependencies: bson (struct), pyyaml (configparser+json), feedparser
+# portable installers (xz)
+# remove dependencies: bson (struct), pyyaml (configparser+json),
+#   feedparser (write my function which retrieve posts' titles)
 # lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
 #   'Facade' is called
 # remove eng.server

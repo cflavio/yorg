@@ -1,10 +1,7 @@
 from collections import namedtuple
 from yyagl.build.build import extensions, files, img_tgt_names, \
-    set_path, p3d_fpath, win_fpath, osx_fpath, linux_fpath, \
-    src_fpath, devinfo_fpath, docs_fpath, win_noint_fpath,\
-    osx_noint_fpath, linux_noint_fpath, pdf_fpath, test_fpath, \
-    tracks_tgt_fnames
-from yyagl.build.p3d import bld_p3d
+    set_path, win_fpath, osx_fpath, linux_fpath, src_fpath, \
+    devinfo_fpath, docs_fpath, pdf_fpath, test_fpath, tracks_tgt_fnames
 from yyagl.build.windows import bld_windows
 from yyagl.build.osx import bld_osx
 from yyagl.build.linux import bld_linux
@@ -21,39 +18,27 @@ from yyagl.build.uml import bld_uml
 
 argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
-    ('windows', 0), ('osx', 0), ('linux_32', 0), ('linux_64', 0), ('docs', 0),
-    ('images', 0), ('tracks', 0), ('deployng', 0), ('nointernet', 0),
-    ('pdf', 0), ('tests', 0), ('cores', 0), ('uml', 0)]
+    ('windows', 0), ('osx', 0), ('linux', 0), ('docs', 0), ('images', 0),
+    ('tracks', 0), ('pdf', 0), ('tests', 0), ('cores', 0), ('uml', 0)]
 args = {arg: ARGUMENTS.get(arg, default) for (arg, default) in argument_info}
-full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux_32', 'linux_64'])
-args['images'] = args['images'] or args['deployng'] or args['p3d'] \
-    or full_bld or args['source']
-args['lang'] = args['lang'] or args['deployng'] or args['p3d'] or full_bld or \
-    args['source']
-args['tracks'] = args['tracks'] or args['deployng'] or args['p3d'] or \
-    full_bld or args['source']
-args['p3d'] = args['p3d'] or (full_bld and not args['deployng'])
+full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux'])
+args['images'] = args['images'] or full_bld or args['source']
+args['lang'] = args['lang'] or full_bld or args['source']
+args['tracks'] = args['tracks'] or full_bld or args['source']
 path = set_path(args['path'])
 app_name = 'yorg'
 lang_path = 'assets/locale/'
 
 pargs = {'dst_dir': path, 'appname': app_name}
-p3d_path = p3d_fpath.format(**pargs)
 win_path = win_fpath.format(**pargs)
 osx_path = osx_fpath.format(**pargs)
-linux_path_32 = linux_fpath.format(platform='i386', **pargs)
-linux_path_64 = linux_fpath.format(platform='amd64', **pargs)
-win_path_noint = win_noint_fpath.format(**pargs)
-osx_path_noint = osx_noint_fpath.format(**pargs)
-linux_path_32_noint = linux_noint_fpath.format(platform='i386', **pargs)
-linux_path_64_noint = linux_noint_fpath.format(platform='amd64', **pargs)
+linux_path = linux_fpath.format(**pargs)
 src_path = src_fpath.format(**pargs)
 devinfo_path = devinfo_fpath.format(**pargs)
 tests_path = test_fpath.format(**pargs)
 docs_path = docs_fpath.format(**pargs)
 pdf_path = pdf_fpath.format(**pargs)
 
-bld_p3d = Builder(action=bld_p3d)
 bld_windows = Builder(action=bld_windows)
 bld_osx = Builder(action=bld_osx)
 bld_linux = Builder(action=bld_linux)
@@ -70,16 +55,13 @@ bld_merge = Builder(action=bld_merge, suffix='.po', src_suffix='.pot')
 bld_uml = Builder(action=bld_uml)
 
 env = Environment(BUILDERS={
-    'p3d': bld_p3d, 'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
+    'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
     'source': bld_src, 'devinfo': bld_devinfo, 'tests': bld_tests,
     'docs': bld_docs, 'images': bld_images, 'mo': bld_mo, 'pot': bld_pot,
     'merge': bld_merge, 'pdf': bld_pdfs, 'tracks': bld_models,
     'uml': bld_uml})
-env['P3D_PATH'] = p3d_path
 env['APPNAME'] = app_name
 env['LNG'] = lang_path
-env['NOINTERNET'] = args['nointernet']
-env['DEPLOYNG'] = args['deployng']
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES']
 env['MODELS_DIR_PATH'] = 'assets/models'
@@ -144,13 +126,10 @@ lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name,
             lang_path + 'gd/LC_MESSAGES/%s.mo' % app_name]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + tracks_tgt_fnames()
-no_int = args['nointernet']
 if args['images']:
     env.images(img_files, files(['jpg', 'png'], ['models'], ['_png.png']))
 if args['tracks']:
     env.tracks(tracks_tgt_fnames(), files(['egg']))
-if args['p3d']:
-    env.p3d([p3d_path], general_src)
 if args['source']:
     env.source([src_path], general_src)
 if args['devinfo']:
@@ -158,19 +137,11 @@ if args['devinfo']:
 if args['tests']:
     env.tests([tests_path], files(['py'], ['venv', 'thirdparty']))
 if args['windows']:
-    out_wpath = win_path_noint if args['nointernet'] else win_path
-    env.windows([out_wpath], general_src if args['deployng'] else [p3d_path])
+    env.windows([win_path], general_src)
 if args['osx']:
-    out_opath = osx_path_noint if args['nointernet'] else osx_path
-    env.osx([out_opath], general_src if args['deployng'] else [p3d_path])
-if args['linux_32']:
-    out_lpath32 = linux_path_32_noint if no_int else linux_path_32
-    env.linux([out_lpath32], general_src if args['deployng'] else [p3d_path],
-              PLATFORM='i386')
-if args['linux_64']:
-    out_lpath64 = linux_path_64_noint if no_int else linux_path_64
-    env.linux([out_lpath64], general_src if args['deployng'] else [p3d_path],
-              PLATFORM='amd64')
+    env.osx([osx_path], general_src)
+if args['linux']:
+    env.linux([linux_path], general_src)
 if args['docs']:
     env.docs([docs_path], files(['py'], ['venv', 'thirdparty']))
 if args['pdf']:

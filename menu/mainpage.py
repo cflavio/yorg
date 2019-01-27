@@ -75,7 +75,6 @@ class YorgMainPageGui(MainPageGui):
 
     def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
-        self.widgets[2]['text'] = self.get_label()
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
