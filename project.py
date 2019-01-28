@@ -8,6 +8,7 @@
 # use logging for logging
 # joypad
 # fix curr_ver == 'deploy-ng' in engine.logic
+# refactor the server (async.io)
 # make a builder which uses pre-built assets, if it works
 #   on vps then make a trigger for git updates and manage the output (create a
 #   webpage which contains builds and logs)
@@ -42,7 +43,7 @@
 #   standard way (fields) and use the parallel creation only when it is useful
 # racing should be another package in another submodule (i.e. yorg contains
 #   yyagl/ and racing/)
-# yyagl's scons; use twisted for the server; unit tests; webapp; track editor
+# yyagl's scons; unit tests; webapp; track editor
 # move all track's assets (minimap, menu image, ...) in track's folder
 # gui warnings for missing track's logics information
 # retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
