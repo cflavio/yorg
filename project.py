@@ -3,7 +3,6 @@
 
 # TODO LIST =====
 
-# installer windows
 # installer osx
 # use logging for logging
 # joypad
