@@ -11,7 +11,7 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import Page, PageFacade, PageGui
-from yyagl.engine.logic import VersionChecker
+from yyagl.engine.logic import VersionChecker, EngineLogic
 from yyagl.gameobject import GameObject
 from yyagl.lib.gui import Btn, Label, Text, Img, Frame
 from .optionpage import OptionPageProps
@@ -39,7 +39,7 @@ class YorgMainPageGui(MainPageGui):
             parser.add_argument('--pwd')
             parser.add_argument('--win_orig')
             parser.add_argument('--optfile')
-            args = parser.parse_args()
+            args = parser.parse_args(EngineLogic.cmd_line())
             if args.user and args.pwd:
                 user = args.user
                 password = args.pwd

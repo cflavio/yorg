@@ -8,6 +8,7 @@ from yyagl.dictfile import DctFile
 from yyagl.engine.configuration import Cfg, GuiCfg, ProfilingCfg, LangCfg, \
     CursorCfg, DevCfg
 from yyagl.engine.gui.menu import MenuProps, NavInfo, NavInfoPerPlayer
+from yyagl.engine.logic import EngineLogic
 from yyagl.racing.gameprops import GameProps
 from yyagl.racing.driver.driver import DriverInfo
 from .logic import YorgLogic
@@ -123,7 +124,7 @@ class Yorg(Game):
         parser.add_argument('--cars')
         parser.add_argument('--server')
         parser.add_argument('--optfile')
-        args = parser.parse_args()
+        args = parser.parse_args(EngineLogic.cmd_line())
         optfile = args.optfile if args.optfile else 'options.yml'
         old_def = deepcopy(default_opt)
         self.options = DctFile(
