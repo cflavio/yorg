@@ -7,12 +7,9 @@
 # make a builder which uses pre-built assets, if it works
 #   on vps then make a trigger for git updates and manage the output (create a
 #   webpage which contains builds and logs)
-# fix curr_ver == 'deploy-ng' in engine.logic
 # use logging for logging
 # joypad
 # fix pause (it doesn't stop the time)
-# main page hangs if the server is not up
-# wrong start positions in online multiplayer matches
 # remove the multiplayer frame
 
 

@@ -15,6 +15,7 @@ options*.yml
 *.geany
 *.tags
 yorg_error.txt
+assets/bld_version.txt
 assets/images/loading/fastload*
 assets/images/minimaps/fastload.png
 assets/models/tracks/fastload/
