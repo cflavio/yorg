@@ -7,7 +7,6 @@
 # make a builder which uses pre-built assets, if it works
 #   on vps then make a trigger for git updates and manage the output (create a
 #   webpage which contains builds and logs)
-# use logging for logging
 # joypad
 # fix pause (it doesn't stop the time)
 # remove the multiplayer frame
