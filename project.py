@@ -3,7 +3,6 @@
 
 # TODO LIST =====
 
-# refactor the server (async.io)
 # make a builder which uses pre-built assets, if it works
 #   on vps then make a trigger for git updates and manage the output (create a
 #   webpage which contains builds and logs)
@@ -16,15 +15,16 @@
 
 # (refactored objects' creation): facade, pass a single list (meth for
 #   callables, prop for others)
-# logging: replace server.start's conn_cb with a message when verbose
 
 
 # MAYBE/SOMEDAY =====
 
 # profiling
 # portable installers (xz)
+# refactor the server (async.io)
 # remove dependencies: bson (struct), pyyaml (configparser+json),
 #   feedparser (write my function which retrieve posts' titles)
+# use python's logging in place of eng.log
 # lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
 #   'Facade' is called
 # remove eng.server
