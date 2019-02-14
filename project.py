@@ -3,12 +3,10 @@
 
 # TODO LIST =====
 
-# make a builder which uses pre-built assets, if it works
-#   on vps then make a trigger for git updates and manage the output (create a
-#   webpage which contains builds and logs)
-# joypad
+# center menus
+# fix the server when a (linux?) client quits
 # fix pause (it doesn't stop the time)
-# remove the multiplayer frame
+# joypad
 
 
 # WAITING =====
@@ -20,8 +18,10 @@
 # MAYBE/SOMEDAY =====
 
 # profiling
+# try opengl3.2
 # portable installers (xz)
-# refactor the server (async.io)
+# refactor the server (async.io) or
+#     def update(): ... threading.Timer(.5, update).start()
 # remove dependencies: bson (struct), pyyaml (configparser+json),
 #   feedparser (write my function which retrieve posts' titles)
 # use python's logging in place of eng.log
@@ -42,3 +42,4 @@
 # gui warnings for missing track's logics information
 # retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
 # retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
+# https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424

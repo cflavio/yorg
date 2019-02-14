@@ -49,8 +49,8 @@ class YorgLogic(GameLogic):
 
     def __init__(self, mediator):
         GameLogic.__init__(self, mediator)
-        self.season = self.mp_frm = None
-        self.eng.do_later(.01, self.init_mp_frm)
+        self.season = None  #self.mp_frm = None
+        #self.eng.do_later(.01, self.init_mp_frm)
         dev = self.mediator.options['development']
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''
@@ -63,9 +63,10 @@ class YorgLogic(GameLogic):
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         server = dev['server'] if 'server' in dev else ''
-        if not self.mp_frm and not (cars and track and not server):
-            self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_props,
-                                         self.eng.cfg.dev_cfg.xmpp_server)
+        #if not self.mp_frm and not (cars and track and not server):
+        if not (cars and track and not server):
+            #self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_props,
+            #                             self.eng.cfg.dev_cfg.xmpp_server)
             #self.mp_frm.attach(self.on_msg_focus)
             #self.mp_frm.attach(self.on_srv_quitted)
             #self.mp_frm.attach(self.on_removed)
@@ -94,7 +95,7 @@ class YorgLogic(GameLogic):
             self.season.start()
             self.mediator.fsm.demand('Race', track, cars, [cars],
                                 self.season.logic.drivers, self.season.ranking)
-            taskMgr.doMethodLater(5.0, lambda task: self.mediator.logic.mp_frm.hide(), 'hide')
+            #taskMgr.doMethodLater(5.0, lambda task: self.mediator.logic.mp_frm.hide(), 'hide')
         elif cars and server:  # for development's quickstart
             self.season = SingleRaceSeason(self.__season_props(
                 self.mediator.gameprops, cars, [],
@@ -300,10 +301,10 @@ class YorgLogic(GameLogic):
     def on_room_back(self):
         if self.eng.server.is_active: self.eng.server.stop()
         #if self.eng.client.is_active: self.eng.client.stop()
-        self.mp_frm.on_room_back()
+        #self.mp_frm.on_room_back()
 
     def on_quit(self):
-        self.mp_frm.on_quit()
+        pass  #self.mp_frm.on_quit()
 
     def on_car_selected(self, car):
         dev = self.mediator.options['development']
@@ -506,11 +507,12 @@ class YorgLogic(GameLogic):
     def on_login(self):
         self.init_mp_frm()
         #self.eng.xmpp.send_connected()
-        self.mp_frm.on_users()
+        #self.mp_frm.on_users()
 
     def on_logout(self):
-        self.mp_frm.on_users()
-        self.mp_frm.on_logout()
+        pass
+        #self.mp_frm.on_users()
+        #self.mp_frm.on_logout()
 
     @staticmethod
     def sign_cb(parent):

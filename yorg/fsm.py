@@ -70,12 +70,12 @@ class YorgFsm(FsmColleague):
             self.models += [rear_path]
         self.load_models(None)
         self.eng.client.attach(self.on_presence_unavailable_room)
-        if self.mediator.logic.mp_frm:
-            #if self.eng.xmpp.client:  # if we're logged
-            #    self.mediator.logic.mp_frm.send_is_playing(False)
-            self.mediator.logic.mp_frm.users_frm.invited_users = []
-            self.mediator.logic.mp_frm.users_frm.in_match_room = None
-            self.mediator.logic.mp_frm.msg_frm.curr_match_room = None
+        #if self.mediator.logic.mp_frm:
+        #    #if self.eng.xmpp.client:  # if we're logged
+        #    #    self.mediator.logic.mp_frm.send_is_playing(False)
+        #    self.mediator.logic.mp_frm.users_frm.invited_users = []
+        #    self.mediator.logic.mp_frm.users_frm.in_match_room = None
+        #    self.mediator.logic.mp_frm.msg_frm.curr_match_room = None
 
     def on_presence_unavailable_room(self, uid, room_name):
         #for usr in self.eng.xmpp.users:
@@ -85,8 +85,9 @@ class YorgFsm(FsmColleague):
         #                if usr.public_addr == conn.getpeername() or usr.local_addr == conn.getpeername():
         #                    self.eng.server.connections.remove(conn)
         if self.getCurrentOrNextState() == 'Menu':
-            if uid == self.mediator.logic.mp_frm.users_frm.in_match_room:
-                self.menu.disable()
+            pass
+            #if uid == self.mediator.logic.mp_frm.users_frm.in_match_room:
+            #    self.menu.disable()
 
     def on_start_match(self):
         self.menu.logic.on_push_page('trackpageserver', [self.__menu_props, self.mediator.fsm.menu.logic.curr_room])
@@ -127,8 +128,8 @@ class YorgFsm(FsmColleague):
     def enterRace(self, track_path='', car_path='', cars=[], drivers='',
                   ranking=None):  # unused ranking, cars
         self.eng.log_mgr.log('entering Race state')
-        if self.mediator.logic.mp_frm:  # None if dev quicksart
-            self.mediator.logic.mp_frm.hide()
+        #if self.mediator.logic.mp_frm:  # None if dev quicksart
+        #    self.mediator.logic.mp_frm.hide()
         base.ignore('escape-up')
         seas = self.mediator.logic.season
         if not seas.props.single_race:
@@ -195,8 +196,8 @@ class YorgFsm(FsmColleague):
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''
         server = dev['server'] if 'server' in dev else ''
-        if not (cars and track and not server):
-            self.mediator.logic.mp_frm.show()
+        #if not (cars and track and not server):
+        #    self.mediator.logic.mp_frm.show()
         self.mediator.logic.season.race.destroy()
         base.accept('escape-up', self.demand, ['Exit'])
         self.eng.client.detach(self.on_presence_unavailable_room)
