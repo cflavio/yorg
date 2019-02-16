@@ -4,9 +4,9 @@
 # TODO LIST =====
 
 # center menus
-# fix the server when a (linux?) client quits
 # fix pause (it doesn't stop the time)
 # joypad
+# update the server's os
 
 
 # WAITING =====
