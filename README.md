@@ -9,16 +9,17 @@ To run it you should create assets:
 
 * `scons images=1 lang=1 tracks=1`
 
-To use **deploy-ng** the switch `deployng` must be specified, as instance:
+To create a build, the target OS (`windows`, `osx`, `linux`) should be specified, e.g.:
 
-* `scons deployng=1 linux_64=1`
+* `scons linux=1`
 
-To create a build, the target OS (`windows`, `osx`, `linux_32`, `linux_64`) should be specified, e.g.:
+Here's a short guide about installing and preparing your environment for Yorg.
 
-* `scons linux_64=1`
-
-Prerequisites for building:
-* Panda3D;
-* SConstruct.
-
-A tutorial for installing and building prerequisites can be found [here](http://www.ya2.it/pages/yorg_setup.html).
+* clone the repository: `git clone --recursive https://github.com/cflavio/yorg.git`
+* go into the directory: `cd yorg`
+* (optional, recommended for non-developers, since *master* is an unstable branch) checkout the *stable* branch: `git checkout stable; git submodule foreach git checkout stable`
+* create a python3 virtualenv: `virtualenv --python=/usr/bin/python3 venv`
+* activate the virtualenv: `. ./venv/bin/activate`
+* install the prerequisites: `pip install panda3d SCons psutil bson pyyaml feedparser`
+* build the required assets: `scons lang=1 images=1 tracks=1`
+* launch the game: `python main.py`
