@@ -43,8 +43,6 @@ class InputPageGui4(ThanksPageGui):
             indicator_val=self.joysticks[self.joyp_idx],
             indicator_frame_col=menu_props.text_active_col,
             **menu_props.checkbtn_args)
-        if not JoystickMgr.supported():
-            self.joypad_cb['state'] = DISABLED
         buttons_data = [
             (_('Accelerate'), 'forward' + suff, .5),
             (_('Brake/Reverse'), 'rear' + suff, .32),

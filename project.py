@@ -4,12 +4,13 @@
 # it does login two times
 # fix multiplayer's match numbers
 # fix back from host and join page
+# crash: options/configure_input back start single player race
 # fix pause (it doesn't stop the time)
 
 
 # TODO LIST =====
 
-# joypad
+# joypad: accelerate with a button
 # update the server's os
 
 
@@ -26,6 +27,7 @@
 # portable installers (xz)
 # refactor the server (async.io) or
 #     def update(): ... threading.Timer(.5, update).start()
+# refactoring: do event/observer for joystick buttons
 # remove dependencies: bson (struct), pyyaml (configparser+json),
 #   feedparser (write my function which retrieve posts' titles)
 # use python's logging in place of eng.log

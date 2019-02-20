@@ -156,7 +156,7 @@ class YorgMenuLogic(MenuLogic):
 
     def on_back(self, page_code, args=[]):
         self.eng.log('back: %s' % page_code)
-        if page_code == 'input_page':
+        if page_code.startswith('input_page'):
             self.mediator.gui.notify('on_input_back', args[0])
         if page_code == 'options_page':
             self.mediator.gui.notify('on_options_back', args[0])
