@@ -18,31 +18,31 @@ class RegisterPageGui(ThanksPageGui):
         menu_props = self.menu_props
         t_a = menu_props.text_args.copy()
         # del t_a['scale']
-        email_lab = Text(_('Your email:'), pos=(-.85, .4),
+        email_lab = Text(_('Your email:'), pos=(-.65, .4),
                                align='right', **t_a)
-        jid_lab = Text(_('Your user id:'), pos=(-.85, .2),
+        jid_lab = Text(_('Your user id:'), pos=(-.65, .2),
                                align='right', **t_a)
-        pwd_lab = Text(_('Your password:'), pos=(-.85, .0),
+        pwd_lab = Text(_('Your password:'), pos=(-.65, .0),
                                align='right', **t_a)
         init_txt = self.props.opt_file['settings']['login']['usr'] if \
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.email_ent = Entry(
-            scale=.08, pos=(-.75, .4), entry_font=menu_props.font, width=20,
+            scale=.08, pos=(-.55, .4), entry_font=menu_props.font, width=20,
             frame_col=menu_props.btn_col, initial_text=_('your email'),
             text_fg=menu_props.text_active_col, on_tab=self.on_tab_email,
             on_click=self.on_click_email)
         self.jid_ent = Entry(
-            scale=.08, pos=(-.75, .2), entry_font=menu_props.font, width=20,
+            scale=.08, pos=(-.55, .2), entry_font=menu_props.font, width=20,
             frame_col=menu_props.btn_col, initial_text=init_txt,
             text_fg=menu_props.text_active_col, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
         self.pwd_ent = Entry(
-            scale=.08, pos=(-.75, 0), entry_font=menu_props.font, width=20,
+            scale=.08, pos=(-.55, 0), entry_font=menu_props.font, width=20,
             frame_col=menu_props.btn_col, obscured=True,
             text_fg=menu_props.text_active_col, cmd=self.register)
         start_btn = Btn(
-            text=_('Register'), pos=(-.2, -.2), cmd=self.register,
+            text=_('Register'), pos=(0, -.2), cmd=self.register,
             **self.props.gameprops.menu_props.btn_args)
         t_a['scale'] = .06
         widgets = [self.jid_ent, self.pwd_ent, start_btn, jid_lab, pwd_lab,

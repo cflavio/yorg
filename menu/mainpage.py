@@ -115,8 +115,8 @@ class YorgMainPageGui(MainPageGui):
         lab_args['scale'] = .12
         lab_args['text_fg'] = self.props.gameprops.menu_props.text_err_col
         wip_lab = Label(
-            text='', pos=(.05, -.76), parent=base.a2dTopLeft,
-            text_wordwrap=10, text_align=TextNode.A_left,
+            text='', pos=(-.05, -1.58), parent=base.a2dTopRight,
+            text_wordwrap=10, text_align=TextNode.A_right,
             tra_src='Note: the game is work-in-progress',
             tra_tra=_('Note: the game is work-in-progress'),
             **lab_args)

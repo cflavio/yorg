@@ -25,7 +25,7 @@ class ClientPageGui(ThanksPageGui):
             parent=base.a2dTopLeft, text_wordwrap=48,
             text_align=TextNode.A_left, **lab_args)
         self.frm = ScrolledFrame(
-            frame_sz=(-.02, 2.6, .7, 2.43),
+            frame_sz=(-.02, 3.49, .7, 2.43),
             canvas_sz=(-.02, 2.56, -.08, 3.8),
             scrollbar_width=.036,
             frame_col=(.2, .2, .2, .5),

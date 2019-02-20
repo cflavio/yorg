@@ -23,7 +23,7 @@ class MultiplayerPageGui(ThanksPageGui):
             ('Local', _('Local'), lmp_cb),
             ('Online', _('Online'), omp_cb)]
         widgets = [
-            Btn(text=menu[0], pos=(-.2, .3-i*.28), cmd=menu[2],
+            Btn(text=menu[0], pos=(0, .3-i*.28), cmd=menu[2],
                 **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)

@@ -42,7 +42,7 @@ class MatchMsgFrm(GameObject):
         self.eng.log('created match message form')
         self.chat = None
         self.msg_frm = Frame(
-            frame_size=(-.02, 2.5, 0, 1.22),
+            frame_size=(-.02, 3.49, 0, 1.22),
             frame_col=(.2, .2, .2, .5),
             pos=(.04, -1.69), parent=base.a2dTopLeft)
         t_a = menu_props.text_args
@@ -52,7 +52,7 @@ class MatchMsgFrm(GameObject):
             txt='', pos=(0, 1.16), parent=self.msg_frm, align='left',
             **t_a)
         self.ent = Entry(
-            scale=.04, pos=(0, .03), entry_font=menu_props.font, width=62,
+            scale=.04, pos=(0, .03), entry_font=menu_props.font, width=86,
             frame_col=menu_props.btn_col, parent=self.msg_frm,
             initial_text=_('write here your message'),
             cmd=self.on_typed_msg, focus_in_cmd=self.on_focus,

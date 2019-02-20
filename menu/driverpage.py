@@ -42,24 +42,24 @@ class DriverPageGui(ThanksPageGui):
     def build(self, exit_behav):
         self.drv_info = self.props.gameprops.drivers_info
         menu_props = self.menu_props
-        widgets = [Text(_('Select the driver'), pos=(-.2, .8),
+        widgets = [Text(_('Select the driver'), pos=(0, .8),
                                 **menu_props.text_args)]
         t_a = self.menu_props.text_args.copy()
         del t_a['scale']
-        self.name = Text(_('Write your name:'), pos=(-.3, .6), scale=.06,
+        self.name = Text(_('Write your name:'), pos=(-.1, .6), scale=.06,
                             align='right', wordwrap=128, **t_a)
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
             drv_btn = ImgBtn(
-                scale=(.24, .24), pos=(-.95 + col * .5, .3 - row * .64),
+                scale=(.24, .24), pos=(-.75 + col * .5, .3 - row * .64),
                 frame_col=(0, 0, 0, 0),
                 img=self.props.gameprops.drivers_img.path % idx,
                 cmd=self.on_click, extra_args=[idx],
                 **self.menu_props.imgbtn_args)
             name = Text(
                 '',
-                pos=(-.95 + col * .5, .01 - row * .64),
+                pos=(-.75 + col * .5, .01 - row * .64),
                 scale=.046, **t_a)
             drv_btn._name_txt = name
             widgets += [drv_btn, name]
@@ -108,7 +108,7 @@ class DriverPageGui(ThanksPageGui):
         t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         return Text(
-            txt + ':', pos=(-1.15 + col * .5, pos_z - row * .64),
+            txt + ':', pos=(-.95 + col * .5, pos_z - row * .64),
             scale=.046, align='left', **t_a)
 
     def _add_txt(self, val, pos_z, psign, pcol, col, row):
@@ -116,7 +116,7 @@ class DriverPageGui(ThanksPageGui):
         del t_a['scale']
         return Text(
             '%s%s%%' % (psign(val), pcol(val)),
-            pos=(-.75 + col * .5, pos_z - row * .64), scale=.052,
+            pos=(-.55 + col * .5, pos_z - row * .64), scale=.052,
             align='right', **t_a)
 
     def enable_buttons(self, enable):
@@ -160,7 +160,7 @@ class DriverPageSinglePlayerGui(DriverPageGui):
     def build(self):
         menu_props = self.menu_props
         self.ent = Entry(
-            scale=.08, pos=(-.2, .6), entry_font=menu_props.font, width=12,
+            scale=.08, pos=(0, .6), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col,
             initial_text=self.props.gameprops.player_name or _('your name'),
             text_fg=menu_props.text_active_col)
@@ -198,24 +198,24 @@ class DriverPageMPGui(DriverPageGui):
     def build(self):
         self.drv_info = self.props.gameprops.drivers_info
         menu_props = self.menu_props
-        widgets = [Text(_('Select the drivers'), pos=(-.2, .91),
+        widgets = [Text(_('Select the drivers'), pos=(0, .91),
                                 **menu_props.text_args)]
         t_a = self.menu_props.text_args.copy()
         del t_a['scale']
-        self.name = Text(_('Write your names:'), pos=(-.3, .7), scale=.06,
+        self.name = Text(_('Write your names:'), pos=(-.1, .7), scale=.06,
                             align='right', wordwrap=128, **t_a)
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
             drv_btn = ImgBtn(
-                scale=(.24, .24), pos=(-.95 + col * .5, .1 - row * .64),
+                scale=(.24, .24), pos=(-.75 + col * .5, .1 - row * .64),
                 frame_col=(0, 0, 0, 0),
                 img=self.props.gameprops.drivers_img.path % idx,
                 cmd=self.on_click, extra_args=[idx],
                 **self.menu_props.imgbtn_args)
             name = Text(
                 '',
-                pos=(-.95 + col * .5, -.19 - row * .64),
+                pos=(-.75 + col * .5, -.19 - row * .64),
                 scale=.046, **t_a)
             drv_btn._name_txt = name
             widgets += [drv_btn, name]
@@ -262,7 +262,7 @@ class DriverPageMPGui(DriverPageGui):
             tex.load(empty_img)
             self.sel_drv_img[-1].set_texture(self.tss[-1], tex)
         self.ents = [Entry(
-            scale=.06, pos=(-.2, .8 - .12 * i), entry_font=menu_props.font, width=12,
+            scale=.06, pos=(0, .8 - .12 * i), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col,
             initial_text=self.props.gameprops.player_name or _('your name'),
             text_fg=menu_props.text_active_col) for i in range(len(self.mediator.cars))]

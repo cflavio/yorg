@@ -18,25 +18,25 @@ class ResetPageGui(ThanksPageGui):
         menu_props = self.menu_props
         t_a = menu_props.text_args.copy()
         # del t_a['scale']
-        email_lab = Text(_('Your email:'), pos=(-.25, .4),
+        email_lab = Text(_('Your email:'), pos=(-.05, .4),
                                align='right', **t_a)
-        jid_lab = Text(_('Your user id:'), pos=(-.25, .2),
+        jid_lab = Text(_('Your user id:'), pos=(-.05, .2),
                                align='right', **t_a)
         init_txt = self.props.opt_file['settings']['login']['usr'] if \
             self.props.opt_file['settings']['login']['usr'] else \
             _('your user id')
         self.email_ent = Entry(
-            scale=.08, pos=(-.15, .4), entry_font=menu_props.font, width=12,
+            scale=.08, pos=(.05, .4), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col, initial_text=_('your email'),
             text_fg=menu_props.text_active_col, on_tab=self.on_tab_email,
             on_click=self.on_click_email)
         self.jid_ent = Entry(
-            scale=.08, pos=(-.15, .2), entry_font=menu_props.font, width=12,
+            scale=.08, pos=(.05, .2), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col, initial_text=init_txt,
             text_fg=menu_props.text_active_col, on_tab=self.on_tab_id,
             on_click=self.on_click_id)
         start_btn = Btn(
-            text=_('Reset'), pos=(-.2, -.2), cmd=self.reset,
+            text=_('Reset'), pos=(0, -.2), cmd=self.reset,
             **self.props.gameprops.menu_props.btn_args)
         t_a['scale'] = .06
         widgets = [self.jid_ent, start_btn, jid_lab, email_lab, self.email_ent]

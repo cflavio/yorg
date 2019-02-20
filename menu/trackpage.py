@@ -15,7 +15,7 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_props)
 
     def build(self):
-        txt = Text(_('Select the track'), pos=(-.2, .8),
+        txt = Text(_('Select the track'), pos=(0, .8),
                            **self.menu_props.text_args)
         self.add_widgets([txt])
         t_a = self.menu_props.text_args.copy()
@@ -31,7 +31,7 @@ class TrackPageGui(ThanksPageGui):
             x_offset = .3 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
                 scale=(.3, .3),
-                pos=(-1.4 + col * .6 + x_offset, .4 - z_offset - row * .7),
+                pos=(-.9 + col * .6 + x_offset, .4 - z_offset - row * .7),
                 frame_col=(0, 0, 0, 0),
                 img=gprops.track_img % gprops.season_tracks[
                     col + row * tracks_per_row],
@@ -40,7 +40,7 @@ class TrackPageGui(ThanksPageGui):
                 **self.menu_props.imgbtn_args)
             txt = Text(
                 gprops.tracks_tr()[col + row * tracks_per_row],
-                pos=(-1.4 + col * .6 + x_offset, .14 - z_offset - row * .7),
+                pos=(-.9 + col * .6 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
             self.add_widgets([btn, txt])
         ThanksPageGui.build(self, exit_behav=self.eng.server.is_active)

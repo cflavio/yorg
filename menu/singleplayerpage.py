@@ -17,7 +17,7 @@ class SingleplayerPageGui(ThanksPageGui):
             (_('Continue season'), lambda: self.notify('on_continue'))]
         widgets = [
             Btn(
-                text=menu[0], pos=(-.2, .4-i*.28), cmd=menu[1],
+                text=menu[0], pos=(0, .4-i*.28), cmd=menu[1],
                 **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)

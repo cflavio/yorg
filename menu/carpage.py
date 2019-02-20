@@ -23,7 +23,7 @@ class CarPageGui(ThanksPageGui):
     def build(self, exit_behav=False):
         gprops = self.props.gameprops
         widgets = [Text(
-            _('Select the car'), pos=(-.2, .8),
+            _('Select the car'), pos=(0, .8),
             **self.menu_props.text_args)]
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
@@ -44,7 +44,7 @@ class CarPageGui(ThanksPageGui):
         x_offset = .4 * (cars_per_row - num_car_row)
         btn = ImgBtn(
             scale=(.32, .32),
-            pos=(-1.4 + col * .64 + x_offset, .4 - z_offset - row * .7),
+            pos=(-.96 + col * .64 + x_offset, .4 - z_offset - row * .7),
             frame_col=(0, 0, 0, 0),
             img=gprops.car_path % gprops.cars_names[col + row*cars_per_row],
             cmd=self.on_car,
@@ -54,11 +54,11 @@ class CarPageGui(ThanksPageGui):
         widgets = [btn]
         txt = Text(
             gprops.cars_names[col + row * cars_per_row],
-            pos=(-1.4 + col * .64 + x_offset, .64 - z_offset - row * .7),
+            pos=(-.96 + col * .64 + x_offset, .64 - z_offset - row * .7),
             scale=.072, **t_a)
         name = Text(
             '',
-            pos=(-1.4 + col * .64 + x_offset, .04 - z_offset - row * .7),
+            pos=(-.96 + col * .64 + x_offset, .04 - z_offset - row * .7),
             scale=.046, **t_a)
         btn._name_txt = name
         widgets += [txt, name]
@@ -86,7 +86,7 @@ class CarPageGui(ThanksPageGui):
         del t_a['scale']
         return Text(
             '%s: %s%s%%' % (txt, psign(val), pcol(val)),
-            pos=(-1.1 + col * .64 + x_offset, pos_z - z_offset - row * .7),
+            pos=(-.68 + col * .64 + x_offset, pos_z - z_offset - row * .7),
             scale=.052, align='right', **t_a)
 
     def _buttons(self, car):

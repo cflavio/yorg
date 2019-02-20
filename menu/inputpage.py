@@ -27,18 +27,19 @@ class InputPageGui4(ThanksPageGui):
 
         suff = str(self.joyp_idx + 1)
         player_lab = Label(
-            text=_('Player') + ' ' + suff, pos=(-.2, .9),
+            text=_('Player') + ' ' + suff, pos=(0, .9),
             tra_src='Player' + ' ' + suff,
             tra_tra=_('Player') + ' ' + suff,
             **menu_props.label_args)
         joypad_lab = Label(
-            text=_('Use the joypad when present'), pos=(-.3, .7),
+            text=_('Use the joypad when present'), pos=(-.1, .7),
             text_align=TextNode.ARight,
             tra_src='Use the joypad when present',
             tra_tra=_('Use the joypad when present'),
+            text_wordwrap=16,
             **menu_props.label_args)
         self.joypad_cb = P3dCheckBtn(
-            pos=(-.11, .72), text='',
+            pos=(.09, .72), text='',
             indicator_val=self.joysticks[self.joyp_idx],
             indicator_frame_col=menu_props.text_active_col,
             **menu_props.checkbtn_args)
@@ -65,11 +66,11 @@ class InputPageGui4(ThanksPageGui):
 
     def _add_lab(self, text, pos_z):
         return Label(
-            text=text, pos=(-.3, pos_z), text_align=TextNode.ARight,
+            text=text, pos=(-.1, pos_z), text_align=TextNode.ARight,
             **self.menu_props.label_args)
 
     def _add_btn(self, text, pos_z):
-        btn = Btn(pos=(.26, pos_z), text=text, cmd=self.start_rec,
+        btn = Btn(pos=(.46, pos_z), text=text, cmd=self.start_rec,
                   **self.menu_props.btn_args)
         btn['extraArgs'] = [btn]
         self.ibuttons += [btn]
@@ -125,7 +126,7 @@ class InputPageGui1(InputPageGui4):
 
     def build(self):
         p2_btn = Btn(
-            text='', pos=(-.2, -.74), cmd=self.on_player2,
+            text='', pos=(0, -.74), cmd=self.on_player2,
             tra_src='Player 2', tra_tra=_('Player 2'),
             **self.menu_props.btn_args)
         self.add_widgets([p2_btn])
@@ -158,7 +159,7 @@ class InputPageGui2(InputPageGui4):
 
     def build(self):
         p_btn = Btn(
-            text='', pos=(-.2, -.74), cmd=self.on_player3,
+            text='', pos=(0, -.74), cmd=self.on_player3,
             tra_src='Player 3', tra_tra=_('Player 3'),
             **self.menu_props.btn_args)
         self.add_widgets([p_btn])
@@ -188,7 +189,7 @@ class InputPageGui3(InputPageGui4):
 
     def build(self):
         p_btn = Btn(
-            text='', pos=(-.2, -.74), cmd=self.on_player3,
+            text='', pos=(0, -.74), cmd=self.on_player3,
             tra_src='Player 4', tra_tra=_('Player 4'),
             **self.menu_props.btn_args)
         self.add_widgets([p_btn])

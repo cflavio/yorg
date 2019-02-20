@@ -9,7 +9,7 @@ class SupportersPageGui(ThanksPageGui):
     def build(self, back_btn=True):
         menu_props = self.menu_props
         text = ', '.join(ThanksNames.get_all_thanks())
-        txt = Text(text, pos=(-.4, .72), wordwrap=18,
+        txt = Text(text, pos=(0, .72), wordwrap=16,
                            **menu_props.text_args)
         self.add_widgets([txt])
         ThanksPageGui.build(self)

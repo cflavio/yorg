@@ -17,7 +17,7 @@ class MatchFrm(GameObject):
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
         self.match_frm = Frame(
-            frame_size=(-.02, 2.5, 0, .45),
+            frame_size=(-.02, 3.49, 0, .45),
             frame_col=(.2, .2, .2, .5),
             pos=(.04, -.46), parent=base.a2dTopLeft)
         usr = [usr for usr in self.eng.client.users if usr.uid == self.eng.client.myid][0]
@@ -158,7 +158,7 @@ class MatchFrmServer(MatchFrm):
         btn_args = self.menu_props.btn_args
         btn_args['scale'] = (.06, .06)
         self.start_btn = Btn(
-            text=_('Start'), pos=(1.2, .03), cmd=self.on_start,
+            text=_('Start'), pos=(1.68, .03), cmd=self.on_start,
             parent=self.match_frm, **btn_args)
 
     @property
@@ -172,7 +172,7 @@ class MatchFrmServerClient(MatchFrm):
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
         self.client_lab = Label(
-            text=_('please wait for the server'), pos=(1.2, .03),
+            text=_('please wait for the server'), pos=(1.68, .03),
             parent=self.match_frm, text_wordwrap=36, **lab_args)
 
     @property

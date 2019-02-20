@@ -1,10 +1,14 @@
 # BUGS =====
 
+# on back, yorg image disappears
+# it does login two times
+# fix multiplayer's match numbers
+# fix back from host and join page
+# fix pause (it doesn't stop the time)
+
 
 # TODO LIST =====
 
-# center menus
-# fix pause (it doesn't stop the time)
 # joypad
 # update the server's os
 
