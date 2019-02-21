@@ -1,6 +1,7 @@
 # BUGS =====
 
 # on back, yorg image disappears
+# crash when the respawn printing appears (with joypad)
 # it does login two times
 # fix multiplayer's match numbers
 # fix back from host and join page
@@ -10,7 +11,6 @@
 
 # TODO LIST =====
 
-# joypad: accelerate with a button
 # update the server's os
 
 
