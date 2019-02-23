@@ -1,9 +1,8 @@
 # BUGS =====
 
-# on back, yorg image disappears
 # crash when the respawn printing appears (with joypad)
 # it does login two times
-# fix multiplayer's match numbers
+# fix multiplayer's match form numbers
 # fix back from host and join page
 # crash: options/configure_input back start single player race
 # fix pause (it doesn't stop the time)
