@@ -26,7 +26,7 @@ class MatchFrm(GameObject):
             self.menu_props, .32)
         self.forms = [frm]
         for i in range(0, 8):
-            row, col = i % 4, i / 4
+            row, col = i % 4, i // 4
             Label(
                 text=str(i + 1) + '.', pos=(.06 + 1.24 * col, .38 - .08 * row),
                 parent=self.match_frm, **lab_args)
