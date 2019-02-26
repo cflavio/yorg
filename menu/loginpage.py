@@ -48,7 +48,7 @@ class LogInPageGui(ThanksPageGui):
         #self.eng.client.start(process_msg, self.eng.cfg.dev_cfg.server)
         self.eng.client.register_rpc('login')
         self.eng.client.register_rpc('get_salt')
-        self.eng.client.restart()
+        #self.eng.client.restart()
         salt = self.eng.client.get_salt(self.jid_ent.text)
         self.pwd = sha512(self.pwd_ent.text.encode() + salt.encode()).hexdigest()
         ret_val = self.eng.client.login(self.jid_ent.text, self.pwd)
