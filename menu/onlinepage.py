@@ -45,7 +45,7 @@ class OnlinePageGui(ThanksPageGui):
         options['settings']['login']['usr'] = ''
         options['settings']['login']['pwd'] = ''
         options.store()
-        self.widgets[2]['text'] = self.get_label()
+        self.widgets[1]['text'] = self.get_label()
         self.notify('on_logout')
 
     def on_play(self):
