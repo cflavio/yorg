@@ -35,6 +35,7 @@ class OnlinePageGui(ThanksPageGui):
                 tra_src=menu[0], tra_tra=menu[1],
                 **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
+        self.__loginout_btn = widgets[-3]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
 
@@ -45,7 +46,7 @@ class OnlinePageGui(ThanksPageGui):
         options['settings']['login']['usr'] = ''
         options['settings']['login']['pwd'] = ''
         options.store()
-        self.widgets[1]['text'] = self.get_label()
+        self.__loginout_btn['text'] = self.get_label()
         self.notify('on_logout')
 
     def on_play(self):

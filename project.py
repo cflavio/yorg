@@ -1,7 +1,6 @@
 # BUGS =====
 
 # crash when the respawn printing appears (with joypad)
-# you need two clicks for logging out
 # fix back from host and join page
 # crash: options/configure_input back start single player race
 # fix pause (it doesn't stop the time)
