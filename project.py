@@ -1,8 +1,8 @@
 # BUGS =====
 
+# default keys (without option file) are wrongly mapped on windows
 # crash when the respawn printing appears (with joypad)
 # fix back from host and join page
-# crash: options/configure_input back start single player race
 # fix pause (it doesn't stop the time)
 
 

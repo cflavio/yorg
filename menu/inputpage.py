@@ -89,13 +89,13 @@ class InputPageGui4(ThanksPageGui):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = {}
-        dct['keys'] = {
-            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
-            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
-            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
-            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
-            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
-            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])}
+        dct['keys'] = self.keys
+        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
+        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
+        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
+        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
+        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
         dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
         self.notify('on_back', 'input_page2', [dct])
 
@@ -139,14 +139,14 @@ class InputPageGui1(InputPageGui4):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = {}
-        dct['keys'] = {
-            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
-            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
-            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
-            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
-            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
-            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text']),
-            'pause': self.eng.event.desc2key(self.mediator.gui.ibuttons[6]['text'])}
+        dct['keys'] = self.keys
+        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
+        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
+        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
+        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
+        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
+        dct['keys']['pause'] = self.eng.event.desc2key(self.mediator.gui.ibuttons[6]['text'])
         dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
         self.notify('on_back', 'input_page1', [dct])
 
