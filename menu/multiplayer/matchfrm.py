@@ -147,7 +147,7 @@ class MatchFrm(GameObject):
 
     def destroy(self):
         self.eng.log('match form: destroy')
-        self.match_frm.destroy()
+        #self.match_frm.destroy()
         GameObject.destroy(self)
 
 

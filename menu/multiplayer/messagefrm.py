@@ -198,7 +198,7 @@ class MatchMsgFrm(GameObject):
 
     def destroy(self):
         self.eng.log('message form destroyed')
-        self.msg_frm.destroy()
+        #self.msg_frm.destroy()
         GameObject.destroy(self)
 
 

@@ -42,6 +42,7 @@ class RoomPageGui(ThanksPageGui):
     def destroy(self):
         self.match_frm.destroy()
         self.match_msg_frm.destroy()
+        ThanksPageGui.destroy(self)
 
 
 class RoomPageClientGui(RoomPageGui):
