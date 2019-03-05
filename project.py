@@ -3,7 +3,6 @@
 # default keys (without option file) are wrongly mapped on windows
 # Trust Gxt 24 (VID_0079, PID_0006)
 # crash when the respawn printing appears (with joypad)
-# fix back from join page
 # fix pause (it doesn't stop the time)
 
 

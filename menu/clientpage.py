@@ -86,9 +86,10 @@ class ClientPageGui(ThanksPageGui):
         self.notify('on_create_room_client', roomname, nick)
 
     def destroy(self):
-        self.frm.destroy()
-        self.users_lab.destroy()
+        #self.frm.destroy()
+        #self.users_lab.destroy()
         self.eng.client.detach(self.on_update_hosting)
+        ThanksPageGui.destroy(self)
 
 
 class ClientPage(Page):
