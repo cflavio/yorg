@@ -1,18 +1,13 @@
 # BUGS =====
 
-# default keys (without option file) are wrongly mapped on windows
-# Trust Gxt 24 (VID_0079, PID_0006)
-# crash when the respawn printing appears (with joypad)
-# fix pause (it doesn't stop the time)
-
 
 # TODO LIST =====
-
-# update the server's os
 
 
 # WAITING =====
 
+# Trust Gxt 24 (VID_0079, PID_0006)
+# keymap doesn't work
 # (refactored objects' creation): facade, pass a single list (meth for
 #   callables, prop for others)
 
@@ -20,6 +15,7 @@
 # MAYBE/SOMEDAY =====
 
 # profiling
+# remove 1.9 and 1.10's specific code
 # try opengl3.2
 # portable installers (xz)
 # refactor the server (async.io) or
