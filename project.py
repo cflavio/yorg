@@ -1,18 +1,15 @@
-# BUGS =====
+# ================================= BUGS ======================================
 
-
-# TODO LIST =====
-
-
-# WAITING =====
-
-# Trust Gxt 24 (VID_0079, PID_0006)
 # keymap doesn't work
-# (refactored objects' creation): facade, pass a single list (meth for
-#   callables, prop for others)
 
 
-# MAYBE/SOMEDAY =====
+# ============================== TODO LIST ====================================
+
+
+# =============================== WAITING =====================================
+
+
+# ============================ MAYBE/SOMEDAY ==================================
 
 # profiling
 # remove 1.9 and 1.10's specific code
@@ -34,6 +31,8 @@
 # notify's sender (see page.py)
 # object's creation: isolate the parallel creation and construct object in the
 #   standard way (fields) and use the parallel creation only when it is useful
+# (waitig for refactored objects' creation): facade, pass a single list (meth
+#   for callables, prop for others)
 # racing should be another package in another submodule (i.e. yorg contains
 #   yyagl/ and racing/)
 # yyagl's scons; unit tests; webapp; track editor

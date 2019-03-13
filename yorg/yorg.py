@@ -112,7 +112,8 @@ class Yorg(Game):
                 'xmpp_debug': 0,
                 'xmpp_server': 'ya2_yorg@jabb3r.org',
                 'server': 'ya2tech.it:9099',
-                'mp_srv_usr': ''}}
+                'mp_srv_usr': '',
+                'fixed_fps': 0}}
         opt_path = ''
         if platform == 'win32' and not exists('main.py'):
             # it is the deployed version for windows
@@ -143,7 +144,8 @@ class Yorg(Game):
             fullscreen=self.options['settings']['fullscreen'],
             antialiasing=self.options['settings']['antialiasing'],
             fps=opt_dev['fps'], shaders=self.options['settings']['shaders'],
-            volume=self.options['settings']['volume'])
+            volume=self.options['settings']['volume'],
+            fixed_fps=self.options['development']['fixed_fps'])
         profiling_cfg = ProfilingCfg(
             profiling=opt_dev['profiling'],
             pyprof_percall=opt_dev['pyprof_percall'])
