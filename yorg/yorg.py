@@ -92,6 +92,7 @@ class Yorg(Game):
             'development': {
                 'multithreaded_render': 0,
                 'ai': 0,
+                'ai_debug': 0,
                 'fps': 0,
                 'cars': '',
                 'track': '',

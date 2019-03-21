@@ -1,6 +1,6 @@
 # ================================= BUGS ======================================
 
-# yyagl\racing\car\gui.py:418 NameError: name 'pars' is not defined
+# local multiplayer's gui
 
 
 # ============================== TODO LIST ====================================
@@ -13,7 +13,6 @@
 
 # profiling
 # remove 1.9 and 1.10's specific code
-# try opengl3.2
 # portable installers (xz)
 # refactor the server (async.io) or
 #     def update(): ... threading.Timer(.5, update).start()

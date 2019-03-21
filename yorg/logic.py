@@ -588,5 +588,5 @@ class YorgLogic(GameLogic):
             'assets/models/weapons/bonus/WeaponboxAnim', 'Anim',
             self.mediator.options['development']['ai'], InGameMenu, share_urls,
             'Respawn', 'PitStop', 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
-            grid, start_wp)
+            grid, start_wp, self.mediator.options['development']['ai_debug'])
         return race_props
