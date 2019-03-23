@@ -1,7 +1,5 @@
 # ================================= BUGS ======================================
 
-# local multiplayer's gui
-
 
 # ============================== TODO LIST ====================================
 
@@ -34,7 +32,8 @@
 #   for callables, prop for others)
 # racing should be another package in another submodule (i.e. yorg contains
 #   yyagl/ and racing/)
-# yyagl's scons; unit tests; webapp; track editor
+# yyagl's scons
+# unit tests
 # move all track's assets (minimap, menu image, ...) in track's folder
 # gui warnings for missing track's logics information
 # retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
