@@ -1,4 +1,5 @@
 from string import ascii_lowercase
+from itertools import product
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
@@ -106,7 +107,9 @@ class InputPageGui4(ThanksPageGui):
             self.dial.attach(self.on_already_dlg)
         else: btn['text'] = val
         self.hint_lab.hide()
-        list(map(self.mediator.event.ignore, self.keys))
+        events = list(self.keys.values()) + self._keys
+        list(map(self.mediator.event.ignore, events))
+        self.enable_navigation([0])
 
     def on_already_dlg(self): self.dial = self.dial.destroy()
 
@@ -114,8 +117,8 @@ class InputPageGui4(ThanksPageGui):
         labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn', 'pause']
         for i, btn in enumerate(self.mediator.gui.ibuttons):
             if self.eng.event.desc2key(btn['text']) == val: return '1', labels[i]
-        for lab in labels[:-1]:
-            if self.eng.event.key2desc(self.keys[lab + '2']) == val: return '2', lab
+        for lab, player in product(labels[:-1], ['2', '3', '4']):
+            if self.eng.event.key2desc(self.keys[lab + player]) == val: return player, lab
 
 
 class InputPageGui1(InputPageGui4):
