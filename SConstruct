@@ -16,6 +16,7 @@ from yyagl.build.tracks import bld_models
 from yyagl.build.uml import bld_uml
 
 
+SCONS_ENABLE_VIRTUALENV=1
 argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux', 0), ('docs', 0), ('images', 0),
