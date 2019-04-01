@@ -4,6 +4,7 @@
 # ============================== TODO LIST ====================================
 
 
+
 # =============================== WAITING =====================================
 
 
@@ -38,4 +39,5 @@
 # gui warnings for missing track's logics information
 # retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
 # retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
+# loadPrcFileData('', 'framebuffer-srgb true')
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
