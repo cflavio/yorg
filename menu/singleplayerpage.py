@@ -21,10 +21,10 @@ class SingleplayerPageGui(ThanksPageGui):
                 **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
-        self._set_widgets()
+        #self._set_widgets()
+        ThanksPageGui.build(self)
         if not self.props.has_save:
             widgets[-1].disable()
-        ThanksPageGui.build(self)
 
     def on_single_race(self):
         self.notify('on_push_page', 'single_race', [self.props])
