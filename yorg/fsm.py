@@ -31,8 +31,8 @@ class YorgFsm(FsmColleague):
             self.mediator.gameprops, self.mediator.options,
             'assets/images/gui/yorg_title.txo',
             'http://feeds.feedburner.com/ya2tech?format=xml',
-            'http://www.ya2.it', 'save' in self.mediator.options.dct,
-            'http://www.ya2.it/pages/support-us.html')
+            'https://www.ya2.it', 'save' in self.mediator.options.dct,
+            'https://www.ya2.it/pages/support-us.html')
         self.menu = YorgMenu(self.__menu_props)
         methods = [self.mediator.logic.on_input_back,
                    self.mediator.logic.on_options_back,
