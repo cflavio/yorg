@@ -13,6 +13,7 @@
 # profiling
 # remove 1.9 and 1.10's specific code
 # portable installers (xz)
+# WindowProperties.setIconFilename()
 # refactor the server (async.io) or
 #     def update(): ... threading.Timer(.5, update).start()
 # refactoring: do event/observer for joystick buttons
