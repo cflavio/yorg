@@ -227,6 +227,7 @@ class Yorg(Game):
             damage_info, wheel_gfx_names, opt_dev['xmpp_debug'],
             social_sites)
         self.log_conf(self.options.dct)
+        self.eng.lib.set_icon('assets/images/icon/yorg.ico')
 
     def log_conf(self, dct, pref=''):
         for key, val in dct.items():
