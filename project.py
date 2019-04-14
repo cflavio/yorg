@@ -11,7 +11,7 @@
 # ============================ MAYBE/SOMEDAY ==================================
 
 # profiling
-# remove 1.9 and 1.10's specific code
+# remove camera's render_all workaround
 # portable installers (xz)
 # refactor the server (async.io) or
 #     def update(): ... threading.Timer(.5, update).start()
