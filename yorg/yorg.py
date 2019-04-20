@@ -52,7 +52,7 @@ class Yorg(Game):
                 'fullscreen': 0,
                 'resolution': '1280 720',
                 'antialiasing': 0,
-                'cars_number': 7,
+                'cars_number': 8,
                 'keys': {
                     'forward1': 'raw-arrow_up',
                     'rear1': 'raw-arrow_down',
