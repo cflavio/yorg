@@ -85,7 +85,11 @@ class DriverPageGui(ThanksPageGui):
         self.sel_drv_img = Img(
             self.props.gameprops.cars_img % self.mediator.car,
             parent=base.a2dBottomLeft, pos=(.3, .4), scale=.28)
-        widgets += [self.sel_drv_img, self.name]
+        instr_txt = _(
+            'If you use the keyboard, press FIRE to edit the field, then '
+            "ENTER when you're done")
+        instr = Text(instr_txt, pos=(1.4, .6), scale=.042, wordwrap=16, **t_a)
+        widgets += [self.sel_drv_img, self.name, instr]
         self.add_widgets(widgets)
         ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
         with open(ffilterpath) as ffilter:
@@ -240,7 +244,13 @@ class DriverPageMPGui(DriverPageGui):
                 txt_lst))
         self.sel_drv_img = []
         self.tss = []
-        widgets += [self.name]
+        instr_txt = _(
+            'If you use the keyboard, press FIRE to edit the field, then '
+            "ENTER when you're done. Other players can't move while someone"
+            'is writing (since, with keyboards, some letters may be bound to '
+            'movements).')
+        instr = Text(instr_txt, pos=(1.28, .8), scale=.042, wordwrap=24, **t_a)
+        widgets += [self.name, instr]
         for i, car in enumerate(self.mediator.cars):
             self.sel_drv_img += [Img(
                 self.props.gameprops.cars_img % car,
@@ -272,7 +282,10 @@ class DriverPageMPGui(DriverPageGui):
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)
 
-    def on_click(self, drv, player):
+    def on_click(self, drv, player=0):
+        if self.selected_drivers[player] is not None:
+            self._buttons(self.selected_drivers[player])[0].enable()
+            self.drivers += [self._buttons(drv)[0]]
         self._buttons(drv)[0].disable()
         self.disable_navigation([player])
         self.selected_drivers[player] = drv

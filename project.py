@@ -1,12 +1,16 @@
 # ================================= BUGS ======================================
 
+# build linux: pitstop's animation (only with shaders)
+# local multiplayer: in the race there is the same name for the players
+# local multiplayer: click on the drivers
+
 
 # ============================== TODO LIST ====================================
 
-# https://github.com/cflavio/yorg/issues/28
-
 
 # =============================== WAITING =====================================
+
+# flatpak on the vps: issues #28
 
 
 # ============================ MAYBE/SOMEDAY ==================================

@@ -114,7 +114,9 @@ class CarPageLocalMPGui(CarPageGui):
         self.selected_cars = {}
         for i in range(players): self.selected_cars[i] = None
 
-    def on_car(self, car, player):
+    def on_car(self, car, player=0):
+        if self.selected_cars[player]:
+            self._buttons(self.selected_cars[player])[0].enable()
         self._buttons(car)[0].disable()
         self.disable_navigation([player])
         self.selected_cars[player] = car
