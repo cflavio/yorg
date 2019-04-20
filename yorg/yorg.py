@@ -116,7 +116,7 @@ class Yorg(Game):
                 'mp_srv_usr': '',
                 'fixed_fps': 0}}
         opt_path = ''
-        if platform == 'win32' and not exists('main.py'):
+        if platform in ['win32', 'linux'] and not exists('main.py'):
             # it is the deployed version for windows
             opt_path = str(Filename.get_user_appdata_directory()) + '/Yorg'
         parser = argparse.ArgumentParser()
