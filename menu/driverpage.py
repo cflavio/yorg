@@ -198,6 +198,7 @@ class DriverPageMPGui(DriverPageGui):
         DriverPageGui.__init__(self, mediator, driverpage_props, players)
         self.selected_drivers = {}
         for i in range(players): self.selected_drivers[i] = None
+        self.enabled = False
 
     def build(self):
         self.drv_info = self.props.gameprops.drivers_info
@@ -295,15 +296,10 @@ class DriverPageMPGui(DriverPageGui):
         self.sel_drv_img[player].set_texture(self.tss[player], loader.loadTexture(txt_path % drv))
         cars = gprops.cars_names[:]
         car_idx = cars.index(self.mediator.cars[player])
-        cars.remove(self.mediator.cars[player])
-        shuffle(cars)
-        drv_idx = list(range(8))
-        drv_idx.remove(drv)
-        shuffle(drv_idx)
         prev_drv = gprops.drivers_info[car_idx]
         gprops.drivers_info[car_idx] = gprops.drivers_info[drv]
         gprops.drivers_info[car_idx].img_idx = drv
-        nname = self.this_name()
+        nname = self.this_name(player)
         gprops.drivers_info[car_idx].name = nname
         gprops.drivers_info[drv] = prev_drv
         self.eng.log('drivers: ' + str(gprops.drivers_info))
@@ -322,7 +318,9 @@ class DriverPageMPGui(DriverPageGui):
 
     def update_text(self, task):
         has_name = all(ent.text != _('your name') for ent in self.ents)
-        self.enable_buttons(True)
+        if has_name and not self.enabled:
+            self.enabled = True
+            self.enable_buttons(True)
         for ent in self.ents:
             if has_name and ent.text.startswith(_('your name')):
                 ent.enter_text(ent.text[len(_('your name')):])
@@ -332,7 +330,7 @@ class DriverPageMPGui(DriverPageGui):
             self.enable_buttons(False)
         return task.cont  # don't do a task, attach to modifications events
 
-    def this_name(self): return self.ents[0].text
+    def this_name(self, player): return self.ents[player].text
 
     def destroy(self):
         taskMgr.remove(self.update_tsk)

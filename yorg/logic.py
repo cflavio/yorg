@@ -384,6 +384,7 @@ class YorgLogic(GameLogic):
             ['Race', track, car, [car], self.season.logic.drivers])
 
     def on_driver_selected_mp(self, player_name, track, cars):
+        self.mediator.gameprops.player_name = player_name
         dev = self.mediator.options['development']
         sprops = self.__season_props(
             self.mediator.gameprops, cars, cars,
@@ -400,7 +401,6 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mediator.event.on_season_end)
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
-        self.mediator.gameprops.player_name = player_name
         drivers = sprops.drivers
         self.eng.log('drivers: ' + str(drivers))
         self.eng.do_later(
