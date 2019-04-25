@@ -379,12 +379,22 @@ class YorgLogic(GameLogic):
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mediator.gameprops.drivers_info[i]
             drv.logic.dprops.info = dinfo
+        for drv in self.season.logic.drivers:
+            if drv.logic.dprops.info.name == player_name:
+                old_car = drv.logic.dprops.car_name
+        for drv in self.season.logic.drivers:
+            if drv.logic.dprops.car_name == car:
+                if drv.logic.dprops.info.name != player_name:
+                    drv.logic.dprops.car_name = old_car
+        for drv in self.season.logic.drivers:
+            if drv.logic.dprops.info.name == player_name:
+                drv.logic.dprops.car_name = car
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
             ['Race', track, car, [car], self.season.logic.drivers])
 
-    def on_driver_selected_mp(self, player_name, track, cars):
-        self.mediator.gameprops.player_name = player_name
+    def on_driver_selected_mp(self, player_names, track, cars):
+        self.mediator.gameprops.player_name = player_names
         dev = self.mediator.options['development']
         sprops = self.__season_props(
             self.mediator.gameprops, cars, cars,
@@ -397,6 +407,17 @@ class YorgLogic(GameLogic):
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mediator.gameprops.drivers_info[i]
             drv.logic.dprops.info = dinfo
+        for player_name, car in zip(player_names, cars):
+            for drv in self.season.logic.drivers:
+                if drv.logic.dprops.info.name == player_name:
+                    old_car = drv.logic.dprops.car_name
+            for drv in self.season.logic.drivers:
+                if drv.logic.dprops.car_name == car:
+                    if drv.logic.dprops.info.name != player_name:
+                        drv.logic.dprops.car_name = old_car
+            for drv in self.season.logic.drivers:
+                if drv.logic.dprops.info.name == player_name:
+                    drv.logic.dprops.car_name = car
         self.season.logic.props.car_names = cars
         self.season.attach_obs(self.mediator.event.on_season_end)
         self.season.attach_obs(self.mediator.event.on_season_cont)

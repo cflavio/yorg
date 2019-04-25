@@ -134,19 +134,8 @@ class DriverPageGui(ThanksPageGui):
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
-        cars = gprops.cars_names[:]
-        car_idx = cars.index(self.mediator.car)
-        cars.remove(self.mediator.car)
-        shuffle(cars)
-        drv_idx = list(range(8))
-        drv_idx.remove(i)
-        shuffle(drv_idx)
-        prev_drv = gprops.drivers_info[car_idx]
-        gprops.drivers_info[car_idx] = gprops.drivers_info[i]
-        gprops.drivers_info[car_idx].img_idx = i
         nname = self.this_name()
-        gprops.drivers_info[car_idx].name = nname
-        gprops.drivers_info[i] = prev_drv
+        gprops.drivers_info[i].name = nname
         self.eng.log('drivers: ' + str(gprops.drivers_info))
         self.notify('on_driver_selected', self.ent.text, self.mediator.track,
                     self.mediator.car)
@@ -294,14 +283,8 @@ class DriverPageMPGui(DriverPageGui):
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
         self.sel_drv_img[player].set_texture(self.tss[player], loader.loadTexture(txt_path % drv))
-        cars = gprops.cars_names[:]
-        car_idx = cars.index(self.mediator.cars[player])
-        prev_drv = gprops.drivers_info[car_idx]
-        gprops.drivers_info[car_idx] = gprops.drivers_info[drv]
-        gprops.drivers_info[car_idx].img_idx = drv
         nname = self.this_name(player)
-        gprops.drivers_info[car_idx].name = nname
-        gprops.drivers_info[drv] = prev_drv
+        gprops.drivers_info[drv].name = nname
         self.eng.log('drivers: ' + str(gprops.drivers_info))
         self.drivers.remove(self._buttons(drv)[0])
         self.evaluate_start()

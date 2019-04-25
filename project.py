@@ -1,8 +1,9 @@
 # ================================= BUGS ======================================
 
 # build linux: pitstop's animation (only with shaders)
-# local multiplayer: in the race there is the same name for the players
-# local multiplayer: click on the drivers
+# local mp: same name, iapeto 3, teia 7, wrong drivers
+# local mp: shadows
+# local mp: end of race with a weapon, image isn't destroyed
 
 
 # ============================== TODO LIST ====================================
@@ -44,5 +45,5 @@
 # gui warnings for missing track's logics information
 # retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
 # retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
-# loadPrcFileData('', 'framebuffer-srgb true')
+# loadPrcFileData('', 'framebuffer-srgb true'); texture.set_format(F_srgb)
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
