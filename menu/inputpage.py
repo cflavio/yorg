@@ -86,7 +86,7 @@ class InputPageGui4(ThanksPageGui):
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
         list(map(acc, self._keys))
 
-    def _on_back(self):
+    def _on_back(self, player=0):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = {}
@@ -138,7 +138,7 @@ class InputPageGui1(InputPageGui4):
     def on_player2(self):
         self.notify('on_push_page', 'input2', [self.joysticks, self.keys])
 
-    def _on_back(self):
+    def _on_back(self, player=0):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = {}
@@ -169,7 +169,7 @@ class InputPageGui2(InputPageGui4):
     def on_player3(self):
         self.notify('on_push_page', 'input3', [self.joysticks, self.keys])
 
-    def _on_back(self):
+    def _on_back(self, player=0):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = {}
@@ -199,7 +199,7 @@ class InputPageGui3(InputPageGui4):
     def on_player3(self):
         self.notify('on_push_page', 'input4', [self.joysticks, self.keys])
 
-    def _on_back(self):
+    def _on_back(self, player=0):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = {}

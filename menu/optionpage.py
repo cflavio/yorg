@@ -124,7 +124,7 @@ class OptionPageGui(ThanksPageGui):
         self.eng.lang_mgr.set_lang(code)
         self.translate()
 
-    def _on_back(self):
+    def _on_back(self, player=0):
         self.mediator.event.on_back()
         lang_idx = self.lang_opt.curr_idx
         dct = {
