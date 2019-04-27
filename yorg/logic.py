@@ -252,7 +252,7 @@ class YorgLogic(GameLogic):
         drivers = []
         for drv_info, car_name in zip(gameprops.drivers_info,
                                       gameprops.cars_names):
-            drivers += [Driver(DriverProps(drv_info, car_name, 0, 0, 0))]
+            drivers += [Driver(DriverProps(drv_info, car_name, None, 0, 0, 0))]
         cars = player_car_names[:] + gameprops.cars_names
         cars = list(OrderedDict.fromkeys(cars))[:int(cars_number)]
         # cars = list(dict.fromkeys(cars))[:int(cars_number)]  # python 3.6
@@ -393,7 +393,7 @@ class YorgLogic(GameLogic):
             2.0, self.mediator.fsm.demand,
             ['Race', track, car, [car], self.season.logic.drivers])
 
-    def on_driver_selected_mp(self, player_names, track, cars):
+    def on_driver_selected_mp(self, player_names, track, cars, drivers):
         self.mediator.gameprops.player_name = player_names
         dev = self.mediator.options['development']
         sprops = self.__season_props(
@@ -407,16 +407,19 @@ class YorgLogic(GameLogic):
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mediator.gameprops.drivers_info[i]
             drv.logic.dprops.info = dinfo
-        for player_name, car in zip(player_names, cars):
+        for idx, (car, drv_idx) in enumerate(zip(cars, drivers)):
             for drv in self.season.logic.drivers:
-                if drv.logic.dprops.info.name == player_name:
+                if drv.logic.dprops.info.img_idx == drv_idx:
+                    drv.logic.dprops.player_idx = idx
+            for drv in self.season.logic.drivers:
+                if drv.logic.dprops.info.img_idx == drv_idx:
                     old_car = drv.logic.dprops.car_name
             for drv in self.season.logic.drivers:
                 if drv.logic.dprops.car_name == car:
-                    if drv.logic.dprops.info.name != player_name:
+                    if drv.logic.dprops.player_idx != idx:
                         drv.logic.dprops.car_name = old_car
             for drv in self.season.logic.drivers:
-                if drv.logic.dprops.info.name == player_name:
+                if drv.logic.dprops.info.img_idx == drv_idx:
                     drv.logic.dprops.car_name = car
         self.season.logic.props.car_names = cars
         self.season.attach_obs(self.mediator.event.on_season_end)
@@ -481,8 +484,9 @@ class YorgLogic(GameLogic):
         dev = self.mediator.options['development']
         tuning = self.mediator.options['save']['tuning']
         car_tun = tuning[saved_cars]
-        drivers = [self.__bld_drv(dct)
-                   for dct in self.mediator.options['save']['drivers']]
+        drivers = [
+            self.__bld_drv(dct, i)
+            for i, dct in enumerate(self.mediator.options['save']['drivers'])]
         self.season = Season(self.__season_props(
             self.mediator.gameprops, saved_cars, [saved_cars],
             self.mediator.options['settings']['cars_number'], False,
@@ -499,11 +503,11 @@ class YorgLogic(GameLogic):
         self.mediator.fsm.demand('Race', track_path, car_path, [car_path], drivers)
 
     @staticmethod
-    def __bld_drv(dct):
+    def __bld_drv(dct, i):
         drv = Driver(
             DriverProps(
                 DriverInfo(dct['img_idx'], dct['name'], dct['speed'],
-                dct['adherence'], dct['stability']), dct['car_name'],
+                dct['adherence'], dct['stability']), dct['car_name'], i,
                 dct['f_engine'], dct['f_tires'], dct['f_suspensions']))
         return drv
 

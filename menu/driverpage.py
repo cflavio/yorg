@@ -297,7 +297,7 @@ class DriverPageMPGui(DriverPageGui):
         taskMgr.remove(self.update_tsk)
         drivers = [self.selected_drivers[i] for i in range(nplayers)]
         self.notify('on_driver_selected_mp', [ent.text for ent in self.ents], self.mediator.track,
-                    self.mediator.cars)
+                    self.mediator.cars, drivers)
 
     def update_text(self, task):
         has_name = all(ent.text != _('your name') for ent in self.ents)

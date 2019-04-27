@@ -193,8 +193,8 @@ class YorgMenuLogic(MenuLogic):
     def on_driver_selected(self, name, track, car):
         self.mediator.gui.notify('on_driver_selected', name, track, car)
 
-    def on_driver_selected_mp(self, name, track, cars):
-        self.mediator.gui.notify('on_driver_selected_mp', name, track, cars)
+    def on_driver_selected_mp(self, name, track, cars, drivers):
+        self.mediator.gui.notify('on_driver_selected_mp', name, track, cars, drivers)
 
     def on_continue(self):
         self.mediator.gui.notify('on_continue')
