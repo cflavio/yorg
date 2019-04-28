@@ -1,9 +1,7 @@
 # ================================= BUGS ======================================
 
 # build linux: pitstop's animation (only with shaders)
-# local mp: same name, iapeto 3, teia 7, wrong drivers
-# local mp: shadows
-# local mp: end of race with a weapon, image isn't destroyed
+# local mp: store names
 
 
 # ============================== TODO LIST ====================================
@@ -28,6 +26,7 @@
 # lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
 #   'Facade' is called
 # remove eng.server
+# class Player (has-a car, has-a driver)
 # where proper (i.e. where observers aren't tied to the observable) replace
 #   observer with publisher-subscriber
 # attach/attach_obs, detach/detach_obs - the client attach-es it to the
