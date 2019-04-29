@@ -1,7 +1,6 @@
 # ================================= BUGS ======================================
 
 # build linux: pitstop's animation (only with shaders)
-# local mp: store names
 
 
 # ============================== TODO LIST ====================================

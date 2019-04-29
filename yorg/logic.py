@@ -170,10 +170,10 @@ class YorgLogic(GameLogic):
                 #    img_idx=car_idx)
                 sprops = self.season.props
                 drivers = sprops.drivers
-                for drv in drivers:
+                for i, drv in enumerate(drivers):
                     if drv.dprops.info.img_idx == 0:
                         drv.logic.dprops.car_name = car
-                        drv.logic.dprops.info.name = self.mediator.options['settings']['player_name']
+                        drv.logic.dprops.info.name = self.mediator.options['settings']['player_names'][i]
             else:
                 def process_msg(data_lst, sender):
                     if data_lst[0] == NetMsgs.track_selected:
@@ -196,7 +196,7 @@ class YorgLogic(GameLogic):
                 #    gprops.drivers_info[1].speed, gprops.drivers_info[1].adherence,
                 #    gprops.drivers_info[1].stability, self.eng.client.my_addr])
                 self.eng.client.send([
-                    NetMsgs.driver_selection, car, self.mediator.options['settings']['player_name'], 1,
+                    NetMsgs.driver_selection, car, self.mediator.options['settings']['player_names'][0], 1,
                     curr_drv.dprops.info.speed, curr_drv.dprops.info.adherence,
                     curr_drv.dprops.info.stability, self.eng.client.my_addr])
         else:
@@ -235,7 +235,7 @@ class YorgLogic(GameLogic):
         self.eng.log('drivers: ' + str(drivers))
         self.eng.log('current drivers: ' + str(self.current_drivers))
         self.on_driver_selected_server(
-            self.mediator.options['settings']['player_name'], track, car,
+            self.mediator.options['settings']['player_names'][0], track, car,
             cars_names)
 
     @staticmethod
@@ -373,8 +373,8 @@ class YorgLogic(GameLogic):
         self.season.start()
 
     def on_driver_selected(self, player_name, track, car):
-        self.mediator.options['settings']['player_name'] = player_name
-        self.mediator.gameprops.player_name = player_name
+        self.mediator.options['settings']['player_names'] = [player_name]
+        self.mediator.gameprops.player_names = [player_name]
         self.mediator.options.store()
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mediator.gameprops.drivers_info[i]
@@ -394,7 +394,7 @@ class YorgLogic(GameLogic):
             ['Race', track, car, [car], self.season.logic.drivers])
 
     def on_driver_selected_mp(self, player_names, track, cars, drivers):
-        self.mediator.gameprops.player_name = player_names
+        self.mediator.gameprops.player_names = player_names
         dev = self.mediator.options['development']
         sprops = self.__season_props(
             self.mediator.gameprops, cars, cars,
@@ -453,7 +453,7 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
         #self.mediator.options['settings']['player_name'] = player_name
-        self.mediator.gameprops.player_name = player_name
+        self.mediator.gameprops.player_names = [player_name]
         #self.mediator.options.store()
 
         packet = [NetMsgs.start_race, len(self.eng.car_mapping)]

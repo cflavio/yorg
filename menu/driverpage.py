@@ -155,7 +155,7 @@ class DriverPageSinglePlayerGui(DriverPageGui):
         self.ent = Entry(
             scale=.08, pos=(0, .6), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col,
-            initial_text=self.props.gameprops.player_name or _('your name'),
+            initial_text=self.props.gameprops.player_names[0] if self.props.gameprops.player_names else _('your name'),
             text_fg=menu_props.text_active_col)
         self.add_widgets([self.ent])
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
@@ -264,7 +264,7 @@ class DriverPageMPGui(DriverPageGui):
         self.ents = [Entry(
             scale=.06, pos=(0, .8 - .12 * i), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col,
-            initial_text=self.props.gameprops.player_name or _('your name'),
+            initial_text=self.props.gameprops.player_names[i] if i < len(self.props.gameprops.player_names) else _('your name'),
             text_fg=menu_props.text_active_col) for i in range(len(self.mediator.cars))]
         self.add_widgets(self.ents)
         self.add_widgets(widgets)
@@ -296,19 +296,21 @@ class DriverPageMPGui(DriverPageGui):
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
         drivers = [self.selected_drivers[i] for i in range(nplayers)]
+        self.props.opt_file['settings']['player_names'] = [ent.text for ent in self.ents]
+        self.props.opt_file.store()
         self.notify('on_driver_selected_mp', [ent.text for ent in self.ents], self.mediator.track,
                     self.mediator.cars, drivers)
 
     def update_text(self, task):
-        has_name = all(ent.text != _('your name') for ent in self.ents)
-        if has_name and not self.enabled:
-            self.enabled = True
-            self.enable_buttons(True)
         for ent in self.ents:
-            if has_name and ent.text.startswith(_('your name')):
+            if ent.text != _('your name') and ent.text.startswith(_('your name')):
                 ent.enter_text(ent.text[len(_('your name')):])
             elif ent.text in [_('your name')[:-1], '']:
                 ent.enter_text('')
+        has_name = all(ent.text not in ['', _('your name')] for ent in self.ents)
+        if has_name and not self.enabled:
+            self.enabled = True
+            self.enable_buttons(True)
         if any(ent.text in ['', _('your name')] for ent in self.ents):
             self.enable_buttons(False)
         return task.cont  # don't do a task, attach to modifications events

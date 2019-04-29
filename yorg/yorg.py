@@ -84,7 +84,7 @@ class Yorg(Game):
                 'joystick3': 0,
                 'joystick4': 0,
                 'last_version': '0.7.0-x',
-                'player_name': '',
+                'player_names': [],
                 'shaders': 1,
                 'camera': 'top',
                 'login':
@@ -217,7 +217,7 @@ class Yorg(Game):
             lambda: [_('Sinus Aestuum'), _('Toronto'), _('Rome'), _('Sheffield'),
                      _('Orlando'), _('Nagano'), _('Dubai')],
             'assets/images/tracks/%s.txo',
-            self.options['settings']['player_name'],
+            self.options['settings']['player_names'],
             DriverPaths('assets/images/drivers/driver%s.txo',
                         'assets/images/drivers/driver%s_sel.txo'),
             'assets/images/cars/%s_sel.txo',
