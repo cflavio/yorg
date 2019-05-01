@@ -61,7 +61,7 @@ class RegisterPageGui(ThanksPageGui):
             salt = self.eng.client.get_salt(self.jid_ent.text)
             ret_val = self.eng.client.register(
                 self.jid_ent.text,
-                sha512(self.pwd_ent.text + salt).hexdigest(), salt,
+                sha512((self.pwd_ent.text + salt).encode('utf-8')).hexdigest(), salt,
                 self.email_ent.text.replace('_AT_', '@'))
         else: ret_val = 'short'
         self.ret_val = ret_val
