@@ -1,7 +1,6 @@
 # ================================= BUGS ======================================
 
 # build linux: pitstop's animation (only with shaders)
-# reset password doesn't work
 
 
 # ============================== TODO LIST ====================================

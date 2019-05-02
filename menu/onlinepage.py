@@ -41,6 +41,8 @@ class OnlinePageGui(ThanksPageGui):
 
     def on_logout(self):
         #self.eng.xmpp.disconnect()
+        self.widgets[5].destroy()
+        self.widgets.remove(self.widgets[5])
         self.eng.client.authenticated = False
         options = self.props.opt_file
         options['settings']['login']['usr'] = ''
