@@ -52,7 +52,7 @@ class LogInPageGui(ThanksPageGui):
         salt = self.eng.client.get_salt(self.jid_ent.text)
         self.pwd = sha512(self.pwd_ent.text.encode() + salt.encode()).hexdigest()
         ret_val = self.eng.client.login(self.jid_ent.text, self.pwd)
-        if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
+        if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd', 'unactivated']:
             return self.on_ko(ret_val)
         self.on_ok()
 
@@ -82,7 +82,7 @@ class LogInPageGui(ThanksPageGui):
         self._on_back()
         self.notify('on_login')
 
-    def on_ko(self, err):  # unused err
+    def on_ko(self, err):
         txt = Text(_('Error') + ': ' + err, pos=(-.2, -.05), fg=(1, 0, 0, 1),
                            scale=.16, font=self.menu_props.font)
         self.eng.do_later(5, txt.destroy)
