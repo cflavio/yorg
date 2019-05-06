@@ -23,6 +23,7 @@ class RoomPageGui(ThanksPageGui):
         self.eng.client.is_server_active = True
         self.eng.client.attach(self.on_presence_available_room)
         self.match_frm.attach(self.on_start)
+        self.match_msg_frm.add_groupchat(room_name)
 
     def show(self):
         ThanksPageGui.show(self)

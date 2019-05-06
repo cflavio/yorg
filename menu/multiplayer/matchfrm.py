@@ -51,7 +51,7 @@ class MatchFrm(GameObject):
                 frm.lab.lab['text'] = frm.lab.lab['text'][2:]
         if not found:
             idx = len(self.forms)
-            x = .1 + 1.24 * (idx / 4)
+            x = .1 + 1.24 * (idx // 4)
             y = .38 - .08 * (idx % 4)
             usr = [usr for usr in self.eng.client.users if usr.uid == uid][0]
             frm = UserFrm(uid, usr.is_supporter,

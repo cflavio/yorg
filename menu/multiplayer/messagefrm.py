@@ -83,6 +83,7 @@ class MatchMsgFrm(GameObject):
             text_align=TextNode.A_right, **lab_args)
         self.tooltip.set_bin('gui-popup', 10)
         self.tooltip.hide()
+        self.eng.client.attach(self.on_groupchat_msg)
 
     @property
     def widgets(self):
@@ -97,8 +98,8 @@ class MatchMsgFrm(GameObject):
 
     def add_msg_txt(self, msg):
         self.msg_txt['text'] += ('\n' if self.msg_txt['text'] else '') + msg
-        txt_height = self.msg_txt.textNode.getUpperLeft3d()[2] - \
-            self.msg_txt.textNode.getLowerRight3d()[2]
+        txt_height = self.msg_txt.get_np().textNode.getUpperLeft3d()[2] - \
+            self.msg_txt.get_np().textNode.getLowerRight3d()[2]
         self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
 
     def set_title(self, title):
@@ -123,7 +124,7 @@ class MatchMsgFrm(GameObject):
         return name
 
     def on_typed_msg(self, val):
-        #self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
+        self.add_msg_txt('\1italic\1' + _('you') + '\2: ' + val)
         self.ent.set('')
         self.eng.client.send([
             'msg_room', self.eng.client.myid, self.chat.dst, val])
@@ -174,8 +175,8 @@ class MatchMsgFrm(GameObject):
             self.chat.users.remove(uid)
         self.update_title()
 
-    def add_groupchat(self, room, usr):
-        self.set_title(usr)
+    def add_groupchat(self, room):#, usr):
+        #self.set_title(usr)
         if not self.chat:
             self.chat = MUC(room)
         self.set_chat(self.chat)
@@ -183,8 +184,8 @@ class MatchMsgFrm(GameObject):
     def set_chat(self, chat):
         self.set_title(chat.title)
         self.msg_txt['text'] = '\n'.join(chat.messages)
-        txt_height = self.msg_txt.textNode.getUpperLeft3d()[2] - \
-            self.msg_txt.textNode.getLowerRight3d()[2]
+        txt_height = self.msg_txt.get_np().textNode.getUpperLeft3d()[2] - \
+            self.msg_txt.get_np().textNode.getLowerRight3d()[2]
         self.txt_frm['canvasSize'] = (-.02, .72, .28 - txt_height, .28)
         self.ent['state'] = NORMAL
 
@@ -192,11 +193,12 @@ class MatchMsgFrm(GameObject):
         self.set_title(self.chat.title)
 
     def on_focus(self, val):
-        if val == 'in' and self.ent.get() == _('write here your message'):
+        if val == 'in' and self.ent.text == _('write here your message'):
             self.ent.set('')
         self.notify('on_match_msg_focus', val)
 
     def destroy(self):
+        self.eng.client.detach(self.on_groupchat_msg)
         self.eng.log('message form destroyed')
         #self.msg_frm.destroy()
         GameObject.destroy(self)
