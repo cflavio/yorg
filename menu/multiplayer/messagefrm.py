@@ -193,6 +193,9 @@ class MatchMsgFrm(GameObject):
         self.set_title(self.chat.title)
 
     def on_focus(self, val):
+        if self.observers is None: return
+        # it may be called from entries which aren't destroyed yet (i.e. they
+        #   are in transition_exit)
         if val == 'in' and self.ent.text == _('write here your message'):
             self.ent.set('')
         self.notify('on_match_msg_focus', val)

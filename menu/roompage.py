@@ -4,16 +4,17 @@ from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 from .multiplayer.matchfrm import MatchFrmServer, MatchFrmServerClient
 from .multiplayer.messagefrm import MatchMsgFrm
-
+from .multiplayer.exit_dlg import ExitDialog
 
 class RoomPageGui(ThanksPageGui):
 
     frm_cls = MatchFrmServer
 
-    def __init__(self, mediator, menu_props, room_name=None):
+    def __init__(self, mediator, menu_props, room_name, srv_usr):
         self.menu_props = menu_props
         if not room_name:
             room_name = self.eng.client.myid + strftime('%y%m%d%H%M%S')
+        self.srv_usr = srv_usr
         self.match_frm = self.frm_cls(menu_props, room_name)
         self.match_msg_frm = MatchMsgFrm(self.menu_props)
         ThanksPageGui.__init__(self, mediator, menu_props)
@@ -22,6 +23,7 @@ class RoomPageGui(ThanksPageGui):
         self.eng.log('created room ' + room_name)
         self.eng.client.is_server_active = True
         self.eng.client.attach(self.on_presence_available_room)
+        self.eng.client.attach(self.on_presence_unavailable_room)
         self.match_frm.attach(self.on_start)
         self.match_msg_frm.add_groupchat(room_name)
 
@@ -35,6 +37,9 @@ class RoomPageGui(ThanksPageGui):
 
     def on_presence_available_room(self, uid, room):
         self.match_frm.on_presence_available_room(uid, room)
+
+    def on_presence_unavailable_room(self, uid, room):
+        self.match_frm.on_presence_unavailable_room(uid, room)
 
     def on_start(self):
         self.eng.client.send(['room_start'])
@@ -50,9 +55,20 @@ class RoomPageClientGui(RoomPageGui):
 
     frm_cls = MatchFrmServerClient
 
-    def __init__(self, mediator, menu_props, room_name):
-        RoomPageGui.__init__(self, mediator, menu_props, room_name)
+    def __init__(self, mediator, menu_props, room_name, srv_usr):
+        RoomPageGui.__init__(self, mediator, menu_props, room_name, srv_usr)
         self.eng.client.attach(self.on_track_selected_msg)
+
+    def on_presence_unavailable_room(self, uid, room):
+        RoomPageGui.on_presence_unavailable_room(self, uid, room)
+        if uid == self.srv_usr:
+            self.exit_dlg = ExitDialog(self.menu_props, uid)
+            self.exit_dlg.attach(self.on_exit_dlg)
+            self.eng.show_cursor()
+
+    def on_exit_dlg(self):
+        self.exit_dlg.destroy()
+        self.notify('on_srv_quitted')
 
     def on_track_selected_msg(self, track):
         self.eng.log_mgr.log('track selected: ' + track)
@@ -75,17 +91,17 @@ class RoomPage(Page):
     gui_cls = RoomPageGui
     event_cls = RoomPageEvent
 
-    def __init__(self, menu_props, room, nick):
+    def __init__(self, menu_props, room, nick, uid_srv):
         self.menu_props = menu_props
         self.room = room
-        self.nick = nick
+        self.uid_srv = uid_srv
         Page.__init__(self, menu_props)
         PageFacade.__init__(self)
 
     @property
     def init_lst(self): return [
         [('event', self.event_cls, [self, self.room])],
-        [('gui', self.gui_cls, [self, self.menu_props, self.room])]]
+        [('gui', self.gui_cls, [self, self.menu_props, self.room, self.uid_srv])]]
 
     def destroy(self):
         Page.destroy(self)
