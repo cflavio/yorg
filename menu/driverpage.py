@@ -487,6 +487,11 @@ class DriverPageClientGui(DriverPageGui):
         self.notify('on_car_start_client', self.mediator.track,
                     self.mediator.car, cars, data_lst)
 
+    def _on_quit(self):
+        self.eng.client.register_rpc('leave_curr_room')
+        self.eng.client.leave_curr_room()
+        DriverPageGui._on_quit(self)
+
     def destroy(self):
         self.eng.client.detach(self.on_drv_selection)
         self.eng.client.detach(self.on_drv_deselection)

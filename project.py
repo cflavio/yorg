@@ -1,6 +1,7 @@
 # ================================= BUGS ======================================
 
 # build linux: pitstop's animation (only with shaders)
+# the server quit at car's selection, then it hosts another match
 
 
 # ============================== TODO LIST ====================================

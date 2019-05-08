@@ -46,6 +46,9 @@ class RoomPageGui(ThanksPageGui):
         self.notify('on_start_match')
 
     def destroy(self):
+        self.eng.client.detach(self.on_presence_available_room)
+        self.eng.client.detach(self.on_presence_unavailable_room)
+        self.match_frm.detach(self.on_start)
         self.match_frm.destroy()
         self.match_msg_frm.destroy()
         ThanksPageGui.destroy(self)

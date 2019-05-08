@@ -58,6 +58,11 @@ class TrackPageServerGui(TrackPageGui):
         self.notify('on_push_page', 'carpageserver', [self.props])
         self.eng.client.send(['track_selected', track, self.room])
 
+    def _on_quit(self):
+        self.eng.client.register_rpc('leave_room')
+        self.eng.client.leave_room(self.room)
+        TrackPageGui._on_quit(self)
+
 
 class TrackPageLocalMPGui(TrackPageGui):
 

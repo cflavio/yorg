@@ -270,6 +270,11 @@ class CarPageGuiClient(CarPageGui):
         page_args = [self.track_path, self.car, self.props]
         self.notify('on_push_page', 'driverpageclient', page_args)
 
+    def _on_quit(self):
+        self.eng.client.register_rpc('leave_curr_room')
+        self.eng.client.leave_curr_room()
+        CarPageGui._on_quit(self)
+
     def destroy(self):
         self.eng.client.detach(self.on_car_selection)
         self.eng.client.detach(self.on_car_deselection)
