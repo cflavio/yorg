@@ -28,6 +28,8 @@ class ExitDialog(GameObject, Subject):
         self.eng.log('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
+        self.eng.client.register_rpc('leave_curr_room')
+        self.eng.client.leave_curr_room()
         self.eng.log('exit button')
         self.notify('on_exit_dlg')
 

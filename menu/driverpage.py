@@ -488,6 +488,7 @@ class DriverPageClientGui(DriverPageGui):
                     self.mediator.car, cars, data_lst)
 
     def _on_quit(self):
+        if self.eng.server.is_active: self.eng.server.stop()
         self.eng.client.register_rpc('leave_curr_room')
         self.eng.client.leave_curr_room()
         DriverPageGui._on_quit(self)

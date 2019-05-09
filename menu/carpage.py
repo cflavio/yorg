@@ -271,6 +271,7 @@ class CarPageGuiClient(CarPageGui):
         self.notify('on_push_page', 'driverpageclient', page_args)
 
     def _on_quit(self):
+        if self.eng.server.is_active: self.eng.server.stop()
         self.eng.client.register_rpc('leave_curr_room')
         self.eng.client.leave_curr_room()
         CarPageGui._on_quit(self)
