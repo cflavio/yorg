@@ -554,7 +554,7 @@ class YorgLogic(GameLogic):
         txt.set_z(.06 + height / 2)
 
     def build_race_props(self, drivers, track_name, keys, joystick,
-                         sounds, start_wp):
+                         sounds, start_wp, grid):
         frwheels = Wheels('EmptyWheelFront', 'EmptyWheelFront.001',
                           'EmptyWheelRear', 'EmptyWheelRear.001')
         # names for front and rear wheels
@@ -587,8 +587,9 @@ class YorgLogic(GameLogic):
             'https://plus.google.com/share?url=ya2.it/pages/yorg.html',
             'https://www.tumblr.com/widgets/share/tool?url=ya2.it']
         items = self.season.ranking.carname2points.items()
-        grid_rev_ranking = sorted(items, key=lambda el: el[1])
-        grid = [pair[0] for pair in grid_rev_ranking]
+        if not grid:
+            grid_rev_ranking = sorted(items, key=lambda el: el[1])
+            grid = [pair[0] for pair in grid_rev_ranking]
         race_props = RaceProps(
             self.season.props, keys, joystick, sounds,
             'assets/models/cars/%s/capsule', 'Capsule', 'assets/models/cars',

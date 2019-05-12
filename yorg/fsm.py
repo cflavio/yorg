@@ -126,7 +126,7 @@ class YorgFsm(FsmColleague):
         self.eng.client.detach(self.on_presence_unavailable_room)
 
     def enterRace(self, track_path='', car_path='', cars=[], drivers='',
-                  ranking=None):  # unused ranking, cars
+                  ranking=None):  # unused ranking
         self.eng.log_mgr.log('entering Race state')
         #if self.mediator.logic.mp_frm:  # None if dev quicksart
         #    self.mediator.logic.mp_frm.hide()
@@ -162,7 +162,7 @@ class YorgFsm(FsmColleague):
             'assets/sfx/rotate_all_fire.ogg', 'assets/sfx/rotate_all_hit.ogg')
         race_props = self.mediator.logic.build_race_props(
             seas.logic.drivers, track_path, keys, joystick, sounds,
-            self.mediator.options['development']['start_wp'])
+            self.mediator.options['development']['start_wp'], cars)
         if self.eng.server.is_active:
             #seas.create_race_server(race_props)
             seas.create_race_server(race_props)

@@ -1,7 +1,7 @@
 # ================================= BUGS ======================================
 
 # build linux: pitstop's animation (only with shaders)
-# sometimes, online starting points are wrong
+# when the server ends a multiplayer race it doesn't quit
 
 
 # ============================== TODO LIST ====================================
