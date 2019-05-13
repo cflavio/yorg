@@ -2,6 +2,7 @@
 *.mo
 *.bam
 *.txo
+*.geanyprj
 built/
 build/
 venv/
