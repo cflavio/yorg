@@ -1,7 +1,7 @@
 # ================================= BUGS ======================================
 
-# build linux: pitstop's animation (only with shaders)
-# when the server ends a multiplayer race it doesn't quit
+# wrong position of wrong-way image and printing (online multiplayer)
+# restart online multiplayer race: the server crashes
 
 
 # ============================== TODO LIST ====================================
@@ -11,7 +11,8 @@
 
 # flatpak on the vps: issues #28
 # 1.10.3 test with two gamepads
-
+# 0.12 improve online multiplayer's end of race (print realtime ranking, show
+#   bigger minimap)
 
 # ============================ MAYBE/SOMEDAY ==================================
 
