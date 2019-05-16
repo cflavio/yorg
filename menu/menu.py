@@ -185,7 +185,7 @@ class YorgMenuLogic(MenuLogic):
                                  cars)
 
     def on_car_start_client(self, track, car, cars, packet):
-        self.mediator.gui.notify('on_car_start_client', track, car, cars, packet)
+        self.mediator.gui.notify('on_car_start_client', track, car, cars, packet, self.curr_room)
 
     def on_car_selected_season(self, car):
         self.mediator.gui.notify('on_car_selected_season', car)
@@ -208,7 +208,9 @@ class YorgMenuLogic(MenuLogic):
         self.push_page(page)
         page.gui.attach(self.on_start_match)
 
-    def on_start_match(self): self.notify('on_start_match')
+    def on_start_match(self, room_name):
+        self.curr_room = room_name
+        self.notify('on_start_match')
 
     def on_create_room_client(self, room, nick, uid_srv):
         page = RoomPageClient(self.mediator.gui.menu_props, room, nick, uid_srv)
@@ -216,7 +218,8 @@ class YorgMenuLogic(MenuLogic):
         page.gui.attach(self.on_start_match_client_page)
         page.gui.attach(self.on_srv_quitted)
 
-    def on_start_match_client_page(self, track):
+    def on_start_match_client_page(self, track, room_name):
+        self.curr_room = room_name
         self.notify('on_start_match_client_menu', track)
 
 

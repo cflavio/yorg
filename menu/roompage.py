@@ -14,6 +14,7 @@ class RoomPageGui(ThanksPageGui):
         self.menu_props = menu_props
         if not room_name:
             room_name = self.eng.client.myid + strftime('%y%m%d%H%M%S')
+        self.room_name = room_name
         self.srv_usr = srv_usr
         self.match_frm = self.frm_cls(menu_props, room_name)
         self.match_msg_frm = MatchMsgFrm(self.menu_props)
@@ -43,7 +44,7 @@ class RoomPageGui(ThanksPageGui):
 
     def on_start(self):
         self.eng.client.send(['room_start'])
-        self.notify('on_start_match')
+        self.notify('on_start_match', self.room_name)
 
     def destroy(self):
         self.eng.client.detach(self.on_presence_available_room)
@@ -76,7 +77,7 @@ class RoomPageClientGui(RoomPageGui):
     def on_track_selected_msg(self, track):
         self.eng.log_mgr.log('track selected: ' + track)
         self.eng.client.detach(self.on_track_selected_msg)
-        self.notify('on_start_match_client_page', track)
+        self.notify('on_start_match_client_page', track, self.room_name)
 
 
 class RoomPageEvent(PageEvent):

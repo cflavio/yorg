@@ -1,8 +1,5 @@
 # ================================= BUGS ======================================
 
-# server ends first and quit: received player_info packet while we've quit
-# restart online multiplayer race: the server crashes
-
 
 # ============================== TODO LIST ====================================
 
