@@ -1,7 +1,11 @@
 # ================================= BUGS ======================================
 
+# server quit in-race, the client continues, the server crashes
+
 
 # ============================== TODO LIST ====================================
+
+# test joypad + keyboard
 
 
 # =============================== WAITING =====================================
@@ -25,6 +29,7 @@
 # lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
 #   'Facade' is called
 # remove eng.server
+# gui: do a single page for configuring the race (less testing)
 # class Player (has-a car, has-a driver)
 # where proper (i.e. where observers aren't tied to the observable) replace
 #   observer with publisher-subscriber
