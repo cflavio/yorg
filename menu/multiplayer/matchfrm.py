@@ -94,7 +94,7 @@ class MatchFrm(GameObject):
         return [clean(frm.lab.lab['text']) for frm in self.forms]
 
     def set_frm_pos(self, frm, i):
-        row, col = i % 4, i / 4
+        row, col = i % 4, i // 4
         x = .1 + 1.24 * col
         y = .38 - .08 * row
         frm.frm.set_pos((x, 1, y))
@@ -120,7 +120,7 @@ class MatchFrm(GameObject):
     def on_invite(self, usr):
         self.eng.log('match form: invited user ' + usr.uid)
         idx = len(self.invited_users)
-        x = .1 + 1.24 * (idx / 4)
+        x = .1 + 1.24 * (idx // 4)
         y = .38 - .08 * (idx % 4)
         frm = UserFrmMatch('? ' + self.trunc(usr.uid, 30), usr, usr.is_supporter, (x, 1, y),
                            self.match_frm, self.menu_props)
