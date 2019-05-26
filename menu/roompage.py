@@ -71,11 +71,12 @@ class RoomPageClientGui(RoomPageGui):
             self.eng.show_cursor()
 
     def on_exit_dlg(self):
+        self.eng.client.detach(self.on_track_selected_msg)
         self.exit_dlg.destroy()
         self.notify('on_srv_quitted')
 
     def on_track_selected_msg(self, track):
-        self.eng.log_mgr.log('track selected: ' + track)
+        self.eng.log_mgr.log('track selected (room page): ' + track)
         self.eng.client.detach(self.on_track_selected_msg)
         self.notify('on_start_match_client_page', track, self.room_name)
 

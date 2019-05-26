@@ -177,7 +177,7 @@ class YorgLogic(GameLogic):
             else:
                 def process_msg(data_lst, sender):
                     if data_lst[0] == NetMsgs.track_selected:
-                        self.eng.log_mgr.log('track selected: ' + data_lst[1])
+                        self.eng.log_mgr.log('track selected (yorg.logic): ' + data_lst[1])
                         self.sel_track = data_lst[1]
                     if data_lst[0] == NetMsgs.start_race:
                         self.eng.log_mgr.log('start_race: ' + str(data_lst))
