@@ -71,7 +71,8 @@ class RoomPageClientGui(RoomPageGui):
             self.eng.show_cursor()
 
     def on_exit_dlg(self):
-        self.eng.client.detach(self.on_track_selected_msg)
+        if self.eng.client.observing(self.on_track_selected_msg):
+            self.eng.client.detach(self.on_track_selected_msg)
         self.exit_dlg.destroy()
         self.notify('on_srv_quitted')
 

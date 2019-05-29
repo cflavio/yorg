@@ -37,6 +37,10 @@ class MenuProps(object):
 
 class YorgMenuLogic(MenuLogic):
 
+    def __init__(self, mediator):
+        MenuLogic.__init__(self, mediator)
+        self.uid_srv = None
+
     def on_push_page(self, page_code, args=[]):
         if page_code == 'singleplayer':
             self.eng.log('single player')
@@ -46,6 +50,7 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'login':
             self.eng.log('login')
             page = LogInPage(args[0])
+            page.gui.attach(self.on_login_page)
         if page_code == 'register':
             self.eng.log('register')
             page = RegisterPage(args[0])
@@ -93,7 +98,7 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'carpageserver':
             self.eng.log('car page server')
             #page = CarPageServer(args[0], self.mediator.track, self.yorg_client)
-            page = CarPageClient(args[0], self.mediator.track)
+            page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpagelocalmp':
             self.eng.log('car page local multiplayer')
@@ -101,7 +106,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageclient':
             self.eng.log('car page client')
-            page = CarPageClient(args[0], self.mediator.track)
+            page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
             self.eng.log('driver page')
@@ -117,7 +122,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_driver_selected_server)
         if page_code == 'driverpageclient':
             self.eng.log('driver page client')
-            page = DriverPageClient(args[0], args[1], args[2])
+            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv)
             page.gui.attach(self.on_driver_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
@@ -199,6 +204,9 @@ class YorgMenuLogic(MenuLogic):
     def on_continue(self):
         self.mediator.gui.notify('on_continue')
 
+    def on_login_page(self):
+        self.mediator.gui.notify('on_login')
+
     def on_login(self):
         self.mediator.gui.notify('on_login')
 
@@ -213,6 +221,7 @@ class YorgMenuLogic(MenuLogic):
         self.notify('on_start_match')
 
     def on_create_room_client(self, room, nick, uid_srv):
+        self.uid_srv = uid_srv
         page = RoomPageClient(self.mediator.gui.menu_props, room, nick, uid_srv)
         self.push_page(page)
         page.gui.attach(self.on_start_match_client_page)

@@ -80,7 +80,7 @@ class LogInPageGui(ThanksPageGui):
         self.props.opt_file.store()
         self.eng.client.init(self.props.opt_file['settings']['login']['usr'])
         self._on_back()
-        self.notify('on_login')
+        self.notify('on_login_page')
 
     def on_ko(self, err):
         txt = Text(_('Error') + ': ' + err, pos=(-.2, -.05), fg=(1, 0, 0, 1),

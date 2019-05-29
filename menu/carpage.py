@@ -226,6 +226,10 @@ class CarPageGuiServer(CarPageGui):
 
 class CarPageGuiClient(CarPageGui):
 
+    def __init__(self, mediator, carpage_props, track_path, uid_srv):
+        CarPageGui.__init__(self, mediator, carpage_props, track_path)
+        self.srv_usr = uid_srv
+
     def build(self):
         CarPageGui.build(self, exit_behav=True)
         self.eng.car_mapping = {}
@@ -234,6 +238,11 @@ class CarPageGuiClient(CarPageGui):
         self.eng.client.attach(self.on_car_selection)
         self.eng.client.attach(self.on_car_deselection)
         self.eng.client.attach(self.on_start_drivers)
+        self.eng.client.attach(self.on_presence_unavailable_room)
+
+    def on_presence_unavailable_room(self, uid, room):
+        if uid == self.srv_usr:
+            self._back_btn.disable()
 
     def on_car(self, car):
         self.eng.log_mgr.log('car request: ' + car)
@@ -312,6 +321,15 @@ class CarPageServer(CarPage):
 
 class CarPageClient(CarPage):
     gui_cls = CarPageGuiClient
+
+    def __init__(self, carpage_props, track_path, uid_srv):
+        self.__uid_srv = uid_srv
+        CarPage.__init__(self, carpage_props, track_path)
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.carpage_props, self.track_path, self.__uid_srv])]]
 
 
 class CarPageLocalMP(CarPage, PageFacade):

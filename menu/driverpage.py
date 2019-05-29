@@ -434,6 +434,10 @@ class DriverPageServerGui(DriverPageGui):
 
 class DriverPageClientGui(DriverPageGui):
 
+    def __init__(self, mediator, driverpage_props, uid_srv):
+        DriverPageGui.__init__(self, mediator, driverpage_props)
+        self.srv_usr = uid_srv
+
     def build(self):
         DriverPageGui.build(self, exit_behav=True)
         self.name['align'] = TextNode.ACenter
@@ -443,8 +447,13 @@ class DriverPageClientGui(DriverPageGui):
         self.eng.client.attach(self.on_drv_selection)
         self.eng.client.attach(self.on_drv_deselection)
         self.eng.client.attach(self.on_start_race)
+        self.eng.client.attach(self.on_presence_unavailable_room)
 
     def this_name(self): return self.eng.client.myid
+
+    def on_presence_unavailable_room(self, uid, room):
+        if uid == self.srv_usr:
+            self._back_btn.disable()
 
     def on_click(self, i):
         self.eng.log_mgr.log('driver request: %s' % i)
@@ -547,3 +556,12 @@ class DriverPageServer(DriverPage):
 
 class DriverPageClient(DriverPage):
     gui_cls = DriverPageClientGui
+
+    def __init__(self, track, car, driverpage_props, uid_srv):
+        self.__uid_srv = uid_srv
+        DriverPage.__init__(self, track, car, driverpage_props)
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.driverpage_props, self.__uid_srv])]]
