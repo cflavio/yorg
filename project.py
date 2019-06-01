@@ -3,13 +3,12 @@
 
 # ============================== TODO LIST ====================================
 
-# test joypad + keyboard
+# loading page: local multiplayer's controls
 
 
 # =============================== WAITING =====================================
 
 # flatpak on the vps: issues #28
-# 1.10.3 test with two gamepads
 # 0.12 improve online multiplayer's end of race (print realtime ranking, show
 #   bigger minimap)
 
