@@ -68,7 +68,7 @@ env = Environment(BUILDERS={
 env['APPNAME'] = app_name
 env['LNG'] = lang_path
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
-env['LANGUAGES'] = ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES']
+env['LANGUAGES'] = ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR']
 env['MODELS_DIR_PATH'] = 'assets/models'
 env['TRACKS_DIR_PATH'] = 'assets/models/tracks'
 env['CORES'] = int(args['cores'])
@@ -127,9 +127,8 @@ env['DEV_CONF'] = dev_conf
 VariantDir(path, '.')
 
 img_files = img_tgt_names(files(['jpg', 'png'], ['models'], ['_png.png']))
-lang_src = [lang_path + 'it_IT/LC_MESSAGES/%s.mo' % app_name,
-            lang_path + 'de_DE/LC_MESSAGES/%s.mo' % app_name,
-            lang_path + 'gd/LC_MESSAGES/%s.mo' % app_name]
+langs = ['de_DE', 'es_ES', 'fr_FR', 'gd', 'gl_ES', 'it_IT']
+lang_src = [lang_path + '%s/LC_MESSAGES/%s.mo' % (lng, app_name) for lng in langs]
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + tracks_tgt_fnames()
 if args['images']:
@@ -173,4 +172,4 @@ def process_lang(lang_code):
 
 if args['lang']:
     env.pot('assets/po/yorg.pot', files(['py'], ['venv', 'thirdparty']))
-    map(process_lang, ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR'])
+    list(map(process_lang, ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR']))
