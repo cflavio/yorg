@@ -391,7 +391,7 @@ class YorgLogic(GameLogic):
                 drv.logic.dprops.car_name = car
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
-            ['Race', track, car, [car], self.season.logic.drivers])
+            ['Race', track, car, None, self.season.logic.drivers])
 
     def on_driver_selected_mp(self, player_names, track, cars, drivers):
         self.mediator.gameprops.player_names = player_names
