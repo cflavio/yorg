@@ -15,10 +15,11 @@ class InputPageGui4(ThanksPageGui):
 
     joyp_idx = 3
 
-    def __init__(self, mediator, menu_props, joysticks, keys):
+    def __init__(self, mediator, menu_props, opt_file, joysticks, keys):
         self.joypad_cb = None
         self.joysticks = joysticks
         self.keys = keys
+        self.opt_file = opt_file
         self.ibuttons = []
         ThanksPageGui.__init__(self, mediator, menu_props)
 
@@ -89,15 +90,7 @@ class InputPageGui4(ThanksPageGui):
     def _on_back(self, player=0):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
-        dct = {}
-        dct['keys'] = self.keys
-        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
-        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
-        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
-        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
-        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
-        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
-        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        dct = self.update_values()
         self.notify('on_back', 'input_page2', [dct])
 
     def rec(self, btn, val):
@@ -114,11 +107,25 @@ class InputPageGui4(ThanksPageGui):
     def on_already_dlg(self): self.dial = self.dial.destroy()
 
     def already_used(self, val):
+        if self.eng.event.key2desc(self.keys['pause']) == val: return '1', 'pause'
         labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn', 'pause']
-        for i, btn in enumerate(self.mediator.gui.ibuttons):
-            if self.eng.event.desc2key(btn['text']) == val: return '1', labels[i]
-        for lab, player in product(labels[:-1], ['2', '3', '4']):
+        for lab, player in product(labels[:-1], ['1', '2', '3', '4']):
             if self.eng.event.key2desc(self.keys[lab + player]) == val: return player, lab
+
+    def update_keys(self): self.keys = self.opt_file['settings']['keys']
+
+    def update_values(self):
+        suff = str(self.joyp_idx + 1)
+        dct = {}
+        dct['keys'] = self.keys
+        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
+        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
+        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
+        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
+        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
+        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        return dct
 
 
 class InputPageGui1(InputPageGui4):
@@ -136,22 +143,27 @@ class InputPageGui1(InputPageGui4):
         InputPageGui4.build(self)
 
     def on_player2(self):
-        self.notify('on_push_page', 'input2', [self.joysticks, self.keys])
+        dct = self.update_values()
+        self.notify('on_push_page', 'input2', [self.joysticks, self.keys, dct])
 
     def _on_back(self, player=0):
         self.mediator.event.on_back()
+        dct = self.update_values()
+        self.notify('on_back', 'input_page1', [dct])
+
+    def update_values(self):
         suff = str(self.joyp_idx + 1)
         dct = {}
         dct['keys'] = self.keys
-        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
-        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
-        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
-        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
-        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
-        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
-        dct['keys']['pause'] = self.eng.event.desc2key(self.mediator.gui.ibuttons[6]['text'])
+        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
+        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
+        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
+        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
+        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[6]['text'])
+        dct['keys']['pause'] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
         dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
-        self.notify('on_back', 'input_page1', [dct])
+        return dct
 
 
 class InputPageGui2(InputPageGui4):
@@ -167,20 +179,13 @@ class InputPageGui2(InputPageGui4):
         InputPageGui4.build(self)
 
     def on_player3(self):
-        self.notify('on_push_page', 'input3', [self.joysticks, self.keys])
+        dct = self.update_values()
+        self.notify('on_push_page', 'input3', [self.joysticks, self.keys, dct])
 
     def _on_back(self, player=0):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
-        dct = {}
-        dct['keys'] = {
-            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
-            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
-            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
-            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
-            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
-            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])}
-        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        dct = self.update_values()
         self.notify('on_back', 'input_page2', [dct])
 
 
@@ -197,30 +202,24 @@ class InputPageGui3(InputPageGui4):
         InputPageGui4.build(self)
 
     def on_player3(self):
-        self.notify('on_push_page', 'input4', [self.joysticks, self.keys])
+        dct = self.update_values()
+        self.notify('on_push_page', 'input4', [self.joysticks, self.keys, dct])
 
     def _on_back(self, player=0):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
-        dct = {}
-        dct['keys'] = {
-            'forward' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text']),
-            'rear' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text']),
-            'left' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text']),
-            'right' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text']),
-            'fire' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text']),
-            'respawn' + suff: self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])}
-        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        dct = self.update_values()
         self.notify('on_back', 'input_page3', [dct])
 
 
 class InputPage4(Page):
     gui_cls = InputPageGui4
 
-    def __init__(self, menu_props, joysticks, keys):
+    def __init__(self, menu_props, opt_file, joysticks, keys):
         self.menu_props = menu_props
         self.joysticks = joysticks
         self.keys = keys
+        self.opt_file = opt_file
         Page.__init__(self, menu_props)
         PageFacade.__init__(self)
 
@@ -228,7 +227,7 @@ class InputPage4(Page):
     def init_lst(self): return [
         [('event', self.event_cls, [self])],
         [('gui', self.gui_cls,
-          [self, self.menu_props, self.joysticks, self.keys])]]
+          [self, self.menu_props, self.opt_file, self.joysticks, self.keys])]]
 
     def destroy(self):
         Page.destroy(self)
@@ -245,4 +244,3 @@ class InputPage3(InputPage4):
 
 class InputPage(InputPage4):
     gui_cls = InputPageGui1
-

@@ -7,6 +7,7 @@ from yyagl.game import GameLogic
 from yyagl.racing.season.season import SingleRaceSeason, Season, SeasonProps
 from yyagl.racing.driver.driver import Driver, DriverProps, DriverInfo
 from yyagl.racing.race.raceprops import RaceProps
+from yyagl.dictfile import DctFile
 from menu.ingamemenu.menu import InGameMenu
 from menu.netmsgs import NetMsgs
 from .thanksnames import ThanksNames
@@ -289,7 +290,7 @@ class YorgLogic(GameLogic):
         self.mediator.fsm.on_removed()
 
     def on_input_back(self, new_opt_dct):
-        self.mediator.options['settings'].update(new_opt_dct)
+        self.mediator.options['settings'] = DctFile.deepupdate(self.mediator.options['settings'], new_opt_dct)
         self.mediator.options.store()
 
     def on_options_back(self, new_opt_dct):

@@ -1,5 +1,6 @@
 from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui, MenuFacade
 from yyagl.gameobject import GameObject
+from yyagl.dictfile import DctFile
 from .mainpage import YorgMainPage
 from .singleplayerpage import SingleplayerPage
 from .multiplayerpage import MultiplayerPage
@@ -131,16 +132,22 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'input':
             self.eng.log('input')
             page = InputPage(
-                self.mediator.gui.menu_props, args[0], args[1])
+                self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], args[1])
         if page_code == 'input2':
             self.eng.log('input2')
-            page = InputPage2(self.mediator.gui.menu_props, args[0], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage2(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'input3':
             self.eng.log('input3')
-            page = InputPage3(self.mediator.gui.menu_props, args[0], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage3(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'input4':
             self.eng.log('input4')
-            page = InputPage4(self.mediator.gui.menu_props, args[0], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage4(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'credits':
             self.eng.log('credits')
             page = CreditPage(self.mediator.gui.menu_props)
@@ -163,6 +170,7 @@ class YorgMenuLogic(MenuLogic):
         self.eng.log('back: %s' % page_code)
         if page_code.startswith('input_page'):
             self.mediator.gui.notify('on_input_back', args[0])
+            if page_code in ['input_page' + str(n) for n in range(2, 5)]: self.pages[-2].gui.update_keys()
         if page_code == 'options_page':
             self.mediator.gui.notify('on_options_back', args[0])
         if page_code == 'RoomPageGui':
@@ -259,6 +267,7 @@ class YorgMenu(Menu):
     logic_cls = YorgMenuLogic
 
     def __init__(self, menu_props):
+        self.menu_props = menu_props
         comps = [
             [('logic', self.logic_cls, [self])],
             [('gui', self.gui_cls, [self, menu_props])]]
