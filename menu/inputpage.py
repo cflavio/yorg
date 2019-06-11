@@ -7,6 +7,7 @@ from yyagl.lib.gui import Btn, P3dCheckBtn, Label
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.joystick import JoystickMgr
 from yyagl.gameobject import GameObject
+from yyagl.dictfile import DctFile
 from .thankspage import ThanksPageGui
 from .already_dlg import AlreadyUsedDlg
 
@@ -98,7 +99,11 @@ class InputPageGui4(ThanksPageGui):
         if used:
             self.dial = AlreadyUsedDlg(self.menu_props, val, *used)
             self.dial.attach(self.on_already_dlg)
-        else: btn['text'] = val
+        else:
+            btn['text'] = val
+            dct = self.update_values()
+            self.opt_file['settings'] = DctFile.deepupdate(self.opt_file['settings'], dct)
+            self.opt_file.store()
         self.hint_lab.hide()
         events = list(self.keys.values()) + self._keys
         list(map(self.mediator.event.ignore, events))
