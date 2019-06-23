@@ -501,7 +501,7 @@ class YorgLogic(GameLogic):
         self.season.start(False)
         track_path = self.mediator.options['save']['track']
         car_path = self.mediator.options['save']['cars']
-        self.mediator.fsm.demand('Race', track_path, car_path, [car_path], drivers)
+        self.mediator.fsm.demand('Race', track_path, car_path, None, drivers)
 
     @staticmethod
     def __bld_drv(dct, i):
