@@ -27,6 +27,7 @@ class YorgFsm(FsmColleague):
         self.eng.log_mgr.log('entering Menu state')
         self.mediator.reset_drivers()
         self.mediator.gameprops.player_names = self.mediator.options['settings']['player_names']
+        self.mediator.gameprops.stored_player_names = self.mediator.options['settings']['stored_player_names']
         self.__menu_props = MenuProps(
             self.mediator.gameprops, self.mediator.options,
             'assets/images/gui/yorg_title.txo',

@@ -6,6 +6,7 @@ from direct.gui.DirectLabel import DirectLabel
 from yyagl.lib.gui import Btn, P3dCheckBtn, Label
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.joystick import JoystickMgr
+from yyagl.engine.gui.menu import NavInfo, NavInfoPerPlayer
 from yyagl.gameobject import GameObject
 from yyagl.dictfile import DctFile
 from .thankspage import ThanksPageGui
@@ -104,6 +105,19 @@ class InputPageGui4(ThanksPageGui):
             dct = self.update_values()
             self.opt_file['settings'] = DctFile.deepupdate(self.opt_file['settings'], dct)
             self.opt_file.store()
+
+            keys = self.opt_file['settings']['keys']
+            nav1 = NavInfoPerPlayer(keys['left1'], keys['right1'], keys['forward1'],
+                                    keys['rear1'], keys['fire1'])
+            nav2 = NavInfoPerPlayer(keys['left2'], keys['right2'], keys['forward2'],
+                                    keys['rear2'], keys['fire2'])
+            nav3 = NavInfoPerPlayer(keys['left3'], keys['right3'], keys['forward3'],
+                                    keys['rear3'], keys['fire3'])
+            nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
+                                    keys['rear4'], keys['fire4'])
+            nav = NavInfo([nav1, nav2, nav3, nav4])
+            self.menu_props.nav = nav
+
         self.hint_lab.hide()
         events = list(self.keys.values()) + self._keys
         list(map(self.mediator.event.ignore, events))
@@ -152,8 +166,8 @@ class InputPageGui1(InputPageGui4):
         self.notify('on_push_page', 'input2', [self.joysticks, self.keys, dct])
 
     def _on_back(self, player=0):
-        self.mediator.event.on_back()
         dct = self.update_values()
+        self.mediator.event.on_back()
         self.notify('on_back', 'input_page1', [dct])
 
     def update_values(self):

@@ -376,6 +376,8 @@ class YorgLogic(GameLogic):
     def on_driver_selected(self, player_name, track, car):
         self.mediator.options['settings']['player_names'] = [player_name]
         self.mediator.gameprops.player_names = [player_name]
+        self.mediator.options['settings']['stored_player_names'] = [player_name] + self.mediator.options['settings']['stored_player_names'][1:]
+        self.mediator.gameprops.stored_player_names = [player_name] + self.mediator.gameprops.player_names[1:]
         self.mediator.options.store()
         for i, drv in enumerate(self.season.logic.drivers):
             dinfo = self.mediator.gameprops.drivers_info[i]

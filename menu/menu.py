@@ -170,7 +170,7 @@ class YorgMenuLogic(MenuLogic):
         self.eng.log('back: %s' % page_code)
         if page_code.startswith('input_page'):
             self.mediator.gui.notify('on_input_back', args[0])
-            if page_code in ['input_page' + str(n) for n in range(2, 5)]: self.pages[-2].gui.update_keys()
+            if page_code in ['input_page' + str(n) for n in range(1, 5)]: self.pages[-2].gui.update_keys()
         if page_code == 'options_page':
             self.mediator.gui.notify('on_options_back', args[0])
         if page_code == 'RoomPageGui':

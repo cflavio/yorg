@@ -152,10 +152,11 @@ class DriverPageSinglePlayerGui(DriverPageGui):
 
     def build(self):
         menu_props = self.menu_props
+        all_names = self.props.gameprops.player_names + self.props.gameprops.stored_player_names[len(self.props.gameprops.player_names):]
         self.ent = Entry(
             scale=.08, pos=(0, .6), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col,
-            initial_text=self.props.gameprops.player_names[0] if self.props.gameprops.player_names else _('your name'),
+            initial_text=all_names[0] if all_names else _('your name'),
             text_fg=menu_props.text_active_col)
         self.add_widgets([self.ent])
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
@@ -261,10 +262,11 @@ class DriverPageMPGui(DriverPageGui):
             tex = Texture()
             tex.load(empty_img)
             self.sel_drv_img[-1].set_texture(self.tss[-1], tex)
+        all_names = self.props.gameprops.player_names + self.props.gameprops.stored_player_names[len(self.props.gameprops.player_names):]
         self.ents = [Entry(
             scale=.06, pos=(0, .8 - .12 * i), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col,
-            initial_text=self.props.gameprops.player_names[i] if i < len(self.props.gameprops.player_names) else _('your name'),
+            initial_text=all_names[i] if i < len(all_names) else _('your name'),
             text_fg=menu_props.text_active_col) for i in range(len(self.mediator.cars))]
         self.add_widgets(self.ents)
         self.add_widgets(widgets)
@@ -297,6 +299,11 @@ class DriverPageMPGui(DriverPageGui):
         taskMgr.remove(self.update_tsk)
         drivers = [self.selected_drivers[i] for i in range(nplayers)]
         self.props.opt_file['settings']['player_names'] = [ent.text for ent in self.ents]
+        stored_player_names = self.props.gameprops.stored_player_names
+        for i, name in enumerate(self.props.opt_file['settings']['player_names']):
+            if i < len(stored_player_names): stored_player_names[i] = name
+            else: stored_player_names += [name]
+        self.props.opt_file['settings']['stored_player_names'] = stored_player_names
         self.props.opt_file.store()
         self.notify('on_driver_selected_mp', [ent.text for ent in self.ents], self.mediator.track,
                     self.mediator.cars, drivers)

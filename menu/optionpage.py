@@ -1,6 +1,7 @@
 from panda3d.core import TextNode, LVector2i
 from direct.gui.DirectLabel import DirectLabel
 from yyagl.lib.gui import Btn, Slider, CheckBtn, OptionMenu
+from yyagl.engine.gui.menu import NavInfo, NavInfoPerPlayer
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 from yyagl.lib.gui import Label
@@ -123,6 +124,20 @@ class OptionPageGui(ThanksPageGui):
         code = [lang for lang in self.eng.cfg.lang_cfg.languages if lang[0] == arg][0][1]
         self.eng.lang_mgr.set_lang(code)
         self.translate()
+
+    def update_keys(self):
+        keys = self.props.opt_file['settings']['keys']
+        nav1 = NavInfoPerPlayer(keys['left1'], keys['right1'], keys['forward1'],
+                                keys['rear1'], keys['fire1'])
+        nav2 = NavInfoPerPlayer(keys['left2'], keys['right2'], keys['forward2'],
+                                keys['rear2'], keys['fire2'])
+        nav3 = NavInfoPerPlayer(keys['left3'], keys['right3'], keys['forward3'],
+                                keys['rear3'], keys['fire3'])
+        nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
+                                keys['rear4'], keys['fire4'])
+        nav = NavInfo([nav1, nav2, nav3, nav4])
+        self.menu_props.nav.nav_infolst = nav
+        self.update_navigation()
 
     def _on_back(self, player=0):
         self.mediator.event.on_back()
