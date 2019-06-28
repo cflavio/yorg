@@ -289,6 +289,7 @@ class CarPageGuiClient(CarPageGui):
         self.eng.client.detach(self.on_car_selection)
         self.eng.client.detach(self.on_car_deselection)
         self.eng.client.detach(self.on_start_drivers)
+        self.eng.client.detach(self.on_presence_unavailable_room)
         CarPageGui.destroy(self)
 
 

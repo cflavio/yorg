@@ -513,6 +513,7 @@ class DriverPageClientGui(DriverPageGui):
         self.eng.client.detach(self.on_drv_selection)
         self.eng.client.detach(self.on_drv_deselection)
         self.eng.client.detach(self.on_start_race)
+        self.eng.client.detach(self.on_presence_unavailable_room)
         DriverPageGui.destroy(self)
 
 
