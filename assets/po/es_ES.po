@@ -17,26 +17,81 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: menu/numplayerspage.py:16
+msgid "How many players?"
+msgstr ""
+
+#: menu/already_dlg.py:12
+#, python-format
+msgid "The key %s is already used by player %s for %s."
+msgstr ""
+
+#: menu/onlinepage.py:27
+msgid "Play"
+msgstr ""
+
+#: menu/onlinepage.py:31 menu/registerpage.py:45
+msgid "Register"
+msgstr "Registrarte"
+
+#: menu/onlinepage.py:32
+#, fuzzy
+msgid "Reset password"
+msgstr "guardar contraseña"
+
+#: menu/onlinepage.py:69
+msgid "Server problem"
+msgstr "Problema con el servidor"
+
+#: menu/onlinepage.py:71
+msgid "Not up-to-date"
+msgstr "No actualizado"
+
+#: menu/onlinepage.py:73
+msgid "Log out"
+msgstr "Desconectar"
+
+#: menu/onlinepage.py:76
+msgid "Log in"
+msgstr "Conéctate"
+
+#: menu/onlinepage.py:76
+msgid "multiplayer"
+msgstr "Multijugador"
+
+#. i18n: This is a caption of a button.
+#: menu/onlinepage.py:78
+msgid "Connecting"
+msgstr "Conectando"
+
+#: menu/multiplayerpage.py:23
+msgid "Local"
+msgstr ""
+
+#: menu/multiplayerpage.py:24
+msgid "Online"
+msgstr ""
+
 #: menu/resetpage.py:21 menu/registerpage.py:21
 msgid "Your email:"
 msgstr "Tu email:"
 
-#: menu/resetpage.py:23 menu/loginpage.py:21 menu/registerpage.py:23
+#: menu/resetpage.py:23 menu/loginpage.py:20 menu/registerpage.py:23
 msgid "Your user id:"
 msgstr "Tu ID de usuario:"
 
 #: menu/resetpage.py:27 menu/resetpage.py:74 menu/resetpage.py:93
-#: menu/loginpage.py:27 menu/loginpage.py:93 menu/loginpage.py:101
-#: menu/registerpage.py:29 menu/registerpage.py:93 menu/registerpage.py:112
+#: menu/loginpage.py:26 menu/loginpage.py:60 menu/loginpage.py:68
+#: menu/registerpage.py:29 menu/registerpage.py:97 menu/registerpage.py:116
 msgid "your user id"
 msgstr "Tu ID de usuario"
 
 #: menu/resetpage.py:30 menu/resetpage.py:80 menu/resetpage.py:88
-#: menu/registerpage.py:32 menu/registerpage.py:99 menu/registerpage.py:107
+#: menu/registerpage.py:32 menu/registerpage.py:103 menu/registerpage.py:111
 msgid "your email"
 msgstr "Tu email"
 
-#: menu/resetpage.py:39 menu/loginpage.py:65
+#: menu/resetpage.py:39
 msgid "Reset"
 msgstr "Resetear"
 
@@ -60,11 +115,11 @@ msgstr "Este apodo no está en nuestro archivo"
 msgid "This nickname-email pair isn't in our archive."
 msgstr "Esta pareja de apodo-email no está en nuestro archivo"
 
-#: menu/resetpage.py:59 menu/registerpage.py:77
+#: menu/resetpage.py:59 menu/registerpage.py:80
 msgid "Connection error."
 msgstr "Error de Conexión."
 
-#: menu/resetpage.py:114 menu/loginpage.py:119 menu/registerpage.py:135
+#: menu/resetpage.py:114 menu/loginpage.py:86 menu/registerpage.py:139
 msgid "Error"
 msgstr "Error"
 
@@ -88,134 +143,130 @@ msgstr "Traducciones"
 msgid "Supporters"
 msgstr "Contribuyentes"
 
-#: menu/inputpage.py:26 menu/inputpage.py:29
+#: menu/inputpage.py:34 menu/inputpage.py:36
+#, fuzzy
+msgid "Player"
+msgstr "Un Jugador"
+
+#: menu/inputpage.py:39 menu/inputpage.py:42
 msgid "Use the joypad when present"
 msgstr "Usa el joypad si está presente"
 
-#: menu/inputpage.py:39
+#: menu/inputpage.py:51
 msgid "Accelerate"
 msgstr "Aceleración"
 
-#: menu/inputpage.py:40
+#: menu/inputpage.py:52
 msgid "Brake/Reverse"
 msgstr "Freno/Atrás"
 
-#: menu/inputpage.py:41
+#: menu/inputpage.py:53
 msgid "Left"
 msgstr "Izquierda"
 
-#: menu/inputpage.py:42
+#: menu/inputpage.py:54
 msgid "Right"
 msgstr "Derecha"
 
-#: menu/inputpage.py:43
+#: menu/inputpage.py:55
 msgid "Weapon"
 msgstr "Arma"
 
-#: menu/inputpage.py:44
+#: menu/inputpage.py:56
 msgid "Respawn"
 msgstr "Recolocar"
 
-#: menu/inputpage.py:45
-msgid "Pause"
-msgstr "Pausa"
-
-#: menu/inputpage.py:53
+#: menu/inputpage.py:63
 msgid "Press the key to record it"
 msgstr "Presiona la tecla para memorizarla"
 
-#: menu/optionpage.py:36
+#: menu/inputpage.py:157
+msgid "Player 2"
+msgstr ""
+
+#: menu/inputpage.py:160
+msgid "Pause"
+msgstr "Pausa"
+
+#: menu/inputpage.py:195
+msgid "Player 3"
+msgstr ""
+
+#: menu/inputpage.py:218
+msgid "Player 4"
+msgstr ""
+
+#: menu/optionpage.py:37
 msgid "Language"
 msgstr "Idioma"
 
-#: menu/optionpage.py:42
+#: menu/optionpage.py:43
 msgid "Volume"
 msgstr "Volumen"
 
-#: menu/optionpage.py:48
+#: menu/optionpage.py:49
 msgid "Fullscreen"
 msgstr "Pantalla Completa"
 
-#: menu/optionpage.py:54
+#: menu/optionpage.py:55
 msgid "Resolution"
 msgstr "Resolución"
 
-#: menu/optionpage.py:65
+#: menu/optionpage.py:66
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: menu/optionpage.py:68
+#: menu/optionpage.py:69
 msgid "(from the next execution)"
 msgstr "(en la próxima ejecución)"
 
-#: menu/optionpage.py:74
+#: menu/optionpage.py:75
 msgid "Shaders"
 msgstr "Shaders"
 
-#: menu/optionpage.py:78
+#: menu/optionpage.py:79
 msgid "Cars number"
 msgstr "Número de Coches"
 
-#: menu/optionpage.py:79
+#: menu/optionpage.py:80
 msgid "Camera"
 msgstr "Cámara"
 
-#: menu/optionpage.py:83
+#: menu/optionpage.py:84
 msgid "Top"
 msgstr "Arriba"
 
-#: menu/optionpage.py:83
+#: menu/optionpage.py:84
 msgid "Rear"
 msgstr "Detrás"
 
-#: menu/optionpage.py:92
+#: menu/optionpage.py:93
 msgid "Configure input"
 msgstr "Configurar las teclas"
 
-#: menu/carpage.py:27
+#: menu/carpage.py:26
 msgid "Select the car"
 msgstr "Seleciona el coche"
 
-#: menu/carpage.py:78 menu/driverpage.py:74
+#: menu/carpage.py:77 menu/driverpage.py:73 menu/driverpage.py:224
 msgid "adherence"
 msgstr "Aderencia"
 
-#: menu/carpage.py:78 menu/driverpage.py:74
+#: menu/carpage.py:77 menu/driverpage.py:73 menu/driverpage.py:224
 msgid "speed"
 msgstr "Velocidad"
 
-#: menu/carpage.py:79 menu/driverpage.py:75
+#: menu/carpage.py:78 menu/driverpage.py:74 menu/driverpage.py:225
 msgid "stability"
 msgstr "Estabilidad"
 
-#: menu/loginpage.py:23 menu/registerpage.py:25
+#: menu/loginpage.py:22 menu/registerpage.py:25
 msgid "Your password:"
 msgstr "Tu contraseña:"
 
-#: menu/loginpage.py:38
+#: menu/loginpage.py:37
 msgid "Log-in"
 msgstr "Entrar"
-
-#: menu/loginpage.py:42
-#, python-format
-msgid ""
-"If you are a supporter, please write us (%s) your user id so we can "
-"highlight your account as a supporter one."
-msgstr ""
-"Si eres un contribuyente, por favor escríbenos (%s) tu id de usuario para "
-"que podamos marcar tu cuenta como tal."
-
-#: menu/loginpage.py:50
-msgid "If you don't have an account, then you can register:"
-msgstr "Si no tienes una cuenta, tu puedes registrarte:"
-
-#: menu/loginpage.py:56 menu/registerpage.py:45
-msgid "Register"
-msgstr "Registrarte"
-
-#: menu/loginpage.py:59
-msgid "If you want to reset your password:"
-msgstr "Si quieres restablecer tu contraseña:"
 
 #: menu/thankspage.py:15
 msgid "Thanks to: "
@@ -225,77 +276,87 @@ msgstr "Gracias a:"
 msgid "Select the track"
 msgstr "Selecciona el Circuito"
 
-#: menu/driverpage.py:46
+#: menu/driverpage.py:45
 msgid "Select the driver"
 msgstr "Selecciona el Piloto"
 
-#: menu/driverpage.py:50
+#: menu/driverpage.py:49
 msgid "Write your name:"
 msgstr "Escribe tu Nombre:"
 
-#: menu/driverpage.py:166 menu/driverpage.py:174 menu/driverpage.py:175
-#: menu/driverpage.py:176 menu/driverpage.py:178 menu/driverpage.py:181
+#: menu/driverpage.py:89
+msgid ""
+"If you use the keyboard, press FIRE to edit the field, then ENTER when "
+"you're done"
+msgstr ""
+
+#: menu/driverpage.py:159 menu/driverpage.py:167 menu/driverpage.py:168
+#: menu/driverpage.py:169 menu/driverpage.py:171 menu/driverpage.py:174
+#: menu/driverpage.py:269 menu/driverpage.py:313 menu/driverpage.py:314
+#: menu/driverpage.py:315 menu/driverpage.py:317 menu/driverpage.py:321
 msgid "your name"
 msgstr "Tu Nombre"
 
-#: menu/mainpage.py:119
-msgid "Server problem"
-msgstr "Problema con el servidor"
+#: menu/driverpage.py:196
+#, fuzzy
+msgid "Select the drivers"
+msgstr "Selecciona el Piloto"
 
-#: menu/mainpage.py:121
-msgid "Not up-to-date"
-msgstr "No actualizado"
+#: menu/driverpage.py:200
+#, fuzzy
+msgid "Write your names:"
+msgstr "Escribe tu Nombre:"
 
-#: menu/mainpage.py:123
-msgid "Log out"
-msgstr "Desconectar"
+#: menu/driverpage.py:239
+msgid ""
+"If you use the keyboard, press FIRE to edit the field, then ENTER when "
+"you're done. Other players can't move while someoneis writing (since, with "
+"keyboards, some letters may be bound to movements)."
+msgstr ""
 
-#: menu/mainpage.py:126
-msgid "Log in"
-msgstr "Conéctate"
-
-#: menu/mainpage.py:126
-msgid "multiplayer"
-msgstr "Multijugador"
-
-#. i18n: This is a caption of a button.
-#: menu/mainpage.py:128
-msgid "Connecting"
-msgstr "Conectando"
-
-#: menu/mainpage.py:136
+#: menu/mainpage.py:99
 msgid "Single Player"
 msgstr "Un Jugador"
 
-#: menu/mainpage.py:137
+#: menu/mainpage.py:100
+#, fuzzy
+msgid "Multiplayer"
+msgstr "Multijugador"
+
+#: menu/mainpage.py:101
 msgid "Options"
 msgstr "Opciones"
 
-#: menu/mainpage.py:138
+#: menu/mainpage.py:102
 msgid "Support us"
 msgstr "Ayúdanos"
 
-#: menu/mainpage.py:139
+#: menu/mainpage.py:103
 msgid "Credits"
 msgstr "Créditos"
 
-#: menu/mainpage.py:141 yyagl/engine/gui/page.py:179
+#: menu/mainpage.py:104 yyagl/engine/gui/page.py:167
 msgid "Quit"
 msgstr "Salir"
 
-#: menu/mainpage.py:158
+#: menu/mainpage.py:121
 msgid "Note: the game is work-in-progress"
 msgstr "Nota: el juego está en desarrollo"
 
-#: menu/mainpage.py:195 menu/mainpage.py:198
+#: menu/mainpage.py:158 menu/mainpage.py:161
 msgid "Last news:"
 msgstr "Últimas Noticias"
 
-#: menu/mainpage.py:208 menu/mainpage.py:210
+#: menu/mainpage.py:170 menu/mainpage.py:172
 msgid "show"
 msgstr "Mostrar"
 
-#: menu/registerpage.py:67
+#: menu/clientpage.py:24
+#, fuzzy
+msgid "Current waiting hosting users"
+msgstr "Usuarios conectados actualmente"
+
+#: menu/registerpage.py:69
 msgid ""
 "Your account has been registered. Now, in order to activate it, you should "
 "click the link that we've sent to your email (please check your spam folder "
@@ -305,22 +366,26 @@ msgstr ""
 "enlace que te hemos enviado a tu correo (por favor comprueba la carpeta de "
 "Spam si no lo encuentras). Después de eso, ya puedes loguearte."
 
-#: menu/registerpage.py:72
+#: menu/registerpage.py:74
 msgid "Your nickname's format is invalid: please use only letters and numbers."
 msgstr ""
 "El formato de tu apodo es inválido: por favor usa solo letras y números."
 
-#: menu/registerpage.py:74
+#: menu/registerpage.py:76
 msgid "Your email's format is invalid."
 msgstr "El formato de tu email es inválido."
 
-#: menu/registerpage.py:75
+#: menu/registerpage.py:77
 msgid "Your nickname already exists."
 msgstr "Tu apodo ya existe."
 
-#: menu/registerpage.py:76
+#: menu/registerpage.py:78
 msgid "Your email has already been used."
 msgstr "Tu email ya está siendo usado."
+
+#: menu/registerpage.py:79
+msgid "Please use more than 6 characters for your password."
+msgstr ""
 
 #: menu/singleplayerpage.py:15
 msgid "Single race"
@@ -371,11 +436,11 @@ msgstr "Volver al Juego"
 msgid "back to the main menu"
 msgstr "Volver al Menú Principal"
 
-#: menu/multiplayer/matchfrm.py:160
+#: menu/multiplayer/matchfrm.py:161
 msgid "Start"
 msgstr "Empezar"
 
-#: menu/multiplayer/matchfrm.py:171
+#: menu/multiplayer/matchfrm.py:175
 msgid "please wait for the server"
 msgstr "Por favor, espera por el Servidor"
 
@@ -389,48 +454,29 @@ msgstr "el usuario del servidor %s ha salido"
 msgid "%s wants to be a (XMPP) friend of you, do you agree?"
 msgstr "%s quiere ser amigo (XMPP) tuyo, ¿estás de acuerdo?"
 
-#: menu/multiplayer/usersfrm.py:32
+#: menu/multiplayer/usersfrm.py:28
 msgid "Current online users"
 msgstr "Usuarios conectados actualmente"
 
-#: menu/multiplayer/usersfrm.py:70
+#: menu/multiplayer/usersfrm.py:66
 msgid "Your game isn't up-to-date, please update"
 msgstr "Tu juego no está actualizado, por favor actualiza"
 
-#: menu/multiplayer/usersfrm.py:72
+#: menu/multiplayer/usersfrm.py:68
 msgid "Yorg's server isn't running"
 msgstr "El servidor de Yorg no está ejecutándose"
 
-#: menu/multiplayer/usersfrm.py:73
+#: menu/multiplayer/usersfrm.py:69
 msgid "You aren't logged in"
 msgstr "No estás logueado"
 
-#: menu/multiplayer/usersfrm.py:137
-msgid "invite the user to a match"
-msgstr "invitar el usuario a una partida"
-
-#: menu/multiplayer/usersfrm.py:138
-msgid "you can't invite more players"
-msgstr "no puedes invitar a más jugadores"
-
-#: menu/multiplayer/usersfrm.py:139
-msgid "you're already in a match"
-msgstr "estás en una partida en este momento"
-
-#: menu/multiplayer/usersfrm.py:140
-msgid "you've already invited this user"
-msgstr "ya has invitado a este usuario"
-
-#: menu/multiplayer/usersfrm.py:141
-msgid "the user is already playing a match"
-msgstr "el usuario esta jugando una partida en este momento"
-
-#: menu/multiplayer/messagefrm.py:62 menu/multiplayer/messagefrm.py:205
-#: menu/multiplayer/messagefrm.py:253 menu/multiplayer/messagefrm.py:509
+#: menu/multiplayer/messagefrm.py:57 menu/multiplayer/messagefrm.py:199
+#: menu/multiplayer/messagefrm.py:247 menu/multiplayer/messagefrm.py:503
 msgid "write here your message"
 msgstr "Escribe aquí tu mensaje"
 
-#: menu/multiplayer/messagefrm.py:379 menu/multiplayer/messagefrm.py:404
+#: menu/multiplayer/messagefrm.py:127 menu/multiplayer/messagefrm.py:373
+#: menu/multiplayer/messagefrm.py:398
 msgid "you"
 msgstr "tu"
 
@@ -438,35 +484,27 @@ msgstr "tu"
 msgid "you have been removed from the match"
 msgstr "has sido borrado de la partida"
 
-#: menu/multiplayer/forms.py:34
+#: menu/multiplayer/forms.py:38
 msgid "Supporter!"
 msgstr "¡Contribuyente!"
 
-#: menu/multiplayer/forms.py:85
-msgid "send a message to the user"
-msgstr "enviar un mensaje al usuario"
-
-#: menu/multiplayer/forms.py:121
-#, python-format
-msgid "%s isn't playing yorg"
-msgstr "%s no está jugado a Yorg"
-
-#: menu/multiplayer/forms.py:178
+#: menu/multiplayer/forms.py:185
 msgid "remove from the match"
 msgstr "borrar de la partida"
 
 #: menu/multiplayer/network_dlg.py:13
+#, fuzzy
 msgid ""
 "Connection error. Please check that (i) your firewall allows traffic for "
 "Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
-"a guide for checking it: http://www.ya2.it/pages/check-your-ports.html)."
+"a guide for checking it: https://www.ya2.it/pages/check-your-ports.html)."
 msgstr ""
 "Error de conexión. Por favor, comprueba que (I) tu cortafuegos permite "
 "trafico para Yorg en el puerto 9099 y  (II) el usuario del servidor ha "
 "abierto su puerto 9099 (aqui tienes una guía para comprobarlo: http://www."
 "ya2.it/pages/check-your-ports.html)."
 
-#: menu/multiplayer/multiplayerfrm.py:115
+#: menu/multiplayer/multiplayerfrm.py:95
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
@@ -474,7 +512,7 @@ msgstr ""
 "Hemos detectado problemas de conexión durante la creación del servidor. Por "
 "favor Compruebatu conexión"
 
-#: menu/multiplayer/multiplayerfrm.py:118
+#: menu/multiplayer/multiplayerfrm.py:98
 msgid "We can't connect to httpbin. Please retry later."
 msgstr "No podemos conectar a httpbien. Por favor, inténtalo más tarde."
 
@@ -483,35 +521,35 @@ msgstr "No podemos conectar a httpbien. Por favor, inténtalo más tarde."
 msgid "%s has invited you to a match, do you agree?"
 msgstr "%s te ha invitado a una partida, ¿aceptas?"
 
-#: yorg/yorg.py:179 yorg/fsm.py:170
+#: yorg/yorg.py:218 yorg/fsm.py:182
 msgid "Sinus Aestuum"
 msgstr "Sinus Aestuum"
 
-#: yorg/yorg.py:179 yorg/fsm.py:167
+#: yorg/yorg.py:218 yorg/fsm.py:179
 msgid "Toronto"
 msgstr "Toronto"
 
-#: yorg/yorg.py:179 yorg/fsm.py:167
+#: yorg/yorg.py:218 yorg/fsm.py:179
 msgid "Rome"
 msgstr "Roma"
 
-#: yorg/yorg.py:179 yorg/fsm.py:168
+#: yorg/yorg.py:218 yorg/fsm.py:180
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: yorg/yorg.py:180 yorg/fsm.py:168
+#: yorg/yorg.py:219 yorg/fsm.py:180
 msgid "Orlando"
 msgstr "Orlando"
 
-#: yorg/yorg.py:180 yorg/fsm.py:169
+#: yorg/yorg.py:219 yorg/fsm.py:181
 msgid "Nagano"
 msgstr "Nagano"
 
-#: yorg/yorg.py:180 yorg/fsm.py:169
+#: yorg/yorg.py:219 yorg/fsm.py:181
 msgid "Dubai"
 msgstr "Dubai"
 
-#: yyagl/engine/gui/page.py:179
+#: yyagl/engine/gui/page.py:167
 msgid "Back"
 msgstr "Volver"
 
@@ -540,55 +578,60 @@ msgstr "Ruedas: Aumentan la aderencia del coche"
 msgid "suspensions: they increase car's stability"
 msgstr "Suspensión: Mejora la estabilidad del coche"
 
-#: yyagl/racing/car/logic.py:717
+#: yyagl/racing/car/logic.py:770
 msgid "wrong way"
 msgstr "Camino Erróneo"
 
-#: yyagl/racing/car/gui.py:169
+#: yyagl/racing/car/gui.py:285
 msgid "speed:"
 msgstr "Velocidad:"
 
-#: yyagl/racing/car/gui.py:171
+#: yyagl/racing/car/gui.py:287
 msgid "lap:"
 msgstr "Vuelta:"
 
-#: yyagl/racing/car/gui.py:172
+#: yyagl/racing/car/gui.py:288
 msgid "time:"
 msgstr "Tiempo:"
 
-#: yyagl/racing/car/gui.py:173
+#: yyagl/racing/car/gui.py:289
 msgid "best lap:"
 msgstr "Mejor Vuelta:"
 
-#: yyagl/racing/car/gui.py:174
+#: yyagl/racing/car/gui.py:290
 msgid "ranking:"
 msgstr "Posición:"
 
-#: yyagl/racing/car/gui.py:175
+#: yyagl/racing/car/gui.py:291
 msgid "damages:"
 msgstr "Daños:"
 
-#: yyagl/racing/car/gui.py:178
+#: yyagl/racing/car/gui.py:294
 msgid "weapon"
 msgstr "Arma:"
 
-#: yyagl/racing/ranking/gui.py:27
+#: yyagl/racing/car/gui.py:449
+#, fuzzy
+msgid "waiting for the other players"
+msgstr "Por favor, espera por el Servidor"
+
+#: yyagl/racing/car/gui.py:577
+#, python-format
+msgid "press %s to respawn"
+msgstr "presiona %s para recolocar"
+
+#: yyagl/racing/ranking/gui.py:28
 #: yyagl/racing/race/gui/loading/loadingpage.py:63
 msgid "Ranking"
 msgstr "Posición"
 
-#: yyagl/racing/ranking/gui.py:44
+#: yyagl/racing/ranking/gui.py:45
 msgid "Congratulations!"
 msgstr "¡Felicidades!"
 
-#: yyagl/racing/ranking/gui.py:53 yyagl/racing/race/gui/results.py:81
+#: yyagl/racing/ranking/gui.py:54 yyagl/racing/race/gui/results.py:81
 msgid "Continue"
 msgstr "Continuar"
-
-#: yyagl/racing/race/event.py:110
-#, python-format
-msgid "press %s to respawn"
-msgstr "presiona %s para recolocar"
 
 #: yyagl/racing/race/gui/countdown.py:19
 msgid "GO!"
@@ -623,6 +666,7 @@ msgid "Starting grid"
 msgstr "Parrilla de Salida"
 
 #: yyagl/racing/race/gui/loading/loadingpage.py:72
+#: yyagl/racing/race/gui/loading/loadingpage.py:121
 msgid "Controls"
 msgstr "Controles"
 
@@ -670,8 +714,39 @@ msgstr "Ruedas: +"
 msgid "suspensions: +"
 msgstr "Suspensión: +"
 
-#~ msgid "store the password"
-#~ msgstr "guardar contraseña"
+#~ msgid ""
+#~ "If you are a supporter, please write us (%s) your user id so we can "
+#~ "highlight your account as a supporter one."
+#~ msgstr ""
+#~ "Si eres un contribuyente, por favor escríbenos (%s) tu id de usuario para "
+#~ "que podamos marcar tu cuenta como tal."
+
+#~ msgid "If you don't have an account, then you can register:"
+#~ msgstr "Si no tienes una cuenta, tu puedes registrarte:"
+
+#~ msgid "If you want to reset your password:"
+#~ msgstr "Si quieres restablecer tu contraseña:"
+
+#~ msgid "invite the user to a match"
+#~ msgstr "invitar el usuario a una partida"
+
+#~ msgid "you can't invite more players"
+#~ msgstr "no puedes invitar a más jugadores"
+
+#~ msgid "you're already in a match"
+#~ msgstr "estás en una partida en este momento"
+
+#~ msgid "you've already invited this user"
+#~ msgstr "ya has invitado a este usuario"
+
+#~ msgid "the user is already playing a match"
+#~ msgstr "el usuario esta jugando una partida en este momento"
+
+#~ msgid "send a message to the user"
+#~ msgstr "enviar un mensaje al usuario"
+
+#~ msgid "%s isn't playing yorg"
+#~ msgstr "%s no está jugado a Yorg"
 
 #~ msgid "(only if your computer is not shared with other people)"
 #~ msgstr "(solo si tu ordenador no está compartido con otra gente)"
