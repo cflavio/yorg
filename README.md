@@ -23,3 +23,7 @@ Here's a short guide about installing and preparing your environment for Yorg.
 * install the prerequisites: `pip install panda3d SCons psutil bson pyyaml feedparser`
 * build the required assets: `scons lang=1 images=1 tracks=1`
 * launch the game: `python main.py`
+
+Here's a screenshot:
+
+![Yorg](assets/images/yorg.jpg)

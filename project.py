@@ -3,8 +3,6 @@
 
 # ============================== TODO LIST ====================================
 
-# loading page: local multiplayer's controls
-
 
 # =============================== WAITING =====================================
 
@@ -47,3 +45,4 @@
 # retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
 # loadPrcFileData('', 'framebuffer-srgb true'); texture.set_format(F_srgb)
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
+# better highlighting of current selection in the menus
