@@ -3,41 +3,40 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <leillo1975@jugandoenlinux.com>, 2017.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-07-10 12:33+0200\n"
 "Last-Translator: Leandro Vergara <leillo1975@jugandoenlinux.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: menu/numplayerspage.py:16
 msgid "How many players?"
-msgstr ""
+msgstr "¿Cuantos Jugadores?"
 
 #: menu/already_dlg.py:12
 #, python-format
 msgid "The key %s is already used by player %s for %s."
-msgstr ""
+msgstr "La clave %s está siendo usada por el jugador %s por %s."
 
 #: menu/onlinepage.py:27
 msgid "Play"
-msgstr ""
+msgstr "Jugar"
 
 #: menu/onlinepage.py:31 menu/registerpage.py:45
 msgid "Register"
 msgstr "Rexístrate"
 
 #: menu/onlinepage.py:32
-#, fuzzy
 msgid "Reset password"
-msgstr "gardar contrasinal"
+msgstr "Resetear Contrasinal"
 
 #: menu/onlinepage.py:69
 msgid "Server problem"
@@ -66,11 +65,11 @@ msgstr "Conectar"
 
 #: menu/multiplayerpage.py:23
 msgid "Local"
-msgstr ""
+msgstr "Local"
 
 #: menu/multiplayerpage.py:24
 msgid "Online"
-msgstr ""
+msgstr "En Liña"
 
 #: menu/resetpage.py:21 menu/registerpage.py:21
 msgid "Your email:"
@@ -144,9 +143,8 @@ msgid "Supporters"
 msgstr "Contribuintes"
 
 #: menu/inputpage.py:34 menu/inputpage.py:36
-#, fuzzy
 msgid "Player"
-msgstr "Un Xogador"
+msgstr "Xogador"
 
 #: menu/inputpage.py:39 menu/inputpage.py:42
 msgid "Use the joypad when present"
@@ -182,7 +180,7 @@ msgstr "Presiona a tecla para memorizala"
 
 #: menu/inputpage.py:157
 msgid "Player 2"
-msgstr ""
+msgstr "Xogador 2"
 
 #: menu/inputpage.py:160
 msgid "Pause"
@@ -190,11 +188,11 @@ msgstr "Pausa"
 
 #: menu/inputpage.py:195
 msgid "Player 3"
-msgstr ""
+msgstr "Xogador 3"
 
 #: menu/inputpage.py:218
 msgid "Player 4"
-msgstr ""
+msgstr "Xogador 4"
 
 #: menu/optionpage.py:37
 msgid "Language"
@@ -289,6 +287,8 @@ msgid ""
 "If you use the keyboard, press FIRE to edit the field, then ENTER when "
 "you're done"
 msgstr ""
+"Se usas o teclado, presiona DISPARO para editar o campo, logo ENTER cando "
+"estes listo"
 
 #: menu/driverpage.py:159 menu/driverpage.py:167 menu/driverpage.py:168
 #: menu/driverpage.py:169 menu/driverpage.py:171 menu/driverpage.py:174
@@ -298,12 +298,10 @@ msgid "your name"
 msgstr "Teu Nome"
 
 #: menu/driverpage.py:196
-#, fuzzy
 msgid "Select the drivers"
 msgstr "Selecciona o Piloto"
 
 #: menu/driverpage.py:200
-#, fuzzy
 msgid "Write your names:"
 msgstr "Escribe o teu Nome:"
 
@@ -313,13 +311,16 @@ msgid ""
 "you're done. Other players can't move while someoneis writing (since, with "
 "keyboards, some letters may be bound to movements)."
 msgstr ""
+"Se usas o teclado, presiona DISPARO para editar o campo, logo ENTER cando "
+"estes listo. Outros xogadores non se poden mover mentrar alguén este "
+"escribindo (xa que con teclados, algunhas teclas poden estar ligadas a "
+"movementos)"
 
 #: menu/mainpage.py:99
 msgid "Single Player"
 msgstr "Un Xogador"
 
 #: menu/mainpage.py:100
-#, fuzzy
 msgid "Multiplayer"
 msgstr "Multixogador"
 
@@ -352,7 +353,6 @@ msgid "show"
 msgstr "Amosar"
 
 #: menu/clientpage.py:24
-#, fuzzy
 msgid "Current waiting hosting users"
 msgstr "Usuarios Online Actuais"
 
@@ -385,7 +385,7 @@ msgstr "O teu email xa está sendo usado."
 
 #: menu/registerpage.py:79
 msgid "Please use more than 6 characters for your password."
-msgstr ""
+msgstr "Por favor, usa mais de 6 caracteres para o teu contrasinal."
 
 #: menu/singleplayerpage.py:15
 msgid "Single race"
@@ -493,7 +493,6 @@ msgid "remove from the match"
 msgstr "borrar da partida"
 
 #: menu/multiplayer/network_dlg.py:13
-#, fuzzy
 msgid ""
 "Connection error. Please check that (i) your firewall allows traffic for "
 "Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
@@ -611,9 +610,8 @@ msgid "weapon"
 msgstr "Arma:"
 
 #: yyagl/racing/car/gui.py:449
-#, fuzzy
 msgid "waiting for the other players"
-msgstr "Por favor, agarda polo servidor"
+msgstr "esperando polos outros xogadores"
 
 #: yyagl/racing/car/gui.py:577
 #, python-format
