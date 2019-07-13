@@ -217,7 +217,7 @@ class Yorg(Game):
              'dubai'],
             lambda: [_('Sinus Aestuum'), _('Toronto'), _('Rome'), _('Sheffield'),
                      _('Orlando'), _('Nagano'), _('Dubai')],
-            'assets/images/tracks/%s.txo',
+            'assets/tracks/%s/images/menu.txo',
             self.options['settings']['player_names'],
             self.options['settings']['stored_player_names'],
             DriverPaths('assets/images/drivers/driver%s.txo',

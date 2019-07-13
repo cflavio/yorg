@@ -173,7 +173,7 @@ class YorgLogic(GameLogic):
                 drivers = sprops.drivers
                 for i, drv in enumerate(drivers):
                     if drv.dprops.info.img_idx == 0:
-                        drv.logic.dprops.car_name = car
+                        drv.logic.dprops.car_name = None  # car - car is undefined
                         drv.logic.dprops.info.name = self.mediator.options['settings']['player_names'][i]
             else:
                 def process_msg(data_lst, sender):
@@ -183,9 +183,12 @@ class YorgLogic(GameLogic):
                     if data_lst[0] == NetMsgs.start_race:
                         self.eng.log_mgr.log('start_race: ' + str(data_lst))
                         cars = data_lst[4::7]
-                        self.on_car_start_client(self.sel_track, car, cars, data_lst)
+                        #self.on_car_start_client(self.sel_track, car, cars, data_lst, None)
+                        # TODO room is None
+                        # TODO car is undefined
                 self.eng.client.start(process_msg)
-                self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
+                #self.eng.client.send([NetMsgs.car_request, car, self.eng.client.my_addr])
+                # car is undefined
                 gprops = self.mediator.gameprops
                 sprops = self.season.props
                 drivers = sprops.drivers
@@ -196,10 +199,11 @@ class YorgLogic(GameLogic):
                 #    NetMsgs.driver_selection, car, self.mediator.options['settings']['player_name'], 1,
                 #    gprops.drivers_info[1].speed, gprops.drivers_info[1].adherence,
                 #    gprops.drivers_info[1].stability, self.eng.client.my_addr])
-                self.eng.client.send([
-                    NetMsgs.driver_selection, car, self.mediator.options['settings']['player_names'][0], 1,
-                    curr_drv.dprops.info.speed, curr_drv.dprops.info.adherence,
-                    curr_drv.dprops.info.stability, self.eng.client.my_addr])
+                #self.eng.client.send([
+                #    NetMsgs.driver_selection, car, self.mediator.options['settings']['player_names'][0], 1,
+                #    curr_drv.dprops.info.speed, curr_drv.dprops.info.adherence,
+                #    curr_drv.dprops.info.stability, self.eng.client.my_addr])
+                # car is undefined
         else:
             self.mediator.fsm.demand('Menu')
 
@@ -565,8 +569,8 @@ class YorgLogic(GameLogic):
                          'EmptyWheel.003')
         # names for both wheels
         wheel_names = WheelNames(frwheels, bwheels)
-        track_gpath = 'assets/models/tracks/%s/track_all.bam' % track_name
-        track_fpath = 'assets/models/tracks/%s/track.yml' % track_name
+        track_gpath = 'assets/tracks/%s/models/track_all.bam' % track_name
+        track_fpath = 'assets/tracks/%s/models/track.yml' % track_name
         with open(self.eng.curr_path + track_fpath) as ftrack:
             music_name = load(ftrack)['music']
         music_fpath = 'assets/music/%s.ogg' % music_name
@@ -600,15 +604,15 @@ class YorgLogic(GameLogic):
             'assets/particles/sparks.ptf', drivers,
             self.mediator.options['development']['shaders_dev'],
             self.mediator.options['settings']['shaders'], music_fpath,
-            track_gpath, 'assets/models/tracks/%s/collision' % track_name,
+            track_gpath, 'assets/tracks/%s/models/collision' % track_name,
             ['Road', 'Offroad'], ['Wall'],
             ['Goal', 'Slow', 'Respawn', 'PitStop'], corner_names,
             WPInfo('Waypoints', 'Waypoint', 'prev'),
             self.mediator.options['development']['show_waypoints'],
             WeaponInfo('Weaponboxs', 'EmptyWeaponboxAnim'), 'Start',
-            track_name, 'tracks/' + track_name, 'track', 'Empty', 'Anim',
+            track_name, 'assets/tracks/' + track_name, 'track', 'Empty', 'Anim',
             'omni', self.sign_cb, 'EmptyNameBillboard4Anim',
-            'assets/images/minimaps/%s.txo' % track_name,
+            'assets/tracks/%s/images/minimap.txo' % track_name,
             'assets/images/minimaps/car_handle.txo', carname2color, camera_vec,
             shadow_src, laps_num, 'assets/models/weapons/rocket/RocketAnim',
             'assets/models/weapons/turbo/TurboAnim',

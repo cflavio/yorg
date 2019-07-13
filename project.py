@@ -39,7 +39,6 @@
 #   yyagl/ and racing/)
 # yyagl's scons
 # unit tests
-# move all track's assets (minimap, menu image, ...) in track's folder
 # gui warnings for missing track's logics information
 # retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
 # retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
