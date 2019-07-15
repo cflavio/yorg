@@ -33,14 +33,13 @@
 # notify's sender (see page.py)
 # object's creation: isolate the parallel creation and construct object in the
 #   standard way (fields) and use the parallel creation only when it is useful
-# (waitig for refactored objects' creation): facade, pass a single list (meth
+# (waiting for refactored objects' creation): facade, pass a single list (meth
 #   for callables, prop for others)
 # racing should be another package in another submodule (i.e. yorg contains
 #   yyagl/ and racing/)
 # yyagl's scons
 # unit tests
 # gui warnings for missing track's logics information
-# retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
 # retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
 # loadPrcFileData('', 'framebuffer-srgb true'); texture.set_format(F_srgb)
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424

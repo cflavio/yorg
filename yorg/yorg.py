@@ -1,7 +1,10 @@
 import argparse
-from sys import platform
+from sys import platform, path
+from importlib import reload
 from copy import deepcopy
+from os import walk
 from os.path import exists
+from yaml import load
 from panda3d.core import Filename
 from yyagl.game import Game
 from yyagl.dictfile import DctFile
@@ -211,12 +214,10 @@ class Yorg(Game):
             ('pinterest', 'https://www.pinterest.com/ya2tech'),
             ('tumblr', 'https://ya2tech.tumblr.com'),
             ('feed', 'https://www.ya2.it/pages/feed-following.html')]
+        tracks = self.__compute_tracks()
+        tracks_tr = self.__compute_tracks_tr()
         self.gameprops = GameProps(
-            menu_props, cars_names, self.drivers(),
-            ['moon', 'toronto', 'rome', 'sheffield', 'orlando', 'nagano',
-             'dubai'],
-            lambda: [_('Sinus Aestuum'), _('Toronto'), _('Rome'), _('Sheffield'),
-                     _('Orlando'), _('Nagano'), _('Dubai')],
+            menu_props, cars_names, self.drivers(), tracks, tracks_tr,
             'assets/tracks/%s/images/menu.txo',
             self.options['settings']['player_names'],
             self.options['settings']['stored_player_names'],
@@ -237,6 +238,26 @@ class Yorg(Game):
                 self.log_conf(val, pref + key + '::')
             elif key != 'pwd':
                 self.eng.log('option %s%s = %s' % (pref, key, val))
+
+    def __compute_tracks(self):
+        tracks = [r for r in next(walk('assets/tracks'))[1]]
+        tracks_i = []
+        for track in tracks:
+            with open(self.eng.curr_path + 'assets/tracks/' + track + '/track.yml') as ftrack:
+                sorting = load(ftrack)['sorting']
+            tracks_i += [(track, sorting)]
+        tracks_i = sorted(tracks_i, key=lambda elm: elm[1])
+        return [track[0] for track in tracks_i]
+
+    def __compute_tracks_tr(self):
+        translated = []
+        for track in self.__compute_tracks():
+            path.insert(0, self.eng.curr_path + 'assets/tracks/' + track)
+            mod = __import__('track_tr')
+            reload(mod)
+            translated += [mod.translated]
+            path.pop(0)
+        return lambda: translated
 
     def reset_drivers(self):
         self.gameprops.drivers_info = self.drivers()

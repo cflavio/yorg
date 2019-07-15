@@ -237,7 +237,7 @@ class DriverPageMPGui(DriverPageGui):
         self.tss = []
         instr_txt = _(
             'If you use the keyboard, press FIRE to edit the field, then '
-            "ENTER when you're done. Other players can't move while someone"
+            "ENTER when you're done. Other players can't move while someone "
             'is writing (since, with keyboards, some letters may be bound to '
             'movements).')
         instr = Text(instr_txt, pos=(1.28, .8), scale=.042, wordwrap=24, **t_a)
