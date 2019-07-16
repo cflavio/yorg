@@ -2,41 +2,41 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-10-14 13:01+0000\n"
+"PO-Revision-Date: 2019-07-16 07:12+0000\n"
 "Last-Translator: xin <xin@riseup.net>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: menu/numplayerspage.py:16
 msgid "How many players?"
-msgstr ""
+msgstr "Combien de joueurs ?"
 
 #: menu/already_dlg.py:12
 #, python-format
 msgid "The key %s is already used by player %s for %s."
-msgstr ""
+msgstr "La touche %s est déjà utilisée par le joueur %s pour %s."
 
 #: menu/onlinepage.py:27
 msgid "Play"
-msgstr ""
+msgstr "Jouer"
 
 #: menu/onlinepage.py:31 menu/registerpage.py:45
 msgid "Register"
 msgstr "S'enregistrer"
 
 #: menu/onlinepage.py:32
-#, fuzzy
 msgid "Reset password"
-msgstr "enregistrer le mot de passe"
+msgstr "Réinitialiser le mot de passe"
 
 #: menu/onlinepage.py:69
 msgid "Server problem"
@@ -65,11 +65,11 @@ msgstr "Connexion"
 
 #: menu/multiplayerpage.py:23
 msgid "Local"
-msgstr ""
+msgstr "Local"
 
 #: menu/multiplayerpage.py:24
 msgid "Online"
-msgstr ""
+msgstr "En ligne"
 
 #: menu/resetpage.py:21 menu/registerpage.py:21
 msgid "Your email:"
@@ -143,9 +143,8 @@ msgid "Supporters"
 msgstr "Soutiens"
 
 #: menu/inputpage.py:34 menu/inputpage.py:36
-#, fuzzy
 msgid "Player"
-msgstr "Un joueur"
+msgstr "Joueur"
 
 #: menu/inputpage.py:39 menu/inputpage.py:42
 msgid "Use the joypad when present"
@@ -181,7 +180,7 @@ msgstr "Appuyer sur une touche pour l'enregistrer"
 
 #: menu/inputpage.py:157
 msgid "Player 2"
-msgstr ""
+msgstr "Joueur 2"
 
 #: menu/inputpage.py:160
 msgid "Pause"
@@ -189,11 +188,11 @@ msgstr "Pause"
 
 #: menu/inputpage.py:195
 msgid "Player 3"
-msgstr ""
+msgstr "Joueur 3"
 
 #: menu/inputpage.py:218
 msgid "Player 4"
-msgstr ""
+msgstr "Joueur 4"
 
 #: menu/optionpage.py:37
 msgid "Language"
@@ -288,6 +287,8 @@ msgid ""
 "If you use the keyboard, press FIRE to edit the field, then ENTER when "
 "you're done"
 msgstr ""
+"Si vous utilisez le clavier, appuyez sur FEU pour éditer le champ, puis sur "
+"ENTRÉE une fois terminé."
 
 #: menu/driverpage.py:159 menu/driverpage.py:167 menu/driverpage.py:168
 #: menu/driverpage.py:169 menu/driverpage.py:171 menu/driverpage.py:174
@@ -297,14 +298,12 @@ msgid "your name"
 msgstr "votre nom"
 
 #: menu/driverpage.py:196
-#, fuzzy
 msgid "Select the drivers"
-msgstr "Sélectionner le pilote"
+msgstr "Sélectionner les pilotes"
 
 #: menu/driverpage.py:200
-#, fuzzy
 msgid "Write your names:"
-msgstr "Écrivez votre nom :"
+msgstr "Écrivez vos noms :"
 
 #: menu/driverpage.py:239
 msgid ""
@@ -312,15 +311,18 @@ msgid ""
 "you're done. Other players can't move while someoneis writing (since, with "
 "keyboards, some letters may be bound to movements)."
 msgstr ""
+"Si vous utilisez le clavier, appuyez sur FEU pour éditer le champ, puis sur "
+"ENTRÉE une fois terminé. Les autres joueurs ne peuvent pas se déplacer "
+"pendant que quelqu'un est en train d'écrire (car, avec les claviers, "
+"certaines lettres peuvent être attribuées à des mouvements)."
 
 #: menu/mainpage.py:99
 msgid "Single Player"
 msgstr "Un joueur"
 
 #: menu/mainpage.py:100
-#, fuzzy
 msgid "Multiplayer"
-msgstr "multijoueur"
+msgstr "Multijoueur"
 
 #: menu/mainpage.py:101
 msgid "Options"
@@ -351,9 +353,8 @@ msgid "show"
 msgstr "afficher"
 
 #: menu/clientpage.py:24
-#, fuzzy
 msgid "Current waiting hosting users"
-msgstr "Utilisateurs actuellement en ligne"
+msgstr "Utilisateurs hôtes actuellement en attente"
 
 #: menu/registerpage.py:69
 msgid ""
@@ -386,7 +387,7 @@ msgstr "Votre email est déjà utilisé."
 
 #: menu/registerpage.py:79
 msgid "Please use more than 6 characters for your password."
-msgstr ""
+msgstr "Veuillez utiliser plus de 6 caractères pour votre mot de passe."
 
 #: menu/singleplayerpage.py:15
 msgid "Single race"
@@ -494,7 +495,6 @@ msgid "remove from the match"
 msgstr "retirer de cette partie"
 
 #: menu/multiplayer/network_dlg.py:13
-#, fuzzy
 msgid ""
 "Connection error. Please check that (i) your firewall allows traffic for "
 "Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is "
@@ -502,7 +502,7 @@ msgid ""
 msgstr ""
 "Erreur de connexion. Veuillez vérifier (i) que votre pare-feu autorise le "
 "trafic pour Yorg sur le port 9099 et (ii) que l'utilisateur du serveur a "
-"ouvert son port 9099 (un guide pour vérifier: http://www.ya2.it/pages/check-"
+"ouvert son port 9099 (un guide pour vérifier: https://www.ya2.it/pages/check-"
 "your-ports.html)."
 
 #: menu/multiplayer/multiplayerfrm.py:95
@@ -613,9 +613,8 @@ msgid "weapon"
 msgstr "arme"
 
 #: yyagl/racing/car/gui.py:449
-#, fuzzy
 msgid "waiting for the other players"
-msgstr "veuillez attendre le serveur"
+msgstr "en attente des autres joueurs"
 
 #: yyagl/racing/car/gui.py:577
 #, python-format
