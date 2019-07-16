@@ -1,4 +1,5 @@
 from random import shuffle
+from os import walk
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from yaml import load
 from collections import OrderedDict
@@ -570,16 +571,13 @@ class YorgLogic(GameLogic):
         # names for both wheels
         wheel_names = WheelNames(frwheels, bwheels)
         track_gpath = 'assets/tracks/%s/models/track_all.bam' % track_name
-        track_fpath = 'assets/tracks/%s/models/track.yml' % track_name
+        track_fpath = 'assets/tracks/%s/track.yml' % track_name
         with open(self.eng.curr_path + track_fpath) as ftrack:
             music_name = load(ftrack)['music']
         music_fpath = 'assets/music/%s.ogg' % music_name
         corner_names = ['topleft', 'topright', 'bottomright', 'bottomleft']
         corner_names = ['Minimap' + crn for crn in corner_names]
-        carname2color = {'kronos': (0, 0, 1, 1), 'themis': (1, 0, 0, 1),
-                         'diones': (1, 1, 1, 1), 'iapeto': (1, 1, 0, 1),
-                         'phoibe': (.6, .6, 1, 1), 'rea': (0, 0, .6, 1),
-                         'iperion': (.8, .8, .8, 1), 'teia': (0, 0, 0, 1)}
+        carname2color = self.__car2colors()
         with open(self.eng.curr_path + track_fpath) as ftrack:
             track_cfg = load(ftrack)
             camera_vec = track_cfg['camera_vector']
@@ -599,7 +597,7 @@ class YorgLogic(GameLogic):
             grid = [pair[0] for pair in grid_rev_ranking]
         race_props = RaceProps(
             self.season.props, keys, joysticks, sounds,
-            'assets/models/cars/%s/capsule', 'Capsule', 'assets/models/cars',
+            'assets/cars/%s/models/capsule', 'Capsule', 'assets/cars',
             wheel_names, 'Road',
             'assets/particles/sparks.ptf', drivers,
             self.mediator.options['development']['shaders_dev'],
@@ -623,3 +621,12 @@ class YorgLogic(GameLogic):
             'Respawn', 'PitStop', 'Wall', 'Goal', 'Bonus', ['Road', 'Offroad'],
             grid, start_wp, self.mediator.options['development']['ai_debug'])
         return race_props
+
+    def __car2colors(self):
+        car2col = {}
+        cars = [r for r in next(walk('assets/cars'))[1]]
+        for car in cars:
+            with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.yml') as fcar:
+                col = tuple(load(fcar)['color'])
+            car2col[car] = col
+        return car2col

@@ -26,3 +26,5 @@ wheels_damping_compression: [1.15, 1.15]  # overwrites suspension_compression; w
 friction_slip: [2.7, 2.7]  # default 10.5
 friction_slip_rear: [2.7, 2.7]  # default 10.5
 roll_influence: [.4, .32]  # default .1; was .2, .007
+sorting: 5
+color: [0, 0, .6, 1]

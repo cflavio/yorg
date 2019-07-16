@@ -1,9 +1,9 @@
-max_speed: 118.0  # Km/h
-box_size: [.76, 1.48, .25]
-box_pos: [0, -0.01, .65]
-gfx_z: .2
+max_speed: 122.0  # Km/h
+box_size: [.72, 1.42, .25]
+box_pos: [0, 0, .65]
+gfx_z: .12
 center_mass_offset: .05
-mass: 285  # kilograms
+mass: 280  # kilograms
 steering: [30, 6]  # degrees at min (max) speed
 steering_clamp: 40  # degrees
 steering_inc: 120  # degrees per second
@@ -23,6 +23,8 @@ skid_info: 1  # default 0 ; was 1
 suspension_stiffness: [12, 12]  # default 5.88; f1 car == 200 ; was 36, 36
 wheels_damping_relaxation: [1.2, 1.2]  # overwrites suspension_damping; was 1.2, 1.2
 wheels_damping_compression: [1.15, 1.15]  # overwrites suspension_compression; was 5, 5
-friction_slip: [2.65, 2.65]  # default 10.5
-friction_slip_rear: [2.65, 2.65]  # default 10.5
-roll_influence: [.4, .31]  # default .1; was .2, .008
+friction_slip: [2.55, 2.55]  # default 10.5; was 2.55, 2.55
+friction_slip_rear: [2.55, 2.55]  # default 10.5; was 2.55, 2.55
+roll_influence: [.4, .32]  # default .1; was .2, .009
+sorting: 0
+color: [1, 0, 0, 1]

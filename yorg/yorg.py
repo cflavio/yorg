@@ -195,14 +195,13 @@ class Yorg(Game):
             (0, 0, 0, .2), 'assets/images/gui/menu_background.txo',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
             'assets/images/icons/%s.txo', nav)
-        cars_names = ['themis', 'kronos', 'diones', 'iapeto', 'phoibe', 'rea',
-                      'iperion', 'teia']
-        damage_info = DamageInfo('assets/models/cars/%s/cardamage1',
-                                 'assets/models/cars/%s/cardamage2')
+        damage_info = DamageInfo('assets/cars/%s/models/cardamage1',
+                                 'assets/cars/%s/models/cardamage2')
         Game.__init__(self, init_lst, conf, YorgClient)
+        cars_names = self.__compute_cars()
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
         wheel_gfx_names = [
-            self.eng.curr_path + 'assets/models/cars/%s/' + wname
+            self.eng.curr_path + 'assets/cars/%s/models/' + wname
             for wname in wheel_gfx_names]
         wheel_gfx_names = WheelGfxNames(*wheel_gfx_names)
         social_sites = [
@@ -223,10 +222,10 @@ class Yorg(Game):
             self.options['settings']['stored_player_names'],
             DriverPaths('assets/images/drivers/driver%s.txo',
                         'assets/images/drivers/driver%s_sel.txo'),
-            'assets/images/cars/%s_sel.txo',
-            'assets/images/cars/%s.txo',
-            self.eng.curr_path + 'assets/models/cars/%s/phys.yml',
-            'assets/models/cars/%s/car',
+            'assets/cars/%s/images/car_sel.txo',
+            'assets/cars/%s/images/car.txo',
+            self.eng.curr_path + 'assets/cars/%s/phys.yml',
+            'assets/cars/%s/models/car',
             damage_info, wheel_gfx_names, opt_dev['xmpp_debug'],
             social_sites)
         self.log_conf(self.options.dct)
@@ -258,6 +257,16 @@ class Yorg(Game):
             translated += [mod.translated]
             path.pop(0)
         return lambda: translated
+
+    def __compute_cars(self):
+        cars = [r for r in next(walk('assets/cars'))[1]]
+        cars_i = []
+        for car in cars:
+            with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.yml') as fcar:
+                sorting = load(fcar)['sorting']
+            cars_i += [(car, sorting)]
+        cars_i = sorted(cars_i, key=lambda elm: elm[1])
+        return [car[0] for car in cars_i]
 
     def reset_drivers(self):
         self.gameprops.drivers_info = self.drivers()
