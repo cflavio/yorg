@@ -118,7 +118,8 @@ class Yorg(Game):
                 'xmpp_server': 'ya2_yorg@jabb3r.org',
                 'server': 'ya2tech.it:9099',
                 'mp_srv_usr': '',
-                'fixed_fps': 0}}
+                'fixed_fps': 0,
+                'srgb': 0}}
         opt_path = ''
         if platform in ['win32', 'linux'] and not exists('main.py'):
             # it is the deployed version for windows
@@ -172,7 +173,8 @@ class Yorg(Game):
             verbose_log=opt_dev['verbose_log'],
             xmpp_server=opt_dev['xmpp_server'],
             start_wp=opt_dev['start_wp'], port=opt_dev['port'],
-            server=opt_dev['server'])
+            server=opt_dev['server'],
+            srgb=opt_dev['srgb'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         init_lst = [
             [('fsm', YorgFsm, [self])],
