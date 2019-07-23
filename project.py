@@ -39,6 +39,7 @@
 #   yyagl/ and racing/)
 # yyagl's scons
 # unit tests
-# gui warnings for missing track's logics information
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
 # better highlighting of current selection in the menus
+# improve rear camera
+# colored skydmarks
