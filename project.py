@@ -1,5 +1,9 @@
 # ================================= BUGS ======================================
 
+# force feedback on crash and skidmarks
+# driver menu: if the name is filled, then focus the first driver
+# joypad: press the accelerator before the race starts
+
 
 # ============================== TODO LIST ====================================
 
@@ -47,3 +51,4 @@
 # retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
 # loadPrcFileData('', 'framebuffer-srgb true'); texture.set_format(F_srgb)
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
+# reconfigure gamepad buttons (as for keyboard ones)
