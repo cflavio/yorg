@@ -1,5 +1,7 @@
 # ================================= BUGS ======================================
 
+# force feedback on crash and skidmarks
+
 
 # ============================== TODO LIST ====================================
 
@@ -43,3 +45,4 @@
 # better highlighting of current selection in the menus
 # improve rear camera
 # colored skydmarks
+# reconfigure gamepad buttons (as for keyboard ones)

@@ -150,6 +150,12 @@ class DriverPageGui(ThanksPageGui):
 
 class DriverPageSinglePlayerGui(DriverPageGui):
 
+    def __init__(self, mediator, driverpage_props, nplayers=1):
+        DriverPageGui.__init__(self, mediator, driverpage_props, nplayers)
+        if self.ent.text != _('your name'):
+            btn = [wdg for wdg in self.widgets if wdg.__class__.__name__ == 'ImgBtnWidget'][0]
+            for player in self.players: self.focus(btn, player)
+
     def build(self):
         menu_props = self.menu_props
         all_names = self.props.gameprops.player_names + self.props.gameprops.stored_player_names[len(self.props.gameprops.player_names):]
@@ -189,6 +195,9 @@ class DriverPageMPGui(DriverPageGui):
         self.selected_drivers = {}
         for i in range(players): self.selected_drivers[i] = None
         self.enabled = False
+        if all(ent.text != _('your name') for ent in self.ents):
+            btns = [wdg for wdg in self.widgets if wdg.__class__.__name__ == 'ImgBtnWidget']
+            for player in self.players: self.focus(btns[player], player)
 
     def build(self):
         self.drv_info = self.props.gameprops.drivers_info
