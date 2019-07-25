@@ -1,8 +1,6 @@
 # ================================= BUGS ======================================
 
 # force feedback on crash and skidmarks
-# driver menu: if the name is filled, then focus the first driver
-# joypad: press the accelerator before the race starts
 
 
 # ============================== TODO LIST ====================================
