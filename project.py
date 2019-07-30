@@ -43,6 +43,7 @@
 # unit tests
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
 # better highlighting of current selection in the menus
+# 1.10.3: change antialiasing without restart
 # improve rear camera
 # colored skydmarks
 # reconfigure gamepad buttons (as for keyboard ones)
