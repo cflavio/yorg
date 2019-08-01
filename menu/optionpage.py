@@ -64,14 +64,11 @@ class OptionPageGui(ThanksPageGui):
             **menu_props.option_args
             )
         widgets += [self.__add_lab('Antialiasing', _('Antialiasing'), .05)]
-        widgets += [
-            self.__add_lab('(from the next execution)',
-                           _('(from the next execution)'), .05, .2,
-                           TextNode.ALeft, .06)]
         self.aa_cb = CheckBtn(
             pos=(.12, .08), text='',
             indicator_val=self.props.antialiasing,
-            indicator_frame_col=menu_props.text_active_col, **menu_props.checkbtn_args)
+            indicator_frame_col=menu_props.text_active_col,
+            cmd=self.eng.gfx.gfx_mgr.toggle_aa, **menu_props.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
         self.shaders_cb = CheckBtn(
             pos=(.12, -.12), text='', indicator_val=self.props.shaders,
@@ -83,7 +80,6 @@ class OptionPageGui(ThanksPageGui):
             initialitem=self.props.cars_num - 1, **menu_props.option_args)
         self.cameras = [_('Top'), _('Rear')]
         self.camera_codes = ['top', 'rear']
-
         self.cam_opt = OptionMenu(
             text='', items=self.cameras, pos=(.49, -.55),
             initialitem=self.cameras[self.camera_codes.index(self.props.camera)],

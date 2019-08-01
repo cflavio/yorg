@@ -9,8 +9,6 @@
 # =============================== WAITING =====================================
 
 # flatpak on the vps: issues #28
-# 0.12 improve online multiplayer's end of race (print realtime ranking, show
-#   bigger minimap)
 
 # ============================ MAYBE/SOMEDAY ==================================
 
@@ -43,7 +41,9 @@
 # unit tests
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
 # better highlighting of current selection in the menus
-# 1.10.3: change antialiasing without restart
 # improve rear camera
 # colored skydmarks
+# load the car and the track from a single file
 # reconfigure gamepad buttons (as for keyboard ones)
+# improve online multiplayer's end of race (print realtime ranking, show
+#   bigger minimap)
