@@ -3,3 +3,4 @@ shadow_source: [50, -80, 80]
 laps: 2
 music: Dune Dannose
 sorting: 6
+skidmark_col: [.6, .4, .2]

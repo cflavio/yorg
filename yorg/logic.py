@@ -582,6 +582,7 @@ class YorgLogic(GameLogic):
             track_cfg = load(ftrack)
             camera_vec = track_cfg['camera_vector']
             shadow_src = track_cfg['shadow_source']
+            skidmark_col = track_cfg['skidmark_col']
             laps_num = track_cfg['laps']
         share_urls = [
             'https://www.facebook.com/sharer/sharer.php?u=' +
@@ -612,7 +613,8 @@ class YorgLogic(GameLogic):
             'omni', self.sign_cb, 'EmptyNameBillboard4Anim',
             'assets/tracks/%s/images/minimap.txo' % track_name,
             'assets/images/minimaps/car_handle.txo', carname2color, camera_vec,
-            shadow_src, laps_num, 'assets/models/weapons/rocket/RocketAnim',
+            shadow_src, laps_num, skidmark_col,
+            'assets/models/weapons/rocket/RocketAnim',
             'assets/models/weapons/turbo/TurboAnim',
             'assets/models/weapons/turn/TurnAnim',
             'assets/models/weapons/mine/MineAnim',

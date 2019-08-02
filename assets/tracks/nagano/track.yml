@@ -3,3 +3,4 @@ shadow_source: [50, -80, 80]
 laps: 2
 music: Freno Notturno
 sorting: 5
+skidmark_col: [.5, .5, .5]

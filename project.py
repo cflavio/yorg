@@ -42,7 +42,6 @@
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
 # better highlighting of current selection in the menus
 # improve rear camera
-# colored skydmarks
 # load the car and the track from a single file
 # reconfigure gamepad buttons (as for keyboard ones)
 # improve online multiplayer's end of race (print realtime ranking, show

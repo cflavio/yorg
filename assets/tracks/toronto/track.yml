@@ -3,3 +3,4 @@ shadow_source: [50, -80, 80]
 laps: 3
 music: Salvation in Snow
 sorting: 1
+skidmark_col: [.8, .8, .8]
