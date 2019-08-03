@@ -1,7 +1,5 @@
 # ================================= BUGS ======================================
 
-# force feedback on crash and skidmarks
-
 
 # ============================== TODO LIST ====================================
 
@@ -50,3 +48,6 @@
 # loadPrcFileData('', 'framebuffer-srgb true'); texture.set_format(F_srgb)
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
 # reconfigure gamepad buttons (as for keyboard ones)
+# force feedback on crash and weapon
+# improve online multiplayer's end of race (print realtime ranking, show
+#   bigger minimap)
