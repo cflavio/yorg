@@ -1,7 +1,5 @@
 # ================================= BUGS ======================================
 
-# force feedback on crash and skidmarks
-
 
 # ============================== TODO LIST ====================================
 
@@ -44,5 +42,6 @@
 # improve rear camera
 # load the car and the track from a single file
 # reconfigure gamepad buttons (as for keyboard ones)
+# force feedback on crash and weapon
 # improve online multiplayer's end of race (print realtime ranking, show
 #   bigger minimap)

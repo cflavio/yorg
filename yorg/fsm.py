@@ -200,6 +200,8 @@ class YorgFsm(FsmColleague):
         #if not (cars and track and not server):
         #    self.mediator.logic.mp_frm.show()
         self.mediator.logic.season.race.destroy()
+        for i in range(4):
+            self.eng.joystick_mgr.joystick_lib.clear_vibration(i)
         base.accept('escape-up', self.demand, ['Exit'])
         self.eng.client.detach(self.on_presence_unavailable_room)
 
