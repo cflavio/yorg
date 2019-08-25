@@ -1,45 +1,54 @@
-# BUGS =====
+# ================================= BUGS ======================================
 
 
-# TODO LIST =====
+# ============================== TODO LIST ====================================
 
-# 0.11 (local multiplayer)
-# option pages for configuring keys
-# highlight the current widget with different colors per-player
-# screen splitting
+# loading page: local multiplayer's controls
 
 
-# WAITING =====
+# =============================== WAITING =====================================
 
-# (Panda3D 1.10) joypad
-# (Panda3D 1.10) remove thirdparty libraries (manage them with deploy-ng)
-# (Panda3D 1.10) write snow shader
-# (Panda3D 1.10) hw skinning
-# (Panda3D 1.10) deployng: log_filename
-# (Panda3D 1.10) deployng: use logging for logging
-# (Panda3D 1.10) port to python 3
-# hardware instancing (gl_InstanceID requires 1.40)
+# flatpak on the vps: issues #28
+# 0.12 improve online multiplayer's end of race (print realtime ranking, show
+#   bigger minimap)
 
+# ============================ MAYBE/SOMEDAY ==================================
 
-# MAYBE/SOMEDAY =====
-
-# make scons for yyagl
-# make a submodule for racing - yyarl
-# embed into a wx / pyqt window
-# uml create automatic class diagrams with fields and methods for each class
-# do automatic update (assets shared among platforms)
+# profiling
+# remove camera's render_all workaround
+# portable installers (xz)
+# refactor the server (async.io) or
+#     def update(): ... threading.Timer(.5, update).start()
+# refactoring: do event/observer for joystick buttons
+# remove dependencies: bson (struct), pyyaml (configparser+json),
+#   feedparser (write my function which retrieve posts' titles)
+# use python's logging in place of eng.log
+# lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
+#   'Facade' is called
+# remove eng.server
+# gui: do a single page for configuring the race (less testing)
+# class Player (has-a car, has-a driver)
+# where proper (i.e. where observers aren't tied to the observable) replace
+#   observer with publisher-subscriber
+# attach/attach_obs, detach/detach_obs - the client attach-es it to the
+#   observed, then it attach-es it to the component
+# notify's sender (see page.py)
+# object's creation: isolate the parallel creation and construct object in the
+#   standard way (fields) and use the parallel creation only when it is useful
+# (waitig for refactored objects' creation): facade, pass a single list (meth
+#   for callables, prop for others)
+# racing should be another package in another submodule (i.e. yorg contains
+#   yyagl/ and racing/)
+# yyagl's scons
 # unit tests
-# django webapp for scores
-# refactor: use only eng.client (remove eng.server and yorg_client)
-# refactor: don't share eng with every colleague, instead share only the
-#   useful components e.g. PhysComponent has PhysComponent.phys_mgr and
-#   PhysComponent.log_mgr
-# refactor: remove mediator from colleague
-# refactor: where proper (i.e. where observers aren't tied to the observable)
-#   replace observer with publisher-subscriber
-# add car helios
-# add friendship
-# drifting force function of linear and angular velocities
-# do a single page with track, drivers, cars and messages for all: single,
-#  local and online multiplayer
-# refactoring: select the driver before the car
+# move all track's assets (minimap, menu image, ...) in track's folder
+# gui warnings for missing track's logics information
+# retrieve track list from 'tracks' folder (don't use an hardcoded list) (mods)
+# retrieve car list from 'cars' folder (don't use an hardcoded list) (mods)
+# loadPrcFileData('', 'framebuffer-srgb true'); texture.set_format(F_srgb)
+# https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
+# reconfigure gamepad buttons (as for keyboard ones)
+# force feedback on crash and weapon
+# executable's icon
+# improve online multiplayer's end of race (print realtime ranking, show
+#   bigger minimap)

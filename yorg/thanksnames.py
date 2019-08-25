@@ -10,6 +10,7 @@ class ThanksNames(GameObject):
         while len(names) < num or curr_level >= level:
             fname = curr_path + 'assets/thanks%s.txt' % curr_level
             curr_names = open(fname).readlines()
+            curr_names = [name for name in curr_names if name.strip()]  # for empty files
             if curr_level >= level:
                 names += curr_names
             else:

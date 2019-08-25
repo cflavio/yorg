@@ -1,3 +1,7 @@
-fire, hit, pitstop, rotate_all_fire, rotate_all_hit and turbo sfx are by:
-  Little Robot Sound Factory
-  https://opengameart.org/content/8-bit-sound-effects-library
+Sound effects attribution
+=========================
+
+fire: Michel Baradari https://opengameart.org/content/4-projectile-launches
+hit, lap, pitstop, rotate_all_hit, turbo: Little Robot Sound Factory https://opengameart.org/content/sci-fi-sound-effects-library
+crash_high_speed: Michel Baradari https://opengameart.org/content/2-high-quality-explosions
+rotate_all_fire, mine: Little Robot Sound Factory https://opengameart.org/content/electric-sound-effects-library

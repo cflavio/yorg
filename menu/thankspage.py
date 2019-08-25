@@ -1,5 +1,5 @@
 from panda3d.core import TextNode
-from yyagl.library.gui import Text
+from yyagl.lib.gui import Text
 from yorg.thanksnames import ThanksNames
 from yyagl.engine.gui.page import PageGui
 
@@ -7,9 +7,9 @@ from yyagl.engine.gui.page import PageGui
 class ThanksPageGui(PageGui):
 
     def build(self, back_btn=True, exit_behav=False):
-        menu_args = self.menu_args
-        t_a = menu_args.text_args
-        t_a['fg'] = menu_args.text_normal
+        menu_props = self.menu_props
+        t_a = menu_props.text_args
+        t_a['fg'] = menu_props.text_normal_col
         t_a['scale'] = .06
         thanks_txt = Text(
             _('Thanks to: ') + ThanksNames.get_thanks(1, 3)[0],

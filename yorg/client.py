@@ -1,5 +1,5 @@
 from socket import error
-from yyagl.gameobject import GameObject
+from yyagl.engine.network.client import Client
 
 
 class User(object):
@@ -10,25 +10,25 @@ class User(object):
         self.is_playing = is_playing
 
 
-class YorgClient(GameObject):
+class YorgClient(Client):
 
-    def __init__(self):
-        GameObject.__init__(self)
+    def __init__(self, port, server):
+        Client.__init__(self, port, server)
         self.authenticated = False
         self.is_server_up = True
-        self.restart()
+        #self.restart()
         self.users = []
         self.is_server_active = False
         self.is_client_active = False
 
     def restart(self):
-        try: self.is_server_up = self.eng.client.start(self.on_msg, self.eng.cfg.dev_cfg.server)
+        try: self.is_server_up = self.start(self.on_msg)
         except error: self.is_server_up = False
 
-    def start(self, uid):
+    def init(self, uid):
         self.myid = uid
-        self.eng.client.register_rpc('get_users')
-        users = self.eng.client.get_users()
+        self.register_rpc('get_users')
+        users = self.get_users()
         self.users = [User(*args) for args in users]
 
     def on_msg(self, data_lst, sender):
@@ -83,6 +83,8 @@ class YorgClient(GameObject):
             self.notify('on_end_race_player', data_lst[1])
         if data_lst[0] == 'rm_usr_from_match':
             self.notify('on_rm_usr_from_match', data_lst[1:])
+        if data_lst[0] == 'update_hosting':
+            self.notify('on_update_hosting')
 
     def find_usr(self, uid):
         return [usr for usr in self.users if usr.uid == uid][0]

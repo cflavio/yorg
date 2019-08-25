@@ -1,4 +1,4 @@
-from yyagl.library.gui import Btn
+from yyagl.lib.gui import Btn
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -8,7 +8,7 @@ class SingleplayerPageGui(ThanksPageGui):
 
     def __init__(self, mediator, props):
         self.props = props
-        ThanksPageGui.__init__(self, mediator, props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, props.gameprops.menu_props)
 
     def build(self):
         menu_data = [
@@ -17,14 +17,14 @@ class SingleplayerPageGui(ThanksPageGui):
             (_('Continue season'), lambda: self.notify('on_continue'))]
         widgets = [
             Btn(
-                text=menu[0], pos=(-.2, 1, .4-i*.28), command=menu[1],
-                **self.props.gameprops.menu_args.btn_args)
+                text=menu[0], pos=(0, .4-i*.28), cmd=menu[1],
+                **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
-        self._set_widgets()
+        #self._set_widgets()
+        ThanksPageGui.build(self)
         if not self.props.has_save:
             widgets[-1].disable()
-        ThanksPageGui.build(self)
 
     def on_single_race(self):
         self.notify('on_push_page', 'single_race', [self.props])
@@ -38,13 +38,15 @@ class SingleplayerPage(Page):
     gui_cls = SingleplayerPageGui
 
     def __init__(self, singleplayerpage_props):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, singleplayerpage_props])]]
-        GameObject.__init__(self, init_lst)
+        self.singleplayerpage_props = singleplayerpage_props
+        Page.__init__(self, singleplayerpage_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.singleplayerpage_props])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)

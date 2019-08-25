@@ -7,7 +7,7 @@ class YorgEvent(EventColleague):
     def __init__(self, mediator):
         EventColleague.__init__(self, mediator)
         if not self.eng.is_runtime:
-            self.accept('f12', self.eng.phys_mgr.toggle_debug)
+            self.accept('f12', self.eng.phys_mgr.toggle_dbg)
         fname = 'yorg_' + strftime('%y_%m_%d_%H_%M_%S') + '.png'
         self.accept('f10', base.win.saveScreenshot, [fname])
         base.accept('escape-up', self.mediator.fsm.demand, ['Exit'])
@@ -27,4 +27,4 @@ class YorgEvent(EventColleague):
         tuning = self.mediator.logic.season.tuning
         self.mediator.options['save']['tuning'] = tuning.to_dct
         self.mediator.options.store()
-        self.mediator.fsm.demand('Race', next_track, curr_car, [curr_car], drivers)
+        self.mediator.fsm.demand('Race', next_track, curr_car, None, drivers)

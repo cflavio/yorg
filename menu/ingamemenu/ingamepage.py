@@ -1,4 +1,4 @@
-from yyagl.library.gui import Btn, Frame, Text
+from yyagl.lib.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 from yyagl.racing.race.event import NetMsgs
@@ -6,40 +6,35 @@ from yyagl.racing.race.event import NetMsgs
 
 class InGamePageGuiMultiplayer(PageGui):
 
-    def __init__(self, mediator, menu_args, keys):
+    def __init__(self, mediator, menu_props, keys):
         self.keys = keys
-        PageGui.__init__(self, mediator, menu_args)
+        PageGui.__init__(self, mediator, menu_props)
 
     def build(self, back_btn=True):
         frm = Frame(
-            frameSize=(-1.5, 1.5, -.9, .9), frameColor=(.95, .95, .7, .85))
+            frame_size=(-1.5, 1.5, -.9, .9), frame_col=(.95, .95, .7, .85))
         question_txt = _(
             "What do you want to do?\n\nNote: use '%s' for pausing the game.")
         question_txt = question_txt % self.keys.pause
-        menu_args = self.menu_args
+        menu_props = self.menu_props
         txt = Text(
             question_txt, pos=(0, .64), scale=.08, wordwrap=32,
-            fg=menu_args.text_active, font=menu_args.font)
+            fg=menu_props.text_active_col, font=menu_props.font)
         on_back = lambda: self.on_end(True)
         on_end = lambda: self.on_end(False)
         menu_data = [
             ('back to the game', _('back to the game'), on_back),
             ('back to the main menu', _('back to the main menu'), on_end)]
-        btn_args = menu_args.btn_args
+        btn_args = menu_props.btn_args
         btn_visit = Btn(
-            text=menu_data[0][1], pos=(0, 1, 0), command=menu_data[0][2],
+            text=menu_data[0][1], pos=(0, 0), cmd=menu_data[0][2],
             text_scale=.8, **btn_args)
         btn_dont_visit = Btn(
-            text=menu_data[1][1], pos=(0, 1, -.5), command=menu_data[1][2],
+            text=menu_data[1][1], pos=(0, -.5), cmd=menu_data[1][2],
             text_scale=.8, **btn_args)
         self.add_widgets([frm, txt, btn_visit, btn_dont_visit])
         PageGui.build(self, False)
-
-        if self.eng.lib.version().startswith('1.10'):
-            self.eng.show_cursor()
-        else:
-            self.eng.hide_cursor()
-            self.eng.show_standard_cursor()
+        self.eng.show_cursor()
 
     def on_end(self, back_to_game):
         self.eng.hide_standard_cursor()
@@ -66,13 +61,16 @@ class InGamePageGui(InGamePageGuiMultiplayer):
 class InGamePageMultiplayer(Page):
     gui_cls = InGamePageGuiMultiplayer
 
-    def __init__(self, menu_args, keys):
+    def __init__(self, menu_props, keys):
+        self.keys = keys
+        self.menu_props = menu_props
         PageFacade.__init__(self)
-        self.menu_args = menu_args
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, keys])]]
-        GameObject.__init__(self, init_lst)
+        Page.__init__(self, menu_props)
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.menu_props, self.keys])]]
 
 
 class InGamePage(InGamePageMultiplayer):

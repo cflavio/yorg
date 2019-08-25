@@ -1,4 +1,4 @@
-from yyagl.library.gui import Btn
+from yyagl.lib.gui import Btn
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
@@ -8,21 +8,23 @@ class MultiplayerPageGui(ThanksPageGui):
 
     def __init__(self, mediator, mp_props):
         self.props = mp_props
-        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
     def show(self):
         ThanksPageGui.show(self)
         self.build()
 
     def build(self):
-        scb = lambda: self.notify('on_push_page', 'server', [self.props])
-        ccb = lambda: self.notify('on_push_page', 'client', [self.props])
+        lmp_cb = lambda: self.notify('on_push_page', 'localmp',
+                                     [self.props])
+        omp_cb = lambda: self.notify('on_push_page', 'online',
+                                     [self.props])
         menu_data = [
-            ('Server', scb),
-            ('Client', ccb)]
+            ('Local', _('Local'), lmp_cb),
+            ('Online', _('Online'), omp_cb)]
         widgets = [
-            Btn(text=menu[0], pos=(0, 1, .4-i*.28), command=menu[1],
-                **self.props.gameprops.menu_args.btn_args)
+            Btn(text=menu[0], pos=(0, .3-i*.28), cmd=menu[2],
+                **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)

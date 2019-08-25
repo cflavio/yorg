@@ -1,5 +1,5 @@
 from itertools import product
-from yyagl.library.gui import Text
+from yyagl.lib.gui import Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -12,13 +12,13 @@ class TrackPageGui(ThanksPageGui):
     def __init__(self, mediator, trackpage_props, room):
         self.props = trackpage_props
         self.room = room
-        ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_args)
+        ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_props)
 
     def build(self):
-        txt = Text(_('Select the track'), pos=(-.2, .8),
-                           **self.menu_args.text_args)
+        txt = Text(_('Select the track'), pos=(0, .8),
+                           **self.menu_props.text_args)
         self.add_widgets([txt])
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         t_a['scale'] = .06
         tracks_per_row = 4
         gprops = self.props.gameprops
@@ -30,17 +30,17 @@ class TrackPageGui(ThanksPageGui):
                 if row == 1 else min(tracks_per_row, len(gprops.season_tracks))
             x_offset = .3 * (tracks_per_row - num_tracks)
             btn = ImgBtn(
-                scale=.3,
-                pos=(-1.4 + col * .6 + x_offset, 1, .4 - z_offset - row * .7),
-                frameColor=(0, 0, 0, 0),
-                image=gprops.track_img % gprops.season_tracks[
+                scale=(.3, .3),
+                pos=(-.9 + col * .6 + x_offset, .4 - z_offset - row * .7),
+                frame_col=(0, 0, 0, 0),
+                img=gprops.track_img % gprops.season_tracks[
                     col + row * tracks_per_row],
-                command=self.on_track, extraArgs=[gprops.season_tracks[
+                cmd=self.on_track, extra_args=[gprops.season_tracks[
                     col + row * tracks_per_row]],
-                **self.menu_args.imgbtn_args)
+                **self.menu_props.imgbtn_args)
             txt = Text(
                 gprops.tracks_tr()[col + row * tracks_per_row],
-                pos=(-1.4 + col * .6 + x_offset, .14 - z_offset - row * .7),
+                pos=(-.9 + col * .6 + x_offset, .14 - z_offset - row * .7),
                 **t_a)
             self.add_widgets([btn, txt])
         ThanksPageGui.build(self, exit_behav=self.eng.server.is_active)
@@ -51,29 +51,49 @@ class TrackPageGui(ThanksPageGui):
         self.notify('on_push_page', 'car_page', [self.props])
 
 
-class TrackPageGuiServer(TrackPageGui):
+class TrackPageServerGui(TrackPageGui):
 
     def on_track(self, track):
         self.notify('on_track_selected', track)
         self.notify('on_push_page', 'carpageserver', [self.props])
         self.eng.client.send(['track_selected', track, self.room])
 
+    def _on_quit(self):
+        self.eng.server.stop()
+        self.eng.client.register_rpc('leave_room')
+        self.eng.client.leave_room(self.room)
+        TrackPageGui._on_quit(self)
+
+
+class TrackPageLocalMPGui(TrackPageGui):
+
+    def on_track(self, track):
+        self.notify('on_track_selected_lmp', track)
+        self.notify('on_push_page', 'carpagelocalmp', [self.props])
+
 
 class TrackPage(Page):
     gui_cls = TrackPageGui
 
     def __init__(self, trackpage_props, room=None):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, trackpage_props, room])]]
-        GameObject.__init__(self, init_lst)
+        self.trackpage_props = trackpage_props
+        self.room = room
+        Page.__init__(self, trackpage_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.trackpage_props, self.room])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)
 
 
 class TrackPageServer(TrackPage):
-    gui_cls = TrackPageGuiServer
+    gui_cls = TrackPageServerGui
+
+
+class TrackPageLocalMP(TrackPage):
+    gui_cls = TrackPageLocalMPGui

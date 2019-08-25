@@ -1,9 +1,8 @@
 from itertools import product
-from sleekxmpp.jid import JID
 from yaml import load
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
-from yyagl.library.gui import Text
+from yyagl.lib.gui import Text
 from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
@@ -13,19 +12,19 @@ from .thankspage import ThanksPageGui
 
 class CarPageGui(ThanksPageGui):
 
-    def __init__(self, mediator, carpage_props, track_path, yorg_client):
+    def __init__(self, mediator, carpage_props, track_path, nplayers=1):
         self.car = None
         self.current_cars = None
         self.track_path = track_path
         self.props = carpage_props
-        self.yorg_client = yorg_client
-        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_args)
+        nplayers = list(range(nplayers))
+        ThanksPageGui.__init__(self, mediator, carpage_props.gameprops.menu_props, nplayers)
 
     def build(self, exit_behav=False):
         gprops = self.props.gameprops
         widgets = [Text(
-            _('Select the car'), pos=(-.2, .8),
-            **self.menu_args.text_args)]
+            _('Select the car'), pos=(0, .8),
+            **self.menu_props.text_args)]
         cars_per_row = 4
         for row, col in product(range(2), range(cars_per_row)):
             if row * cars_per_row + col >= len(gprops.cars_names):
@@ -36,7 +35,7 @@ class CarPageGui(ThanksPageGui):
         ThanksPageGui.build(self, exit_behav=exit_behav)
 
     def __bld_car(self, cars_per_row, row, col):
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         gprops = self.props.gameprops
         z_offset = 0 if len(gprops.cars_names) > cars_per_row else .35
@@ -44,22 +43,22 @@ class CarPageGui(ThanksPageGui):
             min(cars_per_row, len(gprops.cars_names))
         x_offset = .4 * (cars_per_row - num_car_row)
         btn = ImgBtn(
-            scale=.32,
-            pos=(-1.4 + col * .64 + x_offset, 1, .4 - z_offset - row * .7),
-            frameColor=(0, 0, 0, 0),
-            image=gprops.car_path % gprops.cars_names[col + row*cars_per_row],
-            command=self.on_car,
-            extraArgs=[
+            scale=(.32, .32),
+            pos=(-.96 + col * .64 + x_offset, .4 - z_offset - row * .7),
+            frame_col=(0, 0, 0, 0),
+            img=gprops.car_path % gprops.cars_names[col + row*cars_per_row],
+            cmd=self.on_car,
+            extra_args=[
                 gprops.cars_names[col + row * cars_per_row]],
-            **self.menu_args.imgbtn_args)
+            **self.menu_props.imgbtn_args)
         widgets = [btn]
         txt = Text(
             gprops.cars_names[col + row * cars_per_row],
-            pos=(-1.4 + col * .64 + x_offset, .64 - z_offset - row * .7),
+            pos=(-.96 + col * .64 + x_offset, .64 - z_offset - row * .7),
             scale=.072, **t_a)
         name = Text(
             '',
-            pos=(-1.4 + col * .64 + x_offset, .04 - z_offset - row * .7),
+            pos=(-.96 + col * .64 + x_offset, .04 - z_offset - row * .7),
             scale=.046, **t_a)
         btn._name_txt = name
         widgets += [txt, name]
@@ -77,17 +76,17 @@ class CarPageGui(ThanksPageGui):
         pcol = lambda x, _col=_col_: x if x == 0 else _col(x)
         txt_lst = [(_('adherence'), fric, .11), (_('speed'), speed, .27),
                    (_('stability'), roll, .19)]
-        widgets += map(lambda txt_def: self.__add_txt(
-            *txt_def + (psign, pcol, col, x_offset, z_offset, row)), txt_lst)
+        widgets += list(map(lambda txt_def: self.__add_txt(
+            *txt_def + (psign, pcol, col, x_offset, z_offset, row)), txt_lst))
         return widgets
 
     def __add_txt(self, txt, val, pos_z, psign, pcol, col, x_offset, z_offset,
                   row):
-        t_a = self.menu_args.text_args.copy()
+        t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         return Text(
             '%s: %s%s%%' % (txt, psign(val), pcol(val)),
-            pos=(-1.1 + col * .64 + x_offset, pos_z - z_offset - row * .7),
+            pos=(-.68 + col * .64 + x_offset, pos_z - z_offset - row * .7),
             scale=.052, align='right', **t_a)
 
     def _buttons(self, car):
@@ -108,13 +107,38 @@ class CarPageGuiSeason(CarPageGui):
         self.notify('on_push_page', 'driver_page', page_args)
 
 
+class CarPageLocalMPGui(CarPageGui):
+
+    def __init__(self, mediator, carpage_props, track_path, players):
+        CarPageGui.__init__(self, mediator, carpage_props, track_path, players)
+        self.selected_cars = {}
+        for i in range(players): self.selected_cars[i] = None
+
+    def on_car(self, car, player=0):
+        if self.selected_cars[player]:
+            self._buttons(self.selected_cars[player])[0].enable()
+        self._buttons(car)[0].disable()
+        self.disable_navigation([player])
+        self.selected_cars[player] = car
+        self.eng.log('selected %s (player %s)' % (car, player))
+        self.notify('on_car_selected_mp', [car, player])
+        self.evaluate_start()
+
+    def evaluate_start(self):
+        nplayers = len(self.selected_cars.keys())
+        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < nplayers: return
+        cars = [self.selected_cars[i] for i in range(nplayers)]
+        page_args = [self.track_path, cars, self.props]
+        self.notify('on_push_page', 'driver_page_mp', page_args)
+
+
 class CarPageGuiServer(CarPageGui):
 
     def build(self):
         CarPageGui.build(self, exit_behav=True)
         self.eng.car_mapping = {}
         self.eng.xmpp.attach(self.on_presence_unavailable)
-        self.yorg_client.attach(self.on_presence_unavailable_room)
+        self.eng.client.attach(self.on_presence_unavailable_room)
         self.eng.server.register_rpc(self.car_request)
 
     def on_car(self, car):
@@ -126,7 +150,7 @@ class CarPageGuiServer(CarPageGui):
         if ret != 'ok': return
         for btn in self._buttons(car):
             btn.disable()
-            btn._name_txt['text'] = self.yorg_client.myid
+            btn._name_txt['text'] = self.eng.client.myid
         if self in self.current_cars:
             curr_car = self.current_cars[self]
             self.eng.log_mgr.log('car deselected: ' + curr_car)
@@ -180,7 +204,7 @@ class CarPageGuiServer(CarPageGui):
                 for usr in self.eng.xmpp.users:
                     if usr.public_addr == curr_addr:
                         username = usr.name
-            btn._name_txt['text'] = JID(username).bare
+            #btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.car_selection, car, username])
             ip_string = sender.getpeername()[0]
             if ip_string.startswith('::ffff:'): ip_string = ip_string[7:]
@@ -196,20 +220,29 @@ class CarPageGuiServer(CarPageGui):
 
     def destroy(self):
         self.eng.xmpp.detach(self.on_presence_unavailable)
-        self.yorg_client.detach(self.on_presence_unavailable_room)
+        self.eng.client.detach(self.on_presence_unavailable_room)
         CarPageGui.destroy(self)
 
 
 class CarPageGuiClient(CarPageGui):
+
+    def __init__(self, mediator, carpage_props, track_path, uid_srv):
+        CarPageGui.__init__(self, mediator, carpage_props, track_path)
+        self.srv_usr = uid_srv
 
     def build(self):
         CarPageGui.build(self, exit_behav=True)
         self.eng.car_mapping = {}
         #self.eng.client.register_cb(self.process_client)
         self.eng.client.register_rpc('car_request')
-        self.yorg_client.attach(self.on_car_selection)
-        self.yorg_client.attach(self.on_car_deselection)
-        self.yorg_client.attach(self.on_start_drivers)
+        self.eng.client.attach(self.on_car_selection)
+        self.eng.client.attach(self.on_car_deselection)
+        self.eng.client.attach(self.on_start_drivers)
+        self.eng.client.attach(self.on_presence_unavailable_room)
+
+    def on_presence_unavailable_room(self, uid, room):
+        if uid == self.srv_usr:
+            self._back_btn.disable()
 
     def on_car(self, car):
         self.eng.log_mgr.log('car request: ' + car)
@@ -222,7 +255,7 @@ class CarPageGuiClient(CarPageGui):
             self.eng.log_mgr.log('car confirmed: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
-            btn._name_txt['text'] = self.yorg_client.myid
+            btn._name_txt['text'] = self.eng.client.myid
         else: self.eng.log_mgr.log('car denied')
 
     def on_car_selection(self, data_lst):
@@ -246,26 +279,36 @@ class CarPageGuiClient(CarPageGui):
         page_args = [self.track_path, self.car, self.props]
         self.notify('on_push_page', 'driverpageclient', page_args)
 
+    def _on_quit(self):
+        if self.eng.server.is_active: self.eng.server.stop()
+        self.eng.client.register_rpc('leave_curr_room')
+        self.eng.client.leave_curr_room()
+        CarPageGui._on_quit(self)
+
     def destroy(self):
-        self.yorg_client.detach(self.on_car_selection)
-        self.yorg_client.detach(self.on_car_deselection)
-        self.yorg_client.detach(self.on_start_drivers)
+        self.eng.client.detach(self.on_car_selection)
+        self.eng.client.detach(self.on_car_deselection)
+        self.eng.client.detach(self.on_start_drivers)
+        self.eng.client.detach(self.on_presence_unavailable_room)
         CarPageGui.destroy(self)
 
 
 class CarPage(Page):
     gui_cls = CarPageGui
 
-    def __init__(self, carpage_props, track_path, yorg_client=None):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, carpage_props, track_path, yorg_client])]]
-        GameObject.__init__(self, init_lst)
+    def __init__(self, carpage_props, track_path):
+        self.carpage_props = carpage_props
+        self.track_path = track_path
+        Page.__init__(self, carpage_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.carpage_props, self.track_path])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)
 
 
@@ -279,3 +322,29 @@ class CarPageServer(CarPage):
 
 class CarPageClient(CarPage):
     gui_cls = CarPageGuiClient
+
+    def __init__(self, carpage_props, track_path, uid_srv):
+        self.__uid_srv = uid_srv
+        CarPage.__init__(self, carpage_props, track_path)
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.carpage_props, self.track_path, self.__uid_srv])]]
+
+
+class CarPageLocalMP(CarPage, PageFacade):
+    gui_cls = CarPageLocalMPGui
+
+    def __init__(self, carpage_props, track_path, nplayers):
+        self.carpage_props = carpage_props
+        self.track_path = track_path
+        self.nplayers = nplayers
+        Page.__init__(self, carpage_props)
+        PageFacade.__init__(self)
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls,
+         [self, self.carpage_props, self.track_path, self.nplayers])]]

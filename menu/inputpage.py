@@ -1,116 +1,265 @@
 from string import ascii_lowercase
+from itertools import product
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
-from yyagl.library.gui import Btn, PandaCheckBtn, Label
+from yyagl.lib.gui import Btn, P3dCheckBtn, Label
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.joystick import JoystickMgr
+from yyagl.engine.gui.menu import NavInfo, NavInfoPerPlayer
 from yyagl.gameobject import GameObject
+from yyagl.dictfile import DctFile
 from .thankspage import ThanksPageGui
+from .already_dlg import AlreadyUsedDlg
 
 
-class InputPageGui(ThanksPageGui):
+class InputPageGui4(ThanksPageGui):
 
-    def __init__(self, mediator, menu_args, joystick, keys):
+    joyp_idx = 3
+
+    def __init__(self, mediator, menu_props, opt_file, joysticks, keys):
         self.joypad_cb = None
-        self.joystick = joystick
+        self.joysticks = joysticks
         self.keys = keys
-        ThanksPageGui.__init__(self, mediator, menu_args)
+        self.opt_file = opt_file
+        self.ibuttons = []
+        ThanksPageGui.__init__(self, mediator, menu_props)
 
     def build(self):
-        menu_args = self.menu_args
+        menu_props = self.menu_props
         widgets = []
-        self.ibuttons = []
 
+        suff = str(self.joyp_idx + 1)
+        player_lab = Label(
+            text=_('Player') + ' ' + suff, pos=(0, .9),
+            tra_src='Player' + ' ' + suff,
+            tra_tra=_('Player') + ' ' + suff,
+            **menu_props.label_args)
         joypad_lab = Label(
-            text=_('Use the joypad when present'), pos=(-.3, 1, .8),
+            text=_('Use the joypad when present'), pos=(-.1, .7),
             text_align=TextNode.ARight,
             tra_src='Use the joypad when present',
             tra_tra=_('Use the joypad when present'),
-            **menu_args.label_args)
-        self.joypad_cb = PandaCheckBtn(
-            pos=(-.11, 1, .82), text='',
-            indicatorValue=self.joystick,
-            indicator_frameColor=menu_args.text_active,
-            **menu_args.checkbtn_args)
-        if not JoystickMgr.has_support():
-            self.joypad_cb['state'] = DISABLED
+            text_wordwrap=16,
+            **menu_props.label_args)
+        self.joypad_cb = P3dCheckBtn(
+            pos=(.09, .72), text='',
+            indicator_val=self.joysticks[self.joyp_idx],
+            indicator_frame_col=menu_props.text_active_col,
+            **menu_props.checkbtn_args)
         buttons_data = [
-            (_('Accelerate'), 'forward', .6),
-            (_('Brake/Reverse'), 'rear', .42),
-            (_('Left'), 'left', .24),
-            (_('Right'), 'right', .06),
-            (_('Weapon'), 'fire', -.12),
-            (_('Respawn'), 'respawn', -.28),
-            (_('Pause'), 'pause', -.46)]
+            (_('Accelerate'), 'forward' + suff, .5),
+            (_('Brake/Reverse'), 'rear' + suff, .32),
+            (_('Left'), 'left' + suff, .14),
+            (_('Right'), 'right' + suff, -.04),
+            (_('Weapon'), 'fire' + suff, -.22),
+            (_('Respawn'), 'respawn' + suff, -.38)]
         for btn_data in buttons_data:
-            widgets += [self.__add_lab(btn_data[0], btn_data[2])]
-            widgets += [self.__add_btn(self.keys[btn_data[1]], btn_data[2])]
-
-        l_a = menu_args.label_args.copy()
+            widgets += [self._add_lab(btn_data[0], btn_data[2])]
+            widgets += [self._add_btn(self.eng.event.key2desc(self.keys[btn_data[1]]), btn_data[2])]
+        l_a = menu_props.label_args.copy()
         l_a['scale'] = .065
         self.hint_lab = Label(
-            text=_('Press the key to record it'), pos=(-.2, 1, -.6), **l_a)
+            text=_('Press the key to record it'), pos=(-.2, -.6), **l_a)
         self.hint_lab.hide()
-        widgets += [joypad_lab, self.joypad_cb, self.hint_lab]
+        widgets += [player_lab, joypad_lab, self.joypad_cb, self.hint_lab]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
 
-    def __add_lab(self, text, pos_z):
+    def _add_lab(self, text, pos_z):
         return Label(
-            text=text, pos=(-.3, 1, pos_z), text_align=TextNode.ARight,
-            **self.menu_args.label_args)
+            text=text, pos=(-.1, pos_z), text_align=TextNode.ARight,
+            **self.menu_props.label_args)
 
-    def __add_btn(self, text, pos_z):
-        btn = Btn(pos=(.26, 1, pos_z), text=text,
-                           command=self.start_rec, **self.menu_args.btn_args)
+    def _add_btn(self, text, pos_z):
+        btn = Btn(pos=(.46, pos_z), text=text, cmd=self.start_rec,
+                  **self.menu_props.btn_args)
         btn['extraArgs'] = [btn]
         self.ibuttons += [btn]
         return btn
 
     def start_rec(self, btn):
         numbers = [str(n) for n in range(10)]
-        self.keys = list(ascii_lowercase) + numbers + [
+        self._keys = list(ascii_lowercase) + numbers + [
             'backspace', 'insert', 'home', 'page_up', 'num_lock', 'tab',
             'delete', 'end', 'page_down', 'caps_lock', 'enter', 'arrow_left',
             'arrow_up', 'arrow_down', 'arrow_right', 'lshift', 'rshift',
             'lcontrol', 'lalt', 'space', 'ralt', 'rcontrol']
         self.hint_lab.show()
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
-        map(acc, self.keys)
+        list(map(acc, self._keys))
 
-    def _on_back(self):
+    def _on_back(self, player=0):
         self.mediator.event.on_back()
-        dct = {}
-        dct['keys'] = {
-            'forward': self.mediator.gui.ibuttons[0]['text'],
-            'rear': self.mediator.gui.ibuttons[1]['text'],
-            'left': self.mediator.gui.ibuttons[2]['text'],
-            'right': self.mediator.gui.ibuttons[3]['text'],
-            'fire': self.mediator.gui.ibuttons[4]['text'],
-            'respawn': self.mediator.gui.ibuttons[5]['text'],
-            'pause': self.mediator.gui.ibuttons[6]['text']}
-        dct['joystick'] = self.mediator.gui.joypad_cb['indicatorValue']
-        self.notify('on_back', 'input_page', [dct])
+        suff = str(self.joyp_idx + 1)
+        dct = self.update_values()
+        self.notify('on_back', 'input_page2', [dct])
 
     def rec(self, btn, val):
-        btn['text'] = val
+        used = self.already_used(val)
+        if used:
+            self.dial = AlreadyUsedDlg(self.menu_props, val, *used)
+            self.dial.attach(self.on_already_dlg)
+        else:
+            btn['text'] = val
+            dct = self.update_values()
+            self.opt_file['settings'] = DctFile.deepupdate(self.opt_file['settings'], dct)
+            self.opt_file.store()
+
+            keys = self.opt_file['settings']['keys']
+            nav1 = NavInfoPerPlayer(keys['left1'], keys['right1'], keys['forward1'],
+                                    keys['rear1'], keys['fire1'])
+            nav2 = NavInfoPerPlayer(keys['left2'], keys['right2'], keys['forward2'],
+                                    keys['rear2'], keys['fire2'])
+            nav3 = NavInfoPerPlayer(keys['left3'], keys['right3'], keys['forward3'],
+                                    keys['rear3'], keys['fire3'])
+            nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
+                                    keys['rear4'], keys['fire4'])
+            nav = NavInfo([nav1, nav2, nav3, nav4])
+            self.menu_props.nav = nav
+
         self.hint_lab.hide()
-        map(self.mediator.event.ignore, self.keys)
+        events = list(self.keys.values()) + self._keys
+        list(map(self.mediator.event.ignore, events))
+        self.enable_navigation([0])
+
+    def on_already_dlg(self): self.dial = self.dial.destroy()
+
+    def already_used(self, val):
+        if self.eng.event.key2desc(self.keys['pause']) == val: return '1', 'pause'
+        labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn', 'pause']
+        for lab, player in product(labels[:-1], ['1', '2', '3', '4']):
+            if self.eng.event.key2desc(self.keys[lab + player]) == val: return player, lab
+
+    def update_keys(self): self.keys = self.opt_file['settings']['keys']
+
+    def update_values(self):
+        suff = str(self.joyp_idx + 1)
+        dct = {}
+        dct['keys'] = self.keys
+        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
+        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
+        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
+        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
+        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
+        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        return dct
 
 
-class InputPage(Page):
-    gui_cls = InputPageGui
+class InputPageGui1(InputPageGui4):
 
-    def __init__(self, menu_args, joystick, keys):
-        self.menu_args = menu_args
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, self.menu_args, joystick, keys])]]
-        GameObject.__init__(self, init_lst)
+    joyp_idx = 0
+
+    def build(self):
+        p2_btn = Btn(
+            text='', pos=(0, -.74), cmd=self.on_player2,
+            tra_src='Player 2', tra_tra=_('Player 2'),
+            **self.menu_props.btn_args)
+        self.add_widgets([p2_btn])
+        self.add_widgets([self._add_lab(_('Pause'), -.56)])
+        self.add_widgets([self._add_btn(self.eng.event.key2desc(self.keys['pause']), -.56)])
+        InputPageGui4.build(self)
+
+    def on_player2(self):
+        dct = self.update_values()
+        self.notify('on_push_page', 'input2', [self.joysticks, self.keys, dct])
+
+    def _on_back(self, player=0):
+        dct = self.update_values()
+        self.mediator.event.on_back()
+        self.notify('on_back', 'input_page1', [dct])
+
+    def update_values(self):
+        suff = str(self.joyp_idx + 1)
+        dct = {}
+        dct['keys'] = self.keys
+        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
+        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
+        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
+        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
+        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[6]['text'])
+        dct['keys']['pause'] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
+        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
+        return dct
+
+
+class InputPageGui2(InputPageGui4):
+
+    joyp_idx = 1
+
+    def build(self):
+        p_btn = Btn(
+            text='', pos=(0, -.74), cmd=self.on_player3,
+            tra_src='Player 3', tra_tra=_('Player 3'),
+            **self.menu_props.btn_args)
+        self.add_widgets([p_btn])
+        InputPageGui4.build(self)
+
+    def on_player3(self):
+        dct = self.update_values()
+        self.notify('on_push_page', 'input3', [self.joysticks, self.keys, dct])
+
+    def _on_back(self, player=0):
+        self.mediator.event.on_back()
+        suff = str(self.joyp_idx + 1)
+        dct = self.update_values()
+        self.notify('on_back', 'input_page2', [dct])
+
+
+class InputPageGui3(InputPageGui4):
+
+    joyp_idx = 2
+
+    def build(self):
+        p_btn = Btn(
+            text='', pos=(0, -.74), cmd=self.on_player3,
+            tra_src='Player 4', tra_tra=_('Player 4'),
+            **self.menu_props.btn_args)
+        self.add_widgets([p_btn])
+        InputPageGui4.build(self)
+
+    def on_player3(self):
+        dct = self.update_values()
+        self.notify('on_push_page', 'input4', [self.joysticks, self.keys, dct])
+
+    def _on_back(self, player=0):
+        self.mediator.event.on_back()
+        suff = str(self.joyp_idx + 1)
+        dct = self.update_values()
+        self.notify('on_back', 'input_page3', [dct])
+
+
+class InputPage4(Page):
+    gui_cls = InputPageGui4
+
+    def __init__(self, menu_props, opt_file, joysticks, keys):
+        self.menu_props = menu_props
+        self.joysticks = joysticks
+        self.keys = keys
+        self.opt_file = opt_file
+        Page.__init__(self, menu_props)
         PageFacade.__init__(self)
-        # invoke Page's __init__
+
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls,
+          [self, self.menu_props, self.opt_file, self.joysticks, self.keys])]]
 
     def destroy(self):
-        GameObject.destroy(self)
+        Page.destroy(self)
         PageFacade.destroy(self)
+
+
+class InputPage2(InputPage4):
+    gui_cls = InputPageGui2
+
+
+class InputPage3(InputPage4):
+    gui_cls = InputPageGui3
+
+
+class InputPage(InputPage4):
+    gui_cls = InputPageGui1

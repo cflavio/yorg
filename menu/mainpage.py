@@ -11,23 +11,25 @@ from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
 from yyagl.engine.gui.page import Page, PageFacade, PageGui
-from yyagl.engine.logic import VersionChecker
+from yyagl.engine.logic import VersionChecker, EngineLogic
 from yyagl.gameobject import GameObject
-from yyagl.library.gui import Btn, Label, Text, Img, Frame
+from yyagl.lib.gui import Btn, Label, Text, Img, Frame
 from .optionpage import OptionPageProps
 
 
 class YorgMainPageGui(MainPageGui):
 
-    def __init__(self, mediator, mainpage_props, yorg_client):
+    def __init__(self, mediator, mainpage_props):
         self.__feed_type = ''
         self.__date_field = ''
         self.props = mainpage_props
-        self.yorg_client = yorg_client
         self.load_settings()
         self.conn_attempted = False
+        if not self.eng.client.netw_thr or \
+                not self.eng.client.netw_thr.is_running:
+            self.eng.client.restart()
         self.ver_check = VersionChecker()
-        MainPageGui.__init__(self, mediator, self.props.gameprops.menu_args)
+        MainPageGui.__init__(self, mediator, self.props.gameprops.menu_props)
         if self.ver_check.is_uptodate():
             options = self.props.opt_file
             user = options['settings']['login']['usr']
@@ -37,11 +39,11 @@ class YorgMainPageGui(MainPageGui):
             parser.add_argument('--pwd')
             parser.add_argument('--win_orig')
             parser.add_argument('--optfile')
-            args = parser.parse_args()
+            args = parser.parse_args(EngineLogic.cmd_line())
             if args.user and args.pwd:
                 user = args.user
                 password = args.pwd
-            if user and password and yorg_client.is_server_up:
+            if user and password and self.eng.client.is_server_up:
             # if user:
                 # if platform.startswith('linux'): set_keyring(Keyring())
                 # pwd = get_password('ya2_rog', user)
@@ -51,13 +53,10 @@ class YorgMainPageGui(MainPageGui):
                 # self.eng.xmpp.start(user, pwd)
                     #self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
                     self.eng.client.register_rpc('login')
-                    if not self.eng.client.netw_thr or \
-                            not self.eng.client.netw_thr.is_running:
-                        yorg_client.restart()
                     while not self.eng.client.netw_thr: pass
                     # wait for the thread
                     ret_val = 'ok'
-                    if not yorg_client.authenticated:
+                    if not self.eng.client.authenticated:
                         ret_val = self.eng.client.login(user, password)
                     if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
                         return self.on_ko(ret_val)
@@ -67,44 +66,19 @@ class YorgMainPageGui(MainPageGui):
             if not (user and password):
                 self.on_ko()
 
-    def show(self):
-        MainPageGui.show(self)
-        self.widgets[5]['text'] = self.get_label()
-
     def on_ok(self):
-        self.yorg_client.authenticated = True
+        self.eng.client.authenticated = True
         self.conn_attempted = True
         #self.eng.xmpp.send_connected()
-        self.yorg_client.start(self.props.opt_file['settings']['login']['usr'])
+        self.eng.client.init(self.props.opt_file['settings']['login']['usr'])
         self.notify('on_login')
-        self.widgets[5]['text'] = self.get_label()
 
     def on_ko(self, msg=None):  # unused msg
         self.conn_attempted = True
-        self.widgets[5]['text'] = self.get_label()
-
-    def on_logout(self):
-        #self.eng.xmpp.disconnect()
-        self.yorg_client.authenticated = False
-        options = self.props.opt_file
-        options['settings']['login']['usr'] = ''
-        options['settings']['login']['pwd'] = ''
-        options.store()
-        self.widgets[5]['text'] = self.get_label()
-        self.notify('on_logout')
-
-    def on_login(self):
-        self.notify('on_push_page', 'login', [self.props, self.yorg_client])
-
-    def on_loginout(self):
-        if self.eng.client.is_active and self.yorg_client.authenticated:
-            self.on_logout()
-        elif self.conn_attempted:
-            self.on_login()
 
     def load_settings(self):
         sett = self.props.opt_file['settings']
-        self.joystick = sett['joystick']
+        self.joysticks = sett['joystick1'], sett['joystick2'], sett['joystick3'], sett['joystick4']
         self.keys = sett['keys']
         self.lang = sett['lang']
         self.volume = sett['volume']
@@ -114,46 +88,35 @@ class YorgMainPageGui(MainPageGui):
         self.shaders = sett['shaders']
         self.camera = sett['camera']
 
-    def get_label(self):
-        if not self.yorg_client.is_server_up:
-            return _('Server problem')
-        if not self.ver_check.is_uptodate():
-            return _('Not up-to-date')
-        if self.eng.client.is_active and self.yorg_client.authenticated:
-            return _('Log out') + \
-                ' \1small\1(%s)\2' % self.props.opt_file['settings']['login']['usr']
-        elif self.conn_attempted:
-            return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
-        #i18n: This is a caption of a button.
-        return _('Connecting')
-
     def build(self):
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
+                                    [self.props])
+        mp_cb = lambda: self.notify('on_push_page', 'multiplayer',
                                     [self.props])
         supp_cb = lambda: self.eng.open_browser(self.props.support_url)
         cred_cb = lambda: self.notify('on_push_page', 'credits')
         menu_data = [
             ('Single Player', _('Single Player'), sp_cb),
+            ('Multiplayer', _('Multiplayer'), mp_cb),
             ('Options', _('Options'), self.on_options),
             ('Support us', _('Support us'), supp_cb),
             ('Credits', _('Credits'), cred_cb),
-            ('Server problem', self.get_label(), self.on_loginout),
             ('Quit', _('Quit'), lambda: self.notify('on_exit'))]
         widgets = [
-            Btn(text='', pos=(0, 1, .64-i*.23), command=menu[2],
+            Btn(text='', pos=(0, .64-i*.23), cmd=menu[2],
                 tra_src=menu_data[i][0], tra_tra=menu_data[i][1],
-                **self.props.gameprops.menu_args.btn_args)
+                **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         logo_img = Img(
             self.props.title_img, scale=(.64, 1, .64 * (380.0 / 772)),
-            parent=base.a2dTopLeft, pos=(.65, 1, -.32))
+            parent=base.a2dTopLeft, pos=(.65, -.32))
         widgets += [logo_img]
-        lab_args = self.props.gameprops.menu_args.label_args
+        lab_args = self.props.gameprops.menu_props.label_args
         lab_args['scale'] = .12
-        lab_args['text_fg'] = self.props.gameprops.menu_args.text_err
+        lab_args['text_fg'] = self.props.gameprops.menu_props.text_err_col
         wip_lab = Label(
-            text='', pos=(.05, 1, -.76), parent=base.a2dTopLeft,
-            text_wordwrap=10, text_align=TextNode.A_left,
+            text='', pos=(-.05, -1.58), parent=base.a2dTopRight,
+            text_wordwrap=10, text_align=TextNode.A_right,
             tra_src='Note: the game is work-in-progress',
             tra_tra=_('Note: the game is work-in-progress'),
             **lab_args)
@@ -162,18 +125,18 @@ class YorgMainPageGui(MainPageGui):
         self.set_news()
         MainPageGui.build(self)
         if not self.ver_check.is_uptodate():
-            self.widgets[5]['state'] = DISABLED
+            self.widgets[2]['state'] = DISABLED
 
     def on_options(self):
         self.load_settings()
         option_props = OptionPageProps(
-            self.joystick, self.keys, self.lang, self.volume, self.fullscreen,
+            self.joysticks, self.keys, self.lang, self.volume, self.fullscreen,
             self.antialiasing, self.shaders, self.cars_num, self.camera,
             self.props.opt_file)
         self.notify('on_push_page', 'options', [option_props])
 
     def set_news(self):
-        menu_args = self.props.gameprops.menu_args
+        menu_props = self.props.gameprops.menu_props
         feeds = parse(self.props.feed_url)
         if not feeds['entries']: return
         self.__feed_type = \
@@ -189,24 +152,23 @@ class YorgMainPageGui(MainPageGui):
         rss = rss[:5]
         rss = [(_rss[0], self.__ellipsis_str(_rss[1])) for _rss in rss]
         frm = Frame(
-            frameSize=(0, 1.0, 0, .75), frameColor=(.2, .2, .2, .5),
-            pos=(.05, 1, .1), parent=base.a2dBottomLeft)
+            frame_size=(0, 1.0, 0, .75), frame_col=(.2, .2, .2, .5),
+            pos=(.05, .1), parent=base.a2dBottomLeft)
         texts = [Text(
             _('Last news:'), pos=(.55, .75), scale=.055, wordwrap=32,
-            parent='bottomleft', fg=menu_args.text_normal,
-            font=menu_args.font, tra_src='Last news:',
+            parent='bottomleft', fg=menu_props.text_normal_col,
+            font=menu_props.font, tra_src='Last news:',
             tra_tra=_('Last news:'))]
-        rss = [map(self.__to_unicode, rss_str) for rss_str in rss]
         texts += [Text(
             ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent='bottomleft', align='left',
-            fg=menu_args.text_normal, font=menu_args.font)
+            fg=menu_props.text_normal_col, font=menu_props.font)
                   for i in range(min(5, len(rss)))]
-        btn_args = self.props.gameprops.menu_args.btn_args.copy()
-        btn_args['scale'] = .055
+        btn_args = self.props.gameprops.menu_props.btn_args.copy()
+        btn_args['scale'] = (.055, .055)
         show_btn = Btn(
-            text=_('show'), pos=(.55, 1, .15), command=self.eng.open_browser,
-            extraArgs=[self.props.site_url], parent=base.a2dBottomLeft,
+            text=_('show'), pos=(.55, .15), cmd=self.eng.open_browser,
+            extra_args=[self.props.site_url], parent=base.a2dBottomLeft,
             tra_src='show', tra_tra=_('show'), **btn_args)
         self.add_widgets([frm] + texts + [show_btn])
 
@@ -228,13 +190,6 @@ class YorgMainPageGui(MainPageGui):
     def __ellipsis_str(_str):
         return _str if len(_str) <= 20 else _str[:20] + '...'
 
-    @staticmethod
-    def __to_unicode(_str):  # for managing different encodings
-        try:
-            return unicode(_str)
-        except UnicodeDecodeError:
-            return ''
-
     def destroy(self):
         self.ver_check.destroy()
         MainPageGui.destroy(self)
@@ -243,14 +198,17 @@ class YorgMainPageGui(MainPageGui):
 class YorgMainPage(MainPage, PageFacade):
     gui_cls = YorgMainPageGui
 
-    def __init__(self, mainpage_props, yorg_client):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mainpage_props, yorg_client])]]
-        GameObject.__init__(self, init_lst)
-        # don't construct it using GameObject
+    def __init__(self, mainpage_props):
+        self.mainpage_props = mainpage_props
+        MainPage.__init__(self, mainpage_props)
         PageFacade.__init__(self)
 
+    @property
+    def init_lst(self):
+        return [
+            [('event', self.event_cls, [self])],
+            [('gui', self.gui_cls, [self, self.mainpage_props])]]
+
     def destroy(self):
-        GameObject.destroy(self)
+        MainPage.destroy(self)
         PageFacade.destroy(self)
