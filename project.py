@@ -10,7 +10,6 @@
 
 # ============================ MAYBE/SOMEDAY ==================================
 
-# profiling
 # remove camera's render_all workaround
 # portable installers (xz)
 # refactor the server (async.io) or
@@ -38,11 +37,11 @@
 # yyagl's scons
 # unit tests
 # https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
-# better highlighting of current selection in the menus
 # improve rear camera
 # load the car and the track from a single file
 # reconfigure gamepad buttons (as for keyboard ones)
 # force feedback on crash and weapon
-# executable's icon
+# use deployng's windows installer
 # improve online multiplayer's end of race (print realtime ranking, show
 #   bigger minimap)
+# fix ai
