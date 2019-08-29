@@ -243,7 +243,7 @@ class Yorg(Game):
                 self.eng.log('option %s%s = %s' % (pref, key, val))
 
     def __compute_tracks(self):
-        tracks = [r for r in next(walk('assets/tracks'))[1]]
+        tracks = [r for r in next(walk('assets/tracks'))[1] if r != '__pycache__']
         tracks_i = []
         for track in tracks:
             with open(self.eng.curr_path + 'assets/tracks/' + track + '/track.yml') as ftrack:

@@ -1,5 +1,7 @@
 # ================================= BUGS ======================================
 
+# osx log
+
 
 # ============================== TODO LIST ====================================
 
@@ -11,7 +13,6 @@
 # ============================ MAYBE/SOMEDAY ==================================
 
 # remove camera's render_all workaround
-# portable installers (xz)
 # refactor the server (async.io) or
 #     def update(): ... threading.Timer(.5, update).start()
 # refactoring: do event/observer for joystick buttons
@@ -41,7 +42,6 @@
 # load the car and the track from a single file
 # reconfigure gamepad buttons (as for keyboard ones)
 # force feedback on crash and weapon
-# use deployng's windows installer
 # improve online multiplayer's end of race (print realtime ranking, show
 #   bigger minimap)
 # fix ai

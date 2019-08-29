@@ -70,6 +70,7 @@ env['LNG'] = lang_path
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
 env['LANGUAGES'] = ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR']
 env['MODELS_DIR_PATH'] = 'assets/models'
+env['CARS_DIR_PATH'] = 'assets/cars'
 env['TRACKS_DIR_PATH'] = 'assets/tracks'
 env['CORES'] = int(args['cores'])
 env['FLATPAK_DST'] = args['flatpak_dst']
@@ -132,9 +133,11 @@ lang_src = [lang_path + '%s/LC_MESSAGES/%s.mo' % (lng, app_name) for lng in lang
 general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
     lang_src + tracks_tgt_fnames()
 if args['images']:
-    env.images(img_files, files(['jpg', 'png'], ['models'], ['_png.png']))
+    imgs = env.images(img_files, files(['jpg', 'png'], ['models'], ['_png.png']))
+    env.Precious(imgs)
 if args['tracks']:
-    env.tracks(tracks_tgt_fnames(), files(['egg']))
+    tracks = env.tracks(tracks_tgt_fnames(), files(['egg']))
+    env.Precious(tracks)
 if args['source']:
     env.source([src_path], general_src)
 if args['devinfo']:
