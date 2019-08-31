@@ -1,9 +1,9 @@
-import argparse
+import argparse, sys
 from sys import platform, path
 from importlib import reload
 from copy import deepcopy
 from os import walk
-from os.path import exists
+from os.path import exists, dirname
 from yaml import load
 from panda3d.core import Filename
 from yyagl.game import Game
@@ -243,7 +243,10 @@ class Yorg(Game):
                 self.eng.log('option %s%s = %s' % (pref, key, val))
 
     def __compute_tracks(self):
-        tracks = [r for r in next(walk('assets/tracks'))[1] if r != '__pycache__']
+        curr_path = dirname(__file__) + '/'
+        if __file__.endswith('.py'): curr_path += '../../../'
+        if sys.platform == 'darwin': curr_path += '../Resources/'
+        tracks = [r for r in next(walk(curr_path + 'assets/tracks'))[1] if r != '__pycache__']
         tracks_i = []
         for track in tracks:
             with open(self.eng.curr_path + 'assets/tracks/' + track + '/track.yml') as ftrack:
@@ -263,7 +266,10 @@ class Yorg(Game):
         return lambda: translated
 
     def __compute_cars(self):
-        cars = [r for r in next(walk('assets/cars'))[1]]
+        curr_path = dirname(__file__) + '/'
+        if __file__.endswith('.py'): curr_path += '../../../'
+        if sys.platform == 'darwin': curr_path += '../Resources/'
+        cars = [r for r in next(walk(curr_path + 'assets/cars'))[1]]
         cars_i = []
         for car in cars:
             with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.yml') as fcar:

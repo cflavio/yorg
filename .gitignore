@@ -20,4 +20,5 @@ assets/bld_version.txt
 assets/images/loading/fastload*
 assets/images/minimaps/fastload.png
 assets/models/tracks/fastload/
-
+assets/cars/minicar
+assets/tracks/minitrack

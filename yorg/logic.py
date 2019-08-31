@@ -626,7 +626,7 @@ class YorgLogic(GameLogic):
 
     def __car2colors(self):
         car2col = {}
-        cars = [r for r in next(walk('assets/cars'))[1]]
+        cars = [r for r in next(walk(self.eng.curr_path + 'assets/cars'))[1]]
         for car in cars:
             with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.yml') as fcar:
                 col = tuple(load(fcar)['color'])
