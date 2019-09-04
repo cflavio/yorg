@@ -43,3 +43,4 @@
 # improve online multiplayer's end of race (print realtime ranking, show
 #   bigger minimap)
 # fix ai
+# appimage packages
