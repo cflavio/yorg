@@ -244,7 +244,7 @@ class Yorg(Game):
 
     def __compute_tracks(self):
         curr_path = dirname(__file__) + '/'
-        if __file__.endswith('.py'): curr_path += '../../../'
+        if __file__.endswith('.py'): curr_path += '../'
         if sys.platform == 'darwin': curr_path += '../Resources/'
         tracks = [r for r in next(walk(curr_path + 'assets/tracks'))[1] if r != '__pycache__']
         tracks_i = []
@@ -267,7 +267,7 @@ class Yorg(Game):
 
     def __compute_cars(self):
         curr_path = dirname(__file__) + '/'
-        if __file__.endswith('.py'): curr_path += '../../../'
+        if __file__.endswith('.py'): curr_path += '../'
         if sys.platform == 'darwin': curr_path += '../Resources/'
         cars = [r for r in next(walk(curr_path + 'assets/cars'))[1]]
         cars_i = []

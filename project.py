@@ -44,3 +44,5 @@
 #   bigger minimap)
 # fix ai
 # appimage packages
+# add inertia to the camera (more info on freegamer)
+# joypad's commands in the loading menu
