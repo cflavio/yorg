@@ -1,6 +1,9 @@
-from datetime import datetime
+#from datetime import datetime
 import argparse
-from feedparser import parse
+from urllib.request import urlopen
+from locale import setlocale, LC_ALL
+from xml.etree import ElementTree as etree
+from datetime import datetime
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
 from xml.parsers.expat import ExpatError
@@ -59,7 +62,8 @@ class YorgMainPageGui(MainPageGui):
                     if not self.eng.client.authenticated:
                         ret_val = self.eng.client.login(user, password)
                     if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
-                        return self.on_ko(ret_val)
+                        self.on_ko(ret_val)
+                        #return self.on_ko(ret_val)
                     taskMgr.doMethodLater(.1, lambda task: self.on_ok(), 'x')
                     # otherwise the menu is not attached to the page yet
 
@@ -137,20 +141,17 @@ class YorgMainPageGui(MainPageGui):
 
     def set_news(self):
         menu_props = self.props.gameprops.menu_props
-        feeds = parse(self.props.feed_url)
-        if not feeds['entries']: return
-        self.__feed_type = \
-            'rss' if 'published' in feeds['entries'][0] else 'atom'
-        self.__date_field = \
-            'published' if self.__feed_type == 'rss' else 'updated'
-        publ = lambda entry: self.__conv(entry[self.__date_field])
-        rss = sorted(feeds['entries'], key=publ)
-        conv_time = lambda ent: datetime.strftime(self.__conv(ent), '%b %d')
-        rss = [(conv_time(ent[self.__date_field]), ent['title'])
-               for ent in rss]
-        rss.reverse()
-        rss = rss[:5]
-        rss = [(_rss[0], self.__ellipsis_str(_rss[1])) for _rss in rss]
+        feed = urlopen(self.props.feed_url).read()
+        items = etree.fromstring(feed).findall('channel/item')
+        setlocale(LC_ALL, 'en_US.UTF-8')
+        try:
+            entries = [(datetime.strptime(
+                            entry.findtext('pubDate'), '%a, %d %b %Y %H:%M:%S %z'),
+                        entry.findtext('title') or '')
+                       for entry in items]
+        except TypeError: entries = []
+        entries = list(reversed(sorted(entries, key=lambda entry: entry[0])))[:5]
+        entries = [(datetime.strftime(entry[0], '%b %d'), self.__ellipsis_str(entry[1])) for entry in entries]
         frm = Frame(
             frame_size=(0, 1.0, 0, .75), frame_col=(.2, .2, .2, .5),
             pos=(.05, .1), parent=base.a2dBottomLeft)
@@ -160,10 +161,10 @@ class YorgMainPageGui(MainPageGui):
             font=menu_props.font, tra_src='Last news:',
             tra_tra=_('Last news:'))]
         texts += [Text(
-            ': '.join(rss[i]), pos=(.1, .65 - i*.1), scale=.055,
+            ': '.join(entries[i]), pos=(.1, .65 - i*.1), scale=.055,
             wordwrap=32, parent='bottomleft', align='left',
             fg=menu_props.text_normal_col, font=menu_props.font)
-                  for i in range(min(5, len(rss)))]
+                  for i in range(min(5, len(entries)))]
         btn_args = self.props.gameprops.menu_props.btn_args.copy()
         btn_args['scale'] = (.055, .055)
         show_btn = Btn(
@@ -171,20 +172,6 @@ class YorgMainPageGui(MainPageGui):
             extra_args=[self.props.site_url], parent=base.a2dBottomLeft,
             tra_src='show', tra_tra=_('show'), **btn_args)
         self.add_widgets([frm] + texts + [show_btn])
-
-    def __conv(self, datestr):
-        if self.__feed_type == 'rss':
-            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
-                      'Sep', 'Oct', 'Nov', 'Dec']
-            date_el = datestr.split()[1:-2]
-            month = months.index(date_el[1]) + 1
-            day, year = date_el[0], date_el[2]
-            return datetime(int(year), month, int(day))
-        else:
-            year = int(datestr[:4])
-            month = int(datestr[5:7])
-            day = int(datestr[8:10])
-            return datetime(year, month, day)
 
     @staticmethod
     def __ellipsis_str(_str):
