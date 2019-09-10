@@ -89,6 +89,9 @@ class RoomPageEvent(PageEvent):
         self.room = room
 
     def on_back(self):
+        self.eng.log_mgr.log('RoomPageEvent::on_back')
+        self.eng.client.is_server_active = False
+        self.eng.client.is_client_active = False
         self.eng.client.register_rpc('leave_room')
         self.eng.client.leave_room(self.room)
 
