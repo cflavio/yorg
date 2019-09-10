@@ -12,7 +12,7 @@ from .server_dlg import ServerDialog
 from .invite_dlg import InviteDialog
 from .exit_dlg import ExitDialog
 from .remove_dlg import RemovedDialog
-from .network_dlg import NetworkDialog
+#from .network_dlg import NetworkDialog
 
 
 class MultiplayerFrm(GameObject):
@@ -105,6 +105,7 @@ class MultiplayerFrm(GameObject):
         self.server_dlg.detach(self.on_server_dlg)
         self.server_dlg = self.server_dlg.destroy()
 
+    @staticmethod
     def process_msg_srv(data_lst):
         print(data_lst)
 
@@ -214,6 +215,8 @@ class MultiplayerFrm(GameObject):
             self.eng.log('back (client)')
             #self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
             #    self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+            self.eng.client.is_server_active = False
+            self.eng.client.is_client_active = False
             self.eng.client.register_rpc('leave_room')
             self.eng.client.leave_room(self.msg_frm.curr_match_room)
             if self.match_frm:  # it's also invoked when server quits in car's page by os_srv_quitted
@@ -273,6 +276,8 @@ class MultiplayerFrm(GameObject):
             self.eng.log('back (client)')
             #self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
             #    self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
+            self.eng.client.is_server_active = False
+            self.eng.client.is_client_active = False
             self.eng.client.register_rpc('leave_room')
             self.eng.client.leave_room(self.msg_frm.curr_match_room)
             if self.match_frm:  # it's also invoked when server quits in car's page by on_srv_quitted
@@ -427,8 +432,8 @@ class MultiplayerFrm(GameObject):
                 usr.public_addr = public_addr
                 usr.local_addr = local_addr
 
-    def on_network_dlg(self):
-        self.network_dlg.destroy()
+    #def on_network_dlg(self):
+    #    self.network_dlg.destroy()
 
     def on_cancel_invite(self):
         self.curr_inviting_usr = None

@@ -60,6 +60,8 @@ class TrackPageServerGui(TrackPageGui):
 
     def _on_quit(self):
         self.eng.server.stop()
+        self.eng.client.is_server_active = False
+        self.eng.client.is_client_active = False
         self.eng.client.register_rpc('leave_room')
         self.eng.client.leave_room(self.room)
         TrackPageGui._on_quit(self)
