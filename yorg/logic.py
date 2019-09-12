@@ -561,7 +561,7 @@ class YorgLogic(GameLogic):
         height = bounds[1].z - bounds[0].z
         txt.set_z(.06 + height / 2)
 
-    def build_race_props(self, drivers, track_name, keys, joysticks,
+    def build_race_props(self, drivers, track_name, keys,
                          sounds, start_wp, grid):
         frwheels = Wheels('EmptyWheelFront', 'EmptyWheelFront.001',
                           'EmptyWheelRear', 'EmptyWheelRear.001')
@@ -597,7 +597,7 @@ class YorgLogic(GameLogic):
             grid_rev_ranking = sorted(items, key=lambda el: el[1])
             grid = [pair[0] for pair in grid_rev_ranking]
         race_props = RaceProps(
-            self.season.props, keys, joysticks, sounds,
+            self.season.props, keys, sounds,
             'assets/cars/%s/models/capsule', 'Capsule', 'assets/cars',
             wheel_names, 'Road',
             'assets/particles/sparks.ptf', drivers,

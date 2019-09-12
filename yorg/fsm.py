@@ -153,7 +153,6 @@ class YorgFsm(FsmColleague):
         p4k = PlayerKeys(keys['forward4'], keys['rear4'], keys['left4'], keys['right4'],
                          keys['fire4'], keys['respawn4'])
         keys = Keys([p1k, p2k, p3k, p4k], keys['pause'])
-        joysticks = [self.mediator.options['settings']['joystick' + str(i)] for i in range(1, 5)]
         sounds = CarSounds(
             'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',
             'assets/sfx/crash.ogg', 'assets/sfx/crash_high_speed.ogg',
@@ -162,7 +161,7 @@ class YorgFsm(FsmColleague):
             'assets/sfx/hit.ogg', 'assets/sfx/turbo.ogg',
             'assets/sfx/rotate_all_fire.ogg', 'assets/sfx/rotate_all_hit.ogg')
         race_props = self.mediator.logic.build_race_props(
-            seas.logic.drivers, track_path, keys, joysticks, sounds,
+            seas.logic.drivers, track_path, keys, sounds,
             self.mediator.options['development']['start_wp'], cars)
         if self.eng.server.is_active:
             #seas.create_race_server(race_props)

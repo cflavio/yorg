@@ -132,22 +132,22 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'input':
             self.eng.log('input')
             page = InputPage(
-                self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], args[1])
+                self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0])
         if page_code == 'input2':
             self.eng.log('input2')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage2(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage2(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'input3':
             self.eng.log('input3')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage3(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage3(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'input4':
             self.eng.log('input4')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage4(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage4(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'credits':
             self.eng.log('credits')
             page = CreditPage(self.mediator.gui.menu_props)

@@ -3,9 +3,8 @@
 
 ================================ TODO LIST ====================================
 
-* use both keyboard and gamepads concurrently (show gamepad's command if connected)
 * reconfigure gamepad buttons (as for keyboard ones)
-  * joypad's commands in the loading menu
+  * joypad's commands in the loading menu (if connected)
 * fix ai
 * add inertia to the camera (more info on freegamer), then improve rear camera
 

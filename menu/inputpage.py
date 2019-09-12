@@ -17,9 +17,7 @@ class InputPageGui4(ThanksPageGui):
 
     joyp_idx = 3
 
-    def __init__(self, mediator, menu_props, opt_file, joysticks, keys):
-        self.joypad_cb = None
-        self.joysticks = joysticks
+    def __init__(self, mediator, menu_props, opt_file, keys):
         self.keys = keys
         self.opt_file = opt_file
         self.ibuttons = []
@@ -35,18 +33,6 @@ class InputPageGui4(ThanksPageGui):
             tra_src='Player' + ' ' + suff,
             tra_tra=_('Player') + ' ' + suff,
             **menu_props.label_args)
-        joypad_lab = Label(
-            text=_('Use the joypad when present'), pos=(-.1, .7),
-            text_align=TextNode.ARight,
-            tra_src='Use the joypad when present',
-            tra_tra=_('Use the joypad when present'),
-            text_wordwrap=16,
-            **menu_props.label_args)
-        self.joypad_cb = P3dCheckBtn(
-            pos=(.09, .72), text='',
-            indicator_val=self.joysticks[self.joyp_idx],
-            indicator_frame_col=menu_props.text_active_col,
-            **menu_props.checkbtn_args)
         buttons_data = [
             (_('Accelerate'), 'forward' + suff, .5),
             (_('Brake/Reverse'), 'rear' + suff, .32),
@@ -62,7 +48,7 @@ class InputPageGui4(ThanksPageGui):
         self.hint_lab = Label(
             text=_('Press the key to record it'), pos=(-.2, -.6), **l_a)
         self.hint_lab.hide()
-        widgets += [player_lab, joypad_lab, self.joypad_cb, self.hint_lab]
+        widgets += [player_lab, self.hint_lab]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
 
@@ -143,7 +129,6 @@ class InputPageGui4(ThanksPageGui):
         dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
         dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[4]['text'])
         dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
-        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
         return dct
 
 
@@ -163,7 +148,7 @@ class InputPageGui1(InputPageGui4):
 
     def on_player2(self):
         dct = self.update_values()
-        self.notify('on_push_page', 'input2', [self.joysticks, self.keys, dct])
+        self.notify('on_push_page', 'input2', [self.keys, dct])
 
     def _on_back(self, player=0):
         dct = self.update_values()
@@ -181,7 +166,6 @@ class InputPageGui1(InputPageGui4):
         dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[5]['text'])
         dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[6]['text'])
         dct['keys']['pause'] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
-        dct['joystick' + suff] = self.mediator.gui.joypad_cb['indicatorValue']
         return dct
 
 
@@ -199,7 +183,7 @@ class InputPageGui2(InputPageGui4):
 
     def on_player3(self):
         dct = self.update_values()
-        self.notify('on_push_page', 'input3', [self.joysticks, self.keys, dct])
+        self.notify('on_push_page', 'input3', [self.keys, dct])
 
     def _on_back(self, player=0):
         self.mediator.event.on_back()
@@ -222,7 +206,7 @@ class InputPageGui3(InputPageGui4):
 
     def on_player3(self):
         dct = self.update_values()
-        self.notify('on_push_page', 'input4', [self.joysticks, self.keys, dct])
+        self.notify('on_push_page', 'input4', [self.keys, dct])
 
     def _on_back(self, player=0):
         self.mediator.event.on_back()
@@ -234,9 +218,8 @@ class InputPageGui3(InputPageGui4):
 class InputPage4(Page):
     gui_cls = InputPageGui4
 
-    def __init__(self, menu_props, opt_file, joysticks, keys):
+    def __init__(self, menu_props, opt_file, keys):
         self.menu_props = menu_props
-        self.joysticks = joysticks
         self.keys = keys
         self.opt_file = opt_file
         Page.__init__(self, menu_props)
@@ -246,7 +229,7 @@ class InputPage4(Page):
     def init_lst(self): return [
         [('event', self.event_cls, [self])],
         [('gui', self.gui_cls,
-          [self, self.menu_props, self.opt_file, self.joysticks, self.keys])]]
+          [self, self.menu_props, self.opt_file, self.keys])]]
 
     def destroy(self):
         Page.destroy(self)
