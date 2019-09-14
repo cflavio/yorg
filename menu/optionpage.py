@@ -106,8 +106,8 @@ class OptionPageGui(ThanksPageGui):
         return lab
 
     def on_input_btn(self):
-        opts = [self.props.opt_file['settings']['keys']]
-        self.notify('on_push_page', 'input', opts)
+        opts = [self.props.opt_file['settings']['keys'], self.props.opt_file['settings']['joystick']]
+        self.notify('on_push_page', 'inputsel', opts)
 
     def translate(self):
         PageGui.translate(self)

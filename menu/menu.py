@@ -16,7 +16,10 @@ from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason, \
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
     DriverPageClient, DriverPageMP
 from .optionpage import OptionPage
-from .inputpage import InputPage, InputPage2, InputPage3, InputPage4
+from .inputselpage import InputSelPage
+from .inputpage import InputPageKeyboard, InputPage2Keyboard, \
+    InputPage3Keyboard, InputPage4Keyboard, InputPageJoystick, \
+    InputPage2Joystick, InputPage3Joystick, InputPage4Joystick
 from .creditpage import CreditPage
 from .roompage import RoomPage, RoomPageClient
 from .numplayerspage import NumPlayersPage
@@ -129,25 +132,48 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'options':
             self.eng.log('options')
             page = OptionPage(self.mediator.gui.menu_props, args[0])
-        if page_code == 'input':
-            self.eng.log('input')
-            page = InputPage(
+        if page_code == 'inputsel':
+            self.eng.log('inputsel')
+            page = InputSelPage(self.mediator.gui._menu_props, self.mediator.menu_props.opt_file, args[0], args[1])
+            #self.mediator.gui.menu_props, args[0], args[1])
+        if page_code == 'input1keyboard':
+            self.eng.log('input1keyboard')
+            page = InputPageKeyboard(
                 self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0])
-        if page_code == 'input2':
-            self.eng.log('input2')
+        if page_code == 'input1joystick':
+            self.eng.log('input1joystick')
+            page = InputPageJoystick(
+                self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0])
+        if page_code == 'input2keyboard':
+            self.eng.log('input2keyboard')
             self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage2(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
-        if page_code == 'input3':
-            self.eng.log('input3')
+            page = InputPage2Keyboard(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
+        if page_code == 'input2joystick':
+            self.eng.log('input2joystick')
             self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage3(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
-        if page_code == 'input4':
-            self.eng.log('input4')
+            page = InputPage2Joystick(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['joystick'])
+        if page_code == 'input3keyboard':
+            self.eng.log('input3keyboard')
             self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage4(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage3Keyboard(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
+        if page_code == 'input3joystick':
+            self.eng.log('input3joystick')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage3Joystick(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['joystick'])
+        if page_code == 'input4keyboard':
+            self.eng.log('input4keyboard')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage4Keyboard(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
+        if page_code == 'input4joystick':
+            self.eng.log('input4joystick')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage4Joystick(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['joystick'])
         if page_code == 'credits':
             self.eng.log('credits')
             page = CreditPage(self.mediator.gui.menu_props)
@@ -246,6 +272,7 @@ class YorgMenuGui(MenuGui):
         # every page should not manage following pages by forwarding params:
         # each page should callback the menu and it should spawn the next one
         MenuGui.__init__(self, mediator, menu_props.gameprops.menu_props)
+        self._menu_props = menu_props
         page = YorgMainPage(menu_props)
         page.gui.attach(self.on_login)
         page.gui.attach(self.on_logout)
