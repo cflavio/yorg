@@ -79,7 +79,7 @@ class InputPageGui4Keyboard(ThanksPageGui):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = self.update_values()
-        self.notify('on_back', 'input_page2', [dct])
+        self.notify('on_back', 'input_page4', [dct])
 
     def rec(self, btn, val):
         used = self.already_used(val)
@@ -315,7 +315,7 @@ class InputPageGui4Joystick(ThanksPageGui):
         self.mediator.event.on_back()
         suff = str(self.joyp_idx + 1)
         dct = self.update_values()
-        self.notify('on_back', 'input_page2', [dct])
+        self.notify('on_back', 'input_page4', [dct])
 
     def rec(self, btn, val):
         self.eng.joystick_mgr.is_recording = False

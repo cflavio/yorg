@@ -1,6 +1,5 @@
 =================================== BUGS ======================================
 
-* back to input_sel: no focus
 * enable joypad pages only if the joypad is connected
 * bind joypad keys to ingame keys
 

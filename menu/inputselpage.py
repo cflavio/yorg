@@ -13,10 +13,6 @@ class InputSelPageGui(ThanksPageGui):
         self.joystick = joystick
         ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
-    def show(self):
-        ThanksPageGui.show(self)
-        self.build()
-
     def build(self):
         lmp_cb = lambda: self.notify('on_push_page', 'input1keyboard',
                                      [self.keys])

@@ -10,9 +10,9 @@ class MultiplayerPageGui(ThanksPageGui):
         self.props = mp_props
         ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
-    def show(self):
-        ThanksPageGui.show(self)
-        self.build()
+    #def show(self):  # then when you go back from the next page, it creates it again
+    #    ThanksPageGui.show(self)
+    #    self.build()
 
     def build(self):
         lmp_cb = lambda: self.notify('on_push_page', 'localmp',
