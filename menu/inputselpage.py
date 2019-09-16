@@ -27,6 +27,7 @@ class InputSelPageGui(ThanksPageGui):
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
+        (self.widgets[1].enable if self.eng.joystick_mgr.joystick_lib.num_joysticks else self.widgets[1].disable)()
 
     def update_keys(self): self.keys = self.opt_file['settings']['keys']
 

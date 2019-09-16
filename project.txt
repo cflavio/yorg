@@ -1,6 +1,5 @@
 =================================== BUGS ======================================
 
-* enable joypad pages only if the joypad is connected
 * bind joypad keys to ingame keys
 
 ================================ TODO LIST ====================================

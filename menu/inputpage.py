@@ -376,6 +376,7 @@ class InputPageGui1Joystick(InputPageGui4Joystick):
             **self.menu_props.btn_args)
         self.add_widgets([p2_btn])
         InputPageGui4Joystick.build(self)
+        (self.widgets[0].enable if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 2 else self.widgets[0].disable)()
 
     def on_player2(self):
         dct = self.update_values()
@@ -410,6 +411,7 @@ class InputPageGui2Joystick(InputPageGui4Joystick):
             **self.menu_props.btn_args)
         self.add_widgets([p_btn])
         InputPageGui4Joystick.build(self)
+        (self.widgets[0].enable if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 3 else self.widgets[0].disable)()
 
     def on_player3(self):
         dct = self.update_values()
@@ -435,6 +437,7 @@ class InputPageGui3Joystick(InputPageGui4Joystick):
             **self.menu_props.btn_args)
         self.add_widgets([p_btn])
         InputPageGui4Joystick.build(self)
+        (self.widgets[0].enable if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 4 else self.widgets[0].disable)()
 
     def on_player3(self):
         dct = self.update_values()
