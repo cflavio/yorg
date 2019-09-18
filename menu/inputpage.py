@@ -324,7 +324,7 @@ class InputPageGui4Joystick(ThanksPageGui):
             self.dial = AlreadyUsedJoystickDlg(self.menu_props, val, used)
             self.dial.attach(self.on_already_joystick_dlg)
         else:
-            btn['text'] = val.split('_', 1)[1:]
+            btn['text'] = val.split('_', 1)[1:][0]
             dct = self.update_values()
             self.opt_file['settings'] = DctFile.deepupdate(self.opt_file['settings'], dct)
             self.opt_file.store()
@@ -393,10 +393,10 @@ class InputPageGui1Joystick(InputPageGui4Joystick):
         suff = str(self.joyp_idx + 1)
         dct = {}
         dct['joystick'] = self.keys
-        dct['joystick']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
-        dct['joystick']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
-        dct['joystick']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
-        dct['joystick']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['joystick']['forward' + suff] = self.mediator.gui.ibuttons[0]['text']
+        dct['joystick']['rear' + suff] = self.mediator.gui.ibuttons[1]['text']
+        dct['joystick']['fire' + suff] = self.mediator.gui.ibuttons[2]['text']
+        dct['joystick']['respawn' + suff] = self.mediator.gui.ibuttons[3]['text']
         return dct
 
 

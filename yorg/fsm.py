@@ -144,6 +144,7 @@ class YorgFsm(FsmColleague):
             self.mediator.options['save']['ranking'] = seas.ranking.carname2points
             self.mediator.options.store()
         keys = self.mediator.options['settings']['keys']
+        joystick = self.mediator.options['settings']['joystick']
         p1k = PlayerKeys(keys['forward1'], keys['rear1'], keys['left1'], keys['right1'],
                          keys['fire1'], keys['respawn1'])
         p2k = PlayerKeys(keys['forward2'], keys['rear2'], keys['left2'], keys['right2'],
@@ -161,7 +162,7 @@ class YorgFsm(FsmColleague):
             'assets/sfx/hit.ogg', 'assets/sfx/turbo.ogg',
             'assets/sfx/rotate_all_fire.ogg', 'assets/sfx/rotate_all_hit.ogg')
         race_props = self.mediator.logic.build_race_props(
-            seas.logic.drivers, track_path, keys, sounds,
+            seas.logic.drivers, track_path, keys, joystick, sounds,
             self.mediator.options['development']['start_wp'], cars)
         if self.eng.server.is_active:
             #seas.create_race_server(race_props)

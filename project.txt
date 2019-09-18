@@ -1,12 +1,11 @@
 =================================== BUGS ======================================
 
-* bind joypad keys to ingame keys
 
 ================================ TODO LIST ====================================
 
 * joypad's commands in the loading menu (if connected)
-* fix ai
 * add inertia to the camera (more info on freegamer), then improve rear camera
+* fix ai
 
 ================================= WAITING =====================================
 
