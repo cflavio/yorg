@@ -3,7 +3,6 @@
 
 ================================ TODO LIST ====================================
 
-* joypad's commands in the loading menu (if connected)
 * add inertia to the camera (more info on freegamer), then improve rear camera
 * fix ai
 
@@ -13,6 +12,7 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
+* loading page: commands for local multiplayer
 * appimage packages
 * get_joystick: return single object
 * refactor input pages
