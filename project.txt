@@ -12,8 +12,8 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* loading page: commands for local multiplayer
 * appimage packages
+# refactoring: detect localmp with season's kind
 * get_joystick: return single object
 * refactor input pages
 * remove camera's render_all workaround
