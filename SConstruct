@@ -1,11 +1,13 @@
 from collections import namedtuple
 from yyagl.build.build import extensions, files, img_tgt_names, \
     set_path, win_fpath, osx_fpath, linux_fpath, flatpak_fpath, src_fpath, \
-    devinfo_fpath, docs_fpath, pdf_fpath, test_fpath, tracks_tgt_fnames
+    devinfo_fpath, docs_fpath, pdf_fpath, test_fpath, tracks_tgt_fnames, \
+    appimage_fpath
 from yyagl.build.windows import bld_windows
 from yyagl.build.osx import bld_osx
 from yyagl.build.linux import bld_linux
 from yyagl.build.flatpak import bld_flatpak
+from yyagl.build.appimage import bld_appimage
 from yyagl.build.src import bld_src
 from yyagl.build.devinfo import bld_devinfo
 from yyagl.build.test import bld_ut
@@ -22,9 +24,9 @@ argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux', 0), ('docs', 0), ('images', 0),
     ('tracks', 0), ('pdf', 0), ('tests', 0), ('cores', 0), ('uml', 0),
-    ('flatpak', 0), ('flatpak_dst', '.')]
+    ('flatpak', 0), ('flatpak_dst', '.'), ('appimage', 0)]
 args = {arg: ARGUMENTS.get(arg, default) for (arg, default) in argument_info}
-full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux', 'flatpak'])
+full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux', 'flatpak', 'appimage'])
 args['images'] = args['images'] or full_bld or args['source']
 args['lang'] = args['lang'] or full_bld or args['source']
 args['tracks'] = args['tracks'] or full_bld or args['source']
@@ -37,6 +39,7 @@ win_path = win_fpath.format(**pargs)
 osx_path = osx_fpath.format(**pargs)
 linux_path = linux_fpath.format(**pargs)
 flatpak_path = flatpak_fpath.format(**pargs)
+appimage_path = appimage_fpath.format(**pargs)
 src_path = src_fpath.format(**pargs)
 devinfo_path = devinfo_fpath.format(**pargs)
 tests_path = test_fpath.format(**pargs)
@@ -47,6 +50,7 @@ bld_windows = Builder(action=bld_windows)
 bld_osx = Builder(action=bld_osx)
 bld_linux = Builder(action=bld_linux)
 bld_flatpak = Builder(action=bld_flatpak)
+bld_appimage = Builder(action=bld_appimage)
 bld_src = Builder(action=bld_src)
 bld_devinfo = Builder(action=bld_devinfo)
 bld_tests = Builder(action=bld_ut)
@@ -64,7 +68,7 @@ env = Environment(BUILDERS={
     'source': bld_src, 'devinfo': bld_devinfo, 'tests': bld_tests,
     'docs': bld_docs, 'images': bld_images, 'mo': bld_mo, 'pot': bld_pot,
     'merge': bld_merge, 'pdf': bld_pdfs, 'tracks': bld_models,
-    'uml': bld_uml, 'flatpak': bld_flatpak})
+    'uml': bld_uml, 'flatpak': bld_flatpak, 'appimage': bld_appimage})
 env['APPNAME'] = app_name
 env['LNG'] = lang_path
 env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
@@ -130,7 +134,7 @@ VariantDir(path, '.')
 img_files = img_tgt_names(files(['jpg', 'png'], ['models'], ['_png.png']))
 langs = ['de_DE', 'es_ES', 'fr_FR', 'gd', 'gl_ES', 'it_IT']
 lang_src = [lang_path + '%s/LC_MESSAGES/%s.mo' % (lng, app_name) for lng in langs]
-general_src = files(extensions, ['venv', 'thirdparty']) + img_files + \
+general_src = files(extensions, ['venv', 'thirdparty', 'built']) + img_files + \
     lang_src + tracks_tgt_fnames()
 if args['images']:
     imgs = env.images(img_files, files(['jpg', 'png'], ['models'], ['_png.png']))
@@ -152,6 +156,8 @@ if args['linux']:
     env.linux([linux_path], general_src)
 if args['flatpak']:
     env.flatpak([flatpak_path], general_src)
+if args['appimage']:
+    env.appimage([appimage_path], general_src)
 if args['docs']:
     env.docs([docs_path], files(['py'], ['venv', 'thirdparty']))
 if args['pdf']:
