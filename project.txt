@@ -12,15 +12,14 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* refactor input pages
+* use python's logging in place of eng.log
+* load the car and the track from a single file
 * remove camera's render_all workaround
 * remove dependency: pyyaml (configparser+json)
 * remove dependency: bson (struct)
   * refactor the server (async.io) or
       def update(): ... threading.Timer(.5, update).start()
-* use python's logging in place of eng.log
 * https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
-* load the car and the track from a single file
 * improve online multiplayer's end of race (print realtime ranking, show
     bigger minimap)
 * gui: do a single page for configuring the race (less testing)
