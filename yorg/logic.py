@@ -1,3 +1,4 @@
+from logging import info
 from random import shuffle
 from os import walk
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
@@ -112,7 +113,7 @@ class YorgLogic(GameLogic):
                     if data_lst[0] == NetMsgs.car_request:
                         client_car = data_lst[1]
                         self.eng.car_mapping[data_lst[-1]] = client_car
-                        self.eng.log_mgr.log('car requested: %s %s' % (data_lst[-1], client_car))
+                        info('car requested: %s %s' % (data_lst[-1], client_car))
                     if data_lst[0] == NetMsgs.driver_selection:
                         s_ip = sender.get_address().get_ip_string()
                         if s_ip not in self.current_drivers:
@@ -123,8 +124,7 @@ class YorgLogic(GameLogic):
                         driver_speed = data_lst[4]
                         driver_adherence = data_lst[5]
                         driver_stability = data_lst[6]
-                        self.eng.log_mgr.log(
-                            'driver selected: %s (%s, %s) ' % (driver_name, driver_id, _car))
+                        info('driver selected: %s (%s, %s) ' % (driver_name, driver_id, _car))
                         #gprops = self.mediator.gameprops
                         #cars = gprops.cars_names[:]
                         #car_idx = cars.index(_car)
@@ -150,7 +150,7 @@ class YorgLogic(GameLogic):
                         sprops.drivers = drivers
                         self.start_network_race_server(cars, track)
                 def process_connection(client_address):
-                    self.eng.log_mgr.log('connection from ' + client_address)
+                    info('connection from ' + client_address)
                     self.current_drivers = [self, client_address]
                 self.eng.server.start(process_msg, process_connection)
                 self.eng.car_mapping = {}
@@ -179,10 +179,10 @@ class YorgLogic(GameLogic):
             else:
                 def process_msg(data_lst, sender):
                     if data_lst[0] == NetMsgs.track_selected:
-                        self.eng.log_mgr.log('track selected (yorg.logic): ' + data_lst[1])
+                        info('track selected (yorg.logic): ' + data_lst[1])
                         self.sel_track = data_lst[1]
                     if data_lst[0] == NetMsgs.start_race:
-                        self.eng.log_mgr.log('start_race: ' + str(data_lst))
+                        info('start_race: ' + str(data_lst))
                         cars = data_lst[4::7]
                         #self.on_car_start_client(self.sel_track, car, cars, data_lst, None)
                         # TODO room is None
@@ -238,8 +238,8 @@ class YorgLogic(GameLogic):
             cars_names += [drv.dprops.car_name]
         #self.eng.server.send(packet)
         #self.eng.log_mgr.log('start race (server): ' + str(packet))
-        self.eng.log('drivers: ' + str(drivers))
-        self.eng.log('current drivers: ' + str(self.current_drivers))
+        info('drivers: ' + str(drivers))
+        info('current drivers: ' + str(self.current_drivers))
         self.on_driver_selected_server(
             self.mediator.options['settings']['player_names'][0], track, car,
             cars_names)
@@ -434,7 +434,7 @@ class YorgLogic(GameLogic):
         self.season.attach_obs(self.mediator.event.on_season_cont)
         self.season.start()
         drivers = sprops.drivers
-        self.eng.log('drivers: ' + str(drivers))
+        info('drivers: ' + str(drivers))
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
             ['Race', track, cars, cars, self.season.logic.drivers])
@@ -481,8 +481,8 @@ class YorgLogic(GameLogic):
                        drv.dprops.info.speed, drv.dprops.info.adherence,
                        drv.dprops.info.stability]
         self.eng.server.send(packet)
-        self.eng.log_mgr.log('start race (on driver): ' + str(packet))
-        self.eng.log('drivers: ' + str(drivers))
+        info('start race (on driver): ' + str(packet))
+        info('drivers: ' + str(drivers))
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
             ['Race', track, car, cars, self.season.logic.drivers])

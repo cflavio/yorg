@@ -1,3 +1,4 @@
+from logging import info
 from direct.gui.DirectDialog import OkDialog
 from direct.gui.DirectGuiGlobals import FLAT
 from yyagl.observer import Subject
@@ -25,16 +26,16 @@ class ExitDialog(GameObject, Subject):
             button_text_fg=menu_props.text_active_col,
             button_text_font=menu_props.font,
             command=self.on_btn)
-        self.eng.log('created dialog ' + self.dialog['text'])
+        info('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
         self.eng.client.register_rpc('leave_curr_room')
         self.eng.client.leave_curr_room()
-        self.eng.log('exit button')
+        info('exit button')
         self.notify('on_exit_dlg')
 
     def destroy(self):
-        self.eng.log('destroyed dialog ' + self.dialog['text'])
+        info('destroyed dialog ' + self.dialog['text'])
         self.dialog = self.dialog.destroy()
         Subject.destroy(self)
         GameObject.destroy(self)

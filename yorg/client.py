@@ -1,3 +1,4 @@
+from logging import info
 from socket import error
 from yyagl.engine.network.client import Client
 
@@ -36,12 +37,12 @@ class YorgClient(Client):
         if data_lst[0] == 'login':
             self.users += [User(*data_lst[1:])]
             self.notify('on_presence_available', data_lst[1:])
-            self.eng.log('login %s' % data_lst[1])
+            info('login %s' % data_lst[1])
         if data_lst[0] == 'logout':
             for usr in self.users[:]:
                 if usr.uid == data_lst[1]:
                     self.users.remove(usr)
-                    self.eng.log('logout %s' % data_lst[1])
+                    info('logout %s' % data_lst[1])
             self.notify('on_presence_unavailable', data_lst[1:])
         if data_lst[0] == 'msg':
             self.notify('on_msg', data_lst[1:])

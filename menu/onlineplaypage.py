@@ -1,3 +1,4 @@
+from logging import info
 from time import strftime
 from yyagl.lib.gui import Btn
 from yyagl.engine.gui.page import Page, PageFacade
@@ -33,11 +34,11 @@ class OnlinePlayPageGui(ThanksPageGui):
         roomname = self.eng.client.myid + time_code
         self.notify('on_create_room', roomname, self.eng.client.myid)
 
-    def process_msg_srv(data_lst):
+    def process_msg_srv(self, data_lst):
         print(data_lst)
 
     def process_connection(self, client_address):
-        self.eng.log_mgr.log('connection from ' + client_address)
+        info('connection from ' + client_address)
 
 
 class OnlinePlayPage(Page):

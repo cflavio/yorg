@@ -1,3 +1,4 @@
+from logging import info
 from panda3d.core import TextNode
 from yyagl.lib.gui import Btn, Label, ScrolledFrame
 from yyagl.engine.gui.page import Page, PageFacade
@@ -58,7 +59,7 @@ class ClientPageGui(ThanksPageGui):
 
         self.eng.client.register_rpc('hosting')
         hosting = self.eng.client.hosting()
-        self.eng.log('hosting %s' % hosting)
+        info('hosting %s' % hosting)
 
         nusers = len(hosting)
         top = .08 * nusers + .08

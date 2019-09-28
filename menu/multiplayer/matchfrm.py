@@ -1,3 +1,4 @@
+from logging import info
 from itertools import chain
 from yyagl.lib.gui import Btn, Label, Frame
 from direct.gui.DirectLabel import DirectLabel
@@ -10,7 +11,7 @@ class MatchFrm(GameObject):
 
     def __init__(self, menu_props, room):
         GameObject.__init__(self)
-        self.eng.log('created match form (init)')
+        info('created match form (init)')
         self.room = room
         self.invited_users = [self.eng.client.myid]
         self.menu_props = menu_props
@@ -38,7 +39,7 @@ class MatchFrm(GameObject):
     def on_presence_available_room(self, uid, room):
         #room = str(JID(msg['muc']['room']).bare)
         #nick = str(msg['muc']['nick'])
-        self.eng.log('user %s has connected to the room %s' % (uid, room))
+        info('user %s has connected to the room %s' % (uid, room))
         if uid == self.eng.client.myid: return
         if room != self.room: return
         found = False
@@ -61,7 +62,7 @@ class MatchFrm(GameObject):
     def on_presence_unavailable_room(self, uid, room_name):
         room = room_name
         nick = uid
-        self.eng.log('user %s has disconnected from the room %s' % (nick, room))
+        info('user %s has disconnected from the room %s' % (nick, room))
         if room != self.room: return
         for i, frm in enumerate(self.forms[:]):
             lab = frm.lab.lab['text']
@@ -76,7 +77,7 @@ class MatchFrm(GameObject):
     def on_rm_usr_from_match(self, data_lst):
         nick = data_lst[0]
         room = data_lst[1]
-        self.eng.log('user %s has been removed from the room %s' % (nick, room))
+        info('user %s has been removed from the room %s' % (nick, room))
         if room != self.room: return
         for i, frm in enumerate(self.forms[:]):
             lab = frm.lab.lab['text']
@@ -100,7 +101,7 @@ class MatchFrm(GameObject):
         frm.frm.set_pos((x, 1, y))
 
     def on_declined(self, from_):
-        self.eng.log('user %s has declined' % from_)
+        info('user %s has declined' % from_)
         for i, frm in enumerate(self.forms[:]):
             lab = frm.lab.lab['text']
             lab = lab.replace('\1smaller\1', '').replace('\2', '')
@@ -118,7 +119,7 @@ class MatchFrm(GameObject):
         return name
 
     def on_invite(self, usr):
-        self.eng.log('match form: invited user ' + usr.uid)
+        info('match form: invited user ' + usr.uid)
         idx = len(self.invited_users)
         x = .1 + 1.24 * (idx // 4)
         y = .38 - .08 * (idx % 4)
@@ -129,7 +130,7 @@ class MatchFrm(GameObject):
         self.invited_users += [usr.uid]
 
     def on_start(self):
-        self.eng.log('match form: start')
+        info('match form: start')
         self.notify('on_start')
 
     def on_remove(self, usr_name):
@@ -137,16 +138,16 @@ class MatchFrm(GameObject):
         self.eng.client.rm_usr_from_match(usr_name, self.room)
 
     def show(self, room):
-        self.eng.log('match form: show room ' + room)
+        info('match form: show room ' + room)
         self.room = room
         self.match_frm.show()
 
     def hide(self):
-        self.eng.log('match form: hide')
+        info('match form: hide')
         self.match_frm.hide()
 
     def destroy(self):
-        self.eng.log('match form: destroy')
+        info('match form: destroy')
         #self.match_frm.destroy()
         GameObject.destroy(self)
 

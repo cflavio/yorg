@@ -1,3 +1,4 @@
+from logging import info
 from sys import exit as sys_exit
 from os.path import exists
 from yyagl.gameobject import FsmColleague
@@ -24,7 +25,7 @@ class YorgFsm(FsmColleague):
             self.race = self.__exit_menu = self.loader_tsk = self.models = None
 
     def enterMenu(self):
-        self.eng.log_mgr.log('entering Menu state')
+        info('entering Menu state')
         self.mediator.reset_drivers()
         self.mediator.gameprops.player_names = self.mediator.options['settings']['player_names']
         self.mediator.gameprops.stored_player_names = self.mediator.options['settings']['stored_player_names']
@@ -120,7 +121,7 @@ class YorgFsm(FsmColleague):
         self.loader_tsk = loader.loadModel(model, callback=self.load_models)
 
     def exitMenu(self):
-        self.eng.log_mgr.log('exiting Menu state')
+        info('exiting Menu state')
         self.menu.destroy()
         self.mediator.audio.menu_music.stop()
         loader.cancelRequest(self.loader_tsk)
@@ -128,7 +129,7 @@ class YorgFsm(FsmColleague):
 
     def enterRace(self, track_path='', car_path='', cars=[], drivers='',
                   ranking=None):  # unused ranking
-        self.eng.log_mgr.log('entering Race state')
+        info('entering Race state')
         #if self.mediator.logic.mp_frm:  # None if dev quicksart
         #    self.mediator.logic.mp_frm.hide()
         base.ignore('escape-up')
@@ -171,7 +172,7 @@ class YorgFsm(FsmColleague):
             seas.create_race_client(race_props)
         else:
             seas.create_race(race_props)
-        self.eng.log_mgr.log('selected drivers: ' +
+        info('selected drivers: ' +
                              str([drv.dprops for drv in drivers]))
         seas.race.logic.drivers = drivers
         track_name_transl = track_path
@@ -192,7 +193,7 @@ class YorgFsm(FsmColleague):
         self.eng.client.attach(self.on_presence_unavailable_room)
 
     def exitRace(self):
-        self.eng.log_mgr.log('exiting Race state')
+        info('exiting Race state')
         dev = self.mediator.options['development']
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''

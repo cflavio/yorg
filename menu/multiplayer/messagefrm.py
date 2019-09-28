@@ -1,3 +1,4 @@
+from logging import info
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import FLAT, NORMAL, DISABLED, ENTER, EXIT
 from direct.gui.DirectFrame import DirectFrame
@@ -39,7 +40,7 @@ class MatchMsgFrm(GameObject):
 
     def __init__(self, menu_props):
         GameObject.__init__(self)
-        self.eng.log('created match message form')
+        info('created match message form')
         self.chat = None
         self.msg_frm = Frame(
             frame_size=(-.02, 3.49, 0, 1.22),
@@ -140,7 +141,7 @@ class MatchMsgFrm(GameObject):
         #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
         src = from_
         #self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
-        self.eng.log('received groupchat message from %s in the chat %s' % (from_, to))
+        info('received groupchat message from %s in the chat %s' % (from_, to))
         #str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         str_msg = '\1italic\1' + src + '\2: ' + txt
         if not self.chat:
@@ -156,14 +157,14 @@ class MatchMsgFrm(GameObject):
     def on_presence_available_room(self, uid, room):
         #room = str(JID(msg['muc']['room']).bare)
         #nick = str(msg['muc']['nick'])
-        self.eng.log('user %s has logged in the chat %s' % (uid, room))
+        info('user %s has logged in the chat %s' % (uid, room))
         self.chat.users += [uid]
         self.set_title(self.chat.title)
 
     def on_presence_unavailable_room(self, uid, room_name):
         room = room_name
         nick = uid
-        self.eng.log('user %s has left the chat %s' %(nick, room))
+        info('user %s has left the chat %s' %(nick, room))
         if nick in self.chat.users: # it is being removed multiple times when
                                     # you remove a user who has accepted
             self.chat.users.remove(nick)
@@ -202,7 +203,7 @@ class MatchMsgFrm(GameObject):
 
     def destroy(self):
         self.eng.client.detach(self.on_groupchat_msg)
-        self.eng.log('message form destroyed')
+        info('message form destroyed')
         #self.msg_frm.destroy()
         GameObject.destroy(self)
 
@@ -211,7 +212,7 @@ class MessageFrm(GameObject):
 
     def __init__(self, menu_props):
         GameObject.__init__(self)
-        self.eng.log('created message form')
+        info('created message form')
         self.chats = []
         self.curr_chat = None
         self.curr_match_room = None
@@ -426,7 +427,7 @@ class MessageFrm(GameObject):
         #src = src.split('@')[0] + '\1smaller\1@' + src.split('@')[1] + '\2'
         src = from_
         #self.eng.log('received groupchat message from %s in the chat %s' %(msg['mucnick'], JID(msg['from']).bare))
-        self.eng.log('received groupchat message from %s in the chat %s' % (from_, to))
+        info('received groupchat message from %s in the chat %s' % (from_, to))
         #str_msg = '\1italic\1' + src + '\2: ' + str(msg['body'])
         str_msg = '\1italic\1' + src + '\2: ' + txt
         chat = self.curr_chat
@@ -450,7 +451,7 @@ class MessageFrm(GameObject):
             self.match_msg_frm.on_presence_available_room(uid, room)
         #room = str(JID(msg['muc']['room']).bare)
         #nick = str(msg['muc']['nick'])
-        self.eng.log('user %s has logged in the chat %s' %(uid, room))
+        info('user %s has logged in the chat %s' %(uid, room))
         chat = self.__find_chat(room)
         chat.users += [uid]
         if room != self.curr_match_room:
@@ -463,7 +464,7 @@ class MessageFrm(GameObject):
             return
         room = room_name
         nick = uid
-        self.eng.log('user %s has left the chat %s' %(nick, room))
+        info('user %s has left the chat %s' %(nick, room))
         chat = self.__find_chat(room)
         if nick == self.eng.client.myid:
             self.on_close()

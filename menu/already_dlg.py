@@ -1,3 +1,4 @@
+from logging import info
 from direct.gui.DirectDialog import OkDialog
 from direct.gui.DirectGuiGlobals import FLAT
 from yyagl.observer import Subject
@@ -26,14 +27,14 @@ class AlreadyUsedDlg(GameObject, Subject):
             button_text_fg=menu_props.text_active_col,
             button_text_font=menu_props.font,
             command=self.on_btn)
-        self.eng.log('created dialog ' + self.dialog['text'])
+        info('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
-        self.eng.log('already used')
+        info('already used')
         self.notify('on_already_dlg')
 
     def destroy(self):
-        self.eng.log('destroyed dialog ' + self.dialog['text'])
+        info('destroyed dialog ' + self.dialog['text'])
         self.dialog = self.dialog.destroy()
         Subject.destroy(self)
         GameObject.destroy(self)
@@ -61,14 +62,14 @@ class AlreadyUsedJoystickDlg(GameObject, Subject):
             button_text_fg=menu_props.text_active_col,
             button_text_font=menu_props.font,
             command=self.on_btn)
-        self.eng.log('created dialog ' + self.dialog['text'])
+        info('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
-        self.eng.log('already used joystick')
+        info('already used joystick')
         self.notify('on_already_joystick_dlg')
 
     def destroy(self):
-        self.eng.log('destroyed dialog ' + self.dialog['text'])
+        info('destroyed dialog ' + self.dialog['text'])
         self.dialog = self.dialog.destroy()
         Subject.destroy(self)
         GameObject.destroy(self)

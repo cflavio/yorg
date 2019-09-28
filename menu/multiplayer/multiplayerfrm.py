@@ -1,3 +1,4 @@
+from logging import info
 from json import load
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror, error
 from urllib.request import urlopen, URLError
@@ -19,7 +20,7 @@ class MultiplayerFrm(GameObject):
 
     def __init__(self, menu_props, yorg_srv):
         GameObject.__init__(self)
-        self.eng.log('created multiplayer form')
+        info('created multiplayer form')
         self.dialog = self.server_dlg = None
         self.invite_dlg = None
         self.yorg_srv = yorg_srv
@@ -57,19 +58,19 @@ class MultiplayerFrm(GameObject):
         self.match_frm.show(room)
 
     def show(self):
-        self.eng.log('multiplayer form: show')
+        info('multiplayer form: show')
         self.users_frm.show()
         #self.match_frm.show()
         self.msg_frm.show()
 
     def hide(self):
-        self.eng.log('multiplayer form: hide')
+        info('multiplayer form: hide')
         self.users_frm.hide()
         #self.match_frm.hide()
         self.msg_frm.hide()
 
     def on_user_subscribe(self, user):
-        self.eng.log('user subscribe: ' + str(user))
+        info('user subscribe: ' + str(user))
         if self.eng.xmpp.is_friend(user): return
         self.dialog = FriendDialog(self.menu_props, user)
         self.dialog.attach(self.on_friend_answer)
@@ -77,7 +78,7 @@ class MultiplayerFrm(GameObject):
     def on_friend_answer(self, user, val):
         self.dialog.detach(self.on_friend_answer)
         self.dialog = self.dialog.destroy()
-        self.eng.log('send presence subscription to %s: %s' %(user, 'subscribed' if val else 'unsubscribed'))
+        info('send presence subscription to %s: %s' %(user, 'subscribed' if val else 'unsubscribed'))
         self.eng.xmpp.client.send_presence_subscription(
             pto=user,
             pfrom=self.eng.xmpp.client.boundjid.full,
@@ -110,20 +111,20 @@ class MultiplayerFrm(GameObject):
         print(data_lst)
 
     def process_connection(self, client_address):
-        self.eng.log_mgr.log('connection from ' + client_address)
+        info('connection from ' + client_address)
 
     def on_users(self): self.users_frm.on_users()
 
     def on_user_connected(self, user):
-        self.eng.log('user connected ' + user)
+        info('user connected ' + user)
         self.users_frm.on_users()
 
     def on_user_disconnected(self, user):
-        self.eng.log('user disconnected ' + user)
+        info('user disconnected ' + user)
         self.users_frm.on_users()
 
     def on_yorg_init(self, msg):
-        self.eng.log('yorg_init ' + str(msg['from']))
+        info('yorg_init ' + str(msg['from']))
         usr = [user for user in self.eng.xmpp.users if user.name == str(msg['from'].bare)][0]
         usr.is_supporter = msg['body'] == '1'
         usr.is_in_yorg = True
@@ -131,7 +132,7 @@ class MultiplayerFrm(GameObject):
         self.users_frm.on_users()
 
     def on_is_playing(self, uid, is_playing):
-        self.eng.log('is playing %s %s' % (uid, is_playing))
+        info('is playing %s %s' % (uid, is_playing))
         users = [user for user in self.eng.client.users if user.uid == uid]
         #if not users: return  # when we get messages while we were offline
         usr = users[0]
@@ -193,7 +194,7 @@ class MultiplayerFrm(GameObject):
         self.users_frm.on_logout()
 
     def on_start(self):
-        self.eng.log('on_start')
+        info('on_start')
         self.cancel_invites()
         self.users_frm.room_name = None
         self.match_frm.destroy()
@@ -212,7 +213,7 @@ class MultiplayerFrm(GameObject):
         if self.users_frm.room_name:  # i am the server:
             self.cancel_invites()
         if self.msg_frm.curr_match_room:  # if we've accepted the invitation
-            self.eng.log('back (client)')
+            info('back (client)')
             #self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
             #    self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
             self.eng.client.is_server_active = False
@@ -251,9 +252,9 @@ class MultiplayerFrm(GameObject):
         invited = self.users_frm.invited_users
         users = self.match_frm.users_names
         pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
-        self.eng.log('cancel invites: %s, %s, %s' % (invited, users, pending_users))
+        info('cancel invites: %s, %s, %s' % (invited, users, pending_users))
         for usr in pending_users:
-            self.eng.log('cancel_invite %s %s' % (usr, self.match_frm.room))
+            info('cancel_invite %s %s' % (usr, self.match_frm.room))
             self.eng.client.register_rpc('rm_usr_from_match')
             self.eng.client.rm_usr_from_match(usr, self.match_frm.room)
 
@@ -263,9 +264,9 @@ class MultiplayerFrm(GameObject):
             invited = self.users_frm.invited_users
             users = self.match_frm.users_names
             pending_users = [usr[2:] for usr in users if usr.startswith('? ')]
-            self.eng.log('quit (server): %s, %s, %s' % (invited, users, pending_users))
+            info('quit (server): %s, %s, %s' % (invited, users, pending_users))
             for usr in pending_users:
-                self.eng.log('cancel_invite ' + usr)
+                info('cancel_invite ' + usr)
                 self.eng.xmpp.client.send_message(
                     mfrom=self.eng.xmpp.client.boundjid.full,
                     mto=usr,
@@ -273,7 +274,7 @@ class MultiplayerFrm(GameObject):
                     msubject='cancel_invite',
                     mbody='cancel_invite')
         if self.msg_frm.curr_match_room:  # if we've accepted the invitation
-            self.eng.log('back (client)')
+            info('back (client)')
             #self.eng.xmpp.client.plugin['xep_0045'].leaveMUC(
             #    self.msg_frm.curr_match_room, self.eng.xmpp.client.boundjid.bare)
             self.eng.client.is_server_active = False
@@ -299,13 +300,13 @@ class MultiplayerFrm(GameObject):
         self.msg_frm.curr_match_room = None
 
     def on_msg(self, msg):
-        self.eng.log('received message')
+        info('received message')
         self.users_frm.set_size(False)
         self.msg_frm.show()
         self.msg_frm.on_msg(*msg)
 
     def on_close_all_chats(self):
-        self.eng.log('closed all chats')
+        info('closed all chats')
         self.users_frm.set_size(True)
         self.msg_frm.hide()
 
@@ -375,7 +376,7 @@ class MultiplayerFrm(GameObject):
             self.users_frm.in_match_room = from_
             self.users_frm.on_users()
             self.msg_frm.add_groupchat(roomname, from_)
-            self.eng.log('join to the chat ' + roomname)
+            info('join to the chat ' + roomname)
             #self.eng.xmpp.client.plugin['xep_0045'].joinMUC(
             #    chat, self.eng.xmpp.client.boundjid.bare)
             self.eng.client.register_rpc('join_room')
@@ -419,13 +420,13 @@ class MultiplayerFrm(GameObject):
         #self.msg_frm.show()
 
     def on_declined(self, msg):
-        self.eng.log('on declined')
+        info('on declined')
         self.users_frm.on_declined(msg)
         self.match_frm.on_declined(msg)
         self.msg_frm.match_msg_frm.update_title()
 
     def on_ip_address(self, msg):
-        self.eng.log('on ip address')
+        info('on ip address')
         public_addr, local_addr = msg['body'].split('\n')
         for usr in self.eng.xmpp.users:
             if usr.name == msg['from'].bare:
@@ -444,7 +445,7 @@ class MultiplayerFrm(GameObject):
         self.on_users()
 
     def on_add_chat(self, usr):
-        self.eng.log('on add chat' + str(usr))
+        info('on add chat' + str(usr))
         self.users_frm.set_size(False)
         self.msg_frm.show()
         self.msg_frm.add_chat(usr)
@@ -459,6 +460,6 @@ class MultiplayerFrm(GameObject):
         self.notify('on_msg_focus', val)
 
     def destroy(self):
-        self.eng.log('multiplayer form: destroy')
+        info('multiplayer form: destroy')
         self.frm = self.frm.destroy()
         GameObject.destroy(self)

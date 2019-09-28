@@ -1,4 +1,5 @@
 import argparse, sys
+from logging import info
 from sys import platform, path
 from importlib import reload
 from copy import deepcopy
@@ -253,7 +254,7 @@ class Yorg(Game):
             if type(val) == dict:
                 self.log_conf(val, pref + key + '::')
             elif key != 'pwd':
-                self.eng.log('option %s%s = %s' % (pref, key, val))
+                info('option %s%s = %s' % (pref, key, val))
 
     def __compute_tracks(self):
         curr_path = dirname(__file__) + '/'

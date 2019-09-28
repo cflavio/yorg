@@ -1,3 +1,4 @@
+from logging import info
 from itertools import product
 from yyagl.lib.gui import Text
 from yyagl.engine.gui.page import Page, PageFacade
@@ -46,7 +47,7 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.build(self, exit_behav=self.eng.server.is_active)
 
     def on_track(self, track):
-        self.eng.log('selected ' + track)
+        info('selected ' + track)
         self.notify('on_track_selected', track)
         self.notify('on_push_page', 'car_page', [self.props])
 

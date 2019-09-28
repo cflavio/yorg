@@ -1,3 +1,4 @@
+from logging import info
 from time import strftime
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
 from panda3d.core import TextNode
@@ -15,7 +16,7 @@ class UsersFrm(GameObject):
 
     def __init__(self, menu_props, yorg_srv):
         GameObject.__init__(self)
-        self.eng.log('create users form')
+        info('create users form')
         self.ver_check = VersionChecker()
         self.yorg_srv = yorg_srv
         self.room_name = None
@@ -157,7 +158,7 @@ class UsersFrm(GameObject):
             #self.eng.xmpp.client.plugin['xep_0045'].configureRoom(self.room_name, cfg)
             self.eng.client.register_rpc('join_room')
             self.eng.client.join_room(self.room_name)
-            self.eng.log('created room ' + self.room_name)
+            info('created room ' + self.room_name)
             self.eng.client.is_server_active = True
             #for usr_name in [self.yorg_srv] + \
             #    [_usr.name_full for _usr in self.eng.xmpp.users if _usr.is_in_yorg]:
@@ -176,11 +177,11 @@ class UsersFrm(GameObject):
         #    msubject='invite',
         #    mbody=self.room_name + '\n' + self.eng.server.public_addr + '\n' + self.eng.server.local_addr)
         if ret == 'ok':
-            self.eng.log('invited ' + str(usr.uid))
+            info('invited ' + str(usr.uid))
             self.notify('on_add_groupchat', self.room_name, usr.uid)
 
     def on_declined(self, from_):
-        self.eng.log('declined from ' + from_)
+        info('declined from ' + from_)
         self.invited_users.remove(from_)
         self.on_users()
 
@@ -191,17 +192,17 @@ class UsersFrm(GameObject):
         self.labels = []
 
     def on_friend(self, usr_name):
-        self.eng.log('send friend to ' + usr_name)
+        info('send friend to ' + usr_name)
         self.eng.xmpp.client.send_presence_subscription(
             usr_name, ptype='subscribe',
             pfrom=self.eng.xmpp.client.boundjid.full)
 
     def on_unfriend(self, usr):
-        self.eng.log('roster ' + str(self.eng.xmpp.client.client_roster))
+        info('roster ' + str(self.eng.xmpp.client.client_roster))
         self.eng.xmpp.client.del_roster_item(usr)
-        self.eng.log('roster ' + str(self.eng.xmpp.client.client_roster))
+        info('roster ' + str(self.eng.xmpp.client.client_roster))
 
     def destroy(self):
-        self.eng.log('destroyed usersfrm')
+        info('destroyed usersfrm')
         self.frm = self.frm.destroy()
         GameObject.destroy(self)

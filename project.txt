@@ -1,5 +1,6 @@
 =================================== BUGS ======================================
 
+# crash without joypad
 
 ================================ TODO LIST ====================================
 
@@ -12,7 +13,6 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* use python's logging in place of eng.log
 * load the car and the track from a single file
 * remove camera's render_all workaround
 * remove dependency: pyyaml (configparser+json)

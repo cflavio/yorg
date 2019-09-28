@@ -1,3 +1,4 @@
+from logging import info
 from itertools import product
 from yaml import load
 from panda3d.core import TextNode
@@ -93,7 +94,7 @@ class CarPageGui(ThanksPageGui):
         return [btn for btn in self.buttons if btn['extraArgs'] == [car]]
 
     def on_car(self, car):
-        self.eng.log('selected ' + car)
+        info('selected ' + car)
         self.notify('on_car_selected', car)
         page_args = [self.track_path, car, self.props]
         self.notify('on_push_page', 'driver_page', page_args)
@@ -120,7 +121,7 @@ class CarPageLocalMPGui(CarPageGui):
         self._buttons(car)[0].disable()
         self.disable_navigation([player])
         self.selected_cars[player] = car
-        self.eng.log('selected %s (player %s)' % (car, player))
+        info('selected %s (player %s)' % (car, player))
         self.notify('on_car_selected_mp', [car, player])
         self.evaluate_start()
 
@@ -142,7 +143,7 @@ class CarPageGuiServer(CarPageGui):
         self.eng.server.register_rpc(self.car_request)
 
     def on_car(self, car):
-        self.eng.log_mgr.log('car selected: ' + car)
+        info('car selected: ' + car)
         #name = JID(self.eng.xmpp.client.boundjid).bare
         #self.eng.server.send([NetMsgs.car_selection, car, name])
         self.eng.client.register_rpc('car_request')
@@ -153,7 +154,7 @@ class CarPageGuiServer(CarPageGui):
             btn._name_txt['text'] = self.eng.client.myid
         if self in self.current_cars:
             curr_car = self.current_cars[self]
-            self.eng.log_mgr.log('car deselected: ' + curr_car)
+            info('car deselected: ' + curr_car)
             self.eng.server.send([NetMsgs.car_deselection, curr_car])
             for btn in self._buttons(curr_car):
                 btn.enable()
@@ -180,13 +181,13 @@ class CarPageGuiServer(CarPageGui):
     #    self.notify('on_push_page', 'driverpageserver', page_args)
 
     def car_request(self, car, sender):
-        self.eng.log_mgr.log('car requested: ' + car)
+        info('car requested: ' + car)
         btn = self._buttons(car)[0]
         if btn['state'] == DISABLED:
-            self.eng.log_mgr.log('car already selected: ' + car)
+            info('car already selected: ' + car)
             return False
         elif btn['state'] == NORMAL:
-            self.eng.log_mgr.log('car selected: ' + car)
+            info('car selected: ' + car)
             if sender in self.current_cars:
                 _btn = self._buttons(self.current_cars[sender])[0]
                 _btn.enable()
@@ -245,23 +246,23 @@ class CarPageGuiClient(CarPageGui):
             self._back_btn.disable()
 
     def on_car(self, car):
-        self.eng.log_mgr.log('car request: ' + car)
+        info('car request: ' + car)
         if self.eng.client.car_request(car):
             if self.car:
                 _btn = self._buttons(self.car)[0]
                 _btn.enable()
                 _btn._name_txt['text'] = ''
             self.car = car
-            self.eng.log_mgr.log('car confirmed: ' + car)
+            info('car confirmed: ' + car)
             btn = self._buttons(car)[0]
             btn.disable()
             btn._name_txt['text'] = self.eng.client.myid
-        else: self.eng.log_mgr.log('car denied')
+        else: info('car denied')
 
     def on_car_selection(self, data_lst):
         car = data_lst[0]
         name = data_lst[1]
-        self.eng.log_mgr.log('car selection: ' + car)
+        info('car selection: ' + car)
         btn = self._buttons(car)[0]
         btn.disable()
         btn._name_txt['text'] = name
@@ -269,13 +270,13 @@ class CarPageGuiClient(CarPageGui):
 
     def on_car_deselection(self, data_lst):
         car = data_lst[0]
-        self.eng.log_mgr.log('car deselection: ' + car)
+        info('car deselection: ' + car)
         btn = self._buttons(car)[0]
         btn.enable()
         btn._name_txt['text'] = ''
 
     def on_start_drivers(self, data_lst):
-        self.eng.log_mgr.log('start_drivers: ' + str(data_lst))
+        info('start_drivers: ' + str(data_lst))
         page_args = [self.track_path, self.car, self.props]
         self.notify('on_push_page', 'driverpageclient', page_args)
 

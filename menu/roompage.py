@@ -1,3 +1,4 @@
+from logging import info
 from time import strftime
 from yyagl.engine.gui.page import Page, PageFacade, PageEvent
 from yyagl.gameobject import GameObject
@@ -21,7 +22,7 @@ class RoomPageGui(ThanksPageGui):
         ThanksPageGui.__init__(self, mediator, menu_props)
         self.eng.client.register_rpc('join_room')
         self.eng.client.join_room(room_name)
-        self.eng.log('created room ' + room_name)
+        info('created room ' + room_name)
         self.eng.client.is_server_active = True
         self.eng.client.attach(self.on_presence_available_room)
         self.eng.client.attach(self.on_presence_unavailable_room)
@@ -77,7 +78,7 @@ class RoomPageClientGui(RoomPageGui):
         self.notify('on_srv_quitted')
 
     def on_track_selected_msg(self, track):
-        self.eng.log_mgr.log('track selected (room page): ' + track)
+        info('track selected (room page): ' + track)
         self.eng.client.detach(self.on_track_selected_msg)
         self.notify('on_start_match_client_page', track, self.room_name)
 
@@ -89,7 +90,7 @@ class RoomPageEvent(PageEvent):
         self.room = room
 
     def on_back(self):
-        self.eng.log_mgr.log('RoomPageEvent::on_back')
+        info('RoomPageEvent::on_back')
         self.eng.client.is_server_active = False
         self.eng.client.is_client_active = False
         self.eng.client.register_rpc('leave_room')
