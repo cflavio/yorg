@@ -252,9 +252,10 @@ class InputPageGui4Joystick(AbsInputPageGui):
 
     def start_rec_aux(self, btn):
         self.eng.joystick_mgr.is_recording = True
-        self._keys = ['joypad%s_b%s' % (self.joyp_idx, i) for i in range(4)]
-        keys = ['trigger_l', 'trigger_r', 'shoulder_l', 'shoulder_r', 'stick_l', 'stick_r']
-        self._keys += ['joypad%s_%s' % (self.joyp_idx, i) for i in keys]
+        keys = [
+            'face_x', 'face_y', 'face_a', 'face_b',
+            'trigger_l', 'trigger_r', 'shoulder_l', 'shoulder_r', 'stick_l', 'stick_r']
+        self._keys = ['joypad%s_%s' % (self.joyp_idx, i) for i in keys]
         self.hint_lab.show()
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
         list(map(acc, self._keys))
@@ -285,7 +286,7 @@ class InputPageGui4Joystick(AbsInputPageGui):
     def on_already_joystick_dlg(self): self.dial = self.dial.destroy()
 
     def already_used(self, val):
-        val = val.split('_', 1)[1:]
+        val = ''.join(val.split('_', 1)[1:])
         for lab in ['forward', 'rear', 'fire', 'respawn']:
             if self.keys[lab + str(self.joyp_idx + 1)] == val: return lab
 
