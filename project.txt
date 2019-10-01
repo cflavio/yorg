@@ -31,8 +31,6 @@
 * object's creation: isolate the parallel creation and construct object in the
      standard way (fields) and use the parallel creation only when it is useful
   * facade, pass a single list (meth for callables, prop for others)
-* lib/p3d/gui.py, lib/p3d/gfx.py: __init__ method from a non direct base class
-    'Facade' is called
 * remove eng.server
 * racing should be another package in another submodule (i.e. yorg contains
    yyagl/ and racing/)
