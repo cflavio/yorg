@@ -1,5 +1,7 @@
 =================================== BUGS ======================================
 
+* quickstart
+
 ================================ TODO LIST ====================================
 
 * add inertia to the camera (more info on freegamer), then improve rear camera
@@ -21,17 +23,14 @@
 * improve online multiplayer's end of race (print realtime ranking, show
     bigger minimap)
 * gui: do a single page for configuring the race (less testing)
-* refactoring: do event/observer for joystick buttons
 * class Player (has-a car, has-a driver)
 * where proper (i.e. where observers aren't tied to the observable) replace
     observer with publisher-subscriber
 * attach/attach_obs, detach/detach_obs - the client attach-es it to the
     observed, then it attach-es it to the component
-* notify's sender (see page.py)
 * object's creation: isolate the parallel creation and construct object in the
      standard way (fields) and use the parallel creation only when it is useful
   * facade, pass a single list (meth for callables, prop for others)
-* remove eng.server
 * racing should be another package in another submodule (i.e. yorg contains
    yyagl/ and racing/)
 * yyagl's scons
