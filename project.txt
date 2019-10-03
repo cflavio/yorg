@@ -1,7 +1,5 @@
 =================================== BUGS ======================================
 
-* quickstart
-
 ================================ TODO LIST ====================================
 
 * add inertia to the camera (more info on freegamer), then improve rear camera

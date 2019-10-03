@@ -88,15 +88,17 @@ class YorgLogic(GameLogic):
         server = dev['server'] if 'server' in dev else ''
         if cars and track and not dev['mp_srv_usr']:  # for development's quickstart
             cars = cars.split()
+            cars0 = cars
+            if len(cars) == 1: cars0 = cars[0]
             self.season = SingleRaceSeason(self.__season_props(
-                self.mediator.gameprops, cars, cars,
+                self.mediator.gameprops, cars0, cars,
                 self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
                 dev['race_start_time'], dev['countdown_seconds'],
                 self.mediator.options['settings']['camera'], 'single'))
             self.season.attach_obs(self.mediator.event.on_season_end)
             self.season.attach_obs(self.mediator.event.on_season_cont)
             self.season.start()
-            self.mediator.fsm.demand('Race', track, cars, cars,
+            self.mediator.fsm.demand('Race', track, cars0, cars,
                                 self.season.logic.drivers, self.season.ranking)
             #taskMgr.doMethodLater(5.0, lambda task: self.mediator.logic.mp_frm.hide(), 'hide')
         elif cars and server:  # for development's quickstart
