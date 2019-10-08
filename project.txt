@@ -21,12 +21,7 @@
     bigger minimap)
 * gui: do a single page for configuring the race (less testing)
 * class Player (has-a car, has-a driver)
-* where proper (i.e. where observers aren't tied to the observable) replace
-    observer with publisher-subscriber
-* attach/attach_obs, detach/detach_obs - the client attach-es it to the
-    observed, then it attach-es it to the component
-* object's creation: isolate the parallel creation and construct object in the
-     standard way (fields) and use the parallel creation only when it is useful
+* object's creation: construct objects in the standard way (fields)
   * facade, pass a single list (meth for callables, prop for others)
 * racing should be another package in another submodule (i.e. yorg contains
    yyagl/ and racing/)
