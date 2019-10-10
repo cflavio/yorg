@@ -10,20 +10,13 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* load the car and the track from a single file
-* remove camera's render_all workaround
-* remove dependency: pyyaml (configparser+json)
-* remove dependency: bson (struct)
-  * refactor the server (async.io) or
-      def update(): ... threading.Timer(.5, update).start()
-* https://discourse.panda3d.org/t/sample-using-directional-lights-shadows-effectively/24424
-* improve online multiplayer's end of race (print realtime ranking, show
-    bigger minimap)
-* gui: do a single page for configuring the race (less testing)
 * class Player (has-a car, has-a driver)
 * object's creation: construct objects in the standard way (fields)
   * facade, pass a single list (meth for callables, prop for others)
-* racing should be another package in another submodule (i.e. yorg contains
-   yyagl/ and racing/)
-* yyagl's scons
+* gui: do a single page for configuring the race (less testing)
+* remove dependency: pyyaml (configparser+json)
+* remove dependency: bson (struct)
+* improve online multiplayer's end of race (realtime ranking, bigger minimap)
+* racing should be another package in another submodule
+  * yyagl's scons; racing's scons
 * unit tests
