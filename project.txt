@@ -19,4 +19,3 @@
 * improve online multiplayer's end of race (realtime ranking, bigger minimap)
 * racing should be another package in another submodule
   * yyagl's scons; racing's scons
-* unit tests
