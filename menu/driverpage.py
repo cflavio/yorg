@@ -536,10 +536,8 @@ class DriverPage(Page):
         Page.__init__(self, driverpage_props)
         PageFacade.__init__(self)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.driverpage_props])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.driverpage_props)
 
     def destroy(self):
         Page.destroy(self)
@@ -561,10 +559,8 @@ class DriverPageMP(DriverPage):
         DriverPage.__init__(self, track, cars, driverpage_props)
         PageFacade.__init__(self)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.driverpage_props, self.nplayers])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.driverpage_props, self.nplayers)
 
 
 class DriverPageServer(DriverPage):
@@ -578,7 +574,5 @@ class DriverPageClient(DriverPage):
         self.__uid_srv = uid_srv
         DriverPage.__init__(self, track, car, driverpage_props)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.driverpage_props, self.__uid_srv])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.driverpage_props, self.__uid_srv)

@@ -42,10 +42,8 @@ class SingleplayerPage(Page):
         Page.__init__(self, singleplayerpage_props)
         PageFacade.__init__(self)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.singleplayerpage_props])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.singleplayerpage_props)
 
     def destroy(self):
         Page.destroy(self)

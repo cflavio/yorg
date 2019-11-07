@@ -45,13 +45,14 @@ class OnlinePlayPage(Page):
     gui_cls = OnlinePlayPageGui
 
     def __init__(self, mp_props):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mp_props])]]
-        GameObject.__init__(self, init_lst)
+        GameObject.__init__(self)
+        self.event = self.event_cls(self)
+        self.gui = self.gui_cls(self, mp_props)
         PageFacade.__init__(self)
         # invoke Page's __init__
 
     def destroy(self):
+        self.event.destroy()
+        self.gui.destroy()
         GameObject.destroy(self)
         PageFacade.destroy(self)

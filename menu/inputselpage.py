@@ -41,13 +41,18 @@ class InputSelPage(Page):
     gui_cls = InputSelPageGui
 
     def __init__(self, mp_props, opt_file, keys, joystick):
-        init_lst = [
-            [('event', self.event_cls, [self])],
-            [('gui', self.gui_cls, [self, mp_props, opt_file, keys, joystick])]]
-        GameObject.__init__(self, init_lst)
+        self.__mp_props = mp_props
+        self.__opt_file = opt_file
+        self.__keys = keys
+        self.__joystick = joystick
+        GameObject.__init__(self)
+        self.event = self.event_cls(self)
+        self.gui = self.gui_cls(self, self.__mp_props, self.__opt_file, self.__keys, self.__joystick)
         PageFacade.__init__(self)
         # invoke Page's __init__
 
     def destroy(self):
+        self.event.destroy()
+        self.gui.destroy()
         GameObject.destroy(self)
         PageFacade.destroy(self)

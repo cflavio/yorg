@@ -296,8 +296,7 @@ class YorgMenu(Menu):
 
     def __init__(self, menu_props):
         self.menu_props = menu_props
-        comps = [
-            [('logic', self.logic_cls, [self])],
-            [('gui', self.gui_cls, [self, menu_props])]]
-        GameObject.__init__(self, comps)
+        GameObject.__init__(self)
+        self.logic = self.logic_cls(self)
+        self.gui = self.gui_cls(self, menu_props)
         MenuFacade.__init__(self)

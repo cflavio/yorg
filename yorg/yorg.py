@@ -192,11 +192,6 @@ class Yorg(Game):
             srgb=opt_dev['srgb'],
             opengl_3_2=opt_dev['opengl_3_2'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
-        init_lst = [
-            [('fsm', YorgFsm, [self])],
-            [('logic', YorgLogic, [self])],
-            [('audio', YorgAudio, [self])],
-            [('event', YorgEvent, [self])]]
         keys = self.options['settings']['keys']
         nav1 = NavInfoPerPlayer(keys['left1'], keys['right1'], keys['forward1'],
                                 keys['rear1'], keys['fire1'])
@@ -215,7 +210,11 @@ class Yorg(Game):
             'assets/images/icons/%s.txo', nav)
         damage_info = DamageInfo('assets/cars/%s/models/cardamage1',
                                  'assets/cars/%s/models/cardamage2')
-        Game.__init__(self, init_lst, conf, YorgClient)
+        Game.__init__(self, conf, YorgClient)
+        self.fsm = YorgFsm(self)
+        self.logic = YorgLogic(self)
+        self.audio = YorgAudio(self)
+        self.event = YorgEvent(self)
         cars_names = self.__compute_cars()
         wheel_gfx_names = ['wheelfront', 'wheelrear', 'wheel']
         wheel_gfx_names = [

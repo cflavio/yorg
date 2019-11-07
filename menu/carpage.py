@@ -303,10 +303,8 @@ class CarPage(Page):
         Page.__init__(self, carpage_props)
         PageFacade.__init__(self)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.carpage_props, self.track_path])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.carpage_props, self.track_path)
 
     def destroy(self):
         Page.destroy(self)
@@ -328,10 +326,8 @@ class CarPageClient(CarPage):
         self.__uid_srv = uid_srv
         CarPage.__init__(self, carpage_props, track_path)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.carpage_props, self.track_path, self.__uid_srv])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.carpage_props, self.track_path, self.__uid_srv)
 
 
 class CarPageLocalMP(CarPage, PageFacade):
@@ -344,8 +340,5 @@ class CarPageLocalMP(CarPage, PageFacade):
         Page.__init__(self, carpage_props)
         PageFacade.__init__(self)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls,
-         [self, self.carpage_props, self.track_path, self.nplayers])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.carpage_props, self.track_path, self.nplayers)

@@ -108,10 +108,11 @@ class RoomPage(Page):
         Page.__init__(self, menu_props)
         PageFacade.__init__(self)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self, self.room])],
-        [('gui', self.gui_cls, [self, self.menu_props, self.room, self.uid_srv])]]
+    def _build_event(self):
+        self.event = self.event_cls(self, self.room)
+
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.menu_props, self.room, self.uid_srv)
 
     def destroy(self):
         Page.destroy(self)

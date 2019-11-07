@@ -8,8 +8,7 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* object's creation: construct objects in the standard way (fields)
-  * facade, pass a single list (meth for callables, prop for others)
+* facade, pass a single list (meth for callables, prop for others)
 * class Player (has-a car, has-a driver)
 * gui: do a single page for configuring the race (less testing)
 * racing should be another package in another submodule

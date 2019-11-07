@@ -22,7 +22,7 @@ from .optionpage import OptionPageProps
 
 class YorgMainPageGui(MainPageGui):
 
-    def __init__(self, mediator, mainpage_props):
+    def __init__(self, mediator, mainpage_props, players=[0]):
         self.__feed_type = ''
         self.__date_field = ''
         self.props = mainpage_props
