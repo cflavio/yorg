@@ -8,10 +8,11 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* facade, pass a single list (meth for callables, prop for others)
 * class Player (has-a car, has-a driver)
 * gui: do a single page for configuring the race (less testing)
+* refactoring of the server (use a framework)
 * racing should be another package in another submodule
   * yyagl's scons; racing's scons
 * remove dependency: pyyaml (configparser+json)
 * remove dependency: bson (struct)
+* facade, replace them with def
