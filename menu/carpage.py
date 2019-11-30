@@ -122,7 +122,7 @@ class CarPageLocalMPGui(CarPageGui):
         self.disable_navigation([player])
         self.selected_cars[player] = car
         info('selected %s (player %s)' % (car, player))
-        self.notify('on_car_selected_mp', [car, player])
+        self.notify('on_car_selected_mp', car, player)
         self.evaluate_start()
 
     def evaluate_start(self):

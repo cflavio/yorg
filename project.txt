@@ -8,7 +8,9 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* class Player (has-a car, has-a driver)
+* class Player (has-a car, has-a driver, for online multiplayer)
+* create Season asap i.e. when the user selects single/local/online
+* Ranking: add points to Player in place of the current management
 * gui: do a single page for configuring the race (less testing)
 * refactoring of the server (use a framework)
 * racing should be another package in another submodule

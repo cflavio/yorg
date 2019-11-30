@@ -27,4 +27,4 @@ class YorgEvent(EventColleague):
         tuning = self.mediator.logic.season.tuning
         self.mediator.options['save']['tuning'] = tuning.to_dct
         self.mediator.options.store()
-        self.mediator.fsm.demand('Race', next_track, curr_car, None, drivers)
+        self.mediator.fsm.demand('Race', next_track, self.mediator.logic.season.props.players, drivers)

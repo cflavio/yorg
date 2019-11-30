@@ -7,7 +7,7 @@ from yyagl.lib.gui import Entry, Text, Img
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
-from yyagl.racing.driver.driver import DriverInfo
+from yyagl.racing.driver.driver import Driver
 from yyagl.lib.p3d.shader import load_shader
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
@@ -139,7 +139,7 @@ class DriverPageGui(ThanksPageGui):
         gprops.drivers_info[i].name = nname
         info('drivers: ' + str(gprops.drivers_info))
         self.notify('on_driver_selected', self.ent.text, self.mediator.track,
-                    self.mediator.car)
+                    self.mediator.car, i)
 
     def _buttons(self, idx):
         return [btn for btn in self.buttons if btn['extraArgs'] == [idx]]
@@ -191,8 +191,9 @@ class DriverPageSinglePlayerGui(DriverPageGui):
 
 class DriverPageMPGui(DriverPageGui):
 
-    def __init__(self, mediator, driverpage_props, players):
+    def __init__(self, mediator, driverpage_props, players, players_data):
         DriverPageGui.__init__(self, mediator, driverpage_props, players)
+        self.players_data = players_data
         self.selected_drivers = {}
         for i in range(players): self.selected_drivers[i] = None
         self.enabled = False
@@ -288,6 +289,12 @@ class DriverPageMPGui(DriverPageGui):
         if self.selected_drivers[player] is not None:
             self._buttons(self.selected_drivers[player])[0].enable()
             self.drivers += [self._buttons(drv)[0]]
+            self.eng.log_mgr.plog(self.players_data)
+        for _player in self.players_data:
+            if _player.human_idx == player:
+                for _drv in self.props.gameprops.drivers:
+                    if _drv.img_idx == drv:
+                        _player.driver = _drv
         self._buttons(drv)[0].disable()
         self.disable_navigation([player])
         self.selected_drivers[player] = drv
@@ -315,8 +322,7 @@ class DriverPageMPGui(DriverPageGui):
             else: stored_player_names += [name]
         self.props.opt_file['settings']['stored_player_names'] = stored_player_names
         self.props.opt_file.store()
-        self.notify('on_driver_selected_mp', [ent.text for ent in self.ents], self.mediator.track,
-                    self.mediator.cars, drivers)
+        self.notify('on_driver_selected_mp', self.mediator.track, self.players_data)
 
     def update_text(self, task):
         for ent in self.ents:
@@ -429,7 +435,7 @@ class DriverPageServerGui(DriverPageGui):
             cars = gprops.cars_names[:]
             car_idx = cars.index(car)
             prev_drv = gprops.drivers_info[car_idx]
-            gprops.drivers_info[car_idx] = DriverInfo(drv, driver_name, driver_speed, driver_adherence, driver_stability)
+            gprops.drivers_info[car_idx] = Driver(drv, driver_name, driver_speed, driver_adherence, driver_stability)
             for i, drv_i in enumerate(gprops.drivers_info):
                 if drv_i.img_idx == drv and i != car_idx:
                     gprops.drivers_info[i] = prev_drv
@@ -529,7 +535,7 @@ class DriverPageClientGui(DriverPageGui):
 class DriverPage(Page):
     gui_cls = DriverPageGui
 
-    def __init__(self, track, car, driverpage_props):
+    def __init__(self, track, car, driverpage_props, players_data):
         self.track = track
         self.car = car
         self.driverpage_props = driverpage_props
@@ -551,16 +557,17 @@ class DriverPageSinglePlayer(DriverPage):
 class DriverPageMP(DriverPage):
     gui_cls = DriverPageMPGui
 
-    def __init__(self, track, cars, driverpage_props, nplayers):
+    def __init__(self, track, cars, driverpage_props, nplayers, players_data):
         self.track = track
         self.cars = cars
+        self.players_data = players_data
         self.driverpage_props = driverpage_props
         self.nplayers = nplayers
-        DriverPage.__init__(self, track, cars, driverpage_props)
+        DriverPage.__init__(self, track, cars, driverpage_props, players_data)
         PageFacade.__init__(self)
 
     def _build_gui(self):
-        self.gui = self.gui_cls(self, self.driverpage_props, self.nplayers)
+        self.gui = self.gui_cls(self, self.driverpage_props, self.nplayers, self.players_data)
 
 
 class DriverPageServer(DriverPage):
@@ -570,9 +577,9 @@ class DriverPageServer(DriverPage):
 class DriverPageClient(DriverPage):
     gui_cls = DriverPageClientGui
 
-    def __init__(self, track, car, driverpage_props, uid_srv):
+    def __init__(self, track, car, driverpage_props, uid_srv, players_data):
         self.__uid_srv = uid_srv
-        DriverPage.__init__(self, track, car, driverpage_props)
+        DriverPage.__init__(self, track, car, driverpage_props, players_data)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.driverpage_props, self.__uid_srv)

@@ -41,11 +41,13 @@ class YorgFsm(FsmColleague):
                    self.mediator.logic.on_room_back,
                    self.mediator.logic.on_quit,
                    self.mediator.logic.on_car_selected,
+                   self.mediator.logic.on_car_selected_mp,
                    self.mediator.logic.on_car_start_client,
                    self.mediator.logic.on_car_selected_season,
                    self.mediator.logic.on_driver_selected,
                    self.mediator.logic.on_driver_selected_server,
                    self.mediator.logic.on_driver_selected_mp,
+                   self.mediator.logic.on_track_selected_mp,
                    self.mediator.logic.on_continue,
                    self.mediator.logic.on_login,
                    self.mediator.logic.on_logout]
@@ -112,8 +114,8 @@ class YorgFsm(FsmColleague):
 
     def on_removed(self): self.menu.logic.on_removed()
 
-    def create_room(self, room, nick):
-        self.menu.logic.create_room(room, nick)
+    #def create_room(self, room, nick):
+    #    self.menu.logic.create_room(room, nick)
 
     def load_models(self, model):
         if not self.models: return
@@ -127,8 +129,7 @@ class YorgFsm(FsmColleague):
         loader.cancelRequest(self.loader_tsk)
         self.eng.client.detach(self.on_presence_unavailable_room)
 
-    def enterRace(self, track_path='', car_path='', cars=[], drivers='',
-                  ranking=None):  # unused ranking
+    def enterRace(self, track_path='', players=[], ranking=None):  # unused ranking
         info('entering Race state')
         #if self.mediator.logic.mp_frm:  # None if dev quicksart
         #    self.mediator.logic.mp_frm.hide()
@@ -138,10 +139,11 @@ class YorgFsm(FsmColleague):
             if 'save' not in self.mediator.options.dct:
                 self.mediator.options['save'] = {}
             self.mediator.options['save']['track'] = track_path
-            self.mediator.options['save']['cars'] = car_path
-            self.mediator.options['save']['drivers'] = [
-                drv.to_dct() for drv in drivers]
-            self.mediator.options['save']['tuning'] = seas.tuning.car2tuning
+            #self.mediator.options['save']['cars'] = car_path
+            #self.mediator.options['save']['drivers'] = [
+            #    drv.to_dct() for drv in drivers]
+            #self.mediator.options['save']['tuning'] = seas.tuning.car2tuning
+            self.mediator.options['save']['players'] = seas.logic.players
             self.mediator.options['save']['ranking'] = seas.ranking.carname2points
             self.mediator.options.store()
         keys = self.mediator.options['settings']['keys']
@@ -162,19 +164,17 @@ class YorgFsm(FsmColleague):
             'assets/sfx/pitstop.ogg', 'assets/sfx/fire.ogg',
             'assets/sfx/hit.ogg', 'assets/sfx/turbo.ogg',
             'assets/sfx/rotate_all_fire.ogg', 'assets/sfx/rotate_all_hit.ogg')
+        grid = [player.car for player in seas.logic.players]
         race_props = self.mediator.logic.build_race_props(
-            seas.logic.drivers, track_path, keys, joystick, sounds,
-            self.mediator.options['development']['start_wp'], cars)
+            seas.logic.players, track_path, keys, joystick, sounds,
+            self.mediator.options['development']['start_wp'], grid)
         if self.eng.server.is_active:
             #seas.create_race_server(race_props)
-            seas.create_race_server(race_props)
+            seas.create_race_server(race_props, players)
         elif self.eng.client.is_client_active:
-            seas.create_race_client(race_props)
+            seas.create_race_client(race_props, players)
         else:
-            seas.create_race(race_props)
-        info('selected drivers: ' +
-                             str([drv.dprops for drv in drivers]))
-        seas.race.logic.drivers = drivers
+            seas.create_race(race_props, players)
         track_name_transl = track_path
         track_dct = {
             'toronto': _('Toronto'), 'rome': _('Rome'),
@@ -184,8 +184,7 @@ class YorgFsm(FsmColleague):
         if track_path in track_dct:
             track_name_transl = track_dct[track_path]
         seas.race.fsm.demand(
-            'Loading', race_props, track_name_transl, drivers, seas.ranking,
-            seas.tuning)
+            'Loading', race_props, track_name_transl, seas.ranking, seas.logic.players)
         seas.race.attach_obs(self.mediator.logic.on_race_loaded)
         exit_mth = 'on_ingame_exit_confirm'
         seas.race.attach_obs(self.mediator.fsm.demand, rename=exit_mth,

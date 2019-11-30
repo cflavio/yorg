@@ -14,7 +14,7 @@ from yyagl.engine.configuration import Cfg, GuiCfg, ProfilingCfg, LangCfg, \
 from yyagl.engine.gui.menu import MenuProps, NavInfo, NavInfoPerPlayer
 from yyagl.engine.logic import EngineLogic
 from yyagl.racing.gameprops import GameProps
-from yyagl.racing.driver.driver import DriverInfo
+from yyagl.racing.driver.driver import Driver
 from .logic import YorgLogic
 from .event import YorgEvent
 from .fsm import YorgFsm
@@ -302,12 +302,12 @@ class Yorg(Game):
     def drivers():
         names = ThanksNames.get_thanks(8, 5)
         _drivers = [
-            DriverInfo(0, names[0], 4, -2, -2),
-            DriverInfo(1, names[1], -2, 4, -2),
-            DriverInfo(2, names[2], 0, 4, -4),
-            DriverInfo(3, names[3], 4, -4, 0),
-            DriverInfo(4, names[4], -2, -2, 4),
-            DriverInfo(5, names[5], -4, 0, 4),
-            DriverInfo(6, names[6], 4, 0, -4),
-            DriverInfo(7, names[7], -4, 4, 0)]
+            Driver(0, names[0], 4, -2, -2),
+            Driver(1, names[1], -2, 4, -2),
+            Driver(2, names[2], 0, 4, -4),
+            Driver(3, names[3], 4, -4, 0),
+            Driver(4, names[4], -2, -2, 4),
+            Driver(5, names[5], -4, 0, 4),
+            Driver(6, names[6], 4, 0, -4),
+            Driver(7, names[7], -4, 4, 0)]
         return _drivers

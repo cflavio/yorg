@@ -45,6 +45,8 @@ class YorgMenuLogic(MenuLogic):
     def __init__(self, mediator):
         MenuLogic.__init__(self, mediator)
         self.uid_srv = None
+        self.players = None
+        self.players_mp = None
 
     def on_push_page(self, page_code, args=[]):
         if page_code == 'singleplayer':
@@ -108,26 +110,26 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'carpagelocalmp':
             info('car page local multiplayer')
             page = CarPageLocalMP(args[0], self.mediator.track, self.mediator.nplayers)
-            page.gui.attach(self.on_car_selected)
+            page.gui.attach(self.on_car_selected_mp)
         if page_code == 'carpageclient':
             info('car page client')
             page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
         if page_code == 'driver_page':
             info('driver page')
-            page = DriverPageSinglePlayer(args[0], args[1], args[2])
+            page = DriverPageSinglePlayer(args[0], args[1], args[2], self.players)
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driver_page_mp':
             info('driver page multiplayer')
-            page = DriverPageMP(args[0], args[1], args[2], self.mediator.nplayers)
+            page = DriverPageMP(args[0], args[1], args[2], self.mediator.nplayers, self.players_mp)
             page.gui.attach(self.on_driver_selected_mp)
         if page_code == 'driverpageserver':
             info('driver page server')
-            page = DriverPageServer(args[0], args[1], args[2])
+            page = DriverPageServer(args[0], args[1], args[2], args[3])
             page.gui.attach(self.on_driver_selected_server)
         if page_code == 'driverpageclient':
             info('driver page client')
-            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv)
+            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv, args[3])
             page.gui.attach(self.on_driver_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
@@ -213,12 +215,16 @@ class YorgMenuLogic(MenuLogic):
 
     def on_track_selected_lmp(self, track):
         self.mediator.track = track
+        self.mediator.gui.notify('on_track_selected_mp')
 
     def on_nplayers(self, num):
         self.mediator.nplayers = num
 
     def on_car_selected(self, car):
         self.mediator.gui.notify('on_car_selected', car)
+
+    def on_car_selected_mp(self, car, player_idx):
+        self.mediator.gui.notify('on_car_selected_mp', car, player_idx)
 
     def on_driver_selected_server(self, name, track, car, cars):
         self.mediator.gui.notify('on_driver_selected_server', name, track, car,
@@ -230,11 +236,11 @@ class YorgMenuLogic(MenuLogic):
     def on_car_selected_season(self, car):
         self.mediator.gui.notify('on_car_selected_season', car)
 
-    def on_driver_selected(self, name, track, car):
-        self.mediator.gui.notify('on_driver_selected', name, track, car)
+    def on_driver_selected(self, name, track, car, i):
+        self.mediator.gui.notify('on_driver_selected', name, track, car, i)
 
-    def on_driver_selected_mp(self, name, track, cars, drivers):
-        self.mediator.gui.notify('on_driver_selected_mp', name, track, cars, drivers)
+    def on_driver_selected_mp(self, track, players):
+        self.mediator.gui.notify('on_driver_selected_mp', track, players)
 
     def on_continue(self):
         self.mediator.gui.notify('on_continue')

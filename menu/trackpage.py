@@ -84,6 +84,9 @@ class TrackPage(Page):
         Page.__init__(self, trackpage_props)
         PageFacade.__init__(self)
 
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.menu_props, self.players)
+
     @property
     def init_lst(self): return [
         [('event', self.event_cls, [self])],
