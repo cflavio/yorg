@@ -47,6 +47,7 @@ class YorgMenuLogic(MenuLogic):
         self.uid_srv = None
         self.players = None
         self.players_mp = None
+        self.players_omp = None
 
     def on_push_page(self, page_code, args=[]):
         if page_code == 'singleplayer':
@@ -129,7 +130,7 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_driver_selected_server)
         if page_code == 'driverpageclient':
             info('driver page client')
-            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv, args[3])
+            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv, self.players_omp)
             page.gui.attach(self.on_driver_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
@@ -211,6 +212,7 @@ class YorgMenuLogic(MenuLogic):
         MenuLogic.on_quit(self)
 
     def on_track_selected(self, track):
+        self.mediator.gui.notify('on_track_selected')
         self.mediator.track = track
 
     def on_track_selected_lmp(self, track):

@@ -82,19 +82,6 @@ class TrackPage(Page):
         self.trackpage_props = trackpage_props
         self.room = room
         Page.__init__(self, trackpage_props)
-        PageFacade.__init__(self)
-
-    def _build_gui(self):
-        self.gui = self.gui_cls(self, self.menu_props, self.players)
-
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.trackpage_props, self.room])]]
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class TrackPageServer(TrackPage):

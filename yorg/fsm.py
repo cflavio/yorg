@@ -47,6 +47,7 @@ class YorgFsm(FsmColleague):
                    self.mediator.logic.on_driver_selected,
                    self.mediator.logic.on_driver_selected_server,
                    self.mediator.logic.on_driver_selected_mp,
+                   self.mediator.logic.on_track_selected,
                    self.mediator.logic.on_track_selected_mp,
                    self.mediator.logic.on_continue,
                    self.mediator.logic.on_login,
