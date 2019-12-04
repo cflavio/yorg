@@ -365,13 +365,9 @@ class YorgLogic(GameLogic):
             pdrv = packet[1 + offset: 1 + offset + 6]
             packet_drivers += [pdrv]
         for pdrv in packet_drivers:
-            for player in self.season.logic.players:
-                if player.driver.img_idx == pdrv[0]:
-                    player.car = pdrv[1]
-                    player.name = pdrv[2]
-                    player.driver.speed = pdrv[3]
-                    player.driver.adherence = pdrv[4]
-                    player.driver.stability = pdrv[5]
+            driver = Driver(img_idx=pdrv[0], name=pdrv[1], speed=pdrv[3], adherence=pdrv[4], stability=pdrv[5])
+            player = Player(driver=driver, car=pdrv[1], kind=Player.human, tuning=TuningPlayer(0, 0, 0), human_idx=0, name=pdrv[2])
+            self.season.logic.players += [player]
         #for i, pdrv in enumerate(packet_drivers):
         #    prev_drv = drivers[i]
         #    for j, drv in enumerate(drivers):

@@ -87,6 +87,8 @@ class TrackPage(Page):
 class TrackPageServer(TrackPage):
     gui_cls = TrackPageServerGui
 
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.menu_props, self.room)
 
 class TrackPageLocalMP(TrackPage):
     gui_cls = TrackPageLocalMPGui
