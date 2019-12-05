@@ -108,6 +108,8 @@ class YorgMenuLogic(MenuLogic):
             #page = CarPageServer(args[0], self.mediator.track, self.yorg_client)
             page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
+            page.gui.attach(self.on_car_selected_omp_srv)
+            page.gui.attach(self.on_car_selected_omp_client)
         if page_code == 'carpagelocalmp':
             info('car page local multiplayer')
             page = CarPageLocalMP(args[0], self.mediator.track, self.mediator.nplayers)
@@ -116,6 +118,7 @@ class YorgMenuLogic(MenuLogic):
             info('car page client')
             page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
+            page.gui.attach(self.on_car_selected_omp_client)
         if page_code == 'driver_page':
             info('driver page')
             page = DriverPageSinglePlayer(args[0], args[1], args[2], self.players)
@@ -227,6 +230,12 @@ class YorgMenuLogic(MenuLogic):
 
     def on_car_selected_mp(self, car, player_idx):
         self.mediator.gui.notify('on_car_selected_mp', car, player_idx)
+
+    def on_car_selected_omp_srv(self, car):
+        self.mediator.gui.notify('on_car_selected_omp_srv', car)
+
+    def on_car_selected_omp_client(self, car):
+        self.mediator.gui.notify('on_car_selected_omp_client', car)
 
     def on_driver_selected_server(self, name, track, car, cars):
         self.mediator.gui.notify('on_driver_selected_server', name, track, car,

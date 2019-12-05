@@ -161,6 +161,7 @@ class CarPageGuiServer(CarPageGui):
                 btn._name_txt['text'] = ''
         self.current_cars[self] = car
         self.eng.car_mapping['self'] = car
+        self.notify('on_car_selected_omp_srv', car)
         #self.evaluate_starting()
 
     #def evaluate_starting(self):
@@ -257,6 +258,7 @@ class CarPageGuiClient(CarPageGui):
             btn = self._buttons(car)[0]
             btn.disable()
             btn._name_txt['text'] = self.eng.client.myid
+            self.notify('on_car_selected_omp_client', car)
         else: info('car denied')
 
     def on_car_selection(self, data_lst):

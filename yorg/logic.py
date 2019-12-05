@@ -347,6 +347,12 @@ class YorgLogic(GameLogic):
     def on_car_selected_mp(self, car, player_idx):
         self.season.logic.players += [Player(car=car, kind=Player.human, tuning=TuningPlayer(0, 0, 0), human_idx=player_idx)]
 
+    def on_car_selected_omp_srv(self, car):
+        self.season.logic.players = [Player(car=car, kind=Player.human, tuning=TuningPlayer(0, 0, 0), human_idx=0)]
+
+    def on_car_selected_omp_client(self, car):
+        self.season.logic.players = [Player(car=car, kind=Player.human, tuning=TuningPlayer(0, 0, 0), human_idx=0)]
+
     def on_car_start_client(self, track, car, cars, packet, room):
         #drv_info = self.mediator.gameprops.drivers_info
         #for i, drv_name in enumerate(packet[4::3]):
@@ -364,9 +370,12 @@ class YorgLogic(GameLogic):
             offset = i * 6
             pdrv = packet[1 + offset: 1 + offset + 6]
             packet_drivers += [pdrv]
+        this_human_car = self.season.logic.players[0].car
+        self.season.logic.players = []
         for pdrv in packet_drivers:
             driver = Driver(img_idx=pdrv[0], name=pdrv[1], speed=pdrv[3], adherence=pdrv[4], stability=pdrv[5])
-            player = Player(driver=driver, car=pdrv[1], kind=Player.human, tuning=TuningPlayer(0, 0, 0), human_idx=0, name=pdrv[2])
+            is_player = pdrv[1] == this_human_car
+            player = Player(driver=driver, car=pdrv[1], kind=Player.human if is_player else Player.network, tuning=TuningPlayer(0, 0, 0), human_idx=0 if is_player else None, name=pdrv[2])
             self.season.logic.players += [player]
         #for i, pdrv in enumerate(packet_drivers):
         #    prev_drv = drivers[i]

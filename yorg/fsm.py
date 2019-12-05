@@ -42,6 +42,8 @@ class YorgFsm(FsmColleague):
                    self.mediator.logic.on_quit,
                    self.mediator.logic.on_car_selected,
                    self.mediator.logic.on_car_selected_mp,
+                   self.mediator.logic.on_car_selected_omp_srv,
+                   self.mediator.logic.on_car_selected_omp_client,
                    self.mediator.logic.on_car_start_client,
                    self.mediator.logic.on_car_selected_season,
                    self.mediator.logic.on_driver_selected,
