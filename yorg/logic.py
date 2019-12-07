@@ -97,6 +97,7 @@ class YorgLogic(GameLogic):
                 self.mediator.options['settings']['camera'], 'single'))
             self.season.attach_obs(self.mediator.event.on_season_end)
             self.season.attach_obs(self.mediator.event.on_season_cont)
+            self.season.logic.players += [Player(car=cars0, driver=Driver(0, 'quickstart', 0, 0, 0), kind=Player.human, tuning=TuningPlayer(0, 0, 0))]
             self.season.start()
             self.mediator.fsm.demand('Race', track, self.season.logic.players, self.season.ranking)
             #taskMgr.doMethodLater(5.0, lambda task: self.mediator.logic.mp_frm.hide(), 'hide')
