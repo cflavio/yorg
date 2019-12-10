@@ -259,7 +259,7 @@ class Yorg(Game):
         curr_path = dirname(__file__) + '/'
         if __file__.endswith('.py'): curr_path += '../'
         if sys.platform == 'darwin': curr_path += '../Resources/'
-        tracks = [r for r in next(walk(curr_path + 'assets/tracks'))[1] if r != '__pycache__']
+        tracks = [r for r in next(walk(curr_path + 'assets/tracks'))[1] if r not in ['__pycache__', 'models']]
         tracks_i = []
         for track in tracks:
             with open(self.eng.curr_path + 'assets/tracks/' + track + '/track.yml') as ftrack:
