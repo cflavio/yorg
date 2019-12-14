@@ -579,13 +579,18 @@ class YorgLogic(GameLogic):
 
     def on_race_step(self, race_ranking):
         self.season.race.results.detach(self.on_race_step)
-        ranking = self.season.ranking
-        tuning = self.season.tuning
+        #ranking = self.season.ranking
+        #tuning = self.season.tuning
         if self.season.__class__ != SingleRaceSeason:
-            for car in ranking.carname2points:
-                ranking.carname2points[car] += race_ranking[car]
-            self.mediator.options['save']['ranking'] = ranking.carname2points
-            self.mediator.options['save']['tuning'] = tuning.car2tuning
+            #for car in ranking.carname2points:
+            #    ranking.carname2points[car] += race_ranking[car]
+            for car in race_ranking.keys():
+                for player in self.season.logic.players:
+                    if player.car == car:
+                        player.points += race_ranking[car]
+            #self.mediator.options['save']['ranking'] = ranking.carname2points
+            #self.mediator.options['save']['tuning'] = tuning.car2tuning
+            self.mediator.options['save']['tuning'] = self.season.logic.players
             self.mediator.options.store()
             self.mediator.fsm.demand('Ranking')
         else:
@@ -646,7 +651,8 @@ class YorgLogic(GameLogic):
             '%21&hashtags=yorg',
             'https://plus.google.com/share?url=ya2.it/pages/yorg.html',
             'https://www.tumblr.com/widgets/share/tool?url=ya2.it']
-        items = self.season.ranking.carname2points.items()
+        #items = self.season.ranking.carname2points.items()
+        items = [(player.car, player.points) for player in self.season.logic.players]
         if not grid:
             grid_rev_ranking = sorted(items, key=lambda el: el[1])
             grid = [pair[0] for pair in grid_rev_ranking]

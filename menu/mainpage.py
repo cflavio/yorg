@@ -1,8 +1,10 @@
 #from datetime import datetime
 import argparse
 from urllib.request import urlopen
+from urllib.error import URLError
 from locale import setlocale, LC_ALL
 from xml.etree import ElementTree as etree
+from xml.etree.ElementTree import ParseError
 from datetime import datetime
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
@@ -140,8 +142,10 @@ class YorgMainPageGui(MainPageGui):
 
     def set_news(self):
         menu_props = self.props.gameprops.menu_props
-        feed = urlopen(self.props.feed_url).read()
-        items = etree.fromstring(feed).findall('channel/item')
+        try: feed = urlopen(self.props.feed_url).read()
+        except URLError: feed = ''
+        try: items = etree.fromstring(feed).findall('channel/item')
+        except ParseError: items = []  # e.g. when it is offline
         setlocale(LC_ALL, 'en_US.UTF-8')
         try:
             entries = [(datetime.strptime(

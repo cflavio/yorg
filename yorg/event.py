@@ -22,9 +22,10 @@ class YorgEvent(EventColleague):
         #self.mediator.logic.season.race.destroy()
         self.mediator.logic.season = self.mediator.logic.season.destroy()
 
-    def on_season_cont(self, next_track, curr_car, drivers):
+    def on_season_cont(self, next_track, curr_car, players):
         self.mediator.logic.season.race.destroy()
         tuning = self.mediator.logic.season.tuning
-        self.mediator.options['save']['tuning'] = tuning.to_dct
+        #self.mediator.options['save']['tuning'] = tuning.to_dct
+        self.mediator.options['save']['players'] = players
         self.mediator.options.store()
-        self.mediator.fsm.demand('Race', next_track, self.mediator.logic.season.props.players, drivers)
+        self.mediator.fsm.demand('Race', next_track, players)

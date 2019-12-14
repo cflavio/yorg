@@ -147,7 +147,7 @@ class YorgFsm(FsmColleague):
             #    drv.to_dct() for drv in drivers]
             #self.mediator.options['save']['tuning'] = seas.tuning.car2tuning
             self.mediator.options['save']['players'] = seas.logic.players
-            self.mediator.options['save']['ranking'] = seas.ranking.carname2points
+            #self.mediator.options['save']['ranking'] = seas.ranking.carname2points
             self.mediator.options.store()
         keys = self.mediator.options['settings']['keys']
         joystick = self.mediator.options['settings']['joystick']
@@ -211,14 +211,15 @@ class YorgFsm(FsmColleague):
     def enterRanking(self):
         self.mediator.logic.season.ranking.show(
             self.mediator.logic.season.race.logic.props,
-            self.mediator.logic.season.props, self.mediator.logic.season.logic.ranking)
+            self.mediator.logic.season.props, self.mediator.logic.season.logic.ranking,
+            self.mediator.logic.season.logic.players)
         self.eng.do_later(.1, self.mediator.logic.season.ranking.attach_obs,
                           [self.on_ranking_end])
         self.eng.do_later(.1, self.mediator.logic.season.ranking.attach_obs,
                           [self.on_ranking_next_race])
 
-    def on_ranking_end(self):
-        self.demand('Tuning')
+    def on_ranking_end(self, players):
+        self.demand('Tuning', players)
 
     def on_ranking_next_race(self):
         self.mediator.logic.season.logic.next_race()
@@ -228,8 +229,8 @@ class YorgFsm(FsmColleague):
         self.mediator.logic.season.ranking.detach_obs(self.on_ranking_next_race)
         self.mediator.logic.season.ranking.hide()
 
-    def enterTuning(self):
-        self.mediator.logic.season.tuning.show_gui()
+    def enterTuning(self, players):
+        self.mediator.logic.season.tuning.show_gui(players)
 
     def exitTuning(self):
         self.mediator.logic.season.tuning.hide_gui()
