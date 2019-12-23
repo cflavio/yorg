@@ -27,9 +27,11 @@ class SingleplayerPageGui(ThanksPageGui):
             widgets[-1].disable()
 
     def on_single_race(self):
+        self.notify('on_single_race')
         self.notify('on_push_page', 'single_race', [self.props])
 
     def on_start(self):
+        self.notify('on_start_season')
         self.notify('on_track_selected', self.props.gameprops.season_tracks[0])
         self.notify('on_push_page', 'new_season', [self.props])
 

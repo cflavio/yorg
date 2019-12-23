@@ -53,6 +53,8 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'singleplayer':
             info('single player')
             page = SingleplayerPage(args[0])
+            page.gui.attach(self.on_single_race)
+            page.gui.attach(self.on_start_season)
             page.gui.attach(self.on_track_selected)
             page.gui.attach(self.on_continue)
         if page_code == 'login':
@@ -76,6 +78,7 @@ class YorgMenuLogic(MenuLogic):
         if page_code == 'multiplayer':
             info('multiplayer')
             page = MultiplayerPage(args[0])
+            page.gui.attach(self.on_start_local_mp)
         if page_code == 'online':
             info('online')
             page = OnlinePage(args[0])
@@ -83,6 +86,8 @@ class YorgMenuLogic(MenuLogic):
             info('onlineplay')
             page = OnlinePlayPage(args[0])
             page.gui.attach(self.on_create_room)
+            page.gui.attach(self.on_start_mp_server)
+            page.gui.attach(self.on_start_mp_client)
         if page_code == 'client':
             info('client')
             page = ClientPage(args[0])
@@ -224,6 +229,21 @@ class YorgMenuLogic(MenuLogic):
 
     def on_nplayers(self, num):
         self.mediator.nplayers = num
+
+    def on_single_race(self):
+        self.mediator.gui.notify('on_single_race')
+
+    def on_start_season(self):
+        self.mediator.gui.notify('on_start_season')
+
+    def on_start_local_mp(self):
+        self.mediator.gui.notify('on_start_local_mp')
+
+    def on_start_mp_server(self):
+        self.mediator.gui.notify('on_start_mp_server')
+
+    def on_start_mp_client(self):
+        self.mediator.gui.notify('on_start_mp_client')
 
     def on_car_selected(self, car):
         self.mediator.gui.notify('on_car_selected', car)

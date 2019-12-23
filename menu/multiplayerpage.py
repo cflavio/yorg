@@ -15,12 +15,10 @@ class MultiplayerPageGui(ThanksPageGui):
     #    self.build()
 
     def build(self):
-        lmp_cb = lambda: self.notify('on_push_page', 'localmp',
-                                     [self.props])
         omp_cb = lambda: self.notify('on_push_page', 'online',
                                      [self.props])
         menu_data = [
-            ('Local', _('Local'), lmp_cb),
+            ('Local', _('Local'), self.__on_local_mp),
             ('Online', _('Online'), omp_cb)]
         widgets = [
             Btn(text=menu[0], pos=(0, .3-i*.28), cmd=menu[2],
@@ -28,6 +26,10 @@ class MultiplayerPageGui(ThanksPageGui):
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
         ThanksPageGui.build(self)
+
+    def __on_local_mp(self):
+        self.notify('on_start_local_mp')
+        self.notify('on_push_page', 'localmp', [self.props])
 
 
 class MultiplayerPage(Page):

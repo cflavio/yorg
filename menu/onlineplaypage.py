@@ -17,10 +17,9 @@ class OnlinePlayPageGui(ThanksPageGui):
         self.build()
 
     def build(self):
-        ccb = lambda: self.notify('on_push_page', 'client', [self.props])
         menu_data = [
             ('Host', self.on_server),
-            ('Join', ccb)]
+            ('Join', self.on_client)]
         widgets = [
             Btn(text=menu[0], pos=(0, .3-i*.28), cmd=menu[1],
                 **self.props.gameprops.menu_props.btn_args)
@@ -32,7 +31,12 @@ class OnlinePlayPageGui(ThanksPageGui):
         self.eng.server.start(self.process_msg_srv, self.process_connection)
         time_code = strftime('%y%m%d%H%M%S')
         roomname = self.eng.client.myid + time_code
+        self.notify('on_start_mp_server')
         self.notify('on_create_room', roomname, self.eng.client.myid)
+
+    def on_client(self):
+        self.notify('on_start_mp_client')
+        self.notify('on_push_page', 'client', [self.props])
 
     def process_msg_srv(self, data_lst):
         print(data_lst)

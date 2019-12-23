@@ -53,7 +53,12 @@ class YorgFsm(FsmColleague):
                    self.mediator.logic.on_track_selected_mp,
                    self.mediator.logic.on_continue,
                    self.mediator.logic.on_login,
-                   self.mediator.logic.on_logout]
+                   self.mediator.logic.on_logout,
+                   self.mediator.logic.on_single_race,
+                   self.mediator.logic.on_start_season,
+                   self.mediator.logic.on_start_local_mp,
+                   self.mediator.logic.on_start_mp_server,
+                   self.mediator.logic.on_start_mp_client]
         list(map(self.menu.attach_obs, methods))
         self.menu.attach_obs(self.demand, rename='on_exit', args=['Exit'])
         self.mediator.audio.menu_music.play()
