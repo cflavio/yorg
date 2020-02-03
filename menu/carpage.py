@@ -1,6 +1,6 @@
 from logging import info
 from itertools import product
-from yaml import load
+from json import load
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.lib.gui import Text

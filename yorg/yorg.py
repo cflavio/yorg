@@ -5,7 +5,7 @@ from importlib import reload
 from copy import deepcopy
 from os import walk
 from os.path import exists, dirname
-from yaml import load
+from json import load
 from panda3d.core import Filename
 from yyagl.game import Game
 from yyagl.dictfile import DctFile
@@ -147,7 +147,7 @@ class Yorg(Game):
         parser.add_argument('--server')
         parser.add_argument('--optfile')
         args = parser.parse_args(EngineLogic.cmd_line())
-        optfile = args.optfile if args.optfile else 'options.yml'
+        optfile = args.optfile if args.optfile else 'options.json'
         old_def = deepcopy(default_opt)
         self.options = DctFile(
             LibP3d.fixpath(opt_path + '/' + optfile) if opt_path else optfile,
@@ -241,7 +241,7 @@ class Yorg(Game):
                         'assets/images/drivers/driver%s_sel.txo'),
             'assets/cars/%s/images/car_sel.txo',
             'assets/cars/%s/images/car.txo',
-            self.eng.curr_path + 'assets/cars/%s/phys.yml',
+            self.eng.curr_path + 'assets/cars/%s/phys.json',
             'assets/cars/%s/models/car',
             damage_info, wheel_gfx_names, opt_dev['xmpp_debug'],
             social_sites)
@@ -262,7 +262,7 @@ class Yorg(Game):
         tracks = [r for r in next(walk(curr_path + 'assets/tracks'))[1] if r not in ['__pycache__', 'models']]
         tracks_i = []
         for track in tracks:
-            with open(self.eng.curr_path + 'assets/tracks/' + track + '/track.yml') as ftrack:
+            with open(self.eng.curr_path + 'assets/tracks/' + track + '/track.json') as ftrack:
                 sorting = load(ftrack)['sorting']
             tracks_i += [(track, sorting)]
         tracks_i = sorted(tracks_i, key=lambda elm: elm[1])
@@ -285,7 +285,7 @@ class Yorg(Game):
         cars = [r for r in next(walk(curr_path + 'assets/cars'))[1]]
         cars_i = []
         for car in cars:
-            with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.yml') as fcar:
+            with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.json') as fcar:
                 sorting = load(fcar)['sorting']
             cars_i += [(car, sorting)]
         cars_i = sorted(cars_i, key=lambda elm: elm[1])

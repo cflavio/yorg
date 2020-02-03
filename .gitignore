@@ -12,7 +12,7 @@ wvenv/
 .pydevproject
 .sconsign.dblite
 .settings/
-options*.yml
+options*.json
 *.geany
 *.tags
 yorg_error.txt

@@ -2,7 +2,7 @@ from logging import info
 from random import shuffle
 from os import walk
 from socket import socket, AF_INET, SOCK_DGRAM, gaierror
-from yaml import load
+from json import load
 from collections import OrderedDict
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
@@ -640,7 +640,7 @@ class YorgLogic(GameLogic):
         # names for both wheels
         wheel_names = WheelNames(frwheels, bwheels)
         track_gpath = 'assets/tracks/%s/models/track_all.bam' % track_name
-        track_fpath = 'assets/tracks/%s/track.yml' % track_name
+        track_fpath = 'assets/tracks/%s/track.json' % track_name
         with open(self.eng.curr_path + track_fpath) as ftrack:
             music_name = load(ftrack)['music']
         music_fpath = 'assets/music/%s.ogg' % music_name
@@ -698,7 +698,7 @@ class YorgLogic(GameLogic):
         car2col = {}
         cars = [r for r in next(walk(self.eng.curr_path + 'assets/cars'))[1]]
         for car in cars:
-            with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.yml') as fcar:
+            with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.json') as fcar:
                 col = tuple(load(fcar)['color'])
             car2col[car] = col
         return car2col

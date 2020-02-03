@@ -8,9 +8,8 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* refactoring of the server (use a framework)
+* remove dependency: bson (struct)
 * racing should be another package in another submodule
   * yyagl's scons; racing's scons
-* remove dependency: pyyaml (configparser+json)
-* remove dependency: bson (struct)
+* refactoring of the server (use asyncio)
 * facade, replace them with def

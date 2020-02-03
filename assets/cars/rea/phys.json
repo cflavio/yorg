@@ -1,0 +1,69 @@
+{
+    "engine_dec_frc": -2000, 
+    "wheels_damping_relaxation": [
+        1.2, 
+        1.2
+    ], 
+    "color": [
+        0, 
+        0, 
+        0.6, 
+        1
+    ], 
+    "pitch_control": 0, 
+    "max_speed": 116.0, 
+    "engine_acc_frc": 2000, 
+    "brake_frc": 12, 
+    "eng_brk_frc": 6, 
+    "max_suspension_travel_cm": 800, 
+    "skid_info": 1, 
+    "suspension_stiffness": [
+        12, 
+        12
+    ], 
+    "wheels_damping_compression": [
+        1.15, 
+        1.15
+    ], 
+    "max_suspension_force": 10000, 
+    "sorting": 5, 
+    "center_mass_offset": 0.05, 
+    "engine_acc_frc_ratio": [
+        0.5, 
+        0.4
+    ], 
+    "roll_influence": [
+        0.4, 
+        0.32
+    ], 
+    "gfx_z": 0.12, 
+    "suspension_compression": 1.2, 
+    "steering": [
+        30, 
+        6
+    ], 
+    "steering_inc": 120, 
+    "box_size": [
+        0.64, 
+        1.5, 
+        0.25
+    ], 
+    "friction_slip_rear": [
+        2.7, 
+        2.7
+    ], 
+    "mass": 285, 
+    "suspension_damping": 1.15, 
+    "friction_slip": [
+        2.7, 
+        2.7
+    ], 
+    "steering_dec": 120, 
+    "steering_clamp": 40, 
+    "brake_ratio": 0.28, 
+    "box_pos": [
+        0, 
+        0.12, 
+        0.65
+    ]
+}
