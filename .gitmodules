@@ -2,3 +2,6 @@
 	path = yyagl
 	url = https://github.com/cflavio/yyagl
 	branch = stable
+[submodule "yracing"]
+	path = yracing
+	url = https://github.com/cflavio/yracing.git

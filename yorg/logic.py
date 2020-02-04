@@ -6,10 +6,10 @@ from json import load
 from collections import OrderedDict
 from direct.gui.OnscreenText import OnscreenText
 from yyagl.game import GameLogic
-from yyagl.racing.season.season import SingleRaceSeason, Season, SeasonProps
-from yyagl.racing.player.player import Player, TuningPlayer
-from yyagl.racing.driver.driver import Driver
-from yyagl.racing.race.raceprops import RaceProps
+from yracing.season.season import SingleRaceSeason, Season, SeasonProps
+from yracing.player.player import Player, TuningPlayer
+from yracing.driver.driver import Driver
+from yracing.race.raceprops import RaceProps
 from yyagl.dictfile import DctFile
 from menu.ingamemenu.menu import InGameMenu
 from menu.netmsgs import NetMsgs

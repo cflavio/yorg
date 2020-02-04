@@ -2,8 +2,8 @@ from logging import info
 from sys import exit as sys_exit
 from os.path import exists
 from yyagl.gameobject import FsmColleague
-from yyagl.racing.car.audio import CarSounds
-from yyagl.racing.car.event import Keys, PlayerKeys
+from yracing.car.audio import CarSounds
+from yracing.car.event import Keys, PlayerKeys
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 from menu.multiplayer.exit_dlg import ExitDialog

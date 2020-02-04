@@ -13,8 +13,8 @@ from yyagl.engine.configuration import Cfg, GuiCfg, ProfilingCfg, LangCfg, \
     CursorCfg, DevCfg
 from yyagl.engine.gui.menu import MenuProps, NavInfo, NavInfoPerPlayer
 from yyagl.engine.logic import EngineLogic
-from yyagl.racing.gameprops import GameProps
-from yyagl.racing.driver.driver import Driver
+from yracing.gameprops import GameProps
+from yracing.driver.driver import Driver
 from .logic import YorgLogic
 from .event import YorgEvent
 from .fsm import YorgFsm

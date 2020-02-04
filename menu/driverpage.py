@@ -7,7 +7,7 @@ from yyagl.lib.gui import Entry, Text, Img
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
-from yyagl.racing.driver.driver import Driver
+from yracing.driver.driver import Driver
 from yyagl.lib.p3d.shader import load_shader
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui

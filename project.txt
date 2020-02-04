@@ -8,8 +8,8 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
+* yyagl's scons
+* yracing's scons
 * remove dependency: bson (struct)
-* racing should be another package in another submodule
-  * yyagl's scons; racing's scons
 * refactoring of the server (use asyncio)
 * facade, replace them with def
