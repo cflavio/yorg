@@ -8,7 +8,6 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* yyagl's scons
 * yracing's scons
 * remove dependency: bson (struct)
 * refactoring of the server (use asyncio)
