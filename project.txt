@@ -8,7 +8,6 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* yracing's scons
 * remove dependency: bson (struct)
 * refactoring of the server (use asyncio)
 * facade, replace them with def
