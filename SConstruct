@@ -117,16 +117,7 @@ pdf_conf = {
     'tests': [PDFInfo('python', './yyagl/tests', '*.py', [])]}
 env['PDF_CONF'] = pdf_conf
 
-cond_racing = lambda s: not str(s).startswith('yyagl/racing/')
-def cond_yyagl(src):
-    not_yyagl = not str(src).startswith('yyagl/')
-    thirdparty = str(src).startswith('yyagl/thirdparty/')
-    venv = str(src).startswith('venv/')
-    racing = str(src).startswith('yyagl/racing/')
-    return not_yyagl or thirdparty or venv or racing or \
-        str(src).startswith('yyagl/tests')
-dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/'),
-            'devinfo_racing': cond_racing, 'devinfo_yyagl': cond_yyagl}
+dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/') or str(s).startswith('yracing/')}
 env['DEV_CONF'] = dev_conf
 
 VariantDir(path, '.')
