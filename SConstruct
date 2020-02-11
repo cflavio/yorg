@@ -81,7 +81,7 @@ env['FLATPAK_DST'] = args['flatpak_dst']
 PDFInfo = namedtuple('PDFInfo', 'lng root fil excl')
 filt_game = ['./yyagl/racing/*', './yyagl/thirdparty/*']
 yorg_fil_dirs = ['yyagl', 'menu', 'yorg', 'licenses', 'assets', 'venv',
-                 'build', 'built']
+                 'build', 'built', 'yracing']
 yorg_fil = ['./%s/*' % dname for dname in yorg_fil_dirs]
 yorg_fil += ['./yorg_error.txt']
 yorg_lst = [
@@ -102,19 +102,7 @@ build_lst = [PDFInfo(binfo[0], './yyagl/build', binfo[1], filt_game)
              for binfo in binfo_lst]
 pdf_conf = {
     'yorg_menu': [PDFInfo('python', './menu', '*.py', [])],
-    'yorg': yorg_lst,
-    'racing': racing_lst,
-    'racing_car': [PDFInfo('python', './yyagl/racing/car', '*.py', [])],
-    'racing_race': [PDFInfo('python', './yyagl/racing/race', '*.py', [])],
-    'racing_track': [PDFInfo('python', './yyagl/racing/track', '*.py', [])],
-    'yyagl': yyagl_lst,
-    'lib': [PDFInfo('python', './yyagl/lib', '*.py', [])],
-    'build': build_lst,
-    'engine': [PDFInfo('python', './yyagl/engine', '*.py',
-               ['./yyagl/engine/gui/*', './yyagl/engine/network/*'])],
-    'engine_gui': [PDFInfo('python', './yyagl/engine/gui', '*.py', [])],
-    'engine_network': [PDFInfo('python', './yyagl/engine/network', '*.py', [])],
-    'tests': [PDFInfo('python', './yyagl/tests', '*.py', [])]}
+    'yorg': yorg_lst}
 env['PDF_CONF'] = pdf_conf
 
 dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/') or str(s).startswith('yracing/')}
