@@ -108,6 +108,8 @@ env['PDF_CONF'] = pdf_conf
 dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/') or str(s).startswith('yracing/')}
 env['DEV_CONF'] = dev_conf
 
+env['UML_FILTER'] = ['yyagl', 'yracing']
+
 VariantDir(path, '.')
 
 img_files = img_tgt_names(files(['jpg', 'png'], ['models'], ['_png.png']))
@@ -143,11 +145,9 @@ if args['pdf']:
     env.pdf([pdf_path], files(['py'], ['venv', 'thirdparty']))
 if args['uml']:
     env.uml(
-        ['yyagl/assets/uml/class_diagram.png',
-         'yyagl/assets/uml/sequence_diagrams.pdf',
-         'built/uml_classes.pdf'],
-        ['yyagl/assets/uml/class_diagram.txt',
-         'yyagl/assets/uml/sequence_diagrams.txt'])
+        ['assets/uml/sequence_diagrams.pdf',
+         'built/uml_classes.zip'],
+        ['assets/uml/sequence_diagrams.txt'])
 
 def process_lang(lang_code):
     lang_name = 'assets/po/%s.po' % lang_code
