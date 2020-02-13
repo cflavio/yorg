@@ -10,7 +10,6 @@ from yyagl.build.flatpak import bld_flatpak
 from yyagl.build.appimage import bld_appimage
 from yyagl.build.src import bld_src
 from yyagl.build.devinfo import bld_devinfo
-from yyagl.build.test import bld_ut
 from yyagl.build.docs import bld_docs
 from yyagl.build.strings import bld_mo, bld_pot, bld_merge
 from yyagl.build.imgs import bld_images
@@ -23,7 +22,7 @@ SCONS_ENABLE_VIRTUALENV=1
 argument_info = [  # (argname, default value)
     ('path', 'built'), ('lang', 0), ('p3d', 0), ('source', 0), ('devinfo', 0),
     ('windows', 0), ('osx', 0), ('linux', 0), ('docs', 0), ('images', 0),
-    ('tracks', 0), ('pdf', 0), ('tests', 0), ('cores', 0), ('uml', 0),
+    ('tracks', 0), ('pdf', 0), ('cores', 0), ('uml', 0),
     ('flatpak', 0), ('flatpak_dst', '.'), ('appimage', 0)]
 args = {arg: ARGUMENTS.get(arg, default) for (arg, default) in argument_info}
 full_bld = any(args[arg] for arg in ['windows', 'osx', 'linux', 'flatpak', 'appimage'])
@@ -42,7 +41,6 @@ flatpak_path = flatpak_fpath.format(**pargs)
 appimage_path = appimage_fpath.format(**pargs)
 src_path = src_fpath.format(**pargs)
 devinfo_path = devinfo_fpath.format(**pargs)
-tests_path = test_fpath.format(**pargs)
 docs_path = docs_fpath.format(**pargs)
 pdf_path = pdf_fpath.format(**pargs)
 
@@ -53,7 +51,6 @@ bld_flatpak = Builder(action=bld_flatpak)
 bld_appimage = Builder(action=bld_appimage)
 bld_src = Builder(action=bld_src)
 bld_devinfo = Builder(action=bld_devinfo)
-bld_tests = Builder(action=bld_ut)
 bld_docs = Builder(action=bld_docs)
 bld_pdfs = Builder(action=bld_pdfs)
 bld_images = Builder(action=bld_images)
@@ -65,7 +62,7 @@ bld_uml = Builder(action=bld_uml)
 
 env = Environment(BUILDERS={
     'windows': bld_windows, 'osx': bld_osx, 'linux': bld_linux,
-    'source': bld_src, 'devinfo': bld_devinfo, 'tests': bld_tests,
+    'source': bld_src, 'devinfo': bld_devinfo,
     'docs': bld_docs, 'images': bld_images, 'mo': bld_mo, 'pot': bld_pot,
     'merge': bld_merge, 'pdf': bld_pdfs, 'tracks': bld_models,
     'uml': bld_uml, 'flatpak': bld_flatpak, 'appimage': bld_appimage})
@@ -127,8 +124,6 @@ if args['source']:
     env.source([src_path], general_src)
 if args['devinfo']:
     env.devinfo([devinfo_path], files(['py'], ['venv', 'thirdparty']))
-if args['tests']:
-    env.tests([tests_path], files(['py'], ['venv', 'thirdparty']))
 if args['windows']:
     env.windows([win_path], general_src)
 if args['osx']:
