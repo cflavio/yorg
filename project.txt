@@ -5,9 +5,10 @@
 ================================= WAITING =====================================
 
 * flatpak on the vps: issues #28
+* python 3.7 on the vps: refactoring of the server (use asyncio)
 
 ============================== MAYBE/SOMEDAY ==================================
 
 * remove dependency: bson (struct)
-* refactoring of the server (use asyncio)
-* facade, replace them with def
+* using setuptools in place of scons (custom build steps, custom commands)
+* remove facades

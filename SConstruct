@@ -1,4 +1,5 @@
 from collections import namedtuple
+from os import getcwd
 from yyagl.build.build import extensions, files, img_tgt_names, \
     set_path, win_fpath, osx_fpath, linux_fpath, flatpak_fpath, src_fpath, \
     devinfo_fpath, docs_fpath, pdf_fpath, test_fpath, tracks_tgt_fnames, \
@@ -106,6 +107,8 @@ dev_conf = {'devinfo': lambda s: str(s).startswith('yyagl/') or str(s).startswit
 env['DEV_CONF'] = dev_conf
 
 env['UML_FILTER'] = ['yyagl', 'yracing']
+
+env['DOCS_PATH'] = getcwd()
 
 VariantDir(path, '.')
 
