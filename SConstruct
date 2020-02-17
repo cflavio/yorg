@@ -112,13 +112,13 @@ env['DOCS_PATH'] = getcwd()
 
 VariantDir(path, '.')
 
-img_files = img_tgt_names(files(['jpg', 'png'], ['models'], ['_png.png']))
+img_files = img_tgt_names(files(['jpg', 'png'], ['models', 'tracks'], ['_png.png']))
 langs = ['de_DE', 'es_ES', 'fr_FR', 'gd', 'gl_ES', 'it_IT']
 lang_src = [lang_path + '%s/LC_MESSAGES/%s.mo' % (lng, app_name) for lng in langs]
 general_src = files(extensions, ['venv', 'thirdparty', 'built']) + img_files + \
     lang_src + tracks_tgt_fnames()
 if args['images']:
-    imgs = env.images(img_files, files(['jpg', 'png'], ['models'], ['_png.png']))
+    imgs = env.images(img_files, files(['jpg', 'png'], ['models', 'tracks'], ['_png.png']))
     env.Precious(imgs)
 if args['tracks']:
     tracks = env.tracks(tracks_tgt_fnames(), files(['egg']))
