@@ -9,6 +9,5 @@
 
 ============================== MAYBE/SOMEDAY ==================================
 
-* remove dependency: bson (struct)
 * using setuptools in place of scons (custom build steps, custom commands)
 * remove facades
