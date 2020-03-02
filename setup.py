@@ -11,6 +11,7 @@ from yyagl.build.pdf import bld_pdfs
 from yyagl.build.uml import bld_uml
 from yyagl.build.imgs import bld_images
 from yyagl.build.tracks import bld_models
+from yyagl.build.strings import bld_mo, bld_pot, bld_merge
 
 
 class DevelopPyCmd(develop):
@@ -107,6 +108,22 @@ class ModelsCmd(AbsCmd):
         bld_models(None, None, AbsCmd.env)
 
 
+class LangCmd(AbsCmd):
+
+    lang_path = 'assets/locale/'
+
+    def _process_lang(self, lang_code):
+        lang_name = 'assets/po/%s.po' % lang_code
+        bld_merge(lang_name, None, AbsCmd.env)
+        lang_mo = self.lang_path + lang_code + '/LC_MESSAGES/%s.mo' % AbsCmd.env['APPNAME']
+        bld_mo(lang_mo, None, AbsCmd.env)
+
+    def run(self):
+        AbsCmd.env['LNG'] = self.lang_path
+        bld_pot(None, None, AbsCmd.env)
+        list(map(self._process_lang, ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR']))
+
+
 if __name__ == '__main__':
     setup(
         name='Yorg',
@@ -119,7 +136,8 @@ if __name__ == '__main__':
             'pdf': PDFCmd,
             'uml': UMLCmd,
             'images': ImagesCmd,
-            'models': ModelsCmd},
+            'models': ModelsCmd,
+            'lang': LangCmd},
         install_requires=[
             'SCons==2.5.0',
             # 'panda3d'  # it doesn't pull the dependency
