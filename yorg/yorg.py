@@ -116,6 +116,7 @@ class Yorg(Game):
                 'track': '',
                 'start_wp': '',
                 'shaders_dev': 0,
+                'pbr': 0,
                 'gamma': 2.2,
                 'show_waypoints': 0,
                 'show_exit': 1,
@@ -183,7 +184,9 @@ class Yorg(Game):
             cursor_hotspot=(.1, .06))
         dev_cfg = DevCfg(
             mt_render=opt_dev['multithreaded_render'],
-            shaders_dev=opt_dev['shaders_dev'], gamma=opt_dev['gamma'],
+            shaders_dev=opt_dev['shaders_dev'],
+            pbr=opt_dev['pbr'],
+            gamma=opt_dev['gamma'],
             menu_joypad=opt_dev['menu_joypad'], verbose=opt_dev['verbose'],
             verbose_log=opt_dev['verbose_log'],
             xmpp_server=opt_dev['xmpp_server'],

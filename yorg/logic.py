@@ -672,6 +672,7 @@ class YorgLogic(GameLogic):
             wheel_names, 'Road',
             'assets/particles/sparks.ptf',
             self.mediator.options['development']['shaders_dev'],
+            self.mediator.options['development']['pbr'],
             self.mediator.options['settings']['shaders'], music_fpath,
             track_gpath, 'assets/tracks/%s/models/collision' % track_name,
             ['Road', 'Offroad'], ['Wall'],
