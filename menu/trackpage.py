@@ -1,7 +1,7 @@
 from logging import info
 from itertools import product
 from yyagl.lib.gui import Text
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs

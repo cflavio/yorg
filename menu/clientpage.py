@@ -1,7 +1,7 @@
 from logging import info
 from panda3d.core import TextNode
 from yyagl.lib.gui import Btn, Label, ScrolledFrame
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 from .multiplayer.forms import UserFrmList
@@ -100,11 +100,6 @@ class ClientPage(Page):
     def __init__(self, menu_props):
         self.menu_props = menu_props
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.menu_props)
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)

@@ -1,5 +1,5 @@
 from yyagl.lib.gui import Btn
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -37,7 +37,6 @@ class MultiplayerPage(Page):
 
     def __init__(self, mp_props):
         GameObject.__init__(self)
-        PageFacade.__init__(self)
         self.event = self.event_cls(self)
         self.gui = self.gui_cls(self, mp_props)
         # invoke Page's __init__
@@ -46,4 +45,3 @@ class MultiplayerPage(Page):
         self.event.destroy()
         self.gui.destroy()
         GameObject.destroy(self)
-        PageFacade.destroy(self)

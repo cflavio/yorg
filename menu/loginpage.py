@@ -2,7 +2,7 @@ from socket import socket, gethostbyname, gaierror, SHUT_RDWR, create_connection
 from hashlib import sha512
 from panda3d.core import TextNode
 from yyagl.lib.gui import Btn, CheckBtn, Entry, Text
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -92,17 +92,12 @@ class LogInPageGui(ThanksPageGui):
         ThanksPageGui.destroy(self)
 
 
-class LogInPage(Page, PageFacade):
+class LogInPage(Page):
     gui_cls = LogInPageGui
 
     def __init__(self, mp_props):
         self.mp_props = mp_props
         Page.__init__(self, mp_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.mp_props)
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)

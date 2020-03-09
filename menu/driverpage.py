@@ -4,7 +4,7 @@ from random import shuffle
 from panda3d.core import TextureStage, Texture, PNMImage, TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.lib.gui import Entry, Text, Img
-from yyagl.engine.gui.page import Page, PageGui, PageFacade
+from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
 from yracing.driver.driver import Driver
@@ -540,14 +540,9 @@ class DriverPage(Page):
         self.car = car
         self.driverpage_props = driverpage_props
         Page.__init__(self, driverpage_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.driverpage_props)
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class DriverPageSinglePlayer(DriverPage):
@@ -564,7 +559,6 @@ class DriverPageMP(DriverPage):
         self.driverpage_props = driverpage_props
         self.nplayers = nplayers
         DriverPage.__init__(self, track, cars, driverpage_props, players_data)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.driverpage_props, self.nplayers, self.players_data)

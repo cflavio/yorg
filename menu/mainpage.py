@@ -15,7 +15,7 @@ from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.OnscreenImage import OnscreenImage
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
-from yyagl.engine.gui.page import Page, PageFacade, PageGui
+from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.logic import VersionChecker, EngineLogic
 from yyagl.gameobject import GameObject
 from yyagl.lib.gui import Btn, Label, Text, Img, Frame
@@ -152,7 +152,7 @@ class YorgMainPageGui(MainPageGui):
                             entry.findtext('pubDate'), '%a, %d %b %Y %H:%M:%S %z'),
                         entry.findtext('title') or '')
                        for entry in items]
-        except TypeError: entries = []
+        except (TypeError, ValueError): entries = []
         entries = list(reversed(sorted(entries, key=lambda entry: entry[0])))[:5]
         entries = [(datetime.strftime(entry[0], '%b %d'), self.__ellipsis_str(entry[1])) for entry in entries]
         frm = Frame(
@@ -185,20 +185,15 @@ class YorgMainPageGui(MainPageGui):
         MainPageGui.destroy(self)
 
 
-class YorgMainPage(MainPage, PageFacade):
+class YorgMainPage(MainPage):
     gui_cls = YorgMainPageGui
 
     def __init__(self, mainpage_props):
         self.mainpage_props = mainpage_props
         MainPage.__init__(self, mainpage_props)
-        PageFacade.__init__(self)
 
     @property
     def init_lst(self):
         return [
             [('event', self.event_cls, [self])],
             [('gui', self.gui_cls, [self, self.mainpage_props])]]
-
-    def destroy(self):
-        MainPage.destroy(self)
-        PageFacade.destroy(self)

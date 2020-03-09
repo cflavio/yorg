@@ -4,7 +4,7 @@ from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED
 from direct.gui.DirectLabel import DirectLabel
 from yyagl.lib.gui import Btn, P3dCheckBtn, Label
-from yyagl.engine.gui.page import Page, PageGui, PageFacade
+from yyagl.engine.gui.page import Page, PageGui
 from yyagl.engine.joystick import JoystickMgr
 from yyagl.engine.gui.menu import NavInfo, NavInfoPerPlayer
 from yyagl.gameobject import GameObject
@@ -205,14 +205,9 @@ class InputPage4Keyboard(Page):
         self.keys = keys
         self.opt_file = opt_file
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.menu_props, self.opt_file, self.keys)
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class InputPage2Keyboard(InputPage4Keyboard):
@@ -338,17 +333,12 @@ class InputPage4Joystick(Page):
         self.keys = keys
         self.opt_file = opt_file
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     @property
     def init_lst(self): return [
         [('event', self.event_cls, [self])],
         [('gui', self.gui_cls,
           [self, self.menu_props, self.opt_file, self.keys])]]
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class InputPage2Joystick(InputPage4Joystick):

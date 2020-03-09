@@ -2,7 +2,7 @@ from panda3d.core import TextNode, LVector2i
 from direct.gui.DirectLabel import DirectLabel
 from yyagl.lib.gui import Btn, Slider, CheckBtn, OptionMenu
 from yyagl.engine.gui.menu import NavInfo, NavInfoPerPlayer
-from yyagl.engine.gui.page import Page, PageGui, PageFacade
+from yyagl.engine.gui.page import Page, PageGui
 from yyagl.gameobject import GameObject
 from yyagl.lib.gui import Label
 from .thankspage import ThanksPageGui
@@ -149,18 +149,13 @@ class OptionPageGui(ThanksPageGui):
         self.notify('on_back', 'options_page', [dct])
 
 
-class OptionPage(Page, PageFacade):
+class OptionPage(Page):
     gui_cls = OptionPageGui
 
     def __init__(self, menu_props, option_props):
         self.menu_props = menu_props
         self.option_props = option_props
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.menu_props, self.option_props)
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)

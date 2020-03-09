@@ -4,7 +4,7 @@ from json import load
 from panda3d.core import TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.lib.gui import Text
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.gameobject import GameObject
 from .netmsgs import NetMsgs
@@ -303,14 +303,9 @@ class CarPage(Page):
         self.carpage_props = carpage_props
         self.track_path = track_path
         Page.__init__(self, carpage_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.carpage_props, self.track_path)
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class CarPageSeason(CarPage):
@@ -332,7 +327,7 @@ class CarPageClient(CarPage):
         self.gui = self.gui_cls(self, self.carpage_props, self.track_path, self.__uid_srv)
 
 
-class CarPageLocalMP(CarPage, PageFacade):
+class CarPageLocalMP(CarPage):
     gui_cls = CarPageLocalMPGui
 
     def __init__(self, carpage_props, track_path, nplayers):
@@ -340,7 +335,6 @@ class CarPageLocalMP(CarPage, PageFacade):
         self.track_path = track_path
         self.nplayers = nplayers
         Page.__init__(self, carpage_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.carpage_props, self.track_path, self.nplayers)
