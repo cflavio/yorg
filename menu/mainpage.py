@@ -149,7 +149,7 @@ class YorgMainPageGui(MainPageGui):
         setlocale(LC_ALL, 'en_US.UTF-8')
         try:
             entries = [(datetime.strptime(
-                            entry.findtext('pubDate'), '%a, %d %b %Y %H:%M:%S %z'),
+                            entry.findtext('pubDate')[:25], '%a, %d %b %Y %H:%M:%S'),
                         entry.findtext('title') or '')
                        for entry in items]
         except (TypeError, ValueError): entries = []
