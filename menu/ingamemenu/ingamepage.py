@@ -1,5 +1,5 @@
 from yyagl.lib.gui import Btn, Frame, Text
-from yyagl.engine.gui.page import Page, PageGui
+from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.gameobject import GameObject
 from yracing.race.event import NetMsgs
 
@@ -64,10 +64,13 @@ class InGamePageMultiplayer(Page):
     def __init__(self, menu_props, keys):
         self.keys = keys
         self.menu_props = menu_props
+        PageFacade.__init__(self)
         Page.__init__(self, menu_props)
 
-    def _build_gui(self):
-        self.gui = self.gui_cls(self, self.menu_props, self.keys)
+    @property
+    def init_lst(self): return [
+        [('event', self.event_cls, [self])],
+        [('gui', self.gui_cls, [self, self.menu_props, self.keys])]]
 
 
 class InGamePage(InGamePageMultiplayer):

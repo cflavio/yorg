@@ -1,7 +1,7 @@
 from logging import info
 from time import strftime
 from yyagl.lib.gui import Btn
-from yyagl.engine.gui.page import Page
+from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -52,9 +52,11 @@ class OnlinePlayPage(Page):
         GameObject.__init__(self)
         self.event = self.event_cls(self)
         self.gui = self.gui_cls(self, mp_props)
+        PageFacade.__init__(self)
         # invoke Page's __init__
 
     def destroy(self):
         self.event.destroy()
         self.gui.destroy()
         GameObject.destroy(self)
+        PageFacade.destroy(self)

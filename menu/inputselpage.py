@@ -1,5 +1,5 @@
 from yyagl.lib.gui import Btn
-from yyagl.engine.gui.page import Page
+from yyagl.engine.gui.page import Page, PageFacade
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -48,9 +48,11 @@ class InputSelPage(Page):
         GameObject.__init__(self)
         self.event = self.event_cls(self)
         self.gui = self.gui_cls(self, self.__mp_props, self.__opt_file, self.__keys, self.__joystick)
+        PageFacade.__init__(self)
         # invoke Page's __init__
 
     def destroy(self):
         self.event.destroy()
         self.gui.destroy()
         GameObject.destroy(self)
+        PageFacade.destroy(self)
