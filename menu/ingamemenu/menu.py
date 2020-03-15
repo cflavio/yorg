@@ -32,5 +32,5 @@ class InGameMenu(GameObject):
     gui_cls = InGameMenuGui
 
     def __init__(self, menu_props, keys):
-        init_lst = [[('gui', self.gui_cls, [self, menu_props, keys])]]
-        GameObject.__init__(self, init_lst)
+        GameObject.__init__(self)
+        self.gui = self.gui_cls(self, menu_props, keys)

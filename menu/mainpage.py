@@ -152,7 +152,7 @@ class YorgMainPageGui(MainPageGui):
                             entry.findtext('pubDate')[:25], '%a, %d %b %Y %H:%M:%S'),
                         entry.findtext('title') or '')
                        for entry in items]
-        except TypeError: entries = []
+        except (TypeError, ValueError): entries = []
         entries = list(reversed(sorted(entries, key=lambda entry: entry[0])))[:5]
         entries = [(datetime.strftime(entry[0], '%b %d'), self.__ellipsis_str(entry[1])) for entry in entries]
         frm = Frame(

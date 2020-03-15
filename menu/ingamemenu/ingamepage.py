@@ -67,10 +67,8 @@ class InGamePageMultiplayer(Page):
         PageFacade.__init__(self)
         Page.__init__(self, menu_props)
 
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.menu_props, self.keys])]]
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.menu_props, self.keys)
 
 
 class InGamePage(InGamePageMultiplayer):
