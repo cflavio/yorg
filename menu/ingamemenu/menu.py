@@ -34,3 +34,7 @@ class InGameMenu(GameObject):
     def __init__(self, menu_props, keys):
         GameObject.__init__(self)
         self.gui = self.gui_cls(self, menu_props, keys)
+
+    def destroy(self):
+        self.gui.destroy()
+        GameObject.destroy(self)
