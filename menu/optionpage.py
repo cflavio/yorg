@@ -156,11 +156,9 @@ class OptionPage(Page, PageFacade):
         self.menu_props = menu_props
         self.option_props = option_props
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.menu_props, self.option_props)
 
     def destroy(self):
         Page.destroy(self)
-        PageFacade.destroy(self)

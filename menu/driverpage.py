@@ -540,14 +540,12 @@ class DriverPage(Page):
         self.car = car
         self.driverpage_props = driverpage_props
         Page.__init__(self, driverpage_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.driverpage_props)
 
     def destroy(self):
         Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class DriverPageSinglePlayer(DriverPage):

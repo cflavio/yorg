@@ -91,11 +91,9 @@ class OnlinePage(Page):
         GameObject.__init__(self)
         self.event = self.event_cls(self)
         self.gui = self.gui_cls(self, mp_props)
-        PageFacade.__init__(self)
         # invoke Page's __init__
 
     def destroy(self):
         self.event.destroy()
         self.gui.destroy()
         GameObject.destroy(self)
-        PageFacade.destroy(self)

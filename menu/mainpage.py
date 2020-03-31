@@ -191,7 +191,6 @@ class YorgMainPage(MainPage, PageFacade):
     def __init__(self, mainpage_props):
         self.mainpage_props = mainpage_props
         MainPage.__init__(self, mainpage_props)
-        PageFacade.__init__(self)
 
     @property
     def init_lst(self):
@@ -201,4 +200,3 @@ class YorgMainPage(MainPage, PageFacade):
 
     def destroy(self):
         MainPage.destroy(self)
-        PageFacade.destroy(self)

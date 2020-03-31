@@ -151,11 +151,9 @@ class RegisterPage(Page, PageFacade):
     def __init__(self, mp_props):
         self.mp_props = mp_props
         Page.__init__(self, mp_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.mp_props)
 
     def destroy(self):
         Page.destroy(self)
-        PageFacade.destroy(self)

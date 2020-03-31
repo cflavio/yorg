@@ -205,14 +205,12 @@ class InputPage4Keyboard(Page):
         self.keys = keys
         self.opt_file = opt_file
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.menu_props, self.opt_file, self.keys)
 
     def destroy(self):
         Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class InputPage2Keyboard(InputPage4Keyboard):
@@ -338,7 +336,6 @@ class InputPage4Joystick(Page):
         self.keys = keys
         self.opt_file = opt_file
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     @property
     def init_lst(self): return [
@@ -348,7 +345,6 @@ class InputPage4Joystick(Page):
 
     def destroy(self):
         Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class InputPage2Joystick(InputPage4Joystick):

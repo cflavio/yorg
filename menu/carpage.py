@@ -303,14 +303,12 @@ class CarPage(Page):
         self.carpage_props = carpage_props
         self.track_path = track_path
         Page.__init__(self, carpage_props)
-        PageFacade.__init__(self)
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.carpage_props, self.track_path)
 
     def destroy(self):
         Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class CarPageSeason(CarPage):

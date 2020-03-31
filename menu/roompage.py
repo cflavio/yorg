@@ -106,7 +106,6 @@ class RoomPage(Page):
         self.room = room
         self.uid_srv = uid_srv
         Page.__init__(self, menu_props)
-        PageFacade.__init__(self)
 
     def _build_event(self):
         self.event = self.event_cls(self, self.room)
@@ -116,8 +115,6 @@ class RoomPage(Page):
 
     def destroy(self):
         Page.destroy(self)
-        PageFacade.destroy(self)
-
 
 
 class RoomPageClient(RoomPage):
