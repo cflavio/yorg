@@ -67,7 +67,7 @@ class OptionPageGui(ThanksPageGui):
             pos=(.12, .08), text='',
             indicator_val=self.props.antialiasing,
             indicator_frame_col=menu_props.text_active_col,
-            cmd=self.eng.gfx.gfx_mgr.toggle_aa, **menu_props.checkbtn_args)
+            cmd=lambda val: self.eng.gfx.gfx_mgr.toggle_aa(), **menu_props.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
         self.shaders_cb = CheckBtn(
             pos=(.12, -.12), text='', indicator_val=self.props.shaders,
