@@ -6,7 +6,7 @@ from setuptools.command.develop import develop
 from distutils.cmd import Command
 from direct.dist.commands import bdist_apps
 from shutil import move, rmtree
-from yyagl.build.build import bld_dpath, branch, files
+from yyagl.build.build import bld_dpath, branch, files, ver
 from yyagl.build.src import bld_src
 from yyagl.build.devinfo import bld_devinfo
 from yyagl.build.docs import bld_docs
@@ -19,6 +19,7 @@ from yyagl.build.linux import bld_linux
 from yyagl.build.windows import bld_windows
 from yyagl.build.appimage import bld_appimage
 from yyagl.build.flatpak import bld_flatpak
+from yyagl.build.snap import bld_snap
 
 
 msg = '''NOTE: please be sure that you've already created the assets with:
@@ -152,6 +153,19 @@ class FlatPakCmd(AbsCmd):
         bld_flatpak(None, None, AbsCmd.env)
 
 
+class SnapCmd(AbsCmd):
+
+    def run(self):
+        print(msg)
+        AbsCmd.env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
+        summary = 'Yorg is an Open source Racing Game'
+        desc = "Yorg (Yorg's an Open Racing Game) is a free open source " + \
+               "racing game developed by Ya2 using Panda3D for Windows, " + \
+               "OSX and Linux."
+        _branch = branch
+        bld_snap(None, None, AbsCmd.env, ver.split('-')[0], _branch, summary, desc)
+
+
 class BDistAppsCmd(bdist_apps):
 
     def run(self):
@@ -180,6 +194,7 @@ if __name__ == '__main__':
             'lang': LangCmd,
             'appimage': AppImageCmd,
             'flatpak': FlatPakCmd,
+            'snap': SnapCmd,
             'bdist_apps': BDistAppsCmd},
         install_requires=[
             #'SCons==2.5.0',

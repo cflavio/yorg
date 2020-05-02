@@ -3,6 +3,7 @@
 *.bam
 *.txo
 *.geanyprj
+dist/
 built/
 build/
 venv/
