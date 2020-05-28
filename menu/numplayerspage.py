@@ -1,6 +1,5 @@
 from yyagl.lib.gui import Btn, Text
 from yyagl.engine.gui.page import Page, PageFacade
-from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
 
@@ -10,7 +9,7 @@ class NumPlayersPageGui(ThanksPageGui):
         self.props = mp_props
         ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden build
         menu_props = self.menu_props
         t_a = menu_props.text_args.copy()
         players_lab = Text(_('How many players?'), pos=(0, .6),

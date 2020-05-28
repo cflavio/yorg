@@ -1,5 +1,5 @@
 from yyagl.lib.gui import Btn
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -10,11 +10,12 @@ class MultiplayerPageGui(ThanksPageGui):
         self.props = mp_props
         ThanksPageGui.__init__(self, mediator, mp_props.gameprops.menu_props)
 
-    #def show(self):  # then when you go back from the next page, it creates it again
-    #    ThanksPageGui.show(self)
-    #    self.build()
+    # def show(self):
+    # # then when you go back from the next page, it creates it again
+    #     ThanksPageGui.show(self)
+    #     self.build()
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         omp_cb = lambda: self.notify('on_push_page', 'online',
                                      [self.props])
         menu_data = [

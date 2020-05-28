@@ -11,7 +11,7 @@ class AlreadyUsedDlg(GameObject, Subject):
         Subject.__init__(self)
         GameObject.__init__(self)
         msg = _('The key %s is already used by player %s for %s.' % (
-                key, player, cmd))
+            key, player, cmd))
         self.dialog = OkDialog(
             text=msg,
             text_wordwrap=16,
@@ -29,7 +29,7 @@ class AlreadyUsedDlg(GameObject, Subject):
             command=self.on_btn)
         info('created dialog ' + self.dialog['text'])
 
-    def on_btn(self, val):
+    def on_btn(self, val):  # unused val
         info('already used')
         self.notify('on_already_dlg')
 
@@ -46,7 +46,7 @@ class AlreadyUsedJoystickDlg(GameObject, Subject):
         Subject.__init__(self)
         GameObject.__init__(self)
         msg = _('The key %s is already used for %s.' % (
-                key, cmd))
+            key, cmd))
         self.dialog = OkDialog(
             text=msg,
             text_wordwrap=16,
@@ -64,7 +64,7 @@ class AlreadyUsedJoystickDlg(GameObject, Subject):
             command=self.on_btn)
         info('created dialog ' + self.dialog['text'])
 
-    def on_btn(self, val):
+    def on_btn(self, val):  # unused val
         info('already used joystick')
         self.notify('on_already_joystick_dlg')
 

@@ -1,7 +1,7 @@
 from logging import info
 from time import strftime
 from yyagl.lib.gui import Btn
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObject
 from .thankspage import ThanksPageGui
 
@@ -16,7 +16,7 @@ class OnlinePlayPageGui(ThanksPageGui):
         ThanksPageGui.show(self)
         self.build()
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         menu_data = [
             ('Host', self.on_server),
             ('Join', self.on_client)]
@@ -38,10 +38,12 @@ class OnlinePlayPageGui(ThanksPageGui):
         self.notify('on_start_mp_client')
         self.notify('on_push_page', 'client', [self.props])
 
-    def process_msg_srv(self, data_lst):
+    @staticmethod
+    def process_msg_srv(data_lst):
         print(data_lst)
 
-    def process_connection(self, client_address):
+    @staticmethod
+    def process_connection(client_address):
         info('connection from ' + client_address)
 
 

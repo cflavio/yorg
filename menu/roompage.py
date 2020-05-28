@@ -1,11 +1,11 @@
 from logging import info
 from time import strftime
-from yyagl.engine.gui.page import Page, PageFacade, PageEvent
-from yyagl.gameobject import GameObject
+from yyagl.engine.gui.page import Page, PageEvent
 from .thankspage import ThanksPageGui
 from .multiplayer.matchfrm import MatchFrmServer, MatchFrmServerClient
 from .multiplayer.messagefrm import MatchMsgFrm
 from .multiplayer.exit_dlg import ExitDialog
+
 
 class RoomPageGui(ThanksPageGui):
 
@@ -33,7 +33,7 @@ class RoomPageGui(ThanksPageGui):
         ThanksPageGui.show(self)
         self.build()
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         self.add_widgets(self.match_frm.widgets + self.match_msg_frm.widgets)
         ThanksPageGui.build(self)
 
@@ -63,6 +63,7 @@ class RoomPageClientGui(RoomPageGui):
     def __init__(self, mediator, menu_props, room_name, srv_usr):
         RoomPageGui.__init__(self, mediator, menu_props, room_name, srv_usr)
         self.eng.client.attach(self.on_track_selected_msg)
+        self.exit_dlg = None
 
     def on_presence_unavailable_room(self, uid, room):
         RoomPageGui.on_presence_unavailable_room(self, uid, room)
@@ -101,7 +102,7 @@ class RoomPage(Page):
     gui_cls = RoomPageGui
     event_cls = RoomPageEvent
 
-    def __init__(self, menu_props, room, nick, uid_srv):
+    def __init__(self, menu_props, room, nick, uid_srv):  # unused nick
         self.menu_props = menu_props
         self.room = room
         self.uid_srv = uid_srv

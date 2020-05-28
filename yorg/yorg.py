@@ -1,6 +1,6 @@
 import argparse, sys
-from logging import info
 from sys import platform, path
+from logging import info
 from importlib import reload
 from copy import deepcopy
 from os import walk
@@ -13,6 +13,7 @@ from yyagl.engine.configuration import Cfg, GuiCfg, ProfilingCfg, LangCfg, \
     CursorCfg, DevCfg
 from yyagl.engine.gui.menu import MenuProps, NavInfo, NavInfoPerPlayer
 from yyagl.engine.logic import EngineLogic
+from yyagl.lib.p3d.p3d import LibP3d
 from yracing.gameprops import GameProps
 from yracing.driver.driver import Driver
 from .logic import YorgLogic
@@ -21,24 +22,23 @@ from .fsm import YorgFsm
 from .audio import YorgAudio
 from .client import YorgClient
 from .thanksnames import ThanksNames
-from yyagl.lib.p3d.p3d import LibP3d
 
 
-class DriverPaths(object):
+class DriverPaths:
 
     def __init__(self, path, path_sel):
         self.path = path
         self.path_sel = path_sel
 
 
-class DamageInfo(object):
+class DamageInfo:
 
     def __init__(self, low, hi):
         self.low = low
         self.hi = hi
 
 
-class WheelGfxNames(object):
+class WheelGfxNames:
 
     def __init__(self, front, rear, both):
         self.front = front
@@ -154,7 +154,8 @@ class Yorg(Game):
             LibP3d.fixpath(opt_path + '/' + optfile) if opt_path else optfile,
             default_opt)
         if self.options['development']['server'] == '':
-            self.options['development']['server'] = old_def['development']['server']
+            self.options['development']['server'] = \
+                old_def['development']['server']
         opt_dev = self.options['development']
         win_orig = opt_dev['win_orig']
         if args.win_orig: win_orig = args.win_orig
@@ -196,19 +197,24 @@ class Yorg(Game):
             opengl_3_2=opt_dev['opengl_3_2'])
         conf = Cfg(gui_cfg, profiling_cfg, lang_cfg, cursor_cfg, dev_cfg)
         keys = self.options['settings']['keys']
-        nav1 = NavInfoPerPlayer(keys['left1'], keys['right1'], keys['forward1'],
-                                keys['rear1'], keys['fire1'])
-        nav2 = NavInfoPerPlayer(keys['left2'], keys['right2'], keys['forward2'],
-                                keys['rear2'], keys['fire2'])
-        nav3 = NavInfoPerPlayer(keys['left3'], keys['right3'], keys['forward3'],
-                                keys['rear3'], keys['fire3'])
-        nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
-                                keys['rear4'], keys['fire4'])
+        nav1 = NavInfoPerPlayer(
+            keys['left1'], keys['right1'], keys['forward1'], keys['rear1'],
+            keys['fire1'])
+        nav2 = NavInfoPerPlayer(
+            keys['left2'], keys['right2'], keys['forward2'], keys['rear2'],
+            keys['fire2'])
+        nav3 = NavInfoPerPlayer(
+            keys['left3'], keys['right3'], keys['forward3'], keys['rear3'],
+            keys['fire3'])
+        nav4 = NavInfoPerPlayer(
+            keys['left4'], keys['right4'], keys['forward4'], keys['rear4'],
+            keys['fire4'])
         nav = NavInfo([nav1, nav2, nav3, nav4])
         menu_props = MenuProps(
             'assets/fonts/Hanken-Book.ttf', (.75, .75, .25, 1),
-            (.75, .75, .75, 1), (.75, .25, .25, 1), .1, (-4.6, 4.6, -.32, .88),
-            (0, 0, 0, .2), 'assets/images/gui/menu_background.txo',
+            (.75, .75, .75, 1), (.75, .25, .25, 1), .1,
+            (-4.6, 4.6, -.32, .88), (0, 0, 0, .2),
+            'assets/images/gui/menu_background.txo',
             'assets/sfx/menu_over.wav', 'assets/sfx/menu_clicked.ogg',
             'assets/images/icons/%s.txo', nav)
         damage_info = DamageInfo('assets/cars/%s/models/cardamage1',
@@ -253,7 +259,7 @@ class Yorg(Game):
 
     def log_conf(self, dct, pref=''):
         for key, val in dct.items():
-            if type(val) == dict:
+            if isinstance(val, dict):
                 self.log_conf(val, pref + key + '::')
             elif key != 'pwd':
                 info('option %s%s = %s' % (pref, key, val))
@@ -262,10 +268,12 @@ class Yorg(Game):
         curr_path = dirname(__file__) + '/'
         if __file__.endswith('.py'): curr_path += '../'
         if sys.platform == 'darwin': curr_path += '../Resources/'
-        tracks = [r for r in next(walk(curr_path + 'assets/tracks'))[1] if r not in ['__pycache__', 'models']]
+        tracks = [r for r in next(walk(curr_path + 'assets/tracks'))[1]
+                  if r not in ['__pycache__', 'models']]
         tracks_i = []
         for track in tracks:
-            with open(self.eng.curr_path + 'assets/tracks/' + track + '/track.json') as ftrack:
+            with open(self.eng.curr_path + 'assets/tracks/' + track +
+                      '/track.json') as ftrack:
                 sorting = load(ftrack)['sorting']
             tracks_i += [(track, sorting)]
         tracks_i = sorted(tracks_i, key=lambda elm: elm[1])
@@ -288,7 +296,8 @@ class Yorg(Game):
         cars = [r for r in next(walk(curr_path + 'assets/cars'))[1]]
         cars_i = []
         for car in cars:
-            with open(self.eng.curr_path + 'assets/cars/' + car + '/phys.json') as fcar:
+            with open(self.eng.curr_path + 'assets/cars/' + car +
+                      '/phys.json') as fcar:
                 sorting = load(fcar)['sorting']
             cars_i += [(car, sorting)]
         cars_i = sorted(cars_i, key=lambda elm: elm[1])

@@ -1,12 +1,11 @@
 from os import system, getcwd
-from os.path import exists
 from collections import namedtuple
-from setuptools import setup
-from setuptools.command.develop import develop
 from distutils.cmd import Command
 from direct.dist.commands import bdist_apps
-from shutil import move, rmtree
-from yyagl.build.build import bld_dpath, branch, files, ver
+from shutil import rmtree
+from setuptools import setup
+from setuptools.command.develop import develop
+from yyagl.build.build import branch, files, ver
 from yyagl.build.src import bld_src
 from yyagl.build.devinfo import bld_devinfo
 from yyagl.build.docs import bld_docs
@@ -52,8 +51,8 @@ class DevInfoCmd(AbsCmd):
 
     def run(self):
         dev_conf = {
-            'devinfo': lambda s: str(s).startswith('./yyagl/') or \
-                str(s).startswith('./yracing/')}
+            'devinfo': lambda s: str(s).startswith('./yyagl/') or
+            str(s).startswith('./yracing/')}
         AbsCmd.env['DEV_CONF'] = dev_conf
         bld_devinfo(None, files(['py'], ['venv', 'thirdparty']), AbsCmd.env)
 
@@ -79,17 +78,20 @@ class PDFCmd(AbsCmd):
             PDFInfo('python', '.', '*.py SConstruct *.md *.txt', yorg_fil)]
         racing_fil = ['./yyagl/racing/game/*', './yyagl/racing/car/*',
                       './yyagl/racing/race/*', './yyagl/racing/track/*']
-        racing_lst = [PDFInfo('python', './yyagl/racing', '*.py', racing_fil)]
+        # racing_lst = [PDFInfo('python', './yyagl/racing', '*.py',
+        #                       racing_fil)]
         yyagl_fil = ['./yyagl/build/*', './yyagl/engine/*', './yyagl/lib/*',
                      './yyagl/tests/*']
-        yyagl_lst = [
-            PDFInfo('python', './yyagl', '*.py *.pdef', filt_game + yyagl_fil),
-            PDFInfo('c', './yyagl', '*.vert *.frag', filt_game + yyagl_fil)]
+        # yyagl_lst = [
+        #     PDFInfo('python', './yyagl', '*.py *.pdef',
+        #             filt_game + yyagl_fil),
+        #     PDFInfo('c', './yyagl', '*.vert *.frag', filt_game + yyagl_fil)]
         binfo_lst = [
             ('python', '*.py *.pdef'), ('lua', 'config.lua'),
-            ('', '*.rst *.css_t *.conf'), ('html', '*.html'), ('javascript', '*.js')]
-        build_lst = [PDFInfo(binfo[0], './yyagl/build', binfo[1], filt_game)
-                     for binfo in binfo_lst]
+            ('', '*.rst *.css_t *.conf'), ('html', '*.html'),
+            ('javascript', '*.js')]
+        # build_lst = [PDFInfo(binfo[0], './yyagl/build', binfo[1], filt_game)
+        #              for binfo in binfo_lst]
         pdf_conf = {
             'yorg_menu': [PDFInfo('python', './menu', '*.py', [])],
             'yorg': yorg_lst}
@@ -127,13 +129,15 @@ class LangCmd(AbsCmd):
     def _process_lang(self, lang_code):
         lang_name = 'assets/po/%s.po' % lang_code
         bld_merge(lang_name, None, AbsCmd.env)
-        lang_mo = self.lang_path + lang_code + '/LC_MESSAGES/%s.mo' % AbsCmd.env['APPNAME']
+        lang_mo = self.lang_path + lang_code + \
+            '/LC_MESSAGES/%s.mo' % AbsCmd.env['APPNAME']
         bld_mo(lang_mo, None, AbsCmd.env)
 
     def run(self):
         AbsCmd.env['LNG'] = self.lang_path
         bld_pot(None, None, AbsCmd.env)
-        list(map(self._process_lang, ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR']))
+        list(map(self._process_lang,
+                 ['it_IT', 'de_DE', 'gd', 'es_ES', 'gl_ES', 'fr_FR']))
 
 
 class AppImageCmd(AbsCmd):
@@ -163,7 +167,8 @@ class SnapCmd(AbsCmd):
                "racing game developed by Ya2 using Panda3D for Windows, " + \
                "OSX and Linux."
         _branch = branch
-        bld_snap(None, None, AbsCmd.env, ver.split('-')[0], _branch, summary, desc)
+        bld_snap(None, None, AbsCmd.env, ver.split('-')[0], _branch, summary,
+                 desc)
 
 
 class BDistAppsCmd(bdist_apps):
@@ -197,42 +202,43 @@ if __name__ == '__main__':
             'snap': SnapCmd,
             'bdist_apps': BDistAppsCmd},
         install_requires=[
-            #'SCons==2.5.0',
+            # 'SCons==2.5.0',
             # 'panda3d'  # it doesn't pull the dependency
             ],
-        options = {
+        options={
             'build_apps': {
                 'exclude_patterns': [
-                    'build/*', 'built/*', 'setup.py', 'requirements.txt', '*.swp',
-                    'SConstruct', 'venv/*', '.git*', '*.pyc', 'options.json',
-                    '__pycache__'],
+                    'build/*', 'built/*', 'setup.py', 'requirements.txt',
+                    '*.swp', 'SConstruct', 'venv/*', '.git*', '*.pyc',
+                    'options.json', '__pycache__'],
                 'log_filename': '$USER_APPDATA/Yorg/p3d_log.log',
                 'plugins': ['pandagl', 'p3openal_audio'],
                 'gui_apps': {'appname': 'main.py'},
                 'icons': {
                     'appname': [
-                        'assets/images/icon/icon256_png.png', 'assets/images/icon/icon128_png.png',
-                        'assets/images/icon/icon48_png.png', 'assets/images/icon/icon32_png.png',
+                        'assets/images/icon/icon256_png.png',
+                        'assets/images/icon/icon128_png.png',
+                        'assets/images/icon/icon48_png.png',
+                        'assets/images/icon/icon32_png.png',
                         'assets/images/icon/icon16_png.png']},
                 'include_patterns': [
                     '**/yyagl/licenses/*',
                     '**/licenses/*',
                     '**/*.bam',
-                        '**/*.txo',
-                        '**/*.json',
-                        '**/track_tr.py',
-                        '**/*.txt',
-                        '**/*.ttf',
-                        '**/*.vert',
-                        '**/*.frag',
-                        '**/*.ogg',
-                        '**/*.wav',
-                        '**/*.mo'],
-                    'platforms': [
-                        'win_amd64',
-                        'manylinux1_x86_64'
-                    ],
-                    'include_modules': {'*': ['encodings.hex_codec']}},
+                    '**/*.txo',
+                    '**/*.json',
+                    '**/track_tr.py',
+                    '**/*.txt',
+                    '**/*.ttf',
+                    '**/*.vert',
+                    '**/*.frag',
+                    '**/*.ogg',
+                    '**/*.wav',
+                    '**/*.mo'],
+                'platforms': [
+                    'win_amd64',
+                    'manylinux1_x86_64'],
+                'include_modules': {'*': ['encodings.hex_codec']}},
             'bdist_apps': {
                 'installers': {
                     'manylinux1_x86_64': ['xztar'],
