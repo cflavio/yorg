@@ -1,14 +1,12 @@
 from logging import info
 from itertools import product
-from random import shuffle
 from panda3d.core import TextureStage, Texture, PNMImage, TextNode
 from direct.gui.DirectGuiGlobals import DISABLED, NORMAL
 from yyagl.lib.gui import Entry, Text, Img
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
 from yyagl.engine.gui.imgbtn import ImgBtn
-from yyagl.gameobject import GameObject
-from yracing.driver.driver import Driver
 from yyagl.lib.p3d.shader import load_shader
+from yracing.driver.driver import Driver
 from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
@@ -38,17 +36,18 @@ class DriverPageGui(ThanksPageGui):
         self.sel_drv_img = None
         self.driver = None
         nplayers = list(range(nplayers))
-        ThanksPageGui.__init__(self, mediator, driverpage_props.gameprops.menu_props, nplayers)
+        ThanksPageGui.__init__(self, mediator,
+                               driverpage_props.gameprops.menu_props, nplayers)
 
-    def build(self, exit_behav):
+    def build(self, exit_behav):  # parameters differ from overridden
         self.drv_info = self.props.gameprops.drivers_info
         menu_props = self.menu_props
         widgets = [Text(_('Select the driver'), pos=(0, .8),
-                                **menu_props.text_args)]
+                        **menu_props.text_args)]
         t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         self.name = Text(_('Write your name:'), pos=(-.1, .6), scale=.06,
-                            align='right', wordwrap=128, **t_a)
+                         align='right', wordwrap=128, **t_a)
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
@@ -75,14 +74,14 @@ class DriverPageGui(ThanksPageGui):
                        (_('stability'), .15)]
             widgets += list(map(
                 lambda lab_def: self._add_lab(*(lab_def + (row, col))),
-                lab_lst))
+                lab_lst))  # cell vars row, col defined in loop
             txt_lst = [(self.drv_info[idx - 1].adherence, .09),
                        (self.drv_info[idx - 1].speed, .21),
                        (self.drv_info[idx - 1].stability, .15)]
             widgets += list(map(
                 lambda txt_def: self._add_txt(
                     *txt_def + (psign, pcol, col, row)),
-                txt_lst))
+                txt_lst))  # cell vars psign, pcol, col, row defined in loop
         self.sel_drv_img = Img(
             self.props.gameprops.cars_img % self.mediator.car,
             parent=base.a2dBottomLeft, pos=(.3, .4), scale=.28)
@@ -131,7 +130,8 @@ class DriverPageGui(ThanksPageGui):
         info('selected driver ' + str(i))
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
-        self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
+        self.sel_drv_img.set_texture(
+            self.t_s, loader.loadTexture(txt_path % i))
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
@@ -154,12 +154,15 @@ class DriverPageSinglePlayerGui(DriverPageGui):
     def __init__(self, mediator, driverpage_props, nplayers=1):
         DriverPageGui.__init__(self, mediator, driverpage_props, nplayers)
         if self.ent.text != _('your name'):
-            btn = [wdg for wdg in self.widgets if wdg.__class__.__name__ == 'ImgBtnWidget'][0]
+            btn = [wdg for wdg in self.widgets
+                   if wdg.__class__.__name__ == 'ImgBtnWidget'][0]
             for player in self.players: self.focus(btn, player)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         menu_props = self.menu_props
-        all_names = self.props.gameprops.player_names + self.props.gameprops.stored_player_names[len(self.props.gameprops.player_names):]
+        all_names = self.props.gameprops.player_names + \
+            self.props.gameprops.stored_player_names[
+                len(self.props.gameprops.player_names):]
         self.ent = Entry(
             scale=.08, pos=(0, .6), entry_font=menu_props.font, width=12,
             frame_col=menu_props.btn_col,
@@ -198,18 +201,19 @@ class DriverPageMPGui(DriverPageGui):
         for i in range(players): self.selected_drivers[i] = None
         self.enabled = False
         if all(ent.text != _('your name') for ent in self.ents):
-            btns = [wdg for wdg in self.widgets if wdg.__class__.__name__ == 'ImgBtnWidget']
+            btns = [wdg for wdg in self.widgets
+                    if wdg.__class__.__name__ == 'ImgBtnWidget']
             for player in self.players: self.focus(btns[player], player)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         self.drv_info = self.props.gameprops.drivers_info
         menu_props = self.menu_props
         widgets = [Text(_('Select the drivers'), pos=(0, .91),
-                                **menu_props.text_args)]
+                        **menu_props.text_args)]
         t_a = self.menu_props.text_args.copy()
         del t_a['scale']
         self.name = Text(_('Write your names:'), pos=(-.1, .7), scale=.06,
-                            align='right', wordwrap=128, **t_a)
+                         align='right', wordwrap=128, **t_a)
         self.drivers = []
         for row, col in product(range(2), range(4)):
             idx = col + row * 4
@@ -236,14 +240,14 @@ class DriverPageMPGui(DriverPageGui):
                        (_('stability'), -.05)]
             widgets += list(map(
                 lambda lab_def: self._add_lab(*(lab_def + (row, col))),
-                lab_lst))
+                lab_lst))  # cell vars row, col defined in loop
             txt_lst = [(self.drv_info[idx - 1].adherence, -.11),
                        (self.drv_info[idx - 1].speed, .01),
                        (self.drv_info[idx - 1].stability, -.05)]
             widgets += list(map(
                 lambda txt_def: self._add_txt(
                     *txt_def + (psign, pcol, col, row)),
-                txt_lst))
+                txt_lst))  # cell vars psign, pcol, col, row defined in loop
         self.sel_drv_img = []
         self.tss = []
         instr_txt = _(
@@ -256,9 +260,11 @@ class DriverPageMPGui(DriverPageGui):
         for i, car in enumerate(self.mediator.cars):
             self.sel_drv_img += [Img(
                 self.props.gameprops.cars_img % car,
-                parent=base.a2dBottomLeft, pos=(.3, 1.74 - i * .46), scale=.22)]
+                parent=base.a2dBottomLeft, pos=(.3, 1.74 - i * .46),
+                scale=.22)]
             widgets += [self.sel_drv_img[-1]]
-            ffilterpath = self.eng.curr_path + 'yyagl/assets/shaders/filter.vert'
+            ffilterpath = self.eng.curr_path + \
+                'yyagl/assets/shaders/filter.vert'
             with open(ffilterpath) as ffilter:
                 vert = ffilter.read()
             shader = load_shader(vert, frag)
@@ -273,19 +279,23 @@ class DriverPageMPGui(DriverPageGui):
             tex = Texture()
             tex.load(empty_img)
             self.sel_drv_img[-1].set_texture(self.tss[-1], tex)
-        all_names = self.props.gameprops.player_names + self.props.gameprops.stored_player_names[len(self.props.gameprops.player_names):]
+        all_names = self.props.gameprops.player_names + \
+            self.props.gameprops.stored_player_names[
+                len(self.props.gameprops.player_names):]
         self.ents = [Entry(
-            scale=.06, pos=(0, .8 - .12 * i), entry_font=menu_props.font, width=12,
-            frame_col=menu_props.btn_col,
-            initial_text=all_names[i] if i < len(all_names) else _('your name'),
-            text_fg=menu_props.text_active_col) for i in range(len(self.mediator.cars))]
+            scale=.06, pos=(0, .8 - .12 * i), entry_font=menu_props.font,
+            width=12, frame_col=menu_props.btn_col,
+            initial_text=all_names[i] if i < len(all_names)
+            else _('your name'),
+            text_fg=menu_props.text_active_col)
+                     for i in range(len(self.mediator.cars))]
         self.add_widgets(self.ents)
         self.add_widgets(widgets)
         ThanksPageGui.build(self, exit_behav=False)
         self.update_tsk = taskMgr.add(self.update_text, 'update text')
         self.enable_buttons(False)
 
-    def on_click(self, drv, player=0):
+    def on_click(self, drv, player=0):  # parameters differ from overridden
         if self.selected_drivers[player] is not None:
             self._buttons(self.selected_drivers[player])[0].enable()
             self.drivers += [self._buttons(drv)[0]]
@@ -301,7 +311,8 @@ class DriverPageMPGui(DriverPageGui):
         info('selected %s (player %s)' % (drv, player))
         gprops = self.props.gameprops
         txt_path = gprops.drivers_img.path_sel
-        self.sel_drv_img[player].set_texture(self.tss[player], loader.loadTexture(txt_path % drv))
+        self.sel_drv_img[player].set_texture(
+            self.tss[player], loader.loadTexture(txt_path % drv))
         nname = self.this_name(player)
         gprops.drivers_info[drv].name = nname
         info('drivers: ' + str(gprops.drivers_info))
@@ -310,27 +321,34 @@ class DriverPageMPGui(DriverPageGui):
 
     def evaluate_start(self):
         nplayers = len(self.selected_drivers.keys())
-        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < nplayers: return
+        if len([btn for btn in self.buttons if btn['state'] == DISABLED]) < \
+               nplayers: return
         self.widgets[-1]['state'] = DISABLED
         self.enable_buttons(False)
         taskMgr.remove(self.update_tsk)
-        drivers = [self.selected_drivers[i] for i in range(nplayers)]
-        self.props.opt_file['settings']['player_names'] = [ent.text for ent in self.ents]
+        # drivers = [self.selected_drivers[i] for i in range(nplayers)]
+        self.props.opt_file['settings']['player_names'] = [
+            ent.text for ent in self.ents]
         stored_player_names = self.props.gameprops.stored_player_names
-        for i, name in enumerate(self.props.opt_file['settings']['player_names']):
+        for i, name in enumerate(
+                self.props.opt_file['settings']['player_names']):
             if i < len(stored_player_names): stored_player_names[i] = name
             else: stored_player_names += [name]
-        self.props.opt_file['settings']['stored_player_names'] = stored_player_names
+        self.props.opt_file['settings']['stored_player_names'] = \
+            stored_player_names
         self.props.opt_file.store()
-        self.notify('on_driver_selected_mp', self.mediator.track, self.players_data)
+        self.notify('on_driver_selected_mp', self.mediator.track,
+                    self.players_data)
 
     def update_text(self, task):
         for ent in self.ents:
-            if ent.text != _('your name') and ent.text.startswith(_('your name')):
+            if ent.text != _('your name') and \
+                    ent.text.startswith(_('your name')):
                 ent.enter_text(ent.text[len(_('your name')):])
             elif ent.text in [_('your name')[:-1], '']:
                 ent.enter_text('')
-        has_name = all(ent.text not in ['', _('your name')] for ent in self.ents)
+        has_name = all(ent.text not in ['', _('your name')]
+                       for ent in self.ents)
         if has_name and not self.enabled:
             self.enabled = True
             self.enable_buttons(True)
@@ -347,48 +365,49 @@ class DriverPageMPGui(DriverPageGui):
 
 class DriverPageServerGui(DriverPageGui):
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         DriverPageGui.build(self, exit_behav=True)
         self.current_drivers = []
         self.current_drivers_dct = {}
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
         self.name['text'] += ' ' + self.eng.client.myid
-        #self.eng.xmpp.attach(self.on_presence_unavailable)
+        # self.eng.xmpp.attach(self.on_presence_unavailable)
         self.eng.client.attach(self.on_presence_unavailable_room)
         self.eng.server.register_rpc(self.drv_request)
 
     def on_click(self, i):
         info('selected driver ' + str(i))
-        #name = JID(self.eng.xmpp.client.boundjid).bare
-        #self.eng.server.send([NetMsgs.driver_selection, i, name])
-        #for btn in self._buttons(i):
-        #    btn.disable()
-        #    btn._name_txt['text'] = name
-        #if self in self.current_drivers_dct:
-        #    curr_drv = self.current_drivers_dct[self]
-        #    self.eng.log_mgr.log('driver deselected: %s' % curr_drv)
-        #    self.eng.server.send([NetMsgs.driver_deselection, curr_drv])
-        #    for btn in self._buttons(curr_drv):
-        #        btn.enable()
-        #        btn._name_txt['text'] = ''
-        #self.current_drivers_dct[self] = i
-        #gprops = self.props.gameprops
-        #txt_path = gprops.drivers_img.path_sel
-        #self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % i))
-        #self.widgets[-1]['state'] = DISABLED
-        ##self.enable_buttons(False)
-        #self.current_drivers += [self]
-        #cars = gprops.cars_names[:]
-        #car_idx = cars.index(self.mediator.car)
-        #cars.remove(self.mediator.car)
-        #prev_drv = gprops.drivers_info[car_idx]
-        ##gprops.drivers_info[car_idx] = gprops.drivers_info[i]
-        #gprops.drivers_info[car_idx].img_idx = i
-        ##nname = self.this_name()
-        #gprops.drivers_info[car_idx].name = nname
-        ##gprops.drivers_info[i] = prev_drv
-        #self.evaluate_starting()
+        # name = JID(self.eng.xmpp.client.boundjid).bare
+        # self.eng.server.send([NetMsgs.driver_selection, i, name])
+        # for btn in self._buttons(i):
+        #     btn.disable()
+        #     btn._name_txt['text'] = name
+        # if self in self.current_drivers_dct:
+        #     curr_drv = self.current_drivers_dct[self]
+        #     self.eng.log_mgr.log('driver deselected: %s' % curr_drv)
+        #     self.eng.server.send([NetMsgs.driver_deselection, curr_drv])
+        #     for btn in self._buttons(curr_drv):
+        #         btn.enable()
+        #         btn._name_txt['text'] = ''
+        # self.current_drivers_dct[self] = i
+        # gprops = self.props.gameprops
+        # txt_path = gprops.drivers_img.path_sel
+        # self.sel_drv_img.set_texture(
+        #     self.t_s, loader.loadTexture(txt_path % i))
+        # self.widgets[-1]['state'] = DISABLED
+        # #self.enable_buttons(False)
+        # self.current_drivers += [self]
+        # cars = gprops.cars_names[:]
+        # car_idx = cars.index(self.mediator.car)
+        # cars.remove(self.mediator.car)
+        # prev_drv = gprops.drivers_info[car_idx]
+        # #gprops.drivers_info[car_idx] = gprops.drivers_info[i]
+        # gprops.drivers_info[car_idx].img_idx = i
+        # #nname = self.this_name()
+        # gprops.drivers_info[car_idx].name = nname
+        # #gprops.drivers_info[i] = prev_drv
+        # self.evaluate_starting()
 
     def this_name(self): return self.eng.xmpp.client.boundjid.bare
 
@@ -408,7 +427,7 @@ class DriverPageServerGui(DriverPageGui):
         if btn['state'] == DISABLED:
             info('driver already selected: %s' % drv)
             return False
-        elif btn['state'] == NORMAL:
+        if btn['state'] == NORMAL:
             info('driver selected: %s' % drv)
             if sender in self.current_drivers_dct:
                 _btn = self._buttons(self.current_drivers_dct[sender])[0]
@@ -427,7 +446,7 @@ class DriverPageServerGui(DriverPageGui):
                 for usr in self.eng.xmpp.users:
                     if usr.public_addr == curr_addr:
                         username = usr.name
-            #btn._name_txt['text'] = JID(username).bare
+            # btn._name_txt['text'] = JID(username).bare
             self.eng.server.send([NetMsgs.driver_selection, drv, username])
             self.current_drivers += [sender]
             info('driver selected: %s (%s) ' % (driver_name, drv))
@@ -435,21 +454,24 @@ class DriverPageServerGui(DriverPageGui):
             cars = gprops.cars_names[:]
             car_idx = cars.index(car)
             prev_drv = gprops.drivers_info[car_idx]
-            gprops.drivers_info[car_idx] = Driver(drv, driver_name, driver_speed, driver_adherence, driver_stability)
+            gprops.drivers_info[car_idx] = Driver(
+                drv, driver_name, driver_speed, driver_adherence,
+                driver_stability)
             for i, drv_i in enumerate(gprops.drivers_info):
                 if drv_i.img_idx == drv and i != car_idx:
                     gprops.drivers_info[i] = prev_drv
             self.evaluate_starting()
             return True
 
-    #def on_presence_unavailable(self, msg):
-    #    self.evaluate_starting()
+    # def on_presence_unavailable(self, msg):
+    #     self.evaluate_starting()
 
     def on_presence_unavailable_room(self, uid, room_name):
+        # unused uid, room_name
         self.evaluate_starting()
 
     def destroy(self):
-        #self.eng.xmpp.detach(self.on_presence_unavailable)
+        # self.eng.xmpp.detach(self.on_presence_unavailable)
         self.eng.client.detach(self.on_presence_unavailable_room)
         DriverPageGui.destroy(self)
 
@@ -460,7 +482,7 @@ class DriverPageClientGui(DriverPageGui):
         DriverPageGui.__init__(self, mediator, driverpage_props)
         self.srv_usr = uid_srv
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         DriverPageGui.build(self, exit_behav=True)
         self.name['align'] = TextNode.ACenter
         self.name['pos'] = (-.2, .6)
@@ -473,15 +495,16 @@ class DriverPageClientGui(DriverPageGui):
 
     def this_name(self): return self.eng.client.myid
 
-    def on_presence_unavailable_room(self, uid, room):
+    def on_presence_unavailable_room(self, uid, room):  # unused room
         if uid == self.srv_usr:
             self._back_btn.disable()
 
     def on_click(self, i):
         info('driver request: %s' % i)
         gprops = self.props.gameprops
-        if self.eng.client.drv_request(self.mediator.car, i,
-                gprops.drivers_info[i].speed, gprops.drivers_info[i].adherence,
+        if self.eng.client.drv_request(
+                self.mediator.car, i, gprops.drivers_info[i].speed,
+                gprops.drivers_info[i].adherence,
                 gprops.drivers_info[i].stability):
             if self.driver:
                 _btn = self._buttons(self.driver)[0]
@@ -494,7 +517,8 @@ class DriverPageClientGui(DriverPageGui):
             btn._name_txt['text'] = self.eng.client.myid
             gprops = self.props.gameprops
             txt_path = gprops.drivers_img.path_sel
-            self.sel_drv_img.set_texture(self.t_s, loader.loadTexture(txt_path % drv))
+            self.sel_drv_img.set_texture(self.t_s,
+                                         loader.loadTexture(txt_path % drv))
         else: info('driver denied')
 
     def on_drv_selection(self, data_lst):
@@ -510,7 +534,7 @@ class DriverPageClientGui(DriverPageGui):
         info('driver deselection: %s' % drv)
         btn = self._buttons(drv)[0]
         btn.enable()
-        btn._name_txt['text'] = ''
+        btn._name_txt['text'] = ''  # access to a protected member
 
     def on_start_race(self, data_lst):
         info('start_race: ' + str(data_lst))
@@ -536,6 +560,7 @@ class DriverPage(Page):
     gui_cls = DriverPageGui
 
     def __init__(self, track, car, driverpage_props, players_data):
+        # unused players_data
         self.track = track
         self.car = car
         self.driverpage_props = driverpage_props
@@ -552,7 +577,7 @@ class DriverPageSinglePlayer(DriverPage):
     gui_cls = DriverPageSinglePlayerGui
 
 
-class DriverPageMP(DriverPage):
+class DriverPageMP(DriverPage, PageFacade):
     gui_cls = DriverPageMPGui
 
     def __init__(self, track, cars, driverpage_props, nplayers, players_data):
@@ -565,7 +590,8 @@ class DriverPageMP(DriverPage):
         PageFacade.__init__(self)
 
     def _build_gui(self):
-        self.gui = self.gui_cls(self, self.driverpage_props, self.nplayers, self.players_data)
+        self.gui = self.gui_cls(self, self.driverpage_props, self.nplayers,
+                                self.players_data)
 
 
 class DriverPageServer(DriverPage):

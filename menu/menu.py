@@ -12,8 +12,7 @@ from .loginpage import LogInPage
 from .registerpage import RegisterPage
 from .resetpage import ResetPage
 from .trackpage import TrackPage, TrackPageServer, TrackPageLocalMP
-from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason, \
-    CarPageLocalMP
+from .carpage import CarPage, CarPageClient, CarPageSeason, CarPageLocalMP
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
     DriverPageClient, DriverPageMP
 from .optionpage import OptionPage
@@ -27,7 +26,7 @@ from .numplayerspage import NumPlayersPage
 from .supporterspage import SupportersPage
 
 
-class MenuProps(object):
+class MenuProps:
 
     def __init__(self, gameprops, opt_file, title_img, feed_url, site_url,
                  has_save, support_url):
@@ -48,8 +47,10 @@ class YorgMenuLogic(MenuLogic):
         self.players = None
         self.players_mp = None
         self.players_omp = None
+        self.curr_room = None
 
-    def on_push_page(self, page_code, args=[]):
+    def on_push_page(self, page_code, args=None):
+        args = args or []
         if page_code == 'singleplayer':
             info('single player')
             page = SingleplayerPage(args[0])
@@ -110,14 +111,16 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageserver':
             info('car page server')
-            #page = CarPageServer(args[0], self.mediator.track, self.yorg_client)
+            # page = CarPageServer(args[0], self.mediator.track,
+            #                      self.yorg_client)
             page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
             page.gui.attach(self.on_car_selected_omp_srv)
             page.gui.attach(self.on_car_selected_omp_client)
         if page_code == 'carpagelocalmp':
             info('car page local multiplayer')
-            page = CarPageLocalMP(args[0], self.mediator.track, self.mediator.nplayers)
+            page = CarPageLocalMP(args[0], self.mediator.track,
+                                  self.mediator.nplayers)
             page.gui.attach(self.on_car_selected_mp)
         if page_code == 'carpageclient':
             info('car page client')
@@ -126,11 +129,13 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_car_selected_omp_client)
         if page_code == 'driver_page':
             info('driver page')
-            page = DriverPageSinglePlayer(args[0], args[1], args[2], self.players)
+            page = DriverPageSinglePlayer(args[0], args[1], args[2],
+                                          self.players)
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driver_page_mp':
             info('driver page multiplayer')
-            page = DriverPageMP(args[0], args[1], args[2], self.mediator.nplayers, self.players_mp)
+            page = DriverPageMP(args[0], args[1], args[2],
+                                self.mediator.nplayers, self.players_mp)
             page.gui.attach(self.on_driver_selected_mp)
         if page_code == 'driverpageserver':
             info('driver page server')
@@ -138,7 +143,8 @@ class YorgMenuLogic(MenuLogic):
             page.gui.attach(self.on_driver_selected_server)
         if page_code == 'driverpageclient':
             info('driver page client')
-            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv, self.players_omp)
+            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv,
+                                    self.players_omp)
             page.gui.attach(self.on_driver_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
@@ -146,46 +152,75 @@ class YorgMenuLogic(MenuLogic):
             page = OptionPage(self.mediator.gui.menu_props, args[0])
         if page_code == 'inputsel':
             info('inputsel')
-            page = InputSelPage(self.mediator.gui._menu_props, self.mediator.menu_props.opt_file, args[0], args[1])
-            #self.mediator.gui.menu_props, args[0], args[1])
+            page = InputSelPage(
+                self.mediator.gui._menu_props,
+                self.mediator.menu_props.opt_file, args[0], args[1])
+            # access to a protected member
+            # self.mediator.gui.menu_props, args[0], args[1])
         if page_code == 'input1keyboard':
             info('input1keyboard')
             page = InputPageKeyboard(
-                self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0])
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file, args[0])
         if page_code == 'input1joystick':
             info('input1joystick')
             page = InputPageJoystick(
-                self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0])
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file, args[0])
         if page_code == 'input2keyboard':
             info('input2keyboard')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage2Keyboard(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage2Keyboard(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'input2joystick':
             info('input2joystick')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage2Joystick(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['joystick'])
+            page = InputPage2Joystick(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['joystick'])
         if page_code == 'input3keyboard':
             info('input3keyboard')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage3Keyboard(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage3Keyboard(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'input3joystick':
             info('input3joystick')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage3Joystick(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['joystick'])
+            page = InputPage3Joystick(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['joystick'])
         if page_code == 'input4keyboard':
             info('input4keyboard')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage4Keyboard(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage4Keyboard(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['keys'])
         if page_code == 'input4joystick':
             info('input4joystick')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage4Joystick(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, self.mediator.menu_props.opt_file['settings']['joystick'])
+            page = InputPage4Joystick(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['joystick'])
         if page_code == 'credits':
             info('credits')
             page = CreditPage(self.mediator.gui.menu_props)
@@ -204,18 +239,22 @@ class YorgMenuLogic(MenuLogic):
     def on_removed(self):
         self.on_back(self.pages[-1].__class__.__name__)
 
-    def on_back(self, page_code, args=[]):
+    def on_back(self, page_code, args=None):
+        # parameters differ from overridden
+        args = args or []
         info('back: %s' % page_code)
         if page_code.startswith('input_page'):
             self.mediator.gui.notify('on_input_back', args[0])
-            if page_code in ['input_page' + str(n) for n in range(1, 5)]: self.pages[-2].gui.update_keys()
+            if page_code in ['input_page' + str(n) for n in range(1, 5)]:
+                self.pages[-2].gui.update_keys()
         if page_code == 'options_page':
             self.mediator.gui.notify('on_options_back', args[0])
         if page_code == 'RoomPageGui':
             self.mediator.gui.notify('on_room_back')
         MenuLogic.on_back(self)
 
-    def on_quit(self, page_code, args=[]):
+    def on_quit(self, page_code, args=None):  # unused page_code, args
+        # parameters differ from overridden
         self.mediator.gui.notify('on_quit')
         MenuLogic.on_quit(self)
 
@@ -262,7 +301,8 @@ class YorgMenuLogic(MenuLogic):
                                  cars)
 
     def on_car_start_client(self, track, car, cars, packet):
-        self.mediator.gui.notify('on_car_start_client', track, car, cars, packet, self.curr_room)
+        self.mediator.gui.notify('on_car_start_client', track, car, cars,
+                                 packet, self.curr_room)
 
     def on_car_selected_season(self, car):
         self.mediator.gui.notify('on_car_selected_season', car)
@@ -294,7 +334,8 @@ class YorgMenuLogic(MenuLogic):
 
     def on_create_room_client(self, room, nick, uid_srv):
         self.uid_srv = uid_srv
-        page = RoomPageClient(self.mediator.gui.menu_props, room, nick, uid_srv)
+        page = RoomPageClient(self.mediator.gui.menu_props, room, nick,
+                              uid_srv)
         self.push_page(page)
         page.gui.attach(self.on_start_match_client_page)
         page.gui.attach(self.on_srv_quitted)
@@ -333,7 +374,7 @@ class YorgMenu(Menu):
 
     def __init__(self, menu_props):
         self.menu_props = menu_props
-        GameObject.__init__(self)
+        GameObject.__init__(self)  # invoke Menu's one
         self.logic = self.logic_cls(self)
         self.gui = self.gui_cls(self, menu_props)
-        MenuFacade.__init__(self)
+        MenuFacade.__init__(self)  # invoke Menu's one

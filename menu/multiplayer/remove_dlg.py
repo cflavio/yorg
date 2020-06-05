@@ -27,7 +27,7 @@ class RemovedDialog(GameObject, Subject):
             command=self.on_btn)
         info('created dialog ' + self.dialog['text'])
 
-    def on_btn(self, val):
+    def on_btn(self, val):  # unused val
         info('exit button')
         self.notify('on_remove_dlg')
 

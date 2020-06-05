@@ -1,7 +1,5 @@
 from yyagl.lib.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
-from yyagl.gameobject import GameObject
-from yracing.race.event import NetMsgs
 
 
 class InGamePageGuiMultiplayer(PageGui):
@@ -10,7 +8,7 @@ class InGamePageGuiMultiplayer(PageGui):
         self.keys = keys
         PageGui.__init__(self, mediator, menu_props)
 
-    def build(self, back_btn=True):
+    def build(self, back_btn=True):  # parameters differ from overridden
         frm = Frame(
             frame_size=(-1.5, 1.5, -.9, .9), frame_col=(.95, .95, .7, .85))
         question_txt = _(
@@ -58,7 +56,7 @@ class InGamePageGui(InGamePageGuiMultiplayer):
         self.eng.do_later(.01, self.eng.toggle_pause)
 
 
-class InGamePageMultiplayer(Page):
+class InGamePageMultiplayer(Page, PageFacade):
     gui_cls = InGamePageGuiMultiplayer
 
     def __init__(self, menu_props, keys):

@@ -1,13 +1,9 @@
 from string import ascii_lowercase
 from itertools import product
 from panda3d.core import TextNode
-from direct.gui.DirectGuiGlobals import DISABLED
-from direct.gui.DirectLabel import DirectLabel
-from yyagl.lib.gui import Btn, P3dCheckBtn, Label
-from yyagl.engine.gui.page import Page, PageGui, PageFacade
-from yyagl.engine.joystick import JoystickMgr
+from yyagl.lib.gui import Btn, Label
+from yyagl.engine.gui.page import Page
 from yyagl.engine.gui.menu import NavInfo, NavInfoPerPlayer
-from yyagl.gameobject import GameObject
 from yyagl.dictfile import DctFile
 from .thankspage import ThanksPageGui
 from .already_dlg import AlreadyUsedDlg, AlreadyUsedJoystickDlg
@@ -23,7 +19,7 @@ class AbsInputPageGui(ThanksPageGui):
         self.ibuttons = []
         ThanksPageGui.__init__(self, mediator, menu_props)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         menu_props = self.menu_props
         suff = str(self.joyp_idx + 1)
         player_lab = Label(
@@ -74,7 +70,7 @@ class AbsInputPageGui(ThanksPageGui):
 
     def on_player(self, code):
         dct = self.update_values()
-        num = str(self.joyp_idx + 2)
+        # num = str(self.joyp_idx + 2)
         self.notify('on_push_page', code, [self.keys, dct])
 
 
@@ -94,10 +90,11 @@ class InputPageGui4Keyboard(AbsInputPageGui):
             (_('Respawn'), 'respawn' + suff, -.38)]
         for btn_data in buttons_data:
             widgets += [self._add_lab(btn_data[0], btn_data[2])]
-            widgets += [self._add_btn(self.eng.event.key2desc(self.keys[btn_data[1]]), btn_data[2])]
+            widgets += [self._add_btn(self.eng.event.key2desc(
+                self.keys[btn_data[1]]), btn_data[2])]
         return widgets
 
-    def start_rec(self, btn):
+    def start_rec(self, btn):  # parameters differ from overridden
         numbers = [str(n) for n in range(10)]
         self._keys = list(ascii_lowercase) + numbers + [
             'backspace', 'insert', 'home', 'page_up', 'num_lock', 'tab',
@@ -108,7 +105,7 @@ class InputPageGui4Keyboard(AbsInputPageGui):
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
         list(map(acc, self._keys))
 
-    def on_player(self):
+    def on_player(self):  # parameters differ from overridden
         num = str(self.joyp_idx + 2)
         AbsInputPageGui.on_player(self, 'input%skeyboard' % num)
 
@@ -120,18 +117,23 @@ class InputPageGui4Keyboard(AbsInputPageGui):
         else:
             btn['text'] = val
             dct = self.update_values()
-            self.opt_file['settings'] = DctFile.deepupdate(self.opt_file['settings'], dct)
+            self.opt_file['settings'] = DctFile.deepupdate(
+                self.opt_file['settings'], dct)
             self.opt_file.store()
 
             keys = self.opt_file['settings']['keys']
-            nav1 = NavInfoPerPlayer(keys['left1'], keys['right1'], keys['forward1'],
-                                    keys['rear1'], keys['fire1'])
-            nav2 = NavInfoPerPlayer(keys['left2'], keys['right2'], keys['forward2'],
-                                    keys['rear2'], keys['fire2'])
-            nav3 = NavInfoPerPlayer(keys['left3'], keys['right3'], keys['forward3'],
-                                    keys['rear3'], keys['fire3'])
-            nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
-                                    keys['rear4'], keys['fire4'])
+            nav1 = NavInfoPerPlayer(
+                keys['left1'], keys['right1'], keys['forward1'], keys['rear1'],
+                keys['fire1'])
+            nav2 = NavInfoPerPlayer(
+                keys['left2'], keys['right2'], keys['forward2'], keys['rear2'],
+                keys['fire2'])
+            nav3 = NavInfoPerPlayer(
+                keys['left3'], keys['right3'], keys['forward3'], keys['rear3'],
+                keys['fire3'])
+            nav4 = NavInfoPerPlayer(
+                keys['left4'], keys['right4'], keys['forward4'], keys['rear4'],
+                keys['fire4'])
             nav = NavInfo([nav1, nav2, nav3, nav4])
             self.menu_props.nav = nav
 
@@ -143,23 +145,32 @@ class InputPageGui4Keyboard(AbsInputPageGui):
     def on_already_dlg(self): self.dial = self.dial.destroy()
 
     def already_used(self, val):
-        if self.eng.event.key2desc(self.keys['pause']) == val: return '1', 'pause'
-        labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn', 'pause']
+        if self.eng.event.key2desc(self.keys['pause']) == val:
+            return '1', 'pause'
+        labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn',
+                  'pause']
         for lab, player in product(labels[:-1], ['1', '2', '3', '4']):
-            if self.eng.event.key2desc(self.keys[lab + player]) == val: return player, lab
+            if self.eng.event.key2desc(self.keys[lab + player]) == val:
+                return player, lab
 
     def update_keys(self): self.keys = self.opt_file['settings']['keys']
 
-    def update_values(self, idx=0):
+    def update_values(self, idx=0):  # parameters differ from overridden
         suff = str(self.joyp_idx + 1)
         dct = {}
         dct['keys'] = self.keys
-        dct['keys']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[idx]['text'])
-        dct['keys']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[idx + 1]['text'])
-        dct['keys']['left' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[idx + 2]['text'])
-        dct['keys']['right' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[idx + 3]['text'])
-        dct['keys']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[idx + 4]['text'])
-        dct['keys']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[idx + 5]['text'])
+        dct['keys']['forward' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[idx]['text'])
+        dct['keys']['rear' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[idx + 1]['text'])
+        dct['keys']['left' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[idx + 2]['text'])
+        dct['keys']['right' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[idx + 3]['text'])
+        dct['keys']['fire' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[idx + 4]['text'])
+        dct['keys']['respawn' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[idx + 5]['text'])
         return dct
 
 
@@ -168,14 +179,17 @@ class InputPageGui1Keyboard(InputPageGui4Keyboard):
     joyp_idx = 0
 
     def build(self):
-        self.make_player_btn('Player', _('Player') + " " + str(self.joyp_idx + 2))
+        self.make_player_btn('Player',
+                             _('Player') + " " + str(self.joyp_idx + 2))
         self.add_widgets([self._add_lab(_('Pause'), -.56)])
-        self.add_widgets([self._add_btn(self.eng.event.key2desc(self.keys['pause']), -.56)])
+        self.add_widgets([self._add_btn(
+            self.eng.event.key2desc(self.keys['pause']), -.56)])
         InputPageGui4Keyboard.build(self)
 
     def update_values(self, idx=0):
         dct = InputPageGui4Keyboard.update_values(self, 1)
-        dct['keys']['pause'] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
+        dct['keys']['pause'] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[0]['text'])
         return dct
 
 
@@ -184,7 +198,8 @@ class InputPageGui2Keyboard(InputPageGui4Keyboard):
     joyp_idx = 1
 
     def build(self):
-        self.make_player_btn('Player', _('Player') + " " + str(self.joyp_idx + 2))
+        self.make_player_btn('Player',
+                             _('Player') + " " + str(self.joyp_idx + 2))
         InputPageGui4Keyboard.build(self)
 
 
@@ -193,7 +208,8 @@ class InputPageGui3Keyboard(InputPageGui4Keyboard):
     joyp_idx = 2
 
     def build(self):
-        self.make_player_btn('Player', _('Player') + " " + str(self.joyp_idx + 2))
+        self.make_player_btn('Player',
+                             _('Player') + " " + str(self.joyp_idx + 2))
         InputPageGui4Keyboard.build(self)
 
 
@@ -207,7 +223,8 @@ class InputPage4Keyboard(Page):
         Page.__init__(self, menu_props)
 
     def _build_gui(self):
-        self.gui = self.gui_cls(self, self.menu_props, self.opt_file, self.keys)
+        self.gui = self.gui_cls(self, self.menu_props, self.opt_file,
+                                self.keys)
 
     def destroy(self):
         Page.destroy(self)
@@ -242,14 +259,14 @@ class InputPageGui4Joystick(AbsInputPageGui):
             widgets += [self._add_btn(self.keys[btn_data[1]], btn_data[2])]
         return widgets
 
-    def start_rec(self, btn):
+    def start_rec(self, btn):  # parameters differ from overridden
         taskMgr.doMethodLater(.01, self.start_rec_aux, 'start rec aux', [btn])
 
     def start_rec_aux(self, btn):
         self.eng.joystick_mgr.is_recording = True
         keys = [
-            'face_x', 'face_y', 'face_a', 'face_b',
-            'trigger_l', 'trigger_r', 'shoulder_l', 'shoulder_r', 'stick_l', 'stick_r']
+            'face_x', 'face_y', 'face_a', 'face_b', 'trigger_l', 'trigger_r',
+            'shoulder_l', 'shoulder_r', 'stick_l', 'stick_r']
         self._keys = ['joypad%s_%s' % (self.joyp_idx, i) for i in keys]
         self.hint_lab.show()
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
@@ -259,8 +276,9 @@ class InputPageGui4Joystick(AbsInputPageGui):
         self.eng.joystick_mgr.is_recording = False
         AbsInputPageGui._on_back(self, player)
 
-    def on_player(self):
-        AbsInputPageGui.on_player(self, 'input%sjoystick' % (self.joyp_idx + 1))
+    def on_player(self):  # parameters differ from overridden
+        AbsInputPageGui.on_player(self,
+                                  'input%sjoystick' % (self.joyp_idx + 1))
         self.eng.joystick_mgr.is_recording = False
 
     def rec(self, btn, val):
@@ -272,7 +290,8 @@ class InputPageGui4Joystick(AbsInputPageGui):
         else:
             btn['text'] = val.split('_', 1)[1:][0]
             dct = self.update_values()
-            self.opt_file['settings'] = DctFile.deepupdate(self.opt_file['settings'], dct)
+            self.opt_file['settings'] = DctFile.deepupdate(
+                self.opt_file['settings'], dct)
             self.opt_file.store()
         self.hint_lab.hide()
         list(map(self.mediator.event.ignore, self._keys))
@@ -291,10 +310,14 @@ class InputPageGui4Joystick(AbsInputPageGui):
         suff = str(self.joyp_idx + 1)
         dct = {}
         dct['joystick'] = self.keys
-        dct['joystick']['forward' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[0]['text'])
-        dct['joystick']['rear' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[1]['text'])
-        dct['joystick']['fire' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[2]['text'])
-        dct['joystick']['respawn' + suff] = self.eng.event.desc2key(self.mediator.gui.ibuttons[3]['text'])
+        dct['joystick']['forward' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[0]['text'])
+        dct['joystick']['rear' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[1]['text'])
+        dct['joystick']['fire' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[2]['text'])
+        dct['joystick']['respawn' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[3]['text'])
         return dct
 
 
@@ -303,9 +326,12 @@ class InputPageGui1Joystick(InputPageGui4Joystick):
     joyp_idx = 0
 
     def build(self):
-        self.make_player_btn('Player', _('Player') + " " + str(self.joyp_idx + 2))
+        self.make_player_btn('Player',
+                             _('Player') + " " + str(self.joyp_idx + 2))
         InputPageGui4Joystick.build(self)
-        (self.widgets[0].enable if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 2 else self.widgets[0].disable)()
+        (self.widgets[0].enable
+         if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 2
+         else self.widgets[0].disable)()
 
 
 class InputPageGui2Joystick(InputPageGui4Joystick):
@@ -313,9 +339,12 @@ class InputPageGui2Joystick(InputPageGui4Joystick):
     joyp_idx = 1
 
     def build(self):
-        self.make_player_btn('Player', _('Player') + " " + str(self.joyp_idx + 2))
+        self.make_player_btn('Player',
+                             _('Player') + " " + str(self.joyp_idx + 2))
         InputPageGui4Joystick.build(self)
-        (self.widgets[0].enable if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 3 else self.widgets[0].disable)()
+        (self.widgets[0].enable
+         if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 3
+         else self.widgets[0].disable)()
 
 
 class InputPageGui3Joystick(InputPageGui4Joystick):
@@ -323,9 +352,12 @@ class InputPageGui3Joystick(InputPageGui4Joystick):
     joyp_idx = 2
 
     def build(self):
-        self.make_player_btn('Player', _('Player') + " " + str(self.joyp_idx + 2))
+        self.make_player_btn('Player',
+                             _('Player') + " " + str(self.joyp_idx + 2))
         InputPageGui4Joystick.build(self)
-        (self.widgets[0].enable if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 4 else self.widgets[0].disable)()
+        (self.widgets[0].enable
+         if self.eng.joystick_mgr.joystick_lib.num_joysticks >= 4
+         else self.widgets[0].disable)()
 
 
 class InputPage4Joystick(Page):

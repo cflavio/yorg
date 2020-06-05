@@ -1,14 +1,12 @@
 from panda3d.core import TextNode, LVector2i
-from direct.gui.DirectLabel import DirectLabel
 from yyagl.lib.gui import Btn, Slider, CheckBtn, OptionMenu
 from yyagl.engine.gui.menu import NavInfo, NavInfoPerPlayer
 from yyagl.engine.gui.page import Page, PageGui, PageFacade
-from yyagl.gameobject import GameObject
 from yyagl.lib.gui import Label
 from .thankspage import ThanksPageGui
 
 
-class OptionPageProps(object):
+class OptionPageProps:
 
     def __init__(self, keys, lang, volume, fullscreen, antialiasing,
                  shaders, cars_num, camera, opt_file):
@@ -27,11 +25,12 @@ class OptionPageGui(ThanksPageGui):
 
     def __init__(self, mediator, menu_props, option_props):
         self.vol_slider = self.fullscreen_cb = self.lang_opt = self.aa_cb = \
-            self.shaders_cb = self.res_opt = self.cars_opt = self.cam_opt = None
+            self.shaders_cb = self.res_opt = self.cars_opt = self.cam_opt = \
+            None
         self.props = option_props
         ThanksPageGui.__init__(self, mediator, menu_props)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         menu_props = self.menu_props
         widgets = [self.__add_lab('Language', _('Language'), .85)]
         langs = [lan[0] for lan in self.eng.languages]
@@ -58,7 +57,8 @@ class OptionPageGui(ThanksPageGui):
             items=['x'.join([str(el_res) for el_res in res])
                    for res in self.eng.resolutions],
             pos=(.49, .25),
-            initialitem='x'.join(str(res) for res in self.eng.closest_resolution),
+            initialitem='x'.join(str(res)
+                                 for res in self.eng.closest_resolution),
             cmd=lambda res: self.eng.set_resolution(res2vec(res)),
             **menu_props.option_args
             )
@@ -67,11 +67,13 @@ class OptionPageGui(ThanksPageGui):
             pos=(.12, .08), text='',
             indicator_val=self.props.antialiasing,
             indicator_frame_col=menu_props.text_active_col,
-            cmd=lambda val: self.eng.gfx.gfx_mgr.toggle_aa(), **menu_props.checkbtn_args)
+            cmd=lambda val: self.eng.gfx.gfx_mgr.toggle_aa(),
+            **menu_props.checkbtn_args)
         widgets += [self.__add_lab('Shaders', _('Shaders'), -.15)]
         self.shaders_cb = CheckBtn(
             pos=(.12, -.12), text='', indicator_val=self.props.shaders,
-            indicator_frame_col=menu_props.text_active_col, **menu_props.checkbtn_args)
+            indicator_frame_col=menu_props.text_active_col,
+            **menu_props.checkbtn_args)
         widgets += [self.__add_lab('Cars number', _('Cars number'), -.35)]
         widgets += [self.__add_lab('Camera', _('Camera'), -.55)]
         self.cars_opt = OptionMenu(
@@ -81,7 +83,8 @@ class OptionPageGui(ThanksPageGui):
         self.camera_codes = ['top', 'rear']
         self.cam_opt = OptionMenu(
             text='', items=self.cameras, pos=(.49, -.55),
-            initialitem=self.cameras[self.camera_codes.index(self.props.camera)],
+            initialitem=self.cameras[self.camera_codes.index(
+                self.props.camera)],
             **menu_props.option_args)
         input_btn = Btn(
             text='', pos=(0, -.75), cmd=self.on_input_btn,
@@ -106,30 +109,37 @@ class OptionPageGui(ThanksPageGui):
         return lab
 
     def on_input_btn(self):
-        opts = [self.props.opt_file['settings']['keys'], self.props.opt_file['settings']['joystick']]
+        opts = [self.props.opt_file['settings']['keys'],
+                self.props.opt_file['settings']['joystick']]
         self.notify('on_push_page', 'inputsel', opts)
 
     def translate(self):
         PageGui.translate(self)
         curr_lang = self.eng.lang_mgr.lang
-        idx = [lang for lang in enumerate(self.eng.cfg.lang_cfg.languages) if lang[1][1] == curr_lang][0][0]
+        idx = [lang for lang in enumerate(self.eng.cfg.lang_cfg.languages)
+               if lang[1][1] == curr_lang][0][0]
         self.lang_opt.set(idx, 0)
 
     def __change_lang(self, arg):
-        code = [lang for lang in self.eng.cfg.lang_cfg.languages if lang[0] == arg][0][1]
+        code = [lang for lang in self.eng.cfg.lang_cfg.languages
+                if lang[0] == arg][0][1]
         self.eng.lang_mgr.set_lang(code)
         self.translate()
 
     def update_keys(self):
         keys = self.props.opt_file['settings']['keys']
-        nav1 = NavInfoPerPlayer(keys['left1'], keys['right1'], keys['forward1'],
-                                keys['rear1'], keys['fire1'])
-        nav2 = NavInfoPerPlayer(keys['left2'], keys['right2'], keys['forward2'],
-                                keys['rear2'], keys['fire2'])
-        nav3 = NavInfoPerPlayer(keys['left3'], keys['right3'], keys['forward3'],
-                                keys['rear3'], keys['fire3'])
-        nav4 = NavInfoPerPlayer(keys['left4'], keys['right4'], keys['forward4'],
-                                keys['rear4'], keys['fire4'])
+        nav1 = NavInfoPerPlayer(
+            keys['left1'], keys['right1'], keys['forward1'], keys['rear1'],
+            keys['fire1'])
+        nav2 = NavInfoPerPlayer(
+            keys['left2'], keys['right2'], keys['forward2'], keys['rear2'],
+            keys['fire2'])
+        nav3 = NavInfoPerPlayer(
+            keys['left3'], keys['right3'], keys['forward3'], keys['rear3'],
+            keys['fire3'])
+        nav4 = NavInfoPerPlayer(
+            keys['left4'], keys['right4'], keys['forward4'], keys['rear4'],
+            keys['fire4'])
         nav = NavInfo([nav1, nav2, nav3, nav4])
         self.menu_props.nav.nav_infolst = nav
         self.update_navigation()
@@ -141,11 +151,13 @@ class OptionPageGui(ThanksPageGui):
             'lang': self.eng.languages[lang_idx][1].lower(),
             'volume': self.mediator.gui.vol_slider.get_value(),
             'fullscreen': self.mediator.gui.fullscreen_cb['indicatorValue'],
-            'resolution': self.mediator.gui.res_opt.curr_val.replace('x', ' '),
+            'resolution':
+            self.mediator.gui.res_opt.curr_val.replace('x', ' '),
             'antialiasing': self.mediator.gui.aa_cb['indicatorValue'],
             'shaders': self.mediator.gui.shaders_cb['indicatorValue'],
             'cars_number': int(self.mediator.gui.cars_opt.curr_val),
-            'camera': self.camera_codes[self.cameras.index(self.mediator.gui.cam_opt.curr_val)]}
+            'camera': self.camera_codes[self.cameras.index(
+                self.mediator.gui.cam_opt.curr_val)]}
         self.notify('on_back', 'options_page', [dct])
 
 

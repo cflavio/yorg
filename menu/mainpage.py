@@ -1,4 +1,4 @@
-#from datetime import datetime
+# from datetime import datetime
 import argparse
 from urllib.request import urlopen
 from urllib.error import URLError
@@ -8,16 +8,10 @@ from xml.etree.ElementTree import ParseError
 from datetime import datetime
 # from keyring_jeepney import Keyring
 from panda3d.core import TextNode
-from xml.parsers.expat import ExpatError
-from socket import socket, AF_INET, SOCK_DGRAM, SOCK_STREAM, gaierror, error, \
-    SOL_SOCKET, SO_REUSEADDR, timeout
 from direct.gui.DirectGuiGlobals import DISABLED
-from direct.gui.OnscreenText import OnscreenText
-from direct.gui.OnscreenImage import OnscreenImage
 from yyagl.engine.gui.mainpage import MainPage, MainPageGui
-from yyagl.engine.gui.page import Page, PageFacade, PageGui
+from yyagl.engine.gui.page import PageFacade
 from yyagl.engine.logic import VersionChecker, EngineLogic
-from yyagl.gameobject import GameObject
 from yyagl.lib.gui import Btn, Label, Text, Img, Frame
 from .optionpage import OptionPageProps
 
@@ -49,25 +43,27 @@ class YorgMainPageGui(MainPageGui):
                 user = args.user
                 password = args.pwd
             if user and password and self.eng.client.is_server_up:
-            # if user:
+                # if user:
                 # if platform.startswith('linux'): set_keyring(Keyring())
                 # pwd = get_password('ya2_rog', user)
                 # if not pwd:
-                    pwd = password
-                    # set_password('ya2_rog', user, pwd)
+                #     pwd = password
+                #     set_password('ya2_rog', user, pwd)
                 # self.eng.xmpp.start(user, pwd)
-                    #self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko, self.props.gameprops.xmpp_debug)
-                    self.eng.client.register_rpc('login')
-                    while not self.eng.client.netw_thr: pass
-                    # wait for the thread
-                    ret_val = 'ok'
-                    if not self.eng.client.authenticated:
-                        ret_val = self.eng.client.login(user, password)
-                    if ret_val in ['invalid_nick', 'unregistered_nick', 'wrong_pwd']:
-                        self.on_ko(ret_val)
-                        #return self.on_ko(ret_val)
-                    taskMgr.doMethodLater(.1, lambda task: self.on_ok(), 'x')
-                    # otherwise the menu is not attached to the page yet
+                # self.eng.xmpp.start(user, pwd, self.on_ok, self.on_ko,
+                #                     self.props.gameprops.xmpp_debug)
+                self.eng.client.register_rpc('login')
+                while not self.eng.client.netw_thr: pass
+                # wait for the thread
+                ret_val = 'ok'
+                if not self.eng.client.authenticated:
+                    ret_val = self.eng.client.login(user, password)
+                if ret_val in ['invalid_nick', 'unregistered_nick',
+                               'wrong_pwd']:
+                    self.on_ko(ret_val)
+                    # return self.on_ko(ret_val)
+                taskMgr.doMethodLater(.1, lambda task: self.on_ok(), 'x')
+                # otherwise the menu is not attached to the page yet
 
             if not (user and password):
                 self.on_ko()
@@ -75,7 +71,7 @@ class YorgMainPageGui(MainPageGui):
     def on_ok(self):
         self.eng.client.authenticated = True
         self.conn_attempted = True
-        #self.eng.xmpp.send_connected()
+        # self.eng.xmpp.send_connected()
         self.eng.client.init(self.props.opt_file['settings']['login']['usr'])
         self.notify('on_login')
 
@@ -93,7 +89,7 @@ class YorgMainPageGui(MainPageGui):
         self.shaders = sett['shaders']
         self.camera = sett['camera']
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         sp_cb = lambda: self.notify('on_push_page', 'singleplayer',
                                     [self.props])
         mp_cb = lambda: self.notify('on_push_page', 'multiplayer',
@@ -149,12 +145,15 @@ class YorgMainPageGui(MainPageGui):
         setlocale(LC_ALL, 'en_US.UTF-8')
         try:
             entries = [(datetime.strptime(
-                            entry.findtext('pubDate')[:25], '%a, %d %b %Y %H:%M:%S'),
+                        entry.findtext('pubDate')[:25],
+                        '%a, %d %b %Y %H:%M:%S'),
                         entry.findtext('title') or '')
                        for entry in items]
         except (TypeError, ValueError): entries = []
-        entries = list(reversed(sorted(entries, key=lambda entry: entry[0])))[:5]
-        entries = [(datetime.strftime(entry[0], '%b %d'), self.__ellipsis_str(entry[1])) for entry in entries]
+        entries = list(reversed(sorted(entries,
+                                       key=lambda entry: entry[0])))[:5]
+        entries = [(datetime.strftime(entry[0], '%b %d'),
+                    self.__ellipsis_str(entry[1])) for entry in entries]
         frm = Frame(
             frame_size=(0, 1.0, 0, .75), frame_col=(.2, .2, .2, .5),
             pos=(.05, .1), parent=base.a2dBottomLeft)

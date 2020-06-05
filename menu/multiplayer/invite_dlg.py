@@ -35,7 +35,8 @@ class InviteDialog(GameObject, Subject):
 
     def on_btn(self, val):
         info('invite button ' + val)
-        self.notify('on_invite_answer', self.from_, self.roomname, val == 'yes')
+        self.notify('on_invite_answer', self.from_, self.roomname,
+                    val == 'yes')
 
     def destroy(self):
         info('destroyed dialog ' + self.dialog['text'])

@@ -1,10 +1,8 @@
 from logging import info
 from itertools import product
 from yyagl.lib.gui import Text
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.engine.gui.imgbtn import ImgBtn
-from yyagl.gameobject import GameObject
-from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
 
@@ -13,11 +11,12 @@ class TrackPageGui(ThanksPageGui):
     def __init__(self, mediator, trackpage_props, room):
         self.props = trackpage_props
         self.room = room
-        ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_props)
+        ThanksPageGui.__init__(self, mediator,
+                               trackpage_props.gameprops.menu_props)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         txt = Text(_('Select the track'), pos=(0, .8),
-                           **self.menu_props.text_args)
+                   **self.menu_props.text_args)
         self.add_widgets([txt])
         t_a = self.menu_props.text_args.copy()
         t_a['scale'] = .06
@@ -89,6 +88,7 @@ class TrackPageServer(TrackPage):
 
     def _build_gui(self):
         self.gui = self.gui_cls(self, self.menu_props, self.room)
+
 
 class TrackPageLocalMP(TrackPage):
     gui_cls = TrackPageLocalMPGui

@@ -1,5 +1,5 @@
 from yyagl.lib.gui import Btn
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.gameobject import GameObject
 from yyagl.engine.logic import VersionChecker
 from .thankspage import ThanksPageGui
@@ -17,9 +17,9 @@ class OnlinePageGui(ThanksPageGui):
         ThanksPageGui.show(self)
         self.build()
 
-    def build(self):
-        lmp_cb = lambda: self.notify('on_push_page', 'localmp',
-                                     [self.props])
+    def build(self):  # parameters differ from overridden
+        #lmp_cb = lambda: self.notify('on_push_page', 'localmp',
+        #                             [self.props])
         menu_data = []
         top = .3
         if self.eng.client.is_active and self.eng.client.authenticated:
@@ -40,7 +40,7 @@ class OnlinePageGui(ThanksPageGui):
         ThanksPageGui.build(self)
 
     def on_logout(self):
-        #self.eng.xmpp.disconnect()
+        # self.eng.xmpp.disconnect()
         self.widgets[5].destroy()
         self.widgets.remove(self.widgets[5])
         self.eng.client.authenticated = False
@@ -71,8 +71,9 @@ class OnlinePageGui(ThanksPageGui):
             return _('Not up-to-date')
         if self.eng.client.is_active and self.eng.client.authenticated:
             return _('Log out') + \
-                ' \1small\1(%s)\2' % self.props.opt_file['settings']['login']['usr']
-        elif self.conn_attempted:
+                ' \1small\1(%s)\2' % self.props.opt_file[
+                    'settings']['login']['usr']
+        if self.conn_attempted:
             return _('Log in') + ' \1small\1(' + _('multiplayer') + ')\2'
         #i18n: This is a caption of a button.
         return _('Connecting')

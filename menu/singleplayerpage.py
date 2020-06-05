@@ -1,6 +1,5 @@
 from yyagl.lib.gui import Btn
-from yyagl.engine.gui.page import Page, PageFacade
-from yyagl.gameobject import GameObject
+from yyagl.engine.gui.page import Page
 from .thankspage import ThanksPageGui
 
 
@@ -10,7 +9,7 @@ class SingleplayerPageGui(ThanksPageGui):
         self.props = props
         ThanksPageGui.__init__(self, mediator, props.gameprops.menu_props)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         menu_data = [
             (_('Single race'), self.on_single_race),
             (_('New season'), self.on_start),
@@ -21,7 +20,7 @@ class SingleplayerPageGui(ThanksPageGui):
                 **self.props.gameprops.menu_props.btn_args)
             for i, menu in enumerate(menu_data)]
         self.add_widgets(widgets)
-        #self._set_widgets()
+        # self._set_widgets()
         ThanksPageGui.build(self)
         if not self.props.has_save:
             widgets[-1].disable()

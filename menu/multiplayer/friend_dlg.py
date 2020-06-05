@@ -13,7 +13,8 @@ class FriendDialog(GameObject, Subject):
         self.user = user
         self.dialog = YesNoDialog(
             base.a2dBottomLeft,
-            text=_('%s wants to be a (XMPP) friend of you, do you agree?') % user,
+            text=_(
+                '%s wants to be a (XMPP) friend of you, do you agree?') % user,
             text_wordwrap=16,
             text_fg=menu_props.text_active_col,
             text_font=menu_props.font,
