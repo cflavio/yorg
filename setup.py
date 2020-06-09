@@ -1,4 +1,5 @@
-from os import system, getcwd
+from os import system, getcwd, chdir
+from sys import argv
 from collections import namedtuple
 from distutils.cmd import Command
 from direct.dist.commands import bdist_apps
@@ -173,17 +174,44 @@ class SnapCmd(AbsCmd):
 
 class BDistAppsCmd(bdist_apps):
 
+    # e.g. python setup.py bdist_apps --nowin=1
+
+    user_options = bdist_apps.user_options + [
+        ('cores', None, '#cores'),
+        ('nowin=', None, "don't build for windows"),
+        ('nolinux=', None, "don't build for linux")
+    ]
+
+    def initialize_options(self):
+        bdist_apps.initialize_options(self)
+        self.nowin = None
+        self.nolinux = None
+
+    def finalize_options(self):
+        bdist_apps.finalize_options(self)
+
     def run(self):
         print(msg)
         bdist_apps.run(self)
-        bld_windows(None, None, AbsCmd.env)
+        chdir('..')
+        if not self.nowin:
+            bld_windows(None, None, AbsCmd.env)
         AbsCmd.env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
-        bld_linux(None, None, AbsCmd.env)
-        rmtree('build')
-        rmtree('dist')
+        if not self.nolinux:
+            bld_linux(None, None, AbsCmd.env)
+        #rmtree('build')
+        #rmtree('dist')
 
 
 if __name__ == '__main__':
+    platform_lst = []
+    installers_dct = {}
+    if all('--nowin' not in arg for arg in argv):
+        platform_lst += ['win_amd64']
+        installers_dct['win_amd64'] = ['xztar', 'nsis']
+    if all('--nolinux' not in arg for arg in argv):
+        platform_lst += ['manylinux1_x86_64']
+        installers_dct['manylinux1_x86_64'] = ['xztar']
     setup(
         name=AbsCmd.env['APPNAME'],
         version=branch,
@@ -235,13 +263,9 @@ if __name__ == '__main__':
                     '**/*.ogg',
                     '**/*.wav',
                     '**/*.mo'],
-                'platforms': [
-                    'win_amd64',
-                    'manylinux1_x86_64'],
+                'platforms': platform_lst,
                 'include_modules': {'*': ['encodings.hex_codec']}},
             'bdist_apps': {
-                'installers': {
-                    'manylinux1_x86_64': ['xztar'],
-                    'win_amd64': ['xztar', 'nsis']
-                }}}
+                'installers': installers_dct
+                }}
     )
