@@ -212,8 +212,9 @@ if __name__ == '__main__':
     if all('--nolinux' not in arg for arg in argv):
         platform_lst += ['manylinux1_x86_64']
         installers_dct['manylinux1_x86_64'] = ['xztar']
+    appname = AbsCmd.env['APPNAME']
     setup(
-        name=AbsCmd.env['APPNAME'],
+        name=appname,
         version=branch,
         cmdclass={
             'develop': DevelopPyCmd,
@@ -241,9 +242,9 @@ if __name__ == '__main__':
                     'options.json', '__pycache__'],
                 'log_filename': '$USER_APPDATA/Yorg/p3d_log.log',
                 'plugins': ['pandagl', 'p3openal_audio'],
-                'gui_apps': {'appname': 'main.py'},
+                'gui_apps': {appname: 'main.py'},
                 'icons': {
-                    'appname': [
+                    appname: [
                         'assets/images/icon/icon256_png.png',
                         'assets/images/icon/icon128_png.png',
                         'assets/images/icon/icon48_png.png',
