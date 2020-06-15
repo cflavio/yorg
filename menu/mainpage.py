@@ -2,7 +2,7 @@
 import argparse
 from urllib.request import urlopen
 from urllib.error import URLError
-from locale import setlocale, LC_ALL
+from locale import setlocale, LC_ALL, Error as l_error
 from xml.etree import ElementTree as etree
 from xml.etree.ElementTree import ParseError
 from datetime import datetime
@@ -142,7 +142,8 @@ class YorgMainPageGui(MainPageGui):
         except URLError: feed = ''
         try: items = etree.fromstring(feed).findall('channel/item')
         except ParseError: items = []  # e.g. when it is offline
-        setlocale(LC_ALL, 'en_US.UTF-8')
+        try: setlocale(LC_ALL, 'en_US.UTF-8')
+        except l_error: print("can't get this working in snap")
         try:
             entries = [(datetime.strptime(
                         entry.findtext('pubDate')[:25],
