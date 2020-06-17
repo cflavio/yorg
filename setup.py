@@ -154,7 +154,7 @@ class FlatPakCmd(AbsCmd):
     def run(self):
         print(msg)
         AbsCmd.env['ICO_FPATH'] = 'assets/images/icon/icon%s_png.png'
-        AbsCmd.env['FLATPAK_DST'] = '.'
+        AbsCmd.env['FLATPAK_DST'] = getcwd() + '/built'
         bld_flatpak(None, None, AbsCmd.env)
 
 
