@@ -1,3 +1,5 @@
+# usage: python setup.py models --cores=1
+
 from os import system, getcwd, chdir
 from sys import argv
 from collections import namedtuple
@@ -36,11 +38,11 @@ class DevelopPyCmd(develop):
 class AbsCmd(Command):
 
     env = {'APPNAME': 'yorg'}
-    user_options = [('cores', None, '#cores')]
+    user_options = [('cores=', None, '#cores')]
 
     def initialize_options(self): self.cores = 0
 
-    def finalize_options(self): AbsCmd.env['CORES'] = self.cores
+    def finalize_options(self): AbsCmd.env['CORES'] = int(self.cores)
 
 
 class SourcePkgCmd(AbsCmd):
@@ -121,6 +123,7 @@ class ModelsCmd(AbsCmd):
         AbsCmd.env['CARS_DIR_PATH'] = 'assets/cars'
         AbsCmd.env['TRACKS_DIR_PATH'] = 'assets/tracks'
         bld_models(None, None, AbsCmd.env)
+        print('ModelsCmd: done')
 
 
 class LangCmd(AbsCmd):
