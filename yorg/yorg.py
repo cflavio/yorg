@@ -233,12 +233,12 @@ class Yorg(Game):
         social_sites = [
             ('facebook', 'https://www.facebook.com/Ya2Tech'),
             ('twitter', 'https://twitter.com/ya2tech'),
-            ('google_plus', 'https://plus.google.com/118211180567488443153'),
+            #('google_plus', 'https://plus.google.com/118211180567488443153'),
             ('youtube',
              'https://www.youtube.com/user/ya2games?sub_confirmation=1'),
-            ('pinterest', 'https://www.pinterest.com/ya2tech'),
-            ('tumblr', 'https://ya2tech.tumblr.com'),
-            ('feed', 'https://www.ya2.it/pages/feed-following.html')]
+            #('pinterest', 'https://www.pinterest.com/ya2tech'),
+            #('tumblr', 'https://ya2tech.tumblr.com'),
+            ('feed', 'https://www.ya2.it/pages/feed_following.html')]
         tracks = self.__compute_tracks()
         tracks_tr = self.__compute_tracks_tr()
         self.gameprops = GameProps(
