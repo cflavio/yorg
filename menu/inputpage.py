@@ -30,8 +30,9 @@ class AbsInputPageGui(ThanksPageGui):
         widgets = self.create_buttons()
         l_a = menu_props.label_args.copy()
         l_a['scale'] = .065
+        l_a['text_fg'] = menu_props.text_err_col
         self.hint_lab = Label(
-            text=_('Press the key to record it'), pos=(-.2, -.6), **l_a)
+            text=_('Press the key to record it'), pos=(0, .74), **l_a)
         self.hint_lab.hide()
         widgets += [player_lab, self.hint_lab]
         self.add_widgets(widgets)
