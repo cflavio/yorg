@@ -376,6 +376,9 @@ class InputPage4Joystick(Page):
         [('gui', self.gui_cls,
           [self, self.menu_props, self.opt_file, self.keys])]]
 
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.menu_props, self.opt_file, self.keys)
+
     def destroy(self):
         Page.destroy(self)
 
