@@ -666,8 +666,9 @@ class YorgLogic(GameLogic):
             # self.mediator.options['save']['ranking'] = \
             #     ranking.carname2points
             # self.mediator.options['save']['tuning'] = tuning.car2tuning
-            self.mediator.options['save']['tuning'] = \
-                self.season.logic.players
+            players = self.season.logic.players
+            players = [player.to_json() for player in players]
+            self.mediator.options['save']['tuning'] = players
             self.mediator.options.store()
             self.mediator.fsm.demand('Ranking')
         else:

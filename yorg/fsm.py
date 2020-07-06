@@ -1,9 +1,11 @@
 from logging import info
 from sys import exit as sys_exit
 from os.path import exists
+from yyagl.dictfile import DctFile
 from yyagl.gameobject import FsmColleague
 from yracing.car.audio import CarSounds
 from yracing.car.event import Keys, PlayerKeys
+from yracing.player.player import Player
 from menu.menu import YorgMenu, MenuProps
 from menu.exitmenu.menu import ExitMenu
 
@@ -166,6 +168,9 @@ class YorgFsm(FsmColleague):
             self.mediator.options['save']['players'] = seas.logic.players
             # self.mediator.options['save']['ranking'] = \
             #     seas.ranking.carname2points
+            players = self.mediator.options['save']['players']
+            players = [player.to_json() for player in players]
+            self.mediator.options['save']['players'] = players
             self.mediator.options.store()
         keys = self.mediator.options['settings']['keys']
         joystick = self.mediator.options['settings']['joystick']
@@ -191,11 +196,14 @@ class YorgFsm(FsmColleague):
             self.mediator.options['development']['start_wp'], grid)
         if self.eng.server.is_active:
             # seas.create_race_server(race_props)
-            seas.create_race_server(race_props, players)
+            seas.create_race_server(
+                race_props, [Player.from_json(player) for player in players])
         elif self.eng.client.is_client_active:
-            seas.create_race_client(race_props, players)
+            seas.create_race_client(
+                race_props, [Player.from_json(player) for player in players])
         else:
-            seas.create_race(race_props, players)
+            seas.create_race(
+                race_props, [Player.from_json(player) for player in players])
         track_dct = {
             'toronto': _('Toronto'), 'rome': _('Rome'),
             'sheffield': _('Sheffield'), 'orlando': _('Orlando'),
