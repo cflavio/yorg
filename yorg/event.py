@@ -27,6 +27,7 @@ class YorgEvent(EventColleague):
         self.mediator.logic.season.race.destroy()
         # tuning = self.mediator.logic.season.tuning
         # self.mediator.options['save']['tuning'] = tuning.to_dct
-        self.mediator.options['save']['players'] = players
+        stored_players = [player.to_json() for player in players]
+        self.mediator.options['save']['players'] = stored_players
         self.mediator.options.store()
         self.mediator.fsm.demand('Race', next_track, players)
