@@ -155,6 +155,7 @@ class YorgFsm(FsmColleague):
         #if self.mediator.logic.mp_frm:  # None if dev quicksart
         #    self.mediator.logic.mp_frm.hide()
         players = players or []
+        players = [player.to_json() for player in players]
         base.ignore('escape-up')
         seas = self.mediator.logic.season
         if not seas.props.single_race:
