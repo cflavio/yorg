@@ -449,6 +449,7 @@ class YorgLogic(GameLogic):
         #     self.mediator.options['settings']['camera'], 'onlinemp', room)
         # self.season = SingleRaceSeason(sprops)
         # drivers = self.season.logic.drivers
+        self.season.logic.props.room = room
         packet_drivers = []
         for i in range(packet[0]):
             offset = i * 6
@@ -479,8 +480,8 @@ class YorgLogic(GameLogic):
         #     self.mediator.gameprops, car, cars,
         #     self.mediator.options['settings']['cars_number'], True, 0, 0, 0,
         #     dev['race_start_time'], dev['countdown_seconds']))
-        self.season.attach_obs(self.mediator.event.on_season_end)
-        self.season.attach_obs(self.mediator.event.on_season_cont)
+        #self.season.attach_obs(self.mediator.event.on_season_end)
+        #self.season.attach_obs(self.mediator.event.on_season_cont)
         # self.season.start()
         self.mediator.fsm.demand('Race', track, self.season.logic.players)
 
