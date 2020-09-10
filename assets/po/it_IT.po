@@ -98,7 +98,7 @@ msgstr "CLASSIFICA"
 msgid "share:"
 msgstr "condividi:"
 
-#: yracing/race/gui/results.py:81 yracing/ranking/gui.py:58
+#: yracing/race/gui/results.py:83 yracing/ranking/gui.py:59
 msgid "Continue"
 msgstr "Continua"
 
@@ -114,7 +114,7 @@ msgstr "pista: "
 msgid "Starting grid"
 msgstr "Griglia di partenza"
 
-#: yracing/race/gui/loading/loadingpage.py:64 yracing/ranking/gui.py:32
+#: yracing/race/gui/loading/loadingpage.py:64 yracing/ranking/gui.py:33
 msgid "Ranking"
 msgstr "Classifica"
 
@@ -167,7 +167,7 @@ msgstr "gomme: +"
 msgid "suspensions: +"
 msgstr "sospensioni: +"
 
-#: yracing/ranking/gui.py:49
+#: yracing/ranking/gui.py:50
 msgid "Congratulations!"
 msgstr "Congratulazioni!"
 
@@ -183,31 +183,31 @@ msgstr "Indietro"
 msgid "version: "
 msgstr "versione: "
 
-#: assets/tracks/dubai/track_tr.py:1 yorg/fsm.py:202
+#: assets/tracks/dubai/track_tr.py:1 yorg/fsm.py:211
 msgid "Dubai"
 msgstr "Dubai"
 
-#: assets/tracks/orlando/track_tr.py:1 yorg/fsm.py:201
+#: assets/tracks/orlando/track_tr.py:1 yorg/fsm.py:210
 msgid "Orlando"
 msgstr "Orlando"
 
-#: assets/tracks/moon/track_tr.py:1 yorg/fsm.py:203
+#: assets/tracks/moon/track_tr.py:1 yorg/fsm.py:212
 msgid "Sinus Aestuum"
 msgstr "Sinus Aestuum"
 
-#: assets/tracks/sheffield/track_tr.py:1 yorg/fsm.py:201
+#: assets/tracks/sheffield/track_tr.py:1 yorg/fsm.py:210
 msgid "Sheffield"
 msgstr "Sheffield"
 
-#: assets/tracks/nagano/track_tr.py:1 yorg/fsm.py:202
+#: assets/tracks/nagano/track_tr.py:1 yorg/fsm.py:211
 msgid "Nagano"
 msgstr "Nagano"
 
-#: assets/tracks/rome/track_tr.py:1 yorg/fsm.py:200
+#: assets/tracks/rome/track_tr.py:1 yorg/fsm.py:209
 msgid "Rome"
 msgstr "Roma"
 
-#: assets/tracks/toronto/track_tr.py:1 yorg/fsm.py:200
+#: assets/tracks/toronto/track_tr.py:1 yorg/fsm.py:209
 msgid "Toronto"
 msgstr "Toronto"
 
@@ -409,41 +409,41 @@ msgstr "multiplayer"
 msgid "Connecting"
 msgstr "Connessione"
 
-#: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:183
-#: menu/inputpage.py:202 menu/inputpage.py:212 menu/inputpage.py:330
-#: menu/inputpage.py:343 menu/inputpage.py:356
+#: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:184
+#: menu/inputpage.py:203 menu/inputpage.py:213 menu/inputpage.py:331
+#: menu/inputpage.py:344 menu/inputpage.py:357
 msgid "Player"
 msgstr "Giocatore"
 
-#: menu/inputpage.py:34
+#: menu/inputpage.py:35
 msgid "Press the key to record it"
 msgstr "Premi il tasto per memorizzarlo"
 
-#: menu/inputpage.py:85 menu/inputpage.py:253
+#: menu/inputpage.py:86 menu/inputpage.py:254
 msgid "Accelerate"
 msgstr "Accelerazione"
 
-#: menu/inputpage.py:86 menu/inputpage.py:254
+#: menu/inputpage.py:87 menu/inputpage.py:255
 msgid "Brake/Reverse"
 msgstr "Frena/Indietro"
 
-#: menu/inputpage.py:87
+#: menu/inputpage.py:88
 msgid "Left"
 msgstr "Sinistra"
 
-#: menu/inputpage.py:88
+#: menu/inputpage.py:89
 msgid "Right"
 msgstr "Destra"
 
-#: menu/inputpage.py:89 menu/inputpage.py:255
+#: menu/inputpage.py:90 menu/inputpage.py:256
 msgid "Weapon"
 msgstr "Arma"
 
-#: menu/inputpage.py:90 menu/inputpage.py:256
+#: menu/inputpage.py:91 menu/inputpage.py:257
 msgid "Respawn"
 msgstr "Respawn"
 
-#: menu/inputpage.py:184
+#: menu/inputpage.py:185
 msgid "Pause"
 msgstr "Pausa"
 
