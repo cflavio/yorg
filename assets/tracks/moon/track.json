@@ -1,20 +1,20 @@
 {
-    "sorting": 0, 
-    "music": "A Chance At Our Future", 
+    "sorting": 0,
+    "music": "A Chance At Our Future",
     "camera_vector": [
-        -1, 
-        0, 
+        -1,
+        0,
         -0.7
-    ], 
+    ],
     "shadow_source": [
-        50, 
-        -80, 
+        50,
+        -80,
         80
-    ], 
-    "laps": 1, 
+    ],
+    "laps": 3,
     "skidmark_col": [
-        0.6, 
-        0.4, 
+        0.6,
+        0.4,
         0.2
     ]
 }
