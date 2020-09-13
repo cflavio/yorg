@@ -132,6 +132,7 @@ class Yorg(Game):
                 'xmpp_debug': 0,
                 'xmpp_server': 'ya2_yorg@jabb3r.org',
                 'server': 'ya2tech.it:9099',
+                'server_dev': 'ya2tech.it:9098',
                 'mp_srv_usr': '',
                 'fixed_fps': 0,
                 'srgb': 0,
@@ -149,18 +150,22 @@ class Yorg(Game):
         parser.add_argument('--optfile')
         args = parser.parse_args(EngineLogic.cmd_line())
         optfile = args.optfile if args.optfile else 'options.json'
-        old_def = deepcopy(default_opt)
+        #old_def = deepcopy(default_opt)
         self.options = DctFile(
             LibP3d.fixpath(opt_path + '/' + optfile) if opt_path else optfile,
             default_opt)
-        if self.options['development']['server'] == '':
-            self.options['development']['server'] = \
-                old_def['development']['server']
+        #if self._get_server() == '':
+        #    self.options['development']['server'] = \
+        #        old_def['development']['server']
+        #    self.options['development']['server_dev'] = \
+        #        old_def['development']['server']
         opt_dev = self.options['development']
         win_orig = opt_dev['win_orig']
         if args.win_orig: win_orig = args.win_orig
         if args.cars: opt_dev['cars'] = args.cars
-        if args.server: opt_dev['server'] = args.server
+        if args.server:
+            opt_dev['server'] = args.server
+            opt_dev['server_dev'] = args.server
         gui_cfg = GuiCfg(
             win_title='Yorg', win_orig=win_orig,
             win_size=self.options['settings']['resolution'],

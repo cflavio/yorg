@@ -1,4 +1,4 @@
-from logging import info
+from logging import info, debug
 from random import shuffle
 from os import walk
 from json import load
@@ -54,7 +54,7 @@ class YorgLogic(GameLogic):
         dev = self.mediator.options['development']
         cars = dev['cars'] if 'cars' in dev else ''
         # track = dev['track'] if 'track' in dev else ''
-        server = dev['server'] if 'server' in dev else ''
+        server = self._get_server()
         self.sel_track = None
         self.current_drivers = None
         if cars and server:  # for development's quickstart
@@ -64,7 +64,7 @@ class YorgLogic(GameLogic):
         dev = self.mediator.options['development']
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''
-        server = dev['server'] if 'server' in dev else ''
+        server = self._get_server()
         # if not self.mp_frm and not (cars and track and not server):
         if not (cars and track and not server):
             # self.mp_frm = MultiplayerFrm(self.mediator.gameprops.menu_props,
@@ -79,13 +79,24 @@ class YorgLogic(GameLogic):
                 self.mediator.fsm.menu.logic.attach(
                     self.on_start_match_client_menu)
 
+    def _get_server(self):
+        dev = self.mediator.options['development']
+        server = dev['server'] if 'server' in dev else ''
+        server_dev = dev['server_dev'] if 'server_dev' in dev else ''
+        is_stable = self.__class__.eng.version.split('-')[1] == 'stable'
+        ret_server = server if is_stable else server_dev
+        #info('server: %s (%s %s %s)' % (ret_server, self.eng.version, self.__class__.eng.version.split('-')[1], is_stable))
+        print('server: %s (%s %s %s)' % (ret_server, self.eng.version, self.__class__.eng.version.split('-')[1], is_stable))
+        # info doesn't seem to work
+        return ret_server
+
     def on_start(self):
         GameLogic.on_start(self)
         self.__process_default()
         dev = self.mediator.options['development']
         cars = dev['cars'] if 'cars' in dev else ''
         track = dev['track'] if 'track' in dev else ''
-        server = dev['server'] if 'server' in dev else ''
+        server = self._get_server()
         if cars and track and not dev['mp_srv_usr']:
             # for development's quickstart
             cars = cars.split()
