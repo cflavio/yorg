@@ -85,7 +85,7 @@ class YorgLogic(GameLogic):
         server_dev = dev['server_dev'] if 'server_dev' in dev else ''
         is_stable = self.__class__.eng.version.split('-')[1] == 'stable'
         ret_server = server if is_stable else server_dev
-        #info('server: %s (%s %s %s)' % (ret_server, self.eng.version, self.__class__.eng.version.split('-')[1], is_stable))
+        info('server: %s (%s %s %s)' % (ret_server, self.eng.version, self.__class__.eng.version.split('-')[1], is_stable))
         print('server: %s (%s %s %s)' % (ret_server, self.eng.version, self.__class__.eng.version.split('-')[1], is_stable))
         # info doesn't seem to work
         return ret_server
