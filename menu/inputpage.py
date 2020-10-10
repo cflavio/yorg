@@ -254,7 +254,9 @@ class InputPageGui4Joystick(AbsInputPageGui):
             (_('Accelerate'), 'forward' + suff, .5),
             (_('Brake/Reverse'), 'rear' + suff, .32),
             (_('Weapon'), 'fire' + suff, .14),
-            (_('Respawn'), 'respawn' + suff, -.04)]
+            (_('Respawn'), 'respawn' + suff, -.04),
+            (_('Pause'), 'pause' + suff, -.22),
+            (_('Menu'), 'menu' + suff, -.4)]
         for btn_data in buttons_data:
             widgets += [self._add_lab(btn_data[0], btn_data[2])]
             widgets += [self._add_btn(self.keys[btn_data[1]], btn_data[2])]
@@ -266,9 +268,9 @@ class InputPageGui4Joystick(AbsInputPageGui):
     def start_rec_aux(self, btn):
         self.eng.joystick_mgr.is_recording = True
         keys = [
-            'face_x', 'face_y', 'face_a', 'face_b', 'trigger_l', 'trigger_r',
-            'shoulder_l', 'shoulder_r', 'stick_l', 'stick_r']
-        self._keys = ['joypad%s_%s' % (self.joyp_idx, i) for i in keys]
+            'face_x', 'face_y', 'face_a', 'face_b', 'ltrigger', 'rtrigger',
+            'lshoulder', 'rshoulder', 'lstick', 'rstick']
+        self._keys = ['joypad%s-%s-up' % (self.joyp_idx, i) for i in keys]
         self.hint_lab.show()
         acc = lambda key: self.mediator.event.accept(key, self.rec, [btn, key])
         list(map(acc, self._keys))
@@ -289,7 +291,7 @@ class InputPageGui4Joystick(AbsInputPageGui):
             self.dial = AlreadyUsedJoystickDlg(self.menu_props, val, used)
             self.dial.attach(self.on_already_joystick_dlg)
         else:
-            btn['text'] = val.split('_', 1)[1:][0]
+            btn['text'] = val.split('-', 1)[1:][0][:-3]
             dct = self.update_values()
             self.opt_file['settings'] = DctFile.deepupdate(
                 self.opt_file['settings'], dct)
@@ -301,7 +303,7 @@ class InputPageGui4Joystick(AbsInputPageGui):
     def on_already_joystick_dlg(self): self.dial = self.dial.destroy()
 
     def already_used(self, val):
-        val = ''.join(val.split('_', 1)[1:])
+        val = ''.join(val.split('-', 1)[1:])
         for lab in ['forward', 'rear', 'fire', 'respawn']:
             if self.keys[lab + str(self.joyp_idx + 1)] == val: return lab
 
@@ -319,6 +321,10 @@ class InputPageGui4Joystick(AbsInputPageGui):
             self.mediator.gui.ibuttons[2]['text'])
         dct['joystick']['respawn' + suff] = self.eng.event.desc2key(
             self.mediator.gui.ibuttons[3]['text'])
+        dct['joystick']['pause' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[4]['text'])
+        dct['joystick']['menu' + suff] = self.eng.event.desc2key(
+            self.mediator.gui.ibuttons[5]['text'])
         return dct
 
 
