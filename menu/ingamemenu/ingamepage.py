@@ -46,14 +46,16 @@ class InGamePageGui(InGamePageGuiMultiplayer):
 
     def build(self, back_btn=True):
         InGamePageGuiMultiplayer.build(self, back_btn)
-        self.eng.do_later(.01, self.eng.toggle_pause, [False])
+        if not self.eng.pause.paused:
+            self.eng.do_later(.01, self.eng.toggle_pause, [False])
         # in the next frame since otherwise InGameMenu will be paused while
         # waiting page's creation, and when it is restored it is destroyed,
         # then the creation callback finds a None menu
 
     def on_end(self, back_to_game):
         InGamePageGuiMultiplayer.on_end(self, back_to_game)
-        self.eng.do_later(.01, self.eng.toggle_pause)
+        if self.eng.pause.paused:
+            self.eng.do_later(.01, self.eng.toggle_pause)
 
 
 class InGamePageMultiplayer(Page, PageFacade):
