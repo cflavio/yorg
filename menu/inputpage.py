@@ -147,9 +147,9 @@ class InputPageGui4Keyboard(AbsInputPageGui):
 
     def already_used(self, val):
         if self.eng.event.key2desc(self.keys['pause']) == val:
-            return '1', 'pause'
+            return '1', 'menu'
         labels = ['forward', 'rear', 'left', 'right', 'fire', 'respawn',
-                  'pause']
+                  'menu']
         for lab, player in product(labels[:-1], ['1', '2', '3', '4']):
             if self.eng.event.key2desc(self.keys[lab + player]) == val:
                 return player, lab
@@ -161,17 +161,17 @@ class InputPageGui4Keyboard(AbsInputPageGui):
         dct = {}
         dct['keys'] = self.keys
         dct['keys']['forward' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[idx]['text'])
+            self.mediator.gui.ibuttons[0]['text'])
         dct['keys']['rear' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[idx + 1]['text'])
+            self.mediator.gui.ibuttons[1]['text'])
         dct['keys']['left' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[idx + 2]['text'])
+            self.mediator.gui.ibuttons[2]['text'])
         dct['keys']['right' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[idx + 3]['text'])
+            self.mediator.gui.ibuttons[3]['text'])
         dct['keys']['fire' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[idx + 4]['text'])
+            self.mediator.gui.ibuttons[4]['text'])
         dct['keys']['respawn' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[idx + 5]['text'])
+            self.mediator.gui.ibuttons[5]['text'])
         return dct
 
 
@@ -182,16 +182,10 @@ class InputPageGui1Keyboard(InputPageGui4Keyboard):
     def build(self):
         self.make_player_btn('Player',
                              _('Player') + " " + str(self.joyp_idx + 2))
-        self.add_widgets([self._add_lab(_('Pause'), -.56)])
-        self.add_widgets([self._add_btn(
-            self.eng.event.key2desc(self.keys['pause']), -.56)])
         InputPageGui4Keyboard.build(self)
 
     def update_values(self, idx=0):
-        dct = InputPageGui4Keyboard.update_values(self, 1)
-        dct['keys']['pause'] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[0]['text'])
-        return dct
+        return InputPageGui4Keyboard.update_values(self, 1)
 
 
 class InputPageGui2Keyboard(InputPageGui4Keyboard):
@@ -255,8 +249,7 @@ class InputPageGui4Joystick(AbsInputPageGui):
             (_('Brake/Reverse'), 'rear' + suff, .32),
             (_('Weapon'), 'fire' + suff, .14),
             (_('Respawn'), 'respawn' + suff, -.04),
-            (_('Pause'), 'pause' + suff, -.22),
-            (_('Menu'), 'menu' + suff, -.4)]
+            (_('Menu'), 'menu' + suff, -.22)]
         for btn_data in buttons_data:
             widgets += [self._add_lab(btn_data[0], btn_data[2])]
             widgets += [self._add_btn(self.keys[btn_data[1]], btn_data[2])]
@@ -321,10 +314,8 @@ class InputPageGui4Joystick(AbsInputPageGui):
             self.mediator.gui.ibuttons[2]['text'])
         dct['joystick']['respawn' + suff] = self.eng.event.desc2key(
             self.mediator.gui.ibuttons[3]['text'])
-        dct['joystick']['pause' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[4]['text'])
         dct['joystick']['menu' + suff] = self.eng.event.desc2key(
-            self.mediator.gui.ibuttons[5]['text'])
+            self.mediator.gui.ibuttons[4]['text'])
         return dct
 
 

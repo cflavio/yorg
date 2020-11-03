@@ -12,8 +12,7 @@ class InGamePageGuiMultiplayer(PageGui):
         frm = Frame(
             frame_size=(-1.5, 1.5, -.9, .9), frame_col=(.95, .95, .7, .85))
         question_txt = _(
-            "What do you want to do?\n\nNote: use '%s' for pausing the game.")
-        question_txt = question_txt % self.keys.pause
+            "What do you want to do?")
         menu_props = self.menu_props
         txt = Text(
             question_txt, pos=(0, .64), scale=.08, wordwrap=32,
@@ -75,6 +74,6 @@ class InGamePage(InGamePageMultiplayer):
     gui_cls = InGamePageGui
 
     @staticmethod
-    def init_cls():
-        multip = InGamePage.eng.server.is_active or InGamePage.eng.client.is_active
+    def init_cls(season_kind):
+        multip = season_kind not in ['single', 'season', 'localmp']
         return InGamePageMultiplayer if multip else InGamePage

@@ -183,7 +183,7 @@ class YorgFsm(FsmColleague):
                          keys['right3'], keys['fire3'], keys['respawn3'])
         p4k = PlayerKeys(keys['forward4'], keys['rear4'], keys['left4'],
                          keys['right4'], keys['fire4'], keys['respawn4'])
-        keys = Keys([p1k, p2k, p3k, p4k], keys['pause'])
+        keys = Keys([p1k, p2k, p3k, p4k])
         sounds = CarSounds(
             'assets/sfx/engine.ogg', 'assets/sfx/brake.ogg',
             'assets/sfx/crash.ogg', 'assets/sfx/crash_high_speed.ogg',
