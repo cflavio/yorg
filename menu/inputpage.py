@@ -296,8 +296,8 @@ class InputPageGui4Joystick(AbsInputPageGui):
     def on_already_joystick_dlg(self): self.dial = self.dial.destroy()
 
     def already_used(self, val):
-        val = ''.join(val.split('-', 1)[1:])
-        for lab in ['forward', 'rear', 'fire', 'respawn']:
+        val = ''.join(val.split('-', 1)[1:])[:-3]
+        for lab in ['forward', 'rear', 'fire', 'respawn', 'menu']:
             if self.keys[lab + str(self.joyp_idx + 1)] == val: return lab
 
     def update_keys(self): self.keys = self.opt_file['settings']['joystick']
