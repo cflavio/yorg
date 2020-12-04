@@ -528,6 +528,8 @@ class YorgLogic(GameLogic):
                 for drv in self.mediator.gameprops.drivers:
                     if drv.img_idx == i:
                         player.driver = drv
+                        drv.name = player_name
+                        player.name = player_name
         self.__fill_players()
         self.eng.do_later(
             2.0, self.mediator.fsm.demand,
