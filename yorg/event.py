@@ -24,7 +24,7 @@ class YorgEvent(EventColleague):
 
     def on_season_cont(self, next_track, curr_car, players):
         # unused curr_car
-        self.mediator.logic.season.race.destroy()
+        # self.mediator.logic.season.race.destroy()
         # tuning = self.mediator.logic.season.tuning
         # self.mediator.options['save']['tuning'] = tuning.to_dct
         stored_players = [player.to_json() for player in players]
