@@ -4,23 +4,22 @@
 # GunChleoc <fios@foramnagaidhlig.net>, 2017, 2018.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-05-17 10:48+0100\n"
+"PO-Revision-Date: 2021-01-24 16:03+0000\n"
 "Last-Translator: GunChleoc <fios@foramnagaidhlig.net>\n"
 "Language-Team: Fòram na Gàidhlig\n"
 "Language: gd\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : "
-"(n > 2 && n < 20) ? 2 : 3;\n"
-"X-Generator: Virtaal 0.7.1\n"
+"Plural-Forms: nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: yracing/car/logic.py:906
 msgid "wrong way"
-msgstr "rathad cearr"
+msgstr "rathad ceàrr"
 
 #: yracing/car/gui.py:301
 msgid "speed:"
@@ -36,7 +35,7 @@ msgstr "ùine:"
 
 #: yracing/car/gui.py:307
 msgid "best lap:"
-msgstr "a’ chuairt as fhearr:"
+msgstr "a’ chuairt as fheàrr:"
 
 #: yracing/car/gui.py:309
 msgid "ranking:"
@@ -119,18 +118,15 @@ msgstr "Griod tòiseachaidh"
 msgid "Ranking"
 msgstr "Rangachadh"
 
-#: yracing/race/gui/loading/loadingpage.py:73
-#: yracing/race/gui/loading/loadingpage.py:136
+#: yracing/race/gui/loading/loadingpage.py:73 yracing/race/gui/loading/loadingpage.py:136
 msgid "Controls"
 msgstr "Stiùireadh"
 
-#: yracing/race/gui/loading/loadingpage.py:82
-#: yracing/race/gui/loading/loadingpage.py:89
+#: yracing/race/gui/loading/loadingpage.py:82 yracing/race/gui/loading/loadingpage.py:89
 msgid "accelerate"
 msgstr "luathaich"
 
-#: yracing/race/gui/loading/loadingpage.py:83
-#: yracing/race/gui/loading/loadingpage.py:90
+#: yracing/race/gui/loading/loadingpage.py:83 yracing/race/gui/loading/loadingpage.py:90
 msgid "brake/reverse"
 msgstr "brèig/an comhair a’ chùil"
 
@@ -142,13 +138,11 @@ msgstr "gu clì"
 msgid "right"
 msgstr "gu deas"
 
-#: yracing/race/gui/loading/loadingpage.py:86
-#: yracing/race/gui/loading/loadingpage.py:91
+#: yracing/race/gui/loading/loadingpage.py:86 yracing/race/gui/loading/loadingpage.py:91
 msgid "fire"
 msgstr "loisg"
 
-#: yracing/race/gui/loading/loadingpage.py:87
-#: yracing/race/gui/loading/loadingpage.py:92
+#: yracing/race/gui/loading/loadingpage.py:87 yracing/race/gui/loading/loadingpage.py:92
 msgid "respawn"
 msgstr "ath-shìol"
 
@@ -219,14 +213,12 @@ msgstr "Cleachdaichean a tha ag òstadh ’s a feitheamh"
 #: menu/already_dlg.py:13
 #, python-format
 msgid "The key %s is already used by player %s for %s."
-msgstr ""
-"Tha an iuchair %s ‘ga chleachdadh le cluicheadair %s airson %s mu thràth."
+msgstr "Tha an iuchair %s ’ga chleachdadh le cluicheadair %s airson %s mu thràth."
 
 #: menu/already_dlg.py:48
-#, fuzzy, python-format
+#, python-format
 msgid "The key %s is already used for %s."
-msgstr ""
-"Tha an iuchair %s ‘ga chleachdadh le cluicheadair %s airson %s mu thràth."
+msgstr "Tha an iuchair %s ’ga chleachdadh airson %s mu thràth."
 
 #: menu/carpage.py:26
 msgid "Select the car"
@@ -256,14 +248,11 @@ msgstr "ID a’ chleachdaiche agad:"
 msgid "Your password:"
 msgstr "Am facal-faire agad:"
 
-#: menu/registerpage.py:27 menu/registerpage.py:95 menu/registerpage.py:116
-#: menu/resetpage.py:24 menu/resetpage.py:72 menu/resetpage.py:93
-#: menu/loginpage.py:24 menu/loginpage.py:60 menu/loginpage.py:69
+#: menu/registerpage.py:27 menu/registerpage.py:95 menu/registerpage.py:116 menu/resetpage.py:24 menu/resetpage.py:72 menu/resetpage.py:93 menu/loginpage.py:24 menu/loginpage.py:60 menu/loginpage.py:69
 msgid "your user id"
 msgstr "ID a’ chleachdaiche agad"
 
-#: menu/registerpage.py:30 menu/registerpage.py:102 menu/registerpage.py:111
-#: menu/resetpage.py:27 menu/resetpage.py:79 menu/resetpage.py:88
+#: menu/registerpage.py:30 menu/registerpage.py:102 menu/registerpage.py:111 menu/resetpage.py:27 menu/resetpage.py:79 menu/resetpage.py:88
 msgid "your email"
 msgstr "am post-d agad"
 
@@ -272,21 +261,12 @@ msgid "Register"
 msgstr "Clàraich"
 
 #: menu/registerpage.py:67
-msgid ""
-"Your account has been registered. Now, in order to activate it, you should "
-"click the link that we've sent to your email (please check your spam folder "
-"if you can't find it). After that, you can log in."
-msgstr ""
-"Chaidh an cunntas agad a chlàradh. Nise, airson a ghnìomhachadh, bu chòir "
-"dhut briogadh air a’ cheangal a chuir sinn thugad air a’ phost-d (thoir sùil "
-"air a’ phost-truilleis agad mura lorg thu e). ’S urrainn dhut clàradh a-"
-"steach an uairsin."
+msgid "Your account has been registered. Now, in order to activate it, you should click the link that we've sent to your email (please check your spam folder if you can't find it). After that, you can log in."
+msgstr "Chaidh an cunntas agad a chlàradh. Nise, airson a ghnìomhachadh, bu chòir dhut briogadh air a’ cheangal a chuir sinn thugad air a’ phost-d (thoir sùil air a’ phost-truilleis agad mura lorg thu e). ’S urrainn dhut clàradh a-steach an uairsin."
 
 #: menu/registerpage.py:72
 msgid "Your nickname's format is invalid: please use only letters and numbers."
-msgstr ""
-"Tha fòrmat d’ fhar-ainm mì-dhligheach: na cleachd ach litrichean is "
-"àireamhan."
+msgstr "Tha fòrmat d’ fhar-ainm mì-dhligheach: na cleachd ach litrichean is àireamhan."
 
 #: menu/registerpage.py:74
 msgid "Your email's format is invalid."
@@ -306,7 +286,7 @@ msgstr "Cleachd còrr is 6 caractaran airson an fhacail-fhaire agad."
 
 #: menu/registerpage.py:78 menu/resetpage.py:57
 msgid "Connection error."
-msgstr "Mearachd leis a’ cheangal. "
+msgstr "Mearachd leis a’ cheangal."
 
 #: menu/registerpage.py:139 menu/resetpage.py:114 menu/loginpage.py:87
 msgid "Error"
@@ -317,12 +297,8 @@ msgid "Reset"
 msgstr "Ath-shuidhich"
 
 #: menu/resetpage.py:52
-msgid ""
-"We've sent an email to you (please check your spam folder if you can't find "
-"it) with the instructions for completing the reset."
-msgstr ""
-"Cuir sinn post-d thugad (thoir sùil air a’ phost-truilleis agad mura lorg "
-"thu e) le stiùireadh air mar a choileanas tu an ath-shuidheachadh."
+msgid "We've sent an email to you (please check your spam folder if you can't find it) with the instructions for completing the reset."
+msgstr "Cuir sinn post-d thugad (thoir sùil air a’ phost-truilleis agad mura lorg thu e) le stiùireadh air mar a choileanas tu an ath-shuidheachadh."
 
 #: menu/resetpage.py:54
 msgid "This email isn't in our archive."
@@ -413,9 +389,7 @@ msgstr "ioma-chluicheadair"
 msgid "Connecting"
 msgstr "’Ga cheangail"
 
-#: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:184
-#: menu/inputpage.py:197 menu/inputpage.py:207 menu/inputpage.py:328
-#: menu/inputpage.py:341 menu/inputpage.py:354
+#: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:184 menu/inputpage.py:197 menu/inputpage.py:207 menu/inputpage.py:328 menu/inputpage.py:341 menu/inputpage.py:354
 msgid "Player"
 msgstr "Cluicheadair"
 
@@ -449,7 +423,7 @@ msgstr "Ath-shìol"
 
 #: menu/inputpage.py:252
 msgid "Menu"
-msgstr ""
+msgstr "Clàr-taice"
 
 #: menu/numplayerspage.py:15
 msgid "How many players?"
@@ -504,18 +478,11 @@ msgid "Write your name:"
 msgstr "Sgrìobh d’ ainm:"
 
 #: menu/driverpage.py:89
-msgid ""
-"If you use the keyboard, press FIRE to edit the field, then ENTER when "
-"you're done"
-msgstr ""
-"Ma tha thu a’ cleachdadh a’ mheur-chlàir, brùth air “Loisg” gus an raon a "
-"dheasachadh ’s air Enter an uairsin nuair a bhios tu deiseil"
+msgid "If you use the keyboard, press FIRE to edit the field, then ENTER when you're done"
+msgstr "Ma tha thu a’ cleachdadh a’ mheur-chlàir, brùth air “Loisg” gus an raon a dheasachadh ’s air Enter an uairsin nuair a bhios tu deiseil"
 
-#: menu/driverpage.py:156 menu/driverpage.py:169 menu/driverpage.py:177
-#: menu/driverpage.py:178 menu/driverpage.py:179 menu/driverpage.py:181
-#: menu/driverpage.py:184 menu/driverpage.py:203 menu/driverpage.py:289
-#: menu/driverpage.py:345 menu/driverpage.py:346 menu/driverpage.py:347
-#: menu/driverpage.py:348 menu/driverpage.py:350 menu/driverpage.py:355
+#: menu/driverpage.py:156 menu/driverpage.py:169 menu/driverpage.py:177 menu/driverpage.py:178 menu/driverpage.py:179 menu/driverpage.py:181 menu/driverpage.py:184 menu/driverpage.py:203 menu/driverpage.py:289 menu/driverpage.py:345 menu/driverpage.py:346 menu/driverpage.py:347 menu/driverpage.py:348
+#: menu/driverpage.py:350 menu/driverpage.py:355
 msgid "your name"
 msgstr "d’ ainm"
 
@@ -528,17 +495,8 @@ msgid "Write your names:"
 msgstr "Sgrìobhaibh ur n-ainmean:"
 
 #: menu/driverpage.py:254
-#, fuzzy
-msgid ""
-"If you use the keyboard, press FIRE to edit the field, then ENTER when "
-"you're done. Other players can't move while someone is writing (since, with "
-"keyboards, some letters may be bound to movements)."
-msgstr ""
-"Ma tha thu a’ cleachdadh a’ mheur-chlàir, brùth air “Loisg” gus an raon a "
-"dheasachadh ’s air Enter an uairsin nuair a bhios tu deiseil. Chan urrainn "
-"do chluicheadairean eile gluasad fhad ’s a tha cuideigin a’ sgrìobhadh (on a "
-"bhios cuid a litrichean air a’ mheur-chlàr naisgte ri gluasadan ma "
-"dh’fhaoidte)."
+msgid "If you use the keyboard, press FIRE to edit the field, then ENTER when you're done. Other players can't move while someone is writing (since, with keyboards, some letters may be bound to movements)."
+msgstr "Ma tha thu a’ cleachdadh a’ mheur-chlàir, brùth air “Loisg” gus an raon a dheasachadh ’s air Enter an uairsin nuair a bhios tu deiseil. Chan urrainn do chluicheadairean eile gluasad fhad ’s a bhios cuideigin a’ sgrìobhadh (on a bhios litir no dhà naisgte air a’ mheur-chlàr ri gluasad ma dh’fhaoidte.)"
 
 #: menu/singleplayerpage.py:14
 msgid "Single race"
@@ -586,19 +544,17 @@ msgstr "Tagh an t-slighe"
 
 #: menu/inputselpage.py:22
 msgid "Keyboard"
-msgstr ""
+msgstr "Meur-chlàr"
 
 #: menu/inputselpage.py:23
 msgid "Joystick"
-msgstr ""
+msgstr "Bioran-smachd"
 
-#: menu/multiplayer/messagefrm.py:57 menu/multiplayer/messagefrm.py:201
-#: menu/multiplayer/messagefrm.py:250 menu/multiplayer/messagefrm.py:510
+#: menu/multiplayer/messagefrm.py:57 menu/multiplayer/messagefrm.py:201 menu/multiplayer/messagefrm.py:250 menu/multiplayer/messagefrm.py:510
 msgid "write here your message"
 msgstr "sgrìobh do theachdaireachd an-seo"
 
-#: menu/multiplayer/messagefrm.py:128 menu/multiplayer/messagefrm.py:377
-#: menu/multiplayer/messagefrm.py:404
+#: menu/multiplayer/messagefrm.py:128 menu/multiplayer/messagefrm.py:377 menu/multiplayer/messagefrm.py:404
 msgid "you"
 msgstr "thusa"
 
@@ -608,18 +564,12 @@ msgid "%s has invited you to a match, do you agree?"
 msgstr "Thug %s cuireadh dhut airson geama, a bheil thu a’ gabhail ris?"
 
 #: menu/multiplayer/multiplayerfrm.py:99
-msgid ""
-"We've detected connection problems during server's creation. Please check "
-"your connection."
-msgstr ""
-"Mhothaich sinn do dhuilgheadasan ceangail nuair a chruthaich sinn am "
-"frithealaiche. Thoir sùil air a’ cheangal agad."
+msgid "We've detected connection problems during server's creation. Please check your connection."
+msgstr "Mhothaich sinn do dhuilgheadasan ceangail nuair a chruthaich sinn am frithealaiche. Thoir sùil air a’ cheangal agad."
 
 #: menu/multiplayer/multiplayerfrm.py:102
 msgid "We can't connect to httpbin. Please retry later."
-msgstr ""
-"Chan urrainn dhuinn ceangal a dhèanamh gu httpbin. Feuch ris a-rithist an "
-"ceann greis."
+msgstr "Chan urrainn dhuinn ceangal a dhèanamh gu httpbin. Feuch ris a-rithist an ceann greis."
 
 #: menu/multiplayer/matchfrm.py:164
 msgid "Start"
@@ -668,9 +618,8 @@ msgid "You aren't logged in"
 msgstr "Cha do rinn thu clàradh a-steach"
 
 #: menu/ingamemenu/ingamepage.py:15
-#, fuzzy
 msgid "What do you want to do?"
-msgstr "Dè bu toigh leat àrdachadh?"
+msgstr "Dè tha thu airson dèanamh?"
 
 #: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"
@@ -725,27 +674,14 @@ msgstr "na tadhail air an làrach-lìn againn às dèidh fàgail"
 #~ msgid "(from the next execution)"
 #~ msgstr "(on ath-thuras a thèid a ruith)"
 
-#~ msgid ""
-#~ "Connection error. Please check that (i) your firewall allows traffic for "
-#~ "Yorg on port 9099 and (ii) the server user has opened her port 9099 (here "
-#~ "is a guide for checking it: https://www.ya2.it/pages/check-your-ports."
-#~ "html)."
-#~ msgstr ""
-#~ "Mearachd leis a’ cheangal. Dearbhaich (i) gun ceadaich an cachaileith-"
-#~ "theine agad trafaig Yorg air port 9099 agus (ii) gun do dh’fhosgail "
-#~ "cleachdaiche an fhrithealaiche port 9099 (seo treòir air mar a dhearbhas "
-#~ "tu e: https://www.ya2.it/pages/check-your-ports.html)."
+#~ msgid "Connection error. Please check that (i) your firewall allows traffic for Yorg on port 9099 and (ii) the server user has opened her port 9099 (here is a guide for checking it: https://www.ya2.it/pages/check-your-ports.html)."
+#~ msgstr "Mearachd leis a’ cheangal. Dearbhaich (i) gun ceadaich an cachaileith-theine agad trafaig Yorg air port 9099 agus (ii) gun do dh’fhosgail cleachdaiche an fhrithealaiche port 9099 (seo treòir air mar a dhearbhas tu e: https://www.ya2.it/pages/check-your-ports.html)."
 
 #~ msgid "joypad"
 #~ msgstr "joypad"
 
-#~ msgid ""
-#~ "If you are a supporter, please write us (%s) your user id so we can "
-#~ "highlight your account as a supporter one."
-#~ msgstr ""
-#~ "Ma tha tu ’nad neach-taic, nach cuir thu fios thugainn (%s) le ID a’ "
-#~ "chleachdaiche agad ach an soillsich sinn an cunntas agad mar fhear aig "
-#~ "neach-taic."
+#~ msgid "If you are a supporter, please write us (%s) your user id so we can highlight your account as a supporter one."
+#~ msgstr "Ma tha tu ’nad neach-taic, nach cuir thu fios thugainn (%s) le ID a’ chleachdaiche agad ach an soillsich sinn an cunntas agad mar fhear aig neach-taic."
 
 #~ msgid "If you don't have an account, then you can register:"
 #~ msgstr "’S urrainn dhut clàradh leinn mur eil cunntas agad:"
@@ -775,42 +711,21 @@ msgstr "na tadhail air an làrach-lìn againn às dèidh fàgail"
 #~ msgstr "chan eil %s a’ cluich yorg"
 
 #~ msgid "(only if your computer is not shared with other people)"
-#~ msgstr ""
-#~ "(na dèan seo ma tha thu a’ co-roinneadh a’ choimpiutair seo le daoine "
-#~ "eile)"
+#~ msgstr "(na dèan seo ma tha thu a’ co-roinneadh a’ choimpiutair seo le daoine eile)"
 
 #~ msgid ""
-#~ "1. If you are a supporter, please write us (flavio@ya2.it) your jabber id "
-#~ "so we can highlight your account as a supporter one.\n"
-#~ "2. Yorg sends your XMPP presence to other Yorg users, so they can see "
-#~ "your XMPP presence status. If you don't want this, please don't use your "
-#~ "personal account and create a new one for Yorg.\n"
-#~ "3. When you add a Yorg friend, you are adding it to your account's roster "
-#~ "too.\n"
-#~ "4. Yorg's XMPP code is still experimental: if you have important data in "
-#~ "your XMPP account, please create a new account for playing Yorg with."
+#~ "1. If you are a supporter, please write us (flavio@ya2.it) your jabber id so we can highlight your account as a supporter one.\n"
+#~ "2. Yorg sends your XMPP presence to other Yorg users, so they can see your XMPP presence status. If you don't want this, please don't use your personal account and create a new one for Yorg.\n"
+#~ "3. When you add a Yorg friend, you are adding it to your account's roster too.\n"
+#~ "4. Yorg's XMPP code is still experimental: if you have important data in your XMPP account, please create a new account for playing Yorg with."
 #~ msgstr ""
-#~ "1. Ma tha thu ’nan neach-taic, innis an is jabber agad dhuinn (flavio@ya2."
-#~ "it) ach an cuir sinn comharra ris a’ chunntas agad gur e neach-taic a th’ "
-#~ "annad.\n"
-#~ "2. Cuiridh Yorg do làthaireachd air XMPP gu cleachdaichean Yorg eile ach "
-#~ "am faic iad a bheil thu an làthair air XMPP. Mur eil thu ’ga iarraidh, na "
-#~ "cleachd an cunntas pearsanta agad agus cruthaich fear fa leth ùr airson "
-#~ "Yorg.\n"
-#~ "3. Ma chuireas tu caraid Yorg ris, cuiridh tu ri liosta a’ chunntais agad "
-#~ "e cuideachd.\n"
-#~ "4. Tha an còd XMPP aig Yorg deuchainneil fhathast: ma tha dàta cudromach "
-#~ "sa chunntas XMPP agad, cruthaich cunntas fa leth ùr airson Yorg a chluich "
-#~ "leis."
+#~ "1. Ma tha thu ’nan neach-taic, innis an is jabber agad dhuinn (flavio@ya2.it) ach an cuir sinn comharra ris a’ chunntas agad gur e neach-taic a th’ annad.\n"
+#~ "2. Cuiridh Yorg do làthaireachd air XMPP gu cleachdaichean Yorg eile ach am faic iad a bheil thu an làthair air XMPP. Mur eil thu ’ga iarraidh, na cleachd an cunntas pearsanta agad agus cruthaich fear fa leth ùr airson Yorg.\n"
+#~ "3. Ma chuireas tu caraid Yorg ris, cuiridh tu ri liosta a’ chunntais agad e cuideachd.\n"
+#~ "4. Tha an còd XMPP aig Yorg deuchainneil fhathast: ma tha dàta cudromach sa chunntas XMPP agad, cruthaich cunntas fa leth ùr airson Yorg a chluich leis."
 
-#~ msgid ""
-#~ "The jabber id that you've inserted is not correct: it should be something "
-#~ "like nickname@domainname.tld where nickname is your nickname and "
-#~ "domainname.tld is a valid domain."
-#~ msgstr ""
-#~ "Chan eil an id jabber id a chuir thu a-steach mar bu chòir: bu chòir do "
-#~ "choltas mar “far-ainm@àrainn.tld” a bhith air agus “far-anim” am far-ainm "
-#~ "agad agus “àrainn.tld” ’na àrainn dhligheach."
+#~ msgid "The jabber id that you've inserted is not correct: it should be something like nickname@domainname.tld where nickname is your nickname and domainname.tld is a valid domain."
+#~ msgstr "Chan eil an id jabber id a chuir thu a-steach mar bu chòir: bu chòir do choltas mar “far-ainm@àrainn.tld” a bhith air agus “far-anim” am far-ainm agad agus “àrainn.tld” ’na àrainn dhligheach."
 
 #~ msgid "low"
 #~ msgstr "ìosal"
@@ -818,14 +733,8 @@ msgstr "na tadhail air an làrach-lìn againn às dèidh fàgail"
 #~ msgid "hi"
 #~ msgstr "àrd"
 
-#~ msgid ""
-#~ "Connection error. Please check that your router is configured for doing "
-#~ "port-forwarding for port 9099 on your host and your firewall allows "
-#~ "traffic for Yorg on port 9099."
-#~ msgstr ""
-#~ "Mearachd leis a’ cheangal. Dearbhaich gun deach an rùtair agad a "
-#~ "rèiteachadh ach an sìn e air adhart port 9099 air an fhrithealaiche agad "
-#~ "agus gun leig a’ chachaileith-theine trafaig tro phort 9099 airson Yorg."
+#~ msgid "Connection error. Please check that your router is configured for doing port-forwarding for port 9099 on your host and your firewall allows traffic for Yorg on port 9099."
+#~ msgstr "Mearachd leis a’ cheangal. Dearbhaich gun deach an rùtair agad a rèiteachadh ach an sìn e air adhart port 9099 air an fhrithealaiche agad agus gun leig a’ chachaileith-theine trafaig tro phort 9099 airson Yorg."
 
 #~ msgid "Client"
 #~ msgstr "Cliant"
