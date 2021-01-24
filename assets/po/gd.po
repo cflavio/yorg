@@ -18,7 +18,7 @@ msgstr ""
 "(n > 2 && n < 20) ? 2 : 3;\n"
 "X-Generator: Virtaal 0.7.1\n"
 
-#: yracing/car/logic.py:899
+#: yracing/car/logic.py:906
 msgid "wrong way"
 msgstr "rathad cearr"
 
@@ -59,23 +59,23 @@ msgstr "a’ feitheamh air na cluicheadairean eile"
 msgid "press %s to respawn"
 msgstr "brùth air %s airson ath-shìoladh"
 
-#: yracing/tuning/gui.py:25
+#: yracing/tuning/gui.py:26
 msgid "What do you want to upgrade?"
 msgstr "Dè bu toigh leat àrdachadh?"
 
-#: yracing/tuning/gui.py:43 yracing/tuning/gui.py:49 yracing/tuning/gui.py:55
+#: yracing/tuning/gui.py:45 yracing/tuning/gui.py:51 yracing/tuning/gui.py:57
 msgid "current upgrades: +"
 msgstr "na h-àrdachaidhean làithreach: +"
 
-#: yracing/tuning/gui.py:61
+#: yracing/tuning/gui.py:63
 msgid "engine: it increases car's maximum speed"
 msgstr "einnsean: meudaichidh seo an luaths as motha aig an einnsean"
 
-#: yracing/tuning/gui.py:67
+#: yracing/tuning/gui.py:69
 msgid "tires: they increase car's adherence"
 msgstr "taidhirean: meudaichidh iad sticeadh a’ chàir"
 
-#: yracing/tuning/gui.py:73
+#: yracing/tuning/gui.py:75
 msgid "suspensions: they increase car's stability"
 msgstr "crochaidhean: cuiridh e ri seasmhachd a’ chàir"
 
@@ -83,23 +83,23 @@ msgstr "crochaidhean: cuiridh e ri seasmhachd a’ chàir"
 msgid "GO!"
 msgstr "SIUTHAD!"
 
-#: yracing/race/gui/results.py:36
+#: yracing/race/gui/results.py:37
 msgid "LAP"
 msgstr "CUAIRT"
 
-#: yracing/race/gui/results.py:37
+#: yracing/race/gui/results.py:38
 msgid "TIME"
 msgstr "ÙINE"
 
-#: yracing/race/gui/results.py:38
+#: yracing/race/gui/results.py:39
 msgid "RANKING"
 msgstr "RANGACHADH"
 
-#: yracing/race/gui/results.py:51
+#: yracing/race/gui/results.py:52
 msgid "share:"
 msgstr "co-roinn:"
 
-#: yracing/race/gui/results.py:83 yracing/ranking/gui.py:59
+#: yracing/race/gui/results.py:84 yracing/ranking/gui.py:59
 msgid "Continue"
 msgstr "Air adhart"
 
@@ -414,8 +414,8 @@ msgid "Connecting"
 msgstr "’Ga cheangail"
 
 #: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:184
-#: menu/inputpage.py:203 menu/inputpage.py:213 menu/inputpage.py:331
-#: menu/inputpage.py:344 menu/inputpage.py:357
+#: menu/inputpage.py:197 menu/inputpage.py:207 menu/inputpage.py:328
+#: menu/inputpage.py:341 menu/inputpage.py:354
 msgid "Player"
 msgstr "Cluicheadair"
 
@@ -423,11 +423,11 @@ msgstr "Cluicheadair"
 msgid "Press the key to record it"
 msgstr "Brùth air an iuchair gus a chlàradh"
 
-#: menu/inputpage.py:86 menu/inputpage.py:254
+#: menu/inputpage.py:86 menu/inputpage.py:248
 msgid "Accelerate"
 msgstr "Luathaich"
 
-#: menu/inputpage.py:87 menu/inputpage.py:255
+#: menu/inputpage.py:87 menu/inputpage.py:249
 msgid "Brake/Reverse"
 msgstr "Brèig/An comhair a’ chùil"
 
@@ -439,17 +439,17 @@ msgstr "Gu clì"
 msgid "Right"
 msgstr "Gu deas"
 
-#: menu/inputpage.py:90 menu/inputpage.py:256
+#: menu/inputpage.py:90 menu/inputpage.py:250
 msgid "Weapon"
 msgstr "Arm"
 
-#: menu/inputpage.py:91 menu/inputpage.py:257
+#: menu/inputpage.py:91 menu/inputpage.py:251
 msgid "Respawn"
 msgstr "Ath-shìol"
 
-#: menu/inputpage.py:185
-msgid "Pause"
-msgstr "Cuir ’na stad"
+#: menu/inputpage.py:252
+msgid "Menu"
+msgstr ""
 
 #: menu/numplayerspage.py:15
 msgid "How many players?"
@@ -668,21 +668,15 @@ msgid "You aren't logged in"
 msgstr "Cha do rinn thu clàradh a-steach"
 
 #: menu/ingamemenu/ingamepage.py:15
-#, python-format
-msgid ""
-"What do you want to do?\n"
-"\n"
-"Note: use '%s' for pausing the game."
-msgstr ""
-"Dè tha thu airson dèanamh?\n"
-"\n"
-"An aire: cleachd “%s” gus an geama a chur ’na stad."
+#, fuzzy
+msgid "What do you want to do?"
+msgstr "Dè bu toigh leat àrdachadh?"
 
-#: menu/ingamemenu/ingamepage.py:24
+#: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"
 msgstr "till dhan gheama"
 
-#: menu/ingamemenu/ingamepage.py:25
+#: menu/ingamemenu/ingamepage.py:24
 msgid "back to the main menu"
 msgstr "till dhan phrìomh chlàr-taice"
 
@@ -703,6 +697,18 @@ msgstr "tadhail air an làrach-lìn againn às dèidh fàgail"
 #: menu/exitmenu/exitpage.py:21
 msgid "don't visit our site after exiting"
 msgstr "na tadhail air an làrach-lìn againn às dèidh fàgail"
+
+#~ msgid "Pause"
+#~ msgstr "Cuir ’na stad"
+
+#~ msgid ""
+#~ "What do you want to do?\n"
+#~ "\n"
+#~ "Note: use '%s' for pausing the game."
+#~ msgstr ""
+#~ "Dè tha thu airson dèanamh?\n"
+#~ "\n"
+#~ "An aire: cleachd “%s” gus an geama a chur ’na stad."
 
 #~ msgid "Use the joypad when present"
 #~ msgstr "Cleachd joypad ma tha fear ann"

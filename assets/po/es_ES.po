@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.3\n"
 
-#: yracing/car/logic.py:899
+#: yracing/car/logic.py:906
 msgid "wrong way"
 msgstr "Camino Erróneo"
 
@@ -58,23 +58,23 @@ msgstr "Esperando por los otros jugadores"
 msgid "press %s to respawn"
 msgstr "presiona %s para recolocar"
 
-#: yracing/tuning/gui.py:25
+#: yracing/tuning/gui.py:26
 msgid "What do you want to upgrade?"
 msgstr "¿Qué quieres incrementar?"
 
-#: yracing/tuning/gui.py:43 yracing/tuning/gui.py:49 yracing/tuning/gui.py:55
+#: yracing/tuning/gui.py:45 yracing/tuning/gui.py:51 yracing/tuning/gui.py:57
 msgid "current upgrades: +"
 msgstr "Mejoras Actuales: +"
 
-#: yracing/tuning/gui.py:61
+#: yracing/tuning/gui.py:63
 msgid "engine: it increases car's maximum speed"
 msgstr "Motor: Incrementa la velocidad máxima del coche"
 
-#: yracing/tuning/gui.py:67
+#: yracing/tuning/gui.py:69
 msgid "tires: they increase car's adherence"
 msgstr "Ruedas: Aumentan la aderencia del coche"
 
-#: yracing/tuning/gui.py:73
+#: yracing/tuning/gui.py:75
 msgid "suspensions: they increase car's stability"
 msgstr "Suspensión: Mejora la estabilidad del coche"
 
@@ -82,23 +82,23 @@ msgstr "Suspensión: Mejora la estabilidad del coche"
 msgid "GO!"
 msgstr "¡Adelante!"
 
-#: yracing/race/gui/results.py:36
+#: yracing/race/gui/results.py:37
 msgid "LAP"
 msgstr "VUELTA"
 
-#: yracing/race/gui/results.py:37
+#: yracing/race/gui/results.py:38
 msgid "TIME"
 msgstr "TIEMPO"
 
-#: yracing/race/gui/results.py:38
+#: yracing/race/gui/results.py:39
 msgid "RANKING"
 msgstr "CLASIFICACIÓN"
 
-#: yracing/race/gui/results.py:51
+#: yracing/race/gui/results.py:52
 msgid "share:"
 msgstr "Compartir:"
 
-#: yracing/race/gui/results.py:83 yracing/ranking/gui.py:59
+#: yracing/race/gui/results.py:84 yracing/ranking/gui.py:59
 msgid "Continue"
 msgstr "Continuar"
 
@@ -409,8 +409,8 @@ msgid "Connecting"
 msgstr "Conectando"
 
 #: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:184
-#: menu/inputpage.py:203 menu/inputpage.py:213 menu/inputpage.py:331
-#: menu/inputpage.py:344 menu/inputpage.py:357
+#: menu/inputpage.py:197 menu/inputpage.py:207 menu/inputpage.py:328
+#: menu/inputpage.py:341 menu/inputpage.py:354
 msgid "Player"
 msgstr "Jugador"
 
@@ -418,11 +418,11 @@ msgstr "Jugador"
 msgid "Press the key to record it"
 msgstr "Presiona la tecla para memorizarla"
 
-#: menu/inputpage.py:86 menu/inputpage.py:254
+#: menu/inputpage.py:86 menu/inputpage.py:248
 msgid "Accelerate"
 msgstr "Aceleración"
 
-#: menu/inputpage.py:87 menu/inputpage.py:255
+#: menu/inputpage.py:87 menu/inputpage.py:249
 msgid "Brake/Reverse"
 msgstr "Freno/Atrás"
 
@@ -434,17 +434,17 @@ msgstr "Izquierda"
 msgid "Right"
 msgstr "Derecha"
 
-#: menu/inputpage.py:90 menu/inputpage.py:256
+#: menu/inputpage.py:90 menu/inputpage.py:250
 msgid "Weapon"
 msgstr "Arma"
 
-#: menu/inputpage.py:91 menu/inputpage.py:257
+#: menu/inputpage.py:91 menu/inputpage.py:251
 msgid "Respawn"
 msgstr "Recolocar"
 
-#: menu/inputpage.py:185
-msgid "Pause"
-msgstr "Pausa"
+#: menu/inputpage.py:252
+msgid "Menu"
+msgstr ""
 
 #: menu/numplayerspage.py:15
 msgid "How many players?"
@@ -659,21 +659,15 @@ msgid "You aren't logged in"
 msgstr "No estás logueado"
 
 #: menu/ingamemenu/ingamepage.py:15
-#, python-format
-msgid ""
-"What do you want to do?\n"
-"\n"
-"Note: use '%s' for pausing the game."
-msgstr ""
-"¿Qué quieres hacer?\n"
-"\n"
-"Nota: Usa '%s' para pausar el juego."
+#, fuzzy
+msgid "What do you want to do?"
+msgstr "¿Qué quieres incrementar?"
 
-#: menu/ingamemenu/ingamepage.py:24
+#: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"
 msgstr "Volver al Juego"
 
-#: menu/ingamemenu/ingamepage.py:25
+#: menu/ingamemenu/ingamepage.py:24
 msgid "back to the main menu"
 msgstr "Volver al Menú Principal"
 
@@ -694,6 +688,18 @@ msgstr "visitar nuestra web antes de salir"
 #: menu/exitmenu/exitpage.py:21
 msgid "don't visit our site after exiting"
 msgstr "no visitar nuestro web antes de salir"
+
+#~ msgid "Pause"
+#~ msgstr "Pausa"
+
+#~ msgid ""
+#~ "What do you want to do?\n"
+#~ "\n"
+#~ "Note: use '%s' for pausing the game."
+#~ msgstr ""
+#~ "¿Qué quieres hacer?\n"
+#~ "\n"
+#~ "Nota: Usa '%s' para pausar el juego."
 
 #~ msgid "Use the joypad when present"
 #~ msgstr "Usa el joypad si está presente"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-10 18:02+0200\n"
+"POT-Creation-Date: 2021-01-24 16:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: yracing/car/logic.py:899
+#: yracing/car/logic.py:906
 msgid "wrong way"
 msgstr ""
 
@@ -58,23 +58,23 @@ msgstr ""
 msgid "press %s to respawn"
 msgstr ""
 
-#: yracing/tuning/gui.py:25
+#: yracing/tuning/gui.py:26
 msgid "What do you want to upgrade?"
 msgstr ""
 
-#: yracing/tuning/gui.py:43 yracing/tuning/gui.py:49 yracing/tuning/gui.py:55
+#: yracing/tuning/gui.py:45 yracing/tuning/gui.py:51 yracing/tuning/gui.py:57
 msgid "current upgrades: +"
 msgstr ""
 
-#: yracing/tuning/gui.py:61
+#: yracing/tuning/gui.py:63
 msgid "engine: it increases car's maximum speed"
 msgstr ""
 
-#: yracing/tuning/gui.py:67
+#: yracing/tuning/gui.py:69
 msgid "tires: they increase car's adherence"
 msgstr ""
 
-#: yracing/tuning/gui.py:73
+#: yracing/tuning/gui.py:75
 msgid "suspensions: they increase car's stability"
 msgstr ""
 
@@ -82,23 +82,23 @@ msgstr ""
 msgid "GO!"
 msgstr ""
 
-#: yracing/race/gui/results.py:36
+#: yracing/race/gui/results.py:37
 msgid "LAP"
 msgstr ""
 
-#: yracing/race/gui/results.py:37
+#: yracing/race/gui/results.py:38
 msgid "TIME"
 msgstr ""
 
-#: yracing/race/gui/results.py:38
+#: yracing/race/gui/results.py:39
 msgid "RANKING"
 msgstr ""
 
-#: yracing/race/gui/results.py:51
+#: yracing/race/gui/results.py:52
 msgid "share:"
 msgstr ""
 
-#: yracing/race/gui/results.py:83 yracing/ranking/gui.py:59
+#: yracing/race/gui/results.py:84 yracing/ranking/gui.py:59
 msgid "Continue"
 msgstr ""
 
@@ -403,8 +403,8 @@ msgid "Connecting"
 msgstr ""
 
 #: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:184
-#: menu/inputpage.py:203 menu/inputpage.py:213 menu/inputpage.py:331
-#: menu/inputpage.py:344 menu/inputpage.py:357
+#: menu/inputpage.py:197 menu/inputpage.py:207 menu/inputpage.py:328
+#: menu/inputpage.py:341 menu/inputpage.py:354
 msgid "Player"
 msgstr ""
 
@@ -412,11 +412,11 @@ msgstr ""
 msgid "Press the key to record it"
 msgstr ""
 
-#: menu/inputpage.py:86 menu/inputpage.py:254
+#: menu/inputpage.py:86 menu/inputpage.py:248
 msgid "Accelerate"
 msgstr ""
 
-#: menu/inputpage.py:87 menu/inputpage.py:255
+#: menu/inputpage.py:87 menu/inputpage.py:249
 msgid "Brake/Reverse"
 msgstr ""
 
@@ -428,16 +428,16 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: menu/inputpage.py:90 menu/inputpage.py:256
+#: menu/inputpage.py:90 menu/inputpage.py:250
 msgid "Weapon"
 msgstr ""
 
-#: menu/inputpage.py:91 menu/inputpage.py:257
+#: menu/inputpage.py:91 menu/inputpage.py:251
 msgid "Respawn"
 msgstr ""
 
-#: menu/inputpage.py:185
-msgid "Pause"
+#: menu/inputpage.py:252
+msgid "Menu"
 msgstr ""
 
 #: menu/numplayerspage.py:15
@@ -645,18 +645,14 @@ msgid "You aren't logged in"
 msgstr ""
 
 #: menu/ingamemenu/ingamepage.py:15
-#, python-format
-msgid ""
-"What do you want to do?\n"
-"\n"
-"Note: use '%s' for pausing the game."
+msgid "What do you want to do?"
 msgstr ""
 
-#: menu/ingamemenu/ingamepage.py:24
+#: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"
 msgstr ""
 
-#: menu/ingamemenu/ingamepage.py:25
+#: menu/ingamemenu/ingamepage.py:24
 msgid "back to the main menu"
 msgstr ""
 
