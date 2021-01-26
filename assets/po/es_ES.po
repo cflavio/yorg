@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-09-10 09:22+0200\n"
+"PO-Revision-Date: 2021-01-25 12:24+0100\n"
 "Last-Translator: Leandro Vergara <leillo1975@jugandoenlinux.com>\n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -317,19 +317,19 @@ msgid ""
 "it) with the instructions for completing the reset."
 msgstr ""
 "Te hemos enviado un email con las intrucciones para completar el "
-"reseteochequea la carpeta de Spam si no puedes encontrarlo"
+"reseteochequea la carpeta de Spam si no puedes encontrarlo."
 
 #: menu/resetpage.py:54
 msgid "This email isn't in our archive."
-msgstr "Este email no está en nuestro archivo"
+msgstr "Este email no está en nuestro archivo."
 
 #: menu/resetpage.py:55
 msgid "This nickname isn't in our archive."
-msgstr "Este apodo no está en nuestro archivo"
+msgstr "Este apodo no está en nuestro archivo."
 
 #: menu/resetpage.py:56
 msgid "This nickname-email pair isn't in our archive."
-msgstr "Esta pareja de apodo-email no está en nuestro archivo"
+msgstr "Esta pareja de apodo-email no está en nuestro archivo."
 
 #: menu/optionpage.py:35
 msgid "Language"
@@ -444,7 +444,7 @@ msgstr "Recolocar"
 
 #: menu/inputpage.py:252
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 #: menu/numplayerspage.py:15
 msgid "How many players?"
@@ -476,7 +476,7 @@ msgstr "Nota: el juego está en desarrollo"
 
 #: menu/mainpage.py:162 menu/mainpage.py:165
 msgid "Last news:"
-msgstr "Últimas Noticias"
+msgstr "Últimas Noticias:"
 
 #: menu/mainpage.py:174 menu/mainpage.py:176
 msgid "show"
@@ -606,7 +606,7 @@ msgid ""
 "your connection."
 msgstr ""
 "Hemos detectado problemas de conexión durante la creación del servidor. Por "
-"favor Compruebatu conexión"
+"favor Compruebatu conexión."
 
 #: menu/multiplayer/multiplayerfrm.py:102
 msgid "We can't connect to httpbin. Please retry later."
@@ -659,9 +659,8 @@ msgid "You aren't logged in"
 msgstr "No estás logueado"
 
 #: menu/ingamemenu/ingamepage.py:15
-#, fuzzy
 msgid "What do you want to do?"
-msgstr "¿Qué quieres incrementar?"
+msgstr "¿Qué quieres hacer?"
 
 #: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2020-09-10 09:28+0200\n"
+"PO-Revision-Date: 2021-01-25 12:27+0100\n"
 "Last-Translator: Leandro Vergara <leillo1975@jugandoenlinux.com>\n"
 "Language-Team: \n"
 "Language: gl_ES\n"
@@ -47,7 +47,7 @@ msgstr "Danos:"
 
 #: yracing/car/gui.py:314
 msgid "weapon"
-msgstr "Arma:"
+msgstr "Arma"
 
 #: yracing/car/gui.py:475
 msgid "waiting for the other players"
@@ -251,7 +251,7 @@ msgstr "Teu ID de usuario:"
 
 #: menu/registerpage.py:23 menu/loginpage.py:20
 msgid "Your password:"
-msgstr "O teu contrasinal"
+msgstr "O teu contrasinal:"
 
 #: menu/registerpage.py:27 menu/registerpage.py:95 menu/registerpage.py:116
 #: menu/resetpage.py:24 menu/resetpage.py:72 menu/resetpage.py:93
@@ -262,7 +262,7 @@ msgstr "O teu ID de usuario"
 #: menu/registerpage.py:30 menu/registerpage.py:102 menu/registerpage.py:111
 #: menu/resetpage.py:27 menu/resetpage.py:79 menu/resetpage.py:88
 msgid "your email"
-msgstr "Teu email"
+msgstr "O teu email"
 
 #: menu/registerpage.py:43 menu/onlinepage.py:31
 msgid "Register"
@@ -276,7 +276,7 @@ msgid ""
 msgstr ""
 "A tua conta está agora rexistrada. Para poder activala deberías clicar na "
 "ligazón que che enviamos o teu email (comproba o teu cartafol de Spam se non "
-"a atopas). Logo xa podes conectarte"
+"a atopas). Logo xa podes conectarte."
 
 #: menu/registerpage.py:72
 msgid "Your nickname's format is invalid: please use only letters and numbers."
@@ -285,7 +285,7 @@ msgstr ""
 
 #: menu/registerpage.py:74
 msgid "Your email's format is invalid."
-msgstr "O formato do teu email non é válido,"
+msgstr "O formato do teu email non é válido."
 
 #: menu/registerpage.py:75
 msgid "Your nickname already exists."
@@ -301,7 +301,7 @@ msgstr "Por favor, usa mais de 6 caracteres para o teu contrasinal."
 
 #: menu/registerpage.py:78 menu/resetpage.py:57
 msgid "Connection error."
-msgstr "Erro de Conexión"
+msgstr "Erro de Conexión."
 
 #: menu/registerpage.py:139 menu/resetpage.py:114 menu/loginpage.py:87
 msgid "Error"
@@ -321,11 +321,11 @@ msgstr ""
 
 #: menu/resetpage.py:54
 msgid "This email isn't in our archive."
-msgstr "Este email non está no noso arquivo"
+msgstr "Este email non está no noso arquivo."
 
 #: menu/resetpage.py:55
 msgid "This nickname isn't in our archive."
-msgstr "Este alcume non está no noso arquivo"
+msgstr "Este alcume non está no noso arquivo."
 
 #: menu/resetpage.py:56
 msgid "This nickname-email pair isn't in our archive."
@@ -444,7 +444,7 @@ msgstr "Recolocar"
 
 #: menu/inputpage.py:252
 msgid "Menu"
-msgstr ""
+msgstr "Menú"
 
 #: menu/numplayerspage.py:15
 msgid "How many players?"
@@ -476,7 +476,7 @@ msgstr "Nota: este xogo está en desenvolvemento"
 
 #: menu/mainpage.py:162 menu/mainpage.py:165
 msgid "Last news:"
-msgstr "Últimas Noticias"
+msgstr "Últimas Noticias:"
 
 #: menu/mainpage.py:174 menu/mainpage.py:176
 msgid "show"
@@ -659,9 +659,8 @@ msgid "You aren't logged in"
 msgstr "Non estás logueado"
 
 #: menu/ingamemenu/ingamepage.py:15
-#, fuzzy
 msgid "What do you want to do?"
-msgstr "¿Qué queres incrementar?"
+msgstr "¿Qué queres facer?"
 
 #: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"
