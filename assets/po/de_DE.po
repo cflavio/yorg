@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Wuzzy <almikes@aol.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-01-25 19:04+0100\n"
+"Last-Translator: Wuzzy <Wuzzy2@mail.ru>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: yracing/car/logic.py:906
 msgid "wrong way"
@@ -46,14 +46,12 @@ msgid "damages:"
 msgstr "Schäden:"
 
 #: yracing/car/gui.py:314
-#, fuzzy
 msgid "weapon"
-msgstr "Waffe:"
+msgstr "Waffe"
 
 #: yracing/car/gui.py:475
-#, fuzzy
 msgid "waiting for the other players"
-msgstr "Auf Server warten"
+msgstr "auf andere Spieler warten"
 
 #: yracing/car/gui.py:623
 #, python-format
@@ -195,7 +193,7 @@ msgstr "Orlando"
 
 #: assets/tracks/moon/track_tr.py:1 yorg/fsm.py:212
 msgid "Sinus Aestuum"
-msgstr ""
+msgstr "Sinus Aestuum"
 
 #: assets/tracks/sheffield/track_tr.py:1 yorg/fsm.py:210
 msgid "Sheffield"
@@ -211,21 +209,21 @@ msgstr "Rom"
 
 #: assets/tracks/toronto/track_tr.py:1 yorg/fsm.py:209
 msgid "Toronto"
-msgstr ""
+msgstr "Toronto"
 
 #: menu/clientpage.py:25
 msgid "Current waiting hosting users"
-msgstr ""
+msgstr "Momentan wartende Host-Benutzer"
 
 #: menu/already_dlg.py:13
 #, python-format
 msgid "The key %s is already used by player %s for %s."
-msgstr ""
+msgstr "Die Taste %s wird bereits von Spieler %s für %s benutzt."
 
 #: menu/already_dlg.py:48
 #, python-format
 msgid "The key %s is already used for %s."
-msgstr ""
+msgstr "Die Taste %s wird bereits für %s benutzt."
 
 #: menu/carpage.py:26
 msgid "Select the car"
@@ -245,33 +243,30 @@ msgstr "Stabilität"
 
 #: menu/registerpage.py:19 menu/resetpage.py:18
 msgid "Your email:"
-msgstr ""
+msgstr "Ihre E-Mail:"
 
 #: menu/registerpage.py:21 menu/resetpage.py:20 menu/loginpage.py:18
-#, fuzzy
 msgid "Your user id:"
-msgstr "Ihr Name"
+msgstr "Ihre Benutzer-ID:"
 
 #: menu/registerpage.py:23 menu/loginpage.py:20
 msgid "Your password:"
-msgstr ""
+msgstr "Ihr Passwort:"
 
 #: menu/registerpage.py:27 menu/registerpage.py:95 menu/registerpage.py:116
 #: menu/resetpage.py:24 menu/resetpage.py:72 menu/resetpage.py:93
 #: menu/loginpage.py:24 menu/loginpage.py:60 menu/loginpage.py:69
-#, fuzzy
 msgid "your user id"
-msgstr "Ihr Name"
+msgstr "Ihre Benutzer-ID"
 
 #: menu/registerpage.py:30 menu/registerpage.py:102 menu/registerpage.py:111
 #: menu/resetpage.py:27 menu/resetpage.py:79 menu/resetpage.py:88
-#, fuzzy
 msgid "your email"
-msgstr "Ihr Name"
+msgstr "Ihre E-Mail"
 
 #: menu/registerpage.py:43 menu/onlinepage.py:31
 msgid "Register"
-msgstr ""
+msgstr "Registrieren"
 
 #: menu/registerpage.py:67
 msgid ""
@@ -279,31 +274,36 @@ msgid ""
 "click the link that we've sent to your email (please check your spam folder "
 "if you can't find it). After that, you can log in."
 msgstr ""
+"Ihr Konto wurde registriert. Um es jetzt zu aktivieren, sollten Sie den "
+"Link, den wir an Ihre E-Mail-Adresse geschickt haben, anklicken (bitte "
+"überprüfen Sie den Spam-Ordner, wenn Sie ihn nicht finden können). Danach "
+"können Sie sich einloggen."
 
 #: menu/registerpage.py:72
 msgid "Your nickname's format is invalid: please use only letters and numbers."
 msgstr ""
+"Das Format Ihres Spitznames ist ungültig: Bitte benutzen Sie nur Buchstaben "
+"und Ziffern."
 
 #: menu/registerpage.py:74
 msgid "Your email's format is invalid."
-msgstr ""
+msgstr "Das Format Ihrer E-Mail-Adresse ist ungültig."
 
 #: menu/registerpage.py:75
 msgid "Your nickname already exists."
-msgstr ""
+msgstr "Ihr Spitzname existiert bereits."
 
 #: menu/registerpage.py:76
 msgid "Your email has already been used."
-msgstr ""
+msgstr "Diese E-Mail-Adresse wurde bereits benutzt."
 
 #: menu/registerpage.py:77
 msgid "Please use more than 6 characters for your password."
-msgstr ""
+msgstr "Bitte benutzen Sie mehr als 6 Zeichen für Ihr Passwort."
 
 #: menu/registerpage.py:78 menu/resetpage.py:57
-#, fuzzy
 msgid "Connection error."
-msgstr "Verbindung von "
+msgstr "Verbindungsfehler."
 
 #: menu/registerpage.py:139 menu/resetpage.py:114 menu/loginpage.py:87
 msgid "Error"
@@ -311,25 +311,28 @@ msgstr "Fehler"
 
 #: menu/resetpage.py:36
 msgid "Reset"
-msgstr ""
+msgstr "Zurücksetzen"
 
 #: menu/resetpage.py:52
 msgid ""
 "We've sent an email to you (please check your spam folder if you can't find "
 "it) with the instructions for completing the reset."
 msgstr ""
+"Wir haben eine E-Mail an Sie geschickt (bitte überprüfen Sie Ihren Spam-"
+"Order, wenn Sie sie nicht finden können); sie enthält die Anweisungen, um "
+"die Zurücksetzung durchzuführen."
 
 #: menu/resetpage.py:54
 msgid "This email isn't in our archive."
-msgstr ""
+msgstr "Diese E-Mail ist nicht in unserem Archiv."
 
 #: menu/resetpage.py:55
 msgid "This nickname isn't in our archive."
-msgstr ""
+msgstr "Dieser Spitzname ist nicht in unserem Archiv."
 
 #: menu/resetpage.py:56
 msgid "This nickname-email pair isn't in our archive."
-msgstr ""
+msgstr "Dieses Spitzname-/E-Mail-Paar ist nicht in unserem Archiv."
 
 #: menu/optionpage.py:35
 msgid "Language"
@@ -361,15 +364,15 @@ msgstr "Anzahl Autos"
 
 #: menu/optionpage.py:78
 msgid "Camera"
-msgstr ""
+msgstr "Kamera"
 
 #: menu/optionpage.py:82
 msgid "Top"
-msgstr ""
+msgstr "Oben"
 
 #: menu/optionpage.py:82
 msgid "Rear"
-msgstr ""
+msgstr "Hinten"
 
 #: menu/optionpage.py:91
 msgid "Configure input"
@@ -377,45 +380,42 @@ msgstr "Eingabe konfigurieren"
 
 #: menu/onlinepage.py:27
 msgid "Play"
-msgstr ""
+msgstr "Spielen"
 
 #: menu/onlinepage.py:32
 msgid "Reset password"
-msgstr ""
+msgstr "Passwort zurücksetzen"
 
 #: menu/onlinepage.py:69
 msgid "Server problem"
-msgstr ""
+msgstr "Serverproblem"
 
 #: menu/onlinepage.py:71
 msgid "Not up-to-date"
-msgstr ""
+msgstr "Nicht auf dem neuesten Stand"
 
 #: menu/onlinepage.py:73
 msgid "Log out"
-msgstr ""
+msgstr "Abmelden"
 
 #: menu/onlinepage.py:77
 msgid "Log in"
-msgstr ""
+msgstr "Einloggen"
 
 #: menu/onlinepage.py:77
-#, fuzzy
 msgid "multiplayer"
 msgstr "Mehrspieler"
 
 #. i18n: This is a caption of a button.
 #: menu/onlinepage.py:79
-#, fuzzy
 msgid "Connecting"
 msgstr "Verbinden"
 
 #: menu/inputpage.py:26 menu/inputpage.py:28 menu/inputpage.py:184
 #: menu/inputpage.py:197 menu/inputpage.py:207 menu/inputpage.py:328
 #: menu/inputpage.py:341 menu/inputpage.py:354
-#, fuzzy
 msgid "Player"
-msgstr "Einzelspieler"
+msgstr "Spieler"
 
 #: menu/inputpage.py:35
 msgid "Press the key to record it"
@@ -447,18 +447,17 @@ msgstr "Zurücksetzen"
 
 #: menu/inputpage.py:252
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
 #: menu/numplayerspage.py:15
 msgid "How many players?"
-msgstr ""
+msgstr "Wie viele Spieler?"
 
 #: menu/mainpage.py:100
 msgid "Single Player"
 msgstr "Einzelspieler"
 
 #: menu/mainpage.py:101
-#, fuzzy
 msgid "Multiplayer"
 msgstr "Mehrspieler"
 
@@ -476,7 +475,7 @@ msgstr "Mitwirkende"
 
 #: menu/mainpage.py:122
 msgid "Note: the game is work-in-progress"
-msgstr "Achtung: Das Spiel ist noch unfertig."
+msgstr "Achtung: Das Spiel ist noch unfertig"
 
 #: menu/mainpage.py:162 menu/mainpage.py:165
 msgid "Last news:"
@@ -488,11 +487,11 @@ msgstr "anzeigen"
 
 #: menu/multiplayerpage.py:22
 msgid "Local"
-msgstr ""
+msgstr "Lokal"
 
 #: menu/multiplayerpage.py:23
 msgid "Online"
-msgstr ""
+msgstr "Online"
 
 #: menu/driverpage.py:45
 msgid "Select the driver"
@@ -507,6 +506,8 @@ msgid ""
 "If you use the keyboard, press FIRE to edit the field, then ENTER when "
 "you're done"
 msgstr ""
+"Wenn Sie die Tastatur benutzen, drücken Sie FEUER, um das Feld zu "
+"bearbeiten, dann ENTER, wenn Sie fertig sind"
 
 #: menu/driverpage.py:156 menu/driverpage.py:169 menu/driverpage.py:177
 #: menu/driverpage.py:178 menu/driverpage.py:179 menu/driverpage.py:181
@@ -517,12 +518,10 @@ msgid "your name"
 msgstr "Ihr Name"
 
 #: menu/driverpage.py:211
-#, fuzzy
 msgid "Select the drivers"
 msgstr "Fahrer auswählen"
 
 #: menu/driverpage.py:215
-#, fuzzy
 msgid "Write your names:"
 msgstr "Namen eingeben:"
 
@@ -532,6 +531,10 @@ msgid ""
 "you're done. Other players can't move while someone is writing (since, with "
 "keyboards, some letters may be bound to movements)."
 msgstr ""
+"Wenn Sie die Tastatur benutzen, drücken Sie FEUER, um das Feld zu "
+"bearbeiten, dann ENTER, wenn Sie fertig sind. Andere Spieler können sich "
+"nicht bewegen, während jemand schreibt (weil bei einigen Tastaturen einige "
+"Buchstaben Bewegungen zugeordnet sind)."
 
 #: menu/singleplayerpage.py:14
 msgid "Single race"
@@ -551,7 +554,7 @@ msgstr "Danke an: "
 
 #: menu/loginpage.py:35
 msgid "Log-in"
-msgstr ""
+msgstr "Einloggen"
 
 #: menu/creditpage.py:10
 msgid "Code"
@@ -579,90 +582,90 @@ msgstr "Strecke wählen"
 
 #: menu/inputselpage.py:22
 msgid "Keyboard"
-msgstr ""
+msgstr "Tastatur"
 
 #: menu/inputselpage.py:23
 msgid "Joystick"
-msgstr ""
+msgstr "Joystick"
 
 #: menu/multiplayer/messagefrm.py:57 menu/multiplayer/messagefrm.py:201
 #: menu/multiplayer/messagefrm.py:250 menu/multiplayer/messagefrm.py:510
-#, fuzzy
 msgid "write here your message"
-msgstr "Namen eingeben:"
+msgstr "Meldung hier eingeben"
 
 #: menu/multiplayer/messagefrm.py:128 menu/multiplayer/messagefrm.py:377
 #: menu/multiplayer/messagefrm.py:404
 msgid "you"
-msgstr ""
+msgstr "du"
 
 #: menu/multiplayer/invite_dlg.py:17
 #, python-format
 msgid "%s has invited you to a match, do you agree?"
-msgstr ""
+msgstr "%s hat Sie zu einem Spiel eingeladen, sind Sie dabei?"
 
 #: menu/multiplayer/multiplayerfrm.py:99
 msgid ""
 "We've detected connection problems during server's creation. Please check "
 "your connection."
 msgstr ""
+"Wir haben Verbindungsprobleme während der Erstellung des Servers ermittelt. "
+"Bitte überprüfen Sie Ihre Verbindung."
 
 #: menu/multiplayer/multiplayerfrm.py:102
 msgid "We can't connect to httpbin. Please retry later."
 msgstr ""
+"Wir können uns nicht mit httpbin verbinden. Bitte später erneut versuchen."
 
 #: menu/multiplayer/matchfrm.py:164
 msgid "Start"
 msgstr "Start"
 
 #: menu/multiplayer/matchfrm.py:178
-#, fuzzy
 msgid "please wait for the server"
-msgstr "Auf Server warten"
+msgstr "bitte warten Sie auf den Server"
 
 #: menu/multiplayer/remove_dlg.py:14
 msgid "you have been removed from the match"
-msgstr ""
+msgstr "Sie wurden aus dem Spiel entfernt"
 
 #: menu/multiplayer/forms.py:42
-#, fuzzy
 msgid "Supporter!"
-msgstr "Unterstützer"
+msgstr "Unterstützer!"
 
 #: menu/multiplayer/forms.py:192
 msgid "remove from the match"
-msgstr ""
+msgstr "vom Spiel entfernen"
 
 #: menu/multiplayer/friend_dlg.py:17
 #, python-format
 msgid "%s wants to be a (XMPP) friend of you, do you agree?"
 msgstr ""
+"%s möchte ein (XMPP-)Freund von Ihnen sein, sind Sie damit einverstanden?"
 
 #: menu/multiplayer/exit_dlg.py:15
 #, python-format
 msgid "the server user %s has quit"
-msgstr ""
+msgstr "der Serverbenutzer %s ist gegangen"
 
 #: menu/multiplayer/usersfrm.py:26
 msgid "Current online users"
-msgstr ""
+msgstr "Momentane Anzahl Online-Benutzer"
 
 #: menu/multiplayer/usersfrm.py:64
 msgid "Your game isn't up-to-date, please update"
-msgstr ""
+msgstr "Ihre Spielversion ist veraltet, bitte aktualisieren"
 
 #: menu/multiplayer/usersfrm.py:66
 msgid "Yorg's server isn't running"
-msgstr ""
+msgstr "Yorgs Server läuft nicht"
 
 #: menu/multiplayer/usersfrm.py:67
 msgid "You aren't logged in"
-msgstr ""
+msgstr "Sie sind nicht angemeldet"
 
 #: menu/ingamemenu/ingamepage.py:15
-#, fuzzy
 msgid "What do you want to do?"
-msgstr "Was möchten Sie aufrüsten?"
+msgstr "Was möchten Sie tun?"
 
 #: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"
