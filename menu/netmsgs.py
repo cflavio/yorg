@@ -1,6 +1,4 @@
-
-
-class NetMsgs(object):
+class NetMsgs:
 
     track_selected = 0
     car_request = 1

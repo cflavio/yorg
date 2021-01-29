@@ -1,0 +1,320 @@
+@startuml
+!include seq_diag_tmpl.txt
+title A: Startup
+Client -> YorgServer: send_presence()
+Client -> Client: register(answer_full)
+Client -> YorgServer: query_full()
+YorgServer --> Client: answer_full
+Client -> Client: unregister(answer_full)
+Client -> Client: register(list_users)
+note left of Client #white: Register also yorg_init,\ninvite, declined, cancel_invite,\nip_address, is_playing, chat.
+note left of Client #white: This manages messages\nfrom past sessions.
+Client -> YorgServer: list_users()
+YorgServer --> Client: users_list
+Client -> Client: unregister(list_users)
+Client -> OtherClient: yorg_init(supporter)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title B: Presence Subscription
+== Accepted ==
+Client -> OtherClient: presence_subscribe()
+OtherClient --> Client:  presence_subscription(subscribed)
+== Declined ==
+Client -> OtherClient: presence_subscribe()
+OtherClient --> Client:  presence_subscription(unsubscribed)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title C: Chat
+== MUC ==
+Client -> XMPPServer: groupchat_message(msg)
+XMPPServer -> OtherClient: groupchat_message(msg)
+== Single Chat ==
+Client -> OtherClient: message(msg)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title D1: Invite Ok
+Server -> Client: invite(room)
+Server -> YorgServer: is_playing(1)
+Server -> OtherClient: is_playing(1)
+Client -> YorgServer: is_playing(1)
+Client -> OtherClient: is_playing(1)
+Client -> XMPPServer: joinMUC(room)
+XMPPServer --> Server: presence_available(room, client)
+Client -> Server: ip_address(ip_addr)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title D2: Invite Ko
+== Declined ==
+Server -> Client: invite(room)
+Client -> YorgServer: is_playing(1)
+Client -> OtherClient: is_playing(1)
+Client --> Server: declined
+Client -> YorgServer: is_playing(0)
+Client -> OtherClient: is_playing(0)
+== Cancel ==
+Server -> Client: invite(room)
+Client -> YorgServer: is_playing(1)
+Client -> OtherClient: is_playing(1)
+Server -> Client: cancel_invite()
+Client --> Server: declined
+Client -> YorgServer: is_playing(0)
+Client -> OtherClient: is_playing(0)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title D3: Concurrent invites (server)
+Server -> Client: invite(room)
+OtherServer -> Server: invite(room)
+Server -> OtherServer: declined
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title D4: Concurrent invites (client)
+Server -> Client: invite(room)
+OtherServer -> Client: invite(room)
+Client -> OtherServer: declined
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title D5: Can't invite
+OtherServer -> Server: invite(room)
+note right of Server #white: Server can't invite: it must answer before.
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title D6: Canceled invite
+Server -> Client: invite(room)
+Client -> XMPPServer: joinMUC(room)
+Server -> Client: cancel_invite()
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title E1: The client quits
+Server -> Client: invite(room)
+Client -> Server: presence_unavailable
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title E2: The client quits after the join (i)
+Server -> Client: invite(room)
+Client -> XMPPServer: joinMUC(room)
+Client -> Server: presence_unavailable
+XMPPServer --> Server: presence_available(room, client)
+XMPPServer --> Server: presence_unavailable(room, client)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title E3: The client quits after the join (ii)
+Server -> Client: invite(room)
+Client -> XMPPServer: joinMUC(room)
+XMPPServer --> Server: presence_available(room, client)
+Client -> Server: presence_unavailable
+XMPPServer --> Server: presence_unavailable(room, client)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title F: Back
+Client -> XMPPServer: leaveMUC(room)
+Client -> YorgServer: is_playing(0)
+Client -> OtherClient: is_playing(0)
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G1: Race's setting
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+...
+Client -> Server: car_requested(car)
+OtherClient -> Server: car_requested(car)
+Server -> Client: car_confirm
+Server -> OtherClient: car_deny
+Server -> Client: car_selection(car)
+Server -> OtherClient: car_selection(car)
+== Server's deselection ==
+Server -> Client: car_deselection(car)
+Server -> OtherClient: car_deselection(car)
+...
+Server -> Client: start_drivers
+Server -> OtherClient: start_drivers
+Client -> Server: driver_requested(i)
+OtherClient -> Server: driver_requested(j)
+Server -> Client: driver_confirm
+Server -> OtherClient: driver_deny
+Server -> Client: driver_selection(i)
+Server -> OtherClient: driver_selection(i)
+Server -> Client: start_race
+Server -> OtherClient: start_race
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G2: Race's setting: the client quits
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+Client -> Server: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G3: Race's setting: the client quits (ii)
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+...
+Server -> Client: car_selection(car)
+Server -> OtherClient: car_selection(car)
+Client -> Server: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G4: Race's setting: the client quits (iii)
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+...
+Server -> Client: start_drivers
+Server -> OtherClient: start_drivers
+Client -> Server: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G5: Race's setting: the client quits (iv)
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+...
+Server -> Client: start_drivers
+Server -> OtherClient: start_drivers
+Client -> Server: driver_selection(i)
+Client -> Server: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G6: Race's setting: the server quits
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+Server -> Client: presence_unavailable/back
+Server -> OtherClient: presence_unavailable/back
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G7: Race's setting: the server quits (ii)
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+...
+Client -> Server: car_requested(car)
+...
+Server -> Client: presence_unavailable/quit
+Server -> OtherClient: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title G8: Race's setting: the server quits (iii)
+participant Client
+participant Server
+participant OtherClient
+Server -> Client: track_selected(track)
+Server -> OtherClient: track_selected(track)
+...
+Client -> Server: driver_requested(car)
+...
+Server -> Client: presence_unavailable/quit
+Server -> OtherClient: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title H1: Ingame
+Client -> Server: client_ready
+OtherClient -> Server: client_ready
+Server -> Client: begin_race
+Server -> OtherClient: begin_race
+...
+Client -> Server: player_info
+OtherClient -> Server: player_info
+Server -> Client: game_packet
+Server -> OtherClient: game_packet
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title H2: Ingame: the server quits during the loading
+OtherClient -> Server: client_ready
+Server -> OtherClient: presence_unavailable/quit
+Server -> Client: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title H3: Ingame: the client quits during the loading
+OtherClient -> Server: client_ready
+Client -> Server: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title I1: Ingame: the server quits
+Server -> Client: game_packet
+Server -> OtherClient: game_packet
+Server -> Client: presence_unavailable/quit
+Server -> OtherClient: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title I2: Ingame: the client quits
+Server -> Client: game_packet
+Client -> Server: presence_unavailable/quit
+@enduml
+
+@startuml
+!include seq_diag_tmpl.txt
+title J: End of race
+== Client wins ==
+Client -> Server: end_race_player
+Server -> Client: end_race
+Server -> OtherClient: end_race
+== Server wins ==
+Server -> Client: end_race
+Server -> OtherClient: end_race
+@enduml

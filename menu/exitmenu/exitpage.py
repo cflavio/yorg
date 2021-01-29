@@ -1,12 +1,11 @@
 from sys import exit as sys_exit
-from direct.gui.OnscreenText import OnscreenText
 from yyagl.lib.gui import Btn, Frame, Text
 from yyagl.engine.gui.page import Page, PageGui
 
 
 class ExitPageGui(PageGui):
 
-    def build(self, back_btn=True):
+    def build(self, back_btn=True):  # parameters differ from overridden
         menu_props = self.menu_props
         frm = Frame(
             frame_size=(-1.5, 1.5, -.9, .9), frame_col=(.95, .95, .7, .85))
@@ -37,7 +36,7 @@ class ExitPageGui(PageGui):
     def on_end(visit):
         if visit:
             ExitPageGui.eng.open_browser('https://www.ya2.it')
-        #ExitPageGui.eng.xmpp.destroy()
+        # ExitPageGui.eng.xmpp.destroy()
         ExitPageGui.eng.do_later(.5, sys_exit)
 
 

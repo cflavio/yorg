@@ -1,0 +1,3 @@
+panda3d
+#panda3d-simplepbr
+#psutil

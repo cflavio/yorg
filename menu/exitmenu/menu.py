@@ -18,5 +18,5 @@ class ExitMenuGui(GuiColleague):
 class ExitMenu(GameObject):
 
     def __init__(self, menu_props):
-        init_lst = [[('gui', ExitMenuGui, [self, menu_props])]]
-        GameObject.__init__(self, init_lst)
+        GameObject.__init__(self)
+        self.gui = ExitMenuGui(self, menu_props)
