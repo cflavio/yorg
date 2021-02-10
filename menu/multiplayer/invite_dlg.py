@@ -1,3 +1,4 @@
+from logging import info
 from direct.gui.DirectDialog import YesNoDialog
 from direct.gui.DirectGuiGlobals import FLAT
 from yyagl.observer import Subject
@@ -30,14 +31,15 @@ class InviteDialog(GameObject, Subject):
             command=self.on_btn)
         size = self.dialog['frameSize']
         self.dialog.set_pos(-size[0] + .05, 1, -size[2] + .05)
-        self.eng.log('created dialog ' + self.dialog['text'])
+        info('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
-        self.eng.log('invite button ' + val)
-        self.notify('on_invite_answer', self.from_, self.roomname, val == 'yes')
+        info('invite button ' + val)
+        self.notify('on_invite_answer', self.from_, self.roomname,
+                    val == 'yes')
 
     def destroy(self):
-        self.eng.log('destroyed dialog ' + self.dialog['text'])
+        info('destroyed dialog ' + self.dialog['text'])
         self.dialog = self.dialog.destroy()
         Subject.destroy(self)
         GameObject.destroy(self)

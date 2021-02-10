@@ -5,15 +5,16 @@ from .thankspage import ThanksPageGui
 
 class CreditPageGui(ThanksPageGui):
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         menu_props = self.menu_props
         dev_str = [_('Code')+': Flavio Calva',
                    _('Art')+': Luca Quartero',
                    _('Audio')+': Jay Bachelor',
-                   _('Translations')+': Wuzzy, GunChleoc, Leandro Vergara, xin']
+                   _('Translations')+
+                   ': Wuzzy, GunChleoc, Leandro Vergara, xin']
         dev_str = '\n\n'.join(dev_str)
         txt = Text(dev_str, pos=(0, .72), wordwrap=20,
-                           **menu_props.text_args)
+                   **menu_props.text_args)
         btn = Btn(
             text=_('Supporters'), pos=(0, -.4),
             cmd=lambda: self.notify('on_push_page', 'supporters'),

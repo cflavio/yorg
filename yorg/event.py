@@ -19,12 +19,15 @@ class YorgEvent(EventColleague):
             del self.mediator.options['save']
             self.mediator.options.store()
         self.mediator.fsm.demand('Menu')
-        #self.mediator.logic.season.race.destroy()
+        # self.mediator.logic.season.race.destroy()
         self.mediator.logic.season = self.mediator.logic.season.destroy()
 
-    def on_season_cont(self, next_track, curr_car, drivers):
-        self.mediator.logic.season.race.destroy()
-        tuning = self.mediator.logic.season.tuning
-        self.mediator.options['save']['tuning'] = tuning.to_dct
+    def on_season_cont(self, next_track, curr_car, players):
+        # unused curr_car
+        # self.mediator.logic.season.race.destroy()
+        # tuning = self.mediator.logic.season.tuning
+        # self.mediator.options['save']['tuning'] = tuning.to_dct
+        stored_players = [player.to_json() for player in players]
+        self.mediator.options['save']['players'] = stored_players
         self.mediator.options.store()
-        self.mediator.fsm.demand('Race', next_track, curr_car, None, drivers)
+        self.mediator.fsm.demand('Race', next_track, players)

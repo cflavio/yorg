@@ -1,3 +1,4 @@
+from logging import info
 from direct.gui.DirectDialog import YesNoDialog
 from direct.gui.DirectGuiGlobals import FLAT
 from yyagl.observer import Subject
@@ -12,7 +13,8 @@ class FriendDialog(GameObject, Subject):
         self.user = user
         self.dialog = YesNoDialog(
             base.a2dBottomLeft,
-            text=_('%s wants to be a (XMPP) friend of you, do you agree?') % user,
+            text=_(
+                '%s wants to be a (XMPP) friend of you, do you agree?') % user,
             text_wordwrap=16,
             text_fg=menu_props.text_active_col,
             text_font=menu_props.font,
@@ -29,14 +31,14 @@ class FriendDialog(GameObject, Subject):
             command=self.on_btn)
         size = self.dialog['frameSize']
         self.dialog.set_pos(-size[0] + .05, 1, -size[2] + .05)
-        self.eng.log('created dialog ' + self.dialog['text'])
+        info('created dialog ' + self.dialog['text'])
 
     def on_btn(self, val):
-        self.eng.log('friend button ' + val)
+        info('friend button ' + val)
         self.notify('on_friend_answer', self.user, val == 'yes')
 
     def destroy(self):
-        self.eng.log('destroyed dialog ' + self.dialog['text'])
+        info('destroyed dialog ' + self.dialog['text'])
         self.dialog = self.dialog.destroy()
         Subject.destroy(self)
         GameObject.destroy(self)

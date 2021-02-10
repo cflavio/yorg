@@ -1,0 +1,1 @@
+translated = _('Sinus Aestuum')

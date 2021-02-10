@@ -1,8 +1,9 @@
+from logging import info
 from socket import error
 from yyagl.engine.network.client import Client
 
 
-class User(object):
+class User:
 
     def __init__(self, uid, is_supporter, is_playing):
         self.uid = uid
@@ -16,7 +17,7 @@ class YorgClient(Client):
         Client.__init__(self, port, server)
         self.authenticated = False
         self.is_server_up = True
-        #self.restart()
+        # self.restart()
         self.users = []
         self.is_server_active = False
         self.is_client_active = False
@@ -31,32 +32,35 @@ class YorgClient(Client):
         users = self.get_users()
         self.users = [User(*args) for args in users]
 
-    def on_msg(self, data_lst, sender):
+    def on_msg(self, data_lst, sender):  # unused sender
         if not self.authenticated: return
         if data_lst[0] == 'login':
             self.users += [User(*data_lst[1:])]
             self.notify('on_presence_available', data_lst[1:])
-            self.eng.log('login %s' % data_lst[1])
+            info('login %s' % data_lst[1])
         if data_lst[0] == 'logout':
             for usr in self.users[:]:
                 if usr.uid == data_lst[1]:
                     self.users.remove(usr)
-                    self.eng.log('logout %s' % data_lst[1])
+                    info('logout %s' % data_lst[1])
             self.notify('on_presence_unavailable', data_lst[1:])
         if data_lst[0] == 'msg':
             self.notify('on_msg', data_lst[1:])
         if data_lst[0] == 'msg_room':
-            self.notify('on_groupchat_msg', data_lst[1], data_lst[2], data_lst[3])
+            self.notify('on_groupchat_msg', data_lst[1], data_lst[2],
+                        data_lst[3])
         if data_lst[0] == 'is_playing':
             self.notify('on_is_playing', data_lst[1], data_lst[2])
         if data_lst[0] == 'invite_chat':
-            self.notify('on_invite_chat', data_lst[1], data_lst[2], data_lst[3])
+            self.notify('on_invite_chat', data_lst[1], data_lst[2],
+                        data_lst[3])
         if data_lst[0] == 'declined':
             self.notify('on_declined', data_lst[1])
         if data_lst[0] == 'presence_available_room':
             self.notify('on_presence_available_room', data_lst[1], data_lst[2])
         if data_lst[0] == 'presence_unavailable_room':
-            self.notify('on_presence_unavailable_room', data_lst[1], data_lst[2])
+            self.notify('on_presence_unavailable_room', data_lst[1],
+                        data_lst[2])
         if data_lst[0] == 'track_selected':
             self.notify('on_track_selected_msg', data_lst[1])
         if data_lst[0] == 'car_selection':

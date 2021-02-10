@@ -1,9 +1,8 @@
+from logging import info
 from itertools import product
 from yyagl.lib.gui import Text
-from yyagl.engine.gui.page import Page, PageFacade
+from yyagl.engine.gui.page import Page
 from yyagl.engine.gui.imgbtn import ImgBtn
-from yyagl.gameobject import GameObject
-from .netmsgs import NetMsgs
 from .thankspage import ThanksPageGui
 
 
@@ -12,11 +11,12 @@ class TrackPageGui(ThanksPageGui):
     def __init__(self, mediator, trackpage_props, room):
         self.props = trackpage_props
         self.room = room
-        ThanksPageGui.__init__(self, mediator, trackpage_props.gameprops.menu_props)
+        ThanksPageGui.__init__(self, mediator,
+                               trackpage_props.gameprops.menu_props)
 
-    def build(self):
+    def build(self):  # parameters differ from overridden
         txt = Text(_('Select the track'), pos=(0, .8),
-                           **self.menu_props.text_args)
+                   **self.menu_props.text_args)
         self.add_widgets([txt])
         t_a = self.menu_props.text_args.copy()
         t_a['scale'] = .06
@@ -46,7 +46,7 @@ class TrackPageGui(ThanksPageGui):
         ThanksPageGui.build(self, exit_behav=self.eng.server.is_active)
 
     def on_track(self, track):
-        self.eng.log('selected ' + track)
+        info('selected ' + track)
         self.notify('on_track_selected', track)
         self.notify('on_push_page', 'car_page', [self.props])
 
@@ -81,20 +81,13 @@ class TrackPage(Page):
         self.trackpage_props = trackpage_props
         self.room = room
         Page.__init__(self, trackpage_props)
-        PageFacade.__init__(self)
-
-    @property
-    def init_lst(self): return [
-        [('event', self.event_cls, [self])],
-        [('gui', self.gui_cls, [self, self.trackpage_props, self.room])]]
-
-    def destroy(self):
-        Page.destroy(self)
-        PageFacade.destroy(self)
 
 
 class TrackPageServer(TrackPage):
     gui_cls = TrackPageServerGui
+
+    def _build_gui(self):
+        self.gui = self.gui_cls(self, self.menu_props, self.room)
 
 
 class TrackPageLocalMP(TrackPage):

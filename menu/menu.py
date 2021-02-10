@@ -1,3 +1,4 @@
+from logging import info
 from yyagl.engine.gui.menu import Menu, MenuLogic, MenuGui, MenuFacade
 from yyagl.gameobject import GameObject
 from yyagl.dictfile import DctFile
@@ -11,19 +12,21 @@ from .loginpage import LogInPage
 from .registerpage import RegisterPage
 from .resetpage import ResetPage
 from .trackpage import TrackPage, TrackPageServer, TrackPageLocalMP
-from .carpage import CarPage, CarPageServer, CarPageClient, CarPageSeason, \
-    CarPageLocalMP
+from .carpage import CarPage, CarPageClient, CarPageSeason, CarPageLocalMP
 from .driverpage import DriverPageSinglePlayer, DriverPageServer, \
     DriverPageClient, DriverPageMP
 from .optionpage import OptionPage
-from .inputpage import InputPage, InputPage2, InputPage3, InputPage4
+from .inputselpage import InputSelPage
+from .inputpage import InputPageKeyboard, InputPage2Keyboard, \
+    InputPage3Keyboard, InputPage4Keyboard, InputPageJoystick, \
+    InputPage2Joystick, InputPage3Joystick, InputPage4Joystick
 from .creditpage import CreditPage
 from .roompage import RoomPage, RoomPageClient
 from .numplayerspage import NumPlayersPage
 from .supporterspage import SupportersPage
 
 
-class MenuProps(object):
+class MenuProps:
 
     def __init__(self, gameprops, opt_file, title_img, feed_url, site_url,
                  has_save, support_url):
@@ -41,118 +44,188 @@ class YorgMenuLogic(MenuLogic):
     def __init__(self, mediator):
         MenuLogic.__init__(self, mediator)
         self.uid_srv = None
+        self.players = None
+        self.players_mp = None
+        self.players_omp = None
+        self.curr_room = None
 
-    def on_push_page(self, page_code, args=[]):
+    def on_push_page(self, page_code, args=None):
+        args = args or []
         if page_code == 'singleplayer':
-            self.eng.log('single player')
+            info('single player')
             page = SingleplayerPage(args[0])
+            page.gui.attach(self.on_single_race)
+            page.gui.attach(self.on_start_season)
             page.gui.attach(self.on_track_selected)
             page.gui.attach(self.on_continue)
         if page_code == 'login':
-            self.eng.log('login')
+            info('login')
             page = LogInPage(args[0])
             page.gui.attach(self.on_login_page)
         if page_code == 'register':
-            self.eng.log('register')
+            info('register')
             page = RegisterPage(args[0])
         if page_code == 'reset':
-            self.eng.log('reset')
+            info('reset')
             page = ResetPage(args[0])
         if page_code == 'single_race':
-            self.eng.log('single race')
+            info('single race')
             page = TrackPage(args[0])
             page.gui.attach(self.on_track_selected)
         if page_code == 'localmp':
-            self.eng.log('local multiplayer')
+            info('local multiplayer')
             page = NumPlayersPage(args[0])
             page.gui.attach(self.on_nplayers)
         if page_code == 'multiplayer':
-            self.eng.log('multiplayer')
+            info('multiplayer')
             page = MultiplayerPage(args[0])
+            page.gui.attach(self.on_start_local_mp)
         if page_code == 'online':
-            self.eng.log('online')
+            info('online')
             page = OnlinePage(args[0])
         if page_code == 'onlineplay':
-            self.eng.log('onlineplay')
+            info('onlineplay')
             page = OnlinePlayPage(args[0])
             page.gui.attach(self.on_create_room)
+            page.gui.attach(self.on_start_mp_server)
+            page.gui.attach(self.on_start_mp_client)
         if page_code == 'client':
-            self.eng.log('client')
+            info('client')
             page = ClientPage(args[0])
             page.gui.attach(self.on_create_room_client)
         if page_code == 'trackpageserver':
-            self.eng.log('track page server')
+            info('track page server')
             page = TrackPageServer(args[0], args[1])
             page.gui.attach(self.on_track_selected)
         if page_code == 'trackpagelocalmp':
-            self.eng.log('track page local multiplayer')
+            info('track page local multiplayer')
             page = TrackPageLocalMP(args[0])
             page.gui.attach(self.on_track_selected_lmp)
         if page_code == 'new_season':
-            self.eng.log('new season')
+            info('new season')
             page = CarPageSeason(args[0], self.mediator.track)
             page.gui.attach(self.on_car_selected_season)
         if page_code == 'car_page':
-            self.eng.log('car page')
+            info('car page')
             page = CarPage(args[0], self.mediator.track)
             page.gui.attach(self.on_car_selected)
         if page_code == 'carpageserver':
-            self.eng.log('car page server')
-            #page = CarPageServer(args[0], self.mediator.track, self.yorg_client)
+            info('car page server')
+            # page = CarPageServer(args[0], self.mediator.track,
+            #                      self.yorg_client)
             page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
+            page.gui.attach(self.on_car_selected_omp_srv)
+            page.gui.attach(self.on_car_selected_omp_client)
         if page_code == 'carpagelocalmp':
-            self.eng.log('car page local multiplayer')
-            page = CarPageLocalMP(args[0], self.mediator.track, self.mediator.nplayers)
-            page.gui.attach(self.on_car_selected)
+            info('car page local multiplayer')
+            page = CarPageLocalMP(args[0], self.mediator.track,
+                                  self.mediator.nplayers)
+            page.gui.attach(self.on_car_selected_mp)
         if page_code == 'carpageclient':
-            self.eng.log('car page client')
+            info('car page client')
             page = CarPageClient(args[0], self.mediator.track, self.uid_srv)
             page.gui.attach(self.on_car_selected)
+            page.gui.attach(self.on_car_selected_omp_client)
         if page_code == 'driver_page':
-            self.eng.log('driver page')
-            page = DriverPageSinglePlayer(args[0], args[1], args[2])
+            info('driver page')
+            page = DriverPageSinglePlayer(args[0], args[1], args[2],
+                                          self.players)
             page.gui.attach(self.on_driver_selected)
         if page_code == 'driver_page_mp':
-            self.eng.log('driver page multiplayer')
-            page = DriverPageMP(args[0], args[1], args[2], self.mediator.nplayers)
+            info('driver page multiplayer')
+            page = DriverPageMP(args[0], args[1], args[2],
+                                self.mediator.nplayers, self.players_mp)
             page.gui.attach(self.on_driver_selected_mp)
         if page_code == 'driverpageserver':
-            self.eng.log('driver page server')
-            page = DriverPageServer(args[0], args[1], args[2])
+            info('driver page server')
+            page = DriverPageServer(args[0], args[1], args[2], args[3])
             page.gui.attach(self.on_driver_selected_server)
         if page_code == 'driverpageclient':
-            self.eng.log('driver page client')
-            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv)
+            info('driver page client')
+            page = DriverPageClient(args[0], args[1], args[2], self.uid_srv,
+                                    self.players_omp)
             page.gui.attach(self.on_driver_selected)
             page.gui.attach(self.on_car_start_client)
         if page_code == 'options':
-            self.eng.log('options')
+            info('options')
             page = OptionPage(self.mediator.gui.menu_props, args[0])
-        if page_code == 'input':
-            self.eng.log('input')
-            page = InputPage(
-                self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], args[1])
-        if page_code == 'input2':
-            self.eng.log('input2')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+        if page_code == 'inputsel':
+            info('inputsel')
+            page = InputSelPage(
+                self.mediator.gui._menu_props,
+                self.mediator.menu_props.opt_file, args[0], args[1])
+            # access to a protected member
+            # self.mediator.gui.menu_props, args[0], args[1])
+        if page_code == 'input1keyboard':
+            info('input1keyboard')
+            page = InputPageKeyboard(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file, args[0])
+        if page_code == 'input1joystick':
+            info('input1joystick')
+            page = InputPageJoystick(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file, args[0])
+        if page_code == 'input2keyboard':
+            info('input2keyboard')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage2(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
-        if page_code == 'input3':
-            self.eng.log('input3')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            page = InputPage2Keyboard(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['keys'])
+        if page_code == 'input2joystick':
+            info('input2joystick')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage3(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
-        if page_code == 'input4':
-            self.eng.log('input4')
-            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(self.mediator.menu_props.opt_file['settings'], args[2])
+            page = InputPage2Joystick(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['joystick'])
+        if page_code == 'input3keyboard':
+            info('input3keyboard')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
             self.mediator.menu_props.opt_file.store()
-            page = InputPage4(self.mediator.gui.menu_props, self.mediator.menu_props.opt_file, args[0], self.mediator.menu_props.opt_file['settings']['keys'])
+            page = InputPage3Keyboard(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['keys'])
+        if page_code == 'input3joystick':
+            info('input3joystick')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage3Joystick(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['joystick'])
+        if page_code == 'input4keyboard':
+            info('input4keyboard')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage4Keyboard(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['keys'])
+        if page_code == 'input4joystick':
+            info('input4joystick')
+            self.mediator.menu_props.opt_file['settings'] = DctFile.deepupdate(
+                self.mediator.menu_props.opt_file['settings'], args[1])
+            self.mediator.menu_props.opt_file.store()
+            page = InputPage4Joystick(
+                self.mediator.gui.menu_props,
+                self.mediator.menu_props.opt_file,
+                self.mediator.menu_props.opt_file['settings']['joystick'])
         if page_code == 'credits':
-            self.eng.log('credits')
+            info('credits')
             page = CreditPage(self.mediator.gui.menu_props)
         if page_code == 'supporters':
-            self.eng.log('supporters')
+            info('supporters')
             page = SupportersPage(self.mediator.gui.menu_props)
         self.push_page(page)
 
@@ -166,48 +239,79 @@ class YorgMenuLogic(MenuLogic):
     def on_removed(self):
         self.on_back(self.pages[-1].__class__.__name__)
 
-    def on_back(self, page_code, args=[]):
-        self.eng.log('back: %s' % page_code)
+    def on_back(self, page_code, args=None):
+        # parameters differ from overridden
+        args = args or []
+        info('back: %s' % page_code)
         if page_code.startswith('input_page'):
             self.mediator.gui.notify('on_input_back', args[0])
-            if page_code in ['input_page' + str(n) for n in range(1, 5)]: self.pages[-2].gui.update_keys()
+            if page_code in ['input_page' + str(n) for n in range(1, 5)]:
+                self.pages[-2].gui.update_keys()
         if page_code == 'options_page':
             self.mediator.gui.notify('on_options_back', args[0])
         if page_code == 'RoomPageGui':
             self.mediator.gui.notify('on_room_back')
         MenuLogic.on_back(self)
 
-    def on_quit(self, page_code, args=[]):
+    def on_quit(self, page_code, args=None):  # unused page_code, args
+        # parameters differ from overridden
         self.mediator.gui.notify('on_quit')
         MenuLogic.on_quit(self)
 
     def on_track_selected(self, track):
+        self.mediator.gui.notify('on_track_selected')
         self.mediator.track = track
 
     def on_track_selected_lmp(self, track):
         self.mediator.track = track
+        self.mediator.gui.notify('on_track_selected_mp')
 
     def on_nplayers(self, num):
         self.mediator.nplayers = num
 
+    def on_single_race(self):
+        self.mediator.gui.notify('on_single_race')
+
+    def on_start_season(self):
+        self.mediator.gui.notify('on_start_season')
+
+    def on_start_local_mp(self):
+        self.mediator.gui.notify('on_start_local_mp')
+
+    def on_start_mp_server(self):
+        self.mediator.gui.notify('on_start_mp_server')
+
+    def on_start_mp_client(self):
+        self.mediator.gui.notify('on_start_mp_client')
+
     def on_car_selected(self, car):
         self.mediator.gui.notify('on_car_selected', car)
+
+    def on_car_selected_mp(self, car, player_idx):
+        self.mediator.gui.notify('on_car_selected_mp', car, player_idx)
+
+    def on_car_selected_omp_srv(self, car):
+        self.mediator.gui.notify('on_car_selected_omp_srv', car)
+
+    def on_car_selected_omp_client(self, car):
+        self.mediator.gui.notify('on_car_selected_omp_client', car)
 
     def on_driver_selected_server(self, name, track, car, cars):
         self.mediator.gui.notify('on_driver_selected_server', name, track, car,
                                  cars)
 
     def on_car_start_client(self, track, car, cars, packet):
-        self.mediator.gui.notify('on_car_start_client', track, car, cars, packet, self.curr_room)
+        self.mediator.gui.notify('on_car_start_client', track, car, cars,
+                                 packet, self.curr_room)
 
     def on_car_selected_season(self, car):
         self.mediator.gui.notify('on_car_selected_season', car)
 
-    def on_driver_selected(self, name, track, car):
-        self.mediator.gui.notify('on_driver_selected', name, track, car)
+    def on_driver_selected(self, name, track, car, i):
+        self.mediator.gui.notify('on_driver_selected', name, track, car, i)
 
-    def on_driver_selected_mp(self, name, track, cars, drivers):
-        self.mediator.gui.notify('on_driver_selected_mp', name, track, cars, drivers)
+    def on_driver_selected_mp(self, track, players):
+        self.mediator.gui.notify('on_driver_selected_mp', track, players)
 
     def on_continue(self):
         self.mediator.gui.notify('on_continue')
@@ -230,7 +334,8 @@ class YorgMenuLogic(MenuLogic):
 
     def on_create_room_client(self, room, nick, uid_srv):
         self.uid_srv = uid_srv
-        page = RoomPageClient(self.mediator.gui.menu_props, room, nick, uid_srv)
+        page = RoomPageClient(self.mediator.gui.menu_props, room, nick,
+                              uid_srv)
         self.push_page(page)
         page.gui.attach(self.on_start_match_client_page)
         page.gui.attach(self.on_srv_quitted)
@@ -246,6 +351,7 @@ class YorgMenuGui(MenuGui):
         # every page should not manage following pages by forwarding params:
         # each page should callback the menu and it should spawn the next one
         MenuGui.__init__(self, mediator, menu_props.gameprops.menu_props)
+        self._menu_props = menu_props
         page = YorgMainPage(menu_props)
         page.gui.attach(self.on_login)
         page.gui.attach(self.on_logout)
@@ -268,8 +374,7 @@ class YorgMenu(Menu):
 
     def __init__(self, menu_props):
         self.menu_props = menu_props
-        comps = [
-            [('logic', self.logic_cls, [self])],
-            [('gui', self.gui_cls, [self, menu_props])]]
-        GameObject.__init__(self, comps)
-        MenuFacade.__init__(self)
+        GameObject.__init__(self)  # invoke Menu's one
+        self.logic = self.logic_cls(self)
+        self.gui = self.gui_cls(self, menu_props)
+        MenuFacade.__init__(self)  # invoke Menu's one

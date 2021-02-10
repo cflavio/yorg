@@ -1,6 +1,4 @@
-from direct.gui.DirectGuiGlobals import ENTER, EXIT, NORMAL, DISABLED
-from direct.gui.DirectLabel import DirectLabel
-from direct.gui.DirectButton import DirectButton
+from direct.gui.DirectGuiGlobals import ENTER, EXIT, DISABLED
 from panda3d.core import TextNode
 from yyagl.engine.gui.imgbtn import ImgBtn
 from yyagl.lib.gui import Btn, Label
@@ -18,7 +16,7 @@ class MPBtn(GameObject):
         self.owner = owner
         lab_args = menu_props.label_args
         lab_args['scale'] = .046
-        #lab_args['text_fg'] = menu_props.text_normal_col
+        # lab_args['text_fg'] = menu_props.text_normal_col
         self.btn = ImgBtn(
             parent=parent, scale=(.024, .024), pos=(msg_btn_x, .01),
             frame_col=(1, 1, 1, 1), frame_texture=img_path, cmd=cb,

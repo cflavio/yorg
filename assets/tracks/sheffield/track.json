@@ -1,0 +1,20 @@
+{
+    "sorting": 3, 
+    "music": "Through the Green Fields", 
+    "camera_vector": [
+        -1, 
+        1, 
+        -0.9
+    ], 
+    "shadow_source": [
+        50, 
+        -80, 
+        80
+    ], 
+    "laps": 2, 
+    "skidmark_col": [
+        0.6, 
+        0.4, 
+        0.2
+    ]
+}

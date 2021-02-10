@@ -1,0 +1,20 @@
+{
+    "sorting": 1,
+    "music": "Salvation in Snow",
+    "camera_vector": [
+        -1,
+        0,
+        -0.7
+    ],
+    "shadow_source": [
+        50,
+        -80,
+        80
+    ],
+    "laps": 3,
+    "skidmark_col": [
+        0.8,
+        0.8,
+        0.8
+    ]
+}
