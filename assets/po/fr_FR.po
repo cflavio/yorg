@@ -221,9 +221,9 @@ msgid "The key %s is already used by player %s for %s."
 msgstr "La touche %s est déjà utilisée par le joueur %s pour %s."
 
 #: menu/already_dlg.py:48
-#, fuzzy, python-format
+#, python-format
 msgid "The key %s is already used for %s."
-msgstr "La touche %s est déjà utilisée par le joueur %s pour %s."
+msgstr "La touche %s est déjà utilisée pour %s."
 
 #: menu/carpage.py:26
 msgid "Select the car"
@@ -446,7 +446,7 @@ msgstr "Réapparition"
 
 #: menu/inputpage.py:252
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: menu/numplayerspage.py:15
 msgid "How many players?"
@@ -525,7 +525,6 @@ msgid "Write your names:"
 msgstr "Écrivez vos noms :"
 
 #: menu/driverpage.py:254
-#, fuzzy
 msgid ""
 "If you use the keyboard, press FIRE to edit the field, then ENTER when "
 "you're done. Other players can't move while someone is writing (since, with "
@@ -582,11 +581,11 @@ msgstr "Sélectionner le circuit"
 
 #: menu/inputselpage.py:22
 msgid "Keyboard"
-msgstr ""
+msgstr "Clavier"
 
 #: menu/inputselpage.py:23
 msgid "Joystick"
-msgstr ""
+msgstr "Manette"
 
 #: menu/multiplayer/messagefrm.py:57 menu/multiplayer/messagefrm.py:201
 #: menu/multiplayer/messagefrm.py:250 menu/multiplayer/messagefrm.py:510
@@ -663,9 +662,8 @@ msgid "You aren't logged in"
 msgstr "Vous n'êtes pas identifié"
 
 #: menu/ingamemenu/ingamepage.py:15
-#, fuzzy
 msgid "What do you want to do?"
-msgstr "Que voulez-vous améliorer ?"
+msgstr "Que voulez-vous faire ?"
 
 #: menu/ingamemenu/ingamepage.py:23
 msgid "back to the game"
