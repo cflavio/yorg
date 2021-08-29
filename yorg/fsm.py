@@ -1,7 +1,6 @@
 from logging import info
 from sys import exit as sys_exit
 from os.path import exists
-from yyagl.dictfile import DctFile
 from yyagl.gameobject import FsmColleague
 from yracing.car.audio import CarSounds
 from yracing.car.event import Keys, PlayerKeys
