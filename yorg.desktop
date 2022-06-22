@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Yorg
+GenericName=Third person racing game
+Comment=3D miniature car racing game
+Exec=yorg
+Icon=yorg
+Type=Application
+Categories=Game;SportsGame;

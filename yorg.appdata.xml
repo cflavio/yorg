@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>yorg.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0 and CC-BY-SA-4.0</project_license>
+  <name>Yorg</name>
+  <summary>Yorg's an Open Racing Game</summary>
+  <description>
+    <p>
+      Yorg is an arcade style miniature car racing game viewed from third person.
+    </p>
+    <p>
+      Features
+    </p>
+    <ul>
+      <li>8 different drivers</li>
+      <li>8 different cars</li>
+      <li>7 different tracks</li>
+      <li>AI</li>
+      <li>power-ups</li>
+      <li>weapons</li>
+      <li>championships</li>
+      <li>online multiplayer (experimental)</li>
+      <li>local multiplayer</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.ya2.it/images/yorg/yorg_0_11_a.jpg</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="0.11.0.post0" date="2021-02-10" />
+    <release version="0.11.0" date="2019-08-31" />
+    <release version="0.10.0 " date="2018-10-28" />
+    <release version="0.9.0 " date="2018-06-16" />
+    <release version="0.8.0 " date="2017-12-02" />
+    <release version="0.7.0" date="2017-09-09" />
+    <release version="0.6.0" date="2017-06-27" />
+    <release version="0.5.1" date="2017-06-16" />
+    <release version="0.11.0.post0" date="2021-02-10" />
+    <release version="0.5.0" date="2017-04-07" />
+  </releases>
+  <content_rating type="oars-1.1" />
+  <url type="homepage">https://www.ya2.it/pages/yorg.html</url>
+  <url type="donation">https://www.ya2.it/pages/support_us.html</url>
+  <url type="bugtracker">https://github.com/cflavio/yorg/issues</url>
+</component>
